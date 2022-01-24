@@ -21,4 +21,3 @@
 * [Inventory](user-guide/inventory.md)
 * [Environment](user-guide/environment.md)
 * [Repositories](user-guide/repositories.md)
-* [FAQ](user-guide/faq.md)
