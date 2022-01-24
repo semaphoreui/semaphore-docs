@@ -35,6 +35,4 @@ Docker: [https://hub.docker.com/r/ansiblesemaphore/semaphore](https://hub.docker
 
 Snap: [https://snapcraft.io/semaphore](https://snapcraft.io/semaphore).
 
-![Snap installations](<.gitbook/assets/image (4).png>)
-
 Contact: [denis@ansible-semaphore.com](mailto:denis@ansible-semaphore.com)
