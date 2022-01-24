@@ -51,6 +51,16 @@ curl -v -XPOST \
 http://localhost:3000/api/project/1/tasks
 ```
 
+Expire token:
+
+```
+curl -v -XDELETE \
+-H 'Content-Type: application/json' \
+-H 'Accept: application/json' \
+-H 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
+http://localhost:3000/api/user/tokens/YOUR_ACCESS_TOKEN
+```
+
 ### API documentation
 
 {% hint style="info" %}
