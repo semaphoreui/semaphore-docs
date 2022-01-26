@@ -109,7 +109,7 @@ Semaphore uses `config.json` configuration file with following content:
 | `port`                  | `port`                  | TCP port on which the web interface will be available. Defalt: 3000 |
 | `interface`             | `interface`             | Useful if your server has multiple network interfaces                                                                                       |
 | `tmp_path`              | —                       | Path to directory where cloned repositories and generated files are stored. Deafult: /tmp/semaphore |
-| `access_key_encryption` | `access-key-encryption` | Secret key used for encypting access keys in datatabase. Details: https://docs.ansible-semaphore.com/administration-guide/security#database-encryption |
+| `access_key_encryption` | `access-key-encryption` | Secret key used for encypting access keys in datatabase. Read more in [Database encryption reference](https://docs.ansible-semaphore.com/administration-guide/security#database-encryption). |
 | `email_sender`          | `email-sender`          |                                                                                                                                             |
 | `email_host`            | `email-host`            |                                                                                                                                             |
 | `email_port`            | `email-port`            |                                                                                                                                             |
