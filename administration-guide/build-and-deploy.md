@@ -1,6 +1,6 @@
 # Build and deploy
 
-Strart from [v2.8.31](https://github.com/ansible-semaphore/semaphore/releases/tag/v2.8.31) Semaphore supports `build` and `deploy` tasks. 
+Strart from [v2.8.34](https://github.com/ansible-semaphore/semaphore/releases/tag/v2.8.34) Semaphore supports `build` and `deploy` tasks. 
 
 Semaphore passes `semaphore_vars` variable to each Ansible playbook which it runs.
 
