@@ -6,12 +6,12 @@ Semaphore understands repositories that are a local git repository (git://), a l
 
 All Task templates require a repository in order to run.
 
-## Authenication
-If you are using a remote repository that requires authenication you will need to configure key in the key store section of semaphore.
+## Authentication
+If you are using a remote repository that requires authentication you will need to configure key in the key store section of semaphore.
 
 For remote repositories that use SSH you will your key will be an SSH key. 
 
-For Remote repositories that do not have authenication you can create a key with the type of None.
+For Remote repositories that do not have authentication you can create a key with the type of None.
 
 ## Creating a New Repository
 1. make sure you have configured the key for the repository you are about to add in the key store section.
@@ -24,10 +24,10 @@ For Remote repositories that do not have authenication you can create a key with
     * file:// for a local folder on the file system
     * git:// for a local git repository
   * set the branch of the repository if you are not sure what to put it is probably master. 
-  * selct the access key you configured prior to setting up this repository.
+  * select the access key you configured prior to setting up this repository.
 4. click save once everything is configured.
 
-## Editing an Exisiting Repository
+## Editing an Existing Repository
 1. go to the repositories section of Semaphore
 2. Click on the pencil icon next to the repository you wish to change, and you will be presented with the same option as when you created the repository
 

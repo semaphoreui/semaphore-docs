@@ -1,12 +1,12 @@
 # Environment
 the environment section of Semaphore is a place to store additional variables for an inventory and must be stored in json format. 
-All task templates require an envrionment to be defeined even if it is empty. 
+All task templates require an environment to be defined even if it is empty. 
 
 ## Create an Environment
 1. Click on the Environment tab
-2. Click on the New Envrionment button
-3. Name the envrionment and type or paste in valid json variables. If you just need an empty envrionment type in ```{}```
-## Updating an Environmnet
+2. Click on the New Environment button
+3. Name the Environment and type or paste in valid json variables. If you just need an empty Environment type in ```{}```
+## Updating an Environment
 1. Click on the Environment tab
 2. Click the pencil icon
 3. Make changes and click save
