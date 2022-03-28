@@ -1,36 +1,36 @@
 # Key Store
 
-The Key store in Semaphore is used for storing credentials for acessing remote repositories, accessing remote hosts, storing sudo credentials, and ansible vault passwords.
+The Key Store in Semaphore is used to store credentials for acessing remote Repositories, accessing remote hosts, sudo credentials, and Ansible vault passwords.
 
-It is helpful that you have configured all required access keys before setting up other resources like inventories, repositories, and tasks templates so you do not have to edit them later.
+It is helpful to have configured all required access keys before setting up other resources like Inventories, Repositories, and tasks templates so you do not have to edit them later.
 
 ## Types
 
 ### SSH
-SSH Keys are used for access remote servers as well as remote repositories.
+SSH Keys are used to access remote servers as well as remote Repositories.
 
-At this time semaphore does support using SSH keys that are password protected.
+At this time, semaphore does support using SSH keys that are password protected.
 
-If you need assistance quickly generating a key and placing it on your host [here is a quick guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
+If you need assistance quickly generating a key and placing it on your host, [here is a quick guide.](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
 
-For git repositories that use SSH authentication you will need to add the public for the private key generated added to semaphore added to your profile.
+For Git Repositories that use SSH authentication, the Git Repository you are trying to clone from needs to have your public key associated to the private key.
 
-Below are links to the docs for some people git repositories
+Below are links to the docs for some common Git Repositories
 
-[github](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+[GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
 
-[gitlab](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
+[GitLab](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
 
-[bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
+[Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
 
 ### Login With Password
-Login with password is a username and password/access token combination that can be used to do the following
-* authenticate to remote hosts although this is less secure than using ssh keys
-* sudo credentials on remote hosts
-* authenticate to remote git repos over HTTPS although SSH is more secure 
-* unlock ansible vaults
+Login With Password is a username and password/access token combination that can be used to do the following:
+* Authenticate to remote hosts (although this is less secure than using SSH keys)
+* Sudo credentials on remote hosts
+* Authenticate to remote Git Repos over HTTPS (although SSH is more secure)
+* Unlock Ansible vaults
 
 ### Personal Access Token
 
 ### None
-This is used as a filler for repos that do not require authenstication like an open source repo on gitlab.
+This is used as a filler for Repos that do not require authentication like an Open-Source Repo on GitLab.
