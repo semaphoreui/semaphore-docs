@@ -121,39 +121,64 @@ Semaphore will be available by URL [https://localhost:3000](https://localhost:30
 &#x20;Create file `docker-compose.yml` with following content:
 
 ```yaml
-version: '2'
-
 services:
-
+  # uncommenct this section and comment out the mysql section to use postgres instead of mysql
+  #postgres:
+    #restart: unless-stopped
+    #ports:
+      #- 5432:5432
+    #image: postgres:14
+    #hostname: postgres
+    #volumes: 
+    #  - semaphore-postgres:/var/lib/postgresql/data
+    #environment:
+    #  POSTGRES_USER: semaphore
+    #  POSTGRES_PASSWORD: semaphore
+    #  POSTGRES_DATABASE: semaphore
+  # comment this section out if you wish to use postgres
   mysql:
+    restart: unless-stopped
     ports:
       - 3306:3306
-    image: mysql:5.6
+    image: mysql:8.0
     hostname: mysql
+    volumes:
+      - semaphore-mysql:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
       MYSQL_DATABASE: semaphore
       MYSQL_USER: semaphore
       MYSQL_PASSWORD: semaphore
-
   semaphore:
+    restart: unless-stopped
     ports:
       - 3000:3000
     image: ansiblesemaphore/semaphore:latest
     environment:
       SEMAPHORE_DB_USER: semaphore
       SEMAPHORE_DB_PASS: semaphore
-      SEMAPHORE_DB_HOST: mysql
-      SEMAPHORE_DB_PORT: 3306
-      SEMAPHORE_DB: semaphore
+      SEMAPHORE_DB_HOST: mysql #change to postgres for postgres
+      SEMAPHORE_DB_PORT: 3306 # change to 5432 for postgres
+      SEMAPHORE_DB_DIALECT: mysql
+      SEMAPHORE_DB: semaphore # change to semaphore?sslmode=disable for postgres
       SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
-      SEMAPHORE_ADMIN_PASSWORD: cangetin
+      SEMAPHORE_ADMIN_PASSWORD: changeme
       SEMAPHORE_ADMIN_NAME: admin
       SEMAPHORE_ADMIN_EMAIL: admin@localhost
       SEMAPHORE_ADMIN: admin
       SEMAPHORE_ACCESS_KEY_ENCRYPTION: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
+      SEMAPHORE_LDAP_ACTIVATED: 'no' # set to yes if you wish to use ldap
+      SEMAPHORE_LDAP_HOST: dc01.local.example.com
+      SEMAPHORE_LDAP_PORT: '636'
+      SEMAPHORE_LDAP_NEEDTLS: 'yes'
+      SEMAPHORE_LDAP_DN_BIND: 'uid=bind_user,cn=users,cn=accounts,dc=local,dc=shiftsystems,dc=net'
+      SEMAPHORE_LDAP_PASSWORD: 'ldap_bind_account_password'
+      SEMAPHORE_LDAP_DN_SEARCH: 'dc=local,dc=example,dc=com'
+      SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
     depends_on:
-      - mysql
+      - mysql #change to postgres for postgres
+volumes:
+  semaphore-mysql: #switch to semaphore-postgres to use postgres
 ```
 
 You must specify following confidential variables:
