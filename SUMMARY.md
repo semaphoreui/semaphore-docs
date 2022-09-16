@@ -11,6 +11,7 @@
 * [CLI](administration-guide/cli.md)
 * [API](administration-guide/api.md)
 * [Build and deploy](administration-guide/build-and-deploy.md)
+* [Troubleshooting](administration-guide/troubleshooting.md)
 
 ## User Guide
 
