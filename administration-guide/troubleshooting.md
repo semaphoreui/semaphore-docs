@@ -2,7 +2,7 @@
 
 ## Gathering Facts issue for localhost
 
-The issue can occur on Ansible Semaphore which installed via Snap or Docker.
+The issue can occur on Ansible Semaphore which installed via **Snap** or **Docker**.
 
 ```
 4:10:16 PM

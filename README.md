@@ -31,7 +31,7 @@ Source code: [https://github.com/ansible-semaphore/semaphore](https://github.com
 
 Issue tracking: [https://github.com/ansible-semaphore/semaphore/issues](https://github.com/ansible-semaphore/semaphore/issues).
 
-Docker: [https://hub.docker.com/r/ansiblesemaphore/semaphore](https://hub.docker.com/r/ansiblesemaphore/semaphore).
+Docker: [https://hub.docker.com/r/semaphoreui/semaphore](https://hub.docker.com/r/semaphoreui/semaphore).
 
 Snap: [https://snapcraft.io/semaphore](https://snapcraft.io/semaphore).
 
