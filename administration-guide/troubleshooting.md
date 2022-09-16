@@ -13,7 +13,7 @@ fatal: [localhost]: FAILED! => changed=false
 
 ### Why it happens
 
-More information for localhost in Ansible read in article [Implicit 'localhost'](https://docs.ansible.com/ansible/latest/inventory/implicit_localhost.html).
+More information about localhost in Ansible read in article [Implicit 'localhost'](https://docs.ansible.com/ansible/latest/inventory/implicit_localhost.html).
 
 Ansible tries to gathering facts locally, but Ansible localed in limited isolated container which doesn't allow this.
 
