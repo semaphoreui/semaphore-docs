@@ -35,4 +35,4 @@ Docker: [https://hub.docker.com/r/semaphoreui/semaphore](https://hub.docker.com/
 
 Snap: [https://snapcraft.io/semaphore](https://snapcraft.io/semaphore).
 
-Contact: [denis@ansible-semaphore.com](mailto:denis@ansible-semaphore.com)
+Contact: [denis@ansible-semaphore.com](mailto:denis@fastlix.com)
