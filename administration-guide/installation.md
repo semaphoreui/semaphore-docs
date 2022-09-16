@@ -153,7 +153,7 @@ services:
     restart: unless-stopped
     ports:
       - 3000:3000
-    image: ansiblesemaphore/semaphore:latest
+    image: semaphoreui/semaphore:latest
     environment:
       SEMAPHORE_DB_USER: semaphore
       SEMAPHORE_DB_PASS: semaphore
