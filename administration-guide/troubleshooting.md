@@ -35,3 +35,18 @@ There are two ways:
 [localhost]
 127.0.0.1 ansible_connection=ssh ansible_ssh_user=your_localhost_user
 ```
+
+
+
+## fatal: bad numeric config value '0' for 'GIT_TERMINAL_PROMPT': invalid unit
+
+This means that you are trying to access a repository over HTTPS that requires authentication.
+
+### How to fix
+
+* Go to **Key Store** screen.
+* Create new key with type `Login with password`.
+* Specify your login for GitHub/BitBucket/etc.
+* Specify the password. You can't use your account password for GitHub/BitBucket, you should use Personal Access Token (PAT) instead of it. Read more [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+* After creating the key, go to **Repositories** screen, find your repository and specify the key.
+
