@@ -64,5 +64,5 @@ http://localhost:3000/api/user/tokens/YOUR_ACCESS_TOKEN
 ### API documentation
 
 {% hint style="info" %}
-Full API documentation is available in [API reference](https://ansible-semaphore.com/api).
+Full API documentation is available in [API reference](https://ansible-semaphore.com/api-docs).
 {% endhint %}
