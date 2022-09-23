@@ -113,6 +113,8 @@ Semaphore uses `config.json` configuration file with following content:
 | `email_sender`          | `email-sender`          |                                                                                                                                             |
 | `email_host`            | `email-host`            |                                                                                                                                             |
 | `email_port`            | `email-port`            |                                                                                                                                             |
+| `email_username`            | `email-username`            |                                                                                                                                             |
+| `email_password`            | `email-password`            |                                                                                                                                             |
 | `web_host`              | `web-host`              | Can be useful if you want to use Semaphore by the subpath, for example: [http://yourdomain.com/semaphore](http://yourdomain.com/semaphore). |
 | `ldap_binddn`           | `ldap-binddn`           |                                                                                                                                             |
 | `ldap_bindpassword`     | `ldap-bindpassword`     |                                                                                                                                             |
