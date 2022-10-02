@@ -10,7 +10,7 @@
 * [Security](administration-guide/security.md)
 * [CLI](administration-guide/cli.md)
 * [API](administration-guide/api.md)
-* [CI/CD](administration-guide/build-and-deploy.md)
+* [CI/CD](administration-guide/cicd.md)
 * [Troubleshooting](administration-guide/troubleshooting.md)
 
 ## User Guide
