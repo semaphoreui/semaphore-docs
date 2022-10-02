@@ -87,6 +87,7 @@ Semaphore uses `config.json` configuration file with following content:
   "max_parallel_tasks": 0,
   "email_alert": false,
   "telegram_alert": false,
+  "slack_alert": false,
   "ldap_enable": false,
   "ldap_needtls": false
 }
@@ -110,12 +111,18 @@ Semaphore uses `config.json` configuration file with following content:
 | `interface`             | `interface`             | Useful if your server has multiple network interfaces                                                                                       |
 | `tmp_path`              | —                       | Path to directory where cloned repositories and generated files are stored. Deafult: /tmp/semaphore |
 | `access_key_encryption` | `access-key-encryption` | Secret key used for encypting access keys in datatabase. Read more in [Database encryption reference](https://docs.ansible-semaphore.com/administration-guide/security#database-encryption). |
+| `web_host`              | `web-host`              | Can be useful if you want to use Semaphore by the subpath, for example: [http://yourdomain.com/semaphore](http://yourdomain.com/semaphore). |
 | `email_sender`          | `email-sender`          |                                                                                                                                             |
 | `email_host`            | `email-host`            |                                                                                                                                             |
 | `email_port`            | `email-port`            |                                                                                                                                             |
-| `email_username`            | `email-username`            |                                                                                                                                             |
-| `email_password`            | `email-password`            |                                                                                                                                             |
-| `web_host`              | `web-host`              | Can be useful if you want to use Semaphore by the subpath, for example: [http://yourdomain.com/semaphore](http://yourdomain.com/semaphore). |
+| `email_secure`          | `email-secure`          |                                                                                                                                             |
+| `email_username`        | `email-username`        |                                                                                                                                             |
+| `email_password`        | `email-password`        |                                                                                                                                             |
+| `email_alert`           | `email-alert`           |                                                                                                                                             |
+| `telegram_alert`        | `telegram-alert`        |                                                                                                                                             |
+| `slack_alert`           | `slack-alert`           |                                                                                                                                             |
+| `ldap_enable`           | `ldap-enable`           |                                                                                                                                             |
+| `ldap_needtls`          | `ldap-needtls`          |                                                                                                                                             |
 | `ldap_binddn`           | `ldap-binddn`           |                                                                                                                                             |
 | `ldap_bindpassword`     | `ldap-bindpassword`     |                                                                                                                                             |
 | `ldap_server`           | `ldap-server`           |                                                                                                                                             |

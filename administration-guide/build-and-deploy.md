@@ -1,4 +1,4 @@
-# Build and deploy
+# CI/CD
 
 Semaphore supports `build` and `deploy` tasks. 
 

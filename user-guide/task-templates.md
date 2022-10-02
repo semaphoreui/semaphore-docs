@@ -28,7 +28,7 @@ This type of template should be used to create [artifacts](https://en.wikipedia.
 
 ![](<../.gitbook/assets/template\_new\_build\_ipad (1).png>)
 
-Semaphore doesn't support artifacts out-of-box, it only provides task versioning. You should implement artifact creation yourself. Read the article [Build and deploy](../administration-guide/build-and-deploy.md) to know how to do this.
+Semaphore doesn't support artifacts out-of-box, it only provides task versioning. You should implement artifact creation yourself. Read the article [CI/CD](../administration-guide/build-and-deploy.md) to know how to do this.
 
 ### Deploy
 
