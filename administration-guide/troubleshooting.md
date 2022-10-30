@@ -57,7 +57,7 @@ Most likely, you are trying to connect to the LDAP server using an insecure meth
 
 ### How to fix
 
-Enable TSL in your `config.json`:
+Enable TLS in your `config.json`:
 
 ```json
 ...
