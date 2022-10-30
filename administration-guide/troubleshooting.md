@@ -50,3 +50,17 @@ This means that you are trying to access a repository over HTTPS that requires a
 * Specify the password. You can't use your account password for GitHub/BitBucket, you should use Personal Access Token (PAT) instead of it. Read more [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 * After creating the key, go to **Repositories** screen, find your repository and specify the key.
 
+
+## unable to read LDAP response packet: unexpected EOF
+
+Most likely, you are trying to connect to the LDAP server using an insecure method, although it expects a secure connection (via TLS).
+
+### How to fix
+
+Enable TSL in your `config.json`:
+
+```json
+...
+"ldap_needtls": true
+...
+```
