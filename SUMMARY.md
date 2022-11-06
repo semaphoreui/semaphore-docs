@@ -9,6 +9,7 @@
 * [Upgrading](administration-guide/upgrading.md)
 * [Security](administration-guide/security.md)
 * [CLI](administration-guide/cli.md)
+* [LDAP](administration-guide/ldap.md)
 * [API](administration-guide/api.md)
 * [CI/CD](administration-guide/cicd.md)
 * [Troubleshooting](administration-guide/troubleshooting.md)

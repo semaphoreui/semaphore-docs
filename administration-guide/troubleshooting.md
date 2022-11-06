@@ -64,3 +64,29 @@ Enable TLS in your `config.json`:
 "ldap_needtls": true
 ...
 ```
+
+## LDAP Result Code 49 "Invalid Credentials"
+
+You have wrong password or `binddn`.
+
+### How to fix
+
+Use `ldapwhoami` tool and check if your binddn works:
+
+```
+ldapwhoami\
+  -H ldap://ldap.com:389\
+  -D "CN=/your/ldap_binddn/value/in/config/file"\
+  -x\
+  -W
+```
+
+It will ask interactively for the password and should return code **0** and echo out the **DN** as specified.
+
+You also can read following articles: 
+* https://serverfault.com/q/771549/443463
+* https://github.com/ansible-semaphore/semaphore/issues/906
+
+## LDAP Result Code 32 "No Such Object"
+
+Coming soon.
