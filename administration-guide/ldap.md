@@ -40,4 +40,6 @@ ldapwhoami\
 
 It will ask interactively for the password and should return code **0** and echo out the **DN** as specified.
 
+{% hint style="info" %}
 Please read [Troubleshooting](https://docs.ansible-semaphore.com/administration-guide/troubleshooting#unable-to-read-ldap-response-packet-unexpected-eof) section if you have issues with LDAP.
+{% endhint %}
