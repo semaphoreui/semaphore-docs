@@ -19,7 +19,7 @@ Below are links to the docs for some common Git Repositories
 
 [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
 
-[GitLab](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
+[GitLab](https://docs.gitlab.com/ee/user/ssh.html)
 
 [Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
 
