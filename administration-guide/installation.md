@@ -122,7 +122,7 @@ Semaphore will be available by URL [https://localhost:3000](https://localhost:30
 
 ```yaml
 services:
-  # uncommenct this section and comment out the mysql section to use postgres instead of mysql
+  # uncomment this section and comment out the mysql section to use postgres instead of mysql
   #postgres:
     #restart: unless-stopped
     #ports:
