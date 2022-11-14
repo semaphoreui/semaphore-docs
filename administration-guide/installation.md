@@ -134,7 +134,7 @@ services:
     #environment:
     #  POSTGRES_USER: semaphore
     #  POSTGRES_PASSWORD: semaphore
-    #  POSTGRES_DATABASE: semaphore
+    #  POSTGRES_DB: semaphore
   # comment this section out if you wish to use postgres
   mysql:
     restart: unless-stopped
