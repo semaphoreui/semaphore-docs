@@ -4,7 +4,12 @@ description: Shortly about Ansible Semaphore
 
 # Introduction
 
+Do you like Ansible Semaphore? Support the project development on Ko-fi.
+
+[![](https://storage.ko-fi.com/cdn/generated/rsi79788u/rest-f158b65a35c69ae5f97c2312cbe10c46-nftfob77.jpg)](https://ko-fi.com/fiftin)
+
 Semaphore is a responsive web UI for running Ansible playbooks.
+
 
 ![](<.gitbook/assets/image (3).png>)
 
@@ -14,7 +19,7 @@ Semaphore supports the following databases:
 
 * MySQL
 * PostgreSQL
-* [BoltDB ](https://github.com/etcd-io/bbolt)– embedded key/value database
+* [BoltDB](https://github.com/etcd-io/bbolt) – embedded key/value database
 
 Using Semaphore you can:
 
