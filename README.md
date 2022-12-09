@@ -23,7 +23,7 @@ Semaphore supports the following databases:
 * PostgreSQL
 * [BoltDB](https://github.com/etcd-io/bbolt) – embedded key/value database
 
-Using Semaphore you can:
+With Semaphore you can:
 
 * [Build, deploy and rollback](administration-guide/cicd.md)
 * Group playbooks to projects
