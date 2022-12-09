@@ -5,7 +5,7 @@ description: Command line interface documentation
 # CLI
 
 {% hint style="info" %}
-For Semaphore installed via Snap you should use `sudo` for using CLI. This is completely safe because Semaphore working in a [strict mode](https://snapcraft.io/docs/snap-confinement).
+For Semaphore installed via Snap you should use `sudo` for using CLI. This is completely safe because Semaphore works in a [strict mode](https://snapcraft.io/docs/snap-confinement).
 {% endhint %}
 
 ### Version
@@ -28,9 +28,9 @@ semaphore setup
 
 ### User management
 
-Using CLI you can add, remote or change user.
+Using CLI you can add, remove or change user.
 
 ```
-sempahore user --help
+semaphore user --help
 ```
 

@@ -1,5 +1,5 @@
 ---
-description: Shortly about Ansible Semaphore
+description: Short intro about Ansible Semaphore
 ---
 
 # Introduction
@@ -15,7 +15,7 @@ Semaphore is a responsive web UI for running Ansible playbooks.
 
 ![](<.gitbook/assets/image (3).png>)
 
-Semaphore written in pure Go and available for Windows, macOS and Linux (x64, ARM, ARM64). Semaphore is an open-source project with concise and high-quality code.
+Semaphore is written in pure Go and available for Windows, macOS and Linux (x64, ARM, ARM64). Semaphore is an open-source project with concise and high-quality code.
 
 Semaphore supports the following databases:
 
@@ -28,10 +28,10 @@ Using Semaphore you can:
 * [Build, deploy and rollback](administration-guide/cicd.md)
 * Group playbooks to projects
 * Manage environments, inventories, repositories and access keys
-* Run playbooks from the browser. Responsive UI allows using Semaphore on mobile devices
+* Run playbooks from the browser. Responsive UI allows the use of Semaphore on mobile devices
 * Run playbooks by schedule
-* View detailed logs of any runs at any time
-* Grant other users for running playbooks
+* View detailed logs of any playbook runs, at any time
+* Delegate other users the running of playbooks
 * Get notifications about playbook runs
 
 Source code: [https://github.com/ansible-semaphore/semaphore](https://github.com/ansible-semaphore/semaphore).
