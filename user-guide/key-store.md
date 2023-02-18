@@ -1,6 +1,6 @@
 # Key Store
 
-The Key Store in Semaphore is used to store credentials for acessing remote Repositories, accessing remote hosts, sudo credentials, and Ansible vault passwords.
+The Key Store in Semaphore is used to store credentials for accessing remote Repositories, accessing remote hosts, sudo credentials, and Ansible vault passwords.
 
 It is helpful to have configured all required access keys before setting up other resources like Inventories, Repositories, and tasks templates so you do not have to edit them later.
 
