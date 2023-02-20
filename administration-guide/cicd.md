@@ -4,7 +4,7 @@ Semaphore supports `build` and `deploy` tasks.
 
 Semaphore passes `semaphore_vars` variable to each Ansible playbook which it runs.
 
-You can use it in your Ansible tasks to get what type of task is run, which version should be build or deployed, who run the task, etc.
+You can use it in your Ansible tasks to get what type of task was run, which version should be build or deployed, who ran the task, etc.
 
 Example of `semaphore_vars` for `build` tasks:
 
@@ -13,7 +13,7 @@ semaphore_vars:
     task_details:
         type: build
         username: user123
-        message: New verion of some feature
+        message: New version of some feature
         target_version: 1.5.33
 ```
 
@@ -37,8 +37,8 @@ Example of `build` Ansible role:
 
 1. Get app source code from GitHub
 2. Compile source code
-3. Pack result binary to tarball with name `app-{{semaphore_vars.task_details.target_version}}.tar.gz`
-4. Send `app-{{semaphore_vars.task_details.target_version}}.tar.gz` to S3 bucket
+3. Pack created binary to a tarball with name `app-{{semaphore_vars.task_details.target_version}}.tar.gz`
+4. Send `app-{{semaphore_vars.task_details.target_version}}.tar.gz` to an S3 bucket
 {% endhint %}
 
 ### Deploy
@@ -48,7 +48,7 @@ This type of task is used to deploy artifacts to destination servers. Each deplo
 {% hint style="info" %}
 Example of `deploy` Ansible role:
 
-1. Download `app-{{semaphore_vars.task_details.incoming_version}}.tar.gz` from S3 bucket to destination servers
+1. Download `app-{{semaphore_vars.task_details.incoming_version}}.tar.gz` from an S3 bucket to destination servers
 2. Unpack `app-{{semaphore_vars.task_details.incoming_version}}.tar.gz` to destination directory
 3. Create or update configuration files
 4. Restart app service

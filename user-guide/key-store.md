@@ -1,6 +1,6 @@
 # Key Store
 
-The Key Store in Semaphore is used to store credentials for acessing remote Repositories, accessing remote hosts, sudo credentials, and Ansible vault passwords.
+The Key Store in Semaphore is used to store credentials for accessing remote Repositories, accessing remote hosts, sudo credentials, and Ansible vault passwords.
 
 It is helpful to have configured all required access keys before setting up other resources like Inventories, Repositories, and tasks templates so you do not have to edit them later.
 
@@ -9,7 +9,7 @@ It is helpful to have configured all required access keys before setting up othe
 ### SSH
 SSH Keys are used to access remote servers as well as remote Repositories.
 
-At this time, semaphore does support using SSH keys that are password protected.
+At this time, semaphore does not support using SSH keys that are password protected.
 
 If you need assistance quickly generating a key and placing it on your host, [here is a quick guide.](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
 
@@ -27,10 +27,10 @@ Below are links to the docs for some common Git Repositories
 Login With Password is a username and password/access token combination that can be used to do the following:
 * Authenticate to remote hosts (although this is less secure than using SSH keys)
 * Sudo credentials on remote hosts
-* Authenticate to remote Git Repos over HTTPS (although SSH is more secure)
+* Authenticate to remote Git Repositories over HTTPS (although SSH is more secure)
 * Unlock Ansible vaults
 
 ### Personal Access Token
 
 ### None
-This is used as a filler for Repos that do not require authentication like an Open-Source Repo on GitLab.
+This is used as a filler for Repos that do not require authentication, like an Open-Source Repository on GitLab.

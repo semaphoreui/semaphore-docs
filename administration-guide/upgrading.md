@@ -1,6 +1,6 @@
 # Upgrading
 
-There are 4 ways for upgraging Semaphore:
+There are 4 ways for upgrading Semaphore:
 
 * Snap
 * Package manager
@@ -17,7 +17,7 @@ sudo snap refresh semaphore
 
 ### Package manager
 
-Download package file from [Releases page](https://github.com/ansible-semaphore/semaphore/releases).
+Download a package file from [Releases page](https://github.com/ansible-semaphore/semaphore/releases).
 
 &#x20;`*.deb` for Debian and Ubuntu, `*.rpm` for CentOS and RedHat.&#x20;
 
@@ -69,7 +69,7 @@ Coming soon
 
 ### Binary
 
-Download `*.tar.gz` for your platform from [Releases page](https://github.com/ansible-semaphore/semaphore/releases). Unpack binary to the directory where your old Semaphore binary is located.
+Download a `*.tar.gz` for your platform from [Releases page](https://github.com/ansible-semaphore/semaphore/releases). Unpack the binary to the directory where your old Semaphore binary is located.
 
 {% tabs %}
 {% tab title="Linux (x64)" %}

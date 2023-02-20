@@ -1,6 +1,6 @@
 # Task Templates
 
-Template defines how to run Ansible Playbook. The template allows you to specify the following parameters:
+Templates define how to run an Ansible Playbook. The template allows you to specify the following parameters:
 
 * Playbook repository&#x20;
 * Playbook filename
@@ -24,15 +24,15 @@ Just runs specified playbooks with specified parameters.
 
 ### Build
 
-This type of template should be used to create [artifacts](https://en.wikipedia.org/wiki/Artifact\_\(software\_development\)). The start version of the artifact can be specified in template parameters. Each run increments the artifact version.
+This type of template should be used to create [artifacts](https://en.wikipedia.org/wiki/Artifact\_\(software\_development\)). The start version of the artifact can be specified in a template parameter. Each run increments the artifact version.
 
 ![](<../.gitbook/assets/template\_new\_build\_ipad (1).png>)
 
-Semaphore doesn't support artifacts out-of-box, it only provides task versioning. You should implement artifact creation yourself. Read the article [CI/CD](../administration-guide/cicd.md) to know how to do this.
+Semaphore doesn't support artifacts out-of-box, it only provides task versioning. You should implement the artifact creation yourself. Read the article [CI/CD](../administration-guide/cicd.md) to know how to do this.
 
 ### Deploy
 
-This type of template should be used to deploy artifacts to destination servers. Each `deploy` template associated with the `build` template.
+This type of template should be used to deploy artifacts to the destination servers. Each `deploy` template is associated with a `build` template.
 
 ![](../.gitbook/assets/template\_new\_deploy\_ipad.png)
 

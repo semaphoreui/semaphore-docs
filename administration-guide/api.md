@@ -1,6 +1,6 @@
 # API
 
-### How to use Semaphore API
+### How to use the Semaphore API
 
 Login to Semaphore (password should be escaped, `slashy\\pass` instead of `slashy\pass` e.g.):
 
@@ -12,7 +12,7 @@ curl -v -c /tmp/semaphore-cookie -XPOST \
 http://localhost:3000/api/auth/login
 ```
 
-Get user tokens:
+Get a user tokens:
 
 ```
 curl -v -b /tmp/semaphore-cookie \
@@ -21,7 +21,7 @@ curl -v -b /tmp/semaphore-cookie \
 http://localhost:3000/api/user/tokens
 ```
 
-Generate a new token if user had no one and get tokens again:
+Generate a new token, and get the new token:
 
 ```
 curl -v -b /tmp/semaphore-cookie -XPOST \
@@ -36,7 +36,7 @@ curl -v -b /tmp/semaphore-cookie \
 http://localhost:3000/api/user/tokens
 ```
 
-Should be returned something like:
+The command should return something similar to:
 
 `[{"id":"`**`YOUR_ACCESS_TOKEN`**`","created":"2017-03-11T13:13:13Z","expired":false,"user_id":1}]`
 
@@ -51,7 +51,7 @@ curl -v -XPOST \
 http://localhost:3000/api/project/1/tasks
 ```
 
-Expire token:
+Expire a token:
 
 ```
 curl -v -XDELETE \
