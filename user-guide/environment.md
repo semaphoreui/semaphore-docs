@@ -13,7 +13,7 @@ All task templates require an environment to be defined even if it is empty.
 
 ## Deleting the Environment
 Before you remove an Environment, you must remove all resources tied to it.
-If you are not sure which resources are being used in an environment, follow steps 1 and 2 below and it will show you which resources are using it with links to those resources.
+If you are not sure which resources are being used in an environment, follow steps 1 and 2 below. It will show you which resources are being used, with links to those resources.
 
 1. Click on the Environment
 2. Click the trash can icon next to the Environment

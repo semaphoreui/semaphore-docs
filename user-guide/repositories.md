@@ -2,7 +2,10 @@
 
 A Repository is a place to store and manage Ansible content like playbooks and roles.
 
-Semaphore understands Repositories that are a local Git Repository (git://), a local folder (file://), or a remote Git Repository that is accessed over HTTPS (https://) or SSH(ssh://).
+Semaphore understands Repositories that are:
+  * a local Git Repository (git://)
+  * a local file system (file://)
+  * a remote Git Repository that is accessed over HTTPS (https://), or SSH(ssh://)
 
 All Task Templates require a Repository in order to run.
 
@@ -23,13 +26,13 @@ For Remote Repositories that do not have authentication, you can create a Key wi
     * ssh:// for a remote Git Repository accessed over SSH
     * file:// for a local folder on the file system
     * git:// for a local Git Repository
-  * Set the branch of the Repository if you are not sure what it should be, it is probably master or main
+  * Set the branch of the Repository, if you are not sure what it should be, it is probably master or main
   * Select the Access Key you configured prior to setting up this Repository
 4. Click Save once everything is configured
 
 ## Editing an Existing Repository
 1. Go to the Repositories section of Semaphore
-2. Click on the pencil icon next to the Repository you wish to change, then you will be presented with the same option from you created the Repository
+2. Click on the pencil icon next to the Repository you wish to change, then you will be presented with the Repository configuration
 
 ## Deleting a Repository
 Make sure the Repository that is about to be delete is not in use by any Task Templates.

@@ -2,7 +2,7 @@
 
 ## Gathering Facts issue for localhost
 
-The issue can occur on Ansible Semaphore which installed via [Snap](https://snapcraft.io/semaphore) or [Docker](https://hub.docker.com/r/semaphoreui/semaphore).
+The issue can occur on Ansible Semaphore installed via [Snap](https://snapcraft.io/semaphore) or [Docker](https://hub.docker.com/r/semaphoreui/semaphore).
 
 ```
 4:10:16 PM
@@ -11,13 +11,13 @@ TASK [Gathering Facts] *********************************************************
 fatal: [localhost]: FAILED! => changed=false
 ```
 
-### Why it happens
+### Why this happens
 
-More information about localhost in Ansible read in article [Implicit 'localhost'](https://docs.ansible.com/ansible/latest/inventory/implicit_localhost.html).
+For more information about localhost use in Ansible, read in article [Implicit 'localhost'](https://docs.ansible.com/ansible/latest/inventory/implicit_localhost.html).
 
-Ansible tries to gathering facts locally, but Ansible localed in limited isolated container which doesn't allow this.
+Ansible tries to gather facts locally, but Ansible is located in limited isolated container which doesn't allow this.
 
-### How to fix
+### How to fix this
 
 There are two ways:
 
@@ -30,7 +30,7 @@ There are two ways:
     - ...
 ```
 
-2. Explicit set conneciton type to **ssh**:
+2. Explicitly set connection type to **ssh**:
 ```
 [localhost]
 127.0.0.1 ansible_connection=ssh ansible_ssh_user=your_localhost_user
@@ -42,22 +42,22 @@ There are two ways:
 
 This means that you are trying to access a repository over HTTPS that requires authentication.
 
-### How to fix
+### How to fix this
 
 * Go to **Key Store** screen.
-* Create new key with type `Login with password`.
+* Create a new key `Login with password` type.
 * Specify your login for GitHub/BitBucket/etc.
-* Specify the password. You can't use your account password for GitHub/BitBucket, you should use Personal Access Token (PAT) instead of it. Read more [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
-* After creating the key, go to **Repositories** screen, find your repository and specify the key.
+* Specify the password. You can't use your account password for GitHub/BitBucket, you should use a Personal Access Token (PAT) instead of it. Read more [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+* After creating the key, go to the **Repositories** screen, find your repository and specify the key.
 
 
 ## unable to read LDAP response packet: unexpected EOF
 
 Most likely, you are trying to connect to the LDAP server using an insecure method, although it expects a secure connection (via TLS).
 
-### How to fix
+### How to fix this
 
-Enable TLS in your `config.json`:
+Enable TLS in your `config.json` file:
 
 ```json
 ...
@@ -67,9 +67,9 @@ Enable TLS in your `config.json`:
 
 ## LDAP Result Code 49 "Invalid Credentials"
 
-You have wrong password or `binddn`.
+You have the wrong password or `binddn`.
 
-### How to fix
+### How to fix this
 
 Use `ldapwhoami` tool and check if your binddn works:
 
@@ -83,7 +83,7 @@ ldapwhoami\
 
 It will ask interactively for the password and should return code **0** and echo out the **DN** as specified.
 
-You also can read following articles: 
+You also can read the following articles: 
 * [ldapsearch: Invalid credentials (49)](https://serverfault.com/q/771549/443463)
 * [https://github.com/ansible-semaphore/semaphore/issues/906](https://github.com/ansible-semaphore/semaphore/issues/906)
 

@@ -8,21 +8,21 @@ There are 3 ways to configure Semaphore:
 
 ### Snap configuration
 
-Snap configuration should be used for configuration Semaphore installed via Snap.
+Snap configurations should be used for when Semaphore was installed via Snap.
 
-List of available option you can see by following command:
+To see a list of available options, use the following command:
 
 ```bash
 sudo snap get semaphore
 ```
 
-You can change each of this option. For example if you want to change Semaphore port, use following command:
+You can change each of these configurations. For example if you want to change Semaphore port, use following command:
 
 ```bash
 sudo snap set semaphore port=4444
 ```
 
-Don't forget to restart Semaphore after that:
+Don't forget to restart Semaphore after changing a configuration:
 
 ```bash
 sudo snap restart semaphore
@@ -38,7 +38,7 @@ semaphore setup
 
 ### Configuration file
 
-Semaphore uses `config.json` configuration file with following content:
+Semaphore uses a `config.json` configuration file with following content:
 
 ```javascript
 {
@@ -99,18 +99,18 @@ Semaphore uses `config.json` configuration file with following content:
 | ----------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `bolt.host`             | —                       | Path to the BoltDB database file                                                                                                            |
 | `mysql.host`            | `mysql.host`            | MySQL database host                                                                                                                         |
-| `mysql.name`            | `mysql.name`            | MySQL database (schama) name                                                                                                                |
-| `mysql.user`            | `mysql.user`            | MySQL user                                                                                                                                  |
+| `mysql.name`            | `mysql.name`            | MySQL database (schema) name                                                                                                                |
+| `mysql.user`            | `mysql.user`            | MySQL user name                                                                                                                                 |
 | `mysql.pass`            | `mysql.pass`            | MySQL user's password                                                                                                                       |
 | `postgres.host`         | `postgres.host`         | Postgres database host                                                                                                                      |
-| `postgres.name`         | `postgres.name`         | Postgres database (schama) name                                                                                                             |
-| `postgres.user`         | `postgres.user`         | Postgres user                                                                                                                               |
+| `postgres.name`         | `postgres.name`         | Postgres database (schema) name                                                                                                             |
+| `postgres.user`         | `postgres.user`         | Postgres user name                                                                                                                               |
 | `postgres.pass`         | `postgres.pass`         | Postgres user's password                                                                                                                    |
 | `dialect`               | `dialect`               | Can be `mysql`, `postgres `or `bolt`                                                                                                        |
-| `port`                  | `port`                  | TCP port on which the web interface will be available. Defalt: 3000 |
+| `port`                  | `port`                  | TCP port on which the web interface will be available. Default: 3000 |
 | `interface`             | `interface`             | Useful if your server has multiple network interfaces                                                                                       |
-| `tmp_path`              | —                       | Path to directory where cloned repositories and generated files are stored. Deafult: /tmp/semaphore |
-| `access_key_encryption` | `access-key-encryption` | Secret key used for encypting access keys in datatabase. Read more in [Database encryption reference](https://docs.ansible-semaphore.com/administration-guide/security#database-encryption). |
+| `tmp_path`              | —                       | Path to directory where cloned repositories and generated files are stored. Default: /tmp/semaphore |
+| `access_key_encryption` | `access-key-encryption` | Secret key used for encrypting access keys in database. Read more in [Database encryption reference](https://docs.ansible-semaphore.com/administration-guide/security#database-encryption). |
 | `web_host`              | `web-host`              | Can be useful if you want to use Semaphore by the subpath, for example: [http://yourdomain.com/semaphore](http://yourdomain.com/semaphore). |
 | `email_sender`          | `email-sender`          |                                                                                                                                             |
 | `email_host`            | `email-host`            |                                                                                                                                             |
