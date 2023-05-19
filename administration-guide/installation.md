@@ -55,7 +55,7 @@ sudo snap get semaphore
 ### Package manager
 
 {% hint style="info" %}
-Python, Ansible and Git should be installed on your system.
+Python, Ansible, Git and one of the following databases MySQL, BoltDB, or PostgreSQL should be installed on your system.
 {% endhint %}
 
 Download package file from [Releases page](https://github.com/ansible-semaphore/semaphore/releases).
@@ -201,7 +201,7 @@ For more information about the Docker Compose, see the [Docker Compose reference
 ### Binary file
 
 {% hint style="info" %}
-Python, Ansible and Git should be installed on your system.
+Python, Ansible, Git and one of the following databases MySQL, BoltDB, or PostgreSQL should be installed on your system.
 {% endhint %}
 
 Download the `*.tar.gz` for your platform from [Releases page](https://github.com/ansible-semaphore/semaphore/releases). Unpack it and setup Semaphore using the following commands:
