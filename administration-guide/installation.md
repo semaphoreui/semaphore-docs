@@ -125,8 +125,6 @@ services:
   # uncomment this section and comment out the mysql section to use postgres instead of mysql
   #postgres:
     #restart: unless-stopped
-    #ports:
-      #- 5432:5432
     #image: postgres:14
     #hostname: postgres
     #volumes: 
@@ -138,8 +136,6 @@ services:
   # if you wish to use postgres, comment the mysql service section below 
   mysql:
     restart: unless-stopped
-    ports:
-      - 3306:3306
     image: mysql:8.0
     hostname: mysql
     volumes:
