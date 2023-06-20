@@ -190,7 +190,7 @@ Run the following command to start Semaphore with configured database (MySQL or 
 docker-compose up
 ```
 
-&#x20;Semaphore will be available via the following URL [https://localhost:3000](https://localhost:3000).
+&#x20;Semaphore will be available via the following URL [http://localhost:3000](http://localhost:3000).
 
 For more information about the Docker Compose, see the [Docker Compose reference](https://docs.docker.com/compose/).
 
