@@ -83,9 +83,70 @@ ldapwhoami\
 
 It will ask interactively for the password and should return code **0** and echo out the **DN** as specified.
 
+If the check fails - you can enable debug output using the `-V -d1` flags.
+
 You also can read the following articles: 
 * [ldapsearch: Invalid credentials (49)](https://serverfault.com/q/771549/443463)
 * [https://github.com/ansible-semaphore/semaphore/issues/906](https://github.com/ansible-semaphore/semaphore/issues/906)
+
+
+## LDAP Result Code 2 "Protocol error"
+
+The 'protocol error' can have multiple reasons.
+
+### Reason: WhoAmI action not supported
+
+#### Why this happens
+
+After authenticating the LDAP user, a [WhoAmI](https://www.rfc-editor.org/rfc/rfc4532.html) action is performed to make sure we are in the session of the authenticated user.
+
+Some LDAP Provider do not support this extended LDAP Operation!
+
+Affected Providers include:
+
+* Google LDAP
+* lldap
+* Samba
+* GLAuth
+* outpost
+
+#### Testing support
+
+You can check your LDAP Provider for this issue using `ldapwhoami`:
+
+```
+ldapwhoami\
+  -H ldap://ldap.com:389\
+  -D "CN=/your/ldap_binddn/value/in/config/file"\
+  -x\
+  -W\
+  -V\
+  -d1
+```
+
+You should see that the connection and bind was successful, but the whoami-action failed:
+
+```
+connect success
+...
+ldap_bind: Success (0)
+        additional info: Valid access code
+...
+request done: ld 0x55667aa11a40 msgid 2
+res_errno: 2, res_error: <>, res_matched: <>
+...
+ldap_parse_result: Protocol error (2)
+```
+
+#### How to fix this
+
+Disable the WhoAmI-Check in your `config.json` file:
+
+```json
+...
+"ldap_whoami": false
+...
+```
 
 ## LDAP Result Code 32 "No Such Object"
 
