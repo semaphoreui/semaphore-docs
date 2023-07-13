@@ -18,6 +18,7 @@ Configuration file contains the following LDAP parameters:
   },
   "ldap_enable": true,
   "ldap_needtls": false,
+  "ldap_whoami": true,
   ...
 }
 ```
