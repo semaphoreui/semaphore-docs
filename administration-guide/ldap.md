@@ -18,6 +18,7 @@ Configuration file contains the following LDAP parameters:
   },
   "ldap_enable": true,
   "ldap_needtls": false,
+  "ldap_debug": false,
   ...
 }
 ```
@@ -43,3 +44,5 @@ It will ask interactively for the password, and should return code **0** and ech
 {% hint style="info" %}
 Please read [Troubleshooting](https://docs.ansible-semaphore.com/administration-guide/troubleshooting#unable-to-read-ldap-response-packet-unexpected-eof) section if you have issues with LDAP.
 {% endhint %}
+
+**WARNING**: If you enable the `ldap_debug` option - LDAP PASSWORDS WILL BE LOGGED!
