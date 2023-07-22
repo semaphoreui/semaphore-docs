@@ -6,10 +6,6 @@ description: Short intro about Ansible Semaphore
 
 Do you like Ansible Semaphore? Support the project development on [Ko-fi](https://ko-fi.com/fiftin).
 
-<a href="https://ko-fi.com/fiftin">
-  <img src="https://user-images.githubusercontent.com/914224/203517453-4febf7f6-debb-4be9-b6a2-a3b19f5d9f9a.png" />
-</a>
-
 Semaphore is a responsive web UI for running Ansible playbooks.
 
 
