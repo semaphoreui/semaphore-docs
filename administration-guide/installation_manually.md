@@ -375,8 +375,6 @@ User=semaphore
 Group=semaphore
 Restart=always
 RestartSec=10s
-Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/.local/bin"
-
 
 ExecStartPre=/bin/bash -c 'source /home/semaphore/venv/bin/activate \
                            && python3 -m pip install --upgrade -r /home/semaphore/requirements.txt'
