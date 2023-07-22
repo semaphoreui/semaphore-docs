@@ -120,7 +120,7 @@ source /home/semaphore/venv/bin/activate
 # verify we are using python3 from inside the venv
 which python3
 > /home/semaphore/venv/bin/python3
-python3 -m pip install --user --upgrade -r /home/semaphore/requirements.txt
+python3 -m pip install --upgrade -r /home/semaphore/requirements.txt
 # disable the context to the virtual environment
 deactivate
 ```
