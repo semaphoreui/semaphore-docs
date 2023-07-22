@@ -188,6 +188,31 @@ NOTE: You should also update those requirements from time to time!
 
 An option for doing this automatically is also shown in the service example below.
 
+### Install in user-context
+
+**Manually**:
+```bash
+sudo su --login semaphore
+ansible-galaxy collection install --upgrade -r /home/semaphore/requirements.yml
+ansible-galaxy role install --force -r /home/semaphore/requirements.yml
+```
+
+### Install when using a virtalenv
+
+**Manually**:
+```bash
+sudo su --login semaphore
+source /home/semaphore/venv/bin/activate
+# verify we are using python3 from inside the venv
+which python3
+> /home/semaphore/venv/bin/python3
+
+ansible-galaxy collection install --upgrade -r /home/semaphore/requirements.yml
+ansible-galaxy role install --force -r /home/semaphore/requirements.yml
+
+deactivate
+```
+
 
 ----
 
