@@ -11,6 +11,7 @@
 * [Security](administration-guide/security.md)
 * [CLI](administration-guide/cli.md)
 * [LDAP](administration-guide/ldap.md)
+* [OpenID](administration-guide/openid.md)
 * [API](administration-guide/api.md)
 * [CI/CD](administration-guide/cicd.md)
 * [Troubleshooting](administration-guide/troubleshooting.md)
