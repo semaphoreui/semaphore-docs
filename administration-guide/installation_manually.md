@@ -54,7 +54,7 @@ You have multiple options to do so:
 
 [Ansible](https://docs.ansible.com/ansible/latest/getting_started/index.html) is build using the [Python3](https://docs.python.org/3/) programming language.
 
-So its clean setup essential for Ansible to work correctly.
+So its clean setup is essential for Ansible to work correctly.
 
 First - make sure the packages `python3` and `python3-pip` are installed on your system!
 
