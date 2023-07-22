@@ -5,6 +5,7 @@
 ## Administration Guide
 
 * [Installation](administration-guide/installation.md)
+* [Manual Installation](administration-guide/installation_manually.md)
 * [Configuration](administration-guide/configuration.md)
 * [Upgrading](administration-guide/upgrading.md)
 * [Security](administration-guide/security.md)

@@ -58,6 +58,8 @@ sudo snap get semaphore
 Python, Ansible and Git should be installed on your system.
 {% endhint %}
 
+Look into the [Manual Installation](administration-guide/installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
+
 Download package file from [Releases page](https://github.com/ansible-semaphore/semaphore/releases).
 
 &#x20;`*.deb` for Debian and Ubuntu, `*.rpm` for CentOS and RedHat.&#x20;
@@ -203,6 +205,8 @@ For more information about the Docker Compose, see the [Docker Compose reference
 {% hint style="info" %}
 Python, Ansible and Git should be installed on your system.
 {% endhint %}
+
+Look into the [Manual Installation](administration-guide/installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 
 Download the `*.tar.gz` for your platform from [Releases page](https://github.com/ansible-semaphore/semaphore/releases). Unpack it and setup Semaphore using the following commands:
 
