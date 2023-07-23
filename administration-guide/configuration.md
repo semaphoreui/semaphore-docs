@@ -129,6 +129,15 @@ Semaphore uses a `config.json` configuration file with following content:
 | `ldap_searchdn`         | `ldap-searchdn`         |                                                                                                                                             |
 | `concurrency_mode`      | `concurrency-mode`      | Can be *unset/empty* or `project` or `node`. When set to `project`, tasks will run in parallel if and only if they do not share the same project id, with no regard to the nodes/hosts that are affected. When set to `node`, a task will run in parallel if and only if the hosts affected by tasks already running does not intersect with the hosts that would be affected by the task in question. If `concurrency_mode` is not specified or left empty, no task will start before the previous one has finished.                                                                         |
 | `max_parallel_tasks`    | `max-parallel-tasks`    | Max allowed parallel tasks if `concurrency-mode` is enabled. Can also be set/changed within the Web UI (project settings).                                                                                                                                                               |
-| `oidc_providers` ![Static Badge](https://img.shields.io/badge/new-red)    | | OpenID provider settings. You can provie multible OpenID providers. More about OpenID configuration read in [OpenID](administration-guide/openid.md) article. |
+| `oidc_providers` ![Static Badge](https://img.shields.io/badge/new-red)    | | OpenID provider settings. You can provie multible OpenID providers. More about OpenID configuration read in [OpenID](administration-guide/openid.md). |
 
 
+## Public URL
+
+If you use nginx or other web server before Semaphore, you should provide configuration option `web_host`.
+
+For example you configured NGINX on the server which proxies queries to Semaphore.
+
+Server address `https://exmaple.com` and you proxies all queries `https://exmaple.com/semaphore` to Semaphore.
+
+Your `web_host` will be `https://exmaple.com/semaphore`.
