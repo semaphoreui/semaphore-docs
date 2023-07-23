@@ -6,7 +6,7 @@ description: OpenID provider configuration
 
 Semaphore supports authentication via OpenID.
 
-Tutorial: https://www.ansible-semaphore.com/blog/openid-authentication/
+Tutorial: [https://www.ansible-semaphore.com/blog/openid-authentication/](https://www.ansible-semaphore.com/blog/openid-authentication/).
 
 Multiple OIDC providers can be configured in config.json:
 ```yaml
