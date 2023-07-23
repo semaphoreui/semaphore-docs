@@ -6,7 +6,7 @@ There are 3 ways to configure Semaphore:
 * [Interactive setup](configuration.md#snap-configuration)
 * [Configuration file](configuration.md#configuration-file)
 
-### Snap configuration
+## Snap configuration
 
 Snap configurations should be used for when Semaphore was installed via Snap.
 
@@ -28,7 +28,7 @@ Don't forget to restart Semaphore after changing a configuration:
 sudo snap restart semaphore
 ```
 
-### Interactive setup
+## Interactive setup
 
 Use this option for first time configuration (not working for Semaphore installed via Snap).
 
@@ -36,7 +36,7 @@ Use this option for first time configuration (not working for Semaphore installe
 semaphore setup
 ```
 
-### Configuration file
+## Configuration file
 
 Semaphore uses a `config.json` configuration file with following content:
 
@@ -93,7 +93,7 @@ Semaphore uses a `config.json` configuration file with following content:
 }
 ```
 
-### Configuration options
+## Configuration options
 
 | Configuration file      | Snap configuration      | Description                                                                                                                                 |
 | ----------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
