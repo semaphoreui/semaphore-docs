@@ -1,5 +1,11 @@
 # API
 
+### API documentation
+
+{% hint style="info" %}
+Full API documentation is available in [API reference](https://ansible-semaphore.com/api-docs).
+{% endhint %}
+
 ### How to use the Semaphore API
 
 Login to Semaphore (password should be escaped, `slashy\\pass` instead of `slashy\pass` e.g.):
@@ -60,9 +66,3 @@ curl -v -XDELETE \
 -H 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
 http://localhost:3000/api/user/tokens/YOUR_ACCESS_TOKEN
 ```
-
-### API documentation
-
-{% hint style="info" %}
-Full API documentation is available in [API reference](https://ansible-semaphore.com/api-docs).
-{% endhint %}
