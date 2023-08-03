@@ -267,7 +267,7 @@ Semaphore will be available via the following URL [https://localhost:3000](https
 
 ### Run as a service
 
-Look into the [manual installation](installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
+For more detailed information - look into the [extended Systemd service documentation](installation_manually.md#extended-systemd-service).
 
 If you installed Semaphore via a package manager, or by downloading a binary file, you should create the Semaphore service manually.
 
