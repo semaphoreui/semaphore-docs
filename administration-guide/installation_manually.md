@@ -1,5 +1,18 @@
 # Manually installing Semaphore
 
+----
+
+**Content:**
+
+* [Service User](installation_manually.md#service-user)
+* [Python3](installation_manually.md#python3)
+* [Ansible Collections & Roles](installation_manually.md#ansible-collections--roles)
+* [Reverse Proxy](installation_manually.md#reverse-proxy)
+* [Systemd Service](installation_manually.md#extended-systemd-service)
+* [Troubleshooting](installation_manually.md#troubleshooting)
+
+----
+
 This documentation goes into the details on how to set-up Semaphore when using these installation methods:
 
 * [Package manager](installation.md#package-manager)
@@ -213,6 +226,11 @@ ansible-galaxy role install --force -r /home/semaphore/requirements.yml
 deactivate
 ```
 
+----
+
+## Reverse Proxy
+
+See: [Security - Encrypted connection](security.md#reverse-proxy)
 
 ----
 
