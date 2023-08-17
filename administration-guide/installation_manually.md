@@ -210,7 +210,7 @@ ansible-galaxy collection install --upgrade -r /home/semaphore/requirements.yml
 ansible-galaxy role install --force -r /home/semaphore/requirements.yml
 ```
 
-### Install when using a virtalenv
+### Install when using a virtualenv
 
 **Manually**:
 ```bash
