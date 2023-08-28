@@ -281,7 +281,9 @@ Group=semaphore
 ExecStartPre=/bin/bash -c 'python3 -m pip install --upgrade --user -r /home/semaphore/requirements.txt'
 
 # so the executables are found
-Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/.local/bin"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/semaphore/.local/bin"
+# set the correct python path. You can get the correct path with: python3 -c "import site; print(site.USER_SITE)" 
+Environment="PYTHONPATH=/home/semaphore/.local/lib/python3.10/site-packages"
 ```
 
 #### In virtualenv
