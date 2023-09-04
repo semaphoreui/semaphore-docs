@@ -38,6 +38,41 @@ Multiple OIDC providers can be configured in config.json:
 }
 ```
 
+## Authelia config exmaple
+
+I set this up, mostly the same way as the other apps in Authelia's docs. Here's the relevant sections of the config files for each: (generate the client_secret according to the Authelia docs, this also assumes that you have the rest of the oidc_providers section configured in Authelia already)
+
+## Authelia config.yaml:
+```yaml
+identity_providers:
+  oidc:
+    - id: semaphore
+      description: Semaphore
+      secret: 'your_secret'
+      public: false
+      authorization_policy: two_factor
+      redirect_uris:
+        - https://semaphore.example.com/api/auth/oidc/authelia/redirect
+      scopes:
+        - openid
+        - profile
+        - email
+      userinfo_signing_algorithm: none
+```
+
+## Semaphore config.json:
+```json
+"oidc_providers":  {
+    "authelia": {
+        "display_name": "Authelia",
+        "provider_url": "https://authelia.example.com",
+        "client_id": "semaphore",
+        "client_secret": "your_secret",
+        "redirect_url": "https://semaphore.example.com/api/auth/oidc/authelia/redirect"
+    }
+},
+```
+
 For each of the configured providers, an additional login button is added to the login page:
 
 ![Screenshot of the Semaphore login page, with two login buttons. One says "Sign In", the other says "Sign in with MySSO"](https://user-images.githubusercontent.com/5564491/232345599-13f744a0-0530-4422-8b55-6a563a4ef5d9.png)
