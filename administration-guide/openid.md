@@ -40,7 +40,7 @@ Multiple OIDC providers can be configured in config.json:
 
 ## Authelia config exmaple
 
-I set this up, mostly the same way as the other apps in Authelia's docs. Here's the relevant sections of the config files for each: (generate the client_secret according to the Authelia docs, this also assumes that you have the rest of the oidc_providers section configured in Authelia already)
+I set this up, mostly the same way as the other apps in [Authelia](https://www.authelia.com/)'s docs. Here's the relevant sections of the config files for each: (generate the client_secret according to the Authelia docs, this also assumes that you have the rest of the oidc_providers section configured in Authelia already)
 
 ### Authelia config.yaml:
 ```yaml
