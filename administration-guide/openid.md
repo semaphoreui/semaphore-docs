@@ -42,7 +42,7 @@ Multiple OIDC providers can be configured in config.json:
 
 I set this up, mostly the same way as the other apps in Authelia's docs. Here's the relevant sections of the config files for each: (generate the client_secret according to the Authelia docs, this also assumes that you have the rest of the oidc_providers section configured in Authelia already)
 
-## Authelia config.yaml:
+### Authelia config.yaml:
 ```yaml
 identity_providers:
   oidc:
@@ -60,7 +60,7 @@ identity_providers:
       userinfo_signing_algorithm: none
 ```
 
-## Semaphore config.json:
+### Semaphore config.json:
 ```json
 "oidc_providers":  {
     "authelia": {
