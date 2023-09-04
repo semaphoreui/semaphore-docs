@@ -1,5 +1,18 @@
 # Manually installing Semaphore
 
+----
+
+**Content:**
+
+* [Service User](installation_manually.md#service-user)
+* [Python3](installation_manually.md#python3)
+* [Ansible Collections & Roles](installation_manually.md#ansible-collections--roles)
+* [Reverse Proxy](installation_manually.md#reverse-proxy)
+* [Systemd Service](installation_manually.md#extended-systemd-service)
+* [Troubleshooting](installation_manually.md#troubleshooting)
+
+----
+
 This documentation goes into the details on how to set-up Semaphore when using these installation methods:
 
 * [Package manager](installation.md#package-manager)
@@ -197,7 +210,7 @@ ansible-galaxy collection install --upgrade -r /home/semaphore/requirements.yml
 ansible-galaxy role install --force -r /home/semaphore/requirements.yml
 ```
 
-### Install when using a virtalenv
+### Install when using a virtualenv
 
 **Manually**:
 ```bash
@@ -213,6 +226,11 @@ ansible-galaxy role install --force -r /home/semaphore/requirements.yml
 deactivate
 ```
 
+----
+
+## Reverse Proxy
+
+See: [Security - Encrypted connection](security.md#reverse-proxy)
 
 ----
 
@@ -263,7 +281,9 @@ Group=semaphore
 ExecStartPre=/bin/bash -c 'python3 -m pip install --upgrade --user -r /home/semaphore/requirements.txt'
 
 # so the executables are found
-Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/.local/bin"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/semaphore/.local/bin"
+# set the correct python path. You can get the correct path with: python3 -c "import site; print(site.USER_SITE)" 
+Environment="PYTHONPATH=/home/semaphore/.local/lib/python3.10/site-packages"
 ```
 
 #### In virtualenv

@@ -7,6 +7,12 @@ You can install Semaphore in 4 ways:
 * [Docker](installation.md#docker)
 * [Binary file](installation.md#binary-file)
 
+See also:
+* [Run as service](installation.md#run-as-a-service)
+* [Manual installation](installation_manually.md)
+
+----
+
 ### Snap
 
 To install Semaphore via snap, run following command in terminal:
@@ -52,13 +58,15 @@ sudo snap get semaphore
 
 &#x20;List of available options you can find in [Configuration options reference](https://docs.ansible-semaphore.com/administration-guide/configuration#configuration-options).
 
+----
+
 ### Package manager
 
 {% hint style="info" %}
 Python, Ansible and Git should be installed on your system.
 {% endhint %}
 
-Look into the [Manual Installation](administration-guide/installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
+Look into the [manual installation](installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 
 Download package file from [Releases page](https://github.com/ansible-semaphore/semaphore/releases).
 
@@ -118,6 +126,8 @@ semaphore service --config=./config.json
 
 Semaphore will be available via this URL [https://localhost:3000](https://localhost:3000).
 
+----
+
 ### Docker
 
 &#x20;Create a `docker-compose.yml` file with following content:
@@ -157,7 +167,7 @@ services:
       SEMAPHORE_DB_PASS: semaphore
       SEMAPHORE_DB_HOST: mysql # for postgres, change to: postgres
       SEMAPHORE_DB_PORT: 3306 # change to 5432 for postgres
-      SEMAPHORE_DB_DIALECT: mysql
+      SEMAPHORE_DB_DIALECT: mysql # for postgres, change to: postgres
       SEMAPHORE_DB: semaphore
       SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
       SEMAPHORE_ADMIN_PASSWORD: changeme
@@ -196,13 +206,15 @@ docker-compose up
 
 For more information about the Docker Compose, see the [Docker Compose reference](https://docs.docker.com/compose/).
 
+----
+
 ### Binary file
 
 {% hint style="info" %}
 Python, Ansible and Git should be installed on your system.
 {% endhint %}
 
-Look into the [Manual Installation](administration-guide/installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
+Look into the [manual installation](installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 
 Download the `*.tar.gz` for your platform from [Releases page](https://github.com/ansible-semaphore/semaphore/releases). Unpack it and setup Semaphore using the following commands:
 
@@ -251,7 +263,11 @@ Now you can run Semaphore:
 
 Semaphore will be available via the following URL [https://localhost:3000](https://localhost:3000).
 
+----
+
 ### Run as a service
+
+For more detailed information - look into the [extended Systemd service documentation](installation_manually.md#extended-systemd-service).
 
 If you installed Semaphore via a package manager, or by downloading a binary file, you should create the Semaphore service manually.
 
@@ -300,4 +316,3 @@ To make the Semaphore service auto start:
 ```
 sudo systemctl enable semaphore
 ```
-
