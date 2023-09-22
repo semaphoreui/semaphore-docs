@@ -16,7 +16,7 @@ Semaphore runners operate on the same principle as GitLab or GitHub Actions runn
 For end users, working with Semaphore with or without runners appears the same.
 
 Using runners offers the following advantages:
-- Executing tasks more securely. For instance, a runner can be located within a closed subnet.
+- Executing tasks more securely. For instance, a runner can be located within a closed subnet or isolated docker container.
 - Distributing the workload across multiple servers. You can start multiple runners, and tasks will be randomly distributed among them.
 
 ## Setup
