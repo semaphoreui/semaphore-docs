@@ -1,5 +1,5 @@
 ---
-description: Command line interface documentation
+description: How and why to use runners
 ---
 
 # Runners
@@ -18,3 +18,22 @@ For end users, working with Semaphore with or without runners appears the same.
 Using runners offers the following advantages:
 - Executing tasks more securely. For instance, a runner can be located within a closed subnet.
 - Distributing the workload across multiple servers. You can start multiple runners, and tasks will be randomly distributed among them.
+
+## Setup
+
+
+The runner comes as part of Semaphore and is launched with the following command:
+
+```bash
+semaphore runner --config ./config.json
+```
+
+The configuration file should contain a `runner` section with the following parameters:
+
+```json
+{
+  "runner": {
+    "": ""
+  }
+}
+```
