@@ -33,7 +33,18 @@ The configuration file should contain a `runner` section with the following para
 ```json
 {
   "runner": {
-    "": ""
+		"registration_token": "***",
+		"config_file": "path/to/the/file/where/runner/saves/service/information",
+		"api_url": "http://<semaphore_host>:<semaphore_port>/api"
   }
+}
+```
+
+To enable Semaphore to work with runners, the following parameters should be present in its configuration file:
+
+```json
+{
+  "use_remote_runner": true,
+  "runner_registration_token": "***"
 }
 ```
