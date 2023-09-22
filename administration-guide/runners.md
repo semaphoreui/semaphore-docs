@@ -33,9 +33,9 @@ The configuration file should contain a `runner` section with the following para
 ```json
 {
   "runner": {
-		"registration_token": "***",
-		"config_file": "path/to/the/file/where/runner/saves/service/information",
-		"api_url": "http://<semaphore_host>:<semaphore_port>/api"
+    "registration_token": "***",
+    "config_file": "path/to/the/file/where/runner/saves/service/information",
+    "api_url": "http://<semaphore_host>:<semaphore_port>/api"
   }
 }
 ```
