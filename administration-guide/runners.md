@@ -1,5 +1,5 @@
 ---
-description: How and why to use runners
+description: How and why to use Semaphore runners
 ---
 
 # Runners
