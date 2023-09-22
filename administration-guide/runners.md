@@ -35,7 +35,8 @@ The configuration file should contain a `runner` section with the following para
   "runner": {
     "registration_token": "***",
     "config_file": "path/to/the/file/where/runner/saves/service/information",
-    "api_url": "http://<semaphore_host>:<semaphore_port>/api"
+    "api_url": "http://<semaphore_host>:<semaphore_port>/api",
+    "max_parallel_tasks": 10
   }
 }
 ```
