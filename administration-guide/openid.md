@@ -52,7 +52,7 @@ Multiple OIDC providers can be configured in config.json:
       "display_name": "Sign in with GitLab",
       "provider_url": "https://gitlab.com",
       "client_id": "***",
-      "client_secret": "**",
+      "client_secret": "***",
       "redirect_url": "https://semaphore-public-host.com/api/auth/oidc/gitlab/redirect"
     },
     "github": {
