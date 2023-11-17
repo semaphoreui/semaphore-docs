@@ -38,9 +38,50 @@ Multiple OIDC providers can be configured in config.json:
 }
 ```
 
-## Authelia config exmaple
+## GitLab, GitHub and Google config exmaple
 
-I set this up, mostly the same way as the other apps in [Authelia](https://www.authelia.com/)'s docs. Here's the relevant sections of the config files for each: (generate the client_secret according to the Authelia docs, this also assumes that you have the rest of the oidc_providers section configured in Authelia already)
+### Semaphore config.json:
+```json
+{
+  "oidc_providers": {
+    "gitlab": {
+
+      "color": "orange",
+      "icon": "gitlab",
+
+      "display_name": "Sign in with GitLab",
+      "provider_url": "https://gitlab.com",
+      "client_id": "***",
+      "client_secret": "**",
+      "redirect_url": "https://semaphore-public-host.com/api/auth/oidc/gitlab/redirect"
+    },
+    "github": {
+      "icon": "github",
+      "display_name": "Sign in with GitHub",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://semaphore-public-host.com/api/auth/oidc/github/redirect",
+      "endpoint": {
+        "auth": "https://github.com/login/oauth/authorize",
+        "token": "https://github.com/login/oauth/access_token",
+        "userinfo": "https://api.github.com/user"
+      },
+      "scopes": ["read:user", "user:email"]
+    },
+    "google": {
+      "color": "blue",
+      "icon": "google",
+      "display_name": "Sign in with Google",
+      "provider_url": "https://accounts.google.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://semaphore-public-host.com/api/auth/oidc/google/redirect",
+      "username_claim": "email",
+      "name_claim": "name"
+    }
+  }
+}
+```
 
 ### Authelia config.yaml:
 ```yaml
