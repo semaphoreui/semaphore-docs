@@ -34,3 +34,13 @@ Using CLI you can add, remove or change user.
 semaphore user --help
 ```
 
+### Vault management
+
+You can reencrypt your secrets in database with using following command:
+
+```
+semaphore vault rekey --old-key <encryption-key-which-used-before>
+```
+
+Your data will be decryped using `<encryption-key-which-used-before>` and will be encrypted using key in configuration key `access_key_encryption`.
+
