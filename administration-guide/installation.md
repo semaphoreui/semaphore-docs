@@ -121,7 +121,7 @@ semaphore setup
 Now you can run Semaphore:
 
 ```
-semaphore service --config=./config.json
+semaphore server --config=./config.json
 ```
 
 Semaphore will be available via this URL [https://localhost:3000](https://localhost:3000).
@@ -258,7 +258,7 @@ Expand-Archive -Path semaphore.zip  -DestinationPath ./
 Now you can run Semaphore:
 
 ```
-./semaphore service --config=./config.json
+./semaphore server --config=./config.json
 ```
 
 Semaphore will be available via the following URL [https://localhost:3000](https://localhost:3000).
@@ -288,7 +288,7 @@ After=network-online.target
 [Service]
 Type=simple
 ExecReload=/bin/kill -HUP $MAINPID
-ExecStart=/path/to/semaphore service --config=/path/to/config.json
+ExecStart=/path/to/semaphore server --config=/path/to/config.json
 SyslogIdentifier=semaphore
 Restart=always
 RestartSec=10s
