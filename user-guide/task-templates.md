@@ -38,3 +38,8 @@ This type of template should be used to deploy artifacts to the destination serv
 
 This allows you to deploy a specific version of the artifact to the servers.
 
+### Schedule
+
+You can set up task scheduling by specifying a cron schedule in the template settings.
+
+![](../.gitbook/assets/template\_schedule.png)
