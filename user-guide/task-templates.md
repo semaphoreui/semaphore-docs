@@ -43,3 +43,5 @@ This allows you to deploy a specific version of the artifact to the servers.
 You can set up task scheduling by specifying a cron schedule in the template settings.
 
 ![](../.gitbook/assets/template\_schedule.png)
+
+Cron expression format you can find here: https://pkg.go.dev/github.com/robfig/cron/v3#hdr-CRON_Expression_Format
