@@ -15,7 +15,7 @@ Information about credentials can be found in the [Key Store](key-store.md) sect
 2. Click on the Inventory tab and click New Inventory
 4. Name the Inventory and select the correct user credential from the dropdown. Select the correct sudo credential, if needed
 5. Select the Inventory type
-  * If you select file, use the absolute path to the file
+  * If you select file, use the absolute path to the file. If this file is located in your git repo, then use relative path. Ex. `inventory/linux-hosts.yaml`
   * If you select static, paste in or type your Inventory into the form
 6. Click Create.
 

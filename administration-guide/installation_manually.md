@@ -252,7 +252,7 @@ ConditionPathExists=/usr/bin/semaphore
 ConditionPathExists=/etc/semaphore/config.json
 
 [Service]
-ExecStart=/usr/bin/semaphore service --config /etc/semaphore/config.json
+ExecStart=/usr/bin/semaphore server --config /etc/semaphore/config.json
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 RestartSec=10s
@@ -296,7 +296,7 @@ ExecStartPre=/bin/bash -c 'source /home/semaphore/venv/bin/activate \
 
 # REPLACE THE EXISTING 'ExecStart'
 ExecStart=/bin/bash -c 'source /home/semaphore/venv/bin/activate \
-                        && /usr/bin/semaphore service --config /etc/semaphore/config.json'
+                        && /usr/bin/semaphore server --config /etc/semaphore/config.json'
 ```
 
 ----
@@ -372,7 +372,7 @@ ExecStartPre=/bin/bash -c 'ansible-galaxy collection install --upgrade -r /home/
 ExecStartPre=/bin/bash -c 'ansible-galaxy role install --force -r /home/semaphore/requirements.yml'
 ExecStartPre=/bin/bash -c 'python3 -m pip install --upgrade --user -r /home/semaphore/requirements.txt'
 
-ExecStart=/usr/bin/semaphore service --config /etc/semaphore/config.json
+ExecStart=/usr/bin/semaphore server --config /etc/semaphore/config.json
 ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
@@ -403,7 +403,7 @@ ExecStartPre=/bin/bash -c 'source /home/semaphore/venv/bin/activate \
                            && ansible-galaxy role install --force -r /home/semaphore/requirements.yml'
 
 ExecStart=/bin/bash -c 'source /home/semaphore/venv/bin/activate \
-                        && /usr/bin/semaphore service --config /etc/semaphore/config.json'
+                        && /usr/bin/semaphore server --config /etc/semaphore/config.json'
 ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
