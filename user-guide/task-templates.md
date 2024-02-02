@@ -44,3 +44,14 @@ You can set up task scheduling by specifying a cron schedule in the template set
 Cron expression format you can find in [documentation](https://pkg.go.dev/github.com/robfig/cron/v3#hdr-CRON_Expression_Format).
 
 ![](../.gitbook/assets/template\_schedule.png)
+
+#### Run a task when a new commit is added to the repository
+
+You can use cron to periodically check for new commits in the repository and trigger a task upon their arrival.
+
+For example you have source code of the app in repo `Fastlix`. You can add it to Repositories and trigger task for new commits.
+
+![](../.gitbook/assets/template\_schedule\_commit.png)
+
+
+
