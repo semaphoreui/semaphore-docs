@@ -49,7 +49,7 @@ Cron expression format you can find in [documentation](https://pkg.go.dev/github
 
 You can use cron to periodically check for new commits in the repository and trigger a task upon their arrival.
 
-For example you have source code of the app in repo `Fastlix`. You can add it to Repositories and trigger task for new commits.
+For example you have source code of the app in repo `Fastlix`. You can add it to Repositories and trigger the Build task for new commits.
 
 ![](../.gitbook/assets/template\_schedule\_commit.png)
 
