@@ -10,7 +10,7 @@ Full API documentation is available in [API reference](https://ansible-semaphore
 
 Login to Semaphore (password should be escaped, `slashy\\pass` instead of `slashy\pass` e.g.):
 
-```
+```bash
 curl -v -c /tmp/semaphore-cookie -XPOST \
 -H 'Content-Type: application/json' \
 -H 'Accept: application/json' \
@@ -20,7 +20,7 @@ http://localhost:3000/api/auth/login
 
 Get a user tokens:
 
-```
+```bash
 curl -v -b /tmp/semaphore-cookie \
 -H 'Content-Type: application/json' \
 -H 'Accept: application/json' \
@@ -29,7 +29,7 @@ http://localhost:3000/api/user/tokens
 
 Generate a new token, and get the new token:
 
-```
+```bash
 curl -v -b /tmp/semaphore-cookie -XPOST \
 -H 'Content-Type: application/json' \
 -H 'Accept: application/json' \
@@ -48,7 +48,7 @@ The command should return something similar to:
 
 Use this token for launching a task or anything else:
 
-```
+```bash
 curl -v -XPOST \
 -H 'Content-Type: application/json' \
 -H 'Accept: application/json' \
@@ -59,7 +59,7 @@ http://localhost:3000/api/project/1/tasks
 
 Expire a token:
 
-```
+```bash
 curl -v -XDELETE \
 -H 'Content-Type: application/json' \
 -H 'Accept: application/json' \

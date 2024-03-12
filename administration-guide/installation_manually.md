@@ -242,7 +242,7 @@ Add additional settings under their `[PART]`
 
 ### Base
 
-```text
+```ini
 [Unit]
 Description=Ansible Semaphore
 Documentation=https://docs.ansible-semaphore.com/
@@ -263,7 +263,7 @@ WantedBy=multi-user.target
 
 ### Service user
 
-```text
+```ini
 [Service]
 User=semaphore
 Group=semaphore
@@ -275,7 +275,7 @@ Group=semaphore
 
 #### In user-context
 
-```text
+```ini
 [Service]
 # to auto-upgrade python modules at service startup
 ExecStartPre=/bin/bash -c 'python3 -m pip install --upgrade --user -r /home/semaphore/requirements.txt'
@@ -288,7 +288,7 @@ Environment="PYTHONPATH=/home/semaphore/.local/lib/python3.10/site-packages"
 
 #### In virtualenv
 
-```text
+```ini
 [Service]
 # to auto-upgrade python modules at service startup
 ExecStartPre=/bin/bash -c 'source /home/semaphore/venv/bin/activate \
@@ -305,7 +305,7 @@ ExecStart=/bin/bash -c 'source /home/semaphore/venv/bin/activate \
 
 #### If using Python3 in user-context
 
-```text
+```ini
 [Service]
 # to auto-upgrade ansible collections and roles at service startup
 ExecStartPre=/bin/bash -c 'ansible-galaxy collection install --upgrade -r /home/semaphore/requirements.yml'
@@ -314,7 +314,7 @@ ExecStartPre=/bin/bash -c 'ansible-galaxy role install --force -r /home/semaphor
 
 #### If using Python3 in virtualenv
 
-```text
+```ini
 # to auto-upgrade ansible collections and roles at service startup
 ExecStartPre=/bin/bash -c 'source /home/semaphore/venv/bin/activate \
                            && ansible-galaxy collection install --upgrade -r /home/semaphore/requirements.yml \
@@ -327,21 +327,21 @@ ExecStartPre=/bin/bash -c 'source /home/semaphore/venv/bin/activate \
 
 #### Using local MariaDB
 
-```text
+```ini
 [Unit]
 Requires=mariadb.service
 ```
 
 #### Using local Nginx
 
-```text
+```ini
 [Unit]
 Wants=nginx.service
 ```
 
 #### Sending logs to syslog
 
-```text
+```ini
 [Service]
 StandardOutput=journal
 StandardError=journal
@@ -352,7 +352,7 @@ SyslogIdentifier=semaphore
 
 #### Python Modules in user-context
 
-```text
+```ini
 [Unit]
 Description=Ansible Semaphore
 Documentation=https://docs.ansible-semaphore.com/
@@ -381,7 +381,7 @@ WantedBy=multi-user.target
 
 #### Python Modules in virtualenv
 
-```text
+```ini
 [Unit]
 Description=Ansible Semaphore
 Documentation=https://docs.ansible-semaphore.com/
@@ -414,7 +414,7 @@ WantedBy=multi-user.target
 
 If you have a custom system language set - you might run into problems that can be resoled by updating the associated environmental variables:
 
-```text
+```ini
 [Service]
 Environment=LANG="en_US.UTF-8"
 Environment=LC_ALL="en_US.UTF-8"
@@ -436,7 +436,7 @@ Please go through these steps to verify if the issue occurs outside Semaphore:
 
 - Change into the context of the virtualenv if you use one:
 
-  ```bash
+  ```ini
   source /home/semaphore/venv/bin/activate
   # verify we are using python3 from inside the venv
   which python3

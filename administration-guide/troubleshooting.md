@@ -44,7 +44,7 @@ This means that your Postgres doesn't work by SSL.
 
 Add opion `sslmode=disable` to configuration file:
 
-```
+```json
 	"postgres": {
 		"host": "localhost",
 		"user": "pastgres",
@@ -91,7 +91,7 @@ You have the wrong password or `binddn`.
 
 Use `ldapwhoami` tool and check if your binddn works:
 
-```
+```bash
 ldapwhoami\
   -H ldap://ldap.com:389\
   -D "CN=/your/ldap_binddn/value/in/config/file"\
