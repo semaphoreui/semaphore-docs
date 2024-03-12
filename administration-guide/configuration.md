@@ -6,7 +6,7 @@ There are 3 ways to configure Semaphore:
 * [Interactive setup](configuration.md#snap-configuration)
 * [Configuration file](configuration.md#configuration-file)
 
-### Snap configuration
+## Snap configuration
 
 Snap configurations should be used for when Semaphore was installed via Snap.
 
@@ -28,7 +28,7 @@ Don't forget to restart Semaphore after changing a configuration:
 sudo snap restart semaphore
 ```
 
-### Interactive setup
+## Interactive setup
 
 Use this option for first time configuration (not working for Semaphore installed via Snap).
 
@@ -36,7 +36,7 @@ Use this option for first time configuration (not working for Semaphore installe
 semaphore setup
 ```
 
-### Configuration file
+## Configuration file
 
 Semaphore uses a `config.json` configuration file with following content:
 
@@ -93,18 +93,18 @@ Semaphore uses a `config.json` configuration file with following content:
 }
 ```
 
-### Configuration options
+## Configuration options
 
 | Configuration file      | Snap configuration      | Description                                                                                                                                 |
 | ----------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `bolt.host`             | —                       | Path to the BoltDB database file                                                                                                            |
 | `mysql.host`            | `mysql.host`            | MySQL database host                                                                                                                         |
 | `mysql.name`            | `mysql.name`            | MySQL database (schema) name                                                                                                                |
-| `mysql.user`            | `mysql.user`            | MySQL user name                                                                                                                                 |
+| `mysql.user`            | `mysql.user`            | MySQL user name                                                                                                                             |
 | `mysql.pass`            | `mysql.pass`            | MySQL user's password                                                                                                                       |
 | `postgres.host`         | `postgres.host`         | Postgres database host                                                                                                                      |
 | `postgres.name`         | `postgres.name`         | Postgres database (schema) name                                                                                                             |
-| `postgres.user`         | `postgres.user`         | Postgres user name                                                                                                                               |
+| `postgres.user`         | `postgres.user`         | Postgres user name                                                                                                                          |
 | `postgres.pass`         | `postgres.pass`         | Postgres user's password                                                                                                                    |
 | `dialect`               | `dialect`               | Can be `mysql`, `postgres `or `bolt`                                                                                                        |
 | `port`                  | `port`                  | TCP port on which the web interface will be available. Default: 3000 |
@@ -129,3 +129,16 @@ Semaphore uses a `config.json` configuration file with following content:
 | `ldap_searchdn`         | `ldap-searchdn`         |                                                                                                                                             |
 | `concurrency_mode`      | `concurrency-mode`      | Can be *unset/empty* or `project` or `node`. When set to `project`, tasks will run in parallel if and only if they do not share the same project id, with no regard to the nodes/hosts that are affected. When set to `node`, a task will run in parallel if and only if the hosts affected by tasks already running does not intersect with the hosts that would be affected by the task in question. If `concurrency_mode` is not specified or left empty, no task will start before the previous one has finished.                                                                         |
 | `max_parallel_tasks`    | `max-parallel-tasks`    | Max allowed parallel tasks if `concurrency-mode` is enabled. Can also be set/changed within the Web UI (project settings).                                                                                                                                                               |
+| `oidc_providers` ![Static Badge](https://img.shields.io/badge/new-red)    | | OpenID provider settings. You can provide multiple OpenID providers. More about OpenID configuration read in [OpenID](openid.md). |
+| `password_login_disable` ![Static Badge](https://img.shields.io/badge/new-red)    | | Disable login with using password. Only LDAP and OpenID. |
+| `non_admin_can_create_project` ![Static Badge](https://img.shields.io/badge/new-red)    | | Allow non-admin users to create new projects. |
+
+## Public URL
+
+If you use nginx or other web server before Semaphore, you should provide configuration option `web_host`.
+
+For example you configured NGINX on the server which proxies queries to Semaphore.
+
+Server address `https://exmaple.com` and you proxies all queries `https://exmaple.com/semaphore` to Semaphore.
+
+Your `web_host` will be `https://exmaple.com/semaphore`.

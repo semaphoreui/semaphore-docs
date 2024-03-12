@@ -7,6 +7,12 @@ You can install Semaphore in 4 ways:
 * [Docker](installation.md#docker)
 * [Binary file](installation.md#binary-file)
 
+See also:
+* [Run as service](installation.md#run-as-a-service)
+* [Manual installation](installation_manually.md)
+
+----
+
 ### Snap
 
 To install Semaphore via snap, run following command in terminal:
@@ -52,11 +58,15 @@ sudo snap get semaphore
 
 &#x20;List of available options you can find in [Configuration options reference](https://docs.ansible-semaphore.com/administration-guide/configuration#configuration-options).
 
+----
+
 ### Package manager
 
 {% hint style="info" %}
 Python, Ansible and Git should be installed on your system.
 {% endhint %}
+
+Look into the [manual installation](installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 
 Download package file from [Releases page](https://github.com/ansible-semaphore/semaphore/releases).
 
@@ -68,36 +78,36 @@ Here are several installation commands, depending on the package manager:
 {% tab title="Debian / Ubuntu (x64)" %}
 ```bash
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.8.75/semaphore_2.8.75_linux_amd64.deb
+download/v2.9.44/semaphore_2.9.44_linux_amd64.deb
 
-sudo dpkg -i semaphore_2.8.75_linux_amd64.deb
+sudo dpkg -i semaphore_2.9.44_linux_amd64.deb
 ```
 {% endtab %}
 
 {% tab title="Debian / Ubuntu (ARM64)" %}
 ```
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.8.75/semaphore_2.8.75_linux_arm64.deb
+download/v2.9.44/semaphore_2.9.44_linux_arm64.deb
 
-sudo dpkg -i semaphore_2.8.75_linux_arm64.deb
+sudo dpkg -i semaphore_2.9.44_linux_arm64.deb
 ```
 {% endtab %}
 
 {% tab title="CentOS (x64)" %}
 ```
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.8.75/semaphore_2.8.75_linux_amd64.rpm
+download/v2.9.44/semaphore_2.9.44_linux_amd64.rpm
 
-sudo yum install semaphore_2.8.75_linux_amd64.rpm
+sudo yum install semaphore_2.9.44_linux_amd64.rpm
 ```
 {% endtab %}
 
 {% tab title="CentOS (ARM64)" %}
 ```
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.8.75/semaphore_2.8.75_linux_arm64.rpm
+download/v2.9.44/semaphore_2.9.44_linux_arm64.rpm
 
-sudo yum install semaphore_2.8.75_linux_arm64.rpm
+sudo yum install semaphore_2.9.44_linux_arm64.rpm
 ```
 {% endtab %}
 {% endtabs %}
@@ -111,10 +121,12 @@ semaphore setup
 Now you can run Semaphore:
 
 ```
-semaphore service --config=./config.json
+semaphore server --config=./config.json
 ```
 
 Semaphore will be available via this URL [https://localhost:3000](https://localhost:3000).
+
+----
 
 ### Docker
 
@@ -125,8 +137,6 @@ services:
   # uncomment this section and comment out the mysql section to use postgres instead of mysql
   #postgres:
     #restart: unless-stopped
-    #ports:
-      #- 5432:5432
     #image: postgres:14
     #hostname: postgres
     #volumes: 
@@ -138,8 +148,6 @@ services:
   # if you wish to use postgres, comment the mysql service section below 
   mysql:
     restart: unless-stopped
-    ports:
-      - 3306:3306
     image: mysql:8.0
     hostname: mysql
     volumes:
@@ -159,7 +167,7 @@ services:
       SEMAPHORE_DB_PASS: semaphore
       SEMAPHORE_DB_HOST: mysql # for postgres, change to: postgres
       SEMAPHORE_DB_PORT: 3306 # change to 5432 for postgres
-      SEMAPHORE_DB_DIALECT: mysql
+      SEMAPHORE_DB_DIALECT: mysql # for postgres, change to: postgres
       SEMAPHORE_DB: semaphore
       SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
       SEMAPHORE_ADMIN_PASSWORD: changeme
@@ -194,7 +202,7 @@ Run the following command to start Semaphore with configured database (MySQL or 
 docker-compose up
 ```
 
-&#x20;Semaphore will be available via the following URL [https://localhost:3000](https://localhost:3000).
+&#x20;Semaphore will be available via the following URL [http://localhost:3000](http://localhost:3000).
 
 For more information about the Docker Compose, see the [Docker Compose reference](https://docs.docker.com/compose/).
 
@@ -211,11 +219,15 @@ The packages specified in the requirements file will be installed when the conta
 
 For more information about Python requirements files, see the [Pip Requirements File Format reference](https://pip.pypa.io/en/stable/reference/requirements-file-format/)
 
+----
+
 ### Binary file
 
 {% hint style="info" %}
 Python, Ansible and Git should be installed on your system.
 {% endhint %}
+
+Look into the [manual installation](installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 
 Download the `*.tar.gz` for your platform from [Releases page](https://github.com/ansible-semaphore/semaphore/releases). Unpack it and setup Semaphore using the following commands:
 
@@ -223,9 +235,9 @@ Download the `*.tar.gz` for your platform from [Releases page](https://github.co
 {% tab title="Linux (x64)" %}
 ```
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.8.75/semaphore_2.8.75_linux_amd64.tar.gz
+download/v2.9.44/semaphore_2.9.44_linux_amd64.tar.gz
 
-tar xf semaphore_2.8.75_linux_amd64.tar.gz
+tar xf semaphore_2.9.44_linux_amd64.tar.gz
 
 ./semaphore setup
 ```
@@ -234,9 +246,9 @@ tar xf semaphore_2.8.75_linux_amd64.tar.gz
 {% tab title="Linux (ARM64)" %}
 ```
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.8.75/semaphore_2.8.75_linux_arm64.tar.gz
+download/v2.9.44/semaphore_2.9.44_linux_arm64.tar.gz
 
-tar xf semaphore_2.8.75_linux_arm64.tar.gz
+tar xf semaphore_2.9.44_linux_arm64.tar.gz
 
 ./semaphore setup
 ```
@@ -246,7 +258,7 @@ tar xf semaphore_2.8.75_linux_arm64.tar.gz
 ```
 Invoke-WebRequest `
 -Uri ("https://github.com/ansible-semaphore/semaphore/releases/" +
-      "download/v2.8.75/semaphore_2.8.75_windows_amd64.zip") `
+      "download/v2.9.44/semaphore_2.9.44_windows_amd64.zip") `
 -OutFile semaphore.zip
 
 Expand-Archive -Path semaphore.zip  -DestinationPath ./
@@ -259,12 +271,16 @@ Expand-Archive -Path semaphore.zip  -DestinationPath ./
 Now you can run Semaphore:
 
 ```
-./semaphore service --config=./config.json
+./semaphore server --config=./config.json
 ```
 
 Semaphore will be available via the following URL [https://localhost:3000](https://localhost:3000).
 
+----
+
 ### Run as a service
+
+For more detailed information - look into the [extended Systemd service documentation](installation_manually.md#extended-systemd-service).
 
 If you installed Semaphore via a package manager, or by downloading a binary file, you should create the Semaphore service manually.
 
@@ -285,9 +301,10 @@ After=network-online.target
 [Service]
 Type=simple
 ExecReload=/bin/kill -HUP $MAINPID
-ExecStart=/path/to/semaphore service --config=/path/to/config.json
+ExecStart=/path/to/semaphore server --config=/path/to/config.json
 SyslogIdentifier=semaphore
 Restart=always
+RestartSec=10s
 
 [Install]
 WantedBy=multi-user.target
@@ -312,4 +329,3 @@ To make the Semaphore service auto start:
 ```
 sudo systemctl enable semaphore
 ```
-

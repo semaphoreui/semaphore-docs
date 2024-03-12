@@ -36,7 +36,25 @@ There are two ways:
 127.0.0.1 ansible_connection=ssh ansible_ssh_user=your_localhost_user
 ```
 
+## panic: pq: SSL is not enabled on the server
 
+This means that your Postgres doesn't work by SSL.
+
+### How to fix this
+
+Add opion `sslmode=disable` to configuration file:
+
+```
+	"postgres": {
+		"host": "localhost",
+		"user": "pastgres",
+		"pass": "pwd",
+		"name": "semaphore",
+		"options": {
+			"sslmode": "disable"
+		}
+	},
+```
 
 ## fatal: bad numeric config value '0' for 'GIT_TERMINAL_PROMPT': invalid unit
 
