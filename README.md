@@ -1,5 +1,5 @@
 ---
-description: Short intro about Ansible Semaphore
+# description: Short intro about Ansible Semaphore
 ---
 
 # Introduction
