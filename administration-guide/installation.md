@@ -39,7 +39,7 @@ sudo snap start semaphore
 
 You can check the status of the Semaphore service using the following command:
 
-```
+```bash
 sudo snap services semaphore
 ```
 
@@ -52,7 +52,7 @@ semaphore.semaphored  enabled  active   -
 
 After installation, you can set up Semaphore via [Snap Configuration](https://snapcraft.io/docs/configuration-in-snaps). Use the following command to see your Semaphore configuration:
 
-```
+```bash
 sudo snap get semaphore
 ```
 
@@ -198,7 +198,7 @@ You must specify following confidential variables:
 
 Run the following command to start Semaphore with configured database (MySQL or Postgres):
 
-```
+```bash
 docker-compose up
 ```
 
@@ -277,7 +277,7 @@ Create the systemd service file:
 Replace `/path/to/semaphore` and `/path/to/config.json` to your semaphore and config file path
 {% endhint %}
 
-```
+```bash
 sudo cat > /etc/systemd/system/semaphore.service <<EOF
 [Unit]
 Description=Semaphore Ansible
@@ -300,19 +300,19 @@ EOF
 
 Start the Semaphore service:
 
-```
+```bash
 sudo systemctl daemon-reload
 sudo systemctl start semaphore
 ```
 
 Check the Semaphore service status:
 
-```
+```bash
 sudo systemctl status semaphore
 ```
 
 To make the Semaphore service auto start:
 
-```
+```bash
 sudo systemctl enable semaphore
 ```
