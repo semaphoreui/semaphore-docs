@@ -13,9 +13,9 @@ fatal: [localhost]: FAILED! => changed=false
 
 ### Why this happens
 
-For more information about localhost use in Ansible, read in article [Implicit 'localhost'](https://docs.ansible.com/ansible/latest/inventory/implicit_localhost.html).
+For more information about localhost use in Ansible, read this article [Implicit 'localhost'](https://docs.ansible.com/ansible/latest/inventory/implicit_localhost.html).
 
-Ansible tries to gather facts locally, but Ansible is located in limited isolated container which doesn't allow this.
+Ansible tries to gather facts locally, but Ansible is located in a limited isolated container which doesn't allow this.
 
 ### How to fix this
 
@@ -30,7 +30,7 @@ There are two ways:
     - ...
 ```
 
-2. Explicitly set connection type to **ssh**:
+2. Explicitly set the connection type to **ssh**:
 ```
 [localhost]
 127.0.0.1 ansible_connection=ssh ansible_ssh_user=your_localhost_user
@@ -42,7 +42,7 @@ This means that your Postgres doesn't work by SSL.
 
 ### How to fix this
 
-Add opion `sslmode=disable` to configuration file:
+Add option `sslmode=disable` to the configuration file:
 
 ```json
 	"postgres": {
