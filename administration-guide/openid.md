@@ -67,7 +67,7 @@ Multiple OIDC providers can be configured in config.json:
 
 ## Google Auth
 
-### Semaphore config.json:
+`config.json`:
 ```json
 {
   "oidc_providers": {
@@ -89,7 +89,7 @@ Multiple OIDC providers can be configured in config.json:
 
 ## GitLab Auth
 
-### Semaphore config.json:
+`config.json`:
 ```json
 {
   "oidc_providers": {
@@ -107,9 +107,9 @@ Multiple OIDC providers can be configured in config.json:
 }
 ```
 
-## Authelia config example
+## Authelia Auth
 
-### Authelia config.yaml:
+Authelia `config.yaml`:
 ```yaml
 identity_providers:
   oidc:
@@ -127,7 +127,7 @@ identity_providers:
       userinfo_signing_algorithm: none
 ```
 
-### Semaphore config.json:
+Semaphore `config.json`:
 ```json
 "oidc_providers":  {
     "authelia": {
