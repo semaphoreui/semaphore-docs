@@ -4,9 +4,9 @@ description: OpenID Connect (OIDC) provider configuration
 
 # OpenID Connect (OIDC)
 
-Semaphore supports authentication via OpenID.
+Semaphore supports authentication via OpenID Connect (OIDC)
 
-Tutorial for GitLab: [https://www.ansible-semaphore.com/blog/openid-authentication/](https://www.ansible-semaphore.com/blog/openid-authentication/).
+Tutorial for GitLab: [https://semui.co/blog/openid-authentication/](https://semui.co/blog/openid-authentication/).
 
 Multiple OIDC providers can be configured in config.json:
 ```yaml
