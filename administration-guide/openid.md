@@ -38,9 +38,9 @@ Multiple OIDC providers can be configured in config.json:
 }
 ```
 
-## GitHub config exmaple
+## GitHub Auth
 
-### Semaphore config.json:
+`config.json`:
 ```json
 {
   "oidc_providers": {
@@ -65,7 +65,7 @@ Multiple OIDC providers can be configured in config.json:
 }
 ```
 
-## Google config exmaple
+## Google Auth
 
 ### Semaphore config.json:
 ```json
@@ -87,7 +87,7 @@ Multiple OIDC providers can be configured in config.json:
 }
 ```
 
-## GitLab config exmaple
+## GitLab Auth
 
 ### Semaphore config.json:
 ```json
@@ -106,6 +106,8 @@ Multiple OIDC providers can be configured in config.json:
   }
 }
 ```
+
+## Authelia config example
 
 ### Authelia config.yaml:
 ```yaml
