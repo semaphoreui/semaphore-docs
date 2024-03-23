@@ -88,6 +88,7 @@ Semaphore uses a `config.json` configuration file with following content:
   "email_alert": false,
   "telegram_alert": false,
   "slack_alert": false,
+  "slack_url": "",
   "ldap_enable": false,
   "ldap_needtls": false
 }
@@ -111,7 +112,7 @@ Semaphore uses a `config.json` configuration file with following content:
 | `interface`             | `interface`             | Useful if your server has multiple network interfaces                                                                                       |
 | `tmp_path`              | —                       | Path to directory where cloned repositories and generated files are stored. Default: /tmp/semaphore |
 | `access_key_encryption` | `access-key-encryption` | Secret key used for encrypting access keys in database. Read more in [Database encryption reference](https://docs.ansible-semaphore.com/administration-guide/security#database-encryption). |
-| `web_host`              | `web-host`              | Can be useful if you want to use Semaphore by the subpath, for example: [http://yourdomain.com/semaphore](http://yourdomain.com/semaphore). |
+| `web_host`              | `web-host`              | Can be useful if you want to use Semaphore by the subpath, for example: [http://yourdomain.com/semaphore](http://yourdomain.com/semaphore). Do not add a trailing `/`. |
 | `email_sender`          | `email-sender`          |                                                                                                                                             |
 | `email_host`            | `email-host`            |                                                                                                                                             |
 | `email_port`            | `email-port`            |                                                                                                                                             |
@@ -120,7 +121,8 @@ Semaphore uses a `config.json` configuration file with following content:
 | `email_password`        | `email-password`        |                                                                                                                                             |
 | `email_alert`           | `email-alert`           |                                                                                                                                             |
 | `telegram_alert`        | `telegram-alert`        |                                                                                                                                             |
-| `slack_alert`           | `slack-alert`           |                                                                                                                                             |
+| `slack_alert`           | `slack-alert`           | Set to True to enable pushing alerts to slack. It should be used in combination with `slack_url`                          |
+| `slack_url`             | `slack-url`             | The slack webhook url. Semaphore will used it to POST Slack formatted json alerts to the provided url.                                     |
 | `ldap_enable`           | `ldap-enable`           |                                                                                                                                             |
 | `ldap_needtls`          | `ldap-needtls`          |                                                                                                                                             |
 | `ldap_binddn`           | `ldap-binddn`           |                                                                                                                                             |
