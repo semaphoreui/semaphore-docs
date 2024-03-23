@@ -38,7 +38,7 @@ Multiple OIDC providers can be configured in config.json:
 }
 ```
 
-## GitLab, GitHub and Google config exmaple
+## GitHub config exmaple
 
 ### Semaphore config.json:
 ```json
@@ -60,7 +60,17 @@ Multiple OIDC providers can be configured in config.json:
 			"username_claim": "id",
 			"name_claim": "name",
 			"order": 1
-		},
+		}
+  }
+}
+```
+
+## Google config exmaple
+
+### Semaphore config.json:
+```json
+{
+  "oidc_providers": {
 		"google": {
 			"color": "blue",
 			"icon": "google",
@@ -72,7 +82,17 @@ Multiple OIDC providers can be configured in config.json:
 			"username_claim": "email",
 			"name_claim": "name",
 			"order": 2
-		},
+		}
+  }
+}
+```
+
+## GitLab config exmaple
+
+### Semaphore config.json:
+```json
+{
+  "oidc_providers": {
 		"gitlab": {
 			"display_name": "Sign in with GitLab",
 			"color": "orange",
