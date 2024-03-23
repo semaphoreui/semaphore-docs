@@ -58,8 +58,7 @@ Multiple OIDC providers can be configured in config.json:
 			"scopes": ["read:user", "user:email"],
 			"email_suffix": "github-your-domain.com", // this suffix will be used to make email for users with hidden email: <GITHUB_ID>@github-your-domain.com"
 			"username_claim": "id",
-			"name_claim": "name",
-			"order": 1
+			"name_claim": "name"
 		}
   }
 }
@@ -80,8 +79,7 @@ Multiple OIDC providers can be configured in config.json:
 			"client_secret": "GOCSPX-***",
 			"redirect_url": "https://your-domain.com/api/auth/oidc/google/redirect",
 			"username_claim": "email",
-			"name_claim": "name",
-			"order": 2
+			"name_claim": "name"
 		}
   }
 }
@@ -100,8 +98,7 @@ Multiple OIDC providers can be configured in config.json:
 			"provider_url": "https://gitlab.com",
 			"client_id": "***",
 			"client_secret": "gloas-***",
-			"redirect_url": "https://your-domain.com/api/auth/oidc/gitlab/redirect",
-			"order": 3
+			"redirect_url": "https://your-domain.com/api/auth/oidc/gitlab/redirect"
 		}
   }
 }
