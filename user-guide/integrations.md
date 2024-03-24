@@ -2,6 +2,8 @@
 
 Integrations allow establishing interaction between Semaphore and external services, such as GitHub and GitLab.
 
+![](<../.gitbook/assets/integrations_1.jpg>)
+
 Using integration, you can trigger a specific template by calling a special endpoint (alias), for which you can configure one of the following authentication methods:
 * GitHub Webhooks
 * Token
