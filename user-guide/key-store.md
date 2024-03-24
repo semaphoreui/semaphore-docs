@@ -30,8 +30,9 @@ Login With Password is a username and password/access token combination that can
 * Authenticate to remote Git Repositories over HTTPS (although SSH is more secure)
 * Unlock Ansible vaults
 
+{% hint style="info" %}
 This type of secret can be used as Personal Access Token (PAT) or secret string. Simply leave the Login field empty.
-
+{% endhint %}
 
 ### None
 This is used as a filler for Repos that do not require authentication, like an Open-Source Repository on GitLab.
