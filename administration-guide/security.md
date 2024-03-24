@@ -1,4 +1,3 @@
-![image](https://github.com/semaphoreui/ansible-semaphore-docs/assets/914224/00a674c8-1f6b-4e71-8703-582c12a0ff08)# Security
 
 ----
 
