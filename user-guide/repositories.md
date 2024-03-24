@@ -3,9 +3,9 @@
 A Repository is a place to store and manage Ansible content like playbooks and roles.
 
 Semaphore understands Repositories that are:
-  * a local Git Repository (git://)
-  * a local file system (file://)
-  * a remote Git Repository that is accessed over HTTPS (https://), or SSH(ssh://)
+  * a local Git Repository (`git://`)
+  * a local file system (`file://`)
+  * a remote Git Repository that is accessed over HTTPS (`https://`), or SSH(`ssh://`)
 
 All Task Templates require a Repository in order to run.
 
@@ -22,10 +22,10 @@ For Remote Repositories that do not have authentication, you can create a Key wi
 3. Configure the Repository
   * Name Repository
   * Add the URL. The URL must start with the following:
-    * https:// for a remote Git Repository accessed over HTTPS
-    * ssh:// for a remote Git Repository accessed over SSH
-    * file:// for a local folder on the file system
-    * git:// for a local Git Repository
+    * `https://` for a remote Git Repository accessed over HTTPS
+    * `ssh://` for a remote Git Repository accessed over SSH
+    * `file://` for a local folder on the file system
+    * `git://` for a local Git Repository
   * Set the branch of the Repository, if you are not sure what it should be, it is probably master or main
   * Select the Access Key you configured prior to setting up this Repository
 4. Click Save once everything is configured
