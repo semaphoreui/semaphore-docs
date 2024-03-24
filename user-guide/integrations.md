@@ -1,6 +1,6 @@
 # Integrations
 
-Integrations enable Semaphore to interact with third-party services, such as GitHub and GitLab.
+Integrations allow establishing interaction between Semaphore and external services, such as GitHub and GitLab.
 
 ![](<../.gitbook/assets/integrations_1.jpg>)
 
