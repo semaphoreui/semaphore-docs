@@ -14,10 +14,8 @@ The alias represents a URL in the following format: `/api/integrations/<random_s
 
 ## Matchers
 
+With matchers, you can define parameters of the incoming request. When these parameters match, the template will be invoked.
 
 ## Value Extractors
 
-
-
-![](<../.gitbook/assets/integrations_1.jpg>)
-
+With an extractor, you can extract the necessary data from the incoming request and pass it to the task as environment variables.
