@@ -1,4 +1,4 @@
-# Security
+![image](https://github.com/semaphoreui/ansible-semaphore-docs/assets/914224/00a674c8-1f6b-4e71-8703-582c12a0ff08)# Security
 
 ----
 
@@ -80,6 +80,30 @@ server {
     proxy_set_header Origin "";
   }
 }
+```
+
+##### Apache
+
+```
+<VirtualHost *:443>
+
+    ServerName yourapp.test
+
+    ServerAdmin webmaster@localhost
+	
+    SSLEngine on
+    SSLCertificateFile /path/to/www_yoursite_com.crt
+    SSLCertificateKeyFile /path/to/www_yoursite_com.key
+
+    <Location />
+        ProxyPass http://127.0.0.1:3000/
+        ProxyPassReverse http://127.0.0.1:3000/
+    </Location>
+
+    <Location /api/ws>
+        ProxyPass ws://127.0.0.1:3000/api/ws/
+    </Location>
+</VirtualHost>
 ```
 
 ##### Others
