@@ -18,10 +18,15 @@ Why use encrypted connections? See: [Article](https://www.cloudflare.com/learnin
 
 Options you have:
 
-* Reverse Proxy
 * VPN
+* Reverse Proxy with SSL
 
-### Reverse Proxy
+
+## VPN
+
+You can also use a Client-to-Site VPN, that terminates on the Semaphore server, to encrypt & secure the connection.
+
+## Reverse Proxy with SSL
 
 Semaphore doesn't support SSL/TLS on its own.
 
@@ -31,7 +36,7 @@ You need to use a reverse proxy like
 [HAProxy](https://www.haproxy.com/documentation/hapee/latest/onepage/)
  in front of Semaphore to serve secure connections.
 
-#### NGINX
+### NGINX
 
 Configuration example:
 
@@ -80,7 +85,7 @@ server {
 }
 ```
 
-#### Apache
+### Apache
 
 ```
 <VirtualHost *:443>
@@ -104,11 +109,6 @@ server {
 </VirtualHost>
 ```
 
-#### Others
+### Others
 
 If you want to use any other reverse proxy - make sure to also forward websocket connections on the `/api/ws` route!
-
-
-### VPN
-
-You can also use a Client-to-Site VPN, that terminates on the Semaphore server, to encrypt & secure the connection.
