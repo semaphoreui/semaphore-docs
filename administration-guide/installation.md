@@ -78,7 +78,7 @@ Here are several installation commands, depending on the package manager:
 {% tab title="Debian / Ubuntu (x64)" %}
 ```bash
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.9.44/semaphore_2.9.44_linux_amd64.deb
+download/v2.9.58/semaphore_2.9.44_linux_amd64.deb
 
 sudo dpkg -i semaphore_2.9.44_linux_amd64.deb
 ```
@@ -87,7 +87,7 @@ sudo dpkg -i semaphore_2.9.44_linux_amd64.deb
 {% tab title="Debian / Ubuntu (ARM64)" %}
 ```
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.9.44/semaphore_2.9.44_linux_arm64.deb
+download/v2.9.58/semaphore_2.9.44_linux_arm64.deb
 
 sudo dpkg -i semaphore_2.9.44_linux_arm64.deb
 ```
@@ -96,7 +96,7 @@ sudo dpkg -i semaphore_2.9.44_linux_arm64.deb
 {% tab title="CentOS (x64)" %}
 ```
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.9.44/semaphore_2.9.44_linux_amd64.rpm
+download/v2.9.58/semaphore_2.9.44_linux_amd64.rpm
 
 sudo yum install semaphore_2.9.44_linux_amd64.rpm
 ```
@@ -105,7 +105,7 @@ sudo yum install semaphore_2.9.44_linux_amd64.rpm
 {% tab title="CentOS (ARM64)" %}
 ```
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.9.44/semaphore_2.9.44_linux_arm64.rpm
+download/v2.9.58/semaphore_2.9.44_linux_arm64.rpm
 
 sudo yum install semaphore_2.9.44_linux_arm64.rpm
 ```
@@ -222,7 +222,7 @@ Download the `*.tar.gz` for your platform from [Releases page](https://github.co
 {% tab title="Linux (x64)" %}
 ```
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.9.44/semaphore_2.9.44_linux_amd64.tar.gz
+download/v2.9.58/semaphore_2.9.44_linux_amd64.tar.gz
 
 tar xf semaphore_2.9.44_linux_amd64.tar.gz
 
@@ -233,7 +233,7 @@ tar xf semaphore_2.9.44_linux_amd64.tar.gz
 {% tab title="Linux (ARM64)" %}
 ```
 wget https://github.com/ansible-semaphore/semaphore/releases/\
-download/v2.9.44/semaphore_2.9.44_linux_arm64.tar.gz
+download/v2.9.58/semaphore_2.9.44_linux_arm64.tar.gz
 
 tar xf semaphore_2.9.44_linux_arm64.tar.gz
 
@@ -245,7 +245,7 @@ tar xf semaphore_2.9.44_linux_arm64.tar.gz
 ```
 Invoke-WebRequest `
 -Uri ("https://github.com/ansible-semaphore/semaphore/releases/" +
-      "download/v2.9.44/semaphore_2.9.44_windows_amd64.zip") `
+      "download/v2.9.58/semaphore_2.9.44_windows_amd64.zip") `
 -OutFile semaphore.zip
 
 Expand-Archive -Path semaphore.zip  -DestinationPath ./

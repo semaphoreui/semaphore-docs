@@ -24,7 +24,7 @@ Options you have:
 
 ## VPN
 
-You can also use a Client-to-Site VPN, that terminates on the Semaphore server, to encrypt & secure the connection.
+You can use a Client-to-Site VPN, that terminates on the Semaphore server, to encrypt & secure the connection.
 
 ## Reverse Proxy with SSL
 
