@@ -35,7 +35,7 @@ There are two ways:
 [localhost]
 127.0.0.1 ansible_connection=ssh ansible_ssh_user=your_localhost_user
 ```
-
+---
 ## panic: pq: SSL is not enabled on the server
 
 This means that your Postgres doesn't work by SSL.
@@ -55,7 +55,7 @@ Add option `sslmode=disable` to the configuration file:
 		}
 	},
 ```
-
+---
 ## fatal: bad numeric config value '0' for 'GIT_TERMINAL_PROMPT': invalid unit
 
 This means that you are trying to access a repository over HTTPS that requires authentication.
@@ -68,6 +68,7 @@ This means that you are trying to access a repository over HTTPS that requires a
 * Specify the password. You can't use your account password for GitHub/BitBucket, you should use a Personal Access Token (PAT) instead of it. Read more [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 * After creating the key, go to the **Repositories** screen, find your repository and specify the key.
 
+---
 
 ## unable to read LDAP response packet: unexpected EOF
 
@@ -82,6 +83,8 @@ Enable TLS in your `config.json` file:
 "ldap_needtls": true
 ...
 ```
+
+---
 
 ## LDAP Result Code 49 "Invalid Credentials"
 
@@ -104,6 +107,8 @@ It will ask interactively for the password and should return code **0** and echo
 You also can read the following articles: 
 * [ldapsearch: Invalid credentials (49)](https://serverfault.com/q/771549/443463)
 * [https://github.com/ansible-semaphore/semaphore/issues/906](https://github.com/ansible-semaphore/semaphore/issues/906)
+
+---
 
 ## LDAP Result Code 32 "No Such Object"
 
