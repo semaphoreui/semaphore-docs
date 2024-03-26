@@ -15,13 +15,10 @@ If you need assistance quickly generating a key and placing it on your host, [he
 
 For Git Repositories that use SSH authentication, the Git Repository you are trying to clone from needs to have your public key associated to the private key.
 
-Below are links to the docs for some common Git Repositories
-
-[GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
-
-[GitLab](https://docs.gitlab.com/ee/user/ssh.html)
-
-[Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
+Below are links to the docs for some common Git Repositories:
+* [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+* [GitLab](https://docs.gitlab.com/ee/user/ssh.html)
+* [Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
 
 ### Login With Password
 Login With Password is a username and password/access token combination that can be used to do the following:
