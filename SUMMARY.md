@@ -5,7 +5,7 @@
 ## Administration Guide
 
 * [Installation](administration-guide/installation.md)
-* [Manual Installation](administration-guide/installation_manually.md)
+* [Manual Installation](administration-guide/installation\_manually.md)
 * [Configuration](administration-guide/configuration.md)
 * [Upgrading](administration-guide/upgrading.md)
 * [Security](administration-guide/security.md)
@@ -20,11 +20,12 @@
 ## User Guide
 
 * [Projects](user-guide/projects.md)
-* [Task Templates](user-guide/task-templates.md)
+* [Task Templates](user-guide/task-templates/README.md)
+  * [Terraform](user-guide/task-templates/terraform.md)
+  * [Bash](user-guide/task-templates/bash.md)
 * [Tasks](user-guide/tasks.md)
 * [Key Store](user-guide/key-store.md)
 * [Inventory](user-guide/inventory.md)
 * [Environment](user-guide/environment.md)
 * [Repositories](user-guide/repositories.md)
 * [Integrations](user-guide/integrations.md)
-
