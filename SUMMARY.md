@@ -15,8 +15,7 @@
 * [API](administration-guide/api.md)
 * [CI/CD](administration-guide/cicd.md)
 * [Runners](administration-guide/runners.md)
-* * [Troubleshooting](administration-guide/runners_troubleshooting.md)
-* [Troubleshooting](administration-guide/troubleshooting.md)
+* [🤯 Troubleshooting](administration-guide/troubleshooting.md)
 
 ## User Guide
 
