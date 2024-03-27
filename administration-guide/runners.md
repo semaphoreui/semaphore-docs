@@ -1,7 +1,3 @@
----
-description: How and why to use Semaphore runners
----
-
 # Runners
 
 Runners enable running tasks on a separate server from Ansible Semaphore.
