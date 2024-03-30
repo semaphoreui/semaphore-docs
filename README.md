@@ -28,9 +28,9 @@ With Semaphore you can:
 * Delegate other users the running of playbooks
 * Get notifications about playbook runs
 
-Source code: [https://github.com/ansible-semaphore/semaphore](https://github.com/ansible-semaphore/semaphore).
+Source code: [https://github.com/semaphoreui/semaphore](https://github.com/semaphoreui/semaphore).
 
-Issue tracking: [https://github.com/ansible-semaphore/semaphore/issues](https://github.com/ansible-semaphore/semaphore/issues).
+Issue tracking: [https://github.com/semaphoreui/semaphore/issues](https://github.com/semaphoreui/semaphore/issues).
 
 Docker: [https://hub.docker.com/r/semaphoreui/semaphore](https://hub.docker.com/r/semaphoreui/semaphore).
 

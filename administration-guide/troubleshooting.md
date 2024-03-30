@@ -106,7 +106,7 @@ It will ask interactively for the password and should return code **0** and echo
 
 You also can read the following articles: 
 * [ldapsearch: Invalid credentials (49)](https://serverfault.com/q/771549/443463)
-* [https://github.com/ansible-semaphore/semaphore/issues/906](https://github.com/ansible-semaphore/semaphore/issues/906)
+* [https://github.com/semaphoreui/semaphore/issues/906](https://github.com/semaphoreui/semaphore/issues/906)
 
 ---
 

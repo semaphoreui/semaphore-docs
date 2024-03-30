@@ -17,7 +17,7 @@ sudo snap refresh semaphore
 
 ### Package manager
 
-Download a package file from [Releases page](https://github.com/ansible-semaphore/semaphore/releases).
+Download a package file from [Releases page](https://github.com/semaphoreui/semaphore/releases).
 
 &#x20;`*.deb` for Debian and Ubuntu, `*.rpm` for CentOS and RedHat.&#x20;
 
@@ -26,7 +26,7 @@ Install it using the package manager.
 {% tabs %}
 {% tab title="Debian / Ubuntu (x64)" %}
 ```
-wget https://github.com/ansible-semaphore/semaphore/releases/\
+wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_amd64.deb
 
 sudo dpkg -i semaphore_2.9.44_linux_amd64.deb
@@ -35,7 +35,7 @@ sudo dpkg -i semaphore_2.9.44_linux_amd64.deb
 
 {% tab title="Debian / Ubuntu (ARM64)" %}
 ```
-wget https://github.com/ansible-semaphore/semaphore/releases/\
+wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_arm64.deb
 
 sudo dpkg -i semaphore_2.9.44_linux_arm64.deb
@@ -44,7 +44,7 @@ sudo dpkg -i semaphore_2.9.44_linux_arm64.deb
 
 {% tab title="CentOS (x64)" %}
 ```
-wget https://github.com/ansible-semaphore/semaphore/releases/\
+wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_amd64.rpm
 
 sudo yum install semaphore_2.9.44_linux_amd64.rpm
@@ -53,7 +53,7 @@ sudo yum install semaphore_2.9.44_linux_amd64.rpm
 
 {% tab title="CentOS (ARM64)" %}
 ```
-wget https://github.com/ansible-semaphore/semaphore/releases/\
+wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_arm64.rpm
 
 sudo yum install semaphore_2.9.44_linux_arm64.rpm
@@ -69,12 +69,12 @@ Coming soon
 
 ### Binary
 
-Download a `*.tar.gz` for your platform from [Releases page](https://github.com/ansible-semaphore/semaphore/releases). Unpack the binary to the directory where your old Semaphore binary is located.
+Download a `*.tar.gz` for your platform from [Releases page](https://github.com/semaphoreui/semaphore/releases). Unpack the binary to the directory where your old Semaphore binary is located.
 
 {% tabs %}
 {% tab title="Linux (x64)" %}
 ```
-wget https://github.com/ansible-semaphore/semaphore/releases/\
+wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_amd64.tar.gz
 
 tar xf semaphore_2.9.44_linux_amd64.tar.gz
@@ -83,7 +83,7 @@ tar xf semaphore_2.9.44_linux_amd64.tar.gz
 
 {% tab title="Linux (ARM64)" %}
 ```
-wget https://github.com/ansible-semaphore/semaphore/releases/\
+wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_arm64.tar.gz
 
 tar xf semaphore_2.9.44_linux_arm64.tar.gz
@@ -93,7 +93,7 @@ tar xf semaphore_2.9.44_linux_arm64.tar.gz
 {% tab title="Windows (x64)" %}
 ```
 Invoke-WebRequest `
--Uri ("https://github.com/ansible-semaphore/semaphore/releases/" +
+-Uri ("https://github.com/semaphoreui/semaphore/releases/" +
       "download/v2.9.58/semaphore_2.9.44_windows_amd64.zip") `
 -OutFile semaphore.zip
 
