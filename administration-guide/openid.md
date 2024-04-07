@@ -23,6 +23,7 @@ Multiple OIDC providers can be configured in config.json:
       # "username_claim": "preferred_username",  # default value, id_token claim to use as the username
       # "name_claim": "preferred_username",  # default value, id_token claim to use as the display name
       # "email_claim": "email"  # default value, id_token claim to use as the email address
+
       # If the OIDC provider does not offer a /.well-known/openid-configuration, the endpoints can be
       # configured manually.  In this case, the "provider_url" must be omitted.
       # "endpoint": {
@@ -34,72 +35,6 @@ Multiple OIDC providers can be configured in config.json:
       #   "algorithms": ["HS256", ...]
       # }
     }
-  }
-}
-```
-
-## GitHub Auth
-
-`config.json`:
-```json
-{
-  "oidc_providers": {
-		"github": {
-			"icon": "github",
-			"display_name": "Sign in with GitHub",
-			"client_id": "***",
-			"client_secret": "***",
-			"redirect_url": "https://your-domain.com/api/auth/oidc/github/redirect",
-			"endpoint": {
-				"auth": "https://github.com/login/oauth/authorize",
-				"token": "https://github.com/login/oauth/access_token",
-				"userinfo": "https://api.github.com/user"
-			},
-			"scopes": ["read:user", "user:email"],
-			"email_suffix": "github-your-domain.com", // this suffix will be used to make email for users with hidden email: <GITHUB_ID>@github-your-domain.com"
-			"username_claim": "id",
-			"name_claim": "name"
-		}
-  }
-}
-```
-
-## Google Auth
-
-`config.json`:
-```json
-{
-  "oidc_providers": {
-		"google": {
-			"color": "blue",
-			"icon": "google",
-			"display_name": "Sign in with Google",
-			"provider_url": "https://accounts.google.com",
-			"client_id": "***.apps.googleusercontent.com",
-			"client_secret": "GOCSPX-***",
-			"redirect_url": "https://your-domain.com/api/auth/oidc/google/redirect",
-			"username_claim": "email",
-			"name_claim": "name"
-		}
-  }
-}
-```
-
-## GitLab Auth
-
-`config.json`:
-```json
-{
-  "oidc_providers": {
-		"gitlab": {
-			"display_name": "Sign in with GitLab",
-			"color": "orange",
-			"icon": "gitlab",
-			"provider_url": "https://gitlab.com",
-			"client_id": "***",
-			"client_secret": "gloas-***",
-			"redirect_url": "https://your-domain.com/api/auth/oidc/gitlab/redirect"
-		}
   }
 }
 ```
