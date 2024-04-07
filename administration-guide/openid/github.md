@@ -1,4 +1,4 @@
-## GitHub Authentication
+
 
 `config.json`:
 ```json
@@ -16,9 +16,10 @@
 				"userinfo": "https://api.github.com/user"
 			},
 			"scopes": ["read:user", "user:email"],
-      
-			"username_claim": "id",
-			"name_claim": "name"
+			"username_claim": "|",
+			"email_claim": "email | {{ .id }}@github.your-domain.com",
+			"name_claim": "name",
+			"order": 1
 		}
   }
 }
