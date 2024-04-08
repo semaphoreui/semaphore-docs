@@ -1,5 +1,3 @@
-
-
 `config.json`:
 ```json
 {

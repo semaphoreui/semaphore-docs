@@ -11,9 +11,10 @@
 			"provider_url": "https://accounts.google.com",
 			"client_id": "***.apps.googleusercontent.com",
 			"client_secret": "GOCSPX-***",
-			"redirect_url": "https://your-domain.com/api/auth/oidc/google/redirect",
-			"username_claim": "email",
-			"name_claim": "name"
+			"redirect_url": "https://cloud.semui.co/api/auth/oidc/google/redirect",
+			"username_claim": "|",
+			"name_claim": "name",
+			"order": 2
 		}
   }
 }
