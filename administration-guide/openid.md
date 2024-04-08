@@ -48,9 +48,9 @@ All SSO provider options:
 | `redirect_url` |  |
 | `provider_url` |  |
 | `scopes` |  |
-| `username_claim` | Username claim expression[*](). |
-| `email_claim` | Email claim expression[*](). |
-| `name_claim` | Profile Name claim expression[*](). |
+| `username_claim` | Username claim expression[*](/administration-guide/openid#claim-expression). |
+| `email_claim` | Email claim expression[*](/administration-guide/openid#claim-expression). |
+| `name_claim` | Profile Name claim expression[*](/administration-guide/openid#claim-expression). |
 | `order` | Position of the provider button on the Sign in screen. |
 | `endpoint.issuer` |  |
 | `endpoint.auth` |  |
