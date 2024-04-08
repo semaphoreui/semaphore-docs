@@ -71,7 +71,7 @@ email | {{ .username }}@your-domain.com
 Semaphore is attempting to claim the email field first.
 If it is empty, the expression following it is executed.
 
----
+## Sign in screen
 
 For each of the configured providers, an additional login button is added to the login page:
 
