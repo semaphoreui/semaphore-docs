@@ -73,7 +73,7 @@ If it is empty, the expression following it is executed.
 
 ---
 
-Expression `"username_claim": "|"` generate random `username` for each user which logged in by the provider. It is useful to prevent username conflicts if you have several OIDC providers.
+The expression `"username_claim": "|"` generates a random `username` for each user who logs in through the provider.
 
 ## Sign in screen
 
