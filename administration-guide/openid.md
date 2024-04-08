@@ -41,17 +41,17 @@ All SSO provider options:
 | `display_name` | Provider name which displayed on Login screen. |
 | `icon` | [MDI-icon](https://pictogrammers.com/library/mdi/) which displayed before of provider name on Login screen.|
 | `color` | Provider name which displayed on Login screen. |
-| `client_id` |  |
-| `client_id_file` |  |
-| `client_secret` |  |
-| `client_secret_file` |  |
+| `client_id` | Provider client ID. |
+| `client_id_file` | The path to the file where the provider's client ID is stored. Has less priorty then `client_id`. |
+| `client_secret` | Provider client Secret.  |
+| `client_secret_file` | The path to the file where the provider's client secret is stored. Has less priorty then `client_secret`. |
 | `redirect_url` |  |
 | `provider_url` |  |
 | `scopes` |  |
-| `username_claim` |  |
-| `email_claim` |  |
-| `name_claim` |  |
-| `order` |  |
+| `username_claim` | Username claim expression[*](). |
+| `email_claim` | Email claim expression[*](). |
+| `name_claim` | Profile Name claim expression[*](). |
+| `order` | Position of the provider button on the Sign in screen. |
 | `endpoint.issuer` |  |
 | `endpoint.auth` |  |
 | `endpoint.token` |  |
@@ -60,6 +60,18 @@ All SSO provider options:
 | `endpoint.algorithms` |  |
 
 
+### *Claim expression
+
+Example of claim expression:
+
+```
+email | {{ .username }}@your-domain.com
+```
+
+Semaphore is attempting to claim the email field first.
+If it is empty, the expression following it is executed.
+
+---
 
 For each of the configured providers, an additional login button is added to the login page:
 
