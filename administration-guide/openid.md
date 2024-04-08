@@ -71,9 +71,9 @@ email | {{ .username }}@your-domain.com
 Semaphore is attempting to claim the email field first.
 If it is empty, the expression following it is executed.
 
----
-
+{% hint style="info" %}
 The expression `"username_claim": "|"` generates a random `username` for each user who logs in through the provider.
+{% endhint %}
 
 ## Sign in screen
 
