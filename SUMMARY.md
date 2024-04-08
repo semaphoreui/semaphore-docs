@@ -15,6 +15,7 @@
   * [GitHub](administration-guide/openid/github.md)
   * [Google](administration-guide/openid/google.md)
   * [GitLab](administration-guide/openid/gitlab.md)
+  * [Authelia](administration-guide/openid/authelia.md)
 * [API](administration-guide/api.md)
 * [CI/CD](administration-guide/cicd.md)
 * [Runners](administration-guide/runners.md)

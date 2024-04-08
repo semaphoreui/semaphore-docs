@@ -1,5 +1,3 @@
-## Google Auth
-
 `config.json`:
 ```json
 {

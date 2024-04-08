@@ -1,6 +1,3 @@
-
-## GitLab Auth
-
 `config.json`:
 ```json
 {
