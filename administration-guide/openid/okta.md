@@ -9,7 +9,7 @@
       "client_id":"***",
       "client_secret":"***",
       "redirect_url":"http://localhost:3000/api/auth/oidc/okta/redirect/"
-    },
+    }
   }
 }
 ```
