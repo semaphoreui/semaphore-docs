@@ -11,7 +11,7 @@ Links:
 * [GitHub config](/administration-guide/openid/github.md).
 * [Google config](/administration-guide/openid/gogole.md).
 * [GitLab config](/administration-guide/openid/gitlab.md).
-* [GitHub config](/administration-guide/openid/github.md).
+* [Authelia config](/administration-guide/openid/authelia.md).
 * [Tutorial for GitLab](https://semui.co/blog/openid-authentication/).
 
 <!-- Tutorial for GitLab: [https://semui.co/blog/openid-authentication/](https://semui.co/blog/openid-authentication/). -->
