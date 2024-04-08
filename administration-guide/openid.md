@@ -16,6 +16,26 @@ Links:
 
 <!-- Tutorial for GitLab: [https://semui.co/blog/openid-authentication/](https://semui.co/blog/openid-authentication/). -->
 
+Example of SSO provider configuration:
+
+```json
+{
+  "oidc_providers": {
+    "mysso": {
+      "display_name": "Sign in with MySSO",
+      "color": "orange",
+      "icon": "login",
+      "provider_url": "https://mysso-provider.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/mysso/redirect"
+    }
+  }
+}
+```
+
+All SSO provider options:
+
 | Parameter | Description |
 |-----------|-------------|
 | `display_name` | Provider name which displayed on Login screen. |
