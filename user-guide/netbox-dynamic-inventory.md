@@ -4,10 +4,6 @@
 ![Netbox Badge](https://img.shields.io/badge/Netbox-%23F00.svg?style=for-the-badge&logo=netbox&logoColor=white)
 ![Semaphore Badge](https://img.shields.io/badge/Semaphore-%23187EBB.svg?style=for-the-badge&logo=semaphore&logoColor=white)
 
-## 🌟 Introduction
-
-This project was inspired by my lengthy search for a reliable way to integrate Netbox's dynamic inventory into Semaphore. Throughout my research, I found many suggested methods to be either overly complex or unstable. Finally, I discovered a simple and effective use of the `netbox.netbox.nb_inventory` plugin built into Ansible, which greatly simplified the process.
-
 ## 🛠 Key Features
 
 This repository demonstrates the use of the `netbox.netbox.nb_inventory` plugin to create a dynamic inventory in Semaphore. It enables automatic synchronization of data from Netbox, simplifying the management of your infrastructure and the execution of Ansible playbooks.
