@@ -12,6 +12,9 @@ Links:
 * [Google config](/administration-guide/openid/gogole.md).
 * [GitLab config](/administration-guide/openid/gitlab.md).
 * [Authelia config](/administration-guide/openid/authelia.md).
+* [Authentik config](/administration-guide/openid/authentik.md).
+* [Keycloak config](/administration-guide/openid/keycloak.md).
+* [Okta config](/administration-guide/openid/okta.md).
 * [Tutorial for GitLab](https://semui.co/blog/openid-authentication/).
 
 <!-- Tutorial for GitLab: [https://semui.co/blog/openid-authentication/](https://semui.co/blog/openid-authentication/). -->
@@ -48,9 +51,9 @@ All SSO provider options:
 | `redirect_url` |  |
 | `provider_url` |  |
 | `scopes` |  |
-| `username_claim` | Username claim expression[*](/administration-guide/openid#claim-expression). |
-| `email_claim` | Email claim expression[*](/administration-guide/openid#claim-expression). |
-| `name_claim` | Profile Name claim expression[*](/administration-guide/openid#claim-expression). |
+| `username_claim` | Username claim expression[*](administration-guide/openid#claim-expression). |
+| `email_claim` | Email claim expression[*](administration-guide/openid#claim-expression). |
+| `name_claim` | Profile Name claim expression[*](administration-guide/openid#claim-expression). |
 | `order` | Position of the provider button on the Sign in screen. |
 | `endpoint.issuer` |  |
 | `endpoint.auth` |  |
