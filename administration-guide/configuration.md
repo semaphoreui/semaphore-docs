@@ -43,7 +43,7 @@ Semaphore uses a `config.json` configuration file with following content:
 ```javascript
 {
   "bolt": {
-    "host": "/home/ubuntu/semaphore.bolt",
+    "host": "/home/ubuntu/semaphore.bolt"
   },
   "mysql": {
     "host": "localhost",
