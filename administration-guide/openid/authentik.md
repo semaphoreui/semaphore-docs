@@ -16,3 +16,5 @@
   }
 }
 ```
+
+Discussion on GitHub: [#1663](https://github.com/semaphoreui/semaphore/discussions/1663).
