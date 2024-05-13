@@ -9,12 +9,12 @@ Semaphore supports authentication via OpenID Connect (OIDC).
 Links:
 
 * [GitHub config](openid/github.md).
-* [Google config](administration-guide/openid/gogole.md).
-* [GitLab config](administration-guide/openid/gitlab.md).
-* [Authelia config](administration-guide/openid/authelia.md).
-* [Authentik config](administration-guide/openid/authentik.md).
-* [Keycloak config](administration-guide/openid/keycloak.md).
-* [Okta config](administration-guide/openid/okta.md).
+* [Google config](openid/gogole.md).
+* [GitLab config](openid/gitlab.md).
+* [Authelia config](openid/authelia.md).
+* [Authentik config](openid/authentik.md).
+* [Keycloak config](openid/keycloak.md).
+* [Okta config](openid/okta.md).
 * [Tutorial for GitLab](https://semui.co/blog/openid-authentication/).
 
 Example of SSO provider configuration:
@@ -49,9 +49,9 @@ All SSO provider options:
 | `redirect_url`        |                                                                                                             |
 | `provider_url`        |                                                                                                             |
 | `scopes`              |                                                                                                             |
-| `username_claim`      | Username claim expression[\*](administration-guide/openid/#claim-expression).                               |
-| `email_claim`         | Email claim expression[\*](administration-guide/openid/#claim-expression).                                  |
-| `name_claim`          | Profile Name claim expression[\*](administration-guide/openid/#claim-expression).                           |
+| `username_claim`      | Username claim expression[\*](#claim-expression).                               |
+| `email_claim`         | Email claim expression[\*](#claim-expression).                                  |
+| `name_claim`          | Profile Name claim expression[\*](openid/#claim-expression).                           |
 | `order`               | Position of the provider button on the Sign in screen.                                                      |
 | `endpoint.issuer`     |                                                                                                             |
 | `endpoint.auth`       |                                                                                                             |
