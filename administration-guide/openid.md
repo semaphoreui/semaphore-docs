@@ -15,7 +15,6 @@ Links:
 * [Authentik config](openid/authentik.md).
 * [Keycloak config](openid/keycloak.md).
 * [Okta config](openid/okta.md).
-* [Tutorial for GitLab](https://semui.co/blog/openid-authentication/).
 
 Example of SSO provider configuration:
 
