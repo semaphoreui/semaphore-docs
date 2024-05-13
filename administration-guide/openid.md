@@ -8,13 +8,13 @@ Semaphore supports authentication via OpenID Connect (OIDC).
 
 Links:
 
-* [GitHub config](/administration-guide/openid/github.md).
-* [Google config](/administration-guide/openid/gogole.md).
-* [GitLab config](/administration-guide/openid/gitlab.md).
-* [Authelia config](/administration-guide/openid/authelia.md).
-* [Authentik config](/administration-guide/openid/authentik.md).
-* [Keycloak config](/administration-guide/openid/keycloak.md).
-* [Okta config](/administration-guide/openid/okta.md).
+* [GitHub config](administration-guide/openid/github.md).
+* [Google config](administration-guide/openid/gogole.md).
+* [GitLab config](administration-guide/openid/gitlab.md).
+* [Authelia config](administration-guide/openid/authelia.md).
+* [Authentik config](administration-guide/openid/authentik.md).
+* [Keycloak config](administration-guide/openid/keycloak.md).
+* [Okta config](administration-guide/openid/okta.md).
 * [Tutorial for GitLab](https://semui.co/blog/openid-authentication/).
 
 <!-- Tutorial for GitLab: [https://semui.co/blog/openid-authentication/](https://semui.co/blog/openid-authentication/). -->
