@@ -9,7 +9,7 @@ Semaphore supports authentication via OpenID Connect (OIDC).
 Links:
 
 * [GitHub config](openid/github.md).
-* [Google config](openid/gogole.md).
+* [Google config](openid/google.md).
 * [GitLab config](openid/gitlab.md).
 * [Authelia config](openid/authelia.md).
 * [Authentik config](openid/authentik.md).
