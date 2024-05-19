@@ -14,7 +14,7 @@ After creation you will see access token. Copy it to clipboard. Is is will be re
 
 2. Choose `Login with password` as type of the key.
 
-3. Enter `x-token-auth` as **Login** and enter previously coppied key to **Password** field. Save the key.<br>![](<../../.gitbook/assets/bitbucket_access_token_3.webp>)
+3. Enter `x-token-auth` as **Login** and enter previously coppied key to **Password** field. Save the key.<br><br>![](<../../.gitbook/assets/bitbucket_access_token_3.webp>)
 
 4. Go to **Repositories** section and click **New Repository** button.
 
