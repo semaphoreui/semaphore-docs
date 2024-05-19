@@ -29,8 +29,8 @@
 
 * [Projects](user-guide/projects.md)
 * [Task Templates](user-guide/task-templates/README.md)
-  * [💲 Terraform](user-guide/task-templates/terraform.md)
-  * [💲 Bash](user-guide/task-templates/bash.md)
+  * [🌟 Terraform](user-guide/task-templates/terraform.md)
+  * [🌟 Bash](user-guide/task-templates/bash.md)
 * [Tasks](user-guide/tasks.md)
 * [Key Store](user-guide/key-store.md)
 * [Inventory](user-guide/inventory.md)

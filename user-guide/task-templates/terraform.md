@@ -12,7 +12,7 @@ layout:
     visible: true
 ---
 
-# 💲 Terraform
+# 🌟 Terraform
 
 
 ![](<../../.gitbook/assets/terraform_1.webp>)
