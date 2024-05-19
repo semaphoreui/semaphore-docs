@@ -12,7 +12,7 @@ layout:
     visible: true
 ---
 
-# 🌟 Terraform
+# 🌟 Terraform Template
 
 With using [Semaphore Premium](https://semui.co/premium) you can run Terraform code. You need to create **Terraform Code Template** for this.
 

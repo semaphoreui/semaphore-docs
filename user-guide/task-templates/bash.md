@@ -1,2 +1,2 @@
-# Bash
+# Bash Template
 
