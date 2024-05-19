@@ -14,3 +14,5 @@ layout:
 
 # 💲 Terraform
 
+
+![](<../../.gitbook/assets/terraform_1.webp>)
