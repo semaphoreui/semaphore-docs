@@ -14,12 +14,14 @@ layout:
 
 # 🌟 Terraform Template
 
-With using [Semaphore Premium](https://semui.co/premium) you can run Terraform code. You need to create **Terraform Code Template** for this.
+Using [Semaphore Premium](https://semui.co/premium) you can run Terraform code. To do this, you need to create a **Terraform Code Template**.
 
 1. Go go Task Templates section and click the **New Template** button.
 
 ![](<../../.gitbook/assets/terraform_1.webp>)
 
-2. Setup the template and click the **Create** button.
+2. Set up the template and click the **Create** button.
 
 ![](<../../.gitbook/assets/terraform_2.webp>)
+
+3. You can now run your Terraform code.
