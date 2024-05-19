@@ -36,4 +36,5 @@
 * [Inventory](user-guide/inventory.md)
 * [Environment](user-guide/environment.md)
 * [Repositories](user-guide/repositories.md)
+  * [Bitbucket Access Token](user-guide/repositories/bitbucket_access_token.md)
 * [Integrations](user-guide/integrations.md)

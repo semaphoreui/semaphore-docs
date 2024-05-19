@@ -13,9 +13,9 @@ Semaphore understands Repositories that are:
 All Task Templates require a Repository in order to run.
 
 ## Authentication
-If you are using a remote Repository that requires authentication, you will need to configure a key in the Key Store section of Semaphore.
+If you are using a remote Repository that requires authentication, you will need to configure a key in the **Key Store** section of Semaphore.
 
-For remote Repositories that use SSH, you will need to use your SSH key in the Key Store. 
+For remote Repositories that use SSH, you will need to use your SSH key in the **Key Store**. 
 
 For Remote Repositories that do not have authentication, you can create a Key with the type of `None`.
 
@@ -35,8 +35,8 @@ For Remote Repositories that do not have authentication, you can create a Key wi
 4. Click Save once everything is configured.
 
 ## Editing an Existing Repository
-1. Go to the Repositories section of Semaphore
-2. Click on the pencil icon next to the Repository you wish to change, then you will be presented with the Repository configuration
+1. Go to the Repositories section of Semaphore.
+2. Click on the pencil icon next to the Repository you wish to change, then you will be presented with the Repository configuration.
 
 ## Deleting a Repository
 Make sure the Repository that is about to be delete is not in use by any Task Templates.
