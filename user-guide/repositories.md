@@ -3,9 +3,10 @@
 A Repository is a place to store and manage Ansible content like playbooks and roles.
 
 Semaphore understands Repositories that are:
-  * a local Git Repository (`git://`)
-  * a local file system (`file://`)
-  * a remote Git Repository that is accessed over HTTPS (`https://`), or SSH(`ssh://`)
+  * a local file system (`/path/to/the/repo`)
+  * a local Git repository (`file://`)
+  * a remote Git Repository that is accessed over HTTPS (`https://`), SSH(`ssh://`)
+  * `git://` protocol supported, but it is not recommended for security reasons.
 
 All Task Templates require a Repository in order to run.
 
