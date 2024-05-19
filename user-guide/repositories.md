@@ -1,5 +1,7 @@
 # Repositories
 
+![](<.gitbook/assets/repository.webp>)
+
 A Repository is a place to store and manage Ansible content like playbooks and roles.
 
 Semaphore understands Repositories that are:
