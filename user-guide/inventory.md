@@ -2,7 +2,7 @@
 
 An Inventory is a file that contains a list of hosts Ansible will run plays against.
 An Inventory also stores variables that can be used by playbooks. An Inventory can be stored in YAML, JSON, or TOML.
-More information about Inventories can be found in the [Ansible Documentation.](https://docs.Ansible.com/Ansible/latest/user_guide/intro_inventory.html)
+More information about Inventories can be found in the [Ansible Documentation.](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html)
 
 Ansible Semaphore can either read an Inventory from a file on the server that the Semaphore user has read access to, or a static Inventory that is edited via the web GUI.
 Each Inventory also has at least one credential tied to it.

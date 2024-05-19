@@ -5,10 +5,10 @@
   "oidc_providers": {
     "keycloak": {
       "display_name": "Sign in with keycloak",
-      "provider_url": "http://localhost:8080/realms/master",
+      "provider_url": "https://keycloak.example.com/realms/master",
       "client_id": "***",
       "client_secret": "***",
-      "redirect_url": "http://localhost:3000/api/auth/oidc/keycloak/redirect"
+      "redirect_url": "https://semaphore.example.com/api/auth/oidc/keycloak/redirect"
     }
   }
 }

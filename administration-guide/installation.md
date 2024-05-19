@@ -183,6 +183,7 @@ services:
       SEMAPHORE_LDAP_PASSWORD: 'ldap_bind_account_password'
       SEMAPHORE_LDAP_DN_SEARCH: 'dc=local,dc=example,dc=com'
       SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
+      TZ: UTC
     depends_on:
       - mysql # for postgres, change to: postgres
 volumes:
@@ -205,6 +206,19 @@ docker-compose up
 &#x20;Semaphore will be available via the following URL [http://localhost:3000](http://localhost:3000).
 
 For more information about the Docker Compose, see the [Docker Compose reference](https://docs.docker.com/compose/).
+
+### Installing Additional Python Packages
+
+Some Ansible modules and roles require additional python packages to run. To install additional python packages, create a `requirements.txt` file and mount it in the `/etc/semaphore` directory on the container. For example, you could add the following lines to your `docker-compose.yml` file:
+
+```yaml
+volumes:
+  - /path/to/requirements.txt:/etc/semaphore/requirements.txt
+```
+
+The packages specified in the requirements file will be installed when the container starts up.
+
+For more information about Python requirements files, see the [Pip Requirements File Format reference](https://pip.pypa.io/en/stable/reference/requirements-file-format/)
 
 ----
 
