@@ -4,10 +4,9 @@ Configuration file contains the following LDAP parameters:
 
 ```json
 {
-  ...
   "ldap_binddn": "cn=admin,dc=example,dc=org",
   "ldap_bindpassword": "admin_password",
-  "ldap_server": "localhost:1389",
+  "ldap_server": "localhost:389",
   "ldap_searchdn": "ou=users,dc=example,dc=org",
   "ldap_searchfilter": "(&(objectClass=inetOrgPerson)(uid=%s))",
   "ldap_mappings": {
@@ -18,15 +17,41 @@ Configuration file contains the following LDAP parameters:
   },
   "ldap_enable": true,
   "ldap_needtls": false,
-  ...
 }
 ```
 
-`ldap_mappings` used to convert LDAP fields to the following Semaphore fields:
-* `ldap_mappings.uid` &mdash; user login.
-* `ldap_mappings.mail` &mdash; user email.
-* `ldap_mappings.cn` &mdash; user name.
+All SSO provider options:
 
+| Parameter             | Environment Variables | Description                                                                                                 |
+| --------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `ldap_binddn`         | `SEMAPHORE_LDAP_BIND_DN` | |
+| `ldap_bindpassword`   | `SEMAPHORE_LDAP_BIND_PASSWORD` | Password of LDAP user which used as Bind DN. |
+| `ldap_server`         | `SEMAPHORE_LDAP_SERVER` | LDAP server host including port. For example: `localhost:389`. |
+| `ldap_searchdn`       | `SEMAPHORE_LDAP_SEARCH_DN` | Scope where users will be searched. For example: `ou=users,dc=example,dc=org`. |
+| `ldap_searchfilter`   | `SEMAPHORE_LDAP_SEARCH_FILTER` | Users search expression. Default: `(&(objectClass=inetOrgPerson)(uid=%s))`, where `%s` will replaced to entered login. |
+| `ldap_mappings.dn`    | `SEMAPHORE_LDAP_MAPPING_DN` | |
+| `ldap_mappings.mail`  | `SEMAPHORE_LDAP_MAPPING_MAIL` | User email claim expression[\*](#claim-expression). |
+| `ldap_mappings.uid`   | `SEMAPHORE_LDAP_MAPPING_UID` | User login claim expression[\*](#claim-expression). |
+| `ldap_mappings.cn`    | `SEMAPHORE_LDAP_MAPPING_CN` | User name claim expression[\*](#claim-expression). |
+| `ldap_enable`         | `SEMAPHORE_LDAP_ENABLE` | LDAP enabled. |
+| `ldap_needtls`        | `SEMAPHORE_LDAP_NEEDTLS` | Connect to LDAP server by SSL. |
+
+
+### \*Claim expression
+
+Example of claim expression:
+
+```
+email | {{ .username }}@your-domain.com
+```
+
+Semaphore is attempting to claim the email field first. If it is empty, the expression following it is executed.
+
+{% hint style="info" %}
+The expression `"username_claim": "|"` generates a random `username` for each user who logs in through the provider.
+{% endhint %}
+
+### Troubleshooting
 
 Use `ldapwhoami` tool to check if your **BindDN** works:
 
@@ -47,7 +72,7 @@ Please read [Troubleshooting](https://docs.ansible-semaphore.com/administration-
 
 ## Example: Using OpenLDAP Server
 
-Run the following command to start your own LDAP server with an admin account and an additional user::
+Run the following command to start your own LDAP server with an admin account and an additional user:
 
 ```
 docker run -d --name openldap \
