@@ -108,6 +108,7 @@ Your LDAP configuration for Semaphore UI should be as follows:
 
 To run Semaphore in Docker, use the following LDAP configuration:
 
+
 ```
 docker run -d -p 3000:3000 --name semaphore \
   -e SEMAPHORE_DB_DIALECT=bolt \
@@ -126,3 +127,21 @@ docker run -d -p 3000:3000 --name semaphore \
   -e 'SEMAPHORE_LDAP_MAPPING_CN=cn' \
   semaphoreui/semaphore:latest
 ```
+
+<!-- docker run -d -p 3000:3000 --name semaphore \
+  -e SEMAPHORE_DB_DIALECT=bolt \
+  -e SEMAPHORE_ADMIN=admin \
+  -e SEMAPHORE_ADMIN_PASSWORD=changeme \
+  -e SEMAPHORE_ADMIN_NAME=Admin \
+  -e SEMAPHORE_ADMIN_EMAIL=admin@localhost \
+  -e SEMAPHORE_LDAP_ACTIVATED=yes \
+  -e SEMAPHORE_LDAP_HOST=semaphore.run \
+  -e SEMAPHORE_LDAP_PORT=1389 \
+  -e SEMAPHORE_LDAP_DN_BIND=cn=admin,dc=example,dc=org \
+  -e SEMAPHORE_LDAP_PASSWORD=pwd \
+  -e SEMAPHORE_LDAP_DN_SEARCH=dc=example,dc=org \
+  -e 'SEMAPHORE_LDAP_SEARCH_FILTER=(&(objectClass=inetOrgPerson)(uid=%s))' \
+  -e 'SEMAPHORE_LDAP_MAPPING_MAIL={{ .cn }}@ldap.semaphore.run' \
+  -e 'SEMAPHORE_LDAP_MAPPING_UID=|' \
+  -e 'SEMAPHORE_LDAP_MAPPING_CN=cn' \
+  semaphoreui/semaphore:latest -->
