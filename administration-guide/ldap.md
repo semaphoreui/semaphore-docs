@@ -68,12 +68,11 @@ Your LDAP configuration for Semaphore UI should be as follows:
 {
 	"ldap_binddn": "cn=admin,dc=example,dc=org",
 	"ldap_bindpassword": "pwd",
-	"ldap_server": "semaphore.run:1389",
+	"ldap_server": "ldap-server.com:1389",
 	"ldap_searchdn": "dc=example,dc=org",
 	"ldap_searchfilter": "(&(objectClass=inetOrgPerson)(uid=%s))",
 	"ldap_mappings": {
-		"dn": "",
-		"mail": "{{ .cn }}@ldap.semaphore.run",
+		"mail": "{{ .cn }}@ldap.your-domain.com",
 		"uid": "|",
 		"cn": "cn"
 	},
@@ -92,12 +91,12 @@ docker run -d -p 3000:3000 --name semaphore \
   -e SEMAPHORE_ADMIN_NAME=Admin \
   -e SEMAPHORE_ADMIN_EMAIL=admin@localhost \
   -e SEMAPHORE_LDAP_ENABLE=yes \
-  -e SEMAPHORE_LDAP_SERVER=semaphore.run:1389 \
+  -e SEMAPHORE_LDAP_SERVER=ldap-server.com:1389 \
   -e SEMAPHORE_LDAP_BIND_DN=cn=admin,dc=example,dc=org \
   -e SEMAPHORE_LDAP_BIND_PASSWORD=pwd \
   -e SEMAPHORE_LDAP_SEARCH_DN=dc=example,dc=org \
   -e 'SEMAPHORE_LDAP_SEARCH_FILTER=(&(objectClass=inetOrgPerson)(uid=%s))' \
-  -e 'SEMAPHORE_LDAP_MAPPING_MAIL={{ .cn }}@ldap.semaphore.run' \
+  -e 'SEMAPHORE_LDAP_MAPPING_MAIL={{ .cn }}@ldap.your-domain.com' \
   -e 'SEMAPHORE_LDAP_MAPPING_UID=|' \
   -e 'SEMAPHORE_LDAP_MAPPING_CN=cn' \
   semaphoreui/semaphore:latest
