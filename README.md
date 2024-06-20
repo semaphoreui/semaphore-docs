@@ -4,7 +4,7 @@
 
 # Introduction
 
-Semaphore is a responsive web UI for running Ansible playbooks.
+Semaphore is a responsive web UI for running Ansible playbooks, Terraform/OpenTofu and Pulumi code.
 
 
 ![](<.gitbook/assets/image (3).png>)
