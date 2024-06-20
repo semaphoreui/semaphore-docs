@@ -12,9 +12,9 @@ layout:
     visible: true
 ---
 
-# 🌟 Bash Template
+# Bash Template
 
-Using [Semaphore Premium](https://semui.co/premium) you can run Bash scripts. To do this, you need to create a **Bash Script Template**.
+Using Semaphore UI you can run Bash scripts. To do this, you need to create a **Bash Script Template**.
 
 1. Go go Task Templates section and click the **New Template** button.
 

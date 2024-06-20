@@ -12,9 +12,9 @@ layout:
     visible: true
 ---
 
-# 🌟 Terraform Template
+# Terraform Template
 
-Using [Semaphore Premium](https://semui.co/premium) you can run Terraform code. To do this, you need to create a **Terraform Code Template**.
+Using Semaphore UI you can run Terraform code. To do this, you need to create a **Terraform Code Template**.
 
 1. Go go Task Templates section and click the **New Template** button.
 
