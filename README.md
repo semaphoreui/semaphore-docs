@@ -1,11 +1,6 @@
----
-# description: Short intro about Ansible Semaphore
----
-
 # Introduction
 
 Semaphore is a responsive web UI for running Ansible playbooks, Terraform/OpenTofu and Pulumi code.
-
 
 ![](<.gitbook/assets/image (3).png>)
 
@@ -36,4 +31,4 @@ Docker: [https://hub.docker.com/r/semaphoreui/semaphore](https://hub.docker.com/
 
 Snap: [https://snapcraft.io/semaphore](https://snapcraft.io/semaphore).
 
-Contact: [denis@ansible-semaphore.com](mailto:denis@fastlix.com)
+Contact: [denis@semaphoreui.com](mailto:denis@semaphoreui.com)
