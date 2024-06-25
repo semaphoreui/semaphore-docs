@@ -17,4 +17,4 @@
 }
 ```
 
-Tutorial in Semaphore UI blog: [GitLab authentication in Semaphore UI](https://semui.co/blog/openid-authentication/).
+Tutorial in Semaphore UI blog: [GitLab authentication in Semaphore UI](https://semaphoreui.com/blog/openid-authentication/).
