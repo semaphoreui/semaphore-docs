@@ -15,6 +15,7 @@ Links:
 * [Authentik config](openid/authentik.md).
 * [Keycloak config](openid/keycloak.md).
 * [Okta config](openid/okta.md).
+* [Azure config](openid/azure.md)
 
 Example of SSO provider configuration:
 
