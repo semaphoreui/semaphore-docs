@@ -133,6 +133,7 @@ Semaphore will be available via this URL [https://localhost:3000](https://localh
 &#x20;Create a `docker-compose.yml` file with following content:
 
 ```yaml
+version: "3"
 services:
   # uncomment this section and comment out the mysql section to use postgres instead of mysql
   #postgres:
