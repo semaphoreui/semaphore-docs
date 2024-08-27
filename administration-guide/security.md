@@ -64,7 +64,7 @@ server {
   chunked_transfer_encoding on;
 
   location / {
-    proxy_pass http://127.0.0.1/;
+    proxy_pass http://127.0.0.1:3000/;
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -76,7 +76,7 @@ server {
   }
 
   location /api/ws {
-    proxy_pass http://127.0.0.1/api/ws;
+    proxy_pass http://127.0.0.1:3000/api/ws;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
