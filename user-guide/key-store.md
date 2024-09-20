@@ -9,8 +9,6 @@ It is helpful to have configured all required access keys before setting up othe
 ### SSH
 SSH Keys are used to access remote servers as well as remote Repositories.
 
-At this time, semaphore does not support using SSH keys that are password protected.
-
 If you need assistance quickly generating a key and placing it on your host, [here is a quick guide.](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
 
 For Git Repositories that use SSH authentication, the Git Repository you are trying to clone from needs to have your public key associated to the private key.
