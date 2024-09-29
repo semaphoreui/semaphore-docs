@@ -109,7 +109,7 @@ You can remove runner using the web interfance.
 Or unregister runner via CLI:
 
 ```
-semaphore runner --config /path/to/your/config/file.json
+semaphore runner unregister --config /path/to/your/config/file.json
 ```
 
 ## Security
