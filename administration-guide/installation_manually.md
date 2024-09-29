@@ -244,8 +244,8 @@ Add additional settings under their `[PART]`
 
 ```ini
 [Unit]
-Description=Ansible Semaphore
-Documentation=https://docs.ansible-semaphore.com/
+Description=Semaphore UI
+Documentation=https://docs.semaphoreui.com/
 Wants=network-online.target
 After=network-online.target
 ConditionPathExists=/usr/bin/semaphore
@@ -354,8 +354,8 @@ SyslogIdentifier=semaphore
 
 ```ini
 [Unit]
-Description=Ansible Semaphore
-Documentation=https://docs.ansible-semaphore.com/
+Description=Semaphore UI
+Documentation=https://docs.semaphoreui.com/
 Wants=network-online.target
 After=network-online.target
 ConditionPathExists=/usr/bin/semaphore
@@ -383,8 +383,8 @@ WantedBy=multi-user.target
 
 ```ini
 [Unit]
-Description=Ansible Semaphore
-Documentation=https://docs.ansible-semaphore.com/
+Description=Semaphore UI
+Documentation=https://docs.semaphoreui.com/
 Wants=network-online.target
 After=network-online.target
 ConditionPathExists=/usr/bin/semaphore

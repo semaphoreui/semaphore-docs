@@ -19,7 +19,7 @@ semaphore version
 Use this option for first time configuration.
 
 {% hint style="info" %}
-Do not use this command for Semaphore installed via Snap. Use [Snap Configuration](https://docs.ansible-semaphore.com/administration-guide/configuration#snap-configuration) instead.
+Do not use this command for Semaphore installed via Snap. Use [Snap Configuration](https://docs.semaphoreui.com/administration-guide/configuration#snap-configuration) instead.
 {% endhint %}
 
 ```

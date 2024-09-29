@@ -3,7 +3,7 @@
 ### API documentation
 
 {% hint style="info" %}
-Full API documentation is available in [API reference](https://ansible-semaphore.com/api-docs).
+Full API documentation is available in [API reference](https://semaphoreui.com/api-docs).
 {% endhint %}
 
 ### How to use the Semaphore API
