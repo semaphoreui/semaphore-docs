@@ -1,5 +1,13 @@
 # Troubleshooting
 
+## Renner prints error 404
+
+### How to fix
+
+[Getting 401 error code from Runner](https://github.com/semaphoreui/semaphore/discussions/1873?converting=1)
+
+---
+
 ## Gathering Facts issue for localhost
 
 The issue can occur on Semaphore UI installed via [Snap](https://snapcraft.io/semaphore) or [Docker](https://hub.docker.com/r/semaphoreui/semaphore).
