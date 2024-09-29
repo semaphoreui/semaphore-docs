@@ -84,10 +84,6 @@ You can manually edit this file without needing to call `semaphore runner setup`
 
 To re-register the runner, you can use the `semaphore runner register` command. This will overwrite the token in the file specified in the configuration.
 
-## Security
-
-Use the HTTPS protocol for communication between the server and the runner, especially if they are not on the same private network.
-
 ## Running the Runner
 
 Now you can start the runner with the command:
@@ -103,3 +99,19 @@ semaphore runner --config /path/to/your/config/file.json
 ``` -->
 
 Your runner is ready to execute tasks ;)
+
+## Runner unregistaration
+
+You can remove runner using the web interfance.
+
+
+
+Or unregister runner via CLI:
+
+```
+semaphore runner --config /path/to/your/config/file.json
+```
+
+## Security
+
+Use the HTTPS protocol for communication between the server and the runner, especially if they are not on the same private network.
