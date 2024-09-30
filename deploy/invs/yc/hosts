@@ -1,0 +1,5 @@
+[site]
+localhost ansible_connection=local ansible_python_interpreter=python3
+
+[website]
+135.181.40.120 ansible_python_interpreter=python3
