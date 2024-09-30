@@ -3,8 +3,8 @@
 There are 3 ways to configure Semaphore:
 
 * [Snap configuration](https://snapcraft.io/docs/configuration-in-snaps)
-* [Interactive setup](configuration.md#snap-configuration)
-* [Configuration file](configuration.md#configuration-file)
+* [Interactive setup](./configuration.md#snap-configuration)
+* [Configuration file](./configuration.md#configuration-file)
 
 ## Snap configuration
 

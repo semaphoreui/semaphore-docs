@@ -9,16 +9,18 @@ move_html_to_index() {
   mkdir -p "$dirpath"
   mv "$filepath" "$dirpath/index.html"
   sed -i '' 's/\.html/\//g' "$dirpath/index.html"
-  sed -i '' 's/\.\.\//..\/..\//g' "$dirpath/index.html"
-  
+  sed -i '' 's/"\.\.\//"..\/..\//g' "$dirpath/index.html"
+  sed -i '' 's/"\.\//"..\//g' "$dirpath/index.html"
 }
-
-# Find all .html files in the current directory (excluding index.html files)
-find . -type f -name "*.html" ! -name "index.html" | while read file; do
-  move_html_to_index "$file"
-done
 
 find . -type f -name "index.html" | while read file; do
   sed -i '' 's/index\.html/\//g' "$file"
   sed -i '' 's/\.html/\//g' "$file"
+  sed -i '' 's/"\.\.\//"..\/..\//g' "$file"
+  sed -i '' 's/"\.\//"..\//g' "$file"
+done
+
+# Find all .html files in the current directory (excluding index.html files)
+find . -type f -name "*.html" ! -name "index.html" | while read file; do
+  move_html_to_index "$file"
 done

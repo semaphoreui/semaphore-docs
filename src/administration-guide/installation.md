@@ -56,7 +56,7 @@ After installation, you can set up Semaphore via [Snap Configuration](https://sn
 sudo snap get semaphore
 ```
 
-&#x20;List of available options you can find in [Configuration options reference](https://docs.semaphoreui.com/administration-guide/configuration#configuration-options).
+&#x20;List of available options you can find in [Configuration options reference](./configuration#configuration-options).
 
 ----
 
