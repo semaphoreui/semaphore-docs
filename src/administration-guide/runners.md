@@ -114,4 +114,6 @@ semaphore runner unregister --config /path/to/your/config/file.json
 
 ## Security
 
-Use the HTTPS protocol for communication between the server and the runner, especially if they are not on the same private network.
+<div class="warning">
+  Use the HTTPS protocol for communication between the server and the runner, especially if they are not on the same private network.
+</div>

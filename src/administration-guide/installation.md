@@ -236,7 +236,7 @@ Look into the [manual installation](installation_manually.md) on how to set-up y
 Download the `*.tar.gz` for your platform from [Releases page](https://github.com/semaphoreui/semaphore/releases). Unpack it and setup Semaphore using the following commands:
 
 {{#tabs }}
-{{#tab title="Linux (x64)" }}
+{{#tab name="Linux (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_amd64.tar.gz
@@ -247,7 +247,7 @@ tar xf semaphore_2.9.44_linux_amd64.tar.gz
 ```
 {{#endtab }}
 
-{{#tab title="Linux (ARM64)" }}
+{{#tab name="Linux (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_arm64.tar.gz
@@ -258,7 +258,7 @@ tar xf semaphore_2.9.44_linux_arm64.tar.gz
 ```
 {{#endtab }}
 
-{{#tab title="Windows (x64)" }}
+{{#tab name="Windows (x64)" }}
 ```
 Invoke-WebRequest `
 -Uri ("https://github.com/semaphoreui/semaphore/releases/" +
@@ -284,15 +284,15 @@ Semaphore will be available via the following URL [https://localhost:3000](https
 
 ### Run as a service
 
-For more detailed information - look into the [extended Systemd service documentation](installation_manually.md#extended-systemd-service).
+For more detailed information &mdash; look into the [extended Systemd service documentation](installation_manually.md#extended-systemd-service).
 
 If you installed Semaphore via a package manager, or by downloading a binary file, you should create the Semaphore service manually.
 
 Create the systemd service file:
 
-{% hint style="info" %}
-Replace `/path/to/semaphore` and `/path/to/config.json` to your semaphore and config file path
-{% endhint %}
+<div class="warning">
+  Replace <code>/path/to/semaphore</code> and <code>/path/to/config.json</code> to your semaphore and config file path.
+</div>
 
 ```bash
 sudo cat > /etc/systemd/system/semaphore.service <<EOF
