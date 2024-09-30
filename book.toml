@@ -1,0 +1,13 @@
+[book]
+authors = ["Denis Gukov"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Semaphore Docs"
+
+[preprocessor.tabs]
+
+
+[output.html]
+additional-css = ["theme/tabs.css"]
+additional-js = ["theme/tabs.js"]

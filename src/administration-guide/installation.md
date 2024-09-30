@@ -74,43 +74,46 @@ Download package file from [Releases page](https://github.com/semaphoreui/semaph
 
 Here are several installation commands, depending on the package manager:
 
-{% tabs %}
-{% tab title="Debian / Ubuntu (x64)" %}
+
+{{#tabs }}
+
+{{#tab name="Debian / Ubuntu (x64)"}}
 ```bash
 wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_amd64.deb
 
 sudo dpkg -i semaphore_2.9.44_linux_amd64.deb
 ```
-{% endtab %}
+{{#endtab }}
 
-{% tab title="Debian / Ubuntu (ARM64)" %}
+{{#tab name="Debian / Ubuntu (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_arm64.deb
 
 sudo dpkg -i semaphore_2.9.44_linux_arm64.deb
 ```
-{% endtab %}
+{{#endtab }}
 
-{% tab title="CentOS (x64)" %}
+{{#tab name="CentOS (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_amd64.rpm
 
 sudo yum install semaphore_2.9.44_linux_amd64.rpm
 ```
-{% endtab %}
+{{#endtab }}
 
-{% tab title="CentOS (ARM64)" %}
+{{#tab name="CentOS (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_arm64.rpm
 
 sudo yum install semaphore_2.9.44_linux_arm64.rpm
 ```
-{% endtab %}
-{% endtabs %}
+{{#endtab }}
+
+{{#endtabs }}
 
 Setup Semaphore by using the following command:
 
@@ -232,8 +235,8 @@ Look into the [manual installation](installation_manually.md) on how to set-up y
 
 Download the `*.tar.gz` for your platform from [Releases page](https://github.com/semaphoreui/semaphore/releases). Unpack it and setup Semaphore using the following commands:
 
-{% tabs %}
-{% tab title="Linux (x64)" %}
+{{#tabs }}
+{{#tab title="Linux (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_amd64.tar.gz
@@ -242,9 +245,9 @@ tar xf semaphore_2.9.44_linux_amd64.tar.gz
 
 ./semaphore setup
 ```
-{% endtab %}
+{{#endtab }}
 
-{% tab title="Linux (ARM64)" %}
+{{#tab title="Linux (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.9.58/semaphore_2.9.44_linux_arm64.tar.gz
@@ -253,9 +256,9 @@ tar xf semaphore_2.9.44_linux_arm64.tar.gz
 
 ./semaphore setup
 ```
-{% endtab %}
+{{#endtab }}
 
-{% tab title="Windows (x64)" %}
+{{#tab title="Windows (x64)" }}
 ```
 Invoke-WebRequest `
 -Uri ("https://github.com/semaphoreui/semaphore/releases/" +
@@ -266,8 +269,8 @@ Expand-Archive -Path semaphore.zip  -DestinationPath ./
 
 ./semaphore setup
 ```
-{% endtab %}
-{% endtabs %}
+{{#endtab }}
+{{#endtabs }}
 
 Now you can run Semaphore:
 
