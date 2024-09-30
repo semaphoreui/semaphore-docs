@@ -8,6 +8,7 @@ move_html_to_index() {
   # Create directory and move the HTML file
   mkdir -p "$dirpath"
   mv "$filepath" "$dirpath/index.html"
+  sed -i '' 's/\/index\.html/\//g' "$dirpath/index.html"
   sed -i '' 's/\.html/\//g' "$dirpath/index.html"
   sed -i '' 's/"\.\.\//"..\/..\//g' "$dirpath/index.html"
   sed -i '' 's/"\.\//"..\//g' "$dirpath/index.html"

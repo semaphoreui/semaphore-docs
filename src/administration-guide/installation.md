@@ -2,14 +2,14 @@
 
 You can install Semaphore in 4 ways:
 
-* [Snap](installation.md#snap)
-* [Package manager](installation.md#package-manager)
-* [Docker](installation.md#docker)
-* [Binary file](installation.md#binary-file)
+* [Snap](./installation.md#snap)
+* [Package manager](./installation.md#package-manager)
+* [Docker](./installation.md#docker)
+* [Binary file](./installation.md#binary-file)
 
 See also:
-* [Run as service](installation.md#run-as-a-service)
-* [Manual installation](installation_manually.md)
+* [Run as service](./installation.md#run-as-a-service)
+* [Manual installation](./installation_manually.md)
 
 ----
 
@@ -66,7 +66,7 @@ sudo snap get semaphore
 Python, Ansible and Git should be installed on your system.
 {% endhint %}
 
-Look into the [manual installation](installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
+Look into the [manual installation](./installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 
 Download package file from [Releases page](https://github.com/semaphoreui/semaphore/releases).
 
@@ -80,36 +80,36 @@ Here are several installation commands, depending on the package manager:
 {{#tab name="Debian / Ubuntu (x64)"}}
 ```bash
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.9.44_linux_amd64.deb
+download/v2.9.58/semaphore_2.10.22_linux_amd64.deb
 
-sudo dpkg -i semaphore_2.9.44_linux_amd64.deb
+sudo dpkg -i semaphore_2.10.22_linux_amd64.deb
 ```
 {{#endtab }}
 
 {{#tab name="Debian / Ubuntu (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.9.44_linux_arm64.deb
+download/v2.9.58/semaphore_2.10.22_linux_arm64.deb
 
-sudo dpkg -i semaphore_2.9.44_linux_arm64.deb
+sudo dpkg -i semaphore_2.10.22_linux_arm64.deb
 ```
 {{#endtab }}
 
 {{#tab name="CentOS (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.9.44_linux_amd64.rpm
+download/v2.9.58/semaphore_2.10.22_linux_amd64.rpm
 
-sudo yum install semaphore_2.9.44_linux_amd64.rpm
+sudo yum install semaphore_2.10.22_linux_amd64.rpm
 ```
 {{#endtab }}
 
 {{#tab name="CentOS (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.9.44_linux_arm64.rpm
+download/v2.9.58/semaphore_2.10.22_linux_arm64.rpm
 
-sudo yum install semaphore_2.9.44_linux_arm64.rpm
+sudo yum install semaphore_2.10.22_linux_arm64.rpm
 ```
 {{#endtab }}
 
@@ -239,9 +239,9 @@ Download the `*.tar.gz` for your platform from [Releases page](https://github.co
 {{#tab name="Linux (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.9.44_linux_amd64.tar.gz
+download/v2.9.58/semaphore_2.10.22_linux_amd64.tar.gz
 
-tar xf semaphore_2.9.44_linux_amd64.tar.gz
+tar xf semaphore_2.10.22_linux_amd64.tar.gz
 
 ./semaphore setup
 ```
@@ -250,9 +250,9 @@ tar xf semaphore_2.9.44_linux_amd64.tar.gz
 {{#tab name="Linux (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.9.44_linux_arm64.tar.gz
+download/v2.9.58/semaphore_2.10.22_linux_arm64.tar.gz
 
-tar xf semaphore_2.9.44_linux_arm64.tar.gz
+tar xf semaphore_2.10.22_linux_arm64.tar.gz
 
 ./semaphore setup
 ```
@@ -262,7 +262,7 @@ tar xf semaphore_2.9.44_linux_arm64.tar.gz
 ```
 Invoke-WebRequest `
 -Uri ("https://github.com/semaphoreui/semaphore/releases/" +
-      "download/v2.9.58/semaphore_2.9.44_windows_amd64.zip") `
+      "download/v2.9.58/semaphore_2.10.22_windows_amd64.zip") `
 -OutFile semaphore.zip
 
 Expand-Archive -Path semaphore.zip  -DestinationPath ./
@@ -284,7 +284,7 @@ Semaphore will be available via the following URL [https://localhost:3000](https
 
 ### Run as a service
 
-For more detailed information &mdash; look into the [extended Systemd service documentation](installation_manually.md#extended-systemd-service).
+For more detailed information &mdash; look into the [extended Systemd service documentation](./installation_manually.md#extended-systemd-service).
 
 If you installed Semaphore via a package manager, or by downloading a binary file, you should create the Semaphore service manually.
 
