@@ -43,6 +43,8 @@ There are two ways to register a runner on the Semaphore server:
 
 #### Adding the Runner via the Web Interface
 
+<img src="https://github.com/user-attachments/assets/8b0f7890-5767-4139-932d-3e39c217fd57" width="600">
+
 #### Registering via CLI
 
 To register a runner this way, you need to add the `runner_registration_token` option to your Semaphore server's configuration file. This option should be set to an arbitrary string. Choose a sufficiently complex string to avoid security issues.
@@ -104,7 +106,9 @@ Your runner is ready to execute tasks ;)
 
 You can remove runner using the web interfance.
 
+<img src="https://github.com/user-attachments/assets/431291eb-8f48-42c1-b56e-87fc8e9ba040" width="600">
 
+---
 
 Or unregister runner via CLI:
 
