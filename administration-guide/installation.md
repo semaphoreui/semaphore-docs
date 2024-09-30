@@ -183,6 +183,11 @@ services:
       SEMAPHORE_LDAP_PASSWORD: 'ldap_bind_account_password'
       SEMAPHORE_LDAP_DN_SEARCH: 'dc=local,dc=example,dc=com'
       SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
+      SEMAPHORE_OIDC_PROVIDER_1_ID: "authentik"
+      SEMAPHORE_OIDC_PROVIDER_1_DISPLAY_NAME: "Sign in with Authentik"
+      SEMAPHORE_OIDC_PROVIDER_1_AUTODISCOVERY_URL: "https://auth.example.org/application/o/semaphore/"
+      SEMAPHORE_OIDC_PROVIDER_1_CLIENT_ID: "..."
+      SEMAPHORE_OIDC_PROVIDER_1_CLIENT_SECRET: "..."
       TZ: UTC
     depends_on:
       - mysql # for postgres, change to: postgres
