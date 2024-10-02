@@ -89,6 +89,8 @@ Semaphore uses a `config.json` configuration file with following content:
   "telegram_alert": false,
   "slack_alert": false,
   "slack_url": "",
+  "microsoft_teams_alert": false,
+  "microsoft_teams_url": "",
   "rocketchat_alert": false,
   "rocketchat_url": "",
   "ldap_enable": false,
@@ -125,8 +127,10 @@ Semaphore uses a `config.json` configuration file with following content:
 | `telegram_alert`        | `telegram-alert`        |                                                                                                                                             |
 | `slack_alert`           | `slack-alert`           | Set to True to enable pushing alerts to slack. It should be used in combination with `slack_url`                          |
 | `slack_url`             | `slack-url`             | The slack webhook url. Semaphore will used it to POST Slack formatted json alerts to the provided url.                                     |
-| `rocketchat_alert`           | `rocketchat-alert`           | Set to True to enable pushing alerts to Rocket.Chat. It should be used in combination with `rocketchat_url`. Available since v2.9.56.  |
-| `rocketchat_url`             | `rocketchat-url`             | The rocketchat webhook url. Semaphore will used it to POST Rocket.Chat formatted json alerts to the provided url. Available since v2.9.56. |
+| `microsoft_teams_alert` | —                       | Set to True to enable pushing alerts to teams. It should be used in combination with `microsoft_teams_url`.              |
+| `microsoft_teams_url`   | —                       | The teams webhook url. Semaphore will used it to POST alerts.                                                            |
+| `rocketchat_alert`      | `rocketchat-alert`      | Set to True to enable pushing alerts to Rocket.Chat. It should be used in combination with `rocketchat_url`. Available since v2.9.56.  |
+| `rocketchat_url`        | `rocketchat-url`        | The rocketchat webhook url. Semaphore will used it to POST Rocket.Chat formatted json alerts to the provided url. Available since v2.9.56. |
 | `ldap_enable`           | `ldap-enable`           |                                                                                                                                             |
 | `ldap_needtls`          | `ldap-needtls`          |                                                                                                                                             |
 | `ldap_binddn`           | `ldap-binddn`           |                                                                                                                                             |
