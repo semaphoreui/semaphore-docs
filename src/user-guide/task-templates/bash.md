@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # Bash Template
 
 Using Semaphore UI you can run Bash scripts. To do this, you need to create a **Bash Script Template**.

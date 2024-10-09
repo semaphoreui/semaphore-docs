@@ -8,7 +8,7 @@ title = "Semaphore Docs"
 [preprocessor.tabs]
 
 [output.html]
-additional-css = ["theme/tabs.css", "theme/search.css"]
+additional-css = ["theme/tabs.css", "theme/search.css", "theme/content.css", "theme/header.css"]
 additional-js = ["theme/tabs.js"]
 google-analytics = "G-SXDFVHLVBM"
 edit-url-template = "https://github.com/semaphoreui/semaphore-docs/edit/main/{path}"
