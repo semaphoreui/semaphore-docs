@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # Terraform Template
 
 Using Semaphore UI you can run Terraform code. To do this, you need to create a **Terraform Code Template**.
