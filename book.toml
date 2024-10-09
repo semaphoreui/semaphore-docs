@@ -1,0 +1,17 @@
+[book]
+authors = ["Denis Gukov"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Semaphore Docs"
+
+[preprocessor.tabs]
+
+[output.html]
+additional-css = ["theme/tabs.css"]
+additional-js = ["theme/tabs.js"]
+google-analytics = "G-SXDFVHLVBM"
+git-repository-url = "https://github.com/semaphoreui/semaphore-docs"
+git-repository-icon = "fa-github"
+edit-url-template = "https://github.com/semaphoreui/semaphore-docs/edit/main/guide/{path}"
+site-url = "/example-book/"

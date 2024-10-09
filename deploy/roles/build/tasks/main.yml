@@ -1,0 +1,13 @@
+- name: rm old build directory
+  file:
+    path: "{{ playbook_dir }}/../build"
+    state: absent
+    
+- name: npm install
+  community.general.npm:
+    path: "{{ playbook_dir }}/../"
+
+- name: run gulp
+  command: ./node_modules/.bin/gulp build
+  args:
+    chdir: "{{ playbook_dir }}/../"
