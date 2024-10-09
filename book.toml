@@ -13,5 +13,5 @@ additional-js = ["theme/tabs.js"]
 google-analytics = "G-SXDFVHLVBM"
 git-repository-url = "https://github.com/semaphoreui/semaphore-docs"
 git-repository-icon = "fa-github"
-edit-url-template = "https://github.com/semaphoreui/semaphore-docs/edit/main/guide/{path}"
-site-url = "/example-book/"
+edit-url-template = "https://github.com/semaphoreui/semaphore-docs/edit/main/{path}"
+site-url = "https://semaphoreui.com"
