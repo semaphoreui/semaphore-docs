@@ -1,7 +1,3 @@
----
-description: OpenID Connect (OIDC) provider configuration
----
-
 # OpenID
 
 Semaphore supports authentication via OpenID Connect (OIDC).
@@ -70,9 +66,9 @@ email | {{ .username }}@your-domain.com
 
 Semaphore is attempting to claim the email field first. If it is empty, the expression following it is executed.
 
-{% hint style="info" %}
-The expression `"username_claim": "|"` generates a random `username` for each user who logs in through the provider.
-{% endhint %}
+<div class="warning">
+  The expression <code>"username_claim": "|"</code> generates a random <code>username</code> for each user who logs in through the provider.
+</div>
 
 ## Sign in screen
 

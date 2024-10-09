@@ -4,9 +4,9 @@ description: Command line interface documentation
 
 # CLI
 
-{% hint style="info" %}
-For Semaphore installed via Snap you should use `sudo` for using CLI. This is completely safe because Semaphore works in a [strict mode](https://snapcraft.io/docs/snap-confinement).
-{% endhint %}
+<div class="warning">
+    For Semaphore installed via Snap you should use `sudo` for using CLI. This is completely safe because Semaphore works in a <a href="https://snapcraft.io/docs/snap-confinement">strict mode</a>.
+</div>
 
 ### Version
 
@@ -18,9 +18,10 @@ semaphore version
 
 Use this option for first time configuration.
 
-{% hint style="info" %}
-Do not use this command for Semaphore installed via Snap. Use [Snap Configuration](./configuration#snap-configuration) instead.
-{% endhint %}
+
+<div class="warning">
+    Do not use this command for Semaphore installed via Snap. Use <a href="./configuration#snap-configuration">Snap Configuration</a> instead.
+</div>
 
 ```
 semaphore setup

@@ -62,9 +62,9 @@ sudo snap get semaphore
 
 ### Package manager
 
-{% hint style="info" %}
-Python, Ansible and Git should be installed on your system.
-{% endhint %}
+<div class="warning">
+  Python, Ansible and Git should be installed on your system.
+</div>
 
 Look into the [manual installation](./installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 
@@ -227,9 +227,9 @@ For more information about Python requirements files, see the [Pip Requirements 
 
 ### Binary file
 
-{% hint style="info" %}
-Python, Ansible and Git should be installed on your system.
-{% endhint %}
+<div class="warning">
+  Python, Ansible and Git should be installed on your system.
+</div>
 
 Look into the [manual installation](installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 

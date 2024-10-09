@@ -1,3 +1,5 @@
+# GitHub config
+
 `config.json`:
 ```json
 {

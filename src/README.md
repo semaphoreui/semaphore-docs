@@ -2,7 +2,7 @@
 
 Semaphore is a responsive web UI for running Ansible playbooks, Terraform/OpenTofu and Pulumi code.
 
-![](<.gitbook/assets/image (3).png>)
+![](<.gitbook/assets/134777345-8789d9e4-ff0d-439c-b80e-ddc56b74fcee.webp>)
 
 Semaphore is written in pure Go and available for Windows, macOS and Linux (x64, ARM, ARM64). Semaphore is an open-source project with concise and high-quality code.
 

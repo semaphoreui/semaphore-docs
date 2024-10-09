@@ -63,9 +63,9 @@ sudo yum install semaphore_2.10.22_linux_arm64.rpm
 
 ### Docker
 
-{% hint style="info" %}
-Coming soon
-{% endhint %}
+<div class="warning">
+      Coming soon
+</div>
 
 ### Binary
 

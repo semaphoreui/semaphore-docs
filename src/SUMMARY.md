@@ -18,6 +18,7 @@
     * [Authentik config](./administration-guide/openid/authentik.md)
     * [Keycloak config](./administration-guide/openid/keycloak.md)
     * [Okta config](./administration-guide/openid/okta.md)
+    * [Azure config](./administration-guide/openid/azure.md)
   * [API](./administration-guide/api.md)
   * [CI/CD](./administration-guide/cicd.md)
   * [Runners](./administration-guide/runners.md)
