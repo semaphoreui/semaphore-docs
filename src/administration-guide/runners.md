@@ -91,7 +91,7 @@ To re-register the runner, you can use the `semaphore runner register` command. 
 Now you can start the runner with the command:
 
 ```
-semaphore runner --config /path/to/your/config/file.json
+semaphore runner start --config /path/to/your/config/file.json
 ```
 
 <!-- If everything is set up correctly, you will see the following output in the console:
