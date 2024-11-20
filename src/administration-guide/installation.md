@@ -239,7 +239,7 @@ Download the `*.tar.gz` for your platform from [Releases page](https://github.co
 {{#tab name="Linux (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_amd64.tar.gz
+download/v2.10.22/semaphore_2.10.22_linux_amd64.tar.gz
 
 tar xf semaphore_2.10.22_linux_amd64.tar.gz
 
@@ -250,7 +250,7 @@ tar xf semaphore_2.10.22_linux_amd64.tar.gz
 {{#tab name="Linux (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_arm64.tar.gz
+download/v2.10.22/semaphore_2.10.22_linux_arm64.tar.gz
 
 tar xf semaphore_2.10.22_linux_arm64.tar.gz
 
@@ -262,7 +262,7 @@ tar xf semaphore_2.10.22_linux_arm64.tar.gz
 ```
 Invoke-WebRequest `
 -Uri ("https://github.com/semaphoreui/semaphore/releases/" +
-      "download/v2.9.58/semaphore_2.10.22_windows_amd64.zip") `
+      "download/v2.10.22/semaphore_2.10.22_windows_amd64.zip") `
 -OutFile semaphore.zip
 
 Expand-Archive -Path semaphore.zip  -DestinationPath ./
