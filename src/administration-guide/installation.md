@@ -80,7 +80,7 @@ Here are several installation commands, depending on the package manager:
 {{#tab name="Debian / Ubuntu (x64)"}}
 ```bash
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_amd64.deb
+download/v2.10.22/semaphore_2.10.22_linux_amd64.deb
 
 sudo dpkg -i semaphore_2.10.22_linux_amd64.deb
 ```
@@ -89,7 +89,7 @@ sudo dpkg -i semaphore_2.10.22_linux_amd64.deb
 {{#tab name="Debian / Ubuntu (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_arm64.deb
+download/v2.10.22/semaphore_2.10.22_linux_arm64.deb
 
 sudo dpkg -i semaphore_2.10.22_linux_arm64.deb
 ```
@@ -98,7 +98,7 @@ sudo dpkg -i semaphore_2.10.22_linux_arm64.deb
 {{#tab name="CentOS (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_amd64.rpm
+download/v2.10.22/semaphore_2.10.22_linux_amd64.rpm
 
 sudo yum install semaphore_2.10.22_linux_amd64.rpm
 ```
@@ -107,7 +107,7 @@ sudo yum install semaphore_2.10.22_linux_amd64.rpm
 {{#tab name="CentOS (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_arm64.rpm
+download/v2.10.22/semaphore_2.10.22_linux_arm64.rpm
 
 sudo yum install semaphore_2.10.22_linux_arm64.rpm
 ```
