@@ -27,36 +27,52 @@ Install it using the package manager.
 {{#tab name="Debian / Ubuntu (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
+<<<<<<< HEAD
 download/v2.10.22/semaphore_2.10.22_linux_amd64.deb
+=======
+download/v2.10.43/semaphore_2.10.43_linux_amd64.deb
+>>>>>>> mdbook
 
-sudo dpkg -i semaphore_2.10.22_linux_amd64.deb
+sudo dpkg -i semaphore_2.10.43_linux_amd64.deb
 ```
 {{#endtab }}
 
 {{#tab name="Debian / Ubuntu (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
+<<<<<<< HEAD
 download/v2.10.22/semaphore_2.10.22_linux_arm64.deb
+=======
+download/v2.10.43/semaphore_2.10.43_linux_arm64.deb
+>>>>>>> mdbook
 
-sudo dpkg -i semaphore_2.10.22_linux_arm64.deb
+sudo dpkg -i semaphore_2.10.43_linux_arm64.deb
 ```
 {{#endtab }}
 
 {{#tab name="CentOS (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
+<<<<<<< HEAD
 download/v2.10.22/semaphore_2.10.22_linux_amd64.rpm
+=======
+download/v2.10.43/semaphore_2.10.43_linux_amd64.rpm
+>>>>>>> mdbook
 
-sudo yum install semaphore_2.10.22_linux_amd64.rpm
+sudo yum install semaphore_2.10.43_linux_amd64.rpm
 ```
 {{#endtab }}
 
 {{#tab name="CentOS (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
+<<<<<<< HEAD
 download/v2.10.22/semaphore_2.10.22_linux_arm64.rpm
+=======
+download/v2.10.43/semaphore_2.10.43_linux_arm64.rpm
+>>>>>>> mdbook
 
-sudo yum install semaphore_2.10.22_linux_arm64.rpm
+sudo yum install semaphore_2.10.43_linux_arm64.rpm
 ```
 {{#endtab }}
 {{#endtabs }}
@@ -75,18 +91,26 @@ Download a `*.tar.gz` for your platform from [Releases page](https://github.com/
 {{#tab name="Linux (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
+<<<<<<< HEAD
 download/v2.10.22/semaphore_2.10.22_linux_amd64.tar.gz
+=======
+download/v2.10.43/semaphore_2.10.43_linux_amd64.tar.gz
+>>>>>>> mdbook
 
-tar xf semaphore_2.10.22_linux_amd64.tar.gz
+tar xf semaphore_2.10.43_linux_amd64.tar.gz
 ```
 {{#endtab }}
 
 {{#tab name="Linux (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
+<<<<<<< HEAD
 download/v2.10.22/semaphore_2.10.22_linux_arm64.tar.gz
+=======
+download/v2.10.43/semaphore_2.10.43_linux_arm64.tar.gz
+>>>>>>> mdbook
 
-tar xf semaphore_2.10.22_linux_arm64.tar.gz
+tar xf semaphore_2.10.43_linux_arm64.tar.gz
 ```
 {{#endtab }}
 
@@ -94,7 +118,11 @@ tar xf semaphore_2.10.22_linux_arm64.tar.gz
 ```
 Invoke-WebRequest `
 -Uri ("https://github.com/semaphoreui/semaphore/releases/" +
+<<<<<<< HEAD
       "download/v2.10.22/semaphore_2.10.22_windows_amd64.zip") `
+=======
+      "download/v2.10.43/semaphore_2.10.43_windows_amd64.zip") `
+>>>>>>> mdbook
 -OutFile semaphore.zip
 
 Expand-Archive -Path semaphore.zip  -DestinationPath ./

@@ -1,7 +1,3 @@
----
-description: Command line interface documentation
----
-
 # CLI
 
 <div class="warning">
