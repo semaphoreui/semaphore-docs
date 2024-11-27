@@ -1,3 +1,5 @@
+# Authelia config
+
 Authelia `config.yaml`:
 ```yaml
 identity_providers:

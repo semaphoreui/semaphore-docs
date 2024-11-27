@@ -1,3 +1,5 @@
+# Authentik config
+
 `config.json`:
 
 ```yaml

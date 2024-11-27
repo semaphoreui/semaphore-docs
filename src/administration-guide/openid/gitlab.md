@@ -1,3 +1,5 @@
+# GitLab config
+
 `config.json`:
 ```json
 {
