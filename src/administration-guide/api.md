@@ -2,9 +2,9 @@
 
 ### API documentation
 
-{% hint style="info" %}
-Full API documentation is available in [API reference](https://semaphoreui.com/api-docs).
-{% endhint %}
+ <div class="warning">
+Full API documentation is available in <a href="https://semaphoreui.com/api-docs">API reference</a>.
+ </div>
 
 ### How to use the Semaphore API
 

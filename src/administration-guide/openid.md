@@ -1,7 +1,3 @@
----
-description: OpenID Connect (OIDC) provider configuration
----
-
 # OpenID
 
 Semaphore supports authentication via OpenID Connect (OIDC).

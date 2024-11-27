@@ -1,4 +1,4 @@
-----
+# Security
 
 ## Database encryption
 

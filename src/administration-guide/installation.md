@@ -80,7 +80,7 @@ Here are several installation commands, depending on the package manager:
 {{#tab name="Debian / Ubuntu (x64)"}}
 ```bash
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_amd64.deb
+download/v2.10.22/semaphore_2.10.22_linux_amd64.deb
 
 sudo dpkg -i semaphore_2.10.22_linux_amd64.deb
 ```
@@ -89,7 +89,7 @@ sudo dpkg -i semaphore_2.10.22_linux_amd64.deb
 {{#tab name="Debian / Ubuntu (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_arm64.deb
+download/v2.10.22/semaphore_2.10.22_linux_arm64.deb
 
 sudo dpkg -i semaphore_2.10.22_linux_arm64.deb
 ```
@@ -98,7 +98,7 @@ sudo dpkg -i semaphore_2.10.22_linux_arm64.deb
 {{#tab name="CentOS (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_amd64.rpm
+download/v2.10.22/semaphore_2.10.22_linux_amd64.rpm
 
 sudo yum install semaphore_2.10.22_linux_amd64.rpm
 ```
@@ -107,7 +107,7 @@ sudo yum install semaphore_2.10.22_linux_amd64.rpm
 {{#tab name="CentOS (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_arm64.rpm
+download/v2.10.22/semaphore_2.10.22_linux_arm64.rpm
 
 sudo yum install semaphore_2.10.22_linux_arm64.rpm
 ```
@@ -227,9 +227,9 @@ For more information about Python requirements files, see the [Pip Requirements 
 
 ### Binary file
 
-{% hint style="info" %}
-Python, Ansible and Git should be installed on your system.
-{% endhint %}
+<div class="warning">
+  Python, Ansible and Git should be installed on your system.
+</div>
 
 Look into the [manual installation](installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 
@@ -239,7 +239,7 @@ Download the `*.tar.gz` for your platform from [Releases page](https://github.co
 {{#tab name="Linux (x64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_amd64.tar.gz
+download/v2.10.22/semaphore_2.10.22_linux_amd64.tar.gz
 
 tar xf semaphore_2.10.22_linux_amd64.tar.gz
 
@@ -250,7 +250,7 @@ tar xf semaphore_2.10.22_linux_amd64.tar.gz
 {{#tab name="Linux (ARM64)" }}
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.9.58/semaphore_2.10.22_linux_arm64.tar.gz
+download/v2.10.22/semaphore_2.10.22_linux_arm64.tar.gz
 
 tar xf semaphore_2.10.22_linux_arm64.tar.gz
 
@@ -262,7 +262,7 @@ tar xf semaphore_2.10.22_linux_arm64.tar.gz
 ```
 Invoke-WebRequest `
 -Uri ("https://github.com/semaphoreui/semaphore/releases/" +
-      "download/v2.9.58/semaphore_2.10.22_windows_amd64.zip") `
+      "download/v2.10.22/semaphore_2.10.22_windows_amd64.zip") `
 -OutFile semaphore.zip
 
 Expand-Archive -Path semaphore.zip  -DestinationPath ./
