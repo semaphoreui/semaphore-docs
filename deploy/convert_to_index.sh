@@ -21,6 +21,12 @@ find . -type f -name "index.html" | while read file; do
   sed -i '' 's/"\.\//"..\//g' "$file"
 done
 
+echo "Go to book directory"
+
+cd ../book
+
+echo "Move HTML files to their own directories and rename them to index.html"
+
 # Find all .html files in the current directory (excluding index.html files)
 find . -type f -name "*.html" ! -name "index.html" | while read file; do
   move_html_to_index "$file"
