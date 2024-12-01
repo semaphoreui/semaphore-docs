@@ -87,7 +87,7 @@ sudo dpkg -i semaphore_2.10.43_linux_amd64.deb
 {{#endtab }}
 
 {{#tab name="Debian / Ubuntu (ARM64)" }}
-```
+```bash
 wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.10.43/semaphore_2.10.43_linux_arm64.deb
 
@@ -96,7 +96,7 @@ sudo dpkg -i semaphore_2.10.43_linux_arm64.deb
 {{#endtab }}
 
 {{#tab name="CentOS (x64)" }}
-```
+```bash
 wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.10.43/semaphore_2.10.43_linux_amd64.rpm
 
@@ -105,7 +105,7 @@ sudo yum install semaphore_2.10.43_linux_amd64.rpm
 {{#endtab }}
 
 {{#tab name="CentOS (ARM64)" }}
-```
+```bash
 wget https://github.com/semaphoreui/semaphore/releases/\
 download/v2.10.43/semaphore_2.10.43_linux_arm64.rpm
 
