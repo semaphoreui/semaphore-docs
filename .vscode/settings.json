@@ -2,5 +2,6 @@
     "liveServer.settings.root": "/book/",
     "filewatcher.commands": [
     ],
-    "liveServer.settings.port": 5500
+    "liveServer.settings.port": 5500,
+    "ansible.python.interpreterPath": "/usr/bin/python3"
 }

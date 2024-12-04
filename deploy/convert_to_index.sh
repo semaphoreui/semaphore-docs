@@ -15,6 +15,7 @@ move_html_to_index() {
 }
 
 find . -type f -name "index.html" | while read file; do
+  sed -i '' 's/\/index\.html/\//g' "$file"
   sed -i '' 's/index\.html/\//g' "$file"
   sed -i '' 's/\.html/\//g' "$file"
   sed -i '' 's/"\.\.\//"..\/..\//g' "$file"
