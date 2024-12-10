@@ -1,4 +1,4 @@
-# Okta config
+# Keycloak config
 
 `config.json`:
 
