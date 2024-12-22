@@ -1,14 +1,13 @@
 - name: Install Mdbook
   ansible.builtin.unarchive:
     src: "https://github.com/rust-lang/mdBook/releases/download/v0.4.43/mdbook-v0.4.43-x86_64-unknown-linux-gnu.tar.gz"
-    dest: "/usr/local/bin"
+    dest: "/tmp"
     remote_src: true
-  become: true
 
 
 - name: Build The Book
   ansible.builtin.command:
-    cmd: mdbook build
+    cmd: /tmp/mdbook build
     chdir: "{{ playbook_dir }}/.."
     creates: "{{ playbook_dir }}/../book/index.html"
 
