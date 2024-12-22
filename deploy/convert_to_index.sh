@@ -8,19 +8,36 @@ move_html_to_index() {
   # Create directory and move the HTML file
   mkdir -p "$dirpath"
   mv "$filepath" "$dirpath/index.html"
-  sed -i '' 's/\/index\.html/\//g' "$dirpath/index.html"
-  sed -i '' 's/\.html/\//g' "$dirpath/index.html"
-  sed -i '' 's/"\.\.\//"..\/..\//g' "$dirpath/index.html"
-  sed -i '' 's/"\.\//"..\//g' "$dirpath/index.html"
-}
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' 's/\/index\.html/\//g' "$dirpath/index.html"
+    sed -i '' 's/\.html/\//g' "$dirpath/index.html"
+    sed -i '' 's/"\.\.\//"..\/..\//g' "$dirpath/index.html"
+    sed -i '' 's/"\.\//"..\//g' "$dirpath/index.html"
 
-find . -type f -name "index.html" | while read file; do
-  sed -i '' 's/\/index\.html/\//g' "$file"
-  sed -i '' 's/index\.html/\//g' "$file"
-  sed -i '' 's/\.html/\//g' "$file"
-  sed -i '' 's/"\.\.\//"..\/..\//g' "$file"
-  sed -i '' 's/"\.\//"..\//g' "$file"
-done
+    find . -type f -name "index.html" | while read file; do
+      sed -i '' 's/\/index\.html/\//g' "$file"
+      sed -i '' 's/index\.html/\//g' "$file"
+      sed -i '' 's/\.html/\//g' "$file"
+      sed -i '' 's/"\.\.\//"..\/..\//g' "$file"
+      sed -i '' 's/"\.\//"..\//g' "$file"
+    done
+
+  else
+    sed -i 's/\/index\.html/\//g' "$dirpath/index.html"
+    sed -i 's/\.html/\//g' "$dirpath/index.html"
+    sed -i 's/"\.\.\//"..\/..\//g' "$dirpath/index.html"
+    sed -i 's/"\.\//"..\//g' "$dirpath/index.html"
+
+    find . -type f -name "index.html" | while read file; do
+      sed -i 's/\/index\.html/\//g' "$file"
+      sed -i 's/index\.html/\//g' "$file"
+      sed -i 's/\.html/\//g' "$file"
+      sed -i 's/"\.\.\//"..\/..\//g' "$file"
+      sed -i 's/"\.\//"..\//g' "$file"
+    done
+
+  fi
+}
 
 echo "Go to book directory"
 

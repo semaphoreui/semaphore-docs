@@ -2,7 +2,8 @@
   ansible.builtin.unarchive:
     src: "https://github.com/rust-lang/mdBook/releases/download/v0.4.43/mdbook-v0.4.43-x86_64-unknown-linux-gnu.tar.gz"
     dest: "/usr/local/bin"
-    become: true
+    remote_src: true
+  become: true
 
 
 - name: Build The Book
@@ -10,4 +11,17 @@
     cmd: mdbook build
     chdir: "{{ playbook_dir }}/.."
     creates: "{{ playbook_dir }}/../book/index.html"
-  become: true
+
+
+- name: Convert all xyz.html to xyz/index.html
+  ansible.builtin.command:
+    cmd: "{{ playbook_dir }}/convert_to_index.sh"
+  register: convert_to_index
+  changed_when: convert_to_index.stdout != ""
+
+
+- name: Prepare header
+  ansible.builtin.command:
+    cmd: "{{ playbook_dir }}/prepare_header_title.sh"
+  register: prepare_header
+  changed_when: prepare_header.stdout != ""
