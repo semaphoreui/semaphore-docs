@@ -1,10 +1,10 @@
-- name: include secret vars
-  include_vars:
+- name: Include secret vars
+  ansible.builtin.include_vars:
     file: "{{ inventory_dir }}/files/secrets.yml"
     name: secrets
 
-    
-- name: upload assets to s3 bucket
+
+- name: Upload assets to s3 bucket
   community.aws.s3_sync:
     endpoint_url: https://storage.yandexcloud.net
     bucket: "{{ website_bucket }}"
@@ -17,7 +17,7 @@
     exclude: "*.html"
 
 
-- name: upload html to s3 bucket
+- name: Upload html to s3 bucket
   community.aws.s3_sync:
     endpoint_url: https://storage.yandexcloud.net
     bucket: "{{ website_bucket }}"

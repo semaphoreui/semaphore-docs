@@ -1,13 +1,13 @@
-- name: rm old build directory
-  file:
-    path: "{{ playbook_dir }}/../build"
-    state: absent
-    
-- name: npm install
-  community.general.npm:
-    path: "{{ playbook_dir }}/../"
+- name: Install Mdbook
+  ansible.builtin.unarchive:
+    src: "https://github.com/rust-lang/mdBook/releases/download/v0.4.43/mdbook-v0.4.43-x86_64-unknown-linux-gnu.tar.gz"
+    dest: "/usr/local/bin"
+    become: true
 
-- name: run gulp
-  command: ./node_modules/.bin/gulp build
-  args:
-    chdir: "{{ playbook_dir }}/../"
+
+- name: Build The Book
+  ansible.builtin.command:
+    cmd: mdbook build
+    chdir: "{{ playbook_dir }}/.."
+    creates: "{{ playbook_dir }}/../book/index.html"
+  become: true
