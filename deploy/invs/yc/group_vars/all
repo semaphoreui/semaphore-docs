@@ -1,5 +1,2 @@
 aws_region:         ru-central1
 website_bucket:     docs.semaphoreui.com
-ansible_ssh_user:   ubuntu
-
-website_domain:     semaphoreui.com
