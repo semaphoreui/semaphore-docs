@@ -11,7 +11,7 @@
 
 
 - name: Remove old book
-  file:
+  ansible.builtin.file:
     path: "{{ playbook_dir }}/../book"
     state: absent
 
