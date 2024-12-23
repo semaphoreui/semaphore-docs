@@ -2,7 +2,7 @@
 
 * [Introduction](./README.md)
 
-* [Administration Guide]()
+* [Administrator Guide]()
   * [Installation](./administration-guide/installation.md)
   * [Manual Installation](./administration-guide/installation\_manually.md)
   * [Configuration](./administration-guide/configuration.md)
@@ -22,7 +22,6 @@
   * [API](./administration-guide/api.md)
   * [CI/CD](./administration-guide/cicd.md)
   * [Runners](./administration-guide/runners.md)
-  * [🤯 Troubleshooting](./administration-guide/troubleshooting.md)
 
 * [User Guide]()
   * [Projects](./user-guide/projects.md)
@@ -36,3 +35,6 @@
   * [Repositories](./user-guide/repositories.md)
     * [Bitbucket Access Token](./user-guide/repositories/bitbucket_access_token.md)
   * [Integrations](./user-guide/integrations.md)
+
+* [FAQ]()
+  * [🤯 Troubleshooting](./faq/troubleshooting.md)
