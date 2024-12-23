@@ -10,6 +10,12 @@
     creates: "{{ ansible_env.HOME }}/.cargo/bin/mdbook-tabs"
 
 
+- name: Remove old book
+  file:
+    path: "{{ playbook_dir }}/../book"
+    state: absent
+
+
 - name: Build The Book
   ansible.builtin.shell:
     cmd: . {{ ansible_env.HOME }}/.cargo/env && mdbook build
