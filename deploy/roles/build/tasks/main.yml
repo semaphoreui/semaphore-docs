@@ -7,7 +7,7 @@
 
 - name: Build The Book
   ansible.builtin.command:
-    cmd: /tmp/mdbook build
+    cmd: mdbook build
     chdir: "{{ playbook_dir }}/.."
     creates: "{{ playbook_dir }}/../book/index.html"
 
