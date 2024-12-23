@@ -7,9 +7,12 @@ title = "Semaphore Docs"
 
 [preprocessor.tabs]
 
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
 [output.html]
 additional-css = ["theme/tabs.css", "theme/search.css", "theme/content.css", "theme/header.css"]
-additional-js = ["theme/tabs.js"]
+additional-js = ["theme/tabs.js"] # "mermaid.min.js", "mermaid-init.js"
 google-analytics = "G-SXDFVHLVBM"
 edit-url-template = "https://github.com/semaphoreui/semaphore-docs/edit/main/{path}"
 site-url = "https://semaphoreui.com"
