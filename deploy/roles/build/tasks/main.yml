@@ -1,6 +1,18 @@
-- name: Build The Book
+- name: Install mdbook
   ansible.builtin.command:
-    cmd: mdbook build
+    cmd: cargo install mdbook --version 0.4.40
+    creates: "{{ ansible_env.HOME }}/.cargo/bin/mdbook"
+
+
+- name: Install mdbook-tabs
+  ansible.builtin.command:
+    cmd: cargo install mdbook-tabs
+    creates: "{{ ansible_env.HOME }}/.cargo/bin/mdbook-tabs"
+
+
+- name: Build The Book
+  ansible.builtin.shell:
+    cmd: . {{ ansible_env.HOME }}/.cargo/env && mdbook build
     chdir: "{{ playbook_dir }}/.."
     creates: "{{ playbook_dir }}/../book/index.html"
 
