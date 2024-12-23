@@ -1,0 +1,29 @@
+ul#searchresults {
+    padding-right: 10px;
+}
+
+ul#searchresults li {
+    margin: 10px 0px;
+    padding: 2px;
+    border-radius: 2px;
+    border-bottom: 1px dashed var(--searchresults-header-fg);
+    padding-bottom: 10px;
+}
+
+ul#searchresults li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.searchresults-outer#searchresults-outer {
+    border-radius: 6px;
+    margin-top: 6px;
+    border: 1px solid var(--searchbar-border-color);
+    background-color: var(--searchbar-bg);
+    /* box-shadow: 0 0 3px var(--searchbar-shadow-color); */
+}
+
+ul#searchresults span.teaser {
+    color: var(--searchbar-fg);
+    margin-left: 0;
+}
