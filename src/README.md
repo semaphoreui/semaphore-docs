@@ -1,19 +1,5 @@
 # Introduction
 
-```mermaid
-gitGraph
-    commit
-    commit
-    branch develop
-    checkout develop
-    commit
-    commit
-    checkout main
-    merge develop
-    commit
-    commit
-```
-
 Semaphore is a responsive web UI for running Ansible playbooks, Terraform/OpenTofu and Pulumi code.
 
 <img style="box-shadow: none;" src=".gitbook/assets/134777345-8789d9e4-ff0d-439c-b80e-ddc56b74fcee.webp">
