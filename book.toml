@@ -20,3 +20,7 @@ site-url = "https://semaphoreui.com"
 [output.html.search]
 enable = true
 limit-results = 10
+
+[output.html.fold]
+enable = true
+level = 1

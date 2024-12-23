@@ -8,3 +8,8 @@
 .light .menu-icon {
     opacity: 1;
 }
+
+
+.chapter > .chapter-item > .toggle {
+    display: none;
+}
