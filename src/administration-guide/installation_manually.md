@@ -127,7 +127,7 @@ Make sure the virtual environment is activated inside the Service! This is also 
 ```bash
 sudo su --login semaphore
 python3 -m pip install --user virtualenv
-python3 -m virtualenv /home/semaphore/venv
+python3 -m venv /home/semaphore/venv
 # activate the context of the virtual environment
 source /home/semaphore/venv/bin/activate
 # verify we are using python3 from inside the venv
