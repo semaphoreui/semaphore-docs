@@ -22,20 +22,20 @@ find . -type f -name "*.html" ! -name "index.html" | while read file; do
 done
 
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    find . -type f -name "index.html" | while read file; do
+find . -type f -name "index.html" | while read file; do
+    if [[ "$OSTYPE" == "darwin"* ]]; then
         sed -i '' 's/\/index\.html/\//g' "$file"
         sed -i '' 's/index\.html/\//g' "$file"
         sed -i '' 's/\.html/\//g' "$file"
         sed -i '' 's/"\.\.\//"..\/..\//g' "$file"
         sed -i '' 's/"\.\//"..\//g' "$file"
-    done
-else 
-    find . -type f -name "index.html" | while read file; do
+    else 
         sed -i 's/\/index\.html/\//g' "$file"
         sed -i 's/index\.html/\//g' "$file"
         sed -i 's/\.html/\//g' "$file"
         sed -i 's/"\.\.\//"..\/..\//g' "$file"
         sed -i 's/"\.\//"..\//g' "$file"
-    done
-fi
+    fi
+
+    node ../deploy/mermaid-preprocessing/index.js "$file"
+done
