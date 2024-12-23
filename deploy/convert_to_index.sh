@@ -37,5 +37,7 @@ find . -type f -name "index.html" | while read file; do
         sed -i 's/"\.\//"..\//g' "$file"
     fi
 
-    node ../deploy/mermaid-preprocessing/index.js "$file"
+    if grep -q 'mermaid' "$file"; then
+        node ../deploy/mermaid-preprocessing/index.js "$file"
+    fi
 done
