@@ -21,10 +21,21 @@ find . -type f -name "*.html" ! -name "index.html" | while read file; do
   move_html_to_index "$file"
 done
 
-find . -type f -name "index.html" | while read file; do
-  sed -i '' 's/\/index\.html/\//g' "$file"
-  sed -i '' 's/index\.html/\//g' "$file"
-  sed -i '' 's/\.html/\//g' "$file"
-  sed -i '' 's/"\.\.\//"..\/..\//g' "$file"
-  sed -i '' 's/"\.\//"..\//g' "$file"
-done
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    find . -type f -name "index.html" | while read file; do
+        sed -i '' 's/\/index\.html/\//g' "$file"
+        sed -i '' 's/index\.html/\//g' "$file"
+        sed -i '' 's/\.html/\//g' "$file"
+        sed -i '' 's/"\.\.\//"..\/..\//g' "$file"
+        sed -i '' 's/"\.\//"..\//g' "$file"
+    done
+else 
+    find . -type f -name "index.html" | while read file; do
+        sed -i 's/\/index\.html/\//g' "$file"
+        sed -i 's/index\.html/\//g' "$file"
+        sed -i 's/\.html/\//g' "$file"
+        sed -i 's/"\.\.\//"..\/..\//g' "$file"
+        sed -i 's/"\.\//"..\//g' "$file"
+    done
+fi
