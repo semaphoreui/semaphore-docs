@@ -1,4 +1,9 @@
-# Terraform Template
+<div class="breadcrumbs">
+    <a href="/user-guide/task-templates/">Task templates</a>
+    → Terraform/OpenTofu
+</div>
+
+# Terraform/OpenTofu
 
 Using Semaphore UI you can run Terraform code. To do this, you need to create a **Terraform Code Template**.
 

@@ -1,9 +1,9 @@
 <div class="breadcrumbs">
-    <a href="/user-guide/openid">Task templates</a>
-    → Terraform
+    <a href="/user-guide/task-templates/">Task templates</a>
+    → Ansible
 </div>
 
-# Terraform
+# Ansible
 
 Using Semaphore UI you can run Terraform code. To do this, you need to create a **Terraform Code Template**.
 

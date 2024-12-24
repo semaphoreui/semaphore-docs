@@ -3,7 +3,7 @@
     → Snap
 </div>
 
-# Snap
+# Snap (deprecated)
 
 To install Semaphore via snap, run following command in terminal:
 

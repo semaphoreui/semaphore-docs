@@ -6,7 +6,7 @@
 # Binary file
 
 <div class="warning">
-  Python, Ansible and Git should be installed on your system.
+  Ansible and Git should be installed on your system.
 </div>
 
 Look into the [manual installation](installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
