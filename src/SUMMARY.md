@@ -2,8 +2,12 @@
 
 * [Introduction](./README.md)
 
-* [Administrator Guide]()
+* [Admin Guide]()
   * [Installation](./administration-guide/installation.md)
+    * [Snap](./administration-guide/installation/snap.md)
+    * [Package manager](./administration-guide/installation/package-manager.md)
+    * [Docker](./administration-guide/installation/docker.md)
+    * [Binary file](./administration-guide/installation/binary-file.md)
   * [Manual Installation](./administration-guide/installation\_manually.md)
   * [Configuration](./administration-guide/configuration.md)
   * [Upgrading](./administration-guide/upgrading.md)

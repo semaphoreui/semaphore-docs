@@ -1,3 +1,8 @@
+<div class="breadcrumbs">
+    <a href="/administration-guide/openid">OpenID</a>
+    → Authelia config
+</div>
+
 # Authelia config
 
 Authelia `config.yaml`:

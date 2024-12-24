@@ -1,3 +1,8 @@
+<div class="breadcrumbs">
+    <a href="/administration-guide/openid">OpenID</a>
+    → GitLab config
+</div>
+
 # GitLab config
 
 `config.json`:

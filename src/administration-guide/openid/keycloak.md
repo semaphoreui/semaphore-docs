@@ -1,3 +1,8 @@
+<div class="breadcrumbs">
+    <a href="/administration-guide/openid">OpenID</a>
+    → Keycloak config
+</div>
+
 # Keycloak config
 
 `config.json`:

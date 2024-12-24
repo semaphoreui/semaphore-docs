@@ -10,6 +10,9 @@ title = "Semaphore Docs"
 [preprocessor.mermaid]
 command = "mdbook-mermaid"
 
+# [preprocessor.breadcrumbs]
+# command = "/home/fiftin/src/semaphore/mdbook-breadcrumbs/target/release/mdbook-breadcrumbs"
+
 [output.html]
 additional-css = ["theme/tabs.css", "theme/search.css", "theme/content.css", "theme/header.css"]
 additional-js = ["theme/tabs.js"] # "mermaid.min.js", "mermaid-init.js"

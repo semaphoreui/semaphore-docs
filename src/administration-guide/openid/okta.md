@@ -1,3 +1,8 @@
+<div class="breadcrumbs">
+    <a href="/administration-guide/openid">OpenID</a>
+    → Okta config
+</div>
+
 # Okta config
 
 `config.json`:

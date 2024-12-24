@@ -1,3 +1,8 @@
+<div class="breadcrumbs">
+    <a href="/administration-guide/openid">OpenID</a>
+    → Authentik config
+</div>
+
 # Authentik config
 
 `config.json`:

@@ -1,3 +1,8 @@
+<div class="breadcrumbs">
+    <a href="/administration-guide/openid">OpenID</a>
+    → Gitea config
+</div>
+
 # Gitea config
 
 `config.json`:

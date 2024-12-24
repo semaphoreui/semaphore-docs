@@ -1,3 +1,8 @@
+<div class="breadcrumbs">
+    <a href="/administration-guide/openid">OpenID</a>
+    → GitHub config
+</div>
+
 # GitHub config
 
 `config.json`:
