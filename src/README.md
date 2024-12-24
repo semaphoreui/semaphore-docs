@@ -1,5 +1,33 @@
 # Introduction
 
+Semaphore is a responsive web UI for running Ansible playbooks, Terraform/OpenTofu and Pulumi code.
+
+<img style="box-shadow: none;" src=".gitbook/assets/134777345-8789d9e4-ff0d-439c-b80e-ddc56b74fcee.webp">
+
+Semaphore is written in pure Go and available for Windows, macOS and Linux (x64, ARM, ARM64). Semaphore is an open-source project with concise and high-quality code.
+
+Semaphore supports the following databases:
+
+* MySQL
+* PostgreSQL
+* [BoltDB](https://github.com/etcd-io/bbolt) – embedded key/value database
+
+With Semaphore you can:
+
+* [Build, deploy and rollback](./administration-guide/cicd.md)
+* Group playbooks to projects
+* Manage environments, inventories, repositories and access keys
+* Run playbooks from the browser. Responsive UI allows the use of Semaphore on mobile devices
+* Run playbooks by schedule
+* View detailed logs of any playbook runs, at any time
+* Delegate other users the running of playbooks
+* Get notifications about playbook runs
+
+## Development roadmap
+
+We are developing Semaphore according to the [roadmap](https://github.com/orgs/semaphoreui/projects/11).
+
+
 ```mermaid
 gantt
 	title Project Timeline
@@ -34,35 +62,20 @@ gantt
 	    Create official Helm Chart             :des20, after des19, 1d
 ```
 
-Semaphore is a responsive web UI for running Ansible playbooks, Terraform/OpenTofu and Pulumi code.
+## Links
 
-<img style="box-shadow: none;" src=".gitbook/assets/134777345-8789d9e4-ff0d-439c-b80e-ddc56b74fcee.webp">
+* Source code: [https://github.com/semaphoreui/semaphore](https://github.com/semaphoreui/semaphore)
+* Issue tracking: [https://github.com/semaphoreui/semaphore/issues](https://github.com/semaphoreui/semaphore/issues)
+* Docker: [https://hub.docker.com/r/semaphoreui/semaphore](https://hub.docker.com/r/semaphoreui/semaphore)
+* Snap: [https://snapcraft.io/semaphore](https://snapcraft.io/semaphore)
+* Contact: [denis@semaphoreui.com](mailto:denis@semaphoreui.com)
+* Docker container configurator:
 
-Semaphore is written in pure Go and available for Windows, macOS and Linux (x64, ARM, ARM64). Semaphore is an open-source project with concise and high-quality code.
+   [![](https://img.shields.io/badge/docker_configurator-0050ab?style=for-the-badge&logo=docker)](https://semaphoreui.com/install/docker/)  
+* Our responsive community:
 
-Semaphore supports the following databases:
+   [![discord](https://img.shields.io/badge/discord_community-510b80?style=for-the-badge&logo=discord)](https://discord.gg/5R6k7hNGcH)  
 
-* MySQL
-* PostgreSQL
-* [BoltDB](https://github.com/etcd-io/bbolt) – embedded key/value database
+* Every day we add new features, fix bugs, support the community. We need your support:
 
-With Semaphore you can:
-
-* [Build, deploy and rollback](./administration-guide/cicd.md)
-* Group playbooks to projects
-* Manage environments, inventories, repositories and access keys
-* Run playbooks from the browser. Responsive UI allows the use of Semaphore on mobile devices
-* Run playbooks by schedule
-* View detailed logs of any playbook runs, at any time
-* Delegate other users the running of playbooks
-* Get notifications about playbook runs
-
-Source code: [https://github.com/semaphoreui/semaphore](https://github.com/semaphoreui/semaphore).
-
-Issue tracking: [https://github.com/semaphoreui/semaphore/issues](https://github.com/semaphoreui/semaphore/issues).
-
-Docker: [https://hub.docker.com/r/semaphoreui/semaphore](https://hub.docker.com/r/semaphoreui/semaphore).
-
-Snap: [https://snapcraft.io/semaphore](https://snapcraft.io/semaphore).
-
-Contact: [denis@semaphoreui.com](mailto:denis@semaphoreui.com)
+   [![sponsor](https://img.shields.io/badge/become_a_sponsor-d9c7ff?style=for-the-badge&logo=github-sponsors)](https://github.com/sponsors/semaphoreui) [![ko-fi](https://img.shields.io/badge/buy_me_a_coffee-0ba0e0?style=for-the-badge&logo=kofi)](https://ko-fi.com/fiftin) [![patreon](https://img.shields.io/badge/become_a_patreon-teal?style=for-the-badge&logo=patreon)](https://www.patreon.com/semaphoreui)

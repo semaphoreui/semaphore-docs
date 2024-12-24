@@ -13,3 +13,15 @@
 .chapter > .chapter-item > .toggle {
     display: none;
 }
+
+svg {
+    border-radius: 6px;
+}
+
+#disqus_thread {
+    padding-top: 100px;
+}
+
+#disqus_thread > iframe {
+    color-scheme: normal;
+}

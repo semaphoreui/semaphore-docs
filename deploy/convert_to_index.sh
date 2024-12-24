@@ -22,6 +22,8 @@ find . -type f -name "*.html" ! -name "index.html" | while read file; do
 done
 
 
+BUILD_VERSION=$RANDOM
+
 find . -type f -name "index.html" | while read file; do
     if [[ "$OSTYPE" == "darwin"* ]]; then
         sed -i '' 's/\/index\.html/\//g' "$file"
@@ -29,15 +31,23 @@ find . -type f -name "index.html" | while read file; do
         sed -i '' 's/\.html/\//g' "$file"
         sed -i '' 's/"\.\.\//"..\/..\//g' "$file"
         sed -i '' 's/"\.\//"..\//g' "$file"
+
+        sed -i '' "s/\.css/.css?v=$BUILD_VERSION/g" "$file"
+        sed -i '' "s/\.js/.js?v=$BUILD_VERSION/g" "$file"
     else 
         sed -i 's/\/index\.html/\//g' "$file"
         sed -i 's/index\.html/\//g' "$file"
         sed -i 's/\.html/\//g' "$file"
         sed -i 's/"\.\.\//"..\/..\//g' "$file"
         sed -i 's/"\.\//"..\//g' "$file"
+        sed -i "s/\.css/.css?v=$BUILD_VERSION/g" "$file"
+        sed -i "s/\.js/.js?v=$BUILD_VERSION/g" "$file"
     fi
 
     if grep -q 'mermaid' "$file"; then
         node ../deploy/mermaid-preprocessing/index.js "$file"
     fi
 done
+
+
+sed -i "s/\.css/.css?v=$BUILD_VERSION/g" "book.js"
