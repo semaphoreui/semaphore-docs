@@ -14,6 +14,8 @@
   * [Security](./administration-guide/security.md)
   * [CLI](./administration-guide/cli.md)
     * [User management](./administration-guide/cli/users.md)
+    * [Vault management](./administration-guide/cli/vaults.md)
+    * [Runner management](./administration-guide/cli/runners.md)
   * [LDAP](./administration-guide/ldap.md)
   * [OpenID](./administration-guide/openid.md)
     * [GitHub config](./administration-guide/openid/github.md)

@@ -1,35 +1,63 @@
 # CLI
 
-<div class="warning">
-    For Semaphore installed via Snap you should use `sudo` for using CLI. This is completely safe because Semaphore works in a <a href="https://snapcraft.io/docs/snap-confinement">strict mode</a>.
-</div>
+<!-- <div class="warning">
+    For Semaphore installed via Snap you should use <code>sudo</code> for using CLI. 
+    This is completely safe because Semaphore works in a <a href="https://snapcraft.io/docs/snap-confinement">strict mode</a>.
+</div> -->
 
-### Version
+## Common config options
+
+| Option               | Description                               |
+|----------------------|-------------------------------------------|
+|`--config config.json`| Path to the configuration file.           |
+|`--no-cofnig`         | Do not use any configuration file. Only environment variable will be used. |
+|`--log-level ERROR`   | `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`, `PANIC` |
+
+## Version
+
+Print current version.
 
 ```bash
 semaphore version
 ```
 
-### Interactive setup
+
+## Help
+
+Print list of supported commands.
+
+```bash
+semaphore help
+```
+
+## Database migration
+
+Update database schema to latest version.
+
+```
+semaphore migrate
+```
+
+## Interactive setup
 
 Use this option for first time configuration.
-
-
-<div class="warning">
-    Do not use this command for Semaphore installed via Snap. Use <a href="./configuration#snap-configuration">Snap Configuration</a> instead.
-</div>
 
 ```
 semaphore setup
 ```
 
-### Vault management
+## Server mode
 
-You can reencrypt your secrets in database with using following command:
+Start the server.
 
 ```
-semaphore vault rekey --old-key <encryption-key-which-used-before>
+semaphore server
 ```
 
-Your data will be decryped using `<encryption-key-which-used-before>` and will be encrypted using option `access_key_encryption` from configuration key.
+## Runner mode
 
+Start the runner.
+
+```
+semaphore runner
+```
