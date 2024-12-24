@@ -1,4 +1,9 @@
-# Bash Template
+<div class="breadcrumbs">
+    <a href="/user-guide/openid">Task templates</a>
+    → Bash
+</div>
+
+# Bash
 
 Using Semaphore UI you can run Bash scripts. To do this, you need to create a **Bash Script Template**.
 
