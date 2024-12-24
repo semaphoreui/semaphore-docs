@@ -1,0 +1,7 @@
+{{#if current_page.path}}
+<nav id="breadcrumbs">
+    {{#each breadcrumbs}}
+        <a href="{{url}}">{{name}}</a>{{#unless @last}} > {{/unless}}
+    {{/each}}
+</nav>
+{{/if}}
