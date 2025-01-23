@@ -50,4 +50,8 @@ find . -type f -name "index.html" | while read file; do
 done
 
 
-sed -i "s/\.css/.css?v=$BUILD_VERSION/g" "book.js"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' "s/\.css/.css?v=$BUILD_VERSION/g" "book.js"
+else 
+    sed -i "s/\.css/.css?v=$BUILD_VERSION/g" "book.js"
+fi
