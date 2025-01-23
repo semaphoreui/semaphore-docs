@@ -7,8 +7,6 @@
     
 </script>
 
-<script id="dsq-count-scr" src="//semaphoreui.disqus.com/count.js" async></script>
-
 <style>
 :root.theme-dark { color-scheme: dark }
 :root.theme-light { color-scheme: light }
@@ -18,22 +16,3 @@
   background-color: canvas;
 }
 </style>
-<script>
-    (function() {
-
-        document.addEventListener("DOMContentLoaded", (event) => {
-            // create div element
-            const disqus = document.createElement('div');
-            disqus.id = 'disqus_thread';
-            const content = document.querySelector('#content main');
-            content.appendChild(disqus);
-
-            // add script
-            var d = document, s = d.createElement('script');
-            s.src = 'https://semaphoreui.disqus.com/embed.j' + 's';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        });
-
-    })();
-</script>
