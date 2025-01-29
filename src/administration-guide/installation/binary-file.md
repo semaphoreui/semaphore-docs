@@ -16,9 +16,9 @@ Download the `*.tar.gz` for your platform from [Releases page](https://github.co
 {{#tabs }}
 {{#tab name="Linux (x64)" }}
 ```
-download/v2.10.43/semaphore_2.10.43_linux_amd64.tar.gz
+download/v2.12.3/semaphore_2.12.3_linux_amd64.tar.gz
 
-tar xf semaphore_2.10.43_linux_amd64.tar.gz
+tar xf semaphore_2.12.3_linux_amd64.tar.gz
 
 ./semaphore setup
 ```
@@ -28,9 +28,9 @@ tar xf semaphore_2.10.43_linux_amd64.tar.gz
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 
-download/v2.10.43/semaphore_2.10.43_linux_arm64.tar.gz
+download/v2.12.3/semaphore_2.12.3_linux_arm64.tar.gz
 
-tar xf semaphore_2.10.43_linux_arm64.tar.gz
+tar xf semaphore_2.12.3_linux_arm64.tar.gz
 
 ./semaphore setup
 ```
@@ -40,7 +40,7 @@ tar xf semaphore_2.10.43_linux_arm64.tar.gz
 ```
 Invoke-WebRequest `
 -Uri ("https://github.com/semaphoreui/semaphore/releases/" +
-      "download/v2.10.43/semaphore_2.10.43_windows_amd64.zip") `
+      "download/v2.12.3/semaphore_2.12.3_windows_amd64.zip") `
 
 -OutFile semaphore.zip
 
