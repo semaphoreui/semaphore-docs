@@ -21,7 +21,8 @@ To set up the server for working with running you should add following option to
 
 ```json
 {
-  "use_remote_runner": true
+  "use_remote_runner": true,
+  "runner_registration_token": "long string of random characters"
 }
 ```
 
@@ -38,7 +39,7 @@ But before using this command, you need to understand how runners are registered
 ### Registering the Runner on the Server
 
 There are two ways to register a runner on the Semaphore server:
-1) Add it via the web interface.
+1) Add it via the web interface or API.
 2) Use the command line with the `semaphore runner register` command.
 
 #### Adding the Runner via the Web Interface
@@ -71,7 +72,8 @@ As a result of running the `semaphore runner setup` command, a configuration fil
   
   // Runner specific options
   "runner": {
-
+    "token": "your runner's token",
+    // or
     "token_file": "path/to/the/file/where/runner/saves/token"
 
     // Here you can provide other runner-specific options, 
@@ -117,6 +119,10 @@ semaphore runner unregister --config /path/to/your/config/file.json
 ```
 
 ## Security
+
+Data transfer security is ensured by using asymmetric encryption: the server encrypts data using a public key, the runner decrypts it using a private key.
+
+Public and private keys are generated automatically when the runner registers on the server.
 
 <div class="warning">
   Use the HTTPS protocol for communication between the server and the runner, especially if they are not on the same private network.
