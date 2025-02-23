@@ -6,12 +6,14 @@
 
 # Nginx config
 
+
+
 Configuration example:
 
 ```yaml
 server {
   listen 443 ssl;
-  server_name  _;
+  server_name  example.com;
 
   # add Strict-Transport-Security to prevent man in the middle attacks
   add_header Strict-Transport-Security "max-age=31536000" always;
