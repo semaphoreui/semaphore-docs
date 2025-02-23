@@ -1,28 +1,29 @@
-# Environment
-The Environment section of Semaphore is a place to store additional variables for an inventory and must be stored in JSON format. 
-All task templates require an environment to be defined even if it is empty. 
+# Variable Groups
 
-## Create an Environment
-1. Click on the Environment tab.
-2. Click on the New Environment button.
-3. Name the Environment and type or paste in valid JSON variables. If you just need an empty Environment type in ```{}```.
-## Updating an Environment
-1. Click on the Environment tab.
+The Variable Groups section of Semaphore is a place to store additional variables for an inventory and must be stored in JSON format.
+
+All task templates require an variable group to be defined even if it is empty. 
+
+## Create an variable group
+1. Click on the Variable Group tab.
+2. Click on the New Variable Group button.
+3. Name the Variable Group and type or paste in valid JSON variables. If you just need an empty Variable Group type in ```{}```.
+
+## Updating an variable group
+1. Click on the Variable Groups tab.
 2. Click the pencil icon.
 3. Make changes and click save.
 
-## Deleting the Environment
-Before you remove an Environment, you must remove all resources tied to it.
-If you are not sure which resources are being used in an environment, follow steps 1 and 2 below. It will show you which resources are being used, with links to those resources.
+## Deleting the variable group
+Before you remove an variable proup, you must remove all resources tied to it.
+If you are not sure which resources are being used in an variable group, follow steps 1 and 2 below. It will show you which resources are being used, with links to those resources.
 
-1. Click on the Environment.
-2. Click the trash can icon next to the Environment.
-3. Click Yes if you are sure you want to remove the environment.
-
-# Variable Groups 
+1. Click on the Variable Group.
+2. Click the trash can icon next to the Variable Group.
+3. Click Yes if you are sure you want to remove the variable group.
 
 ## Using Variable Groups - Terraform
-When you want utilize a stored environment variable or secret in your terraform template you must prefix the name with `TF_VAR_` for the terraform script to use it. 
+When you want utilize a stored variable group variable or secret in your terraform template you must prefix the name with `TF_VAR_` for the terraform script to use it. 
 
 **Example**
 Passing Hetzner Cloud API key to OpenTofu/Terraform playbook. 

@@ -23,12 +23,17 @@ Full list of available configuration options:
 | <br>`postgres.name` <hr> `SEMAPHORE_DB_NAME`<br><br> | Postgres database (schema) name.    |
 | <br>`postgres.user` <hr> `SEMAPHORE_DB_USER`<br><br> | Postgres user name.                 |
 | <br>`postgres.pass` <hr> `SEMAPHORE_DB_PASS`<br><br> | Postgres user's password.           |
-| <br>`dialect` <hr> `SEMAPHORE_DB_DIALECT`<br><br> | Can be `mysql`, `postgres `or `bolt`                                                                       |
-| <br>`port` <hr> `SEMAPHORE_PORT`<br><br> | TCP port on which the web interface will be available. Default: 3000 |
-| <br>`interface` <hr> `SEMAPHORE_INTERFACE`<br><br> | Useful if your server has multiple network interfaces                                                      |
-| <br>`tmp_path` <hr> `SEMAPHORE_TMP_PATH`<br><br> | Path to directory where cloned repositories and generated files are stored. Default: /tmp/semaphore |
+| <br>`dialect`       <hr> `SEMAPHORE_DB_DIALECT`<br><br> | Can be `mysql`, `postgres `or `bolt`   |
+| <br>`git_client`      <hr> `SEMAPHORE_GIT_CLIENT`<br><br> |  |
+| <br>`ssh_config_path` <hr> `SEMAPHORE_SSH_PATH`<br><br> |  |
+| <br>`port`           <hr> `SEMAPHORE_PORT`<br><br> | TCP port on which the web interface will be available. Default: 3000 |
+| <br>`interface`      <hr> `SEMAPHORE_INTERFACE`<br><br> | Useful if your server has multiple network interfaces      |
+| <br>`tmp_path`       <hr> `SEMAPHORE_TMP_PATH`<br><br> | Path to directory where cloned repositories and generated files are stored. Default: /tmp/semaphore |
 | <br>`access_key_encryption` <hr> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br><br> | Secret key used for encrypting access keys in database. Read more in [Database encryption reference](./security.md#database-encryption). |
-| <br>`web_host` <hr> `SEMAPHORE_WEB_ROOT`<br><br> | Can be useful if you want to use Semaphore by the subpath, for example: [http://yourdomain.com/semaphore](http://yourdomain.com/semaphore). Do not add a trailing `/`. |
+| <br>`web_host`       <hr> `SEMAPHORE_WEB_ROOT`<br><br> | Can be useful if you want to use Semaphore by the subpath, for example: [http://yourdomain.com/semaphore](http://yourdomain.com/semaphore). Do not add a trailing `/`. |
+| <br>`tls.enabled`    <hr> `SEMAPHORE_TLS_ENABLED`<br><br> |  |
+| <br>`tls.cert_file`  <hr> `SEMAPHORE_TLS_CERT_FILE`<br><br> |  |
+| <br>`tls.key_file`   <hr> `SEMAPHORE_TLS_KEY_FILE`<br><br> |  |
 | <br>`email_sender`   <hr> `SEMAPHORE_EMAIL_SENDER`<br><br> |   |
 | <br>`email_host`     <hr> `SEMAPHORE_EMAIL_HOST`<br><br> |   |
 | <br>`email_port`     <hr> `SEMAPHORE_EMAIL_PORT`<br><br> |   |
@@ -36,9 +41,11 @@ Full list of available configuration options:
 | <br>`email_username` <hr> `SEMAPHORE_EMAIL_USERNAME`<br><br> |   |
 | <br>`email_password` <hr> `SEMAPHORE_EMAIL_PASSWORD`<br><br> |   |
 | <br>`email_alert`    <hr> `SEMAPHORE_EMAIL_ALERT`<br><br> |   |
-| <br>`telegram_alert` <hr> `SEMAPHORE_DB_HOST`<br><br> |   |
-| <br>`slack_alert`    <hr> `SEMAPHORE_DB_HOST`<br><br> | Set to True to enable pushing alerts to slack. It should be used in combination with `slack_url`                          |
-| <br>`slack_url`      <hr> `SEMAPHORE_DB_HOST`<br><br> | The slack webhook url. Semaphore will used it to POST Slack formatted json alerts to the provided url.    |
+| <br>`telegram_alert` <hr> `SEMAPHORE_TELEGRAM_ALERT`<br><br> |   |
+| <br>`telegram_chat`  <hr> `SEMAPHORE_TELEGRAM_CHAT`<br><br> |   |
+| <br>`telegram_token` <hr> `SEMAPHORE_TELEGRAM_TOKEN`<br><br> |   |
+| <br>`slack_alert`    <hr> `SEMAPHORE_SLACK_ALERT`<br><br> | Set to True to enable pushing alerts to slack. It should be used in combination with `slack_url`                          |
+| <br>`slack_url`      <hr> `SEMAPHORE_SLACK_URL`<br><br> | The slack webhook url. Semaphore will used it to POST Slack formatted json alerts to the provided url.    |
 | <br>`microsoft_teams_alert` <hr> `SEMAPHORE_MICROSOFT_TEAMS_ALERT` <br><br> | Set to True to enable pushing alerts to teams. It should be used in combination with `microsoft_teams_url`.              |
 | <br>`microsoft_teams_url`   <hr> `SEMAPHORE_MICROSOFT_TEAMS_URL` <br><br> | The teams webhook url. Semaphore will used it to POST alerts.                           |
 | <br>`rocketchat_alert`      <hr> `SEMAPHORE_ROCKETCHAT_ALERT` <br><br> | Set to True to enable pushing alerts to Rocket.Chat. It should be used in combination with `rocketchat_url`. Available since v2.9.56.  |
@@ -51,9 +58,17 @@ Full list of available configuration options:
 | <br>`ldap_searchdn`         <hr> `SEMAPHORE_LDAP_SEARCH_DN` <br><br> |   |
 | <br>`ldap_searchfilter`     <hr> `SEMAPHORE_LDAP_SEARCH_FILTER` <br><br> |   |
 | <br>`max_parallel_tasks`    <hr> `SEMAPHORE_MAX_PARALLEL_TASKS` <br><br> | Max allowed parallel tasks for whole Semaphore instance.                     |
+| <br>`max_task_duration_sec` <hr> `SEMAPHORE_MAX_TASK_DURATION_SEC` <br><br> | Max allowed parallel tasks for whole Semaphore instance.                     |
+| <br>`max_tasks_per_template`<hr> `SEMAPHORE_MAX_TASKS_PER_TEMPLATE` <br><br> | Max allowed parallel tasks for whole Semaphore instance.                     |
 | <br>`oidc_providers` ![Static Badge](https://img.shields.io/badge/v2.10+-red)    | OpenID provider settings. You can provide multiple OpenID providers. More about OpenID configuration read in [OpenID](./openid.md). <br><br> |
 | <br>`password_login_disable` <hr> `SEMAPHORE_PASSWORD_LOGIN_DISABLED` <br><br> ![Static Badge](https://img.shields.io/badge/v2.10+-red)    <br><br> | Disable login with using password. Only LDAP and OpenID. |
-
+| <br>`non_admin_can_create_project`      <hr> `SEMAPHORE_NON_ADMIN_CAN_CREATE_PROJECT` <br><br> |   |
+| <br>`env_vars`               <hr> `SEMAPHORE_ENV_VARS` <br><br> |   |
+| <br>`forwarded_env_vars`     <hr> `SEMAPHORE_FORWARDED_ENV_VARS` <br><br> |   |
+| <br>`apps`                   <hr> `SEMAPHORE_APPS` <br><br> |   |
+| <br>`use_remote_runner`      <hr> `SEMAPHORE_USE_REMOTE_RUNNER` <br><br> |   |
+| <br>`use_remote_runner`      <hr> `SEMAPHORE_USE_REMOTE_RUNNER` <br><br> |   |
+| <br>`runner_registration_token` <hr> `SEMAPHORE_RUNNER_REGISTRATION_TOKEN` <br><br> |   |
 
 ## Public URL
 
