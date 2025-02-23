@@ -1,1 +1,1 @@
-# Subscription Details 🅿🆁🅾
+# Subscription 🅿
