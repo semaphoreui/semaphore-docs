@@ -1,9 +1,10 @@
 # CLI
 
-<!-- <div class="warning">
-    For Semaphore installed via Snap you should use <code>sudo</code> for using CLI. 
-    This is completely safe because Semaphore works in a <a href="https://snapcraft.io/docs/snap-confinement">strict mode</a>.
-</div> -->
+
+* [Runners](./cli/runners.md)
+* [Users](./cli/users.md)
+* [Vaults](./cli/vaults.md)
+
 
 ## Common config options
 

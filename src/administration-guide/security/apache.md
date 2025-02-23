@@ -1,5 +1,5 @@
 <div class="breadcrumbs">
-    <a href="/administration-guide/">Administration Guide</a>
+    Administration Guide
     → <a href="/administration-guide/security/">Security</a>
     → Apache config
 </div>

@@ -5,3 +5,8 @@
 .light .content img {
     box-shadow: 0 0 3px var(--searchbar-shadow-color);
 }
+
+hr {
+    border: 0;
+    border-bottom: 1px solid rgba(150,150,150,0.1);
+}

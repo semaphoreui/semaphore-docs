@@ -2,10 +2,10 @@
 
 You can install Semaphore in 4 ways:
 
-* [Snap (deprecated)](./installation/snap)
 * [Package manager](./installation/package-manager)
 * [Docker](./installation/docker)
 * [Binary file](./installation/binary-file)
+* [Snap (deprecated)](./installation/snap)
 
 See also:
 * [Run as service](./installation/binary-file.md#run-as-a-service)
