@@ -69,6 +69,9 @@ Full list of available configuration options:
 | <br>`use_remote_runner`      <hr> `SEMAPHORE_USE_REMOTE_RUNNER` <br><br> |   |
 | <br>`use_remote_runner`      <hr> `SEMAPHORE_USE_REMOTE_RUNNER` <br><br> |   |
 | <br>`runner_registration_token` <hr> `SEMAPHORE_RUNNER_REGISTRATION_TOKEN` <br><br> |   |
+| <br>`auth.totp.enabled`         <hr> `SEMAPHORE_TOTP_ENABLED` <br><br> |   |
+| <br>`auth.totp.allow_recovery`  <hr> `SEMAPHORE_TOTP_ALLOW_RECOVERY` <br><br> |   |
+
 
 ## Public URL
 
