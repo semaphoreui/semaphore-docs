@@ -31,10 +31,10 @@ Passing Hetzner Cloud API key to OpenTofu/Terraform playbook.
 1. Click on Variable Group
 2. Click `New Group`
 3. Click on `Secrets` tab
-4. Add `TV_VAR_hcloud_token` and add you `secret` in the hidden field
+4. Add `TF_VAR_hcloud_token` and add you `secret` in the hidden field
 5. Click Save
 
-We will call our secret `TV_VAR_hcloud_token` as `var.hcloud_token` in 
+We will call our secret `TF_VAR_hcloud_token` as `var.hcloud_token` in 
 hetzner.tf
 ```
 terraform {
