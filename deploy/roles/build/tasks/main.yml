@@ -18,8 +18,8 @@
 
 - name: Build The Book
   ansible.builtin.shell:
-    cmd: . {{ ansible_env.HOME }}/.cargo/env && mdbook build
-    # cmd: mdbook build 
+    # cmd: . {{ ansible_env.HOME }}/.cargo/env && mdbook build
+    cmd: mdbook build 
     chdir: "{{ playbook_dir }}/.."
     creates: "{{ playbook_dir }}/../book/index.html"
 

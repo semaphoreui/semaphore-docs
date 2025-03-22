@@ -29,7 +29,7 @@ Semaphore supports SSL/TLS starting from v2.12.
 ```json
 {
     ...
-    "tsl": {
+    "tls": {
         "enabled": true,
         "cert_file": "/path/to/cert/example.com.cert",
         "key_file": "/path/to/key/example.com.key"
