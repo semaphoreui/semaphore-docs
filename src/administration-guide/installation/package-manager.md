@@ -9,7 +9,7 @@
   Ansible and Git should be installed on your system.
 </div>
 
-Look into the [manual installation](./installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
+Look into the [manual installation](./../installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 
 Download package file from [Releases page](https://github.com/semaphoreui/semaphore/releases).
 
