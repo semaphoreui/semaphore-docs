@@ -25,3 +25,7 @@ svg {
 #disqus_thread > iframe {
     color-scheme: normal;
 }
+
+.menu-title {
+    font-weight: bold;
+}
