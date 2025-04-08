@@ -3,7 +3,7 @@ authors = ["Denis Gukov"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Semaphore Docs"
+title = ""
 
 [preprocessor.tabs]
 

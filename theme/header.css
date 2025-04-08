@@ -27,5 +27,8 @@ svg {
 }
 
 .menu-title {
-    font-weight: bold;
+    background-image: url(.gitbook/assets/semaphore700.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
