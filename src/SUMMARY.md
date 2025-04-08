@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Introduction](./README.md)
+* [Welcome to Semaphore UI](./README.md)
 
 * [Admin Guide]()
   * [Installation](./administration-guide/installation.md)

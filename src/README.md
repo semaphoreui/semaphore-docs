@@ -1,6 +1,8 @@
-# Introduction
+# Welcome to Semaphore UI
 
-Semaphore is a responsive web UI for running Ansible playbooks, Terraform/OpenTofu and Pulumi code.
+## What is Semaphore UI?
+
+Modern UI and powerful API for Ansible, Terraform, OpenTofu, PowerShell and other DevOps tools.
 
 <img style="box-shadow: none;" src=".gitbook/assets/134777345-8789d9e4-ff0d-439c-b80e-ddc56b74fcee.webp">
 
