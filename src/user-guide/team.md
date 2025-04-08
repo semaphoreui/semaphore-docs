@@ -13,7 +13,7 @@ Every team member has exactly one of these four roles: **Owner**, **Manager**, *
 ### Owner
 
 - **Full permissions:** Owners can do anything within the project, including managing roles, adding/removing members, and configuring any project settings.
-- **Multiple wwners:** A project can have multiple Owners, ensuring there is more than one person with full privileges.
+- **Multiple owners:** A project can have multiple Owners, ensuring there is more than one person with full privileges.
 - **Restrictions on self-removal:** An Owner cannot remove themselves if they are the only Owner of the project. This prevents the project from being left without an Owner.
 - **Managing other wwners:** Owners can manage (including remove or change roles of) all team members, including other Owners.
 
