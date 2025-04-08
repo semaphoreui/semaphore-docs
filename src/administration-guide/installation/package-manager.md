@@ -22,36 +22,36 @@ Here are several installation commands, depending on the package manager:
 {{#tab name="Debian / Ubuntu (x64)"}}
 ```bash
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.12.4/semaphore_2.12.4_linux_amd64.deb
+download/v2.12.10/semaphore_2.12.10_linux_amd64.deb
 
-sudo dpkg -i semaphore_2.12.4_linux_amd64.deb
+sudo dpkg -i semaphore_2.12.10_linux_amd64.deb
 ```
 {{#endtab }}
 
 {{#tab name="Debian / Ubuntu (ARM64)" }}
 ```bash
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.12.4/semaphore_2.12.4_linux_arm64.deb
+download/v2.12.10/semaphore_2.12.10_linux_arm64.deb
 
-sudo dpkg -i semaphore_2.12.4_linux_arm64.deb
+sudo dpkg -i semaphore_2.12.10_linux_arm64.deb
 ```
 {{#endtab }}
 
 {{#tab name="CentOS (x64)" }}
 ```bash
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.12.4/semaphore_2.12.4_linux_amd64.rpm
+download/v2.12.10/semaphore_2.12.10_linux_amd64.rpm
 
-sudo yum install semaphore_2.12.4_linux_amd64.rpm
+sudo yum install semaphore_2.12.10_linux_amd64.rpm
 ```
 {{#endtab }}
 
 {{#tab name="CentOS (ARM64)" }}
 ```bash
 wget https://github.com/semaphoreui/semaphore/releases/\
-download/v2.12.4/semaphore_2.12.4_linux_arm64.rpm
+download/v2.12.10/semaphore_2.12.10_linux_arm64.rpm
 
-sudo yum install semaphore_2.12.4_linux_arm64.rpm
+sudo yum install semaphore_2.12.10_linux_arm64.rpm
 ```
 {{#endtab }}
 
