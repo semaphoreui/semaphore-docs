@@ -20,9 +20,11 @@ Every team member has exactly one of these four roles: **Owner**, **Manager**, *
 ### Manager
 
 - **Broad project control:** Managers have almost the same permissions as Owners, allowing them to handle most day-to-day tasks and manage the project environment.
-- **Key restrictions:** Managers **cannot**:
+
+- Managers **cannot**:
   - Remove the project.
   - Remove or change the roles of Owners.
+
 - **Typical use case:** Assign the Manager role to senior team members who need extensive access but don’t require the authority to delete the project or manage Owners.
 
 ### Task Runner
