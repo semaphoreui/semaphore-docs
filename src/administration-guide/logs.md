@@ -40,6 +40,13 @@ Semaphore Pro 2.10+ supports writing the Activity Log to a file. To enable this,
 }
 ```
 
+Or you can do this using following environment variables:
+
+```bash
+export SEMAPHORE_EVENT_LOG_ENABLED=True
+export SEMAPHORE_EVENT_LOG_PATH=./events.log
+```
+
 Each line in the file follows this format:
 
 ```
