@@ -37,6 +37,7 @@
   * [API](./administration-guide/api.md)
   * [Pipelines](./administration-guide/cicd.md)
   * [Runners](./administration-guide/runners.md)
+  * [Logs](./administration-guide/logs.md)
 
 * [User Guide]()
   * [Projects](./user-guide/projects.md)
