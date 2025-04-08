@@ -1,3 +1,5 @@
+# Bitbucket Access Token
+
 You can use a Bitbucket Access Token in Semaphore to access repositories from Bitbucket.
 
 First, you need to create an Access Token for your Bitbucket repository with read access permissions.
