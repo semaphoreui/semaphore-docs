@@ -25,7 +25,7 @@ The Activity Log captures all user actions performed in Semaphore, including:
 - Adding or removing team members.
 - Starting or stopping tasks.
 
-### Pro Version 2.10 and Later
+### Pro version 2.10 and later
 
 Semaphore Pro 2.10+ supports writing the Activity Log to a file. To enable this, add the following configuration to your `config.json`:
 
