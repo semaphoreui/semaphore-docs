@@ -6,10 +6,9 @@
 # Binary file
 
 <div class="warning">
-  Ansible and Git should be installed on your system.
+    Look into the [manual installation](installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 </div>
 
-Look into the [manual installation](installation_manually.md) on how to set-up your Python/Ansible/Systemd environment!
 
 Download the `*.tar.gz` for your platform from [Releases page](https://github.com/semaphoreui/semaphore/releases). Unpack it and setup Semaphore using the following commands:
 
