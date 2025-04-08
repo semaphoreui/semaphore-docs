@@ -27,8 +27,18 @@ svg {
 }
 
 .menu-title {
-    background-image: url(/.gitbook/assets/semaphore-docs.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 300px;
+}
+
+.light .menu-title, 
+.rust .menu-title {
+    background-image: url(/.gitbook/assets/semaphore-docs-light.png);
+}
+
+.coal .menu-title, 
+.navy .menu-title, 
+.ayu .menu-title {
+    background-image: url(/.gitbook/assets/semaphore-docs-dark.png);
 }
