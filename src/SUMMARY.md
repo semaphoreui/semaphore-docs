@@ -14,7 +14,7 @@
     * [Envrioment variables](./administration-guide/configuration/env-vars.md)
     * [Interactive setup](./administration-guide/configuration/cli.md)
     * [Snap configuration](./administration-guide/configuration/snap.md)
-  <!-- * [Upgrading](./administration-guide/upgrading.md) -->
+  * [Upgrading](./administration-guide/upgrading.md)
   * [Security](./administration-guide/security.md)
     * [Database security](./administration-guide/security/database.md)
     * [Network security](./administration-guide/security/network.md)

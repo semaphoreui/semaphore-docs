@@ -5,4 +5,6 @@
 
 # Runners
 
-We have separate section for [Runners](./../runners.md).
+<div class="warning">
+    We have separate section for <a href="./../runners.md">Runners</a>.
+</div>
