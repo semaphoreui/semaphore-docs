@@ -1,3 +1,8 @@
+<div class="breadcrumbs">
+    <a href="/user-guide/repositories">Repositories</a>
+    → Bitbucket Access Token
+</div>
+
 # Bitbucket Access Token
 
 You can use a Bitbucket Access Token in Semaphore to access repositories from Bitbucket.
