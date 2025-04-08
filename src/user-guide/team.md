@@ -6,7 +6,7 @@ In Semaphore UI, every project is associated with a **Team**. Only team members 
 
 ---
 
-## Team Roles
+## Team roles
 
 Every team member has exactly one of these four roles: **Owner**, **Manager**, **Task Runner**, or **Guest**. Below are detailed descriptions of each role and its permissions.
 
