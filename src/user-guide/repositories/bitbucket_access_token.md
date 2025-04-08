@@ -1,6 +1,5 @@
 <div class="breadcrumbs">
-    User Guide
-    → <a href="/user-guide/repositories">Repositories</a>
+    <a href="/user-guide/repositories">Repositories</a>
     → Bitbucket Access Token
 </div>
 
