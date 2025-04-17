@@ -1,11 +1,11 @@
 # Configuration
 
-There are following ways to configure Semaphore:
+Semaphore can be configured using several methods:
 
-* [Configuration file](./configuration/config-file.md)
-* [Envrioment variables](./configuration/env-vars.md)
-* [Interactive setup](./configuration/snap.md)
-* [Snap configuration (deprecated)](./configuration/snap.md)
+* [Interactive setup](./configuration/snap.md) &mdash; guided configuration when running Semaphore for the first time. It creates `config.json`.
+* [Configuration file](./configuration/config-file.md) &mdash; the primary and most flexible way to configure Semaphore.
+* [Envrioment variables](./configuration/env-vars.md) &mdash; useful for containerized or cloud-native deployments.
+* [Snap configuration (deprecated)](./configuration/snap.md) &mdash; legacy method used when installing via Snap packages.
 
 
 ## Configuration options
