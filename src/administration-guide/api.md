@@ -1,12 +1,18 @@
 # API
 
-### API documentation
+## API reference
 
 <div class="warning">
     Full API documentation is available in <a href="https://semaphoreui.com/api-docs">API reference</a>.
 </div>
 
-### How to use the Semaphore API
+## Creating API token
+
+### Create API token 
+
+<img style="aspect-ratio: 1920/1440" src="https://www.semaphoreui.com/uploads/v2.14/tokens.webp">
+
+### CLI
 
 Login to Semaphore (password should be escaped, `slashy\\pass` instead of `slashy\pass` e.g.):
 

@@ -17,6 +17,8 @@ Using runners offers the following advantages:
 
 ## Set up
 
+### Set up a server
+
 To set up the server for working with running you should add following option to your Semaphore server configuration:
 
 ```json
@@ -25,6 +27,15 @@ To set up the server for working with running you should add following option to
   "runner_registration_token": "long string of random characters"
 }
 ```
+
+or with using environment variables:
+
+```bash
+SEMAPHORE_USE_REMOTE_RUNNER=True
+SEMAPHORE_RUNNER_REGISTRATION_TOKEN=long_string_of_random_characters
+```
+
+### Setup a runner
 
 To set up the runner, use the following command:
 
@@ -36,13 +47,13 @@ This command will create a configuration file at `/path/to/your/config/file.json
 
 But before using this command, you need to understand how runners are registered on the server.
 
-### Registering the Runner on the Server
+### Registering the runner on the server
 
 There are two ways to register a runner on the Semaphore server:
 1) Add it via the web interface or API.
 2) Use the command line with the `semaphore runner register` command.
 
-#### Adding the Runner via the Web Interface
+#### Adding the runner via the web UI
 
 <img src="https://github.com/user-attachments/assets/8b0f7890-5767-4139-932d-3e39c217fd57" width="600">
 
@@ -58,7 +69,7 @@ or
 
 `echo REGISTRATION_TOKEN | semaphore runner register --stdin-registration-token --config /path/to/your/config/file.json`
 
-### Configuration File
+### Configuration file
 
 As a result of running the `semaphore runner setup` command, a configuration file like the following will be created:
 
@@ -88,19 +99,13 @@ You can manually edit this file without needing to call `semaphore runner setup`
 
 To re-register the runner, you can use the `semaphore runner register` command. This will overwrite the token in the file specified in the configuration.
 
-## Running the Runner
+## Running the runner
 
 Now you can start the runner with the command:
 
 ```
 semaphore runner start --config /path/to/your/config/file.json
 ```
-
-<!-- If everything is set up correctly, you will see the following output in the console:
-
-```
-
-``` -->
 
 Your runner is ready to execute tasks ;)
 
