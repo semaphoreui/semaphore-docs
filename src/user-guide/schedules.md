@@ -45,6 +45,8 @@ Examples:
 - `0 0 * * 0` - Run at midnight on Sundays
 - `0 9 1 * *` - Run at 9:00 AM on the first day of every month
 
+Very helpful cron expression generator: [https://crontab.guru/](https://crontab.guru/)
+
 ## Use Cases
 
 ### System Maintenance
