@@ -14,9 +14,9 @@ Templates define how to run an Ansible Playbook. The template allows you to spec
 
 The task template can be one of the following types:
 
-* [Task](./#task)
-* [Build](./#build)
-* [Deploy](./#deploy)
+* [Task](#task)
+* [Build](#build)
+* [Deploy](#deploy)
 
 ### Task
 
