@@ -15,7 +15,7 @@ All Task Templates require a Repository in order to run.
 ## Authentication
 If you are using a remote Repository that requires authentication, you will need to configure a key in the **Key Store** section of Semaphore.
 
-For remote Repositories that use SSH, you will need to use your SSH key in the **Key Store**. 
+For remote Repositories that use SSH, you will need to use your SSH key in the **Key Store**.
 
 For Remote Repositories that do not have authentication, you can create a Key with the type of `None`.
 
@@ -50,3 +50,29 @@ A Repository cannot be deleted if it is used in any Task Templates:
 2. Click on the trash can icon on of the Repository you wish to delete.
 
 3. Click Yes on the confirmation pop-up if you are sure you want this Repository to be deleted.
+
+## Requirements
+Upon project initialization Semaphore searches for and installs Ansible roles and collections from requirements.yml in the following locations and order.
+
+### Roles
+
+* <playbook_dir>/roles/requirements.yml
+* <playbook_dir>/requirements.yml
+* <repo_path>/roles/requirements.yml
+* <repo_path>/requirements.yml
+
+### Collection
+
+* <playbook_dir>/collections/requirements.yml
+* <playbook_dir>/requirements.yml
+* <repo_path>/collections/requirements.yml
+* <repo_path>/requirements.yml
+
+### Processing Logic
+
+* Each file is processed independently
+* If a file exists, it will be processed according to its type (role or collection)
+* If any file processing results in an error, the installation process stops and returns the error
+* The same requirements.yml file in the root directories (<playbook_dir>/requirements.yml and <repo_path>/requirements.yml) is processed twice - once for roles and once for collections
+
+Semaphore will attempt to process all these locations regardless of whether previous locations were found or successfully processed, except in the case of errors.
