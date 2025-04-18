@@ -73,6 +73,6 @@ Upon project initialization Semaphore searches for and installs Ansible roles an
 * Each file is processed independently
 * If a file exists, it will be processed according to its type (role or collection)
 * If any file processing results in an error, the installation process stops and returns the error
-* The same requirements.yml file in the root directories (<playbook_dir>/requirements.yml and <repo_path>/requirements.yml) is processed twice - once for roles and once for collections
+* The same requirements.yml file in the root directories (**<playbook_dir>/requirements.yml** and **<repo_path>/requirements.yml**) is processed twice - once for roles and once for collections
 
 Semaphore will attempt to process all these locations regardless of whether previous locations were found or successfully processed, except in the case of errors.
