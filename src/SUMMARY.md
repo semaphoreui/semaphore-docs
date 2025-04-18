@@ -47,7 +47,7 @@
     * [Runners 🅿](./user-guide/projects/runners.md)
   * [Task Templates](./user-guide/task-templates/README.md)
     * [Ansible](./user-guide/task-templates/ansible.md)
-    * [Terraform/OpenTofu](./user-guide/task-templates/terraform/README.md)
+    * [Terraform/OpenTofu](./user-guide/task-templates/terraform.md)
         * [Workspaces](./user-guide/task-templates/terraform/workspaces.md)
         * [States 🅿](./user-guide/task-templates/terraform/states.md)
     * [Shell/Bash scripts](./user-guide/task-templates/bash.md)
