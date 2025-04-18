@@ -5,7 +5,7 @@
 
 # Ansible
 
-Using Semaphore UI you can run Ansible code. To do this, you need to create an **Ansible Code Template**.
+Using Semaphore UI you can run Ansible playbooks. To do this, you need to create an **Ansible Playbook** Template.
 
 1. Go go **Task Templates** section, click on **New Template** and then **Ansible Playbook**.
 
