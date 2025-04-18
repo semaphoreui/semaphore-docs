@@ -1,5 +1,4 @@
 # Schedules
-# Schedules
 
 The schedule function in Semaphore allows to automate the execution of templates (e.g. playbook runs) at predefined intervals. This feature allows to implement routine automation tasks, such as regular backups, compliance checks, system updates, and more.
 
