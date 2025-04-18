@@ -1,6 +1,6 @@
 # Troubleshooting
 
-## Renner prints error 404
+## 1. Renner prints error 404
 
 ### How to fix
 
@@ -8,7 +8,7 @@
 
 ---
 
-## Gathering Facts issue for localhost
+## 2. Gathering Facts issue for localhost
 
 The issue can occur on Semaphore UI installed via [Snap](https://snapcraft.io/semaphore) or [Docker](https://hub.docker.com/r/semaphoreui/semaphore).
 
@@ -44,7 +44,7 @@ There are two ways:
 127.0.0.1 ansible_connection=ssh ansible_ssh_user=your_localhost_user
 ```
 ---
-## panic: pq: SSL is not enabled on the server
+## 4. panic: pq: SSL is not enabled on the server
 
 This means that your Postgres doesn't work by SSL.
 
@@ -63,8 +63,12 @@ Add option `sslmode=disable` to the configuration file:
 		}
 	},
 ```
+
+
 ---
-## fatal: bad numeric config value '0' for 'GIT_TERMINAL_PROMPT': invalid unit
+
+
+## 5. fatal: bad numeric config value '0' for 'GIT_TERMINAL_PROMPT': invalid unit
 
 This means that you are trying to access a repository over HTTPS that requires authentication.
 
@@ -76,9 +80,12 @@ This means that you are trying to access a repository over HTTPS that requires a
 * Specify the password. You can't use your account password for GitHub/BitBucket, you should use a Personal Access Token (PAT) instead of it. Read more [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 * After creating the key, go to the **Repositories** screen, find your repository and specify the key.
 
+
 ---
 
-## unable to read LDAP response packet: unexpected EOF
+
+
+## 6. unable to read LDAP response packet: unexpected EOF
 
 Most likely, you are trying to connect to the LDAP server using an insecure method, although it expects a secure connection (via TLS).
 
@@ -94,7 +101,7 @@ Enable TLS in your `config.json` file:
 
 ---
 
-## LDAP Result Code 49 "Invalid Credentials"
+## 7. LDAP Result Code 49 "Invalid Credentials"
 
 You have the wrong password or `binddn`.
 
@@ -118,6 +125,6 @@ You also can read the following articles:
 
 ---
 
-## LDAP Result Code 32 "No Such Object"
+## 8. LDAP Result Code 32 "No Such Object"
 
 Coming soon.

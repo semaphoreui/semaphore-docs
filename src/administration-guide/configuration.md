@@ -72,8 +72,9 @@ Full list of available configuration options:
 | <br>`auth.totp.enabled`         <hr> `SEMAPHORE_TOTP_ENABLED` <br><br> |   |
 | <br>`auth.totp.allow_recovery`  <hr> `SEMAPHORE_TOTP_ALLOW_RECOVERY` <br><br> |   |
 
+## Frequently asked questions
 
-## Public URL
+### 1. How to configure a public URL for Semaphore UI
 
 If you use nginx or other web server before Semaphore, you should provide configuration option `web_host`.
 

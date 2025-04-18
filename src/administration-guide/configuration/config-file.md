@@ -26,8 +26,8 @@ Use the following commands to generate the configuration file interactively:
 ### Generate via Web
 
 Alternatively, you can use the web-based interactive configurator:
-* [Server Configurator](https://semaphoreui.com/install/binary/2_13/config)
-* [Runner Configurator](https://semaphoreui.com/install/binary/2_13/runner)
+* [Server configurator](https://semaphoreui.com/install/binary/2_13/config)
+* [Runner configurator](https://semaphoreui.com/install/binary/2_13/runner)
 
 ## Configuration file example
 

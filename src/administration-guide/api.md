@@ -72,6 +72,8 @@ The command should return something similar to:
 
 `[{"id":"`**`YOUR_ACCESS_TOKEN`**`","created":"2017-03-11T13:13:13Z","expired":false,"user_id":1}]`
 
+---
+
 ## Using token to make API requests
 
 Once you have your API token, include it in the **Authorization** header to authenticate your requests.
@@ -88,6 +90,8 @@ curl -v -XPOST \
 -d '{"template_id": 1}' \
 http://localhost:3000/api/project/1/tasks
 ```
+
+---
 
 ## Expiring an API token
 
