@@ -1,10 +1,11 @@
 # Installation
 
-You can install Semaphore in 4 ways:
+You can install Semaphore in multiple ways:
 
 * [Package manager](./installation/package-manager)
 * [Docker](./installation/docker)
 * [Binary file](./installation/binary-file)
+* [Kubernetes (Helm chart)](./installation/k8s)
 * [Snap (deprecated)](./installation/snap)
 
 See also:
