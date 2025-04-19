@@ -47,7 +47,7 @@ All SSO provider options:
 | `scopes`              |                                                                                                             |
 | `username_claim`      | Username claim expression[\*](#claim-expression).                               |
 | `email_claim`         | Email claim expression[\*](#claim-expression).                                  |
-| `name_claim`          | Profile Name claim expression[\*](openid/#claim-expression).                           |
+| `name_claim`          | Profile Name claim expression[\*](#claim-expression).                           |
 | `order`               | Position of the provider button on the Sign in screen.                                                      |
 | `endpoint.issuer`     |                                                                                                             |
 | `endpoint.auth`       |                                                                                                             |
