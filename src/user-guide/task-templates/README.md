@@ -1,6 +1,6 @@
 # Task Templates
 
-Templates define how to run an Ansible Playbook. The template allows you to specify the following parameters:
+Templates define how to run Semaphore tasks. Currently the following task types are supported:
 
 * Playbook repository
 * Playbook filename
