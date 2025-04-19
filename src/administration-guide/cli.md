@@ -11,7 +11,7 @@
 | Option               | Description                               |
 |----------------------|-------------------------------------------|
 |`--config config.json`| Path to the configuration file.           |
-|`--no-cofnig`         | Do not use any configuration file. Only environment variable will be used. |
+|`--no-config`         | Do not use any configuration file. Only environment variable will be used. |
 |`--log-level ERROR`   | `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`, `PANIC` |
 
 ## Version
