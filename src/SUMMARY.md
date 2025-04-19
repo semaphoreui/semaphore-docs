@@ -7,6 +7,7 @@
     * [Package manager](./administration-guide/installation/package-manager.md)
     * [Docker](./administration-guide/installation/docker.md)
     * [Binary file](./administration-guide/installation/binary-file.md)
+    * [Kubernetes (Helm chart)](./administration-guide/installation/k8s.md)
     * [Snap (deprecated)](./administration-guide/installation/snap.md)
     * [Manual Installation](./administration-guide/installation\_manually.md)
   * [Configuration](./administration-guide/configuration.md)
