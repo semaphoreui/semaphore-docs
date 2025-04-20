@@ -1,3 +1,10 @@
+<div class="breadcrumbs">
+    User guide
+    → <a href="/user-guide/inventory/">Inventory</a>
+    → Kerberos
+</div>
+
+
 # Kerberos authentication (Ansible + WinRM)
 
 Semaphore supports Kerberos authentication when running playbooks against Windows hosts via WinRM.
