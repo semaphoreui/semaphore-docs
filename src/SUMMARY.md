@@ -64,11 +64,11 @@
     * [Bitbucket Access Token](./user-guide/repositories/bitbucket_access_token.md)
   * [Integrations](./user-guide/integrations.md)
   * [Team](./user-guide/team.md)
-  * [Admin](./user-guide/admin/README.md)
+  <!-- * [Admin](./user-guide/admin/README.md)
     * [Users](./user-guide/admin/users.md)
     * [Runners](./user-guide/admin/runners.md)
     * [Active Tasks](./user-guide/admin/tasks.md)
-    * [Subscription 🅿](./user-guide/admin/subscription.md)
+    * [Subscription 🅿](./user-guide/admin/subscription.md) -->
 
 * [FAQ]()
   * [Troubleshooting](./faq/troubleshooting.md)
