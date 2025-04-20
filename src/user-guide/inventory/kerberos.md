@@ -5,9 +5,9 @@
 </div>
 
 
-# Kerberos authentication (Ansible + WinRM)
+# Kerberos authentication
 
-Semaphore supports Kerberos authentication when running playbooks against Windows hosts via WinRM.
+Semaphore supports Kerberos authentication when running playbooks against **Windows hosts via WinRM**.
 
 ## Inventory configuration
 
