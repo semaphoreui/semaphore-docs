@@ -59,6 +59,7 @@
   * [Schedules](./user-guide/schedules.md)
   * [Key Store](./user-guide/key-store.md)
   * [Inventory](./user-guide/inventory.md)
+    * [Kerberos](./user-guide/inventory/kerberos.md)
   * [Variable Groups](./user-guide/environment.md)
   * [Repositories](./user-guide/repositories.md)
     * [Bitbucket Access Token](./user-guide/repositories/bitbucket_access_token.md)
