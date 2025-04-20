@@ -30,6 +30,7 @@ svg {
     background-position: center;
     background-repeat: no-repeat;
     background-size: 150px;
+    /* color: transparent; */
 }
 
 .light .menu-title, 
