@@ -21,10 +21,10 @@ Authorization: Bearer YOUR_API_TOKEN
 ### Creating an API Token
 
 There are two ways to create an API token:
-- Through the web interface
+- Through the web interface (singe 2.14)
 - Using HTTP request
 
-#### Through the web interface
+#### Through the web interface (singe 2.14)
 
 You can create and manage your API tokens via the Semaphore web UI:
 
