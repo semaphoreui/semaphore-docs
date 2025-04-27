@@ -41,9 +41,9 @@ Full list of available configuration options:
 | <br>`email_username` <hr> `SEMAPHORE_EMAIL_USERNAME`<br><br> |   |
 | <br>`email_password` <hr> `SEMAPHORE_EMAIL_PASSWORD`<br><br> |   |
 | <br>`email_alert`    <hr> `SEMAPHORE_EMAIL_ALERT`<br><br> |   |
-| <br>`telegram_alert` <hr> `SEMAPHORE_TELEGRAM_ALERT`<br><br> |   |
-| <br>`telegram_chat`  <hr> `SEMAPHORE_TELEGRAM_CHAT`<br><br> |   |
-| <br>`telegram_token` <hr> `SEMAPHORE_TELEGRAM_TOKEN`<br><br> |   |
+| <br>`telegram_alert` <hr> `SEMAPHORE_TELEGRAM_ALERT`<br><br> | Set to True to enable pushing alerts to Telegram. It should be used in combination with `telegram_chat` and `telegram_token`. |
+| <br>`telegram_chat`  <hr> `SEMAPHORE_TELEGRAM_CHAT`<br><br> | Set to the Chat ID for the chat to send alerts to.  Read more in [Telegram Notifications Setup](./notifications.md#chat-id) |
+| <br>`telegram_token` <hr> `SEMAPHORE_TELEGRAM_TOKEN`<br><br> | Set to the Authorization Token for the bot that will receive the alert payload.  Read more in [Telegram Notifications Setup](./notifications.md#bot-setup) |
 | <br>`slack_alert`    <hr> `SEMAPHORE_SLACK_ALERT`<br><br> | Set to True to enable pushing alerts to slack. It should be used in combination with `slack_url`                          |
 | <br>`slack_url`      <hr> `SEMAPHORE_SLACK_URL`<br><br> | The slack webhook url. Semaphore will used it to POST Slack formatted json alerts to the provided url.    |
 | <br>`microsoft_teams_alert` <hr> `SEMAPHORE_MICROSOFT_TEAMS_ALERT` <br><br> | Set to True to enable pushing alerts to teams. It should be used in combination with `microsoft_teams_url`.              |
