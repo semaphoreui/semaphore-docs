@@ -1,6 +1,6 @@
 # Pipelines
 
-Semaphore supports simple pipelins with using `build` and `deploy` tasks. 
+Semaphore supports simple pipelines with using `build` and `deploy` tasks. 
 
 Semaphore passes `semaphore_vars` variable to each Ansible playbook which it runs.
 
