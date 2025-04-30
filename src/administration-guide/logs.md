@@ -27,25 +27,68 @@ The Activity Log captures all user actions performed in Semaphore, including:
 
 ### Pro version 2.10 and later
 
-Semaphore Pro 2.10+ supports writing the Activity Log to a file. To enable this, add the following configuration to your `config.json`:
+**Semaphore Pro** 2.10+ supports writing the Activity Log and Task log to a file. To enable this, add the following configuration to your `config.json`:
 
 ```json
 {
   "log": {
     "events": {
       "enabled": true,
-      "path": "./events.log"
+      "logger": {
+        "filename": "./events.log"
+        // other logger options
+      }
+    },
+    "tasks": {
+      "enabled": true,
+      "logger": {
+        "filename": "./tasks.log"
+        // other logger options
+      }
     }
   }
 }
 ```
+
 
 Or you can do this using following environment variables:
 
 ```bash
 export SEMAPHORE_EVENT_LOG_ENABLED=True
 export SEMAPHORE_EVENT_LOG_PATH=./events.log
+
+export SEMAPHORE_TASK_LOG_ENABLED=True
+export SEMAPHORE_TASK_LOG_PATH=./tasks.log
 ```
+
+#### Events logging options
+
+| Parameter             | Environment Variables | Description           |
+| --------------------- | --------------------- | --------------------- |
+| `enabled`             | `SEMAPHORE_EVENT_LOG_ENABLED` | Enable event logging to file. |
+| `format`              | `SEMAPHORE_EVENT_LOG_FORMAT`  | Log record format. Can be `raw` or `json`. |
+| `logger`              | `SEMAPHORE_EVENT_LOG_LOGGER`  | Logger opitons. |
+
+#### Tasks logging options
+
+| Parameter             | Environment Variables | Description           |
+| --------------------- | --------------------- | --------------------- |
+| `enabled`             | `SEMAPHORE_TASK_LOG_ENABLED` | Enable task logging to file. |
+| `format`              | `SEMAPHORE_TASK_LOG_FORMAT`  | Log record format. Can be `raw` or `json`. |
+| `logger`              | `SEMAPHORE_TASK_LOG_LOGGER`  | Logger opitons. |
+
+#### Logger options
+
+| Parameter             | Type | Description           |
+| --------------------- | ------- | --------------------- |
+| `filename`     | String  | Path and name of the file to write logs to. Backup log files will be retained in the same directory.  It uses <processname>-lumberjack.log in temporary if empty. |
+| `maxsize`      | Integer | The maximum size in megabytes of the log file before it gets rotated. It defaults to 100 megabytes. |
+| `maxage`       | Integer | The maximum number of days to retain old log files based on the timestamp encoded in their filename.  Note that a day is defined as 24 hours and may not exactly correspond to calendar days due to daylight savings, leap seconds, etc. The default is not to remove old log files based on age. |
+| `maxbackups`   | Integer | The maximum number of old log files to retain.  The default is to retain all old log files (though MaxAge may still cause them to get deleted.) |
+| `localtime`    | Boolean | Determines if the time used for formatting the timestamps in backup files is the computer's local time.  The default is to use UTC time. |
+| `compress`     | Boolean | Determines if the rotated log files should be compressed using gzip. The default is not to perform compression. |
+
+
 
 Each line in the file follows this format:
 
@@ -55,9 +98,9 @@ Each line in the file follows this format:
 
 ---
 
-## Task log
+## Task history
 
-Task Logs detail the execution of tasks in Semaphore. You can view them in real-time or access historical logs through the web interface.
+Semaphore stores information about task execution in the database. Task history provides a detailed view of all executed tasks, including their status and logs. You can monitor tasks in real time or review historical logs through the web interface.
 
 ### Configuring task retention
 
@@ -83,7 +126,7 @@ When the number of tasks exceeds this limit, the oldest Task Logs are automatica
 ## Summary
 
 - **Server log:** Written to stdout; viewable via `journalctl` if running under systemd.  
-- **Activity log:** Tracks all user actions. Optionally, Pro 2.10+ can write these to a file.  
-- **Task log:** Stores real-time and historical task execution logs. Retention is configurable per template.
+- **Activity and tasks log:** Tracks all user actions. Optionally, **Pro 2.10+** can write these to a file.  
+- **Task history:** Stores real-time and historical task execution logs. Retention is configurable per template.
 
 Following these guidelines ensures you have proper visibility into Semaphore UI operations while controlling storage usage and log retention.
