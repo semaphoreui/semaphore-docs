@@ -38,6 +38,7 @@ Full list of available configuration options:
 | <br>`email_host`     <hr> `SEMAPHORE_EMAIL_HOST`<br><br> |   |
 | <br>`email_port`     <hr> `SEMAPHORE_EMAIL_PORT`<br><br> |   |
 | <br>`email_secure`   <hr> `SEMAPHORE_EMAIL_SECURE`<br><br> |   |
+| <br>`email_tls`      <hr> `SEMAPHORE_EMAIL_TLS`<br><br> |   |
 | <br>`email_username` <hr> `SEMAPHORE_EMAIL_USERNAME`<br><br> |   |
 | <br>`email_password` <hr> `SEMAPHORE_EMAIL_PASSWORD`<br><br> |   |
 | <br>`email_alert`    <hr> `SEMAPHORE_EMAIL_ALERT`<br><br> |   |
