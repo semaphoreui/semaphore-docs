@@ -6,7 +6,7 @@ It is helpful to have configured all required access keys before setting up othe
 
 ## Types
 
-### SSH
+### 1. SSH
 SSH Keys are used to access remote servers as well as remote Repositories.
 
 If you need assistance quickly generating a key and placing it on your host, [here is a quick guide.](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
@@ -18,7 +18,7 @@ Below are links to the docs for some common Git Repositories:
 * [GitLab](https://docs.gitlab.com/ee/user/ssh.html)
 * [Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
 
-### Login With Password
+### 2. Login With Password
 Login With Password is a username and password/access token combination that can be used to do the following:
 * Authenticate to remote hosts (although this is less secure than using SSH keys)
 * Sudo credentials on remote hosts
@@ -29,5 +29,5 @@ Login With Password is a username and password/access token combination that can
     This type of secret can be used as Personal Access Token (PAT) or secret string. Simply leave the Login field empty.
 </div>
 
-### None
+### 3. None
 This is used as a filler for Repos that do not require authentication, like an Open-Source Repository on GitLab.
