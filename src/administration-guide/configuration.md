@@ -81,8 +81,8 @@ If you use nginx or other web server before Semaphore, you should provide config
 
 For example you configured NGINX on the server which proxies queries to Semaphore.
 
-Server address `https://exmaple.com` and you proxies all queries `https://exmaple.com/semaphore` to Semaphore.
+Server address `https://example.com` and you proxies all queries `https://example.com/semaphore` to Semaphore.
 
-Your `web_host` will be `https://exmaple.com/semaphore`.
+Your `web_host` will be `https://example.com/semaphore`.
 
 
