@@ -6,14 +6,14 @@
 
 # HTTP Backend (Pro)
 
-The Semaphore UI HTTP backend for Terraform provides a secure and convenient way to store and manage Terraform state files directly within Semaphore. This feature is available in the Pro plan and offers several advantages:
+The Semaphore UI HTTP backend for Terraform securely stores and manages Terraform state files directly within Semaphore. Available in the Pro plan, it offers several key advantages.
 
 ## Features
 
-- **Secure State Storage**: State files are encrypted and stored securely within Semaphore
-- **State Locking**: Prevents concurrent modifications to the same state file
-- **Version History**: Track changes to your infrastructure state over time
-- **UI Integration**: Manage state files directly through the Semaphore interface
+- **Secure State Storage**: State files are encrypted and stored securely within Semaphore.
+- **State Locking**: Prevents concurrent modifications to the same state file.
+- **Version History**: Track changes to your infrastructure state over time.
+- **UI Integration**: Manage state files directly through the Semaphore interface.
 
 ## Configuration
 
@@ -30,6 +30,8 @@ terraform {
   }
 }
 ```
+
+
 
 Replace the following placeholders:
 - `<your-semaphore-instance>`: Your Semaphore instance URL
