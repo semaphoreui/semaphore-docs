@@ -21,15 +21,17 @@
 }
 ```
 
-## GitHub issues
-* Question: Disable Certificate Validation for Keycloak Server [#2308](https://github.com/semaphoreui/semaphore/issues/2308)
-* Question: TLS Verification Disable [#2314](https://github.com/semaphoreui/semaphore/issues/2314)
-* Logout from Keycloak session when logging out from Semaphore [#1496](https://github.com/semaphoreui/semaphore/issues/1496)
 
-[Explore all issues >](https://github.com/semaphoreui/semaphore/issues?q=is%3Aissue%20keycloak)
+## Related GitHub Issues
 
-## GitHub discussions
+* [#2308](https://github.com/semaphoreui/semaphore/issues/2308) — How to disable certificate validation for Keycloak server  
+* [#2314](https://github.com/semaphoreui/semaphore/issues/2314) — Option to disable TLS verification  
+* [#1496](https://github.com/semaphoreui/semaphore/issues/1496) — Log out from Keycloak session when logging out from Semaphore  
 
-* Username is different from the "preferred_username" of OpenID [#1745](https://github.com/semaphoreui/semaphore/discussions/1745)
+[Explore all Keycloak-related issues →](https://github.com/semaphoreui/semaphore/issues?q=is%3Aissue%20keycloak)
 
-[Explore all issues >](https://github.com/semaphoreui/semaphore/discussions?discussions_q=is%3Aopen+keycloak)
+## Related GitHub Discussions
+
+* [#1745](https://github.com/semaphoreui/semaphore/discussions/1745) — Username differs from `preferred_username` in OpenID  
+
+[Explore all Keycloak-related discussions →](https://github.com/semaphoreui/semaphore/discussions?discussions_q=is%3Aopen+keycloak)
