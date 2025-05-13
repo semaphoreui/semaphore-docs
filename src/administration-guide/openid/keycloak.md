@@ -32,6 +32,7 @@
 
 ## Related GitHub Discussions
 
-* [#1745](https://github.com/semaphoreui/semaphore/discussions/1745) — Username differs from `preferred_username` in OpenID  
+* [#1745](https://github.com/semaphoreui/semaphore/discussions/1745) — Username differs from `preferred_username` in OpenID
+* [#1030](https://github.com/semaphoreui/semaphore/discussions/1030) &mdash; SAML support?
 
-[Explore all Keycloak-related discussions →](https://github.com/semaphoreui/semaphore/discussions?discussions_q=is%3Aopen+keycloak)
+[Explore all Keycloak-related discussions →](https://github.com/semaphoreui/semaphore/discussions?discussions_q=keycloak)
