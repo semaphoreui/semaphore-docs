@@ -10,7 +10,7 @@ The Semaphore UI HTTP backend for Terraform securely stores and manages Terrafor
 
 ## Features
 
-- **Secure State Storage**: State files are encrypted and stored securely within Semaphore.
+- **Secure State Storage**: State files are <!-- encrypted and--> stored securely within Semaphore.
 - **State Locking**: Prevents concurrent modifications to the same state file.
 - **Version History**: Track changes to your infrastructure state over time.
 - **UI Integration**: Manage state files directly through the Semaphore interface.
@@ -53,12 +53,3 @@ You can access and manage your Terraform state files through the Semaphore UI:
 - Regularly backup your state files
 - Use meaningful names for your state files
 - Keep your API tokens secure and rotate them periodically
-
-## Limitations
-
-- Maximum state file size: 100MB
-- State locking timeout: 5 minutes
-- Maximum number of state versions: 100 per project
-
-For more information about managing Terraform state in Semaphore, refer to the [Terraform documentation](https://developer.hashicorp.com/terraform/language/settings/backends/http).
-

@@ -8,8 +8,6 @@
 
 Semaphore provides built-in support for Terraform workspaces, allowing you to manage multiple environments and configurations within a single project. This feature helps you maintain separate state files for different environments like development, staging, and production.
 
-![](<../../../../.gitbook/assets/tf-workspace.webp>)
-
 ## Features
 
 - **Workspace Management**: Create, switch, and delete workspaces directly from the Semaphore UI.
@@ -21,53 +19,22 @@ Semaphore provides built-in support for Terraform workspaces, allowing you to ma
 
 ### Creating a Workspace
 
-1. Navigate to your project in Semaphore.
-2. Go to the "Terraform" section.
-3. Click on "Workspaces" in the sidebar.
-4. Click "Create Workspace" and provide a name for your workspace.
+In the **Workspaces** section of the Terraform/OpenTofu template where you want to add a workspace, follow these steps:
 
-### Switching Workspaces
+1. Click the ➕ button.  
+2. In the menu that appears, select **New Workspace**.  
+3. In the modal dialog, enter the workspace name and select the SSH key to be used for cloning modules.  
+4. Click the **Create** button to add the new workspace to the template.  
+5. You can now use this workspace to run tasks.
 
-You can switch between workspaces in two ways:
+![](<../../../../.gitbook/assets/tf-workspace.webp>)
 
-1. **Through the UI**:
-   - Go to the "Terraform" section.
-   - Select "Workspaces" from the sidebar.
-   - Click on the desired workspace to make it active.
+### Switching workspaces
 
-2. **In your Terraform configuration**:
-   ```hcl
-   terraform {
-     workspace {
-       name = "development"  # or "staging", "production", etc.
-     }
-   }
-   ```
+You can set the default workspace for a Terraform/OpenTofu template by clicking the **MAKE DEFAULT** button.
 
-### Workspace-specific Variables
+![](<../../../../.gitbook/assets/default-workspace.webp>)
 
-You can set workspace-specific variables in Semaphore:
+### Workspace-specific variables
 
-1. Go to your project settings.
-2. Navigate to the **Variable Groups** section.
-3. Add variables with workspace-specific prefixes:
-   ```
-   TF_WORKSPACE_development_VAR_NAME=value
-   TF_WORKSPACE_staging_VAR_NAME=value
-   TF_WORKSPACE_production_VAR_NAME=value
-   ```
-
-## Best Practices
-
-- Use descriptive names for your workspaces (e.g., `dev`, `staging`, `prod`).
-- Keep workspace configurations consistent across your team.
-- Use workspace-specific variables for environment-specific values.
-- Regularly clean up unused workspaces to maintain a clean project structure.
-
-## Limitations
-
-- Maximum number of workspaces per project: 50
-- Workspace names must be unique within a project
-- Workspace names cannot contain special characters (use alphanumeric characters and hyphens)
-
-For more information about Terraform workspaces, refer to the [Terraform documentation](https://developer.hashicorp.com/terraform/language/state/workspaces).
+Semaphore currently does not support workspace-specific variables.
