@@ -24,8 +24,8 @@ All SSO provider options:
 
 | Parameter             | Environment Variables | Description                                                                                                 |
 | --------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `ldap_binddn`         | `SEMAPHORE_LDAP_BIND_DN` | |
-| `ldap_bindpassword`   | `SEMAPHORE_LDAP_BIND_PASSWORD` | Password of LDAP user which used as Bind DN. |
+| `ldap_binddn`         | `SEMAPHORE_LDAP_BIND_DN` | Name of LDAP user object to bind. |
+| `ldap_bindpassword`   | `SEMAPHORE_LDAP_BIND_PASSWORD` | Password of LDAP user defined in Bind DN. |
 | `ldap_server`         | `SEMAPHORE_LDAP_SERVER` | LDAP server host including port. For example: `localhost:389`. |
 | `ldap_searchdn`       | `SEMAPHORE_LDAP_SEARCH_DN` | Scope where users will be searched. For example: `ou=users,dc=example,dc=org`. |
 | `ldap_searchfilter`   | `SEMAPHORE_LDAP_SEARCH_FILTER` | Users search expression. Default: `(&(objectClass=inetOrgPerson)(uid=%s))`, where `%s` will replaced to entered login. |
@@ -54,6 +54,7 @@ Semaphore is attempting to claim the email field first. If it is empty, the expr
 ### Troubleshooting
 
 Use `ldapwhoami` tool to check if your **BindDN** works:
+This tool is provided by the **openldap-clients** package.
 
 ```bash
 ldapwhoami\
@@ -66,7 +67,7 @@ ldapwhoami\
 It will ask interactively for the password, and should return code **0** and echo out the **DN** as specified.
 
 <div class="warning">
-  Please read <a href="./administration-guide/troubleshooting#unable-to-read-ldap-response-packet-unexpected-eof">Troubleshooting</a> section if you have issues with LDAP.
+  Please read <a href="../faq/troubleshooting.html#6-unable-to-read-ldap-response-packet-unexpected-eof">Troubleshooting</a> section if you have issues with LDAP.
 </div>
 
 
