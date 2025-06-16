@@ -67,7 +67,7 @@ export SEMAPHORE_TASK_LOG_PATH=./tasks.log
 | --------------------- | --------------------- | --------------------- |
 | `enabled`             | `SEMAPHORE_EVENT_LOG_ENABLED` | Enable event logging to file. |
 | `format`              | `SEMAPHORE_EVENT_LOG_FORMAT`  | Log record format. Can be `raw` or `json`. |
-| `logger`              | `SEMAPHORE_EVENT_LOG_LOGGER`  | Logger opitons. |
+| `logger`              | `SEMAPHORE_EVENT_LOG_LOGGER`  | [Logger opitons](#logger-options). |
 
 #### Tasks logging options
 
@@ -75,7 +75,7 @@ export SEMAPHORE_TASK_LOG_PATH=./tasks.log
 | --------------------- | --------------------- | --------------------- |
 | `enabled`             | `SEMAPHORE_TASK_LOG_ENABLED` | Enable task logging to file. |
 | `format`              | `SEMAPHORE_TASK_LOG_FORMAT`  | Log record format. Can be `raw` or `json`. |
-| `logger`              | `SEMAPHORE_TASK_LOG_LOGGER`  | Logger opitons. |
+| `logger`              | `SEMAPHORE_TASK_LOG_LOGGER`  | [Logger opitons](#logger-options). |
 
 #### Logger options
 
@@ -104,7 +104,7 @@ Semaphore stores information about task execution in the database. Task history 
 
 ### Configuring task retention
 
-By default, Semaphore stores all tasks in the database. If you run a large number of tasks, the can occupy a significant amount of disk space.
+By default, Semaphore stores all tasks in the database. If you run a large number of tasks, thet can occupy a significant amount of disk space.
 
 You can configure how many tasks are retained per template using one of the following approaches:
 
