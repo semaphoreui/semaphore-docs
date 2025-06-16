@@ -1,15 +1,15 @@
 <div class="breadcrumbs">
     <a href="/user-guide/task-templates/">Projects</a>
-    → Runners (Pro)
+    → Project Runners (Pro)
 </div>
 
-# Runners (Pro)
+# Project runners (Pro)
 
-Runners are a powerful feature in Semaphore Pro that enables distributed task execution across multiple servers. This feature allows you to run tasks on separate servers from your Semaphore UI instance, providing enhanced security, scalability, and resource management.
+Project Runners are a powerful feature in Semaphore Pro that enables distributed task execution across multiple servers. This feature allows you to run tasks on separate servers from your Semaphore UI instance, providing enhanced security, scalability, and resource management.
 
 ## Overview
 
-Runners operate on a similar principle to GitLab or GitHub Actions runners:
+Project runners operate on a similar principle to GitLab or GitHub Actions runners:
 
 - A runner is deployed on a separate server from your Semaphore UI
 - The runner connects to your Semaphore instance using a secure token
@@ -35,7 +35,7 @@ Using runners provides several key advantages:
    - Run tasks in different network zones
    - Support for various deployment models (on-premises, cloud, hybrid)
 
-## Using Runners
+## Using Project Runners
 
 ### Prerequisites
 
@@ -49,35 +49,10 @@ To use runners, you need:
 ### Configuration
 
 1. **Semaphore UI Configuration**
-   Enable remote runners in your Semaphore configuration:
-
-   ```json
-   {
-     "use_remote_runner": true,
-     "runner_registration_token": "your-secure-token"
-   }
-   ```
-
-   Or using environment variables:
-
-   ```bash
-   SEMAPHORE_USE_REMOTE_RUNNER=True
-   SEMAPHORE_RUNNER_REGISTRATION_TOKEN=your-secure-token
-   ```
+  
 
 2. **Runner Setup**
-   On your runner server:
 
-   ```bash
-   # Generate runner configuration
-   semaphore runner setup --config /path/to/config.json
-
-   # Register the runner
-   semaphore runner register --config /path/to/config.json
-
-   # Start the runner
-   semaphore runner start --config /path/to/config.json
-   ```
 
 ### Managing Runners
 
@@ -117,22 +92,3 @@ You can manage runners through the Semaphore UI:
    - Implement proper access controls
    - Regular security audits
    - Keep software up to date
-
-## Troubleshooting
-
-Common issues and solutions:
-
-1. **Runner Connection Issues**
-   - Verify network connectivity
-   - Check firewall settings
-   - Validate runner registration token
-   - Ensure proper SSL/TLS configuration
-
-2. **Task Execution Problems**
-   - Check runner logs
-   - Verify resource availability
-   - Ensure proper permissions
-   - Validate task configuration
-
-For more detailed troubleshooting, refer to the [Troubleshooting Guide](../../administration-guide/troubleshooting.md).
-
