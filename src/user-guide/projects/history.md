@@ -5,7 +5,7 @@
 
 # History
 
-The History page in Semaphore provides a comprehensive view of all task executions within your project. This feature allows you to track, analyze the execution history of your tasks, providing valuable insights into your automation workflows.
+The History screen in Semaphore provides a comprehensive view of all task executions within your project. This feature allows you to track, analyze the execution history of your tasks, providing valuable insights into your automation workflows.
 
 ## Overview
 
@@ -23,9 +23,9 @@ The History page displays a chronological list of all task executions, including
 ### Accessing History
 
 1. Navigate to your project in Semaphore
-2. Click on "History" in the project sidebar
+2. Click on "History" tab
 3. View the list of all task executions
-
+<!-- 
 ### History List Features
 
 The history list provides several features to help you manage and analyze task executions:
@@ -46,7 +46,7 @@ The history list provides several features to help you manage and analyze task e
    - Search by task ID
    - Search by template name
    - Search by user
-   - Search by status
+   - Search by status -->
 
 ## Task Details
 
@@ -79,20 +79,9 @@ Clicking on any task in the history list opens a detailed view showing:
 
 From the history view, you can:
 
-1. **View Task Output**
-   - Access complete task logs
-   - Download task output
-   - Search within logs
-
-2. **Rerun Tasks**
-   - Rerun successful tasks
-   - Rerun failed tasks
-   - Rerun with modified parameters
-
-3. **Delete Tasks**
-   - Remove individual tasks
-   - Bulk delete tasks
-   - Clean up old task history
+- Access complete task logs
+- Download task output
+- Search within logs
 
 ## Task Retention
 
@@ -119,7 +108,7 @@ Semaphore allows you to configure how long task history is retained:
    - When the limit is reached, oldest tasks are automatically deleted
    - Deletion is per template
    - Task logs are removed along with task records
-
+<!-- 
 ## Best Practices
 
 1. **Regular Maintenance**
@@ -167,3 +156,4 @@ You can export task history for:
    - Proper cleanup of sensitive data
    - Compliance with data retention policies
 
+ -->
