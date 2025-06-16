@@ -44,7 +44,11 @@ The Activity Log captures all user actions performed in Semaphore, including:
       "logger": {
         "filename": "./tasks.log"
         // other logger options
-      }
+      },
+			"result_logger": {
+				"filename": "./task_results.log"
+        // other logger options
+			}
     }
   }
 }
@@ -61,7 +65,9 @@ export SEMAPHORE_TASK_LOG_ENABLED=True
 export SEMAPHORE_TASK_LOG_PATH=./tasks.log
 ```
 
-#### Events logging options
+#### Activity (events) logging options
+
+The Activity (events) logging options allow you to configure how Semaphore records user actions and system events to a file. These settings control the behavior of event logging, including whether it's enabled, the format of log entries, and specific logger configurations. When enabled, all user actions (like creating templates, managing teams, or running tasks) will be written to the specified log file according to these settings.
 
 | Parameter             | Environment Variables | Description           |
 | --------------------- | --------------------- | --------------------- |
@@ -71,11 +77,20 @@ export SEMAPHORE_TASK_LOG_PATH=./tasks.log
 
 #### Tasks logging options
 
+The Tasks logging options allow you to configure how Semaphore records task execution details to a file. These settings control the logging of task-related events, including task starts, completions, and their execution status. When enabled, all task operations and their outcomes will be written to the specified log file according to these settings, providing a detailed audit trail of task execution history.
+
 | Parameter             | Environment Variables | Description           |
 | --------------------- | --------------------- | --------------------- |
 | `enabled`             | `SEMAPHORE_TASK_LOG_ENABLED` | Enable task logging to file. |
 | `format`              | `SEMAPHORE_TASK_LOG_FORMAT`  | Log record format. Can be `raw` or `json`. |
 | `logger`              | `SEMAPHORE_TASK_LOG_LOGGER`  | Logger opitons. |
+
+#### Task results logging options
+
+| Parameter             | Environment Variables | Description           |
+| --------------------- | --------------------- | --------------------- |
+| `result_logger`              | `SEMAPHORE_TASK_RESULT_LOGGER`  | Logger opitons. |
+
 
 #### Logger options
 

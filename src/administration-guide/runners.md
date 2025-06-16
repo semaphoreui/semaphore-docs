@@ -1,6 +1,6 @@
-# Runners
+# Project Runners
 
-Runners enable running tasks on a separate server from Semaphore UI.
+Project Runners enable running tasks on a separate server from Semaphore UI.
 
 Semaphore runners operate on the same principle as GitLab or GitHub Actions runners:
 
