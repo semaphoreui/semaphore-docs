@@ -28,9 +28,9 @@ Install it using the package manager.
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 
-download/v2.13.14/semaphore_2.13.14_linux_amd64.deb
+download/v2.15.0/semaphore_2.15.0_linux_amd64.deb
 
-sudo dpkg -i semaphore_2.13.14_linux_amd64.deb
+sudo dpkg -i semaphore_2.15.0_linux_amd64.deb
 ```
 {{#endtab }}
 
@@ -38,9 +38,9 @@ sudo dpkg -i semaphore_2.13.14_linux_amd64.deb
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 
-download/v2.13.14/semaphore_2.13.14_linux_arm64.deb
+download/v2.15.0/semaphore_2.15.0_linux_arm64.deb
 
-sudo dpkg -i semaphore_2.13.14_linux_arm64.deb
+sudo dpkg -i semaphore_2.15.0_linux_arm64.deb
 ```
 {{#endtab }}
 
@@ -48,9 +48,9 @@ sudo dpkg -i semaphore_2.13.14_linux_arm64.deb
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 
-download/v2.13.14/semaphore_2.13.14_linux_amd64.rpm
+download/v2.15.0/semaphore_2.15.0_linux_amd64.rpm
 
-sudo yum install semaphore_2.13.14_linux_amd64.rpm
+sudo yum install semaphore_2.15.0_linux_amd64.rpm
 ```
 {{#endtab }}
 
@@ -58,9 +58,9 @@ sudo yum install semaphore_2.13.14_linux_amd64.rpm
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 
-download/v2.13.14/semaphore_2.13.14_linux_arm64.rpm
+download/v2.15.0/semaphore_2.15.0_linux_arm64.rpm
 
-sudo yum install semaphore_2.13.14_linux_arm64.rpm
+sudo yum install semaphore_2.15.0_linux_arm64.rpm
 ```
 {{#endtab }}
 {{#endtabs }}
@@ -80,9 +80,9 @@ Download a `*.tar.gz` for your platform from [Releases page](https://github.com/
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 
-download/v2.13.14/semaphore_2.13.14_linux_amd64.tar.gz
+download/v2.15.0/semaphore_2.15.0_linux_amd64.tar.gz
 
-tar xf semaphore_2.13.14_linux_amd64.tar.gz
+tar xf semaphore_2.15.0_linux_amd64.tar.gz
 ```
 {{#endtab }}
 
@@ -90,9 +90,9 @@ tar xf semaphore_2.13.14_linux_amd64.tar.gz
 ```
 wget https://github.com/semaphoreui/semaphore/releases/\
 
-download/v2.13.14/semaphore_2.13.14_linux_arm64.tar.gz
+download/v2.15.0/semaphore_2.15.0_linux_arm64.tar.gz
 
-tar xf semaphore_2.13.14_linux_arm64.tar.gz
+tar xf semaphore_2.15.0_linux_arm64.tar.gz
 ```
 {{#endtab }}
 
@@ -100,7 +100,7 @@ tar xf semaphore_2.13.14_linux_arm64.tar.gz
 ```
 Invoke-WebRequest `
 -Uri ("https://github.com/semaphoreui/semaphore/releases/" +
-      "download/v2.13.14/semaphore_2.13.14_windows_amd64.zip") `
+      "download/v2.15.0/semaphore_2.15.0_windows_amd64.zip") `
 -OutFile semaphore.zip
 
 Expand-Archive -Path semaphore.zip  -DestinationPath ./
