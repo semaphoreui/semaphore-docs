@@ -44,15 +44,6 @@ curl -v -c /tmp/semaphore-cookie -XPOST \
 http://localhost:3000/api/auth/login
 ```
 
-Get a user tokens:
-
-```bash
-curl -v -b /tmp/semaphore-cookie \
--H 'Content-Type: application/json' \
--H 'Accept: application/json' \
-http://localhost:3000/api/user/tokens
-```
-
 Generate a new token, and get the new token:
 
 ```bash
@@ -60,18 +51,18 @@ curl -v -b /tmp/semaphore-cookie -XPOST \
 -H 'Content-Type: application/json' \
 -H 'Accept: application/json' \
 http://localhost:3000/api/user/tokens
-
-
-curl -v -b /tmp/semaphore-cookie \
--H 'Content-Type: application/json' \
--H 'Accept: application/json' \
-http://localhost:3000/api/user/tokens
 ```
 
 The command should return something similar to:
 
-`[{"id":"`**`YOUR_ACCESS_TOKEN`**`","created":"2017-03-11T13:13:13Z","expired":false,"user_id":1}]`
-
+```json
+{
+    "id": "YOUR_ACCESS_TOKEN",
+    "created": "2025-05-21T02:35:12Z",
+    "expired": false,
+    "user_id": 3
+}
+```
 ---
 
 ## Using token to make API requests
