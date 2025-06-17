@@ -4,3 +4,5 @@
 </div>
 
 # Activity
+
+![](<../../.gitbook/assets/project_activity.webp>)

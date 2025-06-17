@@ -5,6 +5,8 @@
 
 # History
 
+![](<../../.gitbook/assets/project_history.webp>)
+
 The History screen in Semaphore provides a comprehensive view of all task executions within your project. This feature allows you to track, analyze the execution history of your tasks, providing valuable insights into your automation workflows.
 
 ## Overview
