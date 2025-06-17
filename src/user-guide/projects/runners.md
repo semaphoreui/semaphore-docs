@@ -46,12 +46,12 @@ To use runners, you need:
 3. Network connectivity between the runner and Semaphore UI
 4. Proper configuration on both the Semaphore UI and runner servers
 
-### Configuration
+<!-- ### Configuration
 
 1. **Semaphore UI Configuration**
   
 
-2. **Runner Setup**
+2. **Runner Setup** -->
 
 
 ### Managing Runners
