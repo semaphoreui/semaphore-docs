@@ -7,6 +7,10 @@
 
 Project Runners are a powerful feature in Semaphore Pro that enables distributed task execution across multiple servers. This feature allows you to run tasks on separate servers from your Semaphore UI instance, providing enhanced security, scalability, and resource management.
 
+
+![](<../../.gitbook/assets/project_runners.webp>)
+
+
 ## Overview
 
 Project runners operate on a similar principle to GitLab or GitHub Actions runners:
