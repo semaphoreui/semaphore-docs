@@ -25,6 +25,7 @@
     * [Users](./administration-guide/cli/users.md)
     * [Vaults](./administration-guide/cli/vaults.md)
     * [Runners](./administration-guide/cli/runners.md)
+    * [Daatabase migrations](./administration-guide/cli/migrations.md)
   * [LDAP](./administration-guide/ldap.md)
   * [OpenID](./administration-guide/openid.md)
     * [GitHub config](./administration-guide/openid/github.md)
