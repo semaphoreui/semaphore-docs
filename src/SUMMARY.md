@@ -12,7 +12,7 @@
     * [Manual Installation](./administration-guide/installation\_manually.md)
   * [Configuration](./administration-guide/configuration.md)
     * [Configuration file](./administration-guide/configuration/config-file.md)
-    * [Envrioment variables](./administration-guide/configuration/env-vars.md)
+    * [Environment variables](./administration-guide/configuration/env-vars.md)
     * [Interactive setup](./administration-guide/configuration/cli.md)
     * [Snap configuration](./administration-guide/configuration/snap.md)
   * [Upgrading](./administration-guide/upgrading.md)
