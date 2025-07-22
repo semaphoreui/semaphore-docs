@@ -15,13 +15,13 @@ services:
     #restart: unless-stopped
     #image: postgres:14
     #hostname: postgres
-    #volumes: 
+    #volumes:
     #  - semaphore-postgres:/var/lib/postgresql/data
     #environment:
     #  POSTGRES_USER: semaphore
     #  POSTGRES_PASSWORD: semaphore
     #  POSTGRES_DB: semaphore
-  # if you wish to use postgres, comment the mysql service section below 
+  # if you wish to use postgres, comment the mysql service section below
   mysql:
     restart: unless-stopped
     image: mysql:8.0
@@ -51,7 +51,7 @@ services:
       SEMAPHORE_ADMIN_EMAIL: admin@localhost
       SEMAPHORE_ADMIN: admin
       SEMAPHORE_ACCESS_KEY_ENCRYPTION: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
-      SEMAPHORE_LDAP_ACTIVATED: 'no' # if you wish to use ldap, set to: 'yes' 
+      SEMAPHORE_LDAP_ACTIVATED: 'no' # if you wish to use ldap, set to: 'yes'
       SEMAPHORE_LDAP_HOST: dc01.local.example.com
       SEMAPHORE_LDAP_PORT: '636'
       SEMAPHORE_LDAP_NEEDTLS: 'yes'
@@ -87,6 +87,7 @@ services:
     ports:
       - 3000:3000
     image: semaphoreui/semaphore:latest
+    environment:
       SEMAPHORE_ADMIN_PASSWORD_FILE: /run/secrets/semaphore_admin_pw
       SEMAPHORE_ADMIN_NAME: admin
       SEMAPHORE_ADMIN_EMAIL: admin@localhost
@@ -101,3 +102,25 @@ docker-compose up
 ```
 
 &#x20;Semaphore will be available via the following URL [http://localhost:3000](http://localhost:3000).
+
+## Installing Additional Python Dependencies
+
+When the Semaphore container starts, it can automatically install additional Python packages that you may need for your Ansible playbooks. To use this feature:
+
+1. Create a `requirements.txt` file with your Python dependencies
+2. Mount this file to the container at the path specified by `SEMAPHORE_CONFIG_PATH` (defaults to `/etc/semaphore`)
+
+Example update to your `docker-compose.yml`:
+
+```yaml
+services:
+  semaphore:
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    image: semaphoreui/semaphore:latest
+    volumes:
+      - ./requirements.txt:/etc/semaphore/requirements.txt
+```
+
+During container startup, Semaphore will detect the `requirements.txt` file and automatically run `pip3 install --upgrade -r ${SEMAPHORE_CONFIG_PATH}/requirements.txt` to install the specified packages.
