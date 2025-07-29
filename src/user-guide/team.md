@@ -30,7 +30,7 @@ Below are detailed descriptions of each role and its permissions.
 - **Restrictions on self-removal**<br>
   An Owner cannot remove themselves if they are the only Owner of the project. This prevents the project from being left without an Owner.
 
-- **Managing other wwners**<br>
+- **Managing other owners**<br>
   Owners can manage (including remove or change roles of) all team members, including other Owners.
 
 ### Manager
