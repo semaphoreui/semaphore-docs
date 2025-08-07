@@ -34,6 +34,8 @@ An ansible-playbook template can be one of the following types:
 
 Just runs specified playbooks with specified parameters.
 
+If you intend to launch the template with an API call with the *limit* feature, make sure to activate the option *Ansible prompts: Limit*. Otherwise the limit set in the API call will be ignored. For the API triggered task, this will not cause any interactive prompt, the task will run unattended.
+
 ### Build
 
 This type of template should be used to create [artifacts](https://en.wikipedia.org/wiki/Artifact\_\(software\_development\)). The start version of the artifact can be specified in a template parameter. Each run increments the artifact version.
