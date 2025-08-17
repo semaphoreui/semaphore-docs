@@ -57,9 +57,8 @@ terraform {
 }
 ```
 
-<!--
-Replace the following placeholders:
-- `<your-semaphore-instance>`: Your Semaphore instance URL
-- `<project-id>`: Your Semaphore project ID
-- `<your-api-token>`: Your Semaphore API token
--->
+Now Terraform will use Semaphore's built-in HTTP backend even when running from your terminal:
+
+```
+terraform apply
+```
