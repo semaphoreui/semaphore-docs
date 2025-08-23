@@ -18,3 +18,6 @@ Example `config.json` for configuring AWS SMTP email notifications:
   "email_password":       "<aws-secret>",
 }
 ```
+
+Explanation of key setting:
+* `email_secure` &mdash; enables **StartTLS** to upgrade the connection to a secure, encrypted channel.

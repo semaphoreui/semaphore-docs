@@ -1,7 +1,15 @@
 <div class="breadcrumbs">
     <a href="/administration-guide/notifications">Notifications</a>
-    → Teams config
+    → Microsoft Teams notifications
 </div>
 
-# Teams notifications
+# Microsoft Teams notifications
 
+`config.json` example:
+
+```json
+{
+    "microsoft_teams_alert": true,
+    "microsoft_teams_url":   "...",
+}
+```

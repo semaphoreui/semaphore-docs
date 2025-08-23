@@ -1,15 +1,15 @@
 <div class="breadcrumbs">
     <a href="/administration-guide/notifications">Notifications</a>
-    → Slack notifications
+    → DingTalk config
 </div>
 
-# Slack notifications
+# DingTalk notifications
 
 `config.json` example:
 
 ```json
 {
-    "slack_alert": true,
-    "slack_url": "...",
+    "dingtalk_alert": true,
+    "dingtalk_url":   "...",
 }
 ```

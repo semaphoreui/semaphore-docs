@@ -1,15 +1,15 @@
 <div class="breadcrumbs">
     <a href="/administration-guide/notifications">Notifications</a>
-    → Slack notifications
+    → RocketChat notifications
 </div>
 
-# Slack notifications
+# RocketChat notifications
 
 `config.json` example:
 
 ```json
 {
-    "slack_alert": true,
-    "slack_url": "...",
+    "rocketchat_alert": true,
+    "rocketchat_url":   "...",
 }
 ```

@@ -1,15 +1,16 @@
 <div class="breadcrumbs">
     <a href="/administration-guide/notifications">Notifications</a>
-    → Slack notifications
+    → Gotify notifications
 </div>
 
-# Slack notifications
+# Gotify notifications
 
 `config.json` example:
 
 ```json
 {
-    "slack_alert": true,
-    "slack_url": "...",
+    "gotify_alert": true,
+    "gotify_url":   "...",
+    "gotify_token": "***",
 }
 ```
