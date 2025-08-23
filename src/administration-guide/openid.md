@@ -12,6 +12,7 @@ Links:
 * [Keycloak config](./openid/keycloak.md)
 * [Okta config](./openid/okta.md)
 * [Azure config](./openid/azure.md)
+* [Zitadel config](./openid/zitadel.md)
 
 Example of SSO provider configuration:
 

@@ -2,9 +2,10 @@
 
 Semaphore UI supports following notifications:
 
-* email
-* slack
-* telegram
+* [Email](/administration-guide/notifications/email)
+* [Slack](/administration-guide/notifications/slack)
+* [Telegram](/administration-guide/notifications/telegram)
+* [Teams](/administration-guide/notifications/teams)
 
 ## Telegram
 
