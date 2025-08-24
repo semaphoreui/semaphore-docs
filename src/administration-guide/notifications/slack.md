@@ -11,7 +11,7 @@ To set up Slack notifications, you need to create a webhook URL that connects Se
 
 ## Creating Slack webhook
 
-### Step 1. Open Slack API Settings
+### Step 1. Open Slack API settings
 
 1. Go to [https://api.slack.com/apps](https://api.slack.com/apps).
 2. Click **Create New App** → choose **From Scratch**.
@@ -19,14 +19,14 @@ To set up Slack notifications, you need to create a webhook URL that connects Se
 
 ---
 
-### Step 2. Enable Incoming Webhooks
+### Step 2. Enable incoming webhooks
 
 1. Inside the app settings, go to **Features → Incoming Webhooks**.
 2. Switch **ctivate Incoming Webhooks** → **On**.
 
 ---
 
-### Step 3. Create a Webhook URL
+### Step 3. Create a webhook URL
 
 1. Click **dd New Webhook to Workspace**.
 2. Select the xxchannelxx where messages should be sent.
@@ -39,7 +39,7 @@ To set up Slack notifications, you need to create a webhook URL that connects Se
 
 ---
 
-### Step 4. Test Your Webhook
+### Step 4. Test your webhook
 
 Use `curl` to test:
 
@@ -56,11 +56,9 @@ If everything is set up, you’ll see the message in the selected Slack channel.
 
 Once you have your Slack webhook URL, you can configure Semaphore to send notifications in several ways:
 
-### Configuration Methods
-
 You can enable Slack notifications using either configuration files or environment variables.
 
-#### Method 1: Configuration File
+### Method 1: Configuration file
 
 Add the following settings to your Semaphore configuration file:
 
@@ -76,11 +74,9 @@ Add the following settings to your Semaphore configuration file:
 }
 ```
 
-#### Method 2: Environment Variables
+### Method 2: Environment variables
 
 Alternatively, you can use environment variables to configure Slack notifications. This method is particularly useful for containerized deployments or when you want to keep sensitive information separate from configuration files.
-
-Environemnt variables:
 
 ```
 SEMAPHORE_SLACK_ALERT=True
