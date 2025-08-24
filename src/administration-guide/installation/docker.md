@@ -45,6 +45,9 @@ services:
       SEMAPHORE_DB_PORT: 3306 # change to 5432 for postgres
       SEMAPHORE_DB_DIALECT: mysql # for postgres, change to: postgres
       SEMAPHORE_DB: semaphore
+      # To use SQLite instead of MySQL/Postgres (v2.16+)
+      # SEMAPHORE_DB_DIALECT: sqlite
+      # SEMAPHORE_DB: "/etc/semaphore/semaphore.sqlite"
       SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
       SEMAPHORE_ADMIN_PASSWORD: changeme
       SEMAPHORE_ADMIN_NAME: admin

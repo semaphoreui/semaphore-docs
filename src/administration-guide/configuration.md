@@ -23,7 +23,7 @@ Full list of available configuration options:
 | <br>`postgres.name` <hr> `SEMAPHORE_DB_NAME`<br><br> | Postgres database (schema) name.    |
 | <br>`postgres.user` <hr> `SEMAPHORE_DB_USER`<br><br> | Postgres user name.                 |
 | <br>`postgres.pass` <hr> `SEMAPHORE_DB_PASS`<br><br> | Postgres user's password.           |
-| <br>`dialect`       <hr> `SEMAPHORE_DB_DIALECT`<br><br> | Can be `mysql`, `postgres `or `bolt`   |
+| <br>`dialect`       <hr> `SEMAPHORE_DB_DIALECT`<br><br> | Can be `sqlite` (default), `postgres`, `mysql` or `bolt` (deprecated).   |
 | <br>`git_client`      <hr> `SEMAPHORE_GIT_CLIENT`<br><br> |  |
 | <br>`ssh_config_path` <hr> `SEMAPHORE_SSH_PATH`<br><br> |  |
 | <br>`port`           <hr> `SEMAPHORE_PORT`<br><br> | TCP port on which the web interface will be available. Default: 3000 |

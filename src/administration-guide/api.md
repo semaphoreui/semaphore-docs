@@ -5,7 +5,7 @@
 Semaphore UI provides two formats of API documentation, so you can choose the one that fits your workflow best:
 
 * [Swagger/OpenAPI](https://semaphoreui.com/api-docs) &mdash; ideal if you prefer an interactive, browser-based experience.
-* **Built-in Swagger API documentation** &mdash; interactive API documentation powered by Swagger UI. You can access on **API Tokens** page on your Semaphore instance.
+* **Built-in Swagger API documentation** &mdash; interactive API documentation powered by Swagger UI. You can access it on your instance.
 
   ![](<../.gitbook/assets/swagger-link.webp>)
 
@@ -23,7 +23,7 @@ Authorization: Bearer YOUR_API_TOKEN
 ### Creating an API Token
 
 There are two ways to create an API token:
-- Through the web interface (since 2.14)
+- Through the web interface
 - Using HTTP request
 
 #### Through the web interface (since 2.14)

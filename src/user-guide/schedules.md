@@ -135,3 +135,9 @@ For development or testing environments. Schedule cloud environment creation in 
 * Consider the effect of long-running scheduled tasks on other schedules
 * Test schedules with short intervals before setting up production schedules with longer intervals
 * Document the purpose and expected outcomes of scheduled tasks
+
+---
+
+## Task parameters
+
+Schedules can pass parameters to tasks. Enable prompts for the required fields in the template, then define parameter values in the schedule configuration so each run supplies the desired overrides (for example branch, variables, flags).

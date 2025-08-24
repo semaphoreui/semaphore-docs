@@ -7,3 +7,9 @@ Templates define how to run Semaphore tasks. Currently the following task types 
 * [Shell](./bash.md)
 * [Powershell](./powershell.md)
 * [Python](./python.md)
+
+---
+
+## Parallel tasks
+
+By default, tasks from the same template execute sequentially. To allow concurrent runs of the same template, enable the "Allow parallel tasks" option in the template settings.

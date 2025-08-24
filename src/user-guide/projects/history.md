@@ -75,6 +75,10 @@ Clicking on any task in the history list opens a detailed view showing:
    - Log search functionality
    - Error highlighting
 
+### Statistics
+
+The project provides a statistics page summarizing task outcomes over a selected time range, with filtering by user.
+
 ## Task Management
 
 ### Actions Available

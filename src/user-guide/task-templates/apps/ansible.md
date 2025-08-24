@@ -65,3 +65,21 @@ You can use cron to periodically check for new commits in the repository and tri
 For example you have source code of the app in the git repository. You can add it to **Repositories** and trigger the Build task for new commits.
 
 ![](../../../.gitbook/assets/template\_schedule\_commit.png)
+
+### Tags, skip-tags and limit
+
+Templates support Ansible CLI options:
+
+- `--tags`
+- `--skip-tags`
+- `--limit`
+
+These can be set in the template and overridden when creating a task. Ensure corresponding prompts are enabled if you plan to pass these values via API.
+
+### Multiple vault passwords
+
+You can attach multiple Vault passwords from the Key Store to a template. During execution, Ansible will attempt to decrypt using the provided passwords.
+
+### Verbosity level
+
+You can adjust Ansible verbosity for a task (for example `-v`, `-vvv`) from the template/task form to aid troubleshooting.

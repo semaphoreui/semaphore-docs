@@ -32,6 +32,21 @@ Example of SSO provider configuration:
 }
 ```
 
+### Configure via environment variable
+
+When running in containers it may be convenient to configure providers using a single environment variable:
+
+```bash
+SEMAPHORE_OIDC_PROVIDERS='{
+  "github": {
+    "client_id": "***",
+    "client_secret": "***"
+  }
+}'
+```
+
+This value must be a valid JSON string matching the `oidc_providers` structure above.
+
 All SSO provider options:
 
 | Parameter             | Description                                                                                                 |

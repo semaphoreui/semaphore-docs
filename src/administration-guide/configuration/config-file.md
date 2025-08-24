@@ -63,6 +63,10 @@ Semaphore uses a `config.json` configuration file with following content:
 
 	"max_tasks_per_template": 3,
 
+	"schedule": {
+		"timezone": "UTC"
+	},
+
 	"log": {
 		"events": {
 			"enabled": true,

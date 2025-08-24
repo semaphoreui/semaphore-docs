@@ -109,6 +109,10 @@ semaphore runner start --config /path/to/your/config/file.json
 
 Your runner is ready to execute tasks ;)
 
+### Runner tags (Pro)
+
+You can assign one or more tags to a project runner. Templates can then require a tag so tasks run only on matching runners. Configure tags when adding a runner in the project UI, and set the required tag in the template settings.
+
 ## Runner unregistaration
 
 You can remove runner using the web interfance.

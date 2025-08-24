@@ -22,7 +22,7 @@ If you are not sure which resources are being used in an variable group, follow 
 2. Click the trash can icon next to the Variable Group.
 3. Click Yes if you are sure you want to remove the variable group.
 
-## Using Variable Groups - Terraform
+## Using Variable Groups - Terraform/OpenTofu
 When you want utilize a stored variable group variable or secret in your terraform template you must prefix the name with `TF_VAR_` for the terraform script to use it. 
 
 **Example**

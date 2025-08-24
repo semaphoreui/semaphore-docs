@@ -15,7 +15,7 @@ Semaphore supports secure authentication and flexible authorization mechanisms:
 
   - **OpenID Connect (OIDC)**<br>Enables single sign-on with identity providers like Google, Azure AD, or Keycloak. Supports custom claims and group mappings.
 
-- **Two-Factor authentication (2FA)**<br>TOTP-based 2FA is available and recommended for all users.
+- **Two-Factor authentication (2FA)**<br>TOTP-based 2FA is available and recommended for all users. It can be enabled per user and supports optional recovery codes. See configuration options `auth.totp.enabled` and `auth.totp.allow_recovery`.
 
 - **Role-based access control**<br>You can assign different roles to users such as Admin, Maintainer, or Viewer, limiting access based on responsibility.
 
@@ -31,7 +31,7 @@ Managing secrets securely is a core feature:
 - **Environment isolation**<br>Secrets are only passed to jobs at runtime and are not exposed to the container environment directly.
 
 - **SSH keys and tokens**<br>Users are responsible for uploading valid SSH keys and tokens. These are encrypted and only used when running tasks.
-<!-- - **Vault Support** *(coming soon)*: Future support for external secret managers like HashiCorp Vault is planned. -->
+- **HashiCorp Vault integration (Pro)**<br>Secrets can be stored in an external Vault instance. Choose storage per-secret when creating or editing a secret.
 
 ## Running untrusted code / playbooks
 
