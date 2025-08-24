@@ -116,7 +116,21 @@ Semaphore collects minimal user data:
 Found a vulnerability? Help us keep Semaphore secure:
 
 - **Responsible disclosure**<br>Please email us at `security@semaphoreui.com`.
+ 
+### Vulnerability resolution targets
 
+We aim to resolve reported vulnerabilities within the following target windows:
+
+- Critical: within 30 days
+- High: within 60 days
+- Medium: within 90 days
+- Low: best effort, typically within 180 days
+
+Out-of-cycle patches may be released for actively exploited issues affecting latest stable releases.
+
+### Code security tooling
+
+We use CodeQL, Codacy, Snyk and Renovate to analyze the codebase and dependencies, and to automate dependency updates.
 - **No public exploits**<br>Do not share vulnerabilities publicly until patched.
 
 - **Acknowledgments**<br>Security researchers may be acknowledged in release notes if desired.
