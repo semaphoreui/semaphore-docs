@@ -2,10 +2,11 @@
 
 * [Welcome to Semaphore UI](./README.md)
 
-* [Admin Guide]()
+* [Admin Guide](./administration-guide/README.md)
   * [Installation](./administration-guide/installation.md)
     * [Package manager](./administration-guide/installation/package-manager.md)
     * [Docker](./administration-guide/installation/docker.md)
+    * [Cloud](./administration-guide/installation/cloud.md)
     * [Binary file](./administration-guide/installation/binary-file.md)
     * [Kubernetes (Helm chart)](./administration-guide/installation/k8s.md)
     * [Snap (deprecated)](./administration-guide/installation/snap.md)
@@ -21,6 +22,7 @@
     * [Network security](./administration-guide/security/network.md)
     * [NGINX config](./administration-guide/security/nginx.md)
     * [Apache config](./administration-guide/security/apache.md)
+    * [Kerberos](./administration-guide/security/kerberos.md)
   * [CLI](./administration-guide/cli.md)
     * [Users](./administration-guide/cli/users.md)
     * [Vaults](./administration-guide/cli/vaults.md)
@@ -31,6 +33,7 @@
     * [GitHub config](./administration-guide/openid/github.md)
     * [Google config](./administration-guide/openid/google.md)
     * [GitLab config](./administration-guide/openid/gitlab.md)
+    * [Gitea config](./administration-guide/openid/gitea.md)
     * [Authelia config](./administration-guide/openid/authelia.md)
     * [Authentik config](./administration-guide/openid/authentik.md)
     * [Keycloak config](./administration-guide/openid/keycloak.md)
@@ -46,6 +49,11 @@
     * [Telegram](./administration-guide/notifications/telegram.md)
     * [Slack](./administration-guide/notifications/slack.md)
     * [Teams](./administration-guide/notifications/teams.md)
+    * [Rocket.Chat](./administration-guide/notifications/rocket.md)
+    * [DingTalk](./administration-guide/notifications/ding.md)
+    * [Gotify](./administration-guide/notifications/gotify.md)
+
+  * [Troubleshooting](./administration-guide/troubleshooting.md)
 
 
 * [User Guide]()

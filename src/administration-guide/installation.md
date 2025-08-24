@@ -10,6 +10,10 @@ You can install Semaphore in multiple ways, depending on your operating system, 
   Run Semaphore as a container using Docker or Docker Compose. Ideal for fast setup, sandboxed environments, and CI/CD pipelines. Recommended for users who prefer infrastructure as code.<br>
   [Learn more »](./installation/docker)
 
+* **Cloud**<br>
+  Guidance for deploying Semaphore to cloud platforms using VMs, containers, or Kubernetes with managed services.<br>
+  [Learn more »](./installation/cloud)
+
 * **Binary file**<br>
   Download a precompiled binary from the releases page. Great for manual installation or embedding in custom workflows. Works across Linux, macOS, and Windows (via WSL).<br>
   [Learn more »](./installation/binary-file)
