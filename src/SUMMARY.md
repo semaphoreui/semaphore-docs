@@ -3,6 +3,7 @@
 * [Welcome to Semaphore UI](./README.md)
 
 * [Admin Guide](./administration-guide/README.md)
+  <!-- * [Introduction](./administration-guide/introduction.md) -->
   * [Installation](./administration-guide/installation.md)
     * [Package manager](./administration-guide/installation/package-manager.md)
     * [Docker](./administration-guide/installation/docker.md)
