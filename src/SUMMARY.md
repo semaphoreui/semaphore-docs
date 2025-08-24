@@ -56,7 +56,7 @@
   * [Troubleshooting](./administration-guide/troubleshooting.md)
 
 
-* [User Guide]()
+* [User Guide](./user-guide/README.md)
   * [Projects](./user-guide/projects.md)
     * [History](./user-guide/projects/history.md)
     * [Activity](./user-guide/projects/activity.md)
@@ -70,11 +70,14 @@
     * [Shell/Bash scripts](./user-guide/task-templates/apps/bash.md)
     * [PowerShell](./user-guide/task-templates/apps/powershell.md)
     * [Python](./user-guide/task-templates/apps/python.md)
+    * [Survey Variables](./user-guide/task-templates/survey-vars.md)
   * [Tasks](./user-guide/tasks.md)
   * [Schedules](./user-guide/schedules.md)
   * [Key Store](./user-guide/key-store.md)
+    * [GitLab](./user-guide/key-store/gitlab.md)
   * [Inventory](./user-guide/inventory.md)
     * [Kerberos](./user-guide/inventory/kerberos.md)
+    * [NetBox dynamic inventory](./user-guide/netbox-dynamic-inventory.md)
   * [Variable Groups](./user-guide/environment.md)
   * [Repositories](./user-guide/repositories.md)
     * [Bitbucket Access Token](./user-guide/repositories/bitbucket_access_token.md)
