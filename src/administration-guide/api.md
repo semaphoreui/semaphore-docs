@@ -5,10 +5,10 @@
 Semaphore UI provides two formats of API documentation, so you can choose the one that fits your workflow best:
 
 * [Swagger/OpenAPI](https://semaphoreui.com/api-docs) &mdash; ideal if you prefer an interactive, browser-based experience.
-* **Built-in Swagger API documentation** &mdash; interactive API documentation powered by Swagger UI. You can access it on your instance.
-  ![](<../.gitbook/assets/swagger-link.webp>)
-
 * [Official Postman Collection](https://www.postman.com/semaphoreui) &mdash; explore and test all endpoints in Postman.
+* **Built-in Swagger API documentation** &mdash; interactive API documentation powered by Swagger UI. You can access it on your instance.
+
+  ![](<../.gitbook/assets/swagger-link.webp>)
 
 All options include complete documentation of available endpoints, parameters, and example responses.
 
