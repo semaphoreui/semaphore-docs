@@ -57,10 +57,10 @@ Full list of available configuration options:
 | <br>`auth.totp.enabled`         <hr> `SEMAPHORE_TOTP_ENABLED` <br><br> | Enable Two-factor authentication with using TOTP. |
 | <br>`auth.totp.allow_recovery`  <hr> `SEMAPHORE_TOTP_ALLOW_RECOVERY` <br><br> | Allow users to reset TOTP using a recovery code. |
 | **Process** ||
-| <br>`process.user`          <hr> `SEMAPHORE_PROCESS_USER` <br><br> | User to run Semaphore process. |
-| <br>`process.uid`           <hr> `SEMAPHORE_PROCESS_UID` <br><br> | UID to run Semaphore process. |
-| <br>`process.gid`           <hr> `SEMAPHORE_PROCESS_GID` <br><br> | GID to run Semaphore process. |
-| <br>`process.chroot`        <hr> `SEMAPHORE_PROCESS_CHROOT` <br><br> | Chroot directory for Semaphore process. |
+| <br>`process.user`          <hr> `SEMAPHORE_PROCESS_USER` <br><br> | User under which wrapped processes (such as Ansible, Terraform, or OpenTofu) will run. |
+| <br>`process.uid`           <hr> `SEMAPHORE_PROCESS_UID` <br><br> | ID of user under which wrapped processes (such as Ansible, Terraform, or OpenTofu) will run. |
+| <br>`process.gid`           <hr> `SEMAPHORE_PROCESS_GID` <br><br> | ID for group under which wrapped processes (such as Ansible, Terraform, or OpenTofu) will run. |
+| <br>`process.chroot`        <hr> `SEMAPHORE_PROCESS_CHROOT` <br><br> | Chroot directory for wrapped processes. |
 | **Email** ||
 | <br>`email_sender`   <hr> `SEMAPHORE_EMAIL_SENDER`<br><br> | Email address of the sender. |
 | <br>`email_host`     <hr> `SEMAPHORE_EMAIL_HOST`<br><br> | SMTP server hostname. |
@@ -88,12 +88,12 @@ Full list of available configuration options:
 | <br>`gotify_token`          <hr> `SEMAPHORE_GOTIFY_TOKEN` <br><br> | Gotify server token. |
 | **LDAP** ||
 | <br>`ldap_enable`           <hr> `SEMAPHORE_LDAP_ENABLE` <br><br> | Flag which enables LDAP authentication. |
-| <br>`ldap_needtls`          <hr> `SEMAPHORE_LDAP_NEEDTLS` <br><br> |   |
-| <br>`ldap_binddn`           <hr> `SEMAPHORE_LDAP_BIND_DN` <br><br> |   |
-| <br>`ldap_bindpassword`     <hr> `SEMAPHORE_LDAP_BIND_PASSWORD` <br><br> |   |
-| <br>`ldap_server`           <hr> `SEMAPHORE_LDAP_SERVER` <br><br> |   |
-| <br>`ldap_searchdn`         <hr> `SEMAPHORE_LDAP_SEARCH_DN` <br><br> |   |
-| <br>`ldap_searchfilter`     <hr> `SEMAPHORE_LDAP_SEARCH_FILTER` <br><br> |   |
+| <br>`ldap_needtls`          <hr> `SEMAPHORE_LDAP_NEEDTLS` <br><br> | Flag to enable or disable TLS for LDAP connections. |
+| <br>`ldap_binddn`           <hr> `SEMAPHORE_LDAP_BIND_DN` <br><br> | The distinguished name (DN) used to bind to the LDAP server for authentication. |
+| <br>`ldap_bindpassword`     <hr> `SEMAPHORE_LDAP_BIND_PASSWORD` <br><br> | The password used to bind to the LDAP server for authentication. |
+| <br>`ldap_server`           <hr> `SEMAPHORE_LDAP_SERVER` <br><br> | The hostname and port of the LDAP server (e.g., ldap-server.com:1389). |
+| <br>`ldap_searchdn`         <hr> `SEMAPHORE_LDAP_SEARCH_DN` <br><br> | The base distinguished name (DN) used for searching users in the LDAP directory (e.g., dc=example,dc=org). |
+| <br>`ldap_searchfilter`     <hr> `SEMAPHORE_LDAP_SEARCH_FILTER` <br><br> | The filter used to search for users in the LDAP directory (e.g., (&(objectClass=inetOrgPerson)(uid=%s))). |
 | <br>`ldap_mappings.dn`      <hr> `SEMAPHORE_LDAP_MAPPING_DN` <br><br> | LDAP attribute to use as the distinguished name (DN) mapping for user authentication. |
 | <br>`ldap_mappings.mail`    <hr> `SEMAPHORE_LDAP_MAPPING_MAIL` <br><br> | LDAP attribute to use as the email address mapping for user authentication. |
 | <br>`ldap_mappings.uid`     <hr> `SEMAPHORE_LDAP_MAPPING_UID` <br><br> | LDAP attribute to use as the user ID (UID) mapping for user authentication. |
