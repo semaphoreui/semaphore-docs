@@ -2,7 +2,7 @@
 
 The Variable Groups section of Semaphore is a place to store additional variables for an inventory and must be stored in JSON format.
 
-All task templates require an variable group to be defined even if it is empty. 
+All task templates require a variable group to be defined even if it is empty. 
 
 ## Create an variable group
 1. Click on the Variable Group tab.
