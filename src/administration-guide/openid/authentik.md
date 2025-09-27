@@ -26,4 +26,4 @@
 
 Discussion on GitHub: [#1663](https://github.com/semaphoreui/semaphore/discussions/1663).
 
-See also description in [authentik docs](https://docs.goauthentik.io/integrations/services/semaphore/).
+See also description in [authentik docs](https://integrations.goauthentik.io/infrastructure/semaphore/).
