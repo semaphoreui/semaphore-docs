@@ -28,11 +28,11 @@
 * [#1864](https://github.com/semaphoreui/semaphore/issues/1864) — v2.9.56 breaks oidc auth with keycloak
 * [#1329](https://github.com/semaphoreui/semaphore/issues/1329) — testing oidc_providers
 
-[Explore all Keycloak-related issues →](https://github.com/semaphoreui/semaphore/issues?q=is%3Aissue%20okta)
+[Explore all Okta-related issues →](https://github.com/semaphoreui/semaphore/issues?q=is%3Aissue%20okta)
 
 ## Related GitHub Discussions
 
 * [#2822](https://github.com/semaphoreui/semaphore/discussions/2822) — When setting up GitHub OpenID, parsing is not possible except for Email
 * [#1030](https://github.com/semaphoreui/semaphore/discussions/1030) &mdash; SAML support?
 
-[Explore all Keycloak-related discussions →](https://github.com/semaphoreui/semaphore/discussions?discussions_q=okta)
+[Explore all Okta-related discussions →](https://github.com/semaphoreui/semaphore/discussions?discussions_q=okta)
