@@ -19,6 +19,7 @@ docker logs -f my-semaphore-container
 ```
 
 This provides a live (streaming) view of the logs.
+
 ---
 
 ## Activity log
@@ -88,12 +89,8 @@ The Tasks logging options allow you to configure how Semaphore records task exec
 | `enabled`             | `SEMAPHORE_TASK_LOG_ENABLED` | Enable task logging to file. |
 | `format`              | `SEMAPHORE_TASK_LOG_FORMAT`  | Log record format. Can be `raw` or `json`. |
 | `logger`              | `SEMAPHORE_TASK_LOG_LOGGER`  | [Logger options](#logger-options). |
-
-#### Task results logging options
-
-| Parameter             | Environment Variables | Description           |
-| --------------------- | --------------------- | --------------------- |
 | `result_logger`              | `SEMAPHORE_TASK_RESULT_LOGGER`  | Logger options. |
+
 
 
 #### Logger options
@@ -157,11 +154,6 @@ Configure syslog support in `config.json`:
 }
 ```
 
-- `enabled` &mdash; turn syslog forwarding on or off.
-- `network` &mdash; protocol used to reach the collector, such as `udp` or `tcp`.
-- `address` &mdash; collector address in `host:port` format.
-- `tag` &mdash; optional identifier prepended to every message.
-
 The same options are available through environment variables if you prefer not to edit the JSON file:
 
 ```bash
@@ -170,6 +162,16 @@ SEMAPHORE_SYSLOG_NETWORK=udp
 SEMAPHORE_SYSLOG_ADDRESS=logs.example.com:514
 SEMAPHORE_SYSLOG_TAG=semaphore
 ```
+
+#### Syslog options
+
+| Parameter             | Environment Variables | Description           |
+| --------------------- | --------------------- | --------------------- |
+| `enabled`             | `SEMAPHORE_SYSLOG_ENABLED` | Turn syslog forwarding on or off. |
+| `network`              | `SEMAPHORE_SYSLOG_NETWORK`  | Protocol used to reach the collector, such as `udp` or `tcp`. |
+| `address`              | `SEMAPHORE_SYSLOG_ADDRESS`  | Collector address in `host:port` format. |
+| `tag`              | `SEMAPHORE_SYSLOG_TAG`  | Optional identifier prepended to every message. |
+
 
 Restart the Semaphore service after changing these values so that the new syslog destination is applied.
 
