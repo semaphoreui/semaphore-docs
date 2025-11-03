@@ -13,8 +13,12 @@ If Semaphore is running as a systemd service, you can view the logs with the fol
 journalctl -u semaphore.service -f
 ```
 
-This provides a live (streaming) view of the logs.
+If Semaphore is running in Docker container, you can view the logs with the following commamd:
+```
+docker logs -f my-semaphore-container
+```
 
+This provides a live (streaming) view of the logs.
 ---
 
 ## Activity log
@@ -59,10 +63,10 @@ Or you can do this using following environment variables:
 
 ```bash
 export SEMAPHORE_EVENT_LOG_ENABLED=True
-export SEMAPHORE_EVENT_LOG_PATH=./events.log
+export SEMAPHORE_EVENT_LOG_LOGGER=./events.log
 
 export SEMAPHORE_TASK_LOG_ENABLED=True
-export SEMAPHORE_TASK_LOG_PATH=./tasks.log
+export SEMAPHORE_EVENT_LOG_LOGGER=./tasks.log
 ```
 
 #### Activity (events) logging options
@@ -119,7 +123,7 @@ Semaphore stores information about task execution in the database. Task history 
 
 ### Configuring task retention
 
-By default, Semaphore stores all tasks in the database. If you run a large number of tasks, thet can occupy a significant amount of disk space.
+By default, Semaphore stores all tasks in the database. If you run a large number of tasks, they can occupy a significant amount of disk space.
 
 You can configure how many tasks are retained per template using one of the following approaches:
 
@@ -137,6 +141,37 @@ You can configure how many tasks are retained per template using one of the foll
 When the number of tasks exceeds this limit, the oldest Task Logs are automatically deleted.
 
 ---
+
+## Syslog protocol support
+
+Semaphore can forward activity and task log entries to an external syslog collector for long‑term storage or centralized monitoring. Syslog forwarding is disabled by default.
+
+Configure syslog support in `config.json`:
+
+```json
+"syslog": {
+  "enabled": true,
+  "network": "udp",
+  "address": "logs.example.com:514",
+  "tag": "semaphore"
+}
+```
+
+- `enabled` &mdash; turn syslog forwarding on or off.
+- `network` &mdash; protocol used to reach the collector, such as `udp` or `tcp`.
+- `address` &mdash; collector address in `host:port` format.
+- `tag` &mdash; optional identifier prepended to every message.
+
+The same options are available through environment variables if you prefer not to edit the JSON file:
+
+```bash
+SEMAPHORE_SYSLOG_ENABLED=true
+SEMAPHORE_SYSLOG_NETWORK=udp
+SEMAPHORE_SYSLOG_ADDRESS=logs.example.com:514
+SEMAPHORE_SYSLOG_TAG=semaphore
+```
+
+Restart the Semaphore service after changing these values so that the new syslog destination is applied.
 
 ## Summary
 
