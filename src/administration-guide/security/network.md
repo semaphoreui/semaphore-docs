@@ -38,7 +38,7 @@ Semaphore supports SSL/TLS starting from v2.12.
 }
 ```
 
-Or environment varibles (useful for Docker):
+Or environment variables (useful for Docker):
 
 ```bash
 export SEMAPHORE_TLS_ENABLED=True
