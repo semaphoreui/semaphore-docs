@@ -4,19 +4,19 @@ The Variable Groups section of Semaphore is a place to store additional variable
 
 All task templates require a variable group to be defined even if it is empty. 
 
-## Create an variable group
+## Create a variable group
 1. Click on the Variable Group tab.
 2. Click on the New Variable Group button.
 3. Name the Variable Group and type or paste in valid JSON variables. If you just need an empty Variable Group type in ```{}```.
 
-## Updating an variable group
+## Updating a variable group
 1. Click on the Variable Groups tab.
 2. Click the pencil icon.
 3. Make changes and click save.
 
 ## Deleting the variable group
-Before you remove an variable proup, you must remove all resources tied to it.
-If you are not sure which resources are being used in an variable group, follow steps 1 and 2 below. It will show you which resources are being used, with links to those resources.
+Before you remove a variable group, you must remove all resources tied to it.
+If you are not sure which resources are being used in a variable group, follow steps 1 and 2 below. It will show you which resources are being used, with links to those resources.
 
 1. Click on the Variable Group.
 2. Click the trash can icon next to the Variable Group.
