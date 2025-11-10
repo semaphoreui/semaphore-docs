@@ -1,6 +1,8 @@
 # Administration Guide
 
-Welcome to the Semaphore UI Administration Guide. This guide provides comprehensive information for installing, configuring, and maintaining your Semaphore instance.
+Welcome to the Semaphore UI Administration Guide. This guide provides comprehensive information for installing, configuring, securing, and maintaining your Semaphore instance.
+
+> Just evaluating or setting up your first project? Start with the [Getting Started](../getting-started/README.md) section before diving into the full administration topics.
 
 ## What is Semaphore UI?
 
@@ -35,50 +37,67 @@ This guide will walk you through setting up and managing these features for your
 
 ## Quick links
 
-- Installation: [Overview](./installation.md)
-  - [Package manager](./installation/package-manager.md)
-  - [Docker](./installation/docker.md)
-  - [Binary file](./installation/binary-file.md)
-  - [Kubernetes (Helm chart)](./installation/k8s.md)
-  - [Cloud](./installation/cloud.md)
-  - [Snap (deprecated)](./installation/snap.md)
-  - [Manual installation](./installation_manually.md)
-- Configuration: [Overview](./configuration.md)
-  - [Configuration file](./configuration/config-file.md)
-  - [Environment variables](./configuration/env-vars.md)
-  - [Interactive setup](./configuration/cli.md)
-  - [Snap configuration](./configuration/snap.md)
-- Security: [Overview](./security.md)
-  - [Database security](./security/database.md)
-  - [Network security](./security/network.md)
-  - [NGINX config](./security/nginx.md)
-  - [Apache config](./security/apache.md)
-  - [Kerberos](./security/kerberos.md)
-- Authentication:
-  - [LDAP](./ldap.md)
-  - [OpenID](./openid.md)
-    - [GitHub](./openid/github.md)
-    - [Google](./openid/google.md)
-    - [GitLab](./openid/gitlab.md)
-    - [Gitea](./openid/gitea.md)
-    - [Authelia](./openid/authelia.md)
-    - [Authentik](./openid/authentik.md)
-    - [Keycloak](./openid/keycloak.md)
-    - [Okta](./openid/okta.md)
-    - [Azure](./openid/azure.md)
-    - [Zitadel](./openid/zitadel.md)
-- Operations:
-  - [CLI](./cli.md)
-  - [Runners](./runners.md)
-  - [Logs](./logs.md)
-  - [Notifications](./notifications.md)
-    - [Email](./notifications/email.md)
-    - [Telegram](./notifications/telegram.md)
-    - [Slack](./notifications/slack.md)
-    - [Teams](./notifications/teams.md)
-    - [Rocket.Chat](./notifications/rocket.md)
-    - [DingTalk](./notifications/ding.md)
-    - [Gotify](./notifications/gotify.md)
-- Maintenance:
-  - [Upgrading](./upgrading.md)
-  - [Troubleshooting](./troubleshooting.md)
+**Plan & Install**
+
+* Installation: [Overview](./installation.md)
+  * [Package manager](./installation/package-manager.md)
+  * [Docker](./installation/docker.md)
+  * [Binary file](./installation/binary-file.md)
+  * [Kubernetes (Helm chart)](./installation/k8s.md)
+  * [Cloud](./installation/cloud.md)
+  * [Manual installation](./installation_manually.md)
+  * [Snap (deprecated)](./installation/snap.md)
+
+**Configure & Harden**
+
+* Configuration: [Overview](./configuration.md)
+  * [Configuration file](./configuration/config-file.md)
+  * [Environment variables](./configuration/env-vars.md)
+  * [Interactive setup](./configuration/cli.md)
+  * [Snap configuration](./configuration/snap.md)
+* Security: [Overview](./security.md)
+  * [Database security](./security/database.md)
+  * [Network security](./security/network.md)
+  * [NGINX config](./security/nginx.md)
+  * [Apache config](./security/apache.md)
+  * [Kerberos](./security/kerberos.md)
+
+**Authenticate & Authorize**
+
+* [LDAP](./ldap.md)
+* [OpenID](./openid.md)
+  * [GitHub](./openid/github.md)
+  * [Google](./openid/google.md)
+  * [GitLab](./openid/gitlab.md)
+  * [Gitea](./openid/gitea.md)
+  * [Authelia](./openid/authelia.md)
+  * [Authentik](./openid/authentik.md)
+  * [Keycloak](./openid/keycloak.md)
+  * [Okta](./openid/okta.md)
+  * [Azure](./openid/azure.md)
+  * [Zitadel](./openid/zitadel.md)
+
+**Integrate & Automate**
+
+* [Pipelines](./cicd.md)
+* [API](./api.md)
+* [CLI](./cli.md)
+  * [Users](./cli/users.md)
+  * [Vaults](./cli/vaults.md)
+  * [Runners](./cli/runners.md)
+  * [Database migrations](./cli/migrations.md)
+* [Runners](./runners.md)
+* [Logs](./logs.md)
+* [Notifications](./notifications.md)
+  * [Email](./notifications/email.md)
+  * [Telegram](./notifications/telegram.md)
+  * [Slack](./notifications/slack.md)
+  * [Teams](./notifications/teams.md)
+  * [Rocket.Chat](./notifications/rocket.md)
+  * [DingTalk](./notifications/ding.md)
+  * [Gotify](./notifications/gotify.md)
+
+**Maintain & Recover**
+
+* [Upgrading](./upgrading.md)
+* [Troubleshooting](./troubleshooting.md)
