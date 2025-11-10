@@ -55,6 +55,7 @@ Full list of available configuration options:
 | <br>`tls.key_file`   <hr> `SEMAPHORE_TLS_KEY_FILE`<br><br> | Path to TLS key file. |
 | <br>`tls.http_redirect_port` <hr> `SEMAPHORE_TLS_HTTP_REDIRECT_PORT`<br><br> | Port to redirect HTTP traffic to HTTPS. |
 | <br>`auth.totp.enabled`         <hr> `SEMAPHORE_TOTP_ENABLED` <br><br> | Enable Two-factor authentication with using TOTP. |
+| <br>`auth.totp.issuer`          <hr> `SEMAPHORE_TOTP_ISSUER` <br><br> | Semaphore title in TOTP authorization app. |
 | <br>`auth.totp.allow_recovery`  <hr> `SEMAPHORE_TOTP_ALLOW_RECOVERY` <br><br> | Allow users to reset TOTP using a recovery code. |
 | **Process** ||
 | <br>`process.user`          <hr> `SEMAPHORE_PROCESS_USER` <br><br> | User under which wrapped processes (such as Ansible, Terraform, or OpenTofu) will run. |
