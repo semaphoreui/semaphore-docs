@@ -60,10 +60,9 @@ const config = {
         },
         items: [
           {
-            type: 'doc',
-            docId: 'README',
-            position: 'left',
+            to: '/README',
             label: 'Home',
+            position: 'left',
           },
           {
             type: 'docSidebar',
@@ -175,15 +174,7 @@ const config = {
       },
     }),
 
-  plugins: [
-    [
-      '@docusaurus/plugin-google-gtag',
-      {
-        trackingID: 'G-SXDFVHLVBM',
-        anonymizeIP: true,
-      },
-    ],
-  ],
+  plugins: [],
 
 
   markdown: {

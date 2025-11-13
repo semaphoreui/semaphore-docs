@@ -47,10 +47,9 @@ export default {
       },
       "items": [
         {
-          "type": "doc",
-          "docId": "README",
-          "position": "left",
-          "label": "Home"
+          "to": "/README",
+          "label": "Home",
+          "position": "left"
         },
         {
           "type": "docSidebar",
@@ -367,15 +366,7 @@ export default {
       "options": {}
     }
   },
-  "plugins": [
-    [
-      "@docusaurus/plugin-google-gtag",
-      {
-        "trackingID": "G-SXDFVHLVBM",
-        "anonymizeIP": true
-      }
-    ]
-  ],
+  "plugins": [],
   "markdown": {
     "mermaid": true,
     "format": "mdx",

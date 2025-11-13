@@ -450,14 +450,5 @@
       ],
       "breadcrumbs": true
     }
-  },
-  "docusaurus-plugin-google-gtag": {
-    "default": {
-      "trackingID": [
-        "G-SXDFVHLVBM"
-      ],
-      "anonymizeIP": true,
-      "id": "default"
-    }
   }
 }

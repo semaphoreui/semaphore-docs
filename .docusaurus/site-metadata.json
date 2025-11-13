@@ -27,11 +27,6 @@
       "name": "@docusaurus/theme-search-algolia",
       "version": "3.6.3"
     },
-    "docusaurus-plugin-google-gtag": {
-      "type": "package",
-      "name": "@docusaurus/plugin-google-gtag",
-      "version": "3.6.3"
-    },
     "docusaurus-theme-mermaid": {
       "type": "package",
       "name": "@docusaurus/theme-mermaid",
