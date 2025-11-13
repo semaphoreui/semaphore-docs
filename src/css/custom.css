@@ -7,26 +7,26 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #008890;
+  --ifm-color-primary-dark: #007a7d;
+  --ifm-color-primary-darker: #006c70;
+  --ifm-color-primary-darkest: #00585b;
+  --ifm-color-primary-light: #0096a3;
+  --ifm-color-primary-lighter: #00a4b6;
+  --ifm-color-primary-lightest: #00b8cc;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #00b8cc;
+  --ifm-color-primary-dark: #00a4b6;
+  --ifm-color-primary-darker: #0096a3;
+  --ifm-color-primary-darkest: #007a7d;
+  --ifm-color-primary-light: #26c4d1;
+  --ifm-color-primary-lighter: #40c9d5;
+  --ifm-color-primary-lightest: #66d4db;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
@@ -82,4 +82,48 @@ hr {
 
 .mdbook-tab-content table {
   margin: unset;
+}
+
+/* Custom navbar styling */
+.navbar {
+  background-color: #008890 !important;
+  color: white !important;
+}
+
+.navbar a {
+  color: white !important;
+}
+
+.navbar a:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar .navbar__brand {
+  color: white !important;
+}
+
+.navbar .navbar__link {
+  color: white !important;
+}
+
+.navbar .navbar__link:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar .navbar__item {
+  color: white !important;
+}
+
+/* Ensure dropdown menus and other navbar elements are also white */
+.navbar .dropdown__menu {
+  background-color: #008890;
+}
+
+.navbar .dropdown__link {
+  color: white !important;
+}
+
+.navbar .dropdown__link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white !important;
 }
