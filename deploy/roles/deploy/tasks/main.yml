@@ -9,7 +9,7 @@
     endpoint_url: https://storage.yandexcloud.net
     bucket: "{{ website_bucket }}"
     file_change_strategy: force
-    file_root: "{{ playbook_dir }}/../book/"
+    file_root: "{{ playbook_dir }}/../build/"
     aws_access_key: "{{ secrets.aws_access_key }}"
     aws_secret_key: "{{ secrets.aws_access_secret }}"
     region: "{{ aws_region }}"
@@ -22,7 +22,7 @@
     endpoint_url: https://storage.yandexcloud.net
     bucket: "{{ website_bucket }}"
     file_change_strategy: force
-    file_root: "{{ playbook_dir }}/../book/"
+    file_root: "{{ playbook_dir }}/../build/"
     aws_access_key: "{{ secrets.aws_access_key }}"
     aws_secret_key: "{{ secrets.aws_access_secret }}"
     region: "{{ aws_region }}"

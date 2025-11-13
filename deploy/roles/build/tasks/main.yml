@@ -1,38 +1,34 @@
-- name: Install mdbook
+- name: Check if Node.js is installed
   ansible.builtin.command:
-    cmd: cargo install mdbook --version 0.4.40
-    creates: "{{ ansible_env.HOME }}/.cargo/bin/mdbook"
+    cmd: node --version
+  register: node_check
+  ignore_errors: true
+  changed_when: false
 
 
-- name: Install mdbook-tabs
+- name: Install Node.js (if not present)
+  ansible.builtin.fail:
+    msg: "Node.js is not installed. Please install Node.js 18 or higher."
+  when: node_check.rc != 0
+
+
+- name: Install npm dependencies
   ansible.builtin.command:
-    cmd: cargo install mdbook-tabs
-    creates: "{{ ansible_env.HOME }}/.cargo/bin/mdbook-tabs"
+    cmd: npm install
+    chdir: "{{ playbook_dir }}/.."
+  args:
+    creates: "{{ playbook_dir }}/../node_modules"
 
 
-- name: Remove old book
+- name: Remove old build
   ansible.builtin.file:
-    path: "{{ playbook_dir }}/../book"
+    path: "{{ playbook_dir }}/../build"
     state: absent
 
 
-- name: Build The Book
-  ansible.builtin.shell:
-    # cmd: . {{ ansible_env.HOME }}/.cargo/env && mdbook build
-    cmd: mdbook build 
+- name: Build Docusaurus site
+  ansible.builtin.command:
+    cmd: npm run build
     chdir: "{{ playbook_dir }}/.."
-    creates: "{{ playbook_dir }}/../book/index.html"
-
-
-- name: Convert all xyz.html to xyz/index.html
-  ansible.builtin.command:
-    cmd: "{{ playbook_dir }}/convert_to_index.sh"
-  register: convert_to_index
-  changed_when: convert_to_index.stdout != ""
-
-
-- name: Prepare header
-  ansible.builtin.command:
-    cmd: "{{ playbook_dir }}/prepare_header_title.sh"
-  register: prepare_header
-  changed_when: prepare_header.stdout != ""
+  register: docusaurus_build
+  changed_when: true

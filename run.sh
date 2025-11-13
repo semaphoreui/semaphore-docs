@@ -1,7 +1,12 @@
-cd deploy
+#!/bin/bash
+# Run Docusaurus development server
 
-# source ./venv/bin/activate
+# Install dependencies if node_modules doesn't exist
+if [ ! -d "node_modules" ]; then
+  echo "Installing dependencies..."
+  npm install
+fi
 
-ansible-playbook build.yml
-
-ansible-playbook -i invs/yc/hosts deploy.yml --vault-password-file ~/semaphore_pass
+# Start the development server
+echo "Starting Docusaurus development server..."
+npm start
