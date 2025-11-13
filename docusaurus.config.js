@@ -60,15 +60,14 @@ const config = {
         },
         items: [
           {
-            to: '/README',
-            label: 'Home',
+            to: '/administration-guide/introduction',
+            label: 'Admin Guide',
             position: 'left',
           },
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            to: '/user-guide/projects',
+            label: 'User Guide',
             position: 'left',
-            label: 'Docs',
           },
           {
             type: 'html',
