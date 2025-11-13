@@ -1,0 +1,20 @@
+{
+  "id": "README",
+  "title": "Welcome to Semaphore UI",
+  "description": "What is Semaphore UI?",
+  "source": "@site/docs/README.md",
+  "sourceDirName": ".",
+  "slug": "/",
+  "permalink": "/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "next": {
+    "title": "Installation",
+    "permalink": "/administration-guide/installation"
+  }
+}

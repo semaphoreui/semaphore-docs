@@ -1,0 +1,24 @@
+{
+  "id": "user-guide/inventory/kerberos",
+  "title": "kerberos",
+  "description": "User guide",
+  "source": "@site/docs/user-guide/inventory/kerberos.md",
+  "sourceDirName": "user-guide/inventory",
+  "slug": "/user-guide/inventory/kerberos",
+  "permalink": "/user-guide/inventory/kerberos",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/user-guide/inventory/kerberos.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Inventory",
+    "permalink": "/user-guide/inventory"
+  },
+  "next": {
+    "title": "Netbox Dynamic Inventory Integration with Semaphore",
+    "permalink": "/user-guide/netbox-dynamic-inventory"
+  }
+}

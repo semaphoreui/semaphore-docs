@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/security/database",
+  "title": "database",
+  "description": "Administration Guide",
+  "source": "@site/docs/administration-guide/security/database.md",
+  "sourceDirName": "administration-guide/security",
+  "slug": "/administration-guide/security/database",
+  "permalink": "/administration-guide/security/database",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/security/database.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "🔐 Security",
+    "permalink": "/administration-guide/security"
+  },
+  "next": {
+    "title": "network",
+    "permalink": "/administration-guide/security/network"
+  }
+}

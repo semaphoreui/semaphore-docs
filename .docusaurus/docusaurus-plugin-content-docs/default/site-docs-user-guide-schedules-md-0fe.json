@@ -1,0 +1,24 @@
+{
+  "id": "user-guide/schedules",
+  "title": "Schedules",
+  "description": "The schedule function in Semaphore allows to automate the execution of templates (e.g. playbook runs) at predefined intervals. This feature allows to implement routine automation tasks, such as regular backups, compliance checks, system updates, and more.",
+  "source": "@site/docs/user-guide/schedules.md",
+  "sourceDirName": "user-guide",
+  "slug": "/user-guide/schedules",
+  "permalink": "/user-guide/schedules",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/user-guide/schedules.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Tasks",
+    "permalink": "/user-guide/tasks"
+  },
+  "next": {
+    "title": "Key Store",
+    "permalink": "/user-guide/key-store"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/installation",
+  "title": "Installation",
+  "description": "You can install Semaphore in multiple ways, depending on your operating system, environment, and preferences:",
+  "source": "@site/docs/administration-guide/installation.md",
+  "sourceDirName": "administration-guide",
+  "slug": "/administration-guide/installation",
+  "permalink": "/administration-guide/installation",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/installation.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Welcome to Semaphore UI",
+    "permalink": "/"
+  },
+  "next": {
+    "title": "package-manager",
+    "permalink": "/administration-guide/installation/package-manager"
+  }
+}

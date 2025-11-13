@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/installation/binary-file",
+  "title": "binary-file",
+  "description": "Installation",
+  "source": "@site/docs/administration-guide/installation/binary-file.md",
+  "sourceDirName": "administration-guide/installation",
+  "slug": "/administration-guide/installation/binary-file",
+  "permalink": "/administration-guide/installation/binary-file",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/installation/binary-file.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Cloud deployment",
+    "permalink": "/administration-guide/installation/cloud"
+  },
+  "next": {
+    "title": "k8s",
+    "permalink": "/administration-guide/installation/k8s"
+  }
+}

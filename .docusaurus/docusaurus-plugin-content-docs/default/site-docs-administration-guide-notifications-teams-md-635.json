@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/notifications/teams",
+  "title": "teams",
+  "description": "Notifications",
+  "source": "@site/docs/administration-guide/notifications/teams.md",
+  "sourceDirName": "administration-guide/notifications",
+  "slug": "/administration-guide/notifications/teams",
+  "permalink": "/administration-guide/notifications/teams",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/notifications/teams.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "slack",
+    "permalink": "/administration-guide/notifications/slack"
+  },
+  "next": {
+    "title": "rocket",
+    "permalink": "/administration-guide/notifications/rocket"
+  }
+}

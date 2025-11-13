@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/configuration/env-vars",
+  "title": "Environment variables",
+  "description": "With using environment variables you can override any available configuration option.",
+  "source": "@site/docs/administration-guide/configuration/env-vars.md",
+  "sourceDirName": "administration-guide/configuration",
+  "slug": "/administration-guide/configuration/env-vars",
+  "permalink": "/administration-guide/configuration/env-vars",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/configuration/env-vars.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Configuration file",
+    "permalink": "/administration-guide/configuration/config-file"
+  },
+  "next": {
+    "title": "Interactive setup",
+    "permalink": "/administration-guide/configuration/cli"
+  }
+}

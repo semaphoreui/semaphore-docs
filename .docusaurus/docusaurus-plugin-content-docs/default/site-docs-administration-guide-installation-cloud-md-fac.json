@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/installation/cloud",
+  "title": "Cloud deployment",
+  "description": "You can run Semaphore in any cloud environment using the same supported installation methods:",
+  "source": "@site/docs/administration-guide/installation/cloud.md",
+  "sourceDirName": "administration-guide/installation",
+  "slug": "/administration-guide/installation/cloud",
+  "permalink": "/administration-guide/installation/cloud",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/installation/cloud.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "docker",
+    "permalink": "/administration-guide/installation/docker"
+  },
+  "next": {
+    "title": "binary-file",
+    "permalink": "/administration-guide/installation/binary-file"
+  }
+}

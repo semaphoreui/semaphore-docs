@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/notifications/telegram",
+  "title": "telegram",
+  "description": "Notifications",
+  "source": "@site/docs/administration-guide/notifications/telegram.md",
+  "sourceDirName": "administration-guide/notifications",
+  "slug": "/administration-guide/notifications/telegram",
+  "permalink": "/administration-guide/notifications/telegram",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/notifications/telegram.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "email",
+    "permalink": "/administration-guide/notifications/email"
+  },
+  "next": {
+    "title": "slack",
+    "permalink": "/administration-guide/notifications/slack"
+  }
+}

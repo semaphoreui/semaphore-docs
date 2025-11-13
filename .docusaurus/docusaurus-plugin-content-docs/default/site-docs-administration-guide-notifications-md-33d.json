@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/notifications",
+  "title": "Notifications",
+  "description": "Semaphore can send notifications about task and project activity to popular channels. Configure a global notifier in config.json, and (where supported) override certain options per project.",
+  "source": "@site/docs/administration-guide/notifications.md",
+  "sourceDirName": "administration-guide",
+  "slug": "/administration-guide/notifications",
+  "permalink": "/administration-guide/notifications",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/notifications.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Logs",
+    "permalink": "/administration-guide/logs"
+  },
+  "next": {
+    "title": "email",
+    "permalink": "/administration-guide/notifications/email"
+  }
+}

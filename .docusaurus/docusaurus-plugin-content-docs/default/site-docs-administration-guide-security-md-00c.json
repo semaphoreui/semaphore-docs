@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/security",
+  "title": "🔐 Security",
+  "description": "Introduction",
+  "source": "@site/docs/administration-guide/security.md",
+  "sourceDirName": "administration-guide",
+  "slug": "/administration-guide/security",
+  "permalink": "/administration-guide/security",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/security.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Upgrading",
+    "permalink": "/administration-guide/upgrading"
+  },
+  "next": {
+    "title": "database",
+    "permalink": "/administration-guide/security/database"
+  }
+}

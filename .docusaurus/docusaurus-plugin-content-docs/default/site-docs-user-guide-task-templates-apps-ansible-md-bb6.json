@@ -1,0 +1,24 @@
+{
+  "id": "user-guide/task-templates/apps/ansible",
+  "title": "ansible",
+  "description": "Task templates",
+  "source": "@site/docs/user-guide/task-templates/apps/ansible.md",
+  "sourceDirName": "user-guide/task-templates/apps",
+  "slug": "/user-guide/task-templates/apps/ansible",
+  "permalink": "/user-guide/task-templates/apps/ansible",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/user-guide/task-templates/apps/ansible.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Task Templates",
+    "permalink": "/user-guide/task-templates/"
+  },
+  "next": {
+    "title": "terraform",
+    "permalink": "/user-guide/task-templates/apps/terraform"
+  }
+}

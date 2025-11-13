@@ -1,0 +1,24 @@
+{
+  "id": "user-guide/task-templates/README",
+  "title": "Task Templates",
+  "description": "Templates define how to run Semaphore tasks. Currently the following task types are supported:",
+  "source": "@site/docs/user-guide/task-templates/README.md",
+  "sourceDirName": "user-guide/task-templates",
+  "slug": "/user-guide/task-templates/",
+  "permalink": "/user-guide/task-templates/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/user-guide/task-templates/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "runners",
+    "permalink": "/user-guide/projects/runners"
+  },
+  "next": {
+    "title": "ansible",
+    "permalink": "/user-guide/task-templates/apps/ansible"
+  }
+}

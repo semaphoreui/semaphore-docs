@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/openid",
+  "title": "OpenID",
+  "description": "Semaphore supports authentication via OpenID Connect (OIDC).",
+  "source": "@site/docs/administration-guide/openid.md",
+  "sourceDirName": "administration-guide",
+  "slug": "/administration-guide/openid",
+  "permalink": "/administration-guide/openid",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/openid.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "LDAP configuration",
+    "permalink": "/administration-guide/ldap"
+  },
+  "next": {
+    "title": "github",
+    "permalink": "/administration-guide/openid/github"
+  }
+}

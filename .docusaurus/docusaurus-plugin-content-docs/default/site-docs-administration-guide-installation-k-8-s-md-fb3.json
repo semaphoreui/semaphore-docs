@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/installation/k8s",
+  "title": "k8s",
+  "description": "Installation",
+  "source": "@site/docs/administration-guide/installation/k8s.md",
+  "sourceDirName": "administration-guide/installation",
+  "slug": "/administration-guide/installation/k8s",
+  "permalink": "/administration-guide/installation/k8s",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/installation/k8s.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "binary-file",
+    "permalink": "/administration-guide/installation/binary-file"
+  },
+  "next": {
+    "title": "snap",
+    "permalink": "/administration-guide/installation/snap"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/cli/runners",
+  "title": "runners",
+  "description": "CLI",
+  "source": "@site/docs/administration-guide/cli/runners.md",
+  "sourceDirName": "administration-guide/cli",
+  "slug": "/administration-guide/cli/runners",
+  "permalink": "/administration-guide/cli/runners",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/cli/runners.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "vaults",
+    "permalink": "/administration-guide/cli/vaults"
+  },
+  "next": {
+    "title": "migrations",
+    "permalink": "/administration-guide/cli/migrations"
+  }
+}

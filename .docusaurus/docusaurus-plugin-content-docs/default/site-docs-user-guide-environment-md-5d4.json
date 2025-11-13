@@ -1,0 +1,24 @@
+{
+  "id": "user-guide/environment",
+  "title": "Variable Groups",
+  "description": "The Variable Groups section of Semaphore is a place to store additional variables for an inventory and must be stored in JSON format.",
+  "source": "@site/docs/user-guide/environment.md",
+  "sourceDirName": "user-guide",
+  "slug": "/user-guide/environment",
+  "permalink": "/user-guide/environment",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/user-guide/environment.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Netbox Dynamic Inventory Integration with Semaphore",
+    "permalink": "/user-guide/netbox-dynamic-inventory"
+  },
+  "next": {
+    "title": "Repositories",
+    "permalink": "/user-guide/repositories"
+  }
+}

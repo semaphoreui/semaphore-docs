@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/installation/snap",
+  "title": "snap",
+  "description": "Installation",
+  "source": "@site/docs/administration-guide/installation/snap.md",
+  "sourceDirName": "administration-guide/installation",
+  "slug": "/administration-guide/installation/snap",
+  "permalink": "/administration-guide/installation/snap",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/installation/snap.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "k8s",
+    "permalink": "/administration-guide/installation/k8s"
+  },
+  "next": {
+    "title": "Manually installing Semaphore",
+    "permalink": "/administration-guide/installation_manually"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/cli",
+  "title": "CLI",
+  "description": "* Runners",
+  "source": "@site/docs/administration-guide/cli.md",
+  "sourceDirName": "administration-guide",
+  "slug": "/administration-guide/cli",
+  "permalink": "/administration-guide/cli",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/cli.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "kerberos",
+    "permalink": "/administration-guide/security/kerberos"
+  },
+  "next": {
+    "title": "users",
+    "permalink": "/administration-guide/cli/users"
+  }
+}

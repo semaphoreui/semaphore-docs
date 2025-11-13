@@ -1,0 +1,15 @@
+{
+  "id": "user-guide/admin/users",
+  "title": "users",
+  "description": "",
+  "source": "@site/docs/user-guide/admin/users.md",
+  "sourceDirName": "user-guide/admin",
+  "slug": "/user-guide/admin/users",
+  "permalink": "/user-guide/admin/users",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/user-guide/admin/users.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

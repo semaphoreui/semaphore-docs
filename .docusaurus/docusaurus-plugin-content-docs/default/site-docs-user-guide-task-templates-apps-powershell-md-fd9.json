@@ -1,0 +1,24 @@
+{
+  "id": "user-guide/task-templates/apps/powershell",
+  "title": "powershell",
+  "description": "Task templates",
+  "source": "@site/docs/user-guide/task-templates/apps/powershell.md",
+  "sourceDirName": "user-guide/task-templates/apps",
+  "slug": "/user-guide/task-templates/apps/powershell",
+  "permalink": "/user-guide/task-templates/apps/powershell",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/user-guide/task-templates/apps/powershell.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "bash",
+    "permalink": "/user-guide/task-templates/apps/bash"
+  },
+  "next": {
+    "title": "python",
+    "permalink": "/user-guide/task-templates/apps/python"
+  }
+}

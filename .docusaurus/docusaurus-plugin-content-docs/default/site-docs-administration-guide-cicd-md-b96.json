@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/cicd",
+  "title": "Pipelines",
+  "description": "Semaphore supports simple pipelines with using build and deploy tasks.",
+  "source": "@site/docs/administration-guide/cicd.md",
+  "sourceDirName": "administration-guide",
+  "slug": "/administration-guide/cicd",
+  "permalink": "/administration-guide/cicd",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/cicd.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "API",
+    "permalink": "/administration-guide/api"
+  },
+  "next": {
+    "title": "Runners",
+    "permalink": "/administration-guide/runners"
+  }
+}

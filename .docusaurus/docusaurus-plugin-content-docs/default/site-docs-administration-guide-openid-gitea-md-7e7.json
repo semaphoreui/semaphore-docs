@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/openid/gitea",
+  "title": "gitea",
+  "description": "OpenID",
+  "source": "@site/docs/administration-guide/openid/gitea.md",
+  "sourceDirName": "administration-guide/openid",
+  "slug": "/administration-guide/openid/gitea",
+  "permalink": "/administration-guide/openid/gitea",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/openid/gitea.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "gitlab",
+    "permalink": "/administration-guide/openid/gitlab"
+  },
+  "next": {
+    "title": "authelia",
+    "permalink": "/administration-guide/openid/authelia"
+  }
+}

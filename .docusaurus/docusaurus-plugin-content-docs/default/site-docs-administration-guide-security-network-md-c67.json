@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/security/network",
+  "title": "network",
+  "description": "Administration Guide",
+  "source": "@site/docs/administration-guide/security/network.md",
+  "sourceDirName": "administration-guide/security",
+  "slug": "/administration-guide/security/network",
+  "permalink": "/administration-guide/security/network",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/security/network.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "database",
+    "permalink": "/administration-guide/security/database"
+  },
+  "next": {
+    "title": "nginx",
+    "permalink": "/administration-guide/security/nginx"
+  }
+}

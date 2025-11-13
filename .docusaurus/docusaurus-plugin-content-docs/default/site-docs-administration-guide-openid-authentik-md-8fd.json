@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/openid/authentik",
+  "title": "authentik",
+  "description": "OpenID",
+  "source": "@site/docs/administration-guide/openid/authentik.md",
+  "sourceDirName": "administration-guide/openid",
+  "slug": "/administration-guide/openid/authentik",
+  "permalink": "/administration-guide/openid/authentik",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/openid/authentik.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "authelia",
+    "permalink": "/administration-guide/openid/authelia"
+  },
+  "next": {
+    "title": "keycloak",
+    "permalink": "/administration-guide/openid/keycloak"
+  }
+}

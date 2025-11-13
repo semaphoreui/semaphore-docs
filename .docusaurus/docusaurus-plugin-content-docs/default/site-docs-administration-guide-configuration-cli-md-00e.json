@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/configuration/cli",
+  "title": "Interactive setup",
+  "description": "Use this option for first time configuration (not working for Semaphore installed via Snap).",
+  "source": "@site/docs/administration-guide/configuration/cli.md",
+  "sourceDirName": "administration-guide/configuration",
+  "slug": "/administration-guide/configuration/cli",
+  "permalink": "/administration-guide/configuration/cli",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/configuration/cli.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Environment variables",
+    "permalink": "/administration-guide/configuration/env-vars"
+  },
+  "next": {
+    "title": "Snap configuration",
+    "permalink": "/administration-guide/configuration/snap"
+  }
+}

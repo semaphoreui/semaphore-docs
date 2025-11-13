@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/openid/okta",
+  "title": "okta",
+  "description": "OpenID",
+  "source": "@site/docs/administration-guide/openid/okta.md",
+  "sourceDirName": "administration-guide/openid",
+  "slug": "/administration-guide/openid/okta",
+  "permalink": "/administration-guide/openid/okta",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/openid/okta.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "keycloak",
+    "permalink": "/administration-guide/openid/keycloak"
+  },
+  "next": {
+    "title": "azure",
+    "permalink": "/administration-guide/openid/azure"
+  }
+}

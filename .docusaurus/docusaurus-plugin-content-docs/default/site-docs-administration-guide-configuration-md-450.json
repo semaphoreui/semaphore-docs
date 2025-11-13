@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/configuration",
+  "title": "Configuration",
+  "description": "Semaphore can be configured using several methods:",
+  "source": "@site/docs/administration-guide/configuration.md",
+  "sourceDirName": "administration-guide",
+  "slug": "/administration-guide/configuration",
+  "permalink": "/administration-guide/configuration",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/configuration.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Manually installing Semaphore",
+    "permalink": "/administration-guide/installation_manually"
+  },
+  "next": {
+    "title": "Configuration file",
+    "permalink": "/administration-guide/configuration/config-file"
+  }
+}

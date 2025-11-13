@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/installation/docker",
+  "title": "docker",
+  "description": "Installation",
+  "source": "@site/docs/administration-guide/installation/docker.md",
+  "sourceDirName": "administration-guide/installation",
+  "slug": "/administration-guide/installation/docker",
+  "permalink": "/administration-guide/installation/docker",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/installation/docker.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "package-manager",
+    "permalink": "/administration-guide/installation/package-manager"
+  },
+  "next": {
+    "title": "Cloud deployment",
+    "permalink": "/administration-guide/installation/cloud"
+  }
+}

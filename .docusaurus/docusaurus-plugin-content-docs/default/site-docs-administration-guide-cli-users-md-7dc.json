@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/cli/users",
+  "title": "users",
+  "description": "CLI",
+  "source": "@site/docs/administration-guide/cli/users.md",
+  "sourceDirName": "administration-guide/cli",
+  "slug": "/administration-guide/cli/users",
+  "permalink": "/administration-guide/cli/users",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/cli/users.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "CLI",
+    "permalink": "/administration-guide/cli"
+  },
+  "next": {
+    "title": "vaults",
+    "permalink": "/administration-guide/cli/vaults"
+  }
+}

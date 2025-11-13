@@ -1,0 +1,15 @@
+{
+  "id": "administration-guide/introduction",
+  "title": "Introduction",
+  "description": "Welcome to the Semaphore UI Administration Guide. This guide provides comprehensive information for installing, configuring, and maintaining your Semaphore instance.",
+  "source": "@site/docs/administration-guide/introduction.md",
+  "sourceDirName": "administration-guide",
+  "slug": "/administration-guide/introduction",
+  "permalink": "/administration-guide/introduction",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/introduction.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

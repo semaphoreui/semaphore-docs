@@ -1,0 +1,24 @@
+{
+  "id": "user-guide/netbox-dynamic-inventory",
+  "title": "Netbox Dynamic Inventory Integration with Semaphore",
+  "description": "Ansible Badge",
+  "source": "@site/docs/user-guide/netbox-dynamic-inventory.md",
+  "sourceDirName": "user-guide",
+  "slug": "/user-guide/netbox-dynamic-inventory",
+  "permalink": "/user-guide/netbox-dynamic-inventory",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/user-guide/netbox-dynamic-inventory.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "kerberos",
+    "permalink": "/user-guide/inventory/kerberos"
+  },
+  "next": {
+    "title": "Variable Groups",
+    "permalink": "/user-guide/environment"
+  }
+}

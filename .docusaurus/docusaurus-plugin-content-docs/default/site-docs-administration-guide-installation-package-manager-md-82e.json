@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/installation/package-manager",
+  "title": "package-manager",
+  "description": "Installation",
+  "source": "@site/docs/administration-guide/installation/package-manager.md",
+  "sourceDirName": "administration-guide/installation",
+  "slug": "/administration-guide/installation/package-manager",
+  "permalink": "/administration-guide/installation/package-manager",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/installation/package-manager.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Installation",
+    "permalink": "/administration-guide/installation"
+  },
+  "next": {
+    "title": "docker",
+    "permalink": "/administration-guide/installation/docker"
+  }
+}

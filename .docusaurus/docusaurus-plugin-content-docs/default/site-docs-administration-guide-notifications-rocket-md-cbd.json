@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/notifications/rocket",
+  "title": "rocket",
+  "description": "Notifications",
+  "source": "@site/docs/administration-guide/notifications/rocket.md",
+  "sourceDirName": "administration-guide/notifications",
+  "slug": "/administration-guide/notifications/rocket",
+  "permalink": "/administration-guide/notifications/rocket",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/notifications/rocket.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "teams",
+    "permalink": "/administration-guide/notifications/teams"
+  },
+  "next": {
+    "title": "ding",
+    "permalink": "/administration-guide/notifications/ding"
+  }
+}

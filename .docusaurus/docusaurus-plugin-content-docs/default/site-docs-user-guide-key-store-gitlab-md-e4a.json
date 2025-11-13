@@ -1,0 +1,24 @@
+{
+  "id": "user-guide/key-store/gitlab",
+  "title": "gitlab",
+  "description": "User Guide",
+  "source": "@site/docs/user-guide/key-store/gitlab.md",
+  "sourceDirName": "user-guide/key-store",
+  "slug": "/user-guide/key-store/gitlab",
+  "permalink": "/user-guide/key-store/gitlab",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/user-guide/key-store/gitlab.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Key Store",
+    "permalink": "/user-guide/key-store"
+  },
+  "next": {
+    "title": "Inventory",
+    "permalink": "/user-guide/inventory"
+  }
+}

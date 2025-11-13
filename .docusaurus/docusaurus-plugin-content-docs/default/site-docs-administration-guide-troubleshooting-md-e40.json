@@ -1,0 +1,24 @@
+{
+  "id": "administration-guide/troubleshooting",
+  "title": "Troubleshooting",
+  "description": "Renner prints error 404",
+  "source": "@site/docs/administration-guide/troubleshooting.md",
+  "sourceDirName": "administration-guide",
+  "slug": "/administration-guide/troubleshooting",
+  "permalink": "/administration-guide/troubleshooting",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/semaphoreui/semaphore-docs/edit/main/docs/administration-guide/troubleshooting.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "gotify",
+    "permalink": "/administration-guide/notifications/gotify"
+  },
+  "next": {
+    "title": "Projects",
+    "permalink": "/user-guide/projects"
+  }
+}
