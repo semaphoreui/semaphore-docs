@@ -16,7 +16,7 @@ Semaphore supports the following databases:
 
 With Semaphore you can:
 
-* [Build, deploy and rollback](./administration-guide/cicd.md)
+* [Build, deploy and rollback](./administration-guide/cicd)
 * Group playbooks to projects
 * Manage environments, inventories, repositories and access keys
 * Run playbooks from the browser. Responsive UI allows the use of Semaphore on mobile devices

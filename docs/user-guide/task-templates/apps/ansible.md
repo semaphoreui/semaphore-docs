@@ -39,7 +39,7 @@ If you intend to launch the template with an API call with the *limit* feature, 
 This type of template should be used to create [artifacts](https://en.wikipedia.org/wiki/Artifact\_\(software\_development\)). The start version of the artifact can be specified in a template parameter. Each run increments the artifact version.
 
 
-Semaphore doesn't support artifacts out-of-box, it only provides task versioning. You should implement the artifact creation yourself. Read the article [CI/CD](../../administration-guide/cicd.md) to know how to do this.
+Semaphore doesn't support artifacts out-of-box, it only provides task versioning. You should implement the artifact creation yourself. Read the article [CI/CD](../../administration-guide/cicd) to know how to do this.
 
 ### Deploy
 

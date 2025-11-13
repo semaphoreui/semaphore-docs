@@ -58,28 +58,7 @@ const config = {
           alt: 'Semaphore UI Logo',
           src: 'img/logo.svg',
         },
-        items: [
-          {
-            to: '/administration-guide/introduction',
-            label: 'Admin Guide',
-            position: 'left',
-          },
-          {
-            to: '/user-guide/projects',
-            label: 'User Guide',
-            position: 'left',
-          },
-          {
-            type: 'html',
-            position: 'right',
-            value: '<div id="docsearch"></div>',
-          },
-          {
-            href: 'https://github.com/semaphoreui/semaphore',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
+        items: [],
       },
       footer: {
         style: 'dark',
