@@ -72,6 +72,11 @@ const config = {
             label: 'Docs',
           },
           {
+            type: 'html',
+            position: 'right',
+            value: '<div id="docsearch"></div>',
+          },
+          {
             href: 'https://github.com/semaphoreui/semaphore',
             label: 'GitHub',
             position: 'right',
@@ -137,18 +142,18 @@ const config = {
       },
       algolia: {
         // The application ID provided by Algolia
-        appId: 'YOUR_ALGOLIA_APP_ID',
+        appId: 'B71NA6DNHD',
 
         // Public API key: it is safe to commit it
-        apiKey: 'YOUR_ALGOLIA_SEARCH_API_KEY',
+        apiKey: 'bb1dabaeb79b08523ab98c9723afad04',
 
-        indexName: 'semaphoreui',
+        indexName: 'docs_semaphoreui_com_b71na6dnhd_pages',
 
         // Optional: see doc section below
         contextualSearch: true,
 
         // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
-        externalUrlRegex: 'external\\.com|domain\\.com',
+        // externalUrlRegex: 'external\\.com|domain\\.com',
 
         // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl.
         // Uncomment and adjust if your Algolia index was crawled with different URLs
@@ -179,6 +184,7 @@ const config = {
       },
     ],
   ],
+
 
   markdown: {
     mermaid: true,

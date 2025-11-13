@@ -59,6 +59,11 @@ export default {
           "label": "Docs"
         },
         {
+          "type": "html",
+          "position": "right",
+          "value": "<div id=\"docsearch\"></div>"
+        },
+        {
           "href": "https://github.com/semaphoreui/semaphore",
           "label": "GitHub",
           "position": "right"
@@ -324,11 +329,10 @@ export default {
       ]
     },
     "algolia": {
-      "appId": "YOUR_ALGOLIA_APP_ID",
-      "apiKey": "YOUR_ALGOLIA_SEARCH_API_KEY",
-      "indexName": "semaphoreui",
+      "appId": "B71NA6DNHD",
+      "apiKey": "bb1dabaeb79b08523ab98c9723afad04",
+      "indexName": "docs_semaphoreui_com_b71na6dnhd_pages",
       "contextualSearch": true,
-      "externalUrlRegex": "external\\.com|domain\\.com",
       "searchParameters": {},
       "searchPagePath": "search",
       "insights": false
