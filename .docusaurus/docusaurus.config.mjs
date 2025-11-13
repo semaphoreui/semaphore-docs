@@ -323,6 +323,16 @@ export default {
         }
       ]
     },
+    "algolia": {
+      "appId": "YOUR_ALGOLIA_APP_ID",
+      "apiKey": "YOUR_ALGOLIA_SEARCH_API_KEY",
+      "indexName": "semaphoreui",
+      "contextualSearch": true,
+      "externalUrlRegex": "external\\.com|domain\\.com",
+      "searchParameters": {},
+      "searchPagePath": "search",
+      "insights": false
+    },
     "colorMode": {
       "defaultMode": "light",
       "disableSwitch": false,
