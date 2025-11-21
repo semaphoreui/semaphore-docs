@@ -13,6 +13,7 @@ Links:
 * [Okta config](./openid/okta.md)
 * [Azure config](./openid/azure.md)
 * [Zitadel config](./openid/zitadel.md)
+* [Pocket-ID config](./openid/pocket-id.md)
 
 Example of SSO provider configuration:
 
