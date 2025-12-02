@@ -20,10 +20,12 @@ const sidebars = {
       type: 'category',
       label: 'Admin Guide',
       items: [
-        'administration-guide/installation',
         {
           type: 'category',
           label: 'Installation',
+          link: {
+            type: 'generated-index',
+          },
           items: [
             'administration-guide/installation/package-manager',
             'administration-guide/installation/docker',
@@ -34,10 +36,10 @@ const sidebars = {
             'administration-guide/installation_manually',
           ],
         },
-        'administration-guide/configuration',
         {
           type: 'category',
           label: 'Configuration',
+          link: { type: 'doc', id: 'administration-guide/configuration' },
           items: [
             'administration-guide/configuration/config-file',
             'administration-guide/configuration/env-vars',
@@ -46,10 +48,10 @@ const sidebars = {
           ],
         },
         'administration-guide/upgrading',
-        'administration-guide/security',
         {
           type: 'category',
           label: 'Security',
+          link: { type: 'doc', id: 'administration-guide/security' },
           items: [
             'administration-guide/security/database',
             'administration-guide/security/network',
@@ -58,10 +60,10 @@ const sidebars = {
             'administration-guide/security/kerberos',
           ],
         },
-        'administration-guide/cli',
         {
           type: 'category',
           label: 'CLI',
+          link: { type: 'doc', id: 'administration-guide/cli' },
           items: [
             'administration-guide/cli/users',
             'administration-guide/cli/vaults',
@@ -70,10 +72,10 @@ const sidebars = {
           ],
         },
         'administration-guide/ldap',
-        'administration-guide/openid',
         {
           type: 'category',
           label: 'OpenID',
+          link: { type: 'doc', id: 'administration-guide/ldap' },
           items: [
             'administration-guide/openid/github',
             'administration-guide/openid/google',
@@ -91,10 +93,10 @@ const sidebars = {
         'administration-guide/cicd',
         'administration-guide/runners',
         'administration-guide/logs',
-        'administration-guide/notifications',
         {
           type: 'category',
           label: 'Notifications',
+          link: { type: 'doc', id: 'administration-guide/notifications' },
           items: [
             'administration-guide/notifications/email',
             'administration-guide/notifications/telegram',
