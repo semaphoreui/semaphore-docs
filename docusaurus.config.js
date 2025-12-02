@@ -111,7 +111,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Semaphore UI. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Semaphore UI.`,
       },
       prism: {
         theme: require('prism-react-renderer').themes.github,

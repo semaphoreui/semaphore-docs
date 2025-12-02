@@ -1,8 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/administration-guide/installation">Installation</a>
-    → Snap
-</div>
-
 # Snap (deprecated)
 
 To install Semaphore via snap, run following command in terminal:

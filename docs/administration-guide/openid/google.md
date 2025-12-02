@@ -1,7 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/administration-guide/openid">OpenID</a>
-    → Google config
-</div>
 
 # Google config
 

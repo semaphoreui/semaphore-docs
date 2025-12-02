@@ -1,7 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/user-guide/task-templates/">Task templates</a>
-    → Ansible
-</div>
 
 # Ansible
 
@@ -9,6 +5,7 @@ Using Semaphore UI you can run Ansible playbooks. To do this, you need to create
 
 1. Go go **Task Templates** section, click on **New Template** and then **Ansible Playbook**.
 
+![](/assets/ansible_1.png)
 
 2. Set up the template.
 
@@ -21,6 +18,7 @@ The template allows you to specify the following parameters:
 * Vaults
 * and much more
 
+![](/assets/ansible_2.png)
 
 An ansible-playbook template can be one of the following types:
 
@@ -38,6 +36,7 @@ If you intend to launch the template with an API call with the *limit* feature, 
 
 This type of template should be used to create [artifacts](https://en.wikipedia.org/wiki/Artifact\_\(software\_development\)). The start version of the artifact can be specified in a template parameter. Each run increments the artifact version.
 
+![](/assets/template_new_build_ipad1.png)
 
 Semaphore doesn't support artifacts out-of-box, it only provides task versioning. You should implement the artifact creation yourself. Read the article [CI/CD](../../administration-guide/cicd) to know how to do this.
 

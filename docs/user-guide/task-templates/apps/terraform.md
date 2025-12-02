@@ -1,7 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/user-guide/task-templates/">Task templates</a>
-    → Terraform/OpenTofu
-</div>
 
 # Terraform/OpenTofu
 

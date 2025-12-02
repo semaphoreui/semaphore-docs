@@ -2,6 +2,7 @@
 
 A Repository is a place to store and manage Ansible content like playbooks and roles.
 
+![](/assets/repository.webp)
 
 Semaphore understands Repositories that are:
   * a local file system (`/path/to/the/repo`)

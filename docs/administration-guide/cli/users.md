@@ -1,8 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/administration-guide/runners">CLI</a>
-    → Users
-</div>
-
 # Users
 
 Using CLI you can add, remove or change user.

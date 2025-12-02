@@ -1,8 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/administration-guide/runners">CLI</a>
-    → Vaults
-</div>
-
 ### Vaults
 
 You can reencrypt your secrets in database with using following command:

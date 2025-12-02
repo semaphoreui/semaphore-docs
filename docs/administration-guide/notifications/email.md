@@ -1,8 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/administration-guide/notifications">Notifications</a>
-    → Email notifications
-</div>
-
 # Email notifications
 
 Example `config.json` for configuring AWS SMTP email notifications:

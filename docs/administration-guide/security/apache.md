@@ -1,9 +1,3 @@
-<div class="breadcrumbs">
-    Administration Guide
-    → <a href="/administration-guide/security/">Security</a>
-    → Apache config
-</div>
-
 
 # Apache config
 

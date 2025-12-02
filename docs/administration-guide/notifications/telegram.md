@@ -1,8 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/administration-guide/notifications">Notifications</a>
-    → Telegram notifications
-</div>
-
 # Telegram notifications
 
 ### Pre-requisites

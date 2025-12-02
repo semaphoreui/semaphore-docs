@@ -8,6 +8,7 @@ Semaphore UI provides two formats of API documentation, so you can choose the on
 * [Official Postman Collection](https://www.postman.com/semaphoreui) &mdash; explore and test all endpoints in Postman.
 * **Built-in Swagger API documentation** &mdash; interactive API documentation powered by Swagger UI. You can access it on your instance.
 
+![](/assets/swagger-link.webp)
 
 All options include complete documentation of available endpoints, parameters, and example responses.
 

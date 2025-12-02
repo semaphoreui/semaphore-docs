@@ -1,8 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/administration-guide/runners">CLI</a>
-    → Database migrations
-</div>
-
 # Database Migrations
 
 Database migrations allow you to update or roll back your Semaphore database schema to match the requirements of different Semaphore versions. This is essential for upgrades, downgrades, and maintaining compatibility.

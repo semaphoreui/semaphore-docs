@@ -36,6 +36,7 @@ For a list of valid timezone values, refer to the [IANA Time Zone Database](http
 2. Navigate to the "Schedule" tab in the main navigation menu
 3. Click the "New Schedule" button in the top right corner to create a new schedule
 
+![](/assets/schedule01.png)
 
 ### Creating a new schedule
 
@@ -47,6 +48,7 @@ When creating a new schedule, you'll need to configure the following options:
 | Template | The specific Task Template to execute |
 | Timing | Either in cron format for more fexibility or using the built-in options for common intervals |
 
+![](/assets/schedule02.png) ![](/assets/schedule03.png)
 
 ### Cron format syntax
 

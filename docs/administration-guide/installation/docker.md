@@ -1,9 +1,3 @@
-
-<div class="breadcrumbs">
-    <a href="/administration-guide/installation">Installation</a>
-    → Docker
-</div>
-
 # Docker
 
 &#x20;Create a `docker-compose.yml` file with following content:

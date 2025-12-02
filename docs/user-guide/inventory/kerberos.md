@@ -1,9 +1,3 @@
-<div class="breadcrumbs">
-    User guide
-    → <a href="/user-guide/inventory/">Inventory</a>
-    → Kerberos
-</div>
-
 
 # Kerberos authentication
 

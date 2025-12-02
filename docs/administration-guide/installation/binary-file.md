@@ -1,8 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/administration-guide/installation">Installation</a>
-    → Binary file
-</div>
-
 # Binary file
 
 <div class="warning">

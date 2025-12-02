@@ -1,8 +1,3 @@
-<div class="breadcrumbs">
-    Administration Guide
-    → <a href="/administration-guide/security/">Security</a>
-    → Nginx config
-</div>
 
 # Nginx config
 

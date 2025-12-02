@@ -1,8 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/administration-guide/openid">OpenID</a>
-    → Azure config
-</div>
-
 # Azure config
 
 `config.json`:

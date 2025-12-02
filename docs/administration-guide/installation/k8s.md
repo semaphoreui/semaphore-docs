@@ -1,8 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/administration-guide/installation">Installation</a>
-    → Kubernetes
-</div>
-
 # Kubernetes (Helm chart)
 
 Semaphore provides a helm chart for installation on Kubernetes.

@@ -1,8 +1,3 @@
-<div class="breadcrumbs">
-    <a href="/administration-guide/installation">Installation</a>
-    → Package manager
-</div>
-
 # Package manager
 
 <div class="warning">

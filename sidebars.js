@@ -114,7 +114,6 @@ const sidebars = {
       type: 'category',
       label: 'User Guide',
       items: [
-        'user-guide/projects',
         {
           type: 'category',
           label: 'Projects',
@@ -125,13 +124,11 @@ const sidebars = {
             'user-guide/projects/runners',
           ],
         },
-        'user-guide/task-templates/README',
         {
           type: 'category',
           label: 'Task Templates',
           items: [
             'user-guide/task-templates/apps/ansible',
-            'user-guide/task-templates/apps/terraform',
             {
               type: 'category',
               label: 'Terraform/OpenTofu',
@@ -148,7 +145,6 @@ const sidebars = {
         },
         'user-guide/tasks',
         'user-guide/schedules',
-        'user-guide/key-store',
         {
           type: 'category',
           label: 'Key Store',
@@ -156,7 +152,6 @@ const sidebars = {
             'user-guide/key-store/gitlab',
           ],
         },
-        'user-guide/inventory',
         {
           type: 'category',
           label: 'Inventory',
@@ -166,7 +161,6 @@ const sidebars = {
         },
         'user-guide/netbox-dynamic-inventory',
         'user-guide/environment',
-        'user-guide/repositories',
         {
           type: 'category',
           label: 'Repositories',
