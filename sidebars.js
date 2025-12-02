@@ -19,13 +19,12 @@ const sidebars = {
     {
       type: 'category',
       label: 'Admin Guide',
+      link: { type: 'generated-index' },
       items: [
         {
           type: 'category',
           label: 'Installation',
-          link: {
-            type: 'generated-index',
-          },
+          link: { type: 'generated-index' },
           items: [
             'administration-guide/installation/package-manager',
             'administration-guide/installation/docker',
@@ -113,6 +112,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'User Guide',
+      link: { type: 'generated-index' },
       items: [
         {
           type: 'category',
@@ -175,6 +175,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'FAQ',
+      link: { type: 'generated-index' },
       items: [
         'faq/troubleshooting',
       ],

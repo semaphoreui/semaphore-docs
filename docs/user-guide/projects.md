@@ -8,6 +8,6 @@ Projects are independent from one another, so you can use them to organize unrel
 
 This can be useful for managing different teams, infrastructures, environments or applications.
 
-![](/assets/project_new_ipad.pngk)
+![](/assets/project_new_ipad.png)
 
 

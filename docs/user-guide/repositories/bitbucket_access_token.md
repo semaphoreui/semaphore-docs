@@ -1,4 +1,3 @@
-
 # Bitbucket Access Token
 
 You can use a Bitbucket Access Token in Semaphore to access repositories from Bitbucket.
@@ -12,12 +11,7 @@ After creation, you will see the access token. Copy it to your clipboard as it w
 ![](/assets/bitbucket_access_token_2.webp)
 
 1. Go to to the **Key Store** section in Semaphore and click the **New Key** button.
-
 2. Choose `Login with password` as the type of key.
-
-3. Enter `x-token-auth` as **Login** and paste the previously copied key into the **Password** field. Save the key.<br><br>![](/assets/bitbucket_access_token_3.webp)
-
+3. Enter `x-token-auth` as **Login** and paste the previously copied key into the **Password** field. Save the key.<br/><br/>![](/assets/bitbucket_access_token_3.png)
 4. Go to the **Repositories** section and click the **New Repository** button.
-
-
-5. Enter HTTPS URL of the repository (`https://bitbucket.org/path/to/repo`), enter correct branch and select previously created **Access Key**.<br><br>![](/assets/bitbucket_access_token_4.webp)
+5. Enter HTTPS URL of the repository (`https://bitbucket.org/path/to/repo`), enter correct branch and select previously created **Access Key**.<br/><br/>![](/assets/bitbucket_access_token_4.webp)
