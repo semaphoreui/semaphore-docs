@@ -13,7 +13,7 @@ Why use encrypted connections? See: [Article from Cloudflare](https://www.cloudf
 Options you have:
 
 * [VPN](#vpn)
-* [SSL](#ssl)
+* [TLS](#tls)
 
 ---
 
@@ -21,7 +21,7 @@ Options you have:
 
 You can use a Client-to-Site VPN, that terminates on the Semaphore server, to encrypt & secure the connection.
 
-## SSL
+## TLS
 
 Semaphore supports SSL/TLS starting from v2.12.
 
@@ -50,6 +50,7 @@ Alternatively, you can use a reverse proxy in front of Semaphore to handle secur
 
 * [NGINX](./nginx.md)
 * [Apache](./apache.md)
+* [Caddy](./caddy.md)
  
 
 ### Self-signed SSL certificate
