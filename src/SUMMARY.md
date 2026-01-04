@@ -53,6 +53,7 @@
     * [Rocket.Chat](./administration-guide/notifications/rocket.md)
     * [DingTalk](./administration-guide/notifications/ding.md)
     * [Gotify](./administration-guide/notifications/gotify.md)
+  * [High Availability (Enterprise)](./administration-guide/ha.md)
 
   * [Troubleshooting](./administration-guide/troubleshooting.md)
 
@@ -64,6 +65,8 @@
     * [Settings](./user-guide/projects/settings.md)
     * [Runners (Pro)](./user-guide/projects/runners.md)
   * [Task Templates](./user-guide/task-templates/README.md)
+    * [Survey Variables](./user-guide/task-templates/survey-vars.md)
+  * [Apps](./user-guide/apps/README.md)
     * [Ansible](./user-guide/task-templates/apps/ansible.md)
     * [Terraform/OpenTofu](./user-guide/task-templates/apps/terraform.md)
         * [Workspaces](./user-guide/task-templates/apps/terraform/workspaces.md)
@@ -71,7 +74,6 @@
     * [Shell/Bash scripts](./user-guide/task-templates/apps/bash.md)
     * [PowerShell](./user-guide/task-templates/apps/powershell.md)
     * [Python](./user-guide/task-templates/apps/python.md)
-    * [Survey Variables](./user-guide/task-templates/survey-vars.md)
   * [Tasks](./user-guide/tasks.md)
   * [Schedules](./user-guide/schedules.md)
   * [Key Store](./user-guide/key-store.md)
@@ -84,11 +86,12 @@
     * [Bitbucket Access Token](./user-guide/repositories/bitbucket_access_token.md)
   * [Integrations](./user-guide/integrations.md)
   * [Team](./user-guide/team.md)
-  <!-- * [Admin](./user-guide/admin/README.md)
+  * [Admin Menu](./user-guide/admin/README.md)
+    * [RBAC (Enterprise)](./user-guide/rbac.md)
     * [Users](./user-guide/admin/users.md)
     * [Runners](./user-guide/admin/runners.md)
     * [Active Tasks](./user-guide/admin/tasks.md)
-    * [Subscription 🅿](./user-guide/admin/subscription.md) -->
+    * [Subscription (Pro)](./user-guide/admin/subscription.md)
 
 * [FAQ]()
   * [Troubleshooting](./faq/troubleshooting.md)

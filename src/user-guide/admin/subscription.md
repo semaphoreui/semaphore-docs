@@ -1,1 +1,1 @@
-# Subscription 🅿
+# Subscription (Pro)
