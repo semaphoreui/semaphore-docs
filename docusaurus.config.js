@@ -8,7 +8,7 @@ const config = {
   url: 'https://semaphoreui.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/docs/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -127,7 +127,7 @@ const config = {
         indexName: 'docs_semaphoreui_com_b71na6dnhd_pages',
 
         // Optional: see doc section below
-        contextualSearch: true,
+        contextualSearch: false,
 
         // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
         // externalUrlRegex: 'external\\.com|domain\\.com',
@@ -140,8 +140,9 @@ const config = {
         // },
 
         // Optional: Algolia search parameters
-        searchParameters: {},
-
+        searchParameters: {
+          facetFilters: [],
+        },
         // Optional: path for search page that enabled by default (`false` to disable it)
         searchPagePath: 'search',
 

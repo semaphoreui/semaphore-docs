@@ -1,5 +1,4 @@
 import React from 'react';
-import SearchBar from '../../components/DocSearch';
 
 export default function SearchNavbarItem() {
   return (
