@@ -124,7 +124,7 @@ const config = {
         // Public API key: it is safe to commit it
         apiKey: 'bb1dabaeb79b08523ab98c9723afad04',
 
-        indexName: 'docs_semaphoreui_com_b71na6dnhd_pages',
+        indexName: 'docs',
 
         // Optional: see doc section below
         contextualSearch: false,

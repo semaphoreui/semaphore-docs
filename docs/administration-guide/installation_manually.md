@@ -245,7 +245,7 @@ Add additional settings under their `[PART]`
 ```ini
 [Unit]
 Description=Semaphore UI
-Documentation=https://docs.semaphoreui.com/
+Documentation=https://semaphoreui.com/docs
 Wants=network-online.target
 After=network-online.target
 ConditionPathExists=/usr/bin/semaphore
@@ -355,7 +355,7 @@ SyslogIdentifier=semaphore
 ```ini
 [Unit]
 Description=Semaphore UI
-Documentation=https://docs.semaphoreui.com/
+Documentation=https://semaphoreui.com/docs
 Wants=network-online.target
 After=network-online.target
 ConditionPathExists=/usr/bin/semaphore
@@ -384,7 +384,7 @@ WantedBy=multi-user.target
 ```ini
 [Unit]
 Description=Semaphore UI
-Documentation=https://docs.semaphoreui.com/
+Documentation=https://semaphoreui.com/docs
 Wants=network-online.target
 After=network-online.target
 ConditionPathExists=/usr/bin/semaphore
