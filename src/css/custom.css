@@ -1,0 +1,143 @@
+/* stylelint-disable docusaurus/copyright-header */
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #008890;
+  --ifm-color-primary-dark: #007a7d;
+  --ifm-color-primary-darker: #006c70;
+  --ifm-color-primary-darkest: #00585b;
+  --ifm-color-primary-light: #0096a3;
+  --ifm-color-primary-lighter: #00a4b6;
+  --ifm-color-primary-lightest: #00b8cc;
+  --ifm-navbar-height: 52px;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #00b8cc;
+  --ifm-color-primary-dark: #00a4b6;
+  --ifm-color-primary-darker: #0096a3;
+  --ifm-color-primary-darkest: #007a7d;
+  --ifm-color-primary-light: #26c4d1;
+  --ifm-color-primary-lighter: #40c9d5;
+  --ifm-color-primary-lightest: #66d4db;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Migrated from mdBook theme */
+
+/* Content styling */
+.main-wrapper img {
+  border-radius: 6px;
+}
+
+[data-theme='light'] .main-wrapper img {
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] .main-wrapper img {
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px solid rgba(150, 150, 150, 0.1);
+}
+
+.warning {
+  color: #ff6b35;
+}
+
+/* Tab styling (adapted for Docusaurus) */
+.mdbook-tabs {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.mdbook-tab {
+  background-color: var(--ifm-color-emphasis-100);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1.45em;
+  border-radius: 4px 4px 0 0;
+  margin-right: 2px;
+}
+
+.mdbook-tab.active {
+  background-color: var(--ifm-color-emphasis-200);
+  font-weight: bold;
+}
+
+.mdbook-tab-content {
+  padding: 1rem 0rem;
+}
+
+.mdbook-tab-content table {
+  margin: unset;
+}
+
+/* Custom navbar styling */
+.navbar {
+  background-color: #008890 !important;
+  color: white !important;
+  padding-top: 3px !important;
+}
+
+.navbar a {
+  color: white !important;
+}
+
+.navbar a:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar .navbar__brand {
+  color: white !important;
+}
+
+.navbar .navbar__link {
+  color: white !important;
+}
+
+.navbar .navbar__link:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar .navbar__item {
+  color: white !important;
+}
+
+/* Ensure dropdown menus and other navbar elements are also white */
+.navbar .dropdown__menu {
+  background-color: #008890;
+}
+
+.navbar .dropdown__link {
+  color: white !important;
+}
+
+.navbar .dropdown__link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white !important;
+}
+
+.navbar__title {
+  line-height: 1;
+}
+
+.navbar__title::after {
+  display: block;
+  content: 'Documentation';
+  color: #ffc000;
+  /* opacity: 0.7; */
+  font-size: 0.9em;
+}

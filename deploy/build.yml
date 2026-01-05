@@ -1,5 +1,0 @@
----
-- name: Build the book
-  hosts: localhost
-  roles:
-    - build
