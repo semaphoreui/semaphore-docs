@@ -129,3 +129,15 @@ hr {
   background-color: rgba(255, 255, 255, 0.1);
   color: white !important;
 }
+
+.navbar__title {
+  line-height: 1;
+}
+
+.navbar__title::after {
+  display: block;
+  content: 'Documentation';
+  color: #ffc000;
+  /* opacity: 0.7; */
+  font-size: 0.9em;
+}

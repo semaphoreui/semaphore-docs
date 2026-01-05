@@ -1,20 +1,19 @@
-# Welcome to Semaphore UI
+# Welcome to Semaphore UI Docs
 
 ## What is Semaphore UI?
 
 Semaphore UI is a modern UI and powerful API for Ansible, Terraform, OpenTofu, PowerShell and other DevOps tools.
 
-<!-- <!-- Image commented out: missing asset --> -->
 
 Semaphore is written in pure Go and available for Windows, macOS and Linux (x64, ARM, ARM64). Semaphore is an open-source project with concise and high-quality code.
 
 Semaphore supports the following databases:
 
+* SQLite
 * MySQL
 * PostgreSQL
-* [BoltDB](https://github.com/etcd-io/bbolt) – embedded key/value database
 
-With Semaphore you can:
+## With Semaphore UI you can:
 
 * [Build, deploy and rollback](./administration-guide/cicd)
 * Group playbooks to projects
@@ -25,7 +24,7 @@ With Semaphore you can:
 * Delegate other users the running of playbooks
 * Get notifications about playbook runs
 
-## Links
+<!-- ## Links
 
 * Source code: [https://github.com/semaphoreui/semaphore](https://github.com/semaphoreui/semaphore)
 * Issue tracking: [https://github.com/semaphoreui/semaphore/issues](https://github.com/semaphoreui/semaphore/issues)
@@ -38,4 +37,4 @@ With Semaphore you can:
 
 * Our responsive community:
 
-   [![discord](https://img.shields.io/badge/discord_community-510b80?style=for-the-badge&logo=discord)](https://discord.gg/5R6k7hNGcH)  
+   [![discord](https://img.shields.io/badge/discord_community-510b80?style=for-the-badge&logo=discord)](https://discord.gg/5R6k7hNGcH)   -->
