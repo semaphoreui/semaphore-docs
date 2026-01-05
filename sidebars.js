@@ -74,7 +74,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'OpenID',
-          link: { type: 'doc', id: 'administration-guide/ldap' },
+          link: { type: 'doc', id: 'administration-guide/openid' },
           items: [
             'administration-guide/openid/github',
             'administration-guide/openid/google',

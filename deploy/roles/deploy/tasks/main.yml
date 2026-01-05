@@ -1,0 +1,33 @@
+- name: include secret vars
+  include_vars:
+    file: "{{ inventory_dir }}/files/secrets.yml"
+    name: secrets
+
+
+- name: upload assets to s3 bucket
+  community.aws.s3_sync:
+    endpoint_url: "{{ website_bucket_endpoint | default('https://s3.' + aws_region + '.amazonaws.com') }}"
+    bucket: "{{ website_bucket }}"
+    key_prefix: "docs/"
+    file_change_strategy: force
+    file_root: "{{ playbook_dir }}/../{{ website_dist_dir }}/"
+    aws_access_key: "{{ secrets.aws_access_key }}"
+    aws_secret_key: "{{ secrets.aws_access_secret }}"
+    region: "{{ aws_region }}"
+    cache_control: "public, max-age=31536000"
+    exclude: "*.html"
+
+- name: upload html to s3 bucket
+  community.aws.s3_sync:
+    endpoint_url: "{{ website_bucket_endpoint | default('https://s3.' + aws_region + '.amazonaws.com') }}"
+    bucket: "{{ website_bucket }}"
+    key_prefix: "docs/"
+    file_change_strategy: force
+    file_root: "{{ playbook_dir }}/../{{ website_dist_dir }}/"
+    aws_access_key: "{{ secrets.aws_access_key }}"
+    aws_secret_key: "{{ secrets.aws_access_secret }}"
+    region: "{{ aws_region }}"
+    cache_control: "public, max-age=600"
+    mime_map:
+      ".html": "text/html; charset=UTF-8"
+    include: "*.html"

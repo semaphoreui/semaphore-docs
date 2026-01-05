@@ -5,3 +5,4 @@
 node_modules/
 /build
 /.docusaurus
+/deploy/invs/aws
