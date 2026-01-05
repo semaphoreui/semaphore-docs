@@ -128,19 +128,26 @@ const sidebars = {
           type: 'category',
           label: 'Task Templates',
           items: [
-            'user-guide/task-templates/apps/ansible',
+            'user-guide/task-templates/survey-vars',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Supported Apps',
+          link: { type: 'generated-index' },
+          items: [
+            'user-guide/apps/ansible',
             {
               type: 'category',
               label: 'Terraform/OpenTofu',
               items: [
-                'user-guide/task-templates/apps/terraform/workspaces',
-                'user-guide/task-templates/apps/terraform/states',
+                'user-guide/apps/terraform/workspaces',
+                'user-guide/apps/terraform/states',
               ],
             },
-            'user-guide/task-templates/apps/bash',
-            'user-guide/task-templates/apps/powershell',
-            'user-guide/task-templates/apps/python',
-            'user-guide/task-templates/survey-vars',
+            'user-guide/apps/bash',
+            'user-guide/apps/powershell',
+            'user-guide/apps/python',
           ],
         },
         'user-guide/tasks',
