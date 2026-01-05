@@ -1,4 +1,4 @@
-# Email notifications
+# Email
 
 Example `config.json` for configuring AWS SMTP email notifications:
 

@@ -104,10 +104,10 @@ const config = {
                 label: 'Docker Hub',
                 href: 'https://hub.docker.com/r/semaphoreui/semaphore',
               },
-              {
-                label: 'Snap',
-                href: 'https://snapcraft.io/semaphore',
-              },
+              // {
+              //   label: 'Snap',
+              //   href: 'https://snapcraft.io/semaphore',
+              // },
             ],
           },
         ],

@@ -28,10 +28,10 @@ const sidebars = {
           items: [
             'administration-guide/installation/package-manager',
             'administration-guide/installation/docker',
-            'administration-guide/installation/cloud',
+            // 'administration-guide/installation/cloud',
             'administration-guide/installation/binary-file',
             'administration-guide/installation/k8s',
-            'administration-guide/installation/snap',
+            // 'administration-guide/installation/snap',
             'administration-guide/installation_manually',
           ],
         },
@@ -42,21 +42,28 @@ const sidebars = {
           items: [
             'administration-guide/configuration/config-file',
             'administration-guide/configuration/env-vars',
-            'administration-guide/configuration/cli',
-            'administration-guide/configuration/snap',
+            // 'administration-guide/configuration/cli',
+            // 'administration-guide/configuration/snap',
           ],
         },
         'administration-guide/upgrading',
         {
           type: 'category',
+          label: 'Reverse-proxy',
+          link: { type: 'generated-index' },
+          items: [
+            'administration-guide/reverse-proxy/nginx',
+            'administration-guide/reverse-proxy/apache',
+            'administration-guide/reverse-proxy/caddy',
+          ],
+        },
+        {
+          type: 'category',
           label: 'Security',
           link: { type: 'doc', id: 'administration-guide/security' },
           items: [
-            'administration-guide/security/database',
             'administration-guide/security/network',
-            'administration-guide/security/nginx',
-            'administration-guide/security/apache',
-            'administration-guide/security/kerberos',
+            // 'administration-guide/security/kerberos',
           ],
         },
         {
@@ -73,7 +80,7 @@ const sidebars = {
         'administration-guide/ldap',
         {
           type: 'category',
-          label: 'OpenID',
+          label: 'OpenID Connect',
           link: { type: 'doc', id: 'administration-guide/openid' },
           items: [
             'administration-guide/openid/github',
@@ -89,13 +96,14 @@ const sidebars = {
           ],
         },
         'administration-guide/api',
-        'administration-guide/cicd',
+        // 'administration-guide/cicd',
         'administration-guide/runners',
         'administration-guide/logs',
         {
           type: 'category',
           label: 'Notifications',
-          link: { type: 'doc', id: 'administration-guide/notifications' },
+          // link: { type: 'doc', id: 'administration-guide/notifications' },
+          link: { type: 'generated-index' },
           items: [
             'administration-guide/notifications/email',
             'administration-guide/notifications/telegram',
@@ -106,7 +114,7 @@ const sidebars = {
             'administration-guide/notifications/gotify',
           ],
         },
-        'administration-guide/troubleshooting',
+        // 'administration-guide/troubleshooting',
       ],
     },
     {
@@ -164,9 +172,9 @@ const sidebars = {
           label: 'Inventory',
           items: [
             'user-guide/inventory/kerberos',
+            'user-guide/inventory/netbox-dynamic-inventory',
           ],
         },
-        'user-guide/netbox-dynamic-inventory',
         'user-guide/environment',
         {
           type: 'category',

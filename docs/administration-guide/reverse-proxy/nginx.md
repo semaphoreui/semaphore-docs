@@ -1,8 +1,6 @@
 
 # Nginx config
 
-
-
 Configuration example:
 
 ```yaml

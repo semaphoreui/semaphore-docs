@@ -1,7 +1,8 @@
 # Authelia config
 
-Authelia `config.yaml`:
-```yaml
+## Authelia configuration
+
+```yaml title="config.yaml"
 identity_providers:
   oidc:
     claims_policies:
@@ -29,8 +30,9 @@ identity_providers:
         userinfo_signed_response_alg: none
 ```
 
-Semaphore `config.json`:
-```json
+## Semaphore UI configuration
+
+```json title="config.json"
 "oidc_providers":  {
     "authelia": {
         "display_name": "Authelia",

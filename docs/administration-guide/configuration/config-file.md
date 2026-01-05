@@ -23,7 +23,7 @@ Use the following commands to generate the configuration file interactively:
   </div>
 
 
-### Generate via Web
+### Generate on the website
 
 Alternatively, you can use the web-based interactive configurator:
 * [Server configurator](https://semaphoreui.com/install/binary/2_13/config)

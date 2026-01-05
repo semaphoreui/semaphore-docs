@@ -1,4 +1,4 @@
-# RocketChat notifications
+# RocketChat
 
 `config.json` example:
 

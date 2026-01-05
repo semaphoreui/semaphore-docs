@@ -1,10 +1,3 @@
-<div class="breadcrumbs">
-    Administration Guide
-    → <a href="/administration-guide/security/">Security</a>
-    → Caddy config
-</div>
-
-
 # Caddy config
 
 Caddy supports websockets and will by default only enable secure TLS ciphers (TLS1.2 + TLS1.3), so minimal config is needed.

@@ -1,4 +1,4 @@
-# LDAP configuration
+# LDAP and Active Directory
 
 Configuration file contains the following LDAP parameters:
 

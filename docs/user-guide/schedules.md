@@ -4,7 +4,7 @@ The schedule function in Semaphore allows to automate the execution of templates
 
 Make sure to restart the Semaphore service after making changes for them to take effect.
 
-## Setup and configuration
+[//]: # (## Setup and configuration)
 
 ## Timezone configuration
 
