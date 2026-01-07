@@ -64,10 +64,10 @@ Or you can do this using following environment variables:
 
 ```bash
 export SEMAPHORE_EVENT_LOG_ENABLED=True
-export SEMAPHORE_EVENT_LOG_LOGGER=./events.log
+export SEMAPHORE_EVENT_LOG_LOGGER={"filename": "./events.log"}
 
 export SEMAPHORE_TASK_LOG_ENABLED=True
-export SEMAPHORE_EVENT_LOG_LOGGER=./tasks.log
+export SEMAPHORE_EVENT_LOG_LOGGER={"filename": "./tasks.log"}
 ```
 
 #### Activity (events) logging options
