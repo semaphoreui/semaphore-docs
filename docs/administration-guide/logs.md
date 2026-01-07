@@ -89,7 +89,7 @@ The Tasks logging options allow you to configure how Semaphore records task exec
 | `enabled`             | `SEMAPHORE_TASK_LOG_ENABLED` | Enable task logging to file. |
 | `format`              | `SEMAPHORE_TASK_LOG_FORMAT`  | Log record format. Can be `raw` or `json`. |
 | `logger`              | `SEMAPHORE_TASK_LOG_LOGGER`  | [Logger options](#logger-options). |
-| `result_logger`              | `SEMAPHORE_TASK_RESULT_LOGGER`  | Logger options. |
+| `result_logger`       | `SEMAPHORE_TASK_RESULT_LOGGER`  | Logger options. |
 
 
 
