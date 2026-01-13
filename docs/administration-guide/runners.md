@@ -113,7 +113,7 @@ Your runner is ready to execute tasks ;)
 
 You can assign one or more tags to a project runner. Templates can then require a tag so tasks run only on matching runners. Configure tags when adding a runner in the project UI, and set the required tag in the template settings.
 
-## Runner unregistaration
+## Runner desregistaration
 
 You can remove runner using the web interfance.
 
