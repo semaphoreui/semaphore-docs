@@ -128,41 +128,69 @@ terraform apply -var="instance_count=3"
 
 ### Shell/Bash templates
 
-Survey variables are passed as environment variables to your script.
-
-**Example**: If you define a survey variable named `backup_path`:
+Survey variables are passed as command line arguments to your script, like this:
 
 ```bash
-#!/bin/bash
-echo "Backing up to: $backup_path"
-tar -czf "$backup_path/backup.tar.gz" /data/
+/bin/bash your_script.sh var1=val1 var2=val2 ... varN=valN
 ```
 
-When running the task, the user enters "/mnt/backups" and the script receives it as an environment variable.
+You can use following code inside your script to parse the arguments to array:
+
+```bash
+for arg in "$@"; do
+  KEY="${arg%%=*}"
+  VALUE="${arg#*=}"
+  declare -A args
+  args["$KEY"]="$VALUE"
+done
+ 
+echo "ARG1: ${args[ARG1]}"
+echo "ARG2: ${args[ARG2]}"
+```
 
 ### PowerShell templates
 
-Survey variables are passed as environment variables to your PowerShell script.
+Survey variables are passed as command line arguments to your PowerShell script.
 
-**Example**: If you define a survey variable named `service_name`:
+To parse the argument use following code:
 
 ```powershell
-$serviceName = $env:service_name
-Restart-Service -Name $serviceName
-Write-Host "Service $serviceName restarted"
+$parsed = @{}
+
+foreach ($a in $args) {
+    if ($a -match "^([^=]+)=(.*)$") {
+        $key = $matches[1]
+        $val = $matches[2]
+        $parsed[$key] = $val
+    }
+}
+
+
+Write-Host "Parsed arguments:"
+
+write-host $parsed['env1']
+write-host $parsed.env1
 ```
 
 ### Python templates
 
-Survey variables are passed as environment variables accessible via `os.environ`.
+Survey variables are passed as command line arguments to your Python script.
 
-**Example**: If you define a survey variable named `api_endpoint`:
+To parse the argument use following code:
 
 ```python
-import os
+import sys
 
-api_endpoint = os.environ.get('api_endpoint', 'https://api.example.com')
-print(f"Connecting to: {api_endpoint}")
+parsed = {}
+
+for arg in sys.argv[1:]:
+    if "=" in arg:
+        key, val = arg.split("=", 1)
+        parsed[key] = val
+
+print("Parsed arguments:")
+print(parsed.get("env1"))
+print(parsed["env1"] if "env1" in parsed else None)
 ```
 
 ## Using survey variables
@@ -177,7 +205,7 @@ When running a task from a template with survey variables:
 4. Click **Run Task**
 
 The task executes with your provided values passed to the playbook or script.
-
+<!-- 
 ### API calls
 
 To pass survey variable values via API:
@@ -200,7 +228,7 @@ curl -XPOST \
 
 Survey variable values are passed in the `environment` object of the request payload.
 
-**Important**: The task runs unattended when triggered via API—no interactive prompt appears.
+**Important**: The task runs unattended when triggered via API—no interactive prompt appears. -->
 
 ### Scheduled tasks
 
