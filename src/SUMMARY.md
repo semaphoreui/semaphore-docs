@@ -64,6 +64,7 @@
     * [Runners (Pro)](./user-guide/projects/runners.md)
   * [Task Templates](./user-guide/task-templates/README.md)
     * [Survey Variables](./user-guide/task-templates/survey-vars.md)
+    * [Prompts](./user-guide/task-templates/prompts.md)
   * [Apps](./user-guide/apps/README.md)
     * [Ansible](./user-guide/task-templates/apps/ansible.md)
     * [Terraform/OpenTofu](./user-guide/task-templates/apps/terraform.md)

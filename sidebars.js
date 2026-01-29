@@ -137,6 +137,7 @@ const sidebars = {
           label: 'Task Templates',
           items: [
             'user-guide/task-templates/survey-vars',
+            'user-guide/task-templates/prompts',
           ],
         },
         {
