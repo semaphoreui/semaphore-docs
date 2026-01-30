@@ -114,6 +114,7 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Semaphore UI.`,
       },
       prism: {
+        additionalLanguages: ['powershell', 'bash', 'hcl'],
         theme: require('prism-react-renderer').themes.github,
         darkTheme: require('prism-react-renderer').themes.dracula,
       },

@@ -128,13 +128,13 @@ terraform apply -var="instance_count=3"
 
 ### Shell/Bash templates
 
-Survey variables are passed as command line arguments to your script, like this:
+Survey variables are passed to the Bash script as command-line arguments:
 
 ```bash
 /bin/bash your_script.sh var1=val1 var2=val2 ... varN=valN
 ```
 
-You can use following code inside your script to parse the arguments to array:
+You can use following code inside the script to parse the arguments to array:
 
 ```bash
 for arg in "$@"; do
@@ -150,9 +150,14 @@ echo "ARG2: ${args[ARG2]}"
 
 ### PowerShell templates
 
-Survey variables are passed as command line arguments to your PowerShell script.
+Survey variables are passed to the running PowerShell script as command-line arguments:
 
-To parse the argument use following code:
+```bash
+pwsh your_script.sh var1=val1 var2=val2 ... varN=valN
+```
+
+
+To parse the arguments, use the following code in the running script:
 
 ```powershell
 $parsed = @{}
@@ -174,9 +179,13 @@ write-host $parsed.env1
 
 ### Python templates
 
-Survey variables are passed as command line arguments to your Python script.
+Survey variables are passed to the running Python script as command-line arguments:
 
-To parse the argument use following code:
+```bash
+python3 your_script.sh var1=val1 var2=val2 ... varN=valN
+```
+
+To parse the argument use following code in the running script:
 
 ```python
 import sys
