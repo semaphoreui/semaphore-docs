@@ -19,6 +19,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Admin Guide',
+      collapsed: false,
       link: { type: 'generated-index' },
       items: [
         {
@@ -112,6 +113,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'User Guide',
+      collapsed: false,
       link: { type: 'generated-index' },
       items: [
         {
