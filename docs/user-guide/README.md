@@ -28,6 +28,7 @@ Learn how to use Semaphore day-to-day: create projects, run tasks, manage invent
   - [PowerShell](./task-templates/apps/powershell.md)
   - [Python](./task-templates/apps/python.md)
   - [Survey Variables](./task-templates/survey-vars.md)
+  - [Prompts](./task-templates/prompts.md)
 - Variables and secrets:
   - [Variable Groups](./environment.md)
   - [Key Store](./key-store.md)

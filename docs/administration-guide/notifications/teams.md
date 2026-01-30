@@ -1,4 +1,4 @@
-# Microsoft Teams notifications
+# Microsoft Teams
 
 `config.json` example:
 

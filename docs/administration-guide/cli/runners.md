@@ -1,5 +1,5 @@
 # Runners
 
-<div class="warning">
-    We have separate section for <a href="./../runners.md">Runners</a>.
-</div>
+:::tip
+    There is a separate section for <a href="./../runners">Runners</a>.
+:::

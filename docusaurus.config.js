@@ -104,16 +104,17 @@ const config = {
                 label: 'Docker Hub',
                 href: 'https://hub.docker.com/r/semaphoreui/semaphore',
               },
-              {
-                label: 'Snap',
-                href: 'https://snapcraft.io/semaphore',
-              },
+              // {
+              //   label: 'Snap',
+              //   href: 'https://snapcraft.io/semaphore',
+              // },
             ],
           },
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Semaphore UI.`,
       },
       prism: {
+        additionalLanguages: ['powershell', 'bash', 'hcl'],
         theme: require('prism-react-renderer').themes.github,
         darkTheme: require('prism-react-renderer').themes.dracula,
       },

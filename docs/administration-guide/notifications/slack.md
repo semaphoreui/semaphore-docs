@@ -1,4 +1,4 @@
-# Slack notifications
+# Slack
 
 Slack notifications allow you to receive real-time updates about your Semaphore workflows directly in your Slack channels. This integration helps teams stay informed about build statuses, deployment results, and other important events without having to constantly check the Semaphore dashboard.
 

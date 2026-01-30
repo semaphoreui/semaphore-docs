@@ -5,5 +5,5 @@ if [ -f ~/venv/bin/activate ]; then
 else
     echo "Use ansible without virtual environment"
 fi
-
+yarn build
 ./run.sh aws deploy

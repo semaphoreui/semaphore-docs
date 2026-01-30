@@ -1,8 +1,8 @@
 # Binary file
 
-<div class="warning">
-    Look into the <a href="./../installation_manually.md">manual installation</a> on how to set-up your Python/Ansible/Systemd environment!
-</div>
+:::tip
+    Look into the <a href="./../installation_manually">manual installation</a> on how to set-up your Python/Ansible/Systemd environment!
+:::
 
 
 Download the `*.tar.gz` for your platform from [Releases page](https://github.com/semaphoreui/semaphore/releases). Unpack it and setup Semaphore using the following commands:

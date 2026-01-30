@@ -1,4 +1,4 @@
-# DingTalk notifications
+# DingTalk
 
 `config.json` example:
 

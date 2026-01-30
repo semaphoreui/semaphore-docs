@@ -1,4 +1,4 @@
-# Telegram notifications
+# Telegram
 
 ### Pre-requisites
 

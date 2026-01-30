@@ -1,4 +1,4 @@
-### Vaults
+# Vaults
 
 You can reencrypt your secrets in database with using following command:
 

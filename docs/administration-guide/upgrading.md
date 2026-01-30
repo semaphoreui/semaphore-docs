@@ -2,18 +2,9 @@
 
 There are 4 ways for upgrading Semaphore:
 
-* Snap
 * Package manager
 * Docker
 * Binary
-
-### Snap
-
-Use the following command for upgrading Semaphore to the latest stable version:
-
-```
-sudo snap refresh semaphore
-```
 
 ### Package manager
 

@@ -1,4 +1,4 @@
-# OpenID
+# OpenID Connect
 
 Semaphore supports authentication via OpenID Connect (OIDC).
 

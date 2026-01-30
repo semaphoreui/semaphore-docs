@@ -64,10 +64,10 @@ Or you can do this using following environment variables:
 
 ```bash
 export SEMAPHORE_EVENT_LOG_ENABLED=True
-export SEMAPHORE_EVENT_LOG_LOGGER=./events.log
+export SEMAPHORE_EVENT_LOG_LOGGER={"filename": "./events.log"}
 
 export SEMAPHORE_TASK_LOG_ENABLED=True
-export SEMAPHORE_EVENT_LOG_LOGGER=./tasks.log
+export SEMAPHORE_EVENT_LOG_LOGGER={"filename": "./tasks.log"}
 ```
 
 #### Activity (events) logging options
@@ -89,7 +89,7 @@ The Tasks logging options allow you to configure how Semaphore records task exec
 | `enabled`             | `SEMAPHORE_TASK_LOG_ENABLED` | Enable task logging to file. |
 | `format`              | `SEMAPHORE_TASK_LOG_FORMAT`  | Log record format. Can be `raw` or `json`. |
 | `logger`              | `SEMAPHORE_TASK_LOG_LOGGER`  | [Logger options](#logger-options). |
-| `result_logger`              | `SEMAPHORE_TASK_RESULT_LOGGER`  | Logger options. |
+| `result_logger`       | `SEMAPHORE_TASK_RESULT_LOGGER`  | Logger options. |
 
 
 

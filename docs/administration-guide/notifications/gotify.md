@@ -1,4 +1,4 @@
-# Gotify notifications
+# Gotify
 
 `config.json` example:
 
