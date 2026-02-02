@@ -43,9 +43,9 @@ export SEMAPHORE_TLS_KEY_FILE=/path/to/key/example.com.key
 
 Alternatively, you can use a reverse proxy in front of Semaphore to handle secure connections. For example:
 
-* [NGINX](./nginx.md)
-* [Apache](./apache.md)
-* [Caddy](./caddy.md)
+* [NGINX](/nginx.md)
+* [Apache](/apache.md)
+* [Caddy](/caddy.md)
  
 
 ### Self-signed SSL certificate

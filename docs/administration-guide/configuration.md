@@ -2,9 +2,9 @@
 
 Semaphore can be configured using several methods:
 
-* [Interactive setup](./configuration/snap.md) &mdash; guided configuration when running Semaphore for the first time. It creates `config.json`.
-* [Configuration file](./configuration/config-file.md) &mdash; the primary and most flexible way to configure Semaphore.
-* [Environment variables](./configuration/env-vars.md) &mdash; useful for containerized or cloud-native deployments.
+* [Interactive setup](/configuration/snap.md) &mdash; guided configuration when running Semaphore for the first time. It creates `config.json`.
+* [Configuration file](/configuration/config-file.md) &mdash; the primary and most flexible way to configure Semaphore.
+* [Environment variables](/configuration/env-vars.md) &mdash; useful for containerized or cloud-native deployments.
 
 
 ## Configuration options
@@ -23,7 +23,7 @@ Full list of available configuration options:
 | <br />`max_task_duration_sec` <hr /> `SEMAPHORE_MAX_TASK_DURATION_SEC` <br /><br /> | Max duration of a task in seconds. |
 | <br />`max_tasks_per_template`<hr /> `SEMAPHORE_MAX_TASKS_PER_TEMPLATE` <br /><br /> | Maximum number of recent tasks stored in the database for each template. |
 | <br />`schedule.timezone`     <hr /> `SEMAPHORE_SCHEDULE_TIMEZONE` <br /><br /> | Timezone used for scheduling tasks and cron jobs. |
-| <br />`oidc_providers` ![Static Badge](https://img.shields.io/badge/v2.10+-red)    | OpenID provider settings. You can provide multiple OpenID providers. More about OpenID configuration read in [OpenID](./openid.md). <br /><br /> |
+| <br />`oidc_providers` ![Static Badge](https://img.shields.io/badge/v2.10+-red)    | OpenID provider settings. You can provide multiple OpenID providers. More about OpenID configuration read in [OpenID](/openid.md). <br /><br /> |
 | <br />`password_login_disable` <hr /> `SEMAPHORE_PASSWORD_LOGIN_DISABLED` <br /><br /> ![Static Badge](https://img.shields.io/badge/v2.10+-red)    <br /><br /> | Deny password login. |
 | <br />`non_admin_can_create_project`      <hr /> `SEMAPHORE_NON_ADMIN_CAN_CREATE_PROJECT` <br /><br /> | Allow non-admin users to create projects. |
 | <br />`env_vars`               <hr /> `SEMAPHORE_ENV_VARS` <br /><br /> | JSON map which contains environment variables. |
@@ -45,7 +45,7 @@ Full list of available configuration options:
 | <br />`dialect`       <hr /> `SEMAPHORE_DB_DIALECT`<br /><br /> | Can be `sqlite` (default), `postgres`, `mysql` or `bolt` (deprecated).   |
 | <br /> `*.options`    <hr /> `SEMAPHORE_DB_OPTIONS`<br /><br /> | JSON map which contains database connection options. |
 | **Security** ||
-| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | Secret key used for encrypting access keys in database. Read more in [Database encryption reference](./security.md#database-encryption). |
+| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | Secret key used for encrypting access keys in database. Read more in [Database encryption reference](/security.md#database-encryption). |
 | <br />`cookie_hash`           <hr /> `SEMAPHORE_COOKIE_HASH`<br /><br /> | Secret key used to sign cookies. |
 | <br />`cookie_encryption`     <hr /> `SEMAPHORE_COOKIE_ENCRYPTION`<br /><br /> | Secret key used to encrypt cookies. |
 | <br />`web_host`       <hr /> `SEMAPHORE_WEB_ROOT`<br /><br /> | Can be useful if you want to use Semaphore by the subpath, for example: [http://yourdomain.com/semaphore](http://yourdomain.com/semaphore). Do not add a trailing `/`. |
@@ -73,8 +73,8 @@ Full list of available configuration options:
 | <br />`email_alert`    <hr /> `SEMAPHORE_EMAIL_ALERT`<br /><br /> | Flag which enables email alerts. |
 | **Messengers** ||
 | <br />`telegram_alert` <hr /> `SEMAPHORE_TELEGRAM_ALERT`<br /><br /> | Set to True to enable pushing alerts to Telegram. It should be used in combination with `telegram_chat` and `telegram_token`. |
-| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | Set to the Chat ID for the chat to send alerts to.  Read more in [Telegram Notifications Setup](./notifications.md#chat-id) |
-| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | Set to the Authorization Token for the bot that will receive the alert payload.  Read more in [Telegram Notifications Setup](./notifications.md#bot-setup) |
+| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | Set to the Chat ID for the chat to send alerts to.  Read more in [Telegram Notifications Setup](/notifications.md#chat-id) |
+| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | Set to the Authorization Token for the bot that will receive the alert payload.  Read more in [Telegram Notifications Setup](/notifications.md#bot-setup) |
 | <br />`slack_alert`    <hr /> `SEMAPHORE_SLACK_ALERT`<br /><br /> | Set to True to enable pushing alerts to slack. It should be used in combination with `slack_url`                          |
 | <br />`slack_url`      <hr /> `SEMAPHORE_SLACK_URL`<br /><br /> | The slack webhook url. Semaphore will used it to POST Slack formatted json alerts to the provided url.    |
 | <br />`microsoft_teams_alert` <hr /> `SEMAPHORE_MICROSOFT_TEAMS_ALERT` <br /><br /> | Flag which enables Microsoft Teams alerts. |
