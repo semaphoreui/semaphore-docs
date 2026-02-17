@@ -97,7 +97,7 @@ const sidebars = {
           ],
         },
         'administration-guide/api',
-        // 'administration-guide/cicd',
+        'administration-guide/cicd',
         'administration-guide/runners',
         'administration-guide/logs',
         {
