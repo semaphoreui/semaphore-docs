@@ -127,6 +127,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Projects',
+          link: { type: 'doc', id: 'user-guide/projects' },
           items: [
             'user-guide/projects/history',
             'user-guide/projects/activity',
@@ -137,6 +138,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Task Templates',
+          link: { type: 'doc', id: 'user-guide/task-templates/README' },
           items: [
             'user-guide/task-templates/survey-vars',
             'user-guide/task-templates/prompts',
@@ -151,6 +153,7 @@ const sidebars = {
             {
               type: 'category',
               label: 'Terraform/OpenTofu',
+              link: { type: 'doc', id: 'user-guide/apps/terraform/README' },
               items: [
                 'user-guide/apps/terraform/workspaces',
                 'user-guide/apps/terraform/states',

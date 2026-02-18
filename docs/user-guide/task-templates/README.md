@@ -2,11 +2,11 @@
 
 Templates define how to run Semaphore tasks. Currently the following task types are supported:
 
-* [Ansible](/apps/ansible.md)
-* [Terraform/OpenTofu](/apps/terraform.md)
-* [Shell](/apps/bash.md)
-* [Powershell](/apps/powershell.md)
-* [Python](/apps/python.md)
+* [Ansible](/user-guide/apps/ansible)
+* [Terraform/OpenTofu](/user-guide/apps/terraform)
+* [Shell](/user-guide/apps/bash)
+* [Powershell](/user-guide/apps/powershell)
+* [Python](/user-guide/apps/python)
 
 ---
 
