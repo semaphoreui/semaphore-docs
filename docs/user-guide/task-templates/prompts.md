@@ -1,6 +1,6 @@
 # Prompts
 
-Prompts are predefined flags and options specific to each template type that you can enable to allow runtime customization. Unlike [Survey Variables](/survey-vars.md) which are custom fields you create, prompts are built-in options that correspond to specific CLI flags for Ansible, Terraform, and other tools.
+Prompts are predefined flags and options specific to each template type that you can enable to allow runtime customization. Unlike [Survey Variables](/survey-vars) which are custom fields you create, prompts are built-in options that correspond to specific CLI flags for Ansible, Terraform, and other tools.
 
 This feature allows you to:
 - Override template defaults at runtime
@@ -125,7 +125,7 @@ Select which Terraform workspace to use for the task execution.
 2. The workspace selector automatically appears in the task form
 3. Users choose the target workspace when running tasks
 
-See [Terraform Workspaces](/apps/terraform/workspaces.md) for detailed setup.
+See [Terraform Workspaces](/apps/terraform/workspaces) for detailed setup.
 
 ### Destroy Flag
 
@@ -166,7 +166,7 @@ The task form displays these options when running Terraform tasks.
 
 ## Shell, Bash, PowerShell, and Python Prompts
 
-For script-based templates (Shell, Bash, PowerShell, Python), prompts are minimal as most customization is handled through [Survey Variables](/survey-vars.md).
+For script-based templates (Shell, Bash, PowerShell, Python), prompts are minimal as most customization is handled through [Survey Variables](/survey-vars).
 
 Available options typically include:
 - Script path or command selection
@@ -228,7 +228,7 @@ Integrations can extract values from webhooks and map them to prompts:
 - Map to Limit prompt to target specific environment
 - Deploy only to servers matching the branch environment
 
-See [Integrations](../integrations.md) for webhook configuration.
+See [Integrations](../integrations) for webhook configuration.
 
 ## Best Practices
 
@@ -357,9 +357,9 @@ Use Terraform destroy for temporary infrastructure:
 
 ## Related Documentation
 
-- [Survey Variables](/survey-vars.md) - Custom fields for templates
-- [Ansible Templates](/apps/ansible.md) - Ansible-specific configuration
-- [Terraform Templates](/apps/terraform.md) - Terraform-specific configuration
-- [Schedules](../schedules.md) - Automated task execution
-- [Integrations](../integrations.md) - Webhook-triggered tasks
-- [API Documentation](../../administration-guide/api.md) - API reference
+- [Survey Variables](/survey-vars) - Custom fields for templates
+- [Ansible Templates](/apps/ansible) - Ansible-specific configuration
+- [Terraform Templates](/apps/terraform) - Terraform-specific configuration
+- [Schedules](../schedules) - Automated task execution
+- [Integrations](../integrations) - Webhook-triggered tasks
+- [API Documentation](../../administration-guide/api) - API reference

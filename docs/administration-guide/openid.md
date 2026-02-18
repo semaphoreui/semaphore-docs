@@ -4,16 +4,16 @@ Semaphore supports authentication via OpenID Connect (OIDC).
 
 Links:
 
-* [GitHub config](/openid/github.md)
-* [Google config](/openid/google.md)
-* [GitLab config](/openid/gitlab.md)
-* [Authelia config](/openid/authelia.md)
-* [Authentik config](/openid/authentik.md)
-* [Keycloak config](/openid/keycloak.md)
-* [Okta config](/openid/okta.md)
-* [Azure config](/openid/azure.md)
-* [Zitadel config](/openid/zitadel.md)
-* [Pocket-ID config](/openid/pocket-id.md)
+* [GitHub config](/openid/github)
+* [Google config](/openid/google)
+* [GitLab config](/openid/gitlab)
+* [Authelia config](/openid/authelia)
+* [Authentik config](/openid/authentik)
+* [Keycloak config](/openid/keycloak)
+* [Okta config](/openid/okta)
+* [Azure config](/openid/azure)
+* [Zitadel config](/openid/zitadel)
+* [Pocket-ID config](/openid/pocket-id)
 
 Example of SSO provider configuration:
 

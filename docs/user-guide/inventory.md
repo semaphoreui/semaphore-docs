@@ -8,7 +8,7 @@ Semaphore UI can either read an Inventory from a file on the server that the Sem
 Each Inventory also has at least one credential tied to it.
 The user credential is required, and is what Ansible uses to log into hosts for that Inventory. Sudo credentials are used for escalating privileges on that host.
 It is required to have a user credential that is either a username with a login, or SSH configured in the Key Store to create an Inventory.
-Information about credentials can be found in the [Key Store](key-store.md) section of this site.
+Information about credentials can be found in the [Key Store](key-store) section of this site.
 
 ## Creating an Inventory 
 1. Click on the Key Store tab and confirm you have a key that is a login_password or ssh type

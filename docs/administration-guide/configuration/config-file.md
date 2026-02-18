@@ -19,7 +19,7 @@ Use the following commands to generate the configuration file interactively:
   ```
   
   <div class="warning">
-    For more details about runner configuration, see the <a href="./../runners.md">Runners</a> section.
+    For more details about runner configuration, see the <a href="./../runners">Runners</a> section.
   </div>
 
 

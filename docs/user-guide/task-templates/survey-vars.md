@@ -255,7 +255,7 @@ Schedules can include survey variable values to run the same template with diffe
 - Weekly schedule with `retention_days=30`
 - Monthly schedule with `retention_days=365`
 
-See the [Schedules](../schedules.md) documentation for more details.
+See the [Schedules](../schedules) documentation for more details.
 
 ### Integrations and webhooks
 
@@ -273,7 +273,7 @@ Integrations can extract values from incoming webhooks and map them to survey va
 - Map it to a survey variable named `release_version`
 - The deployment playbook receives the version number
 
-See the [Integrations](../integrations.md) documentation for more details.
+See the [Integrations](../integrations) documentation for more details.
 
 ## Best practices
 
@@ -317,7 +317,7 @@ Always use the secret type for sensitive values like API keys, passwords, or tok
 
 ### Combine with Variable Groups
 
-Survey variables work well with [Variable Groups](../environment.md):
+Survey variables work well with [Variable Groups](../environment):
 - Use **Variable Groups** for static configuration shared across tasks
 - Use **Survey variables** for values that change per task run
 

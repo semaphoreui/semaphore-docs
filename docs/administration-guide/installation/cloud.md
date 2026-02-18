@@ -15,8 +15,8 @@ Essentials:
 
 Related guides:
 
-- [Docker](../installation/docker.md)
-- [Kubernetes (Helm chart)](../installation/k8s.md)
-- [Binary file](../installation/binary-file.md)
-- [Security hardening](../security.md)
+- [Docker](../installation/docker)
+- [Kubernetes (Helm chart)](../installation/k8s)
+- [Binary file](../installation/binary-file)
+- [Security hardening](../security)
 

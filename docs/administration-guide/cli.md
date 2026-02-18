@@ -1,10 +1,10 @@
 # CLI
 
 
-* [Runners](/cli/runners.md)
-* [Users](/cli/users.md)
-* [Vaults](/cli/vaults.md)
-* [Database migrations](/cli/migrations.md)
+* [Runners](/cli/runners)
+* [Users](/cli/users)
+* [Vaults](/cli/vaults)
+* [Database migrations](/cli/migrations)
 
 
 ## Common config options

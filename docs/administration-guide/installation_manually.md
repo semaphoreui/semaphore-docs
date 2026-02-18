@@ -4,19 +4,19 @@
 
 **Content:**
 
-* [Service User](/installation_manually.md#service-user)
-* [Python3](/installation_manually.md#python3)
-* [Ansible Collections & Roles](/installation_manually.md#ansible-collections--roles)
-* [Reverse Proxy](/installation_manually.md#reverse-proxy)
-* [Systemd Service](/installation_manually.md#extended-systemd-service)
-* [Troubleshooting](/installation_manually.md#troubleshooting)
+* [Service User](/administration-guide/installation_manually#service-user)
+* [Python3](/administration-guide/installation_manually#python3)
+* [Ansible Collections & Roles](/administration-guide/installation_manually#ansible-collections--roles)
+* [Reverse Proxy](/administration-guide/installation_manually#reverse-proxy)
+* [Systemd Service](/administration-guide/installation_manually#extended-systemd-service)
+* [Troubleshooting](/administration-guide/installation_manually#troubleshooting)
 
 ----
 
 This documentation goes into the details on how to set-up Semaphore when using these installation methods:
 
-* [Package manager](/installation.md#package-manager)
-* [Binary file](/installation.md#binary-file)
+* [Package manager](/administration-guide/installation#package-manager)
+* [Binary file](/administration-guide/installation#binary-file)
 
 The Semaphore software-package is just a part of the whole system needed to successfully run Ansible with it.
 
@@ -230,7 +230,7 @@ deactivate
 
 ## Reverse Proxy
 
-See: [Security - Encrypted connection](/security.md#reverse-proxy)
+See: [Security - Encrypted connection](/security#reverse-proxy)
 
 ----
 

@@ -23,8 +23,8 @@ You can install Semaphore in multiple ways, depending on your operating system, 
   [Learn more »](/installation/k8s)
 
 See also:
-* [Run as service](/installation/binary-file.md#run-as-a-service)
-* [Manual installation](/installation_manually.md)
+* [Run as service](/installation/binary-file#run-as-a-service)
+* [Manual installation](/installation_manually)
 
 ----
 

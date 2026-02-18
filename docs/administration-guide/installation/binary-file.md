@@ -49,7 +49,7 @@ Semaphore will be available via the following URL [https://localhost:3000](https
 
 ### Run as a service
 
-For more detailed information &mdash; look into the [extended Systemd service documentation](../installation_manually.md#extended-systemd-service).
+For more detailed information &mdash; look into the [extended Systemd service documentation](../installation_manually#extended-systemd-service).
 
 If you installed Semaphore via a package manager, or by downloading a binary file, you should create the Semaphore service manually.
 
