@@ -73,7 +73,7 @@ const config = {
               },
               {
                 label: 'Admin Guide',
-                to: '/administration-guide/installation',
+                to: '/admin-guide/installation',
               },
               {
                 label: 'User Guide',

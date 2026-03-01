@@ -2,9 +2,9 @@
 
 Semaphore can be configured using several methods:
 
-* [Interactive setup](/configuration/snap) &mdash; guided configuration when running Semaphore for the first time. It creates `config.json`.
-* [Configuration file](/configuration/config-file) &mdash; the primary and most flexible way to configure Semaphore.
-* [Environment variables](/configuration/env-vars) &mdash; useful for containerized or cloud-native deployments.
+* [Online configurator](https://semaphoreui.com/install) &mdash; web interface for generating configuration online.
+* [Configuration file](/admin-guide/configuration/config-file) &mdash; the primary and most flexible way to configure Semaphore.
+* [Environment variables](/admin-guide/configuration/env-vars) &mdash; useful for containerized or cloud-native deployments.
 
 
 ## Configuration options
@@ -19,18 +19,35 @@ Full list of available configuration options:
 | <br />`port`           <hr /> `SEMAPHORE_PORT`<br /><br /> | TCP port on which the web interface will be available. Default: 3000 |
 | <br />`interface`      <hr /> `SEMAPHORE_INTERFACE`<br /><br /> | Useful if your server has multiple network interfaces      |
 | <br />`tmp_path`       <hr /> `SEMAPHORE_TMP_PATH`<br /><br /> | Path to directory where cloned repositories and generated files are stored. Default: /tmp/semaphore |
+| <br />`dirs.secrets_path` <hr /> `SEMAPHORE_SECRETS_PATH`<br /><br /> | Path to directory where secrets are stored. Default: /tmp/semaphore |
+| <br />`dirs.repos_path` <hr /> `SEMAPHORE_REPOS_PATH`<br /><br /> | Path to directory where repositories are stored. |
+| <br />`home_dir_mode`  <hr /> `SEMAPHORE_HOME_DIR_MODE` <br /><br /> | Controls how the HOME environment variable is set for tasks. Options: `template_dir` (default), `project_home`, `user_home`. |
 | <br />`max_parallel_tasks`    <hr /> `SEMAPHORE_MAX_PARALLEL_TASKS` <br /><br /> | Max number of parallel tasks that can be run on the server. |
 | <br />`max_task_duration_sec` <hr /> `SEMAPHORE_MAX_TASK_DURATION_SEC` <br /><br /> | Max duration of a task in seconds. |
 | <br />`max_tasks_per_template`<hr /> `SEMAPHORE_MAX_TASKS_PER_TEMPLATE` <br /><br /> | Maximum number of recent tasks stored in the database for each template. |
 | <br />`schedule.timezone`     <hr /> `SEMAPHORE_SCHEDULE_TIMEZONE` <br /><br /> | Timezone used for scheduling tasks and cron jobs. |
-| <br />`oidc_providers` ![Static Badge](https://img.shields.io/badge/v2.10+-red)    | OpenID provider settings. You can provide multiple OpenID providers. More about OpenID configuration read in [OpenID](/openid). <br /><br /> |
+| <br />`oidc_providers` ![Static Badge](https://img.shields.io/badge/v2.10+-red) <hr /> `SEMAPHORE_OIDC_PROVIDERS` <br /><br /> | OpenID provider settings. You can provide multiple OpenID providers. More about OpenID configuration read in [OpenID](/admin-guide/openid). |
 | <br />`password_login_disable` <hr /> `SEMAPHORE_PASSWORD_LOGIN_DISABLED` <br /><br /> ![Static Badge](https://img.shields.io/badge/v2.10+-red)    <br /><br /> | Deny password login. |
 | <br />`non_admin_can_create_project`      <hr /> `SEMAPHORE_NON_ADMIN_CAN_CREATE_PROJECT` <br /><br /> | Allow non-admin users to create projects. |
 | <br />`env_vars`               <hr /> `SEMAPHORE_ENV_VARS` <br /><br /> | JSON map which contains environment variables. |
 | <br />`forwarded_env_vars`     <hr /> `SEMAPHORE_FORWARDED_ENV_VARS` <br /><br /> | JSON array of environment variables which will be forwarded from system. |
+| <br />`global_integration_alias` <hr /> `SEMAPHORE_INTEGRATION_ALIAS` <br /><br /> | Global integration alias. |
+| <br />`subscription_key` <hr /> `SEMAPHORE_SUBSCRIPTION_KEY` <br /><br /> | Subscription key or token. Disable activation from web UI when set. |
+| <br />`subscription_key_file` <hr /> `SEMAPHORE_SUBSCRIPTION_KEY_FILE` <br /><br /> | Path to subscription key or token file. |
 | <br />`apps`                   <hr /> `SEMAPHORE_APPS` <br /><br /> | JSON map which contains apps configuration. |
-| <br />`use_remote_runner`      <hr /> `SEMAPHORE_USE_REMOTE_RUNNER` <br /><br /> |   |
-| <br />`runner_registration_token` <hr /> `SEMAPHORE_RUNNER_REGISTRATION_TOKEN` <br /><br /> |   |
+| <br />`use_remote_runner`      <hr /> `SEMAPHORE_USE_REMOTE_RUNNER` <br /><br /> | Enable to use remote runner. |
+| <br />`runner_registration_token` <hr /> `SEMAPHORE_RUNNER_REGISTRATION_TOKEN` <br /><br /> | Token used to register remote runners. |
+| **Runner** ||
+| <br />`runner.token` <hr /> `SEMAPHORE_RUNNER_TOKEN` <br /><br /> | Token for runner registration. |
+| <br />`runner.token_file` <hr /> `SEMAPHORE_RUNNER_TOKEN_FILE` <br /><br /> | Path to token file for runner registration. |
+| <br />`runner.private_key_file` <hr /> `SEMAPHORE_RUNNER_PRIVATE_KEY_FILE` <br /><br /> | Path to private key file for runner. |
+| <br />`runner.one_off` <hr /> `SEMAPHORE_RUNNER_ONE_OFF` <br /><br /> | Runner runs only one job and exits. |
+| <br />`runner.webhook` <hr /> `SEMAPHORE_RUNNER_WEBHOOK` <br /><br /> | Webhook URL for runner. |
+| <br />`runner.max_parallel_tasks` <hr /> `SEMAPHORE_RUNNER_MAX_PARALLEL_TASKS` <br /><br /> | Max number of parallel tasks for the runner. Default: 1. |
+| **Teams** ||
+| <br />`teams.invites_enabled` <hr /> `SEMAPHORE_TEAMS_INVITES_ENABLED` <br /><br /> | Allow users to invite members to teams. |
+| <br />`teams.invite_type` <hr /> `SEMAPHORE_TEAMS_INVITE_TYPE` <br /><br /> | Type of invite: `username` (default), `email`, `both`. |
+| <br />`teams.members_can_leave` <hr /> `SEMAPHORE_TEAMS_MEMBERS_CAN_LEAVE` <br /><br /> | Allow members to leave teams. |
 | **Database** ||
 | <br />`sqlite.host` <hr /> `SEMAPHORE_DB_HOST`<br /><br /> | Path to the SQLite database file.   |
 | <br />`bolt.host` <hr /> `SEMAPHORE_DB_HOST`<br /><br /> | Path to the BoltDB database file.   |
@@ -45,7 +62,7 @@ Full list of available configuration options:
 | <br />`dialect`       <hr /> `SEMAPHORE_DB_DIALECT`<br /><br /> | Can be `sqlite` (default), `postgres`, `mysql` or `bolt` (deprecated).   |
 | <br /> `*.options`    <hr /> `SEMAPHORE_DB_OPTIONS`<br /><br /> | JSON map which contains database connection options. |
 | **Security** ||
-| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | Secret key used for encrypting access keys in database. Read more in [Database encryption reference](/security#database-encryption). |
+| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | Secret key used for encrypting access keys in database. Read more in [Database encryption reference](/admin-guide/security#database-encryption). |
 | <br />`cookie_hash`           <hr /> `SEMAPHORE_COOKIE_HASH`<br /><br /> | Secret key used to sign cookies. |
 | <br />`cookie_encryption`     <hr /> `SEMAPHORE_COOKIE_ENCRYPTION`<br /><br /> | Secret key used to encrypt cookies. |
 | <br />`web_host`       <hr /> `SEMAPHORE_WEB_ROOT`<br /><br /> | Can be useful if you want to use Semaphore by the subpath, for example: [http://yourdomain.com/semaphore](http://yourdomain.com/semaphore). Do not add a trailing `/`. |
@@ -73,8 +90,8 @@ Full list of available configuration options:
 | <br />`email_alert`    <hr /> `SEMAPHORE_EMAIL_ALERT`<br /><br /> | Flag which enables email alerts. |
 | **Messengers** ||
 | <br />`telegram_alert` <hr /> `SEMAPHORE_TELEGRAM_ALERT`<br /><br /> | Set to True to enable pushing alerts to Telegram. It should be used in combination with `telegram_chat` and `telegram_token`. |
-| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | Set to the Chat ID for the chat to send alerts to.  Read more in [Telegram Notifications Setup](/notifications#chat-id) |
-| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | Set to the Authorization Token for the bot that will receive the alert payload.  Read more in [Telegram Notifications Setup](/notifications#bot-setup) |
+| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | Set to the Chat ID for the chat to send alerts to.  Read more in [Telegram Notifications Setup](/admin-guide/notifications#chat-id) |
+| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | Set to the Authorization Token for the bot that will receive the alert payload.  Read more in [Telegram Notifications Setup](/admin-guide/notifications#bot-setup) |
 | <br />`slack_alert`    <hr /> `SEMAPHORE_SLACK_ALERT`<br /><br /> | Set to True to enable pushing alerts to slack. It should be used in combination with `slack_url`                          |
 | <br />`slack_url`      <hr /> `SEMAPHORE_SLACK_URL`<br /><br /> | The slack webhook url. Semaphore will used it to POST Slack formatted json alerts to the provided url.    |
 | <br />`microsoft_teams_alert` <hr /> `SEMAPHORE_MICROSOFT_TEAMS_ALERT` <br /><br /> | Flag which enables Microsoft Teams alerts. |
@@ -99,17 +116,22 @@ Full list of available configuration options:
 | <br />`ldap_mappings.uid`     <hr /> `SEMAPHORE_LDAP_MAPPING_UID` <br /><br /> | LDAP attribute to use as the user ID (UID) mapping for user authentication. |
 | <br />`ldap_mappings.cn`      <hr /> `SEMAPHORE_LDAP_MAPPING_CN` <br /><br /> | LDAP attribute to use as the common name (CN) mapping for user authentication. |
 | **Logging** ||
-| <br />`log.events.format`     <hr /> `SEMAPHORE_EVENT_LOG_FORMAT` <br /><br /> | Event log format. Can be `json` or empty for text. |
-| <br />`log.events.enabled`    <hr /> `SEMAPHORE_EVENT_LOG_ENABLED` <br /><br /> | Enable or disable event logging. |
-| <br />`log.events.logger`     <hr /> `SEMAPHORE_EVENT_LOGGER` <br /><br /> | JSON map which contains event logger configuration. |
-| <br />`log.tasks.format`      <hr /> `SEMAPHORE_TASK_LOG_FORMAT` <br /><br /> | Task log format. Can be `json` or empty for text. |
-| <br />`log.tasks.enabled`     <hr /> `SEMAPHORE_TASK_LOG_ENABLED` <br /><br /> | Enable or disable task logging. |
-| <br />`log.tasks.logger`      <hr /> `SEMAPHORE_TASK_LOGGER` <br /><br /> | JSON map which contains task logger configuration. |
-| <br />`log.tasks.result_logger` <hr /> `SEMAPHORE_TASK_RESULT_LOGGER` <br /><br /> | JSON map which contains task result logger configuration. |
+| <br />`log.events.format`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOG_FORMAT` <br /><br /> | Event log format. Can be `json` or empty for text. |
+| <br />`log.events.enabled`     ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOG_ENABLED` <br /><br /> | Enable or disable event logging. |
+| <br />`log.events.logger`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOGGER` <br /><br /> | JSON map which contains event logger configuration. |
+| <br />`log.tasks.format`       ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOG_FORMAT` <br /><br /> | Task log format. Can be `json` or empty for text. |
+| <br />`log.tasks.enabled`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOG_ENABLED` <br /><br /> | Enable or disable task logging. |
+| <br />`log.tasks.logger`       ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOGGER` <br /><br /> | JSON map which contains task logger configuration. |
+| <br />`log.tasks.result_logger`  ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_RESULT_LOGGER` <br /><br /> | JSON map which contains task result logger configuration. |
 | <br />`syslog.enabled` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_ENABLED` <br /><br /> | Enable or disable writing logs to the configured syslog server. |
 | <br />`syslog.network` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_NETWORK` <br /><br /> | Protocol used to connect to the Syslog server: `udp` or `tcp`. |
 | <br />`syslog.address` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_ADDRESS` <br /><br /> | Hostname and port of the Syslog server. Example: `localhost:514`. |
 | <br />`syslog.tag` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_TAG` <br /><br /> | The tag used to mark Semaphore UI records on the Syslog server. |
+| <br />`syslog.format` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_FORMAT` <br /><br /> | Format of the Syslog messages. Can be `rfc5424` or empty for default. |
+| **Debugging** ||
+| <br />`debugging.api_delay` <hr /> `SEMAPHORE_API_DELAY` <br /><br /> | Add delay to API responses (for debugging purposes). |
+| <br />`debugging.pprof_dump_dir` <hr /> `SEMAPHORE_PPROF_DUMP_DIR` <br /><br /> | Directory for pprof dump files. |
+| **High Availability (HA)** ||
 | <br />`ha.enabled` ![Static Badge](https://img.shields.io/badge/enterprise-yellow) <hr /> `SEMAPHORE_HA_ENABLED` <br /><br /> | Enable High Availability (HA) mode. |
 | <br />`ha.node_id` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_NODE_ID` <br /><br /> | Unique identifier for the HA node. |
 | <br />`ha.redis.addr` ![Static Badge](https://img.shields.io/badge/enterprise-yellow) <hr /> `SEMAPHORE_HA_REDIS_ADDR` <br /><br /> | Address of the Redis server used for HA. Example: `localhost:6379`. |
@@ -118,6 +140,7 @@ Full list of available configuration options:
 | <br />`ha.redis.user` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_USER` <br /><br /> | Username for the Redis server. |
 | <br />`ha.redis.tls` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_TLS` <br /><br /> | Enable TLS for the Redis connection. |
 | <br />`ha.redis.tls_skip_verify` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` <br /><br /> | Skip TLS certificate verification for the Redis connection. |
+| <br />`debugging.pprof_dump_dir` <hr /> `SEMAPHORE_PPROF_DUMP_DIR` <br /><br /> | Directory for pprof dump files. |
 
 ## Frequently asked questions
 

@@ -4,13 +4,13 @@ Semaphore can send notifications about task and project activity to popular chan
 
 Supported providers:
 
-* [Email](/administration-guide/notifications/email)
-* [Slack](/administration-guide/notifications/slack)
-* [Telegram](/administration-guide/notifications/telegram)
-* [Microsoft Teams](/administration-guide/notifications/teams)
-* [RocketChat](/administration-guide/notifications/rocket)
-* [DingTalk](/administration-guide/notifications/ding)
-* [Gotify](/administration-guide/notifications/gotify)
+* [Email](/admin-guide/notifications/email)
+* [Slack](/admin-guide/notifications/slack)
+* [Telegram](/admin-guide/notifications/telegram)
+* [Microsoft Teams](/admin-guide/notifications/teams)
+* [RocketChat](/admin-guide/notifications/rocket)
+* [DingTalk](/admin-guide/notifications/ding)
+* [Gotify](/admin-guide/notifications/gotify)
 
 ## How it works
 

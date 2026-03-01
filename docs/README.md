@@ -7,13 +7,13 @@ Semaphore is written in **Go** (lightweight, fast) and runs on **Windows**, **ma
 ## Choose your path
 
 - **I’m installing or operating Semaphore (admins/operators)**
-  - Install: [Installation](/administration-guide/installation)
-  - Configure: [Configuration](/administration-guide/configuration)
-  - Secure: [Security](/administration-guide/security)
-  - Auth: [LDAP](/administration-guide/ldap) or [OpenID Connect](/administration-guide/openid)
-  - Scale & run remotely: [Runners](/administration-guide/runners)
-  - Keep it healthy: [Logs](/administration-guide/logs), [Upgrading](/administration-guide/upgrading), [Troubleshooting](/administration-guide/troubleshooting)
-  - Enterprise setups: [High availability](/administration-guide/ha)
+  - Install: [Installation](/admin-guide/installation)
+  - Configure: [Configuration](/admin-guide/configuration)
+  - Secure: [Security](/admin-guide/security)
+  - Auth: [LDAP](/admin-guide/ldap) or [OpenID Connect](/admin-guide/openid)
+  - Scale & run remotely: [Runners](/admin-guide/runners)
+  - Keep it healthy: [Logs](/admin-guide/logs), [Upgrading](/admin-guide/upgrading), [Troubleshooting](/admin-guide/troubleshooting)
+  - Enterprise setups: [High availability](/admin-guide/ha)
 
 - **I’m using Semaphore day-to-day (teams/users)**
   - Organize work: [Projects](/user-guide/projects) and [Teams](/user-guide/team)
@@ -34,8 +34,8 @@ Semaphore is written in **Go** (lightweight, fast) and runs on **Windows**, **ma
 
 Use this as a simple “happy path” to get productive quickly:
 
-1. **Install Semaphore** using your preferred method: [Installation](/administration-guide/installation)
-2. **Run initial setup** (config + first admin user): [Interactive setup](/administration-guide/configuration/cli)
+1. **Install Semaphore** using your preferred method: [Installation](/admin-guide/installation)
+2. **Run initial setup** (config + first admin user): [Interactive setup](/admin-guide/configuration/cli)
 3. **Create a project** to isolate work (teams, infra, apps): [Projects](/user-guide/projects)
 4. **Connect what Semaphore needs**
    - Source: [Repositories](/user-guide/repositories)
@@ -48,7 +48,7 @@ Use this as a simple “happy path” to get productive quickly:
 6. **Automate & operationalize**
    - Schedule runs: [Schedules](/user-guide/schedules)
    - Control access: [RBAC](/user-guide/rbac)
-   - Get alerts: [Notifications](/administration-guide/notifications)
+   - Get alerts: [Notifications](/admin-guide/notifications)
 
 ## Key concepts (glossary)
 
@@ -60,14 +60,14 @@ If you’re new, these terms show up everywhere in the UI:
 - **Variable Group (Environment)**: reusable variables and configuration per project — [Variable Groups](/user-guide/environment)
 - **Key Store**: encrypted credentials (SSH keys, tokens, passwords) — [Key Store](/user-guide/key-store)
 - **Task / Task template**: the definition and the run of automation — [Tasks](/user-guide/tasks)
-- **Runner**: where tasks execute (local or remote) — [Runners](/administration-guide/runners)
+- **Runner**: where tasks execute (local or remote) — [Runners](/admin-guide/runners)
 
 ## Common workflows
 
-- **CI/CD in Semaphore**: build, deploy, and rollback — [CI/CD](/administration-guide/cicd)
-- **Run at scale**: distribute execution using runners — [Runners](/administration-guide/runners)
-- **Programmatic automation**: integrate Semaphore into your pipelines — [API](/administration-guide/api)
-- **Manage via CLI**: setup, users, runners, migrations — [CLI](/administration-guide/cli)
+- **CI/CD in Semaphore**: build, deploy, and rollback — [CI/CD](/admin-guide/cicd)
+- **Run at scale**: distribute execution using runners — [Runners](/admin-guide/runners)
+- **Programmatic automation**: integrate Semaphore into your pipelines — [API](/admin-guide/api)
+- **Manage via CLI**: setup, users, runners, migrations — [CLI](/admin-guide/cli)
 
 ## Get help, report issues, or contribute
 
