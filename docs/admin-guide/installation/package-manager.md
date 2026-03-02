@@ -1,8 +1,8 @@
 # Package manager
 
-<div class="warning">
+:::tip
   Look into the <a href="./../installation_manually">manual installation</a> on how to set-up your Python/Ansible/Systemd environment!
-</div>
+:::
 
 
 Download package file from [Releases page](https://github.com/semaphoreui/semaphore/releases).
@@ -18,33 +18,33 @@ import TabItem from '@theme/TabItem';
   <TabItem value="debian-x64" label="Debian / Ubuntu (x64)">
     ```bash
     wget https://github.com/semaphoreui/semaphore/releases/\
-    download/v2.15.0/semaphore_2.15.0_linux_amd64.deb
+    download/v2.17.15/semaphore_2.17.15_linux_amd64.deb
 
-    sudo dpkg -i semaphore_2.15.0_linux_amd64.deb
+    sudo dpkg -i semaphore_2.17.15_linux_amd64.deb
     ```
   </TabItem>
   <TabItem value="debian-arm64" label="Debian / Ubuntu (ARM64)">
     ```bash
     wget https://github.com/semaphoreui/semaphore/releases/\
-    download/v2.15.0/semaphore_2.15.0_linux_arm64.deb
+    download/v2.17.15/semaphore_2.17.15_linux_arm64.deb
 
-    sudo dpkg -i semaphore_2.15.0_linux_arm64.deb
+    sudo dpkg -i semaphore_2.17.15_linux_arm64.deb
     ```
   </TabItem>
   <TabItem value="centos-x64" label="CentOS (x64)">
     ```bash
     wget https://github.com/semaphoreui/semaphore/releases/\
-    download/v2.15.0/semaphore_2.15.0_linux_amd64.rpm
+    download/v2.17.15/semaphore_2.17.15_linux_amd64.rpm
 
-    sudo yum install semaphore_2.15.0_linux_amd64.rpm
+    sudo yum install semaphore_2.17.15_linux_amd64.rpm
     ```
   </TabItem>
   <TabItem value="centos-arm64" label="CentOS (ARM64)">
     ```bash
     wget https://github.com/semaphoreui/semaphore/releases/\
-    download/v2.15.0/semaphore_2.15.0_linux_arm64.rpm
+    download/v2.17.15/semaphore_2.17.15_linux_arm64.rpm
 
-    sudo yum install semaphore_2.15.0_linux_arm64.rpm
+    sudo yum install semaphore_2.17.15_linux_arm64.rpm
     ```
   </TabItem>
 </Tabs>

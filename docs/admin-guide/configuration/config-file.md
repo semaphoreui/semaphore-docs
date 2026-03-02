@@ -18,10 +18,9 @@ Use the following commands to generate the configuration file interactively:
   semaphore runner setup
   ```
   
-  <div class="warning">
+  :::tip
     For more details about runner configuration, see the <a href="./../runners">Runners</a> section.
-  </div>
-
+  :::
 
 ### Generate on the website
 
