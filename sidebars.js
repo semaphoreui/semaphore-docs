@@ -170,7 +170,7 @@ const sidebars = {
           type: 'category',
           label: 'Key Store',
           items: [
-            'user-guide/key-store/gitlab',
+            'user-guide/key-store/hashicorp-vault',
           ],
         },
         {
