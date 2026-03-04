@@ -2,8 +2,6 @@
 
 The Key Store in Semaphore is used to store credentials for accessing remote Repositories, accessing remote hosts, sudo credentials, and Ansible vault passwords.
 
-It is helpful to have configured all required access keys before setting up other resources like Inventories, Repositories, and tasks templates so you do not have to edit them later.
-
 ## Types
 
 ### 1. SSH
@@ -25,9 +23,31 @@ Login With Password is a username and password/access token combination that can
 * Authenticate to remote Git Repositories over HTTPS (although SSH is more secure)
 * Unlock Ansible vaults
 
-<div class="warning">
+:::tip
     This type of secret can be used as Personal Access Token (PAT) or secret string. Simply leave the Login field empty.
-</div>
+:::
 
 ### 3. None
 This is used as a filler for Repos that do not require authentication, like an Open-Source Repository on GitLab.
+
+
+## Secret Storages
+
+Semaphore UI supports different storages for secrets. You can choose the storage per-secret when creating or editing a secret.
+
+### Database
+
+Secrets are stored in the database in encrypted form by default. The encryption key is configured via the configuration option
+`access_key_encryption` or `SEMAPHORE_ACCESS_KEY_ENCRYPTION` (must be generated using `head -c32 /dev/urandom | base64`).
+
+### HashiCorp Vault
+
+Secrets can be stored in an external HashiCorp Vault instance instead of the database.
+
+[Read more...](/user-guide/key-store/hashicorp-vault)
+
+### Devolutions Server
+
+Secrets can be stored in an external Devolutions Server instance instead of the database.
+
+[Read more...](/user-guide/key-store/devolutions-server)

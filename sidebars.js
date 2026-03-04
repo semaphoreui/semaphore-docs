@@ -169,8 +169,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Key Store',
+          link: { type: 'doc', id: 'user-guide/key-store' },
           items: [
             'user-guide/key-store/hashicorp-vault',
+            'user-guide/key-store/devolutions-server',
           ],
         },
         {
