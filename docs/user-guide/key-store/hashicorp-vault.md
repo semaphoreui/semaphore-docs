@@ -21,3 +21,9 @@ The storage can work in read-only mode.
 3. Provide the secret path in Vault where the credential should be stored.
 
 ![](/assets/vault2.webp)
+
+## Variable Groups
+
+HashiCorp Vault can also be used as a storage for [Variable Groups](/user-guide/environment). When editing a variable group, select **HashiCorp Vault** as the storage type and specify the path of the folder where secrets will be stored.
+
+![](/assets/vault3.webp)
