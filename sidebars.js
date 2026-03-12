@@ -25,7 +25,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Installation',
-          link: { type: 'generated-index' },
+          link: { type: 'doc', id: 'admin-guide/installation' },
           items: [
             'admin-guide/installation/package-manager',
             'admin-guide/installation/docker',
