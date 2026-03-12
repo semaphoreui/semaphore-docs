@@ -4,14 +4,22 @@
 ```json
 {
   "oidc_providers": {
-        "azure": {
-            "color": "blue",
-            "display_name": "Sign in with Azure (Entra ID)",
-            "provider_url": "https://login.microsoftonline.com/<Tennant ID>/v2.0",
-            "client_id": "<ID>",
-            "client_secret": "<secret>",
-            "redirect_url": "https://semaphore.test.com/api/auth/oidc/azure/redirect"
-        }
+    "azure": {
+      "icon": "microsoft",
+      "color": "blue",
+      "display_name": "Sign in with EntraID",
+      "client_id": "REDACTED",
+      "client_secret": "REDACTED",
+      "redirect_url": "https://YOUR_SEMAPHORE_HOST_AND_PORT/api/auth/oidc/azuread/redirect",
+      "endpoint": {
+        "issuer": "https://login.microsoftonline.com/TENANT_ID/v2.0",
+        "auth": "https://login.microsoftonline.com/TENANT_ID/oauth2/v2.0/authorize",
+        "token": "https://login.microsoftonline.com/TENANT_ID/oauth2/v2.0/token",
+        "userinfo": "https://graph.microsoft.com/oidc/userinfo",
+        "jwks": "https://login.microsoftonline.com/TENANT_ID/discovery/v2.0/keys"
+      },
+      "scopes": ["openid", "email", "profile", "User.Read"]
+    }
   }
 }
 ```
