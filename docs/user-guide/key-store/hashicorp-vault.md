@@ -33,24 +33,24 @@ To set this up:
 1. Configure and run Vault Agent with an appropriate [auto-auth method](https://developer.hashicorp.com/vault/docs/agent-and-proxy/autoauth) (e.g., AppRole, Kubernetes, AWS IAM).
 2. Set Vault Agent to write the token to a file using a `sink` block, for example:
 
-```hcl
-auto_auth {
-  method {
-    type = "approle"
-    config = {
-      role_id_file_path   = "/etc/vault/role-id"
-      secret_id_file_path = "/etc/vault/secret-id"
+    ```hcl
+    auto_auth {
+    method {
+        type = "approle"
+        config = {
+        role_id_file_path   = "/etc/vault/role-id"
+        secret_id_file_path = "/etc/vault/secret-id"
+        }
     }
-  }
 
-  sink {
-    type = "file"
-    config = {
-      path = "/etc/vault/token"
+    sink {
+        type = "file"
+        config = {
+        path = "/etc/vault/token"
+        }
     }
-  }
-}
-```
+    }
+    ```
 
 3. In Semaphore, when configuring the HashiCorp Vault connection, select **File** as the token source and provide the path to the token file (e.g., `/etc/vault/token`).
 
