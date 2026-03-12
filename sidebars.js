@@ -100,6 +100,7 @@ const sidebars = {
         'admin-guide/cicd',
         'admin-guide/runners',
         'admin-guide/logs',
+        'admin-guide/ha',
         {
           type: 'category',
           label: 'Notifications',
