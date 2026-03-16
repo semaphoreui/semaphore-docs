@@ -64,7 +64,7 @@ semaphore migrate --from-boltdb /path/to/boltdb/file
 - `/path/to/boltdb/file` &mdash; Path to the existing BoltDB database file.
 
 Additional arguments:
-- `--err-log-size` &mdash; Error log size.
+- `--err-log-size=N` &mdash; Maximum number of error lines displayed in the output.
 - `--skip-task-output` &mdash; Do not import task outputs.
 - `--merge-existing-users` &mdash; Reuse existing users matched by username instead of failing on conflict.
 
