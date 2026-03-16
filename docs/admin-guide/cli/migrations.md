@@ -50,6 +50,19 @@ semaphore migrate --undo-to <version>
 semaphore migrate --undo-to 2.13
 ```
 
+
+## Migration from BoltDB to SQLite/MySQL/PostgreSQL
+
+BoltDB was deprecated starting from version 2.16, and many new features introduced in 2.17 are no longer supported by BoltDB. BoltDB support will be fully removed in version 2.19.
+
+To migrate your data from BoltDB to another database backend, use:
+
+```
+semaphore migrate --from-boltdb /path/to/boltdb/file
+```
+
+- `/path/to/boltdb/file`: Path to the existing BoltDB database file.
+
 ## Troubleshooting
 
 - Always back up your database before applying or rolling back migrations.
