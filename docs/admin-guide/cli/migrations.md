@@ -61,7 +61,13 @@ To migrate your data from BoltDB to another database backend, use:
 semaphore migrate --from-boltdb /path/to/boltdb/file
 ```
 
-- `/path/to/boltdb/file`: Path to the existing BoltDB database file.
+- `/path/to/boltdb/file` &mdash; Path to the existing BoltDB database file.
+
+Additional arguments:
+- `--err-log-size` &mdash; Error log size.
+- `--skip-task-output` &mdash; Do not import task outputs.
+- `--merge-existing-users` &mdash; Reuse existing users matched by username instead of failing on conflict.
+
 
 If you use Semaphore UI's Docker container, you can set the `SEMAPHORE_MIGRATE_FROM_BOLTDB` environment variable to automatically import the existing BoltDB database. The import runs only once, on the initial start of the container.
 
