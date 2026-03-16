@@ -55,13 +55,21 @@ semaphore migrate --undo-to 2.13
 
 BoltDB was deprecated starting from version 2.16, and many new features introduced in 2.17 are no longer supported by BoltDB. BoltDB support will be fully removed in version 2.19.
 
-To migrate your data from BoltDB to another database backend, use:
+To migrate, first update Semaphore to version 2.17 or later, then configure the target database (SQLite, MySQL, or PostgreSQL) in your `config.json`. After that, run the following command to import all data from the old BoltDB file into the new database:
 
 ```
 semaphore migrate --from-boltdb /path/to/boltdb/file
 ```
 
 - `/path/to/boltdb/file` &mdash; Path to the existing BoltDB database file.
+
+The command reads all projects, templates, inventories, repositories, keys, users, and task history from BoltDB and writes them into the database specified in the current Semaphore configuration. The original BoltDB file is not modified.
+
+By default, the database schema is migrated to the latest version supported by the current Semaphore binary. You can combine `--from-boltdb` with `--apply-to` or `--undo-to` to target a specific schema version:
+
+```
+semaphore migrate --from-boltdb /path/to/boltdb/file --apply-to 2.17.0
+```
 
 Additional arguments:
 - `--err-log-size=N` &mdash; Maximum number of error lines displayed in the output.
