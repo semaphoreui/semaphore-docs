@@ -63,6 +63,8 @@ semaphore migrate --from-boltdb /path/to/boltdb/file
 
 - `/path/to/boltdb/file`: Path to the existing BoltDB database file.
 
+If you use Semaphore UI's Docker container, you can set the `SEMAPHORE_MIGRATE_FROM_BOLTDB` environment variable to automatically import the existing BoltDB database. The import runs only once, on the initial start of the container.
+
 ## Troubleshooting
 
 - Always back up your database before applying or rolling back migrations.
