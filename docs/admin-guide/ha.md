@@ -105,9 +105,9 @@ Place a load balancer in front of the Semaphore nodes to distribute traffic. The
 
 ```nginx
 upstream semaphore {
-    server node1.example.com:3000;
-    server node2.example.com:3000;
-    server node3.example.com:3000;
+    server node1.example.com:3000 max_fails=3 fail_timeout=10s;
+    server node2.example.com:3000 max_fails=3 fail_timeout=10s;
+    server node3.example.com:3000 max_fails=3 fail_timeout=10s;
 }
 
 server {
@@ -118,20 +118,38 @@ server {
     ssl_certificate_key /etc/ssl/private/semaphore.key;
 
     location / {
-        proxy_pass http://semaphore;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-
-    location /api/ws {
-        proxy_pass http://semaphore;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
-        proxy_set_header Host $host;
+        
+        proxy_pass http://semaphore;
+
+        proxy_connect_timeout 3s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        proxy_next_upstream_tries 3;
+    }
+
+
+    location /api/ws {
+        
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
         proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_pass http://semaphore;
+        
+        proxy_connect_timeout 3s;
+        proxy_send_timeout 1h;
+        proxy_read_timeout 1h;
+
+        proxy_next_upstream error timeout http_502 http_503 http_504;
+        proxy_next_upstream_tries 3;
     }
 }
 ```
