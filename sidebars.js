@@ -79,6 +79,7 @@ const sidebars = {
           ],
         },
         'admin-guide/ldap',
+        'admin-guide/jwt-proxy-auth',
         {
           type: 'category',
           label: 'OpenID Connect',
