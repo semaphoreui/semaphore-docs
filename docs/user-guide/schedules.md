@@ -32,7 +32,7 @@ For a list of valid timezone values, refer to the [IANA Time Zone Database](http
 
 ### Accessing the schedule feature
 
-1. Log in to your Ansible Semaphore web interface
+1. Log in to the Semaphore web interface
 2. Navigate to the "Schedule" tab in the main navigation menu
 3. Click the "New Schedule" button in the top right corner to create a new schedule
 

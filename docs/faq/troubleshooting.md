@@ -1,6 +1,6 @@
 # Troubleshooting
 
-## 1. Renner prints error 404
+## 1. Runner prints error 404
 
 ### How to fix
 
@@ -44,7 +44,7 @@ There are two ways:
 127.0.0.1 ansible_connection=ssh ansible_ssh_user=your_localhost_user
 ```
 ---
-## 4. panic: pq: SSL is not enabled on the server
+## 3. panic: pq: SSL is not enabled on the server
 
 This means that your Postgres doesn't work by SSL.
 
@@ -55,7 +55,7 @@ Add option `sslmode=disable` to the configuration file:
 ```json
 	"postgres": {
 		"host": "localhost",
-		"user": "pastgres",
+		"user": "postgres",
 		"pass": "pwd",
 		"name": "semaphore",
 		"options": {
@@ -68,7 +68,7 @@ Add option `sslmode=disable` to the configuration file:
 ---
 
 
-## 5. fatal: bad numeric config value '0' for 'GIT_TERMINAL_PROMPT': invalid unit
+## 4. fatal: bad numeric config value '0' for 'GIT_TERMINAL_PROMPT': invalid unit
 
 This means that you are trying to access a repository over HTTPS that requires authentication.
 
@@ -85,7 +85,7 @@ This means that you are trying to access a repository over HTTPS that requires a
 
 
 
-## 6. unable to read LDAP response packet: unexpected EOF
+## 5. unable to read LDAP response packet: unexpected EOF
 
 Most likely, you are trying to connect to the LDAP server using an insecure method, although it expects a secure connection (via TLS).
 
@@ -101,7 +101,7 @@ Enable TLS in your `config.json` file:
 
 ---
 
-## 7. LDAP Result Code 49 "Invalid Credentials"
+## 6. LDAP Result Code 49 "Invalid Credentials"
 
 You have the wrong password or `binddn`.
 
@@ -125,6 +125,6 @@ You also can read the following articles:
 
 ---
 
-## 8. LDAP Result Code 32 "No Such Object"
+## 7. LDAP Result Code 32 "No Such Object"
 
 Coming soon.

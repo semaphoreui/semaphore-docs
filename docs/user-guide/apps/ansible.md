@@ -3,7 +3,7 @@
 
 Using Semaphore UI you can run Ansible playbooks. To do this, you need to create an **Ansible Playbook** Template.
 
-1. Go go **Task Templates** section, click on **New Template** and then **Ansible Playbook**.
+1. Go to **Task Templates** section, click on **New Template** and then **Ansible Playbook**.
 
 ![](/assets/ansible_1.png)
 
@@ -16,7 +16,8 @@ The template allows you to specify the following parameters:
 * Inventory
 * Variable Groups
 * Vaults
-* and much more
+* Extra CLI arguments (tags, skip-tags, limit, verbosity)
+* Environment variables
 
 ![](/assets/ansible_2.png)
 

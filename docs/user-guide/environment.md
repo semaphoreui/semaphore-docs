@@ -15,7 +15,7 @@ All task templates require a variable group to be defined even if it is empty.
 3. Make changes and click save.
 
 ## Deleting the variable group
-Before you remove a variable proup, you must remove all resources tied to it.
+Before you remove a variable group, you must remove all resources tied to it.
 If you are not sure which resources are being used in a variable group, follow steps 1 and 2 below. It will show you which resources are being used, with links to those resources.
 
 1. Click on the Variable Group.

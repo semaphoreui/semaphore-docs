@@ -1,6 +1,6 @@
 # Troubleshooting
 
-## Renner prints error 404
+## Runner prints error 404
 
 ### How to fix
 
@@ -55,7 +55,7 @@ Add option `sslmode=disable` to the configuration file:
 ```json
 	"postgres": {
 		"host": "localhost",
-		"user": "pastgres",
+		"user": "postgres",
 		"pass": "pwd",
 		"name": "semaphore",
 		"options": {

@@ -11,6 +11,19 @@ You can provide the following options:
     - Stored in the database.
     - Provided via an environment variable.
     - Provided via a file (useful for Vault Agent).
+      :::warning
+      When the token comes from a **file**, that file must be **inside** the secrets directory Semaphore uses. Configure that directory using either the `SEMAPHORE_SECRETS_PATH` environment variable or `dirs.secrets_path` in the Semaphore config. If neither is set, the default is `/tmp/semaphore`. See [Configuration](/admin-guide/configuration) for the full list of options.
+
+      Example `config.json` fragment:
+
+      ```json
+      {
+        "dirs": {
+          "secrets_path": "/root/path/for/secrets"
+        }
+      }
+      ```
+      :::
 
 The storage can work in read-only mode.
 

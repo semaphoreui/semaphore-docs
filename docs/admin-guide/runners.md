@@ -107,15 +107,15 @@ Now you can start the runner with the command:
 semaphore runner start --config /path/to/your/config/file.json
 ```
 
-Your runner is ready to execute tasks ;)
+Your runner is ready to execute tasks.
 
 ### Runner tags (Pro)
 
 You can assign one or more tags to a project runner. Templates can then require a tag so tasks run only on matching runners. Configure tags when adding a runner in the project UI, and set the required tag in the template settings.
 
-## Runner desregistaration
+## Runner deregistration
 
-You can remove runner using the web interfance.
+You can remove a runner using the web interface.
 
 ![Runner Image](https://github.com/user-attachments/assets/431291eb-8f48-42c1-b56e-87fc8e9ba040)
 
