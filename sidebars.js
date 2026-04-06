@@ -147,7 +147,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'apps',
+          label: 'Apps',
           link: { type: 'generated-index' },
           items: [
             'user-guide/apps/ansible',
