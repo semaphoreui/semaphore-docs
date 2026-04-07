@@ -73,10 +73,34 @@ docker run -d -p 3000:3000 --name semaphore \
 | `auth.jwt.email_claim` | `SEMAPHORE_JWT_AUTH_EMAIL_CLAIM` | JWT claim for the user's email. Default: `email`. |
 | `auth.jwt.name_claim` | `SEMAPHORE_JWT_AUTH_NAME_CLAIM` | JWT claim for the user's display name. Default: `name`. |
 | `auth.jwt.username_claim` | `SEMAPHORE_JWT_AUTH_USERNAME_CLAIM` | JWT claim for the username. Default: `email`. |
+| `auth.jwt.signout_url` | `SEMAPHORE_JWT_AUTH_SIGNOUT_URL` | URL the logout link redirects to after clearing the Semaphore session. See [Logout](#logout). |
 
 ## Supported algorithms
 
 Semaphore accepts tokens signed with **ES256**, **ES384**, **ES512**, **RS256**, **RS384**, or **RS512**.
+
+## Logout
+
+Clicking logout in Semaphore clears the Semaphore session cookie, but the reverse proxy's session is unaffected -- so the next request re-authenticates the same user immediately.
+
+To fully sign the user out, set `signout_url` to the proxy's signout endpoint. After clearing the Semaphore session, the browser is redirected there.
+
+```json
+{
+  "auth": {
+    "jwt": {
+      "enabled": true,
+      "signout_url": "https://auth.example.com/.pomerium/sign_out"
+    }
+  }
+}
+```
+
+Examples for common proxies:
+
+- **Pomerium**: `https://<your-domain>/.pomerium/sign_out`
+- **OAuth2 Proxy**: `https://<your-domain>/oauth2/sign_out`
+- **Cloudflare Access**: `https://<your-team>.cloudflareaccess.com/cdn-cgi/access/logout`
 
 ## JWKS availability
 
