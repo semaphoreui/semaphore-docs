@@ -1,7 +1,6 @@
 # Gitea config
 
-`config.json`:
-```json
+```json title="config.json"
 "oidc_providers": {
         "github": {
             "icon": "github",

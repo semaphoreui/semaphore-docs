@@ -1,9 +1,7 @@
 
 # Okta config
 
-`config.json`:
-
-```yaml
+```yaml title="config.json"
 {
   "oidc_providers": {
     "okta": {

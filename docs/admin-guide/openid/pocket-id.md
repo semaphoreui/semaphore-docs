@@ -1,7 +1,6 @@
 # Pocket-ID config
 
-`config.json`:
-```json
+```json title="config.json"
 "oidc_providers": {
     "pocketid": {
         "display_name": "Sign in with PocketID",
