@@ -78,7 +78,14 @@ const sidebars = {
             'admin-guide/cli/migrations',
           ],
         },
-        'admin-guide/ldap',
+        {
+          type: 'category',
+          label: 'LDAP and AD',
+          link: { type: 'doc', id: 'admin-guide/ldap' },
+          items: [
+            'admin-guide/ldap/ad',
+          ],
+        },
         {
           type: 'category',
           label: 'OpenID Connect',
