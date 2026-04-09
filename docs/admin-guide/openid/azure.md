@@ -10,7 +10,7 @@
       "display_name": "Sign in with EntraID",
       "client_id": "REDACTED",
       "client_secret": "REDACTED",
-      "redirect_url": "https://YOUR_SEMAPHORE_HOST_AND_PORT/api/auth/oidc/azuread/redirect",
+      "redirect_url": "https://YOUR_SEMAPHORE_HOST_AND_PORT/api/auth/oidc/azure/redirect",
       "endpoint": {
         "issuer": "https://login.microsoftonline.com/TENANT_ID/v2.0",
         "auth": "https://login.microsoftonline.com/TENANT_ID/oauth2/v2.0/authorize",
