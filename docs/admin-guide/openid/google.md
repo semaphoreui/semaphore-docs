@@ -3,7 +3,7 @@
 
 ```json title="config.json"
 {
-  	"oidc_providers": {
+    "oidc_providers": {
         "google": {
             "color": "blue",
             "icon": "google",
@@ -16,6 +16,6 @@
             "name_claim": "name",
             "order": 2
         }
-  	}
+    }
 }
 ```
