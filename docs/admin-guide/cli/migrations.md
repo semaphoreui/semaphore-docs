@@ -59,7 +59,7 @@ BoltDB was deprecated starting from version 2.16, and many new features introduc
 To migrate, first update Semaphore to version 2.17 or later, then configure the target database (SQLite, MySQL, or PostgreSQL) in your `config.json`. After that, run the following command to import all data from the old BoltDB file into the new database:
 
 ```
-semaphore migrate --from-boltdb /path/to/boltdb/file
+semaphore migrate --from-boltdb /path/to/boltdb/file --config /path/to/config.json
 ```
 
 The command reads all projects, templates, inventories, repositories, keys, users, and task history from BoltDB and writes them into the database specified in the current Semaphore configuration. The original BoltDB file is not modified.
@@ -70,7 +70,21 @@ Additional arguments:
 - `--merge-existing-users` &mdash; Reuse existing users matched by username instead of failing on conflict.
 
 
-If you use Semaphore UI's Docker container, you can set the `SEMAPHORE_MIGRATE_FROM_BOLTDB` environment variable to automatically import the existing BoltDB database. The import runs only once, on the initial start of the container.
+If you use Semaphore UI's Docker container, you can set the `SEMAPHORE_MIGRATE_FROM_BOLTDB` environment variable to automatically import the existing BoltDB database. The import runs only once, on the initial start of the container. Example:
+
+```json
+docker run --name semaphore \
+-p 3000:3000 \
+-e SEMAPHORE_DB_DIALECT=sqlite \
+-e SEMAPHORE_ADMIN=admin \
+-e SEMAPHORE_ADMIN_PASSWORD=changeme \
+-e SEMAPHORE_ADMIN_NAME="Admin" \
+-e SEMAPHORE_MIGRATE_FROM_BOLTDB=/var/lib/semaphore/database.boltdb \
+-e SEMAPHORE_ADMIN_EMAIL=admin@localhost \
+-v semaphore_data:/var/lib/semaphore \
+-d semaphoreui/semaphore:v2.18.2
+```
+
 
 ## Troubleshooting
 

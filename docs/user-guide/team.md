@@ -4,11 +4,9 @@ In Semaphore UI, every project is associated with a **Team**. Only team members 
 
 In the **Enterprise** edition, built-in roles can be extended with [custom roles](#extended-rbac-enterprise) that grant additional, fine-grained permissions on specific templates.
 
-<div class="warning">
+:::tip
 To avoid losing access to a project, it's recommended to have at least two team members with the <b>Owner</b> role.
-</div>
-
----
+:::
 
 ## Built-in roles
 
@@ -69,6 +67,8 @@ Below are detailed descriptions of each role and its permissions.
 Extended RBAC is available in the **Semaphore Enterprise** edition, starting with [Semaphore v2.17](https://semaphoreui.com/releases/semaphore-v2_17).
 :::
 
+![](https://www.semaphoreui.com/uploads/v2.17/roles1.webp)
+
 Extended RBAC layers additional, fine-grained permissions on top of the four built-in roles. The built-in roles themselves are unchanged — if you do not define any custom roles, every project behaves exactly as in the community edition.
 
 With Extended RBAC you can define **custom roles** that grant targeted permissions on specific templates. This lets you give a team member access to just the templates they need, without promoting them to a higher built-in role.
@@ -85,6 +85,8 @@ Custom roles are managed from the Semaphore UI and through the REST API.
 ### Available permissions
 
 In the current release, custom roles support **template-level permissions** only. A role can be attached to one or more task templates and control actions such as viewing, running, or managing those templates.
+
+![](https://www.semaphoreui.com/uploads/v2.17/roles2.webp)
 
 Permissions for other project resources (inventory, repositories, environments, key store, etc.) continue to follow the member's built-in role. Support for additional resource types may be added in future releases.
 
