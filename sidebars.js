@@ -189,6 +189,7 @@ const sidebars = {
           items: [
             'user-guide/inventory/kerberos',
             'user-guide/inventory/netbox-dynamic-inventory',
+            'user-guide/inventory/consul-dynamic-inventory',
           ],
         },
         'user-guide/environment',
