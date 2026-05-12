@@ -19,7 +19,7 @@ Using runners offers the following advantages:
 
 ### Set up a server
 
-To set up the server for working with running you should add following option to your Semaphore server configuration:
+To set up the server for working with runners you should add following option to your Semaphore server configuration:
 
 ```json
 {
