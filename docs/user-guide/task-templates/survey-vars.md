@@ -137,10 +137,10 @@ Survey variables are passed to the Bash script as command-line arguments:
 You can use following code inside the script to parse the arguments to array:
 
 ```bash
+declare -A args
 for arg in "$@"; do
   KEY="${arg%%=*}"
   VALUE="${arg#*=}"
-  declare -A args
   args["$KEY"]="$VALUE"
 done
  
