@@ -70,6 +70,10 @@ Templates support Ansible CLI options:
 
 These can be set in the template and overridden when creating a task. Ensure corresponding prompts are enabled if you plan to pass these values via API.
 
+### Authentication
+
+Authentication for hosts in the playbook is done using the user references from the Key Store on the inventory. The user for SSH is determined by the optional user on the Key Store element.
+
 ### Multiple vault passwords
 
 You can attach multiple Vault passwords from the Key Store to a template. During execution, Ansible will attempt to decrypt using the provided passwords.
