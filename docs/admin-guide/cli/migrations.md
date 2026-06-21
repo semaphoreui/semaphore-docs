@@ -7,7 +7,7 @@ Database migrations allow you to update or roll back your Semaphore database sch
 To see all available migration commands and options, run:
 
 ```
-semaphore migrations --help
+semaphore migrate --help
 ```
 
 ## Applying Migrations
@@ -52,11 +52,15 @@ semaphore migrate --undo-to 2.13
 
 
 ## Migration from BoltDB to SQLite/MySQL/PostgreSQL
-*Available since version 2.17*
+*Available in versions 2.17 and 2.18 only*
 
-BoltDB was deprecated starting from version 2.16, and many new features introduced in 2.17 are no longer supported by BoltDB. BoltDB support will be fully removed in version 2.19.
+BoltDB was deprecated starting from version 2.16, and **support was removed in version 2.19** — the `--from-boltdb` flag and the `SEMAPHORE_MIGRATE_FROM_BOLTDB` environment variable no longer exist in 2.19+.
 
-To migrate, first update Semaphore to version 2.17 or later, then configure the target database (SQLite, MySQL, or PostgreSQL) in your `config.json`. After that, run the following command to import all data from the old BoltDB file into the new database:
+:::warning
+If you still run on BoltDB, migrate **before** upgrading to 2.19 or later. Install Semaphore **2.17 or 2.18**, perform the migration below, and only then upgrade to a newer version.
+:::
+
+To migrate, first install Semaphore version 2.17 or 2.18, then configure the target database (SQLite, MySQL, or PostgreSQL) in your `config.json`. After that, run the following command to import all data from the old BoltDB file into the new database:
 
 ```
 semaphore migrate --from-boltdb /path/to/boltdb/file --config /path/to/config.json

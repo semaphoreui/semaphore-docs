@@ -75,6 +75,7 @@ const sidebars = {
           link: { type: 'doc', id: 'admin-guide/cli' },
           items: [
             'admin-guide/cli/users',
+            'admin-guide/cli/projects',
             'admin-guide/cli/vaults',
             'admin-guide/cli/runners',
             'admin-guide/cli/migrations',
