@@ -63,6 +63,8 @@ const sidebars = {
           label: 'Security',
           link: { type: 'doc', id: 'admin-guide/security' },
           items: [
+            'admin-guide/security/encryption',
+            'admin-guide/security/database',
             'admin-guide/security/network',
             // 'admin-guide/security/kerberos',
           ],

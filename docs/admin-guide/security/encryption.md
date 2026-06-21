@@ -1,5 +1,5 @@
 ---
-id: encryption-keys
+id: encryption
 title: Encryption Keys
 sidebar_label: Encryption Keys
 description: How Semaphore encrypts secrets, configures encryption keys, and rotates them with zero downtime.
