@@ -1,6 +1,8 @@
 # Tasks
 
-A task is an instance of launching an Ansible playbook. You can create the task from [Task Template](task-templates/) by clicking the button Run/Build/Deploy for the required template.
+A task is an instance of launching a template task. You can create the task from [Task Template](task-templates/) by clicking the button Run/Build/Deploy for the required template.
+
+Each task has an independent copy of the complete repository to ensure read consistency.
 
 ![](/assets/image6.png)
 
