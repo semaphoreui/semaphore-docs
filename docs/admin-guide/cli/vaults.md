@@ -38,7 +38,7 @@ decrypt old data. Rotation is therefore: add a key, switch the active pointer,
 re-encrypt in the background, then drop the old key.
 
 1. Add a new key to the keyset (a file in `keys_folder`, or a `keys:` entry) and
-   point the active pointer (`active.secrets_key`, or `secrets_key_file`) at it.
+   point the active pointer (`active.secret_key`, or `secret_key_file`) at it.
    The change is applied within `keys_poll_interval` (default `15s`), or
    immediately with `kill -HUP <pid>` — no restart required.
 2. Run `semaphore vault rekey` to re-encrypt existing data to the new key.

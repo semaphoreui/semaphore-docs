@@ -16,8 +16,8 @@ rotation works, and how to operate it safely.
 
 | Key | Protects | Active pointer |
 |-----|----------|----------------|
-| **Secrets key** | Access Key secrets stored in the database | `active.secrets_key` |
-| **Options key** | Encrypted DB options (the JWT signing key) | `active.options_key` |
+| **Secrets key** | Access Key secrets stored in the database | `active.secret_key` |
+| **Options key** | Encrypted DB options (the JWT signing key) | `active.option_key` |
 
 If no options key is configured, options fall back to the secrets key.
 :::
@@ -37,7 +37,7 @@ encryption:
 keys:
   key1: { value: "REPLACE_WITH_openssl_rand_-base64_32" }
 active:
-  secrets_key: key1
+  secret_key: key1
 ```
 
 Generate a key with:
@@ -89,10 +89,10 @@ both combined.
 ```yaml
 keys:
   key1: { value: "2hmxtfgK6LkJfJK9ZNZ9GUMmEwTQwHIFamijclUem48=" }   # inline (dev)
-  key2: { file: /run/secrets/secrets_key }                         # from a file (prod)
+  key2: { file: /run/secrets/secret_key }                         # from a file (prod)
 active:
-  secrets_key: key1
-  options_key: key2
+  secret_key: key1
+  option_key: key2
 ```
 
 Each entry is a [`KeySource`](#keysource): either `value` (inline base64) **or**
@@ -106,8 +106,8 @@ its filename. Ideal for mounted Docker/Kubernetes secrets.
 ```yaml
 keys_folder: /run/secrets/enc-keys
 active:
-  secrets_key_file: secrets_key_primary.txt   # filename in keys_folder (relative)
-  options_key_file: options_key_primary.txt
+  secret_key_file: secrets_key_primary.txt   # filename in keys_folder (relative)
+  option_key_file: options_key_primary.txt
 ```
 
 ```text title="/run/secrets/enc-keys/"
@@ -132,8 +132,8 @@ keys:
   inline1: { value: "..." }
 keys_folder: /run/secrets/enc-keys
 active:
-  secrets_key: inline1
-  options_key_file: options_key_primary.txt
+  secret_key: inline1
+  option_key_file: options_key_primary.txt
 ```
 
 ---
@@ -147,7 +147,7 @@ re-encrypt in the background, then drop the old key.
 ```bash
 # 1. Add a new key to the registry (a file in keys_folder, or a keys: entry)
 #    and point the active pointer at it:
-#      active.secrets_key: key2        # (or secrets_key_file: ...)
+#      active.secret_key: key2        # (or secret_key_file: ...)
 
 # 2. Apply it without a restart — within keys_poll_interval (default 15s),
 #    or immediately:
@@ -242,7 +242,7 @@ keys:
   old: { value: "<the old access_key_encryption value>" }
   new: { value: "<a freshly generated key>" }
 active:
-  secrets_key: new
+  secret_key: new
 ```
 
 Old data decrypts via `old`; run `vault rekey` to move everything onto `new`.
@@ -269,8 +269,8 @@ containers:
 ```yaml title="encryption-keys.yml"
 keys_folder: /run/secrets/enc-keys
 active:
-  secrets_key_file: secrets_key_primary.txt
-  options_key_file: options_key_primary.txt
+  secret_key_file: secrets_key_primary.txt
+  option_key_file: options_key_primary.txt
 ```
 
 When you update the `Secret`, Kubernetes refreshes the mounted files and the
@@ -312,10 +312,10 @@ poller applies the change within `keys_poll_interval` — no pod restart.
 |-------|-------------|
 | `keys` | Map of `label → KeySource` (inline registry). |
 | `keys_folder` | Directory of key files (one regular file per key, labelled by filename). |
-| `active.secrets_key` | Label (in `keys`) of the active secrets key. |
-| `active.options_key` | Label of the active options key. |
-| `active.secrets_key_file` | Filename in `keys_folder` of the active secrets key (relative). |
-| `active.options_key_file` | Filename in `keys_folder` of the active options key (relative). |
+| `active.secret_key` | Label (in `keys`) of the active secrets key. |
+| `active.option_key` | Label of the active options key. |
+| `active.secret_key_file` | Filename in `keys_folder` of the active secrets key (relative). |
+| `active.option_key_file` | Filename in `keys_folder` of the active options key (relative). |
 
 ### KeySource
 
@@ -337,4 +337,4 @@ bytes** (AES‑128/192/256).
 | `vault check` shows `MISSING KEY <id>` (exit 1) | Data was encrypted with a key no longer in the registry. Add that key back before it can be decrypted. |
 | `cannot decrypt access key, perhaps encryption key was changed` | A legacy (un‑prefixed) value can't be decrypted by any configured key. Ensure the original key is present (in the registry or `access_key_encryption`). |
 | Rotation not applied | Check `keys_poll_interval` (not `"0"`) and that the keys file actually changed; or send `SIGHUP`. |
-| `active.secrets_key: no key labelled "…"` | The active pointer names a label/filename that isn't in `keys`/`keys_folder`. |
+| `active.secret_key: no key labelled "…"` | The active pointer names a label/filename that isn't in `keys`/`keys_folder`. |

@@ -15,6 +15,37 @@
 }
 ```
 
+## IdP-initiated login
+
+To let users start sign-in from the Okta dashboard tile, enable
+[IdP-initiated login](/admin-guide/openid#idp-initiated-login) for the provider:
+
+```json title="config.json"
+{
+  "oidc_providers": {
+    "okta": {
+      "...": "...",
+      "allow_idp_initiated": true
+    }
+  }
+}
+```
+
+Then, in the Okta Admin Console, open your application's **General** settings and configure the *Login* section:
+
+1. Set **Login initiated by** to *Either Okta or App* (or *App Only*).
+2. Set **Initiate login URI** to:
+
+   ```
+   https://semaphore.example.com/api/auth/oidc/okta/initiate
+   ```
+
+3. (Optional) Under **Application visibility**, enable *Display application icon to users* so the tile appears on the
+   Okta dashboard.
+
+Okta sends the `iss` and `target_link_uri` parameters; Semaphore validates `iss` against your `provider_url` and starts
+a normal Authorization Code flow.
+
 
 ## Related GitHub Issues
 

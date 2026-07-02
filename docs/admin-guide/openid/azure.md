@@ -22,3 +22,19 @@
   }
 }
 ```
+
+## IdP-initiated login
+
+Microsoft Entra ID (Azure AD) launches applications from **My Apps** using an SP-initiated start URL rather than the
+OpenID Connect [Third-Party Initiated Login](/admin-guide/openid#idp-initiated-login) mechanism, and it does not reliably
+send the `iss` parameter. For Entra, point the tile at Semaphore's **`/login`** endpoint instead of `/initiate` — so you
+do **not** need to set `allow_idp_initiated`.
+
+In the Azure portal, open your **App registration → Branding & properties** and set the **Home page URL** to:
+
+```
+https://YOUR_SEMAPHORE_HOST_AND_PORT/api/auth/oidc/azure/login
+```
+
+When a user clicks the Semaphore tile in My Apps, Entra navigates to this URL, which begins a normal SP-initiated
+Authorization Code flow.
