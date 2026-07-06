@@ -102,6 +102,7 @@ const sidebars = {
             'admin-guide/openid/authentik',
             'admin-guide/openid/keycloak',
             'admin-guide/openid/okta',
+            'admin-guide/openid/pingfederate',
             'admin-guide/openid/azure',
             'admin-guide/openid/zitadel',
           ],
@@ -111,6 +112,7 @@ const sidebars = {
         'admin-guide/runners',
         'admin-guide/logs',
         'admin-guide/ha',
+        'admin-guide/license',
         {
           type: 'category',
           label: 'Notifications',

@@ -11,6 +11,7 @@ Links:
 * [Authentik config](/admin-guide/openid/authentik)
 * [Keycloak config](/admin-guide/openid/keycloak)
 * [Okta config](/admin-guide/openid/okta)
+* [PingFederate config](/admin-guide/openid/pingfederate)
 * [Azure config](/admin-guide/openid/azure)
 * [Zitadel config](/admin-guide/openid/zitadel)
 * [Pocket-ID config](/admin-guide/openid/pocket-id)
