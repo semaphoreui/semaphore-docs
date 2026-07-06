@@ -66,6 +66,7 @@ const sidebars = {
             'admin-guide/security/encryption',
             'admin-guide/security/database',
             'admin-guide/security/network',
+            'admin-guide/security/jwt',
             // 'admin-guide/security/kerberos',
           ],
         },
@@ -155,6 +156,7 @@ const sidebars = {
           items: [
             'user-guide/task-templates/survey-vars',
             'user-guide/task-templates/prompts',
+            'user-guide/task-templates/jwt',
           ],
         },
         {
