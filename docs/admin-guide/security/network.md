@@ -54,9 +54,9 @@ TLS configuration options:
 
 Alternatively, you can use a reverse proxy in front of Semaphore to handle secure connections. For example:
 
-* [NGINX](/nginx)
-* [Apache](/apache)
-* [Caddy](/caddy)
+* [NGINX](/admin-guide/reverse-proxy/nginx)
+* [Apache](/admin-guide/reverse-proxy/apache)
+* [Caddy](/admin-guide/reverse-proxy/caddy)
  
 
 ### Self-signed SSL certificate
