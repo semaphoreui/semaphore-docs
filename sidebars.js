@@ -66,6 +66,7 @@ const sidebars = {
             'admin-guide/security/encryption',
             'admin-guide/security/database',
             'admin-guide/security/network',
+            'admin-guide/security/jwt',
             // 'admin-guide/security/kerberos',
           ],
         },
@@ -102,6 +103,7 @@ const sidebars = {
             'admin-guide/openid/authentik',
             'admin-guide/openid/keycloak',
             'admin-guide/openid/okta',
+            'admin-guide/openid/pingfederate',
             'admin-guide/openid/azure',
             'admin-guide/openid/zitadel',
           ],
@@ -111,6 +113,7 @@ const sidebars = {
         'admin-guide/runners',
         'admin-guide/logs',
         'admin-guide/ha',
+        'admin-guide/license',
         {
           type: 'category',
           label: 'Notifications',
@@ -153,6 +156,7 @@ const sidebars = {
           items: [
             'user-guide/task-templates/survey-vars',
             'user-guide/task-templates/prompts',
+            'user-guide/task-templates/jwt',
           ],
         },
         {
