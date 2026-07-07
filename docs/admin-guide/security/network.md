@@ -50,7 +50,8 @@ TLS configuration options:
 | `tls.enabled` | `SEMAPHORE_TLS_ENABLED` | Enables HTTPS for the Semaphore server. |
 | `tls.cert_file` | `SEMAPHORE_TLS_CERT_FILE` | Path to the TLS certificate file. |
 | `tls.key_file` | `SEMAPHORE_TLS_KEY_FILE` | Path to the TLS private key file. |
-| `tls.http_redirect_addr` | `SEMAPHORE_TLS_HTTP_REDIRECT_ADDR` | Optional address for the HTTP-to-HTTPS redirect listener, for example `80`. This is mutually exclusive with `tls.http_redirect_port`. |
+| `tls.http_redirect_addr` | `SEMAPHORE_TLS_HTTP_REDIRECT_ADDR` | Address (`host[:port]`) for the HTTP-to-HTTPS redirect listener. Mutually exclusive with `tls.http_redirect_port`. |
+| `tls.http_redirect_port` | `SEMAPHORE_TLS_HTTP_REDIRECT_PORT` | Port to redirect HTTP traffic to HTTPS. Mutually exclusive with `tls.http_redirect_addr`. |
 
 Alternatively, you can use a reverse proxy in front of Semaphore to handle secure connections. For example:
 
