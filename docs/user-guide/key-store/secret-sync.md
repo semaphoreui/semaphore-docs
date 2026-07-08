@@ -1,6 +1,6 @@
 # Syncing secrets from remote storages
 
-Semaphore can connect to an external secret manager — such as **HashiCorp Vault**, **AWS Secrets Manager**, **Azure Key Vault**, or **Devolutions Server (DVLS)** — and automatically import secrets from it into the Key Store. Instead of copying credentials into Semaphore by hand and keeping them up to date, you point Semaphore at your remote storage and it maintains a local mirror for you.
+Semaphore can connect to an external secret manager — such as **HashiCorp Vault**, **OpenBao**, **AWS Secrets Manager**, **Azure Key Vault**, or **Devolutions Server (DVLS)** — and automatically import secrets from it into the Key Store. Instead of copying credentials into Semaphore by hand and keeping them up to date, you point Semaphore at your remote storage and it maintains a local mirror for you.
 
 **Sync paths** are the rules that tell Semaphore *which* secrets to import from a remote storage and *how* to name them once they arrive. A secret manager can hold thousands of secrets across many folders; sync paths let you select just the subtrees you care about and control the naming of the keys that get created.
 
@@ -23,7 +23,7 @@ When a sync runs, Semaphore walks the **path**, and for each secret it finds it 
 You can define **multiple sync paths** on a single storage. Each path is imported independently, so you can pull from several unrelated areas of the same secret manager and give each its own prefix and naming style.
 
 :::tip
-Sensible defaults are applied per provider — for example, HashiCorp Vault and AWS Secrets Manager default to `/` as the separator, Azure Key Vault to `-`, and Devolutions Server to `\` — so in most cases you only need to fill in the path.
+Sensible defaults are applied per provider — for example, HashiCorp Vault, OpenBao, and AWS Secrets Manager default to `/` as the separator, Azure Key Vault to `-`, and Devolutions Server to `\` — so in most cases you only need to fill in the path.
 :::
 
 ## Running a sync
@@ -64,6 +64,6 @@ The mechanics are identical; only the destination of the imported secrets differ
 
 ## Notes and limitations
 
-- Syncing is supported only for **external** storage types (HashiCorp Vault, AWS Secrets Manager, Azure Key Vault, Devolutions Server). The built-in **Database** storage holds secrets natively and has nothing to sync.
+- Syncing is supported only for **external** storage types (HashiCorp Vault, OpenBao, AWS Secrets Manager, Azure Key Vault, Devolutions Server). The built-in **Database** storage holds secrets natively and has nothing to sync.
 - The remote storage credential itself (the token or key Semaphore uses to authenticate) is stored securely and separately from the secrets it imports.
 - If sync is turned off and no paths remain, the sync configuration for that storage is cleared.
