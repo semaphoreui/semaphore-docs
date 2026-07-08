@@ -27,23 +27,7 @@ Semaphore supports SSL/TLS starting from v2.12.
     "tls": {
         "enabled": true,
         "cert_file": "/path/to/cert/example.com.cert",
-        "key_file": "/path/to/key/example.com.key",
-        "http_redirect_addr": "80"
-    }
-    ...
-}
-```
-
-or:
-
-```json
-{
-    ...
-    "tls": {
-        "enabled": true,
-        "cert_file": "/path/to/cert/example.com.cert",
-        "key_file": "/path/to/key/example.com.key",
-        "http_redirect_port": 80
+        "key_file": "/path/to/key/example.com.key"
     }
     ...
 }
@@ -55,27 +39,20 @@ Or environment variables (useful for Docker):
 export SEMAPHORE_TLS_ENABLED=True
 export SEMAPHORE_TLS_CERT_FILE=/path/to/cert/example.com.cert
 export SEMAPHORE_TLS_KEY_FILE=/path/to/key/example.com.key
-export SEMAPHORE_TLS_HTTP_REDIRECT_ADDR=80
 ```
 
-or:
+### HTTP-to-HTTPS redirect listener
 
-```bash
-export SEMAPHORE_TLS_ENABLED=True
-export SEMAPHORE_TLS_CERT_FILE=/path/to/cert/example.com.cert
-export SEMAPHORE_TLS_KEY_FILE=/path/to/key/example.com.key
-export SEMAPHORE_TLS_HTTP_REDIRECT_PORT=80
-```
+To configure the HTTP-to-HTTPS redirect listener, add one of the following fields to the `tls` block in `config.json`, or set the corresponding environment variable.
 
-TLS configuration options:
+Use `http_redirect_addr` to bind the listener to a specific IP address and port. Use `http_redirect_port` to listen on all network interfaces. These options are mutually exclusive.
 
-| Config option | Environment variable | Description |
+| Bind HTTP redirect listener to | `config.json` (`tls` block) | Environment variable |
 | --- | --- | --- |
-| `tls.enabled` | `SEMAPHORE_TLS_ENABLED` | Enables HTTPS for the Semaphore server. |
-| `tls.cert_file` | `SEMAPHORE_TLS_CERT_FILE` | Path to the TLS certificate file. |
-| `tls.key_file` | `SEMAPHORE_TLS_KEY_FILE` | Path to the TLS private key file. |
-| `tls.http_redirect_addr` | `SEMAPHORE_TLS_HTTP_REDIRECT_ADDR` | Optional address for the HTTP-to-HTTPS redirect listener, for example `:80` or `0.0.0.0:80`. This is mutually exclusive with `tls.http_redirect_port`. |
-| `tls.http_redirect_port` | `SEMAPHORE_TLS_HTTP_REDIRECT_PORT` | Port to redirect HTTP traffic to HTTPS. Mutually exclusive with `tls.http_redirect_addr`. |
+| Specific IP address and port | `"http_redirect_addr": "172.29.184.90:80"` | `SEMAPHORE_TLS_HTTP_REDIRECT_ADDR=172.29.184.90:80` |
+| All network interfaces on a port | `"http_redirect_port": 80` | `SEMAPHORE_TLS_HTTP_REDIRECT_PORT=80` |
+
+### Reverse proxy
 
 Alternatively, you can use a reverse proxy in front of Semaphore to handle secure connections. For example:
 
