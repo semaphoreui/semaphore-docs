@@ -27,8 +27,7 @@ Semaphore supports SSL/TLS starting from v2.12.
     "tls": {
         "enabled": true,
         "cert_file": "/path/to/cert/example.com.cert",
-        "key_file": "/path/to/key/example.com.key",
-        "http_redirect_addr": ":80"
+        "key_file": "/path/to/key/example.com.key"
     }
     ...
 }
@@ -40,23 +39,26 @@ Or environment variables (useful for Docker):
 export SEMAPHORE_TLS_ENABLED=True
 export SEMAPHORE_TLS_CERT_FILE=/path/to/cert/example.com.cert
 export SEMAPHORE_TLS_KEY_FILE=/path/to/key/example.com.key
-export SEMAPHORE_TLS_HTTP_REDIRECT_ADDR=:80
 ```
 
-TLS configuration options:
+### HTTP-to-HTTPS redirect listener
 
-| Config option | Environment variable | Description |
+To configure the HTTP-to-HTTPS redirect listener, add one of the following fields to the `tls` block in `config.json`, or set the corresponding environment variable.
+
+Use `http_redirect_addr` to bind the listener to a specific IP address and port. Use `http_redirect_port` to listen on all network interfaces. These options are mutually exclusive.
+
+| Bind HTTP redirect listener to | `config.json` (`tls` block) | Environment variable |
 | --- | --- | --- |
-| `tls.enabled` | `SEMAPHORE_TLS_ENABLED` | Enables HTTPS for the Semaphore server. |
-| `tls.cert_file` | `SEMAPHORE_TLS_CERT_FILE` | Path to the TLS certificate file. |
-| `tls.key_file` | `SEMAPHORE_TLS_KEY_FILE` | Path to the TLS private key file. |
-| `tls.http_redirect_addr` | `SEMAPHORE_TLS_HTTP_REDIRECT_ADDR` | Optional address for the HTTP-to-HTTPS redirect listener, for example `:80` or `0.0.0.0:80`. This is mutually exclusive with `tls.http_redirect_port`. |
+| Specific IP address and port | `"http_redirect_addr": "172.29.184.90:80"` | `SEMAPHORE_TLS_HTTP_REDIRECT_ADDR=172.29.184.90:80` |
+| All network interfaces on a port | `"http_redirect_port": 80` | `SEMAPHORE_TLS_HTTP_REDIRECT_PORT=80` |
+
+### Reverse proxy
 
 Alternatively, you can use a reverse proxy in front of Semaphore to handle secure connections. For example:
 
-* [NGINX](/nginx)
-* [Apache](/apache)
-* [Caddy](/caddy)
+* [NGINX](/admin-guide/reverse-proxy/nginx)
+* [Apache](/admin-guide/reverse-proxy/apache)
+* [Caddy](/admin-guide/reverse-proxy/caddy)
  
 
 ### Self-signed SSL certificate

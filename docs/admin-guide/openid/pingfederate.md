@@ -22,4 +22,9 @@
 }
 ```
 
-Replace `YOUR_ENVIRONMENT_ID` with the PingOne environment identifier from your issuer URL.
+Replace the placeholders with values from your PingFederate configuration:
+
+* `YOUR_CLIENT_ID` — the OIDC application client ID.
+* `YOUR_CLIENT_SECRET` — the OIDC application client secret.
+* `YOUR_SEMAPHORE_HOST_AND_PORT` — the external Semaphore UI host and port.
+* `YOUR_ENVIRONMENT_ID` — the environment identifier from your issuer URL.
