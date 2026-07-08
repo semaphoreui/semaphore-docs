@@ -46,6 +46,12 @@ Secrets can be stored in an external HashiCorp Vault instance instead of the dat
 
 [Read more...](/user-guide/key-store/hashicorp-vault)
 
+### OpenBao
+
+Secrets can be stored in an external [OpenBao](https://openbao.org) instance (an open-source, API-compatible fork of HashiCorp Vault).
+
+[Read more...](/user-guide/key-store/openbao)
+
 ### Devolutions Server
 
 Secrets can be stored in an external Devolutions Server instance instead of the database.
@@ -54,6 +60,6 @@ Secrets can be stored in an external Devolutions Server instance instead of the 
 
 ## Syncing secrets from remote storages
 
-Semaphore can automatically import secrets from an external secret manager (HashiCorp Vault, AWS Secrets Manager, Azure Key Vault, or Devolutions Server) and keep them in sync. Sync paths let you choose which secrets to import and how to name them.
+Semaphore can automatically import secrets from an external secret manager (HashiCorp Vault, OpenBao, AWS Secrets Manager, Azure Key Vault, or Devolutions Server) and keep them in sync. Sync paths let you choose which secrets to import and how to name them.
 
 [Read more...](/user-guide/key-store/secret-sync)
