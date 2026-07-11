@@ -3,3 +3,6 @@
 /deploy/venv
 /book_ok
 node_modules/
+/build
+/.docusaurus
+/deploy/invs/aws

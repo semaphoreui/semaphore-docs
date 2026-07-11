@@ -1,7 +1,9 @@
 cd deploy
-
-# source ./venv/bin/activate
-
-ansible-playbook build.yml
-
-ansible-playbook -i invs/yc/hosts deploy.yml --vault-password-file ~/semaphore_pass
+if [ -f ~/venv/bin/activate ]; then
+    echo "Activating virtual environment"
+    source ~/venv/bin/activate
+else
+    echo "Use ansible without virtual environment"
+fi
+yarn build
+./run.sh aws deploy

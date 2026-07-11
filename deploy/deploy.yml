@@ -1,5 +1,4 @@
 ---
-- name: Deploy the book
-  hosts: site
+- hosts: site
   roles:
     - deploy
