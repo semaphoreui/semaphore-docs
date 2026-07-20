@@ -112,6 +112,7 @@ const sidebars = {
         'admin-guide/cicd',
         'admin-guide/runners',
         'admin-guide/logs',
+        'admin-guide/metrics',
         'admin-guide/ha',
         'admin-guide/license',
         {
