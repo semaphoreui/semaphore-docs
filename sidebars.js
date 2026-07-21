@@ -18,6 +18,18 @@ const sidebars = {
     'README',
     {
       type: 'category',
+      label: 'Getting Started',
+      collapsed: false,
+      link: { type: 'doc', id: 'getting-started/README' },
+      items: [
+        'getting-started/quickstart',
+        'getting-started/concepts',
+        'getting-started/ui-tour',
+        'getting-started/next-steps',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Admin Guide',
       collapsed: false,
       link: { type: 'generated-index' },

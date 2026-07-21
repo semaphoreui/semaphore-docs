@@ -6,6 +6,11 @@ Semaphore is written in **Go** (lightweight, fast) and runs on **Windows**, **ma
 
 ## Choose your path
 
+- **I’m evaluating Semaphore or getting my first task running**
+  - Start here: [Getting Started](./getting-started/README.md)
+  - Run a first task: [Quick Start](./getting-started/quickstart.md)
+  - Learn the layout: [UI Tour](./getting-started/ui-tour.md)
+
 - **I’m installing or operating Semaphore (admins/operators)**
   - Install: [Installation](/admin-guide/installation)
   - Configure: [Configuration](/admin-guide/configuration)
