@@ -1,10 +1,10 @@
-# High Availability (Enterprise)
-
-Semaphore UI supports active-active high availability (HA) deployments where multiple instances run simultaneously behind a load balancer. Every instance is fully capable of handling UI requests, API calls, scheduled jobs, and task execution. If one instance fails, the remaining nodes continue operating without interruption.
+# High Availability
 
 :::info
 High Availability is available in the **Semaphore Enterprise** edition.
 :::
+
+Semaphore UI supports active-active high availability (HA) deployments where multiple instances run simultaneously behind a load balancer. Every instance is fully capable of handling UI requests, API calls, scheduled jobs, and task execution. If one instance fails, the remaining nodes continue operating without interruption.
 
 ## Architecture
 

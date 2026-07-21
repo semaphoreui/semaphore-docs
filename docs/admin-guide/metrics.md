@@ -1,5 +1,9 @@
 # Metrics
 
+:::info
+The metrics endpoint is available since **Semaphore version 2.20**. If you are running an older version, upgrade to use this feature.
+:::
+
 Semaphore exposes a `GET /api/metrics` endpoint in the standard Prometheus text exposition format, so an existing Prometheus + Grafana setup can monitor the server without any external polling tool.
 
 Two categories of metrics are exposed:
