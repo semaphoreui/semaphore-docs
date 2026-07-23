@@ -110,7 +110,16 @@ const sidebars = {
         },
         'admin-guide/api',
         'admin-guide/cicd',
-        'admin-guide/runners',
+        {
+          type: 'category',
+          label: 'Runners',
+          link: { type: 'doc', id: 'admin-guide/runners' },
+          items: [
+            'admin-guide/runners/executors',
+            'admin-guide/runners/docker-executor',
+            'admin-guide/runners/k8s-executor',
+          ],
+        },
         'admin-guide/logs',
         'admin-guide/ha',
         'admin-guide/license',

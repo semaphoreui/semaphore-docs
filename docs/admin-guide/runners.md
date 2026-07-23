@@ -113,6 +113,10 @@ Your runner is ready to execute tasks.
 
 You can assign one or more tags to a project runner. Templates can then require a tag so tasks run only on matching runners. Configure tags when adding a runner in the project UI, and set the required tag in the template settings.
 
+### Executors (Pro)
+
+By default, a runner executes tasks as processes on its own host. In Semaphore Pro, a runner can instead run every task in an ephemeral Docker container or Kubernetes Pod. See [Executors](/admin-guide/runners/executors) for the overview, and the dedicated pages for the [Docker executor](/admin-guide/runners/docker-executor) and the [Kubernetes executor](/admin-guide/runners/k8s-executor).
+
 ## Runner deregistration
 
 You can remove a runner using the web interface.
