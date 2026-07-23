@@ -1,6 +1,11 @@
 
 # GitLab config
 
+Prerequisites:
+
+- An application for Semaphore created in GitLab (client ID and secret).
+- Admin access to the Semaphore server's `config.json` file.
+
 ```json title="config.json"
 {
 	"oidc_providers": {

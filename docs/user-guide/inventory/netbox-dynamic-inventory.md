@@ -6,11 +6,11 @@
 
 ## 🛠 Key Features
 
-This repository demonstrates the use of the `netbox.netbox.nb_inventory` plugin to create a dynamic inventory in Semaphore. It enables automatic synchronization of data from Netbox, simplifying the management of your infrastructure and the execution of Ansible playbooks.
+This guide demonstrates the use of the `netbox.netbox.nb_inventory` plugin to create a dynamic inventory in Semaphore. It enables automatic synchronization of data from Netbox, simplifying the management of your infrastructure and the execution of Ansible playbooks.
 
 ## 🔧 Setup
 
-### Requirements
+### Prerequisites
 
 - Access to Semaphore
 - Access to Netbox with configured API
@@ -21,7 +21,7 @@ Ensure your Netbox is configured and accessible for API interaction. Obtain an A
 
 ### 📡 Configuration in Semaphore
 
-1. In Semaphore, go to the inventory section.
+1. In Semaphore, open the **Inventory** section.
 2. Create a new inventory.
 3. Enter the following settings for the plugin configuration:
 

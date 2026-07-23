@@ -34,7 +34,7 @@ Example of SSO provider configuration:
 }
 ```
 
-### Configure via environment variable
+## Configure via environment variable
 
 When running in containers it may be convenient to configure providers using a single environment variable:
 
@@ -76,7 +76,7 @@ All SSO provider options:
 | `endpoint.jwks`       |                                                                                                             |
 | `endpoint.algorithms` |                                                                                                             |
 
-### \*Claim expression
+## \*Claim expression
 
 Example of claim expression:
 

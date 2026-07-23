@@ -24,12 +24,12 @@ You can install Semaphore in multiple ways, depending on your operating system, 
 
 See also:
 * [Run as service](/admin-guide/installation/binary-file#run-as-a-service)
-* [Manual installation](/admin-guide/installation_manually)
+* [Manual installation](/admin-guide/installation/manual)
 
 ----
 
 
-### Installing Additional Python Packages
+## Installing Additional Python Packages
 
 Some Ansible modules and roles require additional python packages to run. To install additional python packages, create a `requirements.txt` file and mount it in the `/etc/semaphore` directory on the container. For example, you could add the following lines to your `docker-compose.yml` file:
 

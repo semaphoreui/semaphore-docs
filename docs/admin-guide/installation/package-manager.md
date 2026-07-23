@@ -1,7 +1,7 @@
 # Package manager
 
 :::tip
-  Look into the <a href="./../installation_manually">manual installation</a> on how to set-up your Python/Ansible/Systemd environment!
+  Look into the <a href="/admin-guide/installation/manual">manual installation</a> on how to set-up your Python/Ansible/Systemd environment!
 :::
 
 

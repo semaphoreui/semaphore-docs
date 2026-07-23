@@ -1,44 +1,32 @@
+---
+slug: /user-guide
+---
+
 # User Guide
 
-Learn how to use Semaphore day-to-day: create projects, run tasks, manage inventories, keys, variables, and more.
+This guide covers day-to-day work in the Semaphore UI web interface: organizing projects, connecting repositories and credentials, and running automation.
 
-## Start here
+If you are looking for installation or server configuration, see the [Admin Guide](/admin-guide/).
 
-- Organize work with projects and teams
-- Connect repositories and key store
-- Define inventories and variable groups
-- Create task templates and run tasks on schedule
+## Organize
 
-## Quick links
+- [Projects](/user-guide/projects) — the main unit of separation
+- [Teams](/user-guide/team) — members, roles, and access control
 
-- Projects: [Overview](/projects)
-  - [History](/projects/history)
-  - [Activity](/projects/activity)
-  - [Settings](/projects/settings)
-  - [Runners (Pro)](/projects/runners)
-- Tasks and schedules:
-  - [Tasks](/tasks)
-  - [Schedules](/schedules)
-- Task Templates: [Overview](/task-templates/README)
-  - [Ansible](/task-templates/apps/ansible)
-  - [Terraform/OpenTofu](/task-templates/apps/terraform)
-    - [Workspaces](/task-templates/apps/terraform/workspaces)
-    - [HTTP Backend (Pro)](/task-templates/apps/terraform/states)
-  - [Shell/Bash scripts](/task-templates/apps/bash)
-  - [PowerShell](/task-templates/apps/powershell)
-  - [Python](/task-templates/apps/python)
-  - [Survey Variables](/task-templates/survey-vars)
-  - [Prompts](/task-templates/prompts)
-- Variables and secrets:
-  - [Variable Groups](/environment)
-  - [Key Store](/key-store)
-    - [GitLab](/key-store/gitlab)
-- Inventory:
-  - [Inventory](/inventory)
-  - [Kerberos](/inventory/kerberos)
-  - [NetBox dynamic inventory](/netbox-dynamic-inventory)
-- Repositories:
-  - [Repositories](/repositories)
-  - [Bitbucket Access Token](/repositories/bitbucket_access_token)
-- Integrations: [Overview](/integrations)
-- Team management: [Overview](/team)
+## Connect
+
+- [Repositories](/user-guide/repositories) — where your playbooks, code, and scripts live
+- [Key Store](/user-guide/key-store) — SSH keys, passwords, and access tokens
+- [Inventory](/user-guide/inventory) — hosts and groups for Ansible runs
+- [Variable Groups](/user-guide/environment) — reusable variables and secrets
+
+## Run
+
+- [Task Templates](/user-guide/task-templates/) — define what to run
+- Apps: [Ansible](/user-guide/apps/ansible), [Terraform/OpenTofu](/user-guide/apps/terraform/), [Shell/Bash](/user-guide/apps/bash), [PowerShell](/user-guide/apps/powershell), [Python](/user-guide/apps/python)
+- [Tasks](/user-guide/tasks) — run, monitor, and read logs
+- [Schedules](/user-guide/schedules) — run templates on a cron schedule
+
+## Integrate
+
+- [Integrations](/user-guide/integrations) — trigger tasks from webhooks

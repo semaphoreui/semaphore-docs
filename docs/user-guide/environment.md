@@ -5,16 +5,19 @@ The Variable Groups section of Semaphore is a place to store additional variable
 All task templates require a variable group to be defined even if it is empty. 
 
 ## Create a variable group
+
 1. Click on the Variable Group tab.
 2. Click on the New Variable Group button.
 3. Name the Variable Group and type or paste in valid JSON variables. If you just need an empty Variable Group type in ```{}```.
 
 ## Updating a variable group
+
 1. Click on the Variable Groups tab.
 2. Click the pencil icon.
 3. Make changes and click save.
 
 ## Deleting the variable group
+
 Before you remove a variable group, you must remove all resources tied to it.
 If you are not sure which resources are being used in a variable group, follow steps 1 and 2 below. It will show you which resources are being used, with links to those resources.
 
@@ -23,6 +26,7 @@ If you are not sure which resources are being used in a variable group, follow s
 3. Click Yes if you are sure you want to remove the variable group.
 
 ## Using Variable Groups - Terraform/OpenTofu
+
 When you want utilize a stored variable group variable or secret in your terraform template you must prefix the name with `TF_VAR_` for the terraform script to use it. 
 
 **Example**

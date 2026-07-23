@@ -3,8 +3,6 @@
 ![Ansible Badge](https://img.shields.io/badge/ansible-%23000.svg?style=for-the-badge&logo=ansible&logoColor=white)
 ![Consul Badge](https://img.shields.io/badge/Consul-%23F24C53.svg?style=for-the-badge&logo=consul&logoColor=white)
 
-## Overview
-
 This guide shows how to use [HashiCorp Consul](https://www.consul.io/) as a dynamic inventory source in Semaphore. Instead of manually listing hosts, Ansible will query Consul's catalog at runtime to discover which hosts to target.
 
 This approach uses a **Python inventory script** committed to your git repository. Semaphore runs the script automatically when executing a playbook.
@@ -131,13 +129,13 @@ Push this repository to your git provider.
 
 The inventory script reads the Consul address and token from environment variables. Create a Variable Group in Semaphore to pass these values.
 
-1. Go to your project and click **Variable Group**
-2. Click **New Variable Group**
-3. Name it (e.g. `consul-inventory`)
+1. In your project, open the **Variable Groups** section.
+2. Click **New Variable Group**.
+3. Name it (e.g. `consul-inventory`).
 4. Under **Environment Variables**, add:
    - `CONSUL_HTTP_ADDR` = `https://consul.example.com`
    - `CONSUL_HTTP_TOKEN` = `your-consul-acl-token` *(only required if [ACLs](https://developer.hashicorp.com/consul/docs/security/acl) are enabled on your Consul cluster)*
-5. Click **Create**
+5. Click **Create**.
 
 :::tip
 If your Consul cluster does not have ACLs enabled, you can omit the `CONSUL_HTTP_TOKEN` variable. The inventory script will still work — it simply won't send an authentication token with its API requests.
@@ -145,19 +143,19 @@ If your Consul cluster does not have ACLs enabled, you can omit the `CONSUL_HTTP
 
 ### Add the Repository
 
-1. Go to **Repositories** and click **New Repository**
-2. Enter the git URL of your repository
-3. Select the access key for your git provider
-4. Click **Create**
+1. In the **Repositories** section, click **New Repository**.
+2. Enter the git URL of your repository.
+3. Select the access key for your git provider.
+4. Click **Create**.
 
 ### Add the Inventory
 
-1. Go to **Inventory** and click **New Inventory**
-2. Name it (e.g. `consul-dynamic-inventory`)
-3. Select **File** as the type
-4. Enter the path: `inventory/consul_inventory.py`
-5. Select the SSH key that Ansible will use to connect to your hosts
-6. Click **Create**
+1. In the **Inventory** section, click **New Inventory**.
+2. Name it (e.g. `consul-dynamic-inventory`).
+3. Select **File** as the type.
+4. Enter the path: `inventory/consul_inventory.py`.
+5. Select the SSH key that Ansible will use to connect to your hosts.
+6. Click **Create**.
 
 :::note
 The path is relative to the root of your git repository. Semaphore clones the repo and passes this path to `ansible-playbook -i inventory/consul_inventory.py`.
@@ -165,11 +163,11 @@ The path is relative to the root of your git repository. Semaphore clones the re
 
 ### Create a Task Template
 
-1. Go to **Task Templates** and click **New Template**
-2. Name it (e.g. `Consul Hello World`)
-3. Set **Playbook** to `playbook.yml`
-4. Select the repository, inventory, and variable group you created above
-5. Click **Create**
+1. In the **Task Templates** section, click **New Template**.
+2. Name it (e.g. `Consul Hello World`).
+3. Set **Playbook** to `playbook.yml`.
+4. Select the repository, inventory, and variable group you created above.
+5. Click **Create**.
 
 ## Step 4 — Run It
 

@@ -1,6 +1,10 @@
 # Executors (Pro)
 
-An **executor** is the strategy a [runner](/admin-guide/runners) uses to execute each task. By default a runner executes tasks as ordinary processes on the runner host. In **Semaphore Pro**, a runner can instead dispatch every task into an ephemeral Docker container or Kubernetes Pod — the same model used by GitLab Runner and GitHub Actions container jobs.
+:::info Pro feature
+This feature is available in Semaphore UI Pro.
+:::
+
+An **executor** is the strategy a [runner](/admin-guide/runners) uses to execute each task. By default a runner executes tasks as ordinary processes on the runner host. A runner can instead dispatch every task into an ephemeral Docker container or Kubernetes Pod — the same model used by GitLab Runner and GitHub Actions container jobs.
 
 Semaphore provides the following executors:
 

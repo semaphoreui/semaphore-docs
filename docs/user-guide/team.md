@@ -134,22 +134,29 @@ Permissions for other project resources (inventory, repositories, environments, 
 ## Frequently asked questions
 
 ### 1. Can an Owner remove another Owner?
+
 Yes, an Owner can remove or change the role of any other Owner, unless they are the only remaining Owner in the project.
 
 ### 2. Who can delete the project?
+
 Only **Owners** can delete a project.
 
 ### 3. Can Managers add or remove other Managers?
+
 No. Managers can only add or remove users with **Task Runner** or **Guest** roles. To manage Owners or other Managers, you must be an Owner.
 
 ### 4. What happens if I remove all Owners by accident?
+
 Semaphore UI prevents the removal of an Owner if it would leave the project with no Owners at all. There must be at least one Owner at all times.
 
 ### 5. Can Guests run tasks?
+
 No. Guests have read‐only access and cannot trigger or manage tasks. In the Enterprise edition you can grant a Guest permission to run individual templates through a [custom role](#extended-rbac-enterprise).
 
 ### 6. Do custom roles replace the built-in roles?
+
 No. Custom roles extend the built-in roles with additional template-level permissions. Every team member still has exactly one built-in role.
 
 ### 7. Is Extended RBAC available in the community edition?
+
 No. Extended RBAC requires a **Semaphore Enterprise** subscription.

@@ -7,6 +7,10 @@ The Settings page allows you to configure various aspects of your project, inclu
 
 ## Runners (Pro)
 
+:::info Pro feature
+This feature is available in Semaphore UI Pro.
+:::
+
 Project runners can be attached to a project. You can also require a specific runner by tag in a template:
 
 1. In `Project → Runners`, add a runner and specify a tag.

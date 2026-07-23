@@ -1,5 +1,9 @@
 # Kubernetes executor (Pro)
 
+:::info Pro feature
+This feature is available in Semaphore UI Pro.
+:::
+
 The Kubernetes executor runs every task in an ephemeral Kubernetes Pod. The runner calls the Kubernetes API and creates one Pod per task; when the task finishes, the Pod and all per-task resources are deleted.
 
 Use the Kubernetes executor to:

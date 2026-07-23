@@ -1,6 +1,11 @@
 # Devolutions Server secret storage
 
-Semaphore UI supports Devolutions Server as a storage for secrets. 
+Semaphore UI supports Devolutions Server as a storage for secrets.
+
+Prerequisites:
+
+- A running Devolutions Server instance.
+- An application key and token for authentication.
 
 ![](/assets/dvls1.webp)
 

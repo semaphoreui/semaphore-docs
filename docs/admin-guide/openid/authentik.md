@@ -1,6 +1,11 @@
 # Authentik config
 
-```yaml title="config.json"
+Prerequisites:
+
+- An OAuth2/OIDC provider and application for Semaphore created in Authentik (client ID and secret).
+- Admin access to the Semaphore server's `config.json` file.
+
+```json title="config.json"
 {
   "oidc_providers": {
     "authentik": {

@@ -4,6 +4,11 @@ Slack notifications allow you to receive real-time updates about your Semaphore 
 
 To set up Slack notifications, you need to create a webhook URL that connects Semaphore to your desired Slack channel. This webhook acts as a secure communication bridge between the two platforms.
 
+Prerequisites:
+
+- A Slack workspace where you are allowed to create apps.
+- Admin access to the Semaphore server's configuration (`config.json` or environment variables).
+
 ## Creating Slack webhook
 
 ### Step 1. Open Slack API settings
@@ -17,14 +22,14 @@ To set up Slack notifications, you need to create a webhook URL that connects Se
 ### Step 2. Enable incoming webhooks
 
 1. Inside the app settings, go to **Features → Incoming Webhooks**.
-2. Switch **ctivate Incoming Webhooks** → **On**.
+2. Switch **Activate Incoming Webhooks** → **On**.
 
 ---
 
 ### Step 3. Create a webhook URL
 
-1. Click **dd New Webhook to Workspace**.
-2. Select the xxchannelxx where messages should be sent.
+1. Click **Add New Webhook to Workspace**.
+2. Select the channel where messages should be sent.
 3. Click **Allow**.
 4. You’ll see a **Webhook URL** like:
 

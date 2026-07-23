@@ -1,5 +1,10 @@
 # Gitea config
 
+Prerequisites:
+
+- An OAuth2 application for Semaphore created in your Gitea instance (client ID and secret).
+- Admin access to the Semaphore server's `config.json` file.
+
 ```json title="config.json"
 "oidc_providers": {
     "github": {
@@ -22,7 +27,7 @@
 }
 ```
 
-In your `gitea` instance, go to `https://your-gitea.tld/user/settings/applications` and create a new `oauth2` application.
+In your Gitea instance, go to `https://your-gitea.tld/user/settings/applications` and create a new OAuth2 application.
 As redirect URI use `https://your-semaphore.tld/api/auth/oidc/github/redirect`.
 
-Authentication works fine. But "Name" and "Username" does not recieved correctly. The username will be a unique ID in semaphore and the name will be set to "Anonymous", which is changeable by the user itself. The emails is mapped correctly.
+Authentication works fine, but "Name" and "Username" are not received correctly. The username will be a unique ID in Semaphore and the name will be set to "Anonymous", which can be changed by the user. The email is mapped correctly.

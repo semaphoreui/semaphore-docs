@@ -1,5 +1,9 @@
 # Docker executor (Pro)
 
+:::info Pro feature
+This feature is available in Semaphore UI Pro.
+:::
+
 The Docker executor runs every task in an ephemeral Docker container. One runner process drives many short-lived containers — one per task, plus a transient git-clone helper container — created against a local or remote Docker daemon.
 
 Use the Docker executor to:

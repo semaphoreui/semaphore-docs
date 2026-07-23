@@ -36,6 +36,49 @@ From the repo root:
 - Internal doc links in Markdown typically use paths like `/admin-guide/installation` (see existing pages for the pattern Docusaurus expects).
 - After structural changes (new sections, renamed files), verify `sidebars.js` and run `npm run build` if possible.
 
+## Docs style guide
+
+These rules apply to every page under `docs/`. They follow the conventions of GitLab and Terraform documentation (see `AGENTS/plans/documentation-improvement.md` for the rationale).
+
+### Page types
+
+Every section of a page must be one of four types:
+
+- **Concept** — noun title ("Runners", "Task Templates"); answers *what it is* and *why use it*; never contains steps.
+- **Task** — verb title ("Create a repository", "Register a runner"); structure:
+  1. One context sentence.
+  2. `Prerequisites:` bulleted list (roles/permissions first), when there are any.
+  3. Numbered steps in "location, then action" form: "In the **Key Store** section, select **New Key**."
+  4. Optional result / next step sentence.
+- **Reference** — scannable tables or lists with a one-line intro (options, defaults, formats).
+- **Troubleshooting** — always the last section of a feature page. Item heading = the literal error message in backticks; body = **Cause:** then **Resolution:**.
+
+Banned: `Overview`, `Introduction`, `Important notes`, `Limitations` headings; link-only pages (except section landing pages); empty pages; one-sentence sections.
+
+### Edition and version metadata
+
+- Pro-only features: put an admonition directly under the page H1 or section heading:
+  ```
+  :::info Pro feature
+  This feature is available in Semaphore UI Pro.
+  :::
+  ```
+  Page level = the widest availability on the page; section-level admonitions state the exceptions. Do not use ad-hoc "(Pro)" text in body prose; a "(Pro)" suffix in a page/section *title* is allowed as a nav hint.
+- New features: first line under the heading — `*Introduced in v2.16.*` (link the PR or release when possible).
+
+### Structure and linking
+
+- One H1 per page; no skipped heading levels; avoid H5+ (split the page instead).
+- Feature pages end with `## Related pages` (bulleted links) when inline links are not enough.
+- Use Docusaurus `<Tabs>` for Docker/Snap/package/OS variants instead of parallel pages or repeated blocks.
+- File names: lowercase-with-dashes. Every category folder has a landing page registered as the category `link` in `sidebars.js`.
+- Renames/moves: add a redirect in `docusaurus.config.js` (`@docusaurus/plugin-client-redirects`) and update all inbound links (`grep -rn` the old path).
+- Screenshots: sparse in reference/admin docs, generous in tutorials; always add alt text.
+
+### Sidebar
+
+Every page must be registered in `sidebars.js` (or be a landing page used as a category `link`). Orphan pages are not allowed; delete or register.
+
 ## Relationship to the product
 
 The **Semaphore application** source code is **not** in this repo—only the docs. For product behavior or API details, align with the main Semaphore repository and keep docs accurate to the shipped version when making substantive claims.

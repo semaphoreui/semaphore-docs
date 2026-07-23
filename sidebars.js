@@ -1,26 +1,126 @@
-/**
- * Creating a sidebar enables you to:
- - create an ordered group of docs
- - render a sidebar for each doc of that group
- - provide next/previous navigation
-
- The sidebars can be generated from the filesystem, or explicitly defined here.
-
- Create as many sidebars as you want.
- */
-
 // @ts-check
+
+/**
+ * Sidebar structure rules (see CLAUDE.md "Docs style guide"):
+ * - Every page under docs/ must be registered here, either as an item or as a
+ *   category `link` doc. Orphan pages are not allowed (checked by
+ *   scripts/check-orphans.js).
+ * - Top-level order: Getting Started → User Guide → Admin Guide → Reference → FAQ.
+ */
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
-  // By default, Docusaurus generates a sidebar from the docs folder structure
-  tutorialSidebar: [
+  docsSidebar: [
     'README',
+    {
+      type: 'category',
+      label: 'Getting Started',
+      collapsed: false,
+      link: { type: 'doc', id: 'getting-started/what-is-semaphore' },
+      items: [
+        'getting-started/core-concepts',
+        'getting-started/quickstart',
+        {
+          type: 'category',
+          label: 'Tutorials',
+          link: { type: 'generated-index', slug: '/getting-started/tutorials' },
+          items: [
+            'getting-started/tutorials/run-ansible-playbook',
+            'getting-started/tutorials/run-terraform-code',
+            'getting-started/tutorials/run-scripts',
+          ],
+        },
+        'getting-started/glossary',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'User Guide',
+      collapsed: false,
+      link: { type: 'doc', id: 'user-guide/README' },
+      items: [
+        {
+          type: 'category',
+          label: 'Projects',
+          link: { type: 'doc', id: 'user-guide/projects' },
+          items: [
+            'user-guide/projects/history',
+            'user-guide/projects/activity',
+            'user-guide/projects/settings',
+            'user-guide/projects/runners',
+          ],
+        },
+        'user-guide/team',
+        {
+          type: 'category',
+          label: 'Repositories',
+          link: { type: 'doc', id: 'user-guide/repositories' },
+          items: [
+            'user-guide/repositories/bitbucket-access-token',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Key Store',
+          link: { type: 'doc', id: 'user-guide/key-store' },
+          items: [
+            'user-guide/key-store/hashicorp-vault',
+            'user-guide/key-store/openbao',
+            'user-guide/key-store/devolutions-server',
+            'user-guide/key-store/secret-sync',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Inventory',
+          link: { type: 'doc', id: 'user-guide/inventory' },
+          items: [
+            'user-guide/inventory/kerberos',
+            'user-guide/inventory/netbox-dynamic-inventory',
+            'user-guide/inventory/consul-dynamic-inventory',
+          ],
+        },
+        'user-guide/environment',
+        {
+          type: 'category',
+          label: 'Task Templates',
+          link: { type: 'doc', id: 'user-guide/task-templates/README' },
+          items: [
+            'user-guide/task-templates/survey-vars',
+            'user-guide/task-templates/prompts',
+            'user-guide/task-templates/jwt',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Apps',
+          link: { type: 'generated-index', slug: '/user-guide/apps' },
+          items: [
+            'user-guide/apps/ansible',
+            {
+              type: 'category',
+              label: 'Terraform/OpenTofu',
+              link: { type: 'doc', id: 'user-guide/apps/terraform/README' },
+              items: [
+                'user-guide/apps/terraform/workspaces',
+                'user-guide/apps/terraform/states',
+              ],
+            },
+            'user-guide/apps/bash',
+            'user-guide/apps/powershell',
+            'user-guide/apps/python',
+          ],
+        },
+        'user-guide/tasks',
+        'user-guide/schedules',
+        'user-guide/integrations',
+      ],
+    },
     {
       type: 'category',
       label: 'Admin Guide',
       collapsed: false,
-      link: { type: 'generated-index' },
+      link: { type: 'doc', id: 'admin-guide/README' },
       items: [
         {
           type: 'category',
@@ -29,11 +129,11 @@ const sidebars = {
           items: [
             'admin-guide/installation/package-manager',
             'admin-guide/installation/docker',
-            // 'admin-guide/installation/cloud',
+            'admin-guide/installation/cloud',
             'admin-guide/installation/binary-file',
             'admin-guide/installation/k8s',
-            // 'admin-guide/installation/snap',
-            'admin-guide/installation_manually',
+            'admin-guide/installation/snap',
+            'admin-guide/installation/manual',
           ],
         },
         {
@@ -43,8 +143,8 @@ const sidebars = {
           items: [
             'admin-guide/configuration/config-file',
             'admin-guide/configuration/env-vars',
-            // 'admin-guide/configuration/cli',
-            // 'admin-guide/configuration/snap',
+            'admin-guide/configuration/cli',
+            'admin-guide/configuration/snap',
           ],
         },
         'admin-guide/upgrading',
@@ -67,7 +167,6 @@ const sidebars = {
             'admin-guide/security/database',
             'admin-guide/security/network',
             'admin-guide/security/jwt',
-            // 'admin-guide/security/kerberos',
           ],
         },
         {
@@ -106,10 +205,9 @@ const sidebars = {
             'admin-guide/openid/pingfederate',
             'admin-guide/openid/azure',
             'admin-guide/openid/zitadel',
+            'admin-guide/openid/pocket-id',
           ],
         },
-        'admin-guide/api',
-        'admin-guide/cicd',
         {
           type: 'category',
           label: 'Runners',
@@ -126,7 +224,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Notifications',
-          // link: { type: 'doc', id: 'admin-guide/notifications' },
           link: { type: 'generated-index' },
           items: [
             'admin-guide/notifications/email',
@@ -138,98 +235,20 @@ const sidebars = {
             'admin-guide/notifications/gotify',
           ],
         },
-        // 'admin-guide/troubleshooting',
       ],
     },
     {
       type: 'category',
-      label: 'User Guide',
+      label: 'Reference',
       collapsed: false,
-      link: { type: 'generated-index' },
+      link: { type: 'generated-index', slug: '/reference' },
       items: [
-        {
-          type: 'category',
-          label: 'Projects',
-          link: { type: 'doc', id: 'user-guide/projects' },
-          items: [
-            'user-guide/projects/history',
-            'user-guide/projects/activity',
-            'user-guide/projects/settings',
-            'user-guide/projects/runners',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Task Templates',
-          link: { type: 'doc', id: 'user-guide/task-templates/README' },
-          items: [
-            'user-guide/task-templates/survey-vars',
-            'user-guide/task-templates/prompts',
-            'user-guide/task-templates/jwt',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Apps',
-          link: { type: 'generated-index' },
-          items: [
-            'user-guide/apps/ansible',
-            {
-              type: 'category',
-              label: 'Terraform/OpenTofu',
-              link: { type: 'doc', id: 'user-guide/apps/terraform/README' },
-              items: [
-                'user-guide/apps/terraform/workspaces',
-                'user-guide/apps/terraform/states',
-              ],
-            },
-            'user-guide/apps/bash',
-            'user-guide/apps/powershell',
-            'user-guide/apps/python',
-          ],
-        },
-        'user-guide/tasks',
-        'user-guide/schedules',
-        {
-          type: 'category',
-          label: 'Key Store',
-          link: { type: 'doc', id: 'user-guide/key-store' },
-          items: [
-            'user-guide/key-store/hashicorp-vault',
-            'user-guide/key-store/openbao',
-            'user-guide/key-store/devolutions-server',
-            'user-guide/key-store/secret-sync',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Inventory',
-          items: [
-            'user-guide/inventory/kerberos',
-            'user-guide/inventory/netbox-dynamic-inventory',
-            'user-guide/inventory/consul-dynamic-inventory',
-          ],
-        },
-        'user-guide/environment',
-        {
-          type: 'category',
-          label: 'Repositories',
-          items: [
-            'user-guide/repositories/bitbucket_access_token',
-          ],
-        },
-        'user-guide/integrations',
-        'user-guide/team',
+        'reference/configuration-options',
+        'admin-guide/api',
+        'reference/cicd',
       ],
     },
-    {
-      type: 'category',
-      label: 'FAQ',
-      link: { type: 'generated-index' },
-      items: [
-        'faq/troubleshooting',
-      ],
-    },
+    'troubleshooting',
   ],
 };
 

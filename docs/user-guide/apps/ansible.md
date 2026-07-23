@@ -27,40 +27,40 @@ An ansible-playbook template can be one of the following types:
 * [Build](#build)
 * [Deploy](#deploy)
 
-### Task
+## Task
 
 Just runs specified playbooks with specified parameters.
 
 If you intend to launch the template with an API call with the *limit* feature, make sure to activate the option *Ansible prompts: Limit*. Otherwise the limit set in the API call will be ignored. For the API triggered task, this will not cause any interactive prompt, the task will run unattended.
 
-### Build
+## Build
 
 This type of template should be used to create [artifacts](https://en.wikipedia.org/wiki/Artifact\_\(software\_development\)). The start version of the artifact can be specified in a template parameter. Each run increments the artifact version.
 
 ![](/assets/template_new_build_ipad1.png)
 
-Semaphore doesn't support artifacts out-of-box, it only provides task versioning. You should implement the artifact creation yourself. Read the article [CI/CD](../../admin-guide/cicd) to know how to do this.
+Semaphore doesn't support artifacts out-of-box, it only provides task versioning. You should implement the artifact creation yourself. Read the article [CI/CD](/reference/cicd) to know how to do this.
 
-### Deploy
+## Deploy
 
 This type of template should be used to deploy artifacts to the destination servers. Each `deploy` template is associated with a `build` template.
 
 
 This allows you to deploy a specific version of the artifact to the servers.
 
-### Schedule
+## Schedule
 
 You can set up task scheduling by specifying a cron schedule in the template settings. Cron expression format you can find in [documentation](https://pkg.go.dev/github.com/robfig/cron/v3#hdr-CRON\_Expression\_Format).
 
 
-#### Run a task when a new commit is added to the repository
+### Run a task when a new commit is added to the repository
 
 You can use cron to periodically check for new commits in the repository and trigger a task upon their arrival.
 
 For example you have source code of the app in the git repository. You can add it to **Repositories** and trigger the Build task for new commits.
 
 
-### Tags, skip-tags and limit
+## Tags, skip-tags and limit
 
 Templates support Ansible CLI options:
 
@@ -70,14 +70,14 @@ Templates support Ansible CLI options:
 
 These can be set in the template and overridden when creating a task. Ensure corresponding prompts are enabled if you plan to pass these values via API.
 
-### Authentication
+## Authentication
 
 Authentication for hosts in the playbook is done using the user references from the Key Store on the inventory. The user for SSH is determined by the optional user on the Key Store element.
 
-### Multiple vault passwords
+## Multiple vault passwords
 
 You can attach multiple Vault passwords from the Key Store to a template. During execution, Ansible will attempt to decrypt using the provided passwords.
 
-### Verbosity level
+## Verbosity level
 
 You can adjust Ansible verbosity for a task (for example `-v`, `-vvv`) from the template/task form to aid troubleshooting.

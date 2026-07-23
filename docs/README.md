@@ -1,80 +1,27 @@
-# Welcome to Semaphore UI
+---
+slug: /
+---
+
+# Semaphore UI Documentation
 
 Semaphore UI is a modern, open-source web UI and API for running automation with **Ansible**, **Terraform/OpenTofu**, **PowerShell**, **Shell/Bash**, and **Python**.
 
-Semaphore is written in **Go** (lightweight, fast) and runs on **Windows**, **macOS**, and **Linux**. It supports **SQLite**, **MySQL**, and **PostgreSQL**.
+It is written in **Go** (lightweight, fast), runs on **Linux**, **macOS**, and **Windows**, and supports **SQLite**, **MySQL**, and **PostgreSQL**.
 
-## Choose your path
+## Start here
 
-- **I’m installing or operating Semaphore (admins/operators)**
-  - Install: [Installation](/admin-guide/installation)
-  - Configure: [Configuration](/admin-guide/configuration)
-  - Secure: [Security](/admin-guide/security)
-  - Auth: [LDAP](/admin-guide/ldap) or [OpenID Connect](/admin-guide/openid)
-  - Scale & run remotely: [Runners](/admin-guide/runners)
-  - Keep it healthy: [Logs](/admin-guide/logs), [Upgrading](/admin-guide/upgrading), [Troubleshooting](/admin-guide/troubleshooting)
-  - Enterprise setups: [High availability](/admin-guide/ha)
+- **New to Semaphore?** Read [What is Semaphore UI?](/getting-started/what-is-semaphore) and the [Core concepts](/getting-started/core-concepts).
+- **Want it running in 10 minutes?** Follow the [Quickstart](/getting-started/quickstart), then a tutorial for your tool: [Ansible](/getting-started/tutorials/run-ansible-playbook), [Terraform/OpenTofu](/getting-started/tutorials/run-terraform-code), or [Bash/Python](/getting-started/tutorials/run-scripts).
 
-- **I’m using Semaphore day-to-day (teams/users)**
-  - Organize work: [Projects](/user-guide/projects) and [Teams](/user-guide/team)
-  - Run automation: [Tasks](/user-guide/tasks) and [Schedules](/user-guide/schedules)
-  - Connect your code: [Repositories](/user-guide/repositories)
-  - Targets and variables: [Inventory](/user-guide/inventory) and [Variable Groups](/user-guide/environment)
-  - Credentials: [Key Store](/user-guide/key-store)
-  - Connect tools: [Integrations](/user-guide/integrations)
+## Documentation
 
-- **I’m here for a specific tool**
-  - [Ansible](/user-guide/apps/ansible)
-  - [Terraform/OpenTofu](/user-guide/apps/terraform)
-  - [Shell/Bash](/user-guide/apps/bash)
-  - [PowerShell](/user-guide/apps/powershell)
-  - [Python](/user-guide/apps/python)
-
-## First run checklist (from zero to first task)
-
-Use this as a simple “happy path” to get productive quickly:
-
-1. **Install Semaphore** using your preferred method: [Installation](/admin-guide/installation)
-2. **Run initial setup** (config + first admin user): [Interactive setup](/admin-guide/configuration/cli)
-3. **Create a project** to isolate work (teams, infra, apps): [Projects](/user-guide/projects)
-4. **Connect what Semaphore needs**
-   - Source: [Repositories](/user-guide/repositories)
-   - Secrets/credentials: [Key Store](/user-guide/key-store)
-   - Targets: [Inventory](/user-guide/inventory)
-   - Variables: [Variable Groups](/user-guide/environment)
-5. **Create a task template and run it**
-   - App-specific guides: [Ansible](/user-guide/apps/ansible), [Terraform/OpenTofu](/user-guide/apps/terraform), [Shell/Bash](/user-guide/apps/bash)
-   - Run and monitor: [Tasks](/user-guide/tasks)
-6. **Automate & operationalize**
-   - Schedule runs: [Schedules](/user-guide/schedules)
-   - Control access: [RBAC](/user-guide/rbac)
-   - Get alerts: [Notifications](/admin-guide/notifications)
-
-## Key concepts (glossary)
-
-If you’re new, these terms show up everywhere in the UI:
-
-- **Project**: the main unit of separation (teams/infrastructures/applications) — [Projects](/user-guide/projects)
-- **Repository**: where your playbooks/modules/scripts live — [Repositories](/user-guide/repositories)
-- **Inventory**: hosts/groups/connection settings for Ansible-style runs — [Inventory](/user-guide/inventory)
-- **Variable Group (Environment)**: reusable variables and configuration per project — [Variable Groups](/user-guide/environment)
-- **Key Store**: encrypted credentials (SSH keys, tokens, passwords) — [Key Store](/user-guide/key-store)
-- **Task / Task template**: the definition and the run of automation — [Tasks](/user-guide/tasks)
-- **Runner**: where tasks execute (local or remote) — [Runners](/admin-guide/runners)
-
-## Common workflows
-
-- **CI/CD in Semaphore**: build, deploy, and rollback — [CI/CD](/admin-guide/cicd)
-- **Run at scale**: distribute execution using runners — [Runners](/admin-guide/runners)
-- **Programmatic automation**: integrate Semaphore into your pipelines — [API](/admin-guide/api)
-- **Manage via CLI**: setup, users, runners, migrations — [CLI](/admin-guide/cli)
+- **[User Guide](/user-guide)** — day-to-day work in the web UI: [Projects](/user-guide/projects), [Task Templates](/user-guide/task-templates), [Tasks](/user-guide/tasks), [Schedules](/user-guide/schedules), [Key Store](/user-guide/key-store), [Inventory](/user-guide/inventory), [Teams](/user-guide/team).
+- **[Admin Guide](/admin-guide)** — install, configure, and operate the server: [Installation](/admin-guide/installation), [Configuration](/admin-guide/configuration), [Security](/admin-guide/security), [Authentication](/admin-guide/openid), [Runners](/admin-guide/runners), [High availability](/admin-guide/ha).
+- **Reference** — [Configuration options](/reference/configuration-options), [API](/admin-guide/api), [CLI](/admin-guide/cli), [CI/CD patterns](/reference/cicd).
+- **[Troubleshooting](/troubleshooting)** — solutions for common errors.
 
 ## Get help, report issues, or contribute
 
 - **Help / community**: join the [Discord](https://discord.gg/5R6k7hNGcH)
 - **Bug reports / feature requests**: open an issue on [GitHub Issues](https://github.com/semaphoreui/semaphore/issues)
 - **Source code**: [GitHub](https://github.com/semaphoreui/semaphore)
-
-## FAQ
-
-If something isn’t working as expected, start here: [Troubleshooting FAQ](/faq/troubleshooting)

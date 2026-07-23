@@ -1,5 +1,10 @@
 # Email
 
+Prerequisites:
+
+- An SMTP server (or service such as AWS SES) with valid credentials.
+- Admin access to the Semaphore server's `config.json` file.
+
 Example `config.json` for configuring AWS SMTP email notifications:
 
 ```json
@@ -16,7 +21,7 @@ Example `config.json` for configuring AWS SMTP email notifications:
 }
 ```
 
-Explanation of key setting:
+Explanation of key settings:
 * `email_secure` &mdash; enables **StartTLS** to upgrade the connection to a secure, encrypted channel.
 * `email_tls` &mdash; force TLS usage for SMTP connections.
 * `email_tls_min_version` &mdash; minimal allowed TLS version (e.g. `1.2`).

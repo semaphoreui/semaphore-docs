@@ -7,77 +7,36 @@ with no arguments (or `semaphore help`) to list every command:
 semaphore help
 ```
 
-Most administrative tasks have a dedicated command group:
+## Main commands
 
-| Command group | Purpose |
-|---------------|---------|
-| [`semaphore users`](/admin-guide/cli/users) | Add, change, remove, and inspect users; manage API tokens and TOTP (2FA). |
-| [`semaphore projects`](/admin-guide/cli/projects) | Export and import projects (backups). |
-| [`semaphore vaults`](/admin-guide/cli/vaults) | Re-encrypt stored secrets and inspect encryption key usage. |
-| [`semaphore runner`](/admin-guide/cli/runners) | Run in runner mode and register/unregister runners. |
-| [`semaphore migrate`](/admin-guide/cli/migrations) | Apply or roll back database migrations. |
+| Command | Description | Usage |
+|---------|-------------|-------|
+| `semaphore server` | Run in server mode (web UI and API). `service` is an alias. | `semaphore server --config /path/to/config.json` |
+| `semaphore setup` | Perform interactive setup: generates secrets, walks through a questionnaire, writes a `config.json`, runs database migrations, and creates the first admin user. On completion it prints the command to start the server. | `semaphore setup` |
+| `semaphore version` | Print the version of Semaphore. | `semaphore version` |
+
+## Management commands
+
+Most administrative tasks have a dedicated command group with its own page:
+
+| Command group | Description |
+|---------------|-------------|
+| [`semaphore users`](/admin-guide/cli/users) | Manage users: add, change, remove, and inspect users; manage API tokens (`token create`, `token list`) and TOTP (`totp enable`, `totp disable`, `totp show`). |
+| [`semaphore projects`](/admin-guide/cli/projects) | Manage projects: `export` and `import` project backups. |
+| [`semaphore vaults`](/admin-guide/cli/vaults) | Manage access keys and other secrets: `rekey` re-encrypts all stored secrets under the active encryption key; `check` reports which key id encrypts each stored secret. |
+| [`semaphore runner`](/admin-guide/cli/runners) | Run in runner mode. Subcommands: `setup`, `register`, `start`, `unregister`. |
+| [`semaphore migrate`](/admin-guide/cli/migrations) | Execute database migrations. Flags: `--apply-to`, `--undo-to`, `--err-log-size`, `--skip-task-output`, `--merge-existing-users`. |
 
 Several command groups have shorter aliases: `users`/`user`, `projects`/`project`,
 `vaults`/`vault`, and `server`/`service`.
 
-## Global options
+## Global flags
 
 These flags are accepted by every command:
 
-| Option | Description |
-|--------|-------------|
-| `--config <path>` | Path to the configuration file. |
-| `--no-config` | Don't read any configuration file — use environment variables only. |
-| `--log-level <level>` | Log verbosity: `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`, or `PANIC`. Falls back to the `SEMAPHORE_LOG_LEVEL` environment variable. |
-| `--debug-filter <spec>` | Narrows `DEBUG` output to specific namespaces, e.g. `'runner,task_*'` or `'*,-db'`. Only takes effect when the log level is `DEBUG`. Falls back to `SEMAPHORE_DEBUG_FILTER`. |
-
-## Version
-
-Print the current version.
-
-```bash
-semaphore version
-```
-
-## Interactive setup
-
-Use this for first-time configuration. It generates secrets, walks through an
-interactive questionnaire, writes a `config.json`, runs the database migrations,
-and creates the first admin user.
-
-```bash
-semaphore setup
-```
-
-On completion it prints the commands to start the server, for example:
-
-```bash
-./semaphore server --config /path/to/config.json
-```
-
-## Server mode
-
-Start the Semaphore server (web UI and API). `service` is an alias of `server`.
-
-```bash
-semaphore server --config /path/to/config.json
-```
-
-## Runner mode
-
-Run Semaphore as a task runner. See [Runners](/admin-guide/cli/runners) for the
-full set of subcommands (`setup`, `register`, `start`, `unregister`).
-
-```bash
-semaphore runner start --config /path/to/config.json
-```
-
-## Database migration
-
-Bring the database schema up to date. See
-[Database Migrations](/admin-guide/cli/migrations) for applying or rolling back
-to a specific version.
-
-```bash
-semaphore migrate --config /path/to/config.json
-```
+| Flag | Description |
+|------|-------------|
+| `--config <path>` | Configuration file path. |
+| `--no-config` | Don't use a configuration file — rely on environment variables only. |
+| `--log-level <level>` | Log level: `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`, or `PANIC`. Falls back to the `SEMAPHORE_LOG_LEVEL` environment variable. |
+| `--debug-filter <spec>` | Debug namespace filter (only with `DEBUG` level), e.g. `'runner,task_*'` or `'*,-db'`. Falls back to the `SEMAPHORE_DEBUG_FILTER` environment variable. |

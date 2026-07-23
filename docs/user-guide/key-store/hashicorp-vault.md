@@ -2,6 +2,11 @@
 
 Semaphore UI supports HashiCorp Vault as a storage for secrets.
 
+Prerequisites:
+
+- A running HashiCorp Vault server.
+- An authentication token with access to the secrets engine mount.
+
 ![](/assets/vault1.webp)
 
 You can provide the following options:
@@ -29,7 +34,7 @@ The storage can work in read-only mode.
 
 ## How to use
 
-1. Configure the HashiCorp Vault connection in the Semaphore settings (URL, mount path, and token).
+1. In the Semaphore settings, configure the HashiCorp Vault connection (URL, mount path, and token).
 2. When creating or editing a key in the Key Store, select **HashiCorp Vault** as the storage type.
 3. Provide the secret path in Vault where the credential should be stored.
 
@@ -65,7 +70,7 @@ To set this up:
     }
     ```
 
-3. In Semaphore, when configuring the HashiCorp Vault connection, select **File** as the token source and provide the path to the token file (e.g., `/etc/vault/token`).
+3. In Semaphore, in the HashiCorp Vault connection settings, select **File** as the token source and provide the path to the token file (e.g., `/etc/vault/token`).
 
 This approach avoids long-lived static tokens and lets Vault Agent handle authentication and token renewal automatically.
 

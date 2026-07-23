@@ -116,6 +116,6 @@ If any secret references a key id that is missing from the keyset, the command
 flags those rows and **exits with a non-zero status** — add the missing key back
 to the keyset before that data can be decrypted.
 
-#### Multiple vault passwords (Ansible)
+### Multiple vault passwords (Ansible)
 
 You can define multiple Ansible Vault passwords in the Key Store and attach them to an Ansible template. During execution, Semaphore will provide all configured passwords to Ansible so it can decrypt any referenced vaults.

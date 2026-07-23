@@ -52,6 +52,7 @@ semaphore migrate --undo-to 2.13
 
 
 ## Migration from BoltDB to SQLite/MySQL/PostgreSQL
+
 *Available in versions 2.17 and 2.18 only*
 
 BoltDB was deprecated starting from version 2.16, and **support was removed in version 2.19** — the `--from-boltdb` flag and the `SEMAPHORE_MIGRATE_FROM_BOLTDB` environment variable no longer exist in 2.19+.

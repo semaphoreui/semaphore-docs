@@ -4,6 +4,11 @@ Semaphore UI supports [OpenBao](https://openbao.org) as a storage for secrets.
 
 OpenBao is an open-source fork of HashiCorp Vault and is API-compatible with it, so the storage works exactly like the [HashiCorp Vault storage](/user-guide/key-store/hashicorp-vault).
 
+Prerequisites:
+
+- A running OpenBao server.
+- An authentication token with access to the KV secrets engine mount.
+
 You can provide the following options:
 - **Server URL** — address of your OpenBao server.
 - **Mount** — the KV v2 secrets engine mount path (`secret` by default).

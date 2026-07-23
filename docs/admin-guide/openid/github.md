@@ -1,6 +1,11 @@
 
 # GitHub config
 
+Prerequisites:
+
+- An OAuth app for Semaphore created in GitHub (client ID and secret).
+- Admin access to the Semaphore server's `config.json` file.
+
 ```json title="config.json"
 {
     "oidc_providers": {

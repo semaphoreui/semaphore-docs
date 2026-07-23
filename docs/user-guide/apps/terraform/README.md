@@ -1,3 +1,7 @@
+---
+slug: /user-guide/apps/terraform
+---
+
 
 # Terraform/OpenTofu
 
@@ -21,11 +25,15 @@ For sensitive values, use the **Secrets** tab in Variable Groups — they are en
 
 ## Workspaces
 
-Semaphore supports Terraform/OpenTofu workspaces natively. See [Workspaces](./workspaces) for creating and switching workspaces and using SSH keys for private modules.
+Semaphore supports Terraform/OpenTofu workspaces natively. See [Workspaces](/user-guide/apps/terraform/workspaces) for creating and switching workspaces and using SSH keys for private modules.
 
 ## Backend override and HTTP backend (Pro)
 
-You can override the backend in a template to use the built-in HTTP backend without modifying your Terraform code. See [HTTP Backend (Pro)](./states) for details.
+:::info Pro feature
+This feature is available in Semaphore UI Pro.
+:::
+
+You can override the backend in a template to use the built-in HTTP backend without modifying your Terraform code. See [HTTP Backend (Pro)](/user-guide/apps/terraform/states) for details.
 
 ## Destroy flag and state migration
 

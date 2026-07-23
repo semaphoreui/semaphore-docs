@@ -1,0 +1,9 @@
+{
+  "default": false,
+  "MD001": true,
+  "MD003": { "style": "atx" },
+  "MD022": true,
+  "MD025": { "front_matter_title": "" },
+  "MD041": false,
+  "MD047": true
+}

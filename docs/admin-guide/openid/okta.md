@@ -1,7 +1,12 @@
 
 # Okta config
 
-```yaml title="config.json"
+Prerequisites:
+
+- An OIDC application for Semaphore created in Okta (client ID and secret).
+- Admin access to the Semaphore server's `config.json` file.
+
+```json title="config.json"
 {
   "oidc_providers": {
     "okta": {

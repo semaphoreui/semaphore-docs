@@ -1,5 +1,10 @@
 # Authelia config
 
+Prerequisites:
+
+- An OIDC client for Semaphore configured in Authelia (client ID and secret).
+- Admin access to the Semaphore server's `config.json` file.
+
 ## Authelia configuration
 
 ```yaml title="config.yaml"

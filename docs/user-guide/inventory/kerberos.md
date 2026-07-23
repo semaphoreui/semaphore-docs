@@ -3,6 +3,11 @@
 
 Semaphore supports Kerberos authentication when running playbooks against **Windows hosts via WinRM**.
 
+Prerequisites:
+
+- Windows hosts reachable via WinRM.
+- An Active Directory domain and a username/password for it.
+
 ## Inventory configuration
 
 ```ini
@@ -32,7 +37,7 @@ ansible_winrm_kinit_mode=managed
 This tells Ansible to **automatically acquire a Kerberos ticket** using the provided username/password without requiring you to manually run kinit.
 
 
-##  Example Playbook
+## Example playbook
 
 ```yaml
 - hosts: all

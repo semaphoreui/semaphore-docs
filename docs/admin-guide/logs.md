@@ -32,6 +32,10 @@ The Activity Log captures all user actions performed in Semaphore, including:
 
 ### Pro version 2.10 and later
 
+:::info Pro feature
+This feature is available in Semaphore UI Pro.
+:::
+
 **Semaphore Pro** 2.10+ supports writing the Activity Log and Task log to a file. To enable this, add the following configuration to your `config.json`:
 
 ```json
@@ -163,7 +167,7 @@ SEMAPHORE_SYSLOG_ADDRESS=logs.example.com:514
 SEMAPHORE_SYSLOG_TAG=semaphore
 ```
 
-#### Syslog options
+### Syslog options
 
 | Parameter             | Environment Variables | Description           |
 | --------------------- | --------------------- | --------------------- |

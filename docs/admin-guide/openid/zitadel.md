@@ -1,6 +1,11 @@
 
 # Zitadel config
 
+Prerequisites:
+
+- An application for Semaphore created in Zitadel (client ID and secret).
+- Admin access to the Semaphore server's `config.json` file.
+
 ```json title="config.json"
 {
   "oidc_providers": {
@@ -19,6 +24,6 @@
 
 Tutorial on Zitadel: [OpenID Connect Endpoints in ZITADEL](https://zitadel.com/docs/apis/openidoauth/endpoints).
 
-## Known issues:
+## Known issues
 
 * to avoid error `claim 'email' missing or has bad format` add user Info inside ID Token in the Zitadel console.

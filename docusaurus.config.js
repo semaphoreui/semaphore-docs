@@ -16,7 +16,7 @@ const config = {
   organizationName: 'semaphoreui', // Usually your GitHub org/user name.
   projectName: 'semaphore-docs', // Usually your repo name.
 
-  onBrokenLinks: 'ignore',
+  onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
@@ -59,7 +59,43 @@ const config = {
           alt: 'Semaphore UI Logo',
           src: 'img/logo.svg',
         },
-        items: [],
+        items: [
+          {
+            type: 'doc',
+            docId: 'getting-started/what-is-semaphore',
+            label: 'Getting Started',
+            position: 'left',
+          },
+          {
+            type: 'doc',
+            docId: 'user-guide/README',
+            label: 'User Guide',
+            position: 'left',
+          },
+          {
+            type: 'doc',
+            docId: 'admin-guide/README',
+            label: 'Admin Guide',
+            position: 'left',
+          },
+          {
+            type: 'doc',
+            docId: 'reference/configuration-options',
+            label: 'Reference',
+            position: 'left',
+          },
+          {
+            type: 'doc',
+            docId: 'troubleshooting',
+            label: 'Troubleshooting',
+            position: 'left',
+          },
+          {
+            href: 'https://github.com/semaphoreui/semaphore',
+            label: 'GitHub',
+            position: 'right',
+          },
+        ],
       },
       footer: {
         style: 'dark',
@@ -69,15 +105,19 @@ const config = {
             items: [
               {
                 label: 'Home',
-                to: '/README',
+                to: '/',
               },
               {
-                label: 'Admin Guide',
-                to: '/admin-guide/installation',
+                label: 'Getting Started',
+                to: '/getting-started/what-is-semaphore',
               },
               {
                 label: 'User Guide',
-                to: '/user-guide/projects',
+                to: '/user-guide',
+              },
+              {
+                label: 'Admin Guide',
+                to: '/admin-guide',
               },
             ],
           },
@@ -155,7 +195,49 @@ const config = {
       },
     }),
 
-  plugins: [],
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          // Renamed/moved pages. Keep entries at least until the next major
+          // docs restructuring; external links may point at the old URLs.
+          {
+            from: '/admin-guide/installation_manually',
+            to: '/admin-guide/installation/manual',
+          },
+          {
+            from: '/user-guide/repositories/bitbucket_access_token',
+            to: '/user-guide/repositories/bitbucket-access-token',
+          },
+          {
+            from: '/admin-guide/troubleshooting',
+            to: '/troubleshooting',
+          },
+          {
+            from: '/faq/troubleshooting',
+            to: '/troubleshooting',
+          },
+          {
+            from: '/admin-guide/introduction',
+            to: '/admin-guide',
+          },
+          {
+            from: '/admin-guide/cicd',
+            to: '/reference/cicd',
+          },
+          {
+            from: '/user-guide/rbac',
+            to: '/user-guide/team',
+          },
+          {
+            from: '/README',
+            to: '/',
+          },
+        ],
+      },
+    ],
+  ],
 
 
   markdown: {

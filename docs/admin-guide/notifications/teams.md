@@ -1,10 +1,10 @@
 # Microsoft Teams
 
-`config.json` example:
+To enable Microsoft Teams notifications, add the following options to the Semaphore server's `config.json`:
 
 ```json
 {
     "microsoft_teams_alert": true,
-    "microsoft_teams_url":   "...",
+    "microsoft_teams_url":   "..."
 }
 ```
