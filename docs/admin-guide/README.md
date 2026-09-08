@@ -1,6 +1,8 @@
 # Administration Guide
 
-Welcome to the Semaphore UI Administration Guide. This guide provides comprehensive information for installing, configuring, and maintaining your Semaphore instance.
+Welcome to the Semaphore UI Administration Guide. This guide provides comprehensive information for installing, configuring, securing, and maintaining your Semaphore instance.
+
+> Just evaluating or setting up your first project? Start with the [Getting Started](../getting-started/README.md) section before diving into the full administration topics.
 
 ## What is Semaphore UI?
 
