@@ -83,6 +83,8 @@ const sidebars = {
             'admin-guide/cli/migrations',
           ],
         },
+        'admin-guide/ldap',
+        'admin-guide/jwt-proxy-auth',
         {
           type: 'category',
           label: 'LDAP and AD',
