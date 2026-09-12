@@ -9,7 +9,7 @@ Security is a top priority in Semaphore UI. Whether you're automating critical i
 Semaphore supports secure authentication and flexible authorization mechanisms:
 
 - **Login methods:**
-  - **Username/password**<br />Default method using credentials stored in the Semaphore database. Passwords are hashed using a strong algorithm (bcrypt).
+  - **Username/password**<br />Default method using credentials stored in the Semaphore database. Passwords are never stored in plain text; they are hashed with Argon2id (see [Password hashing](#password-hashing)).
 
   - **LDAP**<br />Allows integration with enterprise directory services. Supports user/group filtering and secure connections via LDAPS.
 
@@ -21,6 +21,34 @@ Semaphore supports secure authentication and flexible authorization mechanisms:
 
 - **Session management**<br />Sessions are protected with secure HTTP cookies. Session expiration and logout mechanisms ensure minimal exposure.
 <!-- - **Brute-Force Protection**: Login attempts are rate-limited to prevent brute-force attacks. -->
+
+### Password hashing {#password-hashing}
+
+Local user passwords are hashed with **Argon2id**, the algorithm recommended by [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html) for password storage. Semaphore uses the OWASP minimum-strength parameters:
+
+| Parameter | Value |
+|-----------|-------|
+| Memory | 19 MiB (`m=19456`) |
+| Iterations | 2 (`t=2`) |
+| Parallelism | 1 (`p=1`) |
+| Salt | 16 random bytes per password |
+| Hash length | 32 bytes |
+
+Hashes are stored in the standard [PHC string format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md), for example `$argon2id$v=19$m=19456,t=2,p=1$<salt>$<hash>`, so the parameters used for each hash are recorded alongside it.
+
+This applies to every way a password can be set: the web UI, the API, and the CLI commands `semaphore user add`, `semaphore user change-by-login`, and `semaphore setup`.
+
+**Upgrading from earlier versions.** Releases before this change hashed passwords with bcrypt. No migration step is required:
+
+- Existing bcrypt hashes are still accepted at login, so all users keep working after the upgrade.
+- On the first successful login, the password is transparently re-hashed with Argon2id and the bcrypt hash is replaced.
+- If Semaphore's Argon2id parameters are strengthened in a future release, hashes created with the older parameters are upgraded the same way on the next login.
+
+Because the re-hash happens only at login, users who never log in again keep their bcrypt hash. To force an upgrade for such accounts, reset their password with `semaphore user change-by-login --password ...` or via the admin UI.
+
+:::note
+Two-factor recovery codes are not user passwords and continue to use bcrypt.
+:::
 
 ## Secrets & credentials {#secrets--credentials}
 
