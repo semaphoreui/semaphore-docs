@@ -34,6 +34,8 @@ downstream nodes are launched according to the edge conditions.
 4. Set a **name** (and optionally a **start version** for run versioning).
 5. Fix any problems listed in the **Problems** panel, then click **Save**.
 
+![Workflow editor](/assets/workflow-editor.webp)
+
 The editor validates the graph before saving. A valid workflow must have at least
 one node, exactly one starting node (no incoming edges), no cycles, and complete
 configuration on every executable node.

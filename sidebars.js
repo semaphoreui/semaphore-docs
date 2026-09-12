@@ -146,6 +146,7 @@ const sidebars = {
           link: { type: 'doc', id: 'user-guide/projects' },
           items: [
             'user-guide/projects/history',
+            'user-guide/projects/stats',
             'user-guide/projects/activity',
             'user-guide/projects/settings',
             'user-guide/projects/runners',
@@ -156,6 +157,8 @@ const sidebars = {
           label: 'Task Templates',
           link: { type: 'doc', id: 'user-guide/task-templates/README' },
           items: [
+            'user-guide/task-templates/build-deploy',
+            'user-guide/task-templates/views',
             'user-guide/task-templates/survey-vars',
             'user-guide/task-templates/prompts',
             'user-guide/task-templates/jwt',
@@ -164,7 +167,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Apps',
-          link: { type: 'generated-index' },
+          link: { type: 'doc', id: 'user-guide/apps/README' },
           items: [
             'user-guide/apps/ansible',
             {
@@ -176,6 +179,7 @@ const sidebars = {
                 'user-guide/apps/terraform/states',
               ],
             },
+            'user-guide/apps/terragrunt',
             'user-guide/apps/bash',
             'user-guide/apps/powershell',
             'user-guide/apps/python',
@@ -200,6 +204,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Inventory',
+          link: { type: 'doc', id: 'user-guide/inventory' },
           items: [
             'user-guide/inventory/kerberos',
             'user-guide/inventory/netbox-dynamic-inventory',
@@ -210,12 +215,14 @@ const sidebars = {
         {
           type: 'category',
           label: 'Repositories',
+          link: { type: 'doc', id: 'user-guide/repositories' },
           items: [
             'user-guide/repositories/bitbucket_access_token',
           ],
         },
         'user-guide/integrations',
         'user-guide/team',
+        'user-guide/account',
       ],
     },
     {

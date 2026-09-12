@@ -29,9 +29,17 @@ There are two ways to create an API token:
 
 #### Through the web interface (since 2.14) {#through-the-web-interface-since-214}
 
-You can create and manage your API tokens via the Semaphore web UI:
+Open the account menu at the bottom of the sidebar and choose **API Tokens**. The page lists your tokens; the **API Reference** link on it opens the Swagger UI built into your instance.
 
-![API Tokens](https://www.semaphoreui.com/uploads/v2.14/tokens.webp)
+![API Tokens](/assets/api-tokens.webp)
+
+Click **New Token**, enter a name, choose when the token expires, and copy the value shown after creation. See [Your account](/user-guide/account#api-tokens).
+
+<div style={{maxWidth: 420}}>
+
+![New token dialog](/assets/api-token-new.webp)
+
+</div>
 
 #### Using HTTP request {#using-http-request}
 

@@ -2,6 +2,10 @@
 
 The Key Store in Semaphore is used to store credentials for accessing remote Repositories, accessing remote hosts, sudo credentials, and Ansible vault passwords.
 
+![Key Store](/assets/key-store-keys.webp)
+
+The **Keys** tab lists the credentials of the project with their type. The **Storages** tab (Pro) lists external secret storages configured for the project, see [Secret Storages](#secret-storages).
+
 ## Types {#types}
 
 ### 1. SSH {#1-ssh}
@@ -34,6 +38,10 @@ This is used as a filler for Repos that do not require authentication, like an O
 ## Secret Storages {#secret-storages}
 
 Semaphore UI supports different storages for secrets. You can choose the storage per-secret when creating or editing a secret.
+
+External storages are created on the **Storages** tab of the Key Store (Pro). Each storage has a name and a type; keys then reference the storage and the path of the secret inside it.
+
+![Secret storages](/assets/key-store-storages.webp)
 
 ### Database {#database}
 

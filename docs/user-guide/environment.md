@@ -1,5 +1,7 @@
 # Variable Groups
 
+![Variable groups list](/assets/variable-groups-list.webp)
+
 The Variable Groups section of Semaphore is a place to store additional variables for an inventory and must be stored in JSON format.
 
 All task templates require a variable group to be defined even if it is empty. 

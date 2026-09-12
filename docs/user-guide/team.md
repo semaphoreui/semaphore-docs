@@ -8,6 +8,10 @@ In the **Enterprise** edition, built-in roles can be extended with [custom roles
 To avoid losing access to a project, it's recommended to have at least two team members with the <b>Owner</b> role.
 :::
 
+The **Team** section of a project has two tabs: **Members** with users and their roles, and **Roles** with custom roles (Enterprise).
+
+![Team members](/assets/team-members.webp)
+
 ## Built-in roles {#built-in-roles}
 
 Every team member has exactly one of these four roles:
