@@ -1,6 +1,6 @@
 # Prompts
 
-Prompts — это предопределённые флаги и опции, специфичные для каждого типа шаблона, которые можно включить, чтобы разрешить настройку во время запуска. В отличие от [Survey-переменных](/survey-vars), которые являются создаваемыми вами пользовательскими полями, prompts — это встроенные опции, соответствующие конкретным флагам CLI для Ansible, Terraform и других инструментов.
+Prompts — это предопределённые флаги и опции, специфичные для каждого типа шаблона, которые можно включить, чтобы разрешить настройку во время запуска. В отличие от [Survey-переменных](/user-guide/task-templates/survey-vars), которые являются создаваемыми вами пользовательскими полями, prompts — это встроенные опции, соответствующие конкретным флагам CLI для Ansible, Terraform и других инструментов.
 
 Эта функция позволяет:
 - Переопределять значения шаблона по умолчанию во время запуска
@@ -125,7 +125,7 @@ Prompts — это предопределённые флаги и опции, с
 2. Селектор workspace автоматически появится в форме задачи
 3. Пользователи выбирают целевой workspace при запуске задач
 
-Подробная настройка описана в разделе [Workspaces Terraform](/apps/terraform/workspaces).
+Подробная настройка описана в разделе [Workspaces Terraform](/user-guide/apps/terraform/workspaces).
 
 ### Флаг Destroy {#destroy-flag}
 
@@ -166,7 +166,7 @@ Prompts для Terraform доступны в настройках шаблона
 
 ## Prompts для Bash, PowerShell и Python {#bash-powershell-and-python-prompts}
 
-Для шаблонов Bash, PowerShell и Python prompts минимальны, так как большая часть настройки выполняется через [Survey-переменные](/survey-vars).
+Для шаблонов Bash, PowerShell и Python prompts минимальны, так как большая часть настройки выполняется через [Survey-переменные](/user-guide/task-templates/survey-vars).
 
 Доступные prompts:
 
@@ -357,9 +357,9 @@ POST /api/project/1/tasks
 
 ## Связанная документация {#related-documentation}
 
-- [Survey-переменные](/survey-vars) - пользовательские поля для шаблонов
-- [Шаблоны Ansible](/apps/ansible) - настройка, специфичная для Ansible
-- [Шаблоны Terraform](/apps/terraform) - настройка, специфичная для Terraform
+- [Survey-переменные](/user-guide/task-templates/survey-vars) - пользовательские поля для шаблонов
+- [Шаблоны Ansible](/user-guide/apps/ansible) - настройка, специфичная для Ansible
+- [Шаблоны Terraform](/user-guide/apps/terraform) - настройка, специфичная для Terraform
 - [Расписания](../schedules) - автоматическое выполнение задач
 - [Интеграции](../integrations) - задачи, запускаемые через webhook
 - [Документация API](../../admin-guide/api) - справочник по API

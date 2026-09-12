@@ -47,9 +47,11 @@ email | {{ .username }}@your-domain.com
 
 Semaphore はまず email フィールドの取得を試みます。それが空の場合、その後に続く式が実行されます。
 
-<div class="warning">
-  式 <code>"username_claim": "|"</code> は、プロバイダー経由でログインする各ユーザーにランダムな <code>username</code> を生成します。
-</div>
+:::warning
+
+式 <code>"username_claim": "|"</code> は、プロバイダー経由でログインする各ユーザーにランダムな <code>username</code> を生成します。
+
+:::
 
 ### トラブルシューティング {#troubleshooting}
 
@@ -66,9 +68,11 @@ ldapwhoami\
 
 対話的にパスワードの入力を求められ、リターンコード **0** を返して、指定した **DN** を出力するはずです。
 
-<div class="warning">
-  LDAP で問題が発生した場合は、<a href="../faq/troubleshooting.html#6-unable-to-read-ldap-response-packet-unexpected-eof">トラブルシューティング</a>のセクションをお読みください。
-</div>
+:::warning
+
+LDAP で問題が発生した場合は、 [トラブルシューティング](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof)のセクションをお読みください。
+
+:::
 
 
 ## 例: OpenLDAP サーバーの使用 {#example-using-openldap-server}

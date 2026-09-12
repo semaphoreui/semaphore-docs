@@ -1,6 +1,6 @@
 # Prompts
 
-Prompts sind vordefinierte Flags und Optionen, die für den jeweiligen Template-Typ spezifisch sind und die Sie aktivieren können, um Anpassungen zur Laufzeit zu ermöglichen. Im Gegensatz zu [Survey-Variablen](/survey-vars), die Sie als eigene Felder selbst erstellen, sind Prompts integrierte Optionen, die bestimmten CLI-Flags von Ansible, Terraform und anderen Tools entsprechen.
+Prompts sind vordefinierte Flags und Optionen, die für den jeweiligen Template-Typ spezifisch sind und die Sie aktivieren können, um Anpassungen zur Laufzeit zu ermöglichen. Im Gegensatz zu [Survey-Variablen](/user-guide/task-templates/survey-vars), die Sie als eigene Felder selbst erstellen, sind Prompts integrierte Optionen, die bestimmten CLI-Flags von Ansible, Terraform und anderen Tools entsprechen.
 
 Diese Funktion ermöglicht Ihnen:
 - Template-Standardwerte zur Laufzeit zu überschreiben
@@ -125,7 +125,7 @@ Wählen Sie, welcher Terraform-Workspace für die Task-Ausführung verwendet wir
 2. Die Workspace-Auswahl erscheint automatisch im Task-Formular
 3. Benutzer wählen beim Ausführen von Tasks den Ziel-Workspace
 
-Siehe [Terraform-Workspaces](/apps/terraform/workspaces) für die detaillierte Einrichtung.
+Siehe [Terraform-Workspaces](/user-guide/apps/terraform/workspaces) für die detaillierte Einrichtung.
 
 ### Destroy-Flag {#destroy-flag}
 
@@ -166,7 +166,7 @@ Das Task-Formular zeigt diese Optionen beim Ausführen von Terraform-Tasks an.
 
 ## Bash-, PowerShell- und Python-Prompts {#bash-powershell-and-python-prompts}
 
-Für Bash-, PowerShell- und Python-Templates sind die Prompts minimal, da die meisten Anpassungen über [Survey-Variablen](/survey-vars) erfolgen.
+Für Bash-, PowerShell- und Python-Templates sind die Prompts minimal, da die meisten Anpassungen über [Survey-Variablen](/user-guide/task-templates/survey-vars) erfolgen.
 
 Verfügbare Prompts sind:
 
@@ -357,9 +357,9 @@ Verwenden Sie Terraform Destroy für temporäre Infrastruktur:
 
 ## Verwandte Dokumentation {#related-documentation}
 
-- [Survey-Variablen](/survey-vars) – Eigene Felder für Templates
-- [Ansible-Templates](/apps/ansible) – Ansible-spezifische Konfiguration
-- [Terraform-Templates](/apps/terraform) – Terraform-spezifische Konfiguration
+- [Survey-Variablen](/user-guide/task-templates/survey-vars) – Eigene Felder für Templates
+- [Ansible-Templates](/user-guide/apps/ansible) – Ansible-spezifische Konfiguration
+- [Terraform-Templates](/user-guide/apps/terraform) – Terraform-spezifische Konfiguration
 - [Zeitpläne](../schedules) – Automatisierte Task-Ausführung
 - [Integrationen](../integrations) – Über Webhooks ausgelöste Tasks
 - [API-Dokumentation](../../admin-guide/api) – API-Referenz

@@ -47,9 +47,11 @@ email | {{ .username }}@your-domain.com
 
 Semaphore는 먼저 email 필드를 클레임하려고 시도합니다. 비어 있으면 그 뒤의 표현식이 실행됩니다.
 
-<div class="warning">
-  <code>"username_claim": "|"</code> 표현식은 공급자를 통해 로그인하는 각 사용자에 대해 임의의 <code>username</code>을 생성합니다.
-</div>
+:::warning
+
+<code>"username_claim": "|"</code> 표현식은 공급자를 통해 로그인하는 각 사용자에 대해 임의의 <code>username</code>을 생성합니다.
+
+:::
 
 ### 문제 해결 {#troubleshooting}
 
@@ -66,9 +68,11 @@ ldapwhoami\
 
 비밀번호를 대화형으로 묻고, 코드 **0**을 반환하며 지정한 **DN**을 출력해야 합니다.
 
-<div class="warning">
-  LDAP에 문제가 있는 경우 <a href="../faq/troubleshooting.html#6-unable-to-read-ldap-response-packet-unexpected-eof">문제 해결</a> 섹션을 읽어 보십시오.
-</div>
+:::warning
+
+LDAP에 문제가 있는 경우 [문제 해결](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof) 섹션을 읽어 보십시오.
+
+:::
 
 
 ## 예제: OpenLDAP 서버 사용 {#example-using-openldap-server}

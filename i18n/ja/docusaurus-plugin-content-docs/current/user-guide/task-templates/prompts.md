@@ -1,6 +1,6 @@
 # プロンプト
 
-プロンプトは、各テンプレートタイプに固有の事前定義されたフラグやオプションで、有効にすると実行時のカスタマイズが可能になります。自分で作成するカスタムフィールドである[サーベイ変数](/survey-vars)とは異なり、プロンプトは Ansible、Terraform などのツールの特定の CLI フラグに対応する組み込みオプションです。
+プロンプトは、各テンプレートタイプに固有の事前定義されたフラグやオプションで、有効にすると実行時のカスタマイズが可能になります。自分で作成するカスタムフィールドである[サーベイ変数](/user-guide/task-templates/survey-vars)とは異なり、プロンプトは Ansible、Terraform などのツールの特定の CLI フラグに対応する組み込みオプションです。
 
 この機能により、次のことが可能になります。
 - 実行時にテンプレートのデフォルトを上書きする
@@ -125,7 +125,7 @@ Terraform および OpenTofu テンプレートでは、Semaphore はいくつ�
 2. ワークスペースセレクターがタスクフォームに自動的に表示されます
 3. ユーザーはタスク実行時に対象のワークスペースを選択します
 
-詳細なセットアップについては [Terraform ワークスペース](/apps/terraform/workspaces)を参照してください。
+詳細なセットアップについては [Terraform ワークスペース](/user-guide/apps/terraform/workspaces)を参照してください。
 
 ### Destroy フラグ {#destroy-flag}
 
@@ -166,7 +166,7 @@ Terraform タスクの実行時に、タスクフォームにこれらのオプ�
 
 ## Bash、PowerShell、Python のプロンプト {#bash-powershell-and-python-prompts}
 
-Bash、PowerShell、Python テンプレートでは、ほとんどのカスタマイズが[サーベイ変数](/survey-vars)で行われるため、プロンプトは最小限です。
+Bash、PowerShell、Python テンプレートでは、ほとんどのカスタマイズが[サーベイ変数](/user-guide/task-templates/survey-vars)で行われるため、プロンプトは最小限です。
 
 利用可能なプロンプトは次のとおりです。
 
@@ -357,9 +357,9 @@ Tags を使って playbook の特定の部分だけを実行します。
 
 ## 関連ドキュメント {#related-documentation}
 
-- [サーベイ変数](/survey-vars) - テンプレート用のカスタムフィールド
-- [Ansible テンプレート](/apps/ansible) - Ansible 固有の設定
-- [Terraform テンプレート](/apps/terraform) - Terraform 固有の設定
+- [サーベイ変数](/user-guide/task-templates/survey-vars) - テンプレート用のカスタムフィールド
+- [Ansible テンプレート](/user-guide/apps/ansible) - Ansible 固有の設定
+- [Terraform テンプレート](/user-guide/apps/terraform) - Terraform 固有の設定
 - [スケジュール](../schedules) - タスクの自動実行
 - [インテグレーション](../integrations) - webhook でトリガーされるタスク
 - [API ドキュメント](../../admin-guide/api) - API リファレンス

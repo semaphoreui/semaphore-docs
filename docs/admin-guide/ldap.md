@@ -47,9 +47,11 @@ email | {{ .username }}@your-domain.com
 
 Semaphore is attempting to claim the email field first. If it is empty, the expression following it is executed.
 
-<div class="warning">
-  The expression <code>"username_claim": "|"</code> generates a random <code>username</code> for each user who logs in through the provider.
-</div>
+:::warning
+
+The expression <code>"username_claim": "|"</code> generates a random <code>username</code> for each user who logs in through the provider.
+
+:::
 
 ### Troubleshooting {#troubleshooting}
 
@@ -66,9 +68,11 @@ ldapwhoami\
 
 It will ask interactively for the password, and should return code **0** and echo out the **DN** as specified.
 
-<div class="warning">
-  Please read <a href="../faq/troubleshooting.html#6-unable-to-read-ldap-response-packet-unexpected-eof">Troubleshooting</a> section if you have issues with LDAP.
-</div>
+:::warning
+
+Please read [Troubleshooting](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof) section if you have issues with LDAP.
+
+:::
 
 
 ## Example: Using OpenLDAP Server {#example-using-openldap-server}

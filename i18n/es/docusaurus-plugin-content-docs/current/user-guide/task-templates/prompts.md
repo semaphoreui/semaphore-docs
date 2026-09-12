@@ -1,6 +1,6 @@
 # Prompts
 
-Los prompts son indicadores y opciones predefinidos, específicos de cada tipo de plantilla, que puede habilitar para permitir la personalización en tiempo de ejecución. A diferencia de las [variables de encuesta](/survey-vars), que son campos personalizados que usted crea, los prompts son opciones integradas que corresponden a indicadores concretos de la CLI de Ansible, Terraform y otras herramientas.
+Los prompts son indicadores y opciones predefinidos, específicos de cada tipo de plantilla, que puede habilitar para permitir la personalización en tiempo de ejecución. A diferencia de las [variables de encuesta](/user-guide/task-templates/survey-vars), que son campos personalizados que usted crea, los prompts son opciones integradas que corresponden a indicadores concretos de la CLI de Ansible, Terraform y otras herramientas.
 
 Esta característica le permite:
 - Sobrescribir los valores predeterminados de la plantilla en tiempo de ejecución
@@ -125,7 +125,7 @@ Seleccione qué workspace de Terraform se utilizará para la ejecución de la ta
 2. El selector de workspace aparece automáticamente en el formulario de la tarea
 3. Los usuarios eligen el workspace de destino al ejecutar las tareas
 
-Consulte [Workspaces de Terraform](/apps/terraform/workspaces) para una configuración detallada.
+Consulte [Workspaces de Terraform](/user-guide/apps/terraform/workspaces) para una configuración detallada.
 
 ### Indicador Destroy {#destroy-flag}
 
@@ -166,7 +166,7 @@ El formulario de la tarea muestra estas opciones al ejecutar tareas de Terraform
 
 ## Prompts de Bash, PowerShell y Python {#bash-powershell-and-python-prompts}
 
-Para las plantillas de Bash, PowerShell y Python, los prompts son mínimos, ya que la mayor parte de la personalización se gestiona mediante [variables de encuesta](/survey-vars).
+Para las plantillas de Bash, PowerShell y Python, los prompts son mínimos, ya que la mayor parte de la personalización se gestiona mediante [variables de encuesta](/user-guide/task-templates/survey-vars).
 
 Los prompts disponibles son:
 
@@ -357,9 +357,9 @@ Utilice destroy de Terraform para infraestructura temporal:
 
 ## Documentación relacionada {#related-documentation}
 
-- [Variables de encuesta](/survey-vars) - Campos personalizados para plantillas
-- [Plantillas de Ansible](/apps/ansible) - Configuración específica de Ansible
-- [Plantillas de Terraform](/apps/terraform) - Configuración específica de Terraform
+- [Variables de encuesta](/user-guide/task-templates/survey-vars) - Campos personalizados para plantillas
+- [Plantillas de Ansible](/user-guide/apps/ansible) - Configuración específica de Ansible
+- [Plantillas de Terraform](/user-guide/apps/terraform) - Configuración específica de Terraform
 - [Programaciones](../schedules) - Ejecución automatizada de tareas
 - [Integraciones](../integrations) - Tareas desencadenadas por webhooks
 - [Documentación de la API](../../admin-guide/api) - Referencia de la API

@@ -103,7 +103,7 @@ Semaphore можно настроить несколькими способам�
 | <br />`dialect`       <hr /> `SEMAPHORE_DB_DIALECT`<br /><br /> | Может быть `sqlite` (по умолчанию), `postgres` или `mysql`.   |
 | <br /> `*.options`    <hr /> `SEMAPHORE_DB_OPTIONS`<br /><br /> | JSON-словарь с параметрами подключения к базе данных. |
 | **Безопасность** ||
-| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | Ключ в кодировке Base64, используемый для шифрования ключей доступа, хранящихся в базе данных. Подробнее в разделе [Шифрование базы данных](/admin-guide/security#database-encryption). |
+| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | Ключ в кодировке Base64, используемый для шифрования ключей доступа, хранящихся в базе данных. Подробнее в разделе [Шифрование базы данных](/admin-guide/security#data-encryption). |
 | <br />`option_encryption` <hr /> `SEMAPHORE_OPTION_ENCRYPTION`<br /><br /> | Ключ в кодировке Base64, используемый для шифрования параметров БД (ключа подписи JWT) по старой схеме с одним ключом (без ротации). Если не задан, используется ключ доступа. |
 | <br />`cookie_hash`           <hr /> `SEMAPHORE_COOKIE_HASH`<br /><br /> | HMAC-ключ в кодировке Base64, используемый для подписи cookie. |
 | <br />`cookie_encryption`     <hr /> `SEMAPHORE_COOKIE_ENCRYPTION`<br /><br /> | Ключ в кодировке Base64, используемый для шифрования cookie. |
@@ -147,8 +147,8 @@ Semaphore можно настроить несколькими способам�
 | <br />`email_alert`    <hr /> `SEMAPHORE_EMAIL_ALERT`<br /><br /> | Флаг, включающий оповещения по электронной почте. |
 | **Мессенджеры** ||
 | <br />`telegram_alert` <hr /> `SEMAPHORE_TELEGRAM_ALERT`<br /><br /> | Установите в True, чтобы включить отправку оповещений в Telegram. Следует использовать вместе с `telegram_chat` и `telegram_token`. |
-| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | Укажите Chat ID чата, в который отправлять оповещения.  Подробнее в разделе [Настройка уведомлений Telegram](/admin-guide/notifications#chat-id) |
-| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | Укажите token авторизации бота, который будет получать оповещения.  Подробнее в разделе [Настройка уведомлений Telegram](/admin-guide/notifications#bot-setup) |
+| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | Укажите Chat ID чата, в который отправлять оповещения.  Подробнее в разделе [Настройка уведомлений Telegram](/admin-guide/notifications/telegram#chat-id) |
+| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | Укажите token авторизации бота, который будет получать оповещения.  Подробнее в разделе [Настройка уведомлений Telegram](/admin-guide/notifications/telegram#bot-setup) |
 | <br />`slack_alert`    <hr /> `SEMAPHORE_SLACK_ALERT`<br /><br /> | Установите в True, чтобы включить отправку оповещений в Slack. Следует использовать вместе с `slack_url`                          |
 | <br />`slack_url`      <hr /> `SEMAPHORE_SLACK_URL`<br /><br /> | URL webhook'а Slack. Semaphore будет использовать его для отправки POST-запросов с оповещениями в формате JSON Slack на указанный URL.    |
 | <br />`microsoft_teams_alert` <hr /> `SEMAPHORE_MICROSOFT_TEAMS_ALERT` <br /><br /> | Флаг, включающий оповещения в Microsoft Teams. |

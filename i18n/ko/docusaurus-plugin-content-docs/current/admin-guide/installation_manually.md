@@ -15,8 +15,8 @@
 
 이 문서는 다음 설치 방법을 사용할 때 Semaphore를 설정하는 방법을 자세히 설명합니다.
 
-* [패키지 관리자](/admin-guide/installation#package-manager)
-* [바이너리 파일](/admin-guide/installation#binary-file)
+* [패키지 관리자](/admin-guide/installation/package-manager)
+* [바이너리 파일](/admin-guide/installation/binary-file)
 
 Semaphore 소프트웨어 패키지는 Ansible을 성공적으로 실행하는 데 필요한 전체 시스템의 일부일 뿐입니다.
 
@@ -230,7 +230,7 @@ deactivate
 
 ## 리버스 프록시 {#reverse-proxy}
 
-참조: [보안 - 암호화된 연결](/security#reverse-proxy)
+참조: [보안 - 암호화된 연결](/admin-guide/security/network#reverse-proxy)
 
 ----
 

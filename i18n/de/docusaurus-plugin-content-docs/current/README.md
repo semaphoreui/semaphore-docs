@@ -4,6 +4,8 @@ sidebar_label: Startseite
 hide_table_of_contents: true
 ---
 
+import Link from '@docusaurus/Link';
+
 # Semaphore UI Dokumentation
 
 Semaphore UI ist eine selbst gehostete Weboberfläche und API zum Ausführen von **Ansible**-, **Terraform/OpenTofu**-, **Shell**-, **PowerShell**- und **Python**-Automatisierung. Es bietet Ihrem Team einen zentralen Ort, um Playbooks und Skripte auszuführen, Zugangsdaten verschlüsselt zu speichern, Jobs zu planen und nachzuvollziehen, wer wann was ausgeführt hat.
@@ -36,11 +38,11 @@ Für den Produktionsbetrieb finden Sie unter [Installation](/admin-guide/install
       <div className="card__body">
         <p>Bringen Sie einen Server zum Laufen und verbinden Sie ihn mit Ihrer Datenbank, Ihrem Identity Provider und Ihrem Netzwerk.</p>
         <ul>
-          <li><a href="/admin-guide/installation">Installation</a></li>
-          <li><a href="/admin-guide/configuration">Konfiguration</a></li>
-          <li><a href="/category/reverse-proxy">Reverse-Proxy und TLS</a></li>
-          <li><a href="/admin-guide/ldap">LDAP</a> und <a href="/admin-guide/openid">OpenID Connect</a></li>
-          <li><a href="/admin-guide/security">Sicherheitshärtung</a></li>
+          <li><Link to="/admin-guide/installation">Installation</Link></li>
+          <li><Link to="/admin-guide/configuration">Konfiguration</Link></li>
+          <li><Link to="/category/reverse-proxy">Reverse-Proxy und TLS</Link></li>
+          <li><Link to="/admin-guide/ldap">LDAP</Link> und <Link to="/admin-guide/openid">OpenID Connect</Link></li>
+          <li><Link to="/admin-guide/security">Sicherheitshärtung</Link></li>
         </ul>
       </div>
     </div>
@@ -51,11 +53,11 @@ Für den Produktionsbetrieb finden Sie unter [Installation](/admin-guide/install
       <div className="card__body">
         <p>Organisieren Sie die Arbeit in Projekten, verbinden Sie Repositories und Zugangsdaten und führen Sie Aufgaben bei Bedarf oder nach Zeitplan aus.</p>
         <ul>
-          <li><a href="/getting-started">Erste Schritte: erste Aufgabe in sechs Schritten</a></li>
-          <li><a href="/user-guide/projects">Projekte</a> und <a href="/user-guide/team">Teams</a></li>
-          <li><a href="/user-guide/task-templates">Aufgabenvorlagen</a> und <a href="/user-guide/tasks">Aufgaben</a></li>
-          <li><a href="/user-guide/key-store">Schlüsselspeicher</a>, <a href="/user-guide/inventory">Inventory</a>, <a href="/user-guide/environment">Variablengruppen</a></li>
-          <li><a href="/user-guide/schedules">Zeitpläne</a> und <a href="/user-guide/workflows">Workflows</a> (Pro)</li>
+          <li><Link to="/getting-started">Erste Schritte: erste Aufgabe in sechs Schritten</Link></li>
+          <li><Link to="/user-guide/projects">Projekte</Link> und <Link to="/user-guide/team">Teams</Link></li>
+          <li><Link to="/user-guide/task-templates">Aufgabenvorlagen</Link> und <Link to="/user-guide/tasks">Aufgaben</Link></li>
+          <li><Link to="/user-guide/key-store">Schlüsselspeicher</Link>, <Link to="/user-guide/inventory">Inventory</Link>, <Link to="/user-guide/environment">Variablengruppen</Link></li>
+          <li><Link to="/user-guide/schedules">Zeitpläne</Link> und <Link to="/user-guide/workflows">Workflows</Link> (Pro)</li>
         </ul>
       </div>
     </div>
@@ -66,11 +68,11 @@ Für den Produktionsbetrieb finden Sie unter [Installation](/admin-guide/install
       <div className="card__body">
         <p>Verteilen Sie die Ausführung, betreiben Sie den Dienst redundant und halten Sie ihn beobachtbar und aktuell.</p>
         <ul>
-          <li><a href="/admin-guide/runners">Runner</a></li>
-          <li><a href="/admin-guide/ha">Hochverfügbarkeit</a></li>
-          <li><a href="/admin-guide/upgrading">Aktualisierung</a></li>
-          <li><a href="/admin-guide/logs">Logs</a> und <a href="/admin-guide/metrics">Metriken</a></li>
-          <li><a href="/category/notifications">Benachrichtigungen</a></li>
+          <li><Link to="/admin-guide/runners">Runner</Link></li>
+          <li><Link to="/admin-guide/ha">Hochverfügbarkeit</Link></li>
+          <li><Link to="/admin-guide/upgrading">Aktualisierung</Link></li>
+          <li><Link to="/admin-guide/logs">Logs</Link> und <Link to="/admin-guide/metrics">Metriken</Link></li>
+          <li><Link to="/category/notifications">Benachrichtigungen</Link></li>
         </ul>
       </div>
     </div>
@@ -81,11 +83,11 @@ Für den Produktionsbetrieb finden Sie unter [Installation](/admin-guide/install
       <div className="card__body">
         <p>Genaue Optionen und Endpunkte, wenn Sie bereits wissen, wonach Sie suchen.</p>
         <ul>
-          <li><a href="/admin-guide/configuration/config-file">Konfigurationsdatei</a> und <a href="/admin-guide/configuration/env-vars">Umgebungsvariablen</a></li>
-          <li><a href="/admin-guide/api">REST-API</a></li>
-          <li><a href="/admin-guide/cli">CLI</a></li>
-          <li><a href="/admin-guide/cicd">CI/CD-Integration</a></li>
-          <li><a href="/faq/troubleshooting">FAQ zur Fehlerbehebung</a></li>
+          <li><Link to="/admin-guide/configuration/config-file">Konfigurationsdatei</Link> und <Link to="/admin-guide/configuration/env-vars">Umgebungsvariablen</Link></li>
+          <li><Link to="/admin-guide/api">REST-API</Link></li>
+          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/admin-guide/cicd">CI/CD-Integration</Link></li>
+          <li><Link to="/faq/troubleshooting">FAQ zur Fehlerbehebung</Link></li>
         </ul>
       </div>
     </div>
@@ -95,11 +97,11 @@ Für den Produktionsbetrieb finden Sie unter [Installation](/admin-guide/install
 ## Anleitungen nach Werkzeug {#guides-by-tool}
 
 <div className="home-tools margin-bottom--lg">
-  <a className="button button--outline button--primary" href="/user-guide/apps/ansible">Ansible</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/terraform">Terraform / OpenTofu</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/bash">Shell</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/powershell">PowerShell</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/python">Python</a>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/ansible">Ansible</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/terraform">Terraform / OpenTofu</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/bash">Shell</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/powershell">PowerShell</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/python">Python</Link>
 </div>
 
 ## Hilfe und Community {#help-and-community}

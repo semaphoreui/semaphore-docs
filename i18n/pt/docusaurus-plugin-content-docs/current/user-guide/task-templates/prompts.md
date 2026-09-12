@@ -1,6 +1,6 @@
 # Prompts
 
-Prompts são flags e opções predefinidas, específicas de cada tipo de template, que você pode ativar para permitir a personalização em tempo de execução. Diferentemente das [Variáveis de Survey](/survey-vars), que são campos personalizados criados por você, os prompts são opções integradas que correspondem a flags de CLI específicas do Ansible, Terraform e outras ferramentas.
+Prompts são flags e opções predefinidas, específicas de cada tipo de template, que você pode ativar para permitir a personalização em tempo de execução. Diferentemente das [Variáveis de Survey](/user-guide/task-templates/survey-vars), que são campos personalizados criados por você, os prompts são opções integradas que correspondem a flags de CLI específicas do Ansible, Terraform e outras ferramentas.
 
 Esse recurso permite:
 - Substituir os padrões do template em tempo de execução
@@ -125,7 +125,7 @@ Selecione qual workspace do Terraform será usado na execução da tarefa.
 2. O seletor de workspace aparece automaticamente no formulário da tarefa
 3. Os usuários escolhem o workspace de destino ao executar as tarefas
 
-Consulte [Workspaces do Terraform](/apps/terraform/workspaces) para a configuração detalhada.
+Consulte [Workspaces do Terraform](/user-guide/apps/terraform/workspaces) para a configuração detalhada.
 
 ### Flag Destroy {#destroy-flag}
 
@@ -166,7 +166,7 @@ O formulário da tarefa exibe essas opções ao executar tarefas do Terraform.
 
 ## Prompts do Bash, PowerShell e Python {#bash-powershell-and-python-prompts}
 
-Para templates do Bash, PowerShell e Python, os prompts são mínimos, pois a maior parte da personalização é feita por meio de [Variáveis de Survey](/survey-vars).
+Para templates do Bash, PowerShell e Python, os prompts são mínimos, pois a maior parte da personalização é feita por meio de [Variáveis de Survey](/user-guide/task-templates/survey-vars).
 
 Os prompts disponíveis são:
 
@@ -357,9 +357,9 @@ Use o destroy do Terraform para infraestrutura temporária:
 
 ## Documentação relacionada {#related-documentation}
 
-- [Variáveis de Survey](/survey-vars) - Campos personalizados para templates
-- [Templates do Ansible](/apps/ansible) - Configuração específica do Ansible
-- [Templates do Terraform](/apps/terraform) - Configuração específica do Terraform
+- [Variáveis de Survey](/user-guide/task-templates/survey-vars) - Campos personalizados para templates
+- [Templates do Ansible](/user-guide/apps/ansible) - Configuração específica do Ansible
+- [Templates do Terraform](/user-guide/apps/terraform) - Configuração específica do Terraform
 - [Agendamentos](../schedules) - Execução automatizada de tarefas
 - [Integrações](../integrations) - Tarefas acionadas por webhook
 - [Documentação da API](../../admin-guide/api) - Referência da API

@@ -4,6 +4,8 @@ sidebar_label: Главная
 hide_table_of_contents: true
 ---
 
+import Link from '@docusaurus/Link';
+
 # Документация Semaphore UI
 
 Semaphore UI — это самостоятельно размещаемый веб-интерфейс и API для запуска автоматизации на **Ansible**, **Terraform/OpenTofu**, **Shell**, **PowerShell** и **Python**. Он даёт вашей команде единое место, где можно запускать playbook'и и скрипты, хранить учётные данные в зашифрованном виде, планировать задания и видеть, кто, что и когда запускал.
@@ -36,11 +38,11 @@ docker run -d -p 3000:3000 \
       <div className="card__body">
         <p>Запустите сервер и подключите его к базе данных, провайдеру идентификации и сети.</p>
         <ul>
-          <li><a href="/admin-guide/installation">Установка</a></li>
-          <li><a href="/admin-guide/configuration">Конфигурация</a></li>
-          <li><a href="/category/reverse-proxy">Обратный прокси и TLS</a></li>
-          <li><a href="/admin-guide/ldap">LDAP</a> и <a href="/admin-guide/openid">OpenID Connect</a></li>
-          <li><a href="/admin-guide/security">Усиление безопасности</a></li>
+          <li><Link to="/admin-guide/installation">Установка</Link></li>
+          <li><Link to="/admin-guide/configuration">Конфигурация</Link></li>
+          <li><Link to="/category/reverse-proxy">Обратный прокси и TLS</Link></li>
+          <li><Link to="/admin-guide/ldap">LDAP</Link> и <Link to="/admin-guide/openid">OpenID Connect</Link></li>
+          <li><Link to="/admin-guide/security">Усиление безопасности</Link></li>
         </ul>
       </div>
     </div>
@@ -51,11 +53,11 @@ docker run -d -p 3000:3000 \
       <div className="card__body">
         <p>Организуйте работу в проекты, подключите репозитории и учётные данные и запускайте задачи по запросу или по расписанию.</p>
         <ul>
-          <li><a href="/getting-started">Начало работы: первая задача за шесть шагов</a></li>
-          <li><a href="/user-guide/projects">Проекты</a> и <a href="/user-guide/team">Команды</a></li>
-          <li><a href="/user-guide/task-templates">Шаблоны задач</a> и <a href="/user-guide/tasks">Задачи</a></li>
-          <li><a href="/user-guide/key-store">Хранилище ключей</a>, <a href="/user-guide/inventory">Inventory</a>, <a href="/user-guide/environment">Группы переменных</a></li>
-          <li><a href="/user-guide/schedules">Расписания</a> и <a href="/user-guide/workflows">Рабочие процессы</a> (Pro)</li>
+          <li><Link to="/getting-started">Начало работы: первая задача за шесть шагов</Link></li>
+          <li><Link to="/user-guide/projects">Проекты</Link> и <Link to="/user-guide/team">Команды</Link></li>
+          <li><Link to="/user-guide/task-templates">Шаблоны задач</Link> и <Link to="/user-guide/tasks">Задачи</Link></li>
+          <li><Link to="/user-guide/key-store">Хранилище ключей</Link>, <Link to="/user-guide/inventory">Inventory</Link>, <Link to="/user-guide/environment">Группы переменных</Link></li>
+          <li><Link to="/user-guide/schedules">Расписания</Link> и <Link to="/user-guide/workflows">Рабочие процессы</Link> (Pro)</li>
         </ul>
       </div>
     </div>
@@ -66,11 +68,11 @@ docker run -d -p 3000:3000 \
       <div className="card__body">
         <p>Распределяйте выполнение, обеспечивайте отказоустойчивость и поддерживайте наблюдаемость и актуальность сервиса.</p>
         <ul>
-          <li><a href="/admin-guide/runners">Runner'ы</a></li>
-          <li><a href="/admin-guide/ha">Высокая доступность</a></li>
-          <li><a href="/admin-guide/upgrading">Обновление</a></li>
-          <li><a href="/admin-guide/logs">Логи</a> и <a href="/admin-guide/metrics">Метрики</a></li>
-          <li><a href="/category/notifications">Уведомления</a></li>
+          <li><Link to="/admin-guide/runners">Runner'ы</Link></li>
+          <li><Link to="/admin-guide/ha">Высокая доступность</Link></li>
+          <li><Link to="/admin-guide/upgrading">Обновление</Link></li>
+          <li><Link to="/admin-guide/logs">Логи</Link> и <Link to="/admin-guide/metrics">Метрики</Link></li>
+          <li><Link to="/category/notifications">Уведомления</Link></li>
         </ul>
       </div>
     </div>
@@ -81,11 +83,11 @@ docker run -d -p 3000:3000 \
       <div className="card__body">
         <p>Точные опции и эндпоинты, когда вы уже знаете, что ищете.</p>
         <ul>
-          <li><a href="/admin-guide/configuration/config-file">Файл конфигурации</a> и <a href="/admin-guide/configuration/env-vars">Переменные окружения</a></li>
-          <li><a href="/admin-guide/api">REST API</a></li>
-          <li><a href="/admin-guide/cli">CLI</a></li>
-          <li><a href="/admin-guide/cicd">Интеграция с CI/CD</a></li>
-          <li><a href="/faq/troubleshooting">FAQ по устранению неполадок</a></li>
+          <li><Link to="/admin-guide/configuration/config-file">Файл конфигурации</Link> и <Link to="/admin-guide/configuration/env-vars">Переменные окружения</Link></li>
+          <li><Link to="/admin-guide/api">REST API</Link></li>
+          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/admin-guide/cicd">Интеграция с CI/CD</Link></li>
+          <li><Link to="/faq/troubleshooting">FAQ по устранению неполадок</Link></li>
         </ul>
       </div>
     </div>
@@ -95,11 +97,11 @@ docker run -d -p 3000:3000 \
 ## Руководства по инструментам {#guides-by-tool}
 
 <div className="home-tools margin-bottom--lg">
-  <a className="button button--outline button--primary" href="/user-guide/apps/ansible">Ansible</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/terraform">Terraform / OpenTofu</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/bash">Shell</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/powershell">PowerShell</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/python">Python</a>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/ansible">Ansible</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/terraform">Terraform / OpenTofu</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/bash">Shell</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/powershell">PowerShell</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/python">Python</Link>
 </div>
 
 ## Помощь и сообщество {#help-and-community}

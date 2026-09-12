@@ -103,7 +103,7 @@ Semaphore は、いくつかの方法で設定できます。
 | <br />`dialect`       <hr /> `SEMAPHORE_DB_DIALECT`<br /><br /> | `sqlite`(デフォルト)、`postgres` または `mysql` を指定できます。   |
 | <br /> `*.options`    <hr /> `SEMAPHORE_DB_OPTIONS`<br /><br /> | データベース接続オプションを含む JSON マップ。 |
 | **セキュリティ** ||
-| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | データベースに保存されるアクセスキーの暗号化に使用する Base64 エンコードされたキー。詳細は [データベース暗号化リファレンス](/admin-guide/security#database-encryption) を参照してください。 |
+| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | データベースに保存されるアクセスキーの暗号化に使用する Base64 エンコードされたキー。詳細は [データベース暗号化リファレンス](/admin-guide/security#data-encryption) を参照してください。 |
 | <br />`option_encryption` <hr /> `SEMAPHORE_OPTION_ENCRYPTION`<br /><br /> | 従来の単一キー方式(ローテーションなし)で DB オプション(JWT 署名キー)を暗号化するために使用する Base64 エンコードされたキー。未設定の場合はアクセスキーが使用されます。 |
 | <br />`cookie_hash`           <hr /> `SEMAPHORE_COOKIE_HASH`<br /><br /> | Cookie の署名に使用する Base64 エンコードされた HMAC キー。 |
 | <br />`cookie_encryption`     <hr /> `SEMAPHORE_COOKIE_ENCRYPTION`<br /><br /> | Cookie の暗号化に使用する Base64 エンコードされたキー。 |
@@ -147,8 +147,8 @@ Semaphore は、いくつかの方法で設定できます。
 | <br />`email_alert`    <hr /> `SEMAPHORE_EMAIL_ALERT`<br /><br /> | メールアラートを有効にするフラグ。 |
 | **メッセンジャー** ||
 | <br />`telegram_alert` <hr /> `SEMAPHORE_TELEGRAM_ALERT`<br /><br /> | Telegram へのアラート送信を有効にするには True に設定します。`telegram_chat` および `telegram_token` と組み合わせて使用します。 |
-| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | アラートの送信先チャットの Chat ID を設定します。詳細は [Telegram 通知の設定](/admin-guide/notifications#chat-id) を参照してください。 |
-| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | アラートのペイロードを受け取るボットの Authorization Token を設定します。詳細は [Telegram 通知の設定](/admin-guide/notifications#bot-setup) を参照してください。 |
+| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | アラートの送信先チャットの Chat ID を設定します。詳細は [Telegram 通知の設定](/admin-guide/notifications/telegram#chat-id) を参照してください。 |
+| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | アラートのペイロードを受け取るボットの Authorization Token を設定します。詳細は [Telegram 通知の設定](/admin-guide/notifications/telegram#bot-setup) を参照してください。 |
 | <br />`slack_alert`    <hr /> `SEMAPHORE_SLACK_ALERT`<br /><br /> | Slack へのアラート送信を有効にするには True に設定します。`slack_url` と組み合わせて使用します。                          |
 | <br />`slack_url`      <hr /> `SEMAPHORE_SLACK_URL`<br /><br /> | Slack の webhook URL。Semaphore はこの URL に Slack 形式の JSON アラートを POST します。    |
 | <br />`microsoft_teams_alert` <hr /> `SEMAPHORE_MICROSOFT_TEAMS_ALERT` <br /><br /> | Microsoft Teams アラートを有効にするフラグ。 |

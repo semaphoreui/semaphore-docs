@@ -103,7 +103,7 @@ Lista completa de las opciones de configuración disponibles:
 | <br />`dialect`       <hr /> `SEMAPHORE_DB_DIALECT`<br /><br /> | Puede ser `sqlite` (predeterminado), `postgres` o `mysql`.   |
 | <br /> `*.options`    <hr /> `SEMAPHORE_DB_OPTIONS`<br /><br /> | Mapa JSON que contiene las opciones de conexión a la base de datos. |
 | **Seguridad** ||
-| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | Clave codificada en Base64 utilizada para cifrar las claves de acceso almacenadas en la base de datos. Más información en la [referencia de cifrado de la base de datos](/admin-guide/security#database-encryption). |
+| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | Clave codificada en Base64 utilizada para cifrar las claves de acceso almacenadas en la base de datos. Más información en la [referencia de cifrado de la base de datos](/admin-guide/security#data-encryption). |
 | <br />`option_encryption` <hr /> `SEMAPHORE_OPTION_ENCRYPTION`<br /><br /> | Clave codificada en Base64 utilizada para cifrar las opciones de la BD (la clave de firma JWT) con el antiguo esquema de clave única (sin rotación). Si no está definida, se usa la clave de acceso. |
 | <br />`cookie_hash`           <hr /> `SEMAPHORE_COOKIE_HASH`<br /><br /> | Clave HMAC codificada en Base64 utilizada para firmar las cookies. |
 | <br />`cookie_encryption`     <hr /> `SEMAPHORE_COOKIE_ENCRYPTION`<br /><br /> | Clave codificada en Base64 utilizada para cifrar las cookies. |
@@ -147,8 +147,8 @@ Lista completa de las opciones de configuración disponibles:
 | <br />`email_alert`    <hr /> `SEMAPHORE_EMAIL_ALERT`<br /><br /> | Flag que activa las alertas por correo electrónico. |
 | **Mensajería** ||
 | <br />`telegram_alert` <hr /> `SEMAPHORE_TELEGRAM_ALERT`<br /><br /> | Establezca True para activar el envío de alertas a Telegram. Debe usarse junto con `telegram_chat` y `telegram_token`. |
-| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | Establezca el Chat ID del chat al que se enviarán las alertas.  Más información en [Configuración de notificaciones de Telegram](/admin-guide/notifications#chat-id) |
-| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | Establezca el token de autorización del bot que recibirá el contenido de la alerta.  Más información en [Configuración de notificaciones de Telegram](/admin-guide/notifications#bot-setup) |
+| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | Establezca el Chat ID del chat al que se enviarán las alertas.  Más información en [Configuración de notificaciones de Telegram](/admin-guide/notifications/telegram#chat-id) |
+| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | Establezca el token de autorización del bot que recibirá el contenido de la alerta.  Más información en [Configuración de notificaciones de Telegram](/admin-guide/notifications/telegram#bot-setup) |
 | <br />`slack_alert`    <hr /> `SEMAPHORE_SLACK_ALERT`<br /><br /> | Establezca True para activar el envío de alertas a Slack. Debe usarse junto con `slack_url`                          |
 | <br />`slack_url`      <hr /> `SEMAPHORE_SLACK_URL`<br /><br /> | La URL del webhook de Slack. Semaphore la usará para enviar por POST alertas JSON con formato de Slack a la URL indicada.    |
 | <br />`microsoft_teams_alert` <hr /> `SEMAPHORE_MICROSOFT_TEAMS_ALERT` <br /><br /> | Flag que activa las alertas de Microsoft Teams. |

@@ -1,6 +1,6 @@
 # Invites
 
-Les invites (prompts) sont des options prédéfinies, propres à chaque type de modèle, que vous pouvez activer pour permettre une personnalisation à l'exécution. Contrairement aux [variables de sondage](/survey-vars), qui sont des champs personnalisés que vous créez, les invites sont des options intégrées correspondant à des options de ligne de commande spécifiques d'Ansible, Terraform et d'autres outils.
+Les invites (prompts) sont des options prédéfinies, propres à chaque type de modèle, que vous pouvez activer pour permettre une personnalisation à l'exécution. Contrairement aux [variables de sondage](/user-guide/task-templates/survey-vars), qui sont des champs personnalisés que vous créez, les invites sont des options intégrées correspondant à des options de ligne de commande spécifiques d'Ansible, Terraform et d'autres outils.
 
 Cette fonctionnalité vous permet de :
 - Remplacer les valeurs par défaut du modèle à l'exécution
@@ -125,7 +125,7 @@ Sélectionnez le workspace Terraform à utiliser pour l'exécution de la tâche.
 2. Le sélecteur de workspace apparaît automatiquement dans le formulaire de tâche
 3. Les utilisateurs choisissent le workspace cible lors de l'exécution des tâches
 
-Consultez [Workspaces Terraform](/apps/terraform/workspaces) pour une configuration détaillée.
+Consultez [Workspaces Terraform](/user-guide/apps/terraform/workspaces) pour une configuration détaillée.
 
 ### Option Destroy {#destroy-flag}
 
@@ -166,7 +166,7 @@ Le formulaire de tâche affiche ces options lors de l'exécution de tâches Terr
 
 ## Invites Bash, PowerShell et Python {#bash-powershell-and-python-prompts}
 
-Pour les modèles Bash, PowerShell et Python, les invites sont minimales, car l'essentiel de la personnalisation passe par les [variables de sondage](/survey-vars).
+Pour les modèles Bash, PowerShell et Python, les invites sont minimales, car l'essentiel de la personnalisation passe par les [variables de sondage](/user-guide/task-templates/survey-vars).
 
 Les invites disponibles sont :
 
@@ -357,9 +357,9 @@ Utilisez Terraform destroy pour les infrastructures temporaires :
 
 ## Documentation associée {#related-documentation}
 
-- [Variables de sondage](/survey-vars) - Champs personnalisés pour les modèles
-- [Modèles Ansible](/apps/ansible) - Configuration spécifique à Ansible
-- [Modèles Terraform](/apps/terraform) - Configuration spécifique à Terraform
+- [Variables de sondage](/user-guide/task-templates/survey-vars) - Champs personnalisés pour les modèles
+- [Modèles Ansible](/user-guide/apps/ansible) - Configuration spécifique à Ansible
+- [Modèles Terraform](/user-guide/apps/terraform) - Configuration spécifique à Terraform
 - [Planifications](../schedules) - Exécution automatisée des tâches
 - [Intégrations](../integrations) - Tâches déclenchées par webhook
 - [Documentation de l'API](../../admin-guide/api) - Référence de l'API

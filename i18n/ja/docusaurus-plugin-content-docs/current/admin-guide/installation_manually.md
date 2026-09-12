@@ -15,8 +15,8 @@
 
 このドキュメントでは、次のインストール方法を使用する場合の Semaphore のセットアップ方法を詳しく説明します。
 
-* [パッケージマネージャー](/admin-guide/installation#package-manager)
-* [バイナリファイル](/admin-guide/installation#binary-file)
+* [パッケージマネージャー](/admin-guide/installation/package-manager)
+* [バイナリファイル](/admin-guide/installation/binary-file)
 
 Semaphore のソフトウェアパッケージは、Ansible を正常に実行するために必要なシステム全体の一部にすぎません。
 
@@ -230,7 +230,7 @@ deactivate
 
 ## リバースプロキシ {#reverse-proxy}
 
-参照: [セキュリティ - 暗号化された接続](/security#reverse-proxy)
+参照: [セキュリティ - 暗号化された接続](/admin-guide/security/network#reverse-proxy)
 
 ----
 

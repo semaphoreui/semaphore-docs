@@ -1,6 +1,6 @@
 # Prompt
 
-I prompt sono flag e opzioni predefiniti, specifici per ciascun tipo di template, che è possibile abilitare per consentire la personalizzazione in fase di esecuzione. A differenza delle [variabili survey](/survey-vars), che sono campi personalizzati creati dall'utente, i prompt sono opzioni integrate che corrispondono a flag CLI specifici di Ansible, Terraform e altri strumenti.
+I prompt sono flag e opzioni predefiniti, specifici per ciascun tipo di template, che è possibile abilitare per consentire la personalizzazione in fase di esecuzione. A differenza delle [variabili survey](/user-guide/task-templates/survey-vars), che sono campi personalizzati creati dall'utente, i prompt sono opzioni integrate che corrispondono a flag CLI specifici di Ansible, Terraform e altri strumenti.
 
 Questa funzionalità consente di:
 - Sovrascrivere i valori predefiniti del template in fase di esecuzione
@@ -125,7 +125,7 @@ Selezionare il workspace Terraform da utilizzare per l'esecuzione del task.
 2. Il selettore del workspace compare automaticamente nel modulo del task
 3. Gli utenti scelgono il workspace di destinazione durante l'esecuzione dei task
 
-Consultare [Workspace Terraform](/apps/terraform/workspaces) per la configurazione dettagliata.
+Consultare [Workspace Terraform](/user-guide/apps/terraform/workspaces) per la configurazione dettagliata.
 
 ### Flag Destroy {#destroy-flag}
 
@@ -166,7 +166,7 @@ Il modulo del task mostra queste opzioni durante l'esecuzione dei task Terraform
 
 ## Prompt Bash, PowerShell e Python {#bash-powershell-and-python-prompts}
 
-Per i template Bash, PowerShell e Python, i prompt sono minimi, poiché la maggior parte della personalizzazione è gestita tramite le [variabili survey](/survey-vars).
+Per i template Bash, PowerShell e Python, i prompt sono minimi, poiché la maggior parte della personalizzazione è gestita tramite le [variabili survey](/user-guide/task-templates/survey-vars).
 
 I prompt disponibili sono:
 
@@ -357,9 +357,9 @@ Utilizzare destroy di Terraform per l'infrastruttura temporanea:
 
 ## Documentazione correlata {#related-documentation}
 
-- [Variabili survey](/survey-vars) - Campi personalizzati per i template
-- [Template Ansible](/apps/ansible) - Configurazione specifica di Ansible
-- [Template Terraform](/apps/terraform) - Configurazione specifica di Terraform
+- [Variabili survey](/user-guide/task-templates/survey-vars) - Campi personalizzati per i template
+- [Template Ansible](/user-guide/apps/ansible) - Configurazione specifica di Ansible
+- [Template Terraform](/user-guide/apps/terraform) - Configurazione specifica di Terraform
 - [Pianificazioni](../schedules) - Esecuzione automatica dei task
 - [Integrazioni](../integrations) - Task attivati da webhook
 - [Documentazione API](../../admin-guide/api) - Riferimento API

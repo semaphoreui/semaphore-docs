@@ -4,6 +4,8 @@ sidebar_label: ホーム
 hide_table_of_contents: true
 ---
 
+import Link from '@docusaurus/Link';
+
 # Semaphore UI ドキュメント
 
 Semaphore UI は、**Ansible**、**Terraform/OpenTofu**、**Shell**、**PowerShell**、**Python** の自動化を実行するためのセルフホスト型の Web UI および API です。playbook やスクリプトの実行、認証情報の暗号化保管、ジョブのスケジュール実行、そして誰がいつ何を実行したかの確認を、チームでひとつの場所から行えます。
@@ -36,11 +38,11 @@ docker run -d -p 3000:3000 \
       <div className="card__body">
         <p>サーバーを起動し、データベース、ID プロバイダー、ネットワークに接続します。</p>
         <ul>
-          <li><a href="/admin-guide/installation">インストール</a></li>
-          <li><a href="/admin-guide/configuration">設定</a></li>
-          <li><a href="/category/reverse-proxy">リバースプロキシと TLS</a></li>
-          <li><a href="/admin-guide/ldap">LDAP</a> と <a href="/admin-guide/openid">OpenID Connect</a></li>
-          <li><a href="/admin-guide/security">セキュリティ強化</a></li>
+          <li><Link to="/admin-guide/installation">インストール</Link></li>
+          <li><Link to="/admin-guide/configuration">設定</Link></li>
+          <li><Link to="/category/reverse-proxy">リバースプロキシと TLS</Link></li>
+          <li><Link to="/admin-guide/ldap">LDAP</Link> と <Link to="/admin-guide/openid">OpenID Connect</Link></li>
+          <li><Link to="/admin-guide/security">セキュリティ強化</Link></li>
         </ul>
       </div>
     </div>
@@ -51,11 +53,11 @@ docker run -d -p 3000:3000 \
       <div className="card__body">
         <p>作業をプロジェクトに整理し、リポジトリと認証情報を接続して、タスクをオンデマンドまたはスケジュールで実行します。</p>
         <ul>
-          <li><a href="/getting-started">はじめに: 6 つのステップで最初のタスクを実行</a></li>
-          <li><a href="/user-guide/projects">プロジェクト</a> と <a href="/user-guide/team">チーム</a></li>
-          <li><a href="/user-guide/task-templates">タスクテンプレート</a> と <a href="/user-guide/tasks">タスク</a></li>
-          <li><a href="/user-guide/key-store">キーストア</a>、<a href="/user-guide/inventory">インベントリ</a>、<a href="/user-guide/environment">変数グループ</a></li>
-          <li><a href="/user-guide/schedules">スケジュール</a> と <a href="/user-guide/workflows">ワークフロー</a> (Pro)</li>
+          <li><Link to="/getting-started">はじめに: 6 つのステップで最初のタスクを実行</Link></li>
+          <li><Link to="/user-guide/projects">プロジェクト</Link> と <Link to="/user-guide/team">チーム</Link></li>
+          <li><Link to="/user-guide/task-templates">タスクテンプレート</Link> と <Link to="/user-guide/tasks">タスク</Link></li>
+          <li><Link to="/user-guide/key-store">キーストア</Link>、<Link to="/user-guide/inventory">インベントリ</Link>、<Link to="/user-guide/environment">変数グループ</Link></li>
+          <li><Link to="/user-guide/schedules">スケジュール</Link> と <Link to="/user-guide/workflows">ワークフロー</Link> (Pro)</li>
         </ul>
       </div>
     </div>
@@ -66,11 +68,11 @@ docker run -d -p 3000:3000 \
       <div className="card__body">
         <p>実行を分散し、冗長構成で稼働させ、サービスを監視可能かつ最新の状態に保ちます。</p>
         <ul>
-          <li><a href="/admin-guide/runners">ランナー</a></li>
-          <li><a href="/admin-guide/ha">高可用性</a></li>
-          <li><a href="/admin-guide/upgrading">アップグレード</a></li>
-          <li><a href="/admin-guide/logs">ログ</a> と <a href="/admin-guide/metrics">メトリクス</a></li>
-          <li><a href="/category/notifications">通知</a></li>
+          <li><Link to="/admin-guide/runners">ランナー</Link></li>
+          <li><Link to="/admin-guide/ha">高可用性</Link></li>
+          <li><Link to="/admin-guide/upgrading">アップグレード</Link></li>
+          <li><Link to="/admin-guide/logs">ログ</Link> と <Link to="/admin-guide/metrics">メトリクス</Link></li>
+          <li><Link to="/category/notifications">通知</Link></li>
         </ul>
       </div>
     </div>
@@ -81,11 +83,11 @@ docker run -d -p 3000:3000 \
       <div className="card__body">
         <p>探しているものが分かっている場合に参照する、正確なオプションとエンドポイントです。</p>
         <ul>
-          <li><a href="/admin-guide/configuration/config-file">設定ファイル</a> と <a href="/admin-guide/configuration/env-vars">環境変数</a></li>
-          <li><a href="/admin-guide/api">REST API</a></li>
-          <li><a href="/admin-guide/cli">CLI</a></li>
-          <li><a href="/admin-guide/cicd">CI/CD 連携</a></li>
-          <li><a href="/faq/troubleshooting">トラブルシューティング FAQ</a></li>
+          <li><Link to="/admin-guide/configuration/config-file">設定ファイル</Link> と <Link to="/admin-guide/configuration/env-vars">環境変数</Link></li>
+          <li><Link to="/admin-guide/api">REST API</Link></li>
+          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/admin-guide/cicd">CI/CD 連携</Link></li>
+          <li><Link to="/faq/troubleshooting">トラブルシューティング FAQ</Link></li>
         </ul>
       </div>
     </div>
@@ -95,11 +97,11 @@ docker run -d -p 3000:3000 \
 ## ツール別ガイド {#guides-by-tool}
 
 <div className="home-tools margin-bottom--lg">
-  <a className="button button--outline button--primary" href="/user-guide/apps/ansible">Ansible</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/terraform">Terraform / OpenTofu</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/bash">Shell</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/powershell">PowerShell</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/python">Python</a>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/ansible">Ansible</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/terraform">Terraform / OpenTofu</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/bash">Shell</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/powershell">PowerShell</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/python">Python</Link>
 </div>
 
 ## ヘルプとコミュニティ {#help-and-community}

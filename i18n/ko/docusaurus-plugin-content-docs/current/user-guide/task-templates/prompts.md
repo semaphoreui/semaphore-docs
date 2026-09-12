@@ -1,6 +1,6 @@
 # 프롬프트
 
-프롬프트는 각 템플릿 유형에 특화된 미리 정의된 플래그와 옵션으로, 이를 활성화하면 실행 시점에 사용자 지정이 가능합니다. 직접 만드는 사용자 정의 필드인 [설문 변수](/survey-vars)와 달리, 프롬프트는 Ansible, Terraform 및 기타 도구의 특정 CLI 플래그에 대응하는 내장 옵션입니다.
+프롬프트는 각 템플릿 유형에 특화된 미리 정의된 플래그와 옵션으로, 이를 활성화하면 실행 시점에 사용자 지정이 가능합니다. 직접 만드는 사용자 정의 필드인 [설문 변수](/user-guide/task-templates/survey-vars)와 달리, 프롬프트는 Ansible, Terraform 및 기타 도구의 특정 CLI 플래그에 대응하는 내장 옵션입니다.
 
 이 기능을 통해 다음을 수행할 수 있습니다:
 - 실행 시점에 템플릿 기본값 재정의
@@ -125,7 +125,7 @@ Terraform 및 OpenTofu 템플릿에서 Semaphore는 여러 내장 프롬프트�
 2. 워크스페이스 선택기가 작업 양식에 자동으로 표시됩니다
 3. 사용자는 작업 실행 시 대상 워크스페이스를 선택합니다
 
-자세한 설정은 [Terraform 워크스페이스](/apps/terraform/workspaces)를 참고하십시오.
+자세한 설정은 [Terraform 워크스페이스](/user-guide/apps/terraform/workspaces)를 참고하십시오.
 
 ### Destroy 플래그 {#destroy-flag}
 
@@ -166,7 +166,7 @@ Terraform 작업을 실행할 때 작업 양식에 이 옵션들이 표시됩니
 
 ## Bash, PowerShell, Python 프롬프트 {#bash-powershell-and-python-prompts}
 
-Bash, PowerShell, Python 템플릿의 경우 대부분의 사용자 지정이 [설문 변수](/survey-vars)를 통해 처리되므로 프롬프트가 최소한으로 제공됩니다.
+Bash, PowerShell, Python 템플릿의 경우 대부분의 사용자 지정이 [설문 변수](/user-guide/task-templates/survey-vars)를 통해 처리되므로 프롬프트가 최소한으로 제공됩니다.
 
 사용 가능한 프롬프트는 다음과 같습니다:
 
@@ -357,9 +357,9 @@ Tags를 사용하여 playbook의 특정 부분만 실행합니다:
 
 ## 관련 문서 {#related-documentation}
 
-- [설문 변수](/survey-vars) - 템플릿용 사용자 정의 필드
-- [Ansible 템플릿](/apps/ansible) - Ansible 관련 설정
-- [Terraform 템플릿](/apps/terraform) - Terraform 관련 설정
+- [설문 변수](/user-guide/task-templates/survey-vars) - 템플릿용 사용자 정의 필드
+- [Ansible 템플릿](/user-guide/apps/ansible) - Ansible 관련 설정
+- [Terraform 템플릿](/user-guide/apps/terraform) - Terraform 관련 설정
 - [스케줄](../schedules) - 자동화된 작업 실행
 - [통합](../integrations) - webhook으로 트리거되는 작업
 - [API 문서](../../admin-guide/api) - API 레퍼런스

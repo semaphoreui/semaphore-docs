@@ -103,7 +103,7 @@ Semaphore는 여러 가지 방법으로 설정할 수 있습니다:
 | <br />`dialect`       <hr /> `SEMAPHORE_DB_DIALECT`<br /><br /> | `sqlite`(기본값), `postgres` 또는 `mysql`을 사용할 수 있습니다.   |
 | <br /> `*.options`    <hr /> `SEMAPHORE_DB_OPTIONS`<br /><br /> | 데이터베이스 연결 옵션을 담은 JSON 맵입니다. |
 | **보안** ||
-| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | 데이터베이스에 저장된 액세스 키를 암호화하는 데 사용되는 Base64 인코딩 키입니다. 자세한 내용은 [데이터베이스 암호화 참조](/admin-guide/security#database-encryption)를 참조하십시오. |
+| <br />`access_key_encryption` <hr /> `SEMAPHORE_ACCESS_KEY_ENCRYPTION`<br /><br /> | 데이터베이스에 저장된 액세스 키를 암호화하는 데 사용되는 Base64 인코딩 키입니다. 자세한 내용은 [데이터베이스 암호화 참조](/admin-guide/security#data-encryption)를 참조하십시오. |
 | <br />`option_encryption` <hr /> `SEMAPHORE_OPTION_ENCRYPTION`<br /><br /> | 기존 단일 키 방식(순환 없음)으로 DB 옵션(JWT 서명 키)을 암호화하는 데 사용되는 Base64 인코딩 키입니다. 설정하지 않으면 액세스 키를 대신 사용합니다. |
 | <br />`cookie_hash`           <hr /> `SEMAPHORE_COOKIE_HASH`<br /><br /> | 쿠키 서명에 사용되는 Base64 인코딩 HMAC 키입니다. |
 | <br />`cookie_encryption`     <hr /> `SEMAPHORE_COOKIE_ENCRYPTION`<br /><br /> | 쿠키 암호화에 사용되는 Base64 인코딩 키입니다. |
@@ -147,8 +147,8 @@ Semaphore는 여러 가지 방법으로 설정할 수 있습니다:
 | <br />`email_alert`    <hr /> `SEMAPHORE_EMAIL_ALERT`<br /><br /> | 이메일 알림을 활성화하는 플래그입니다. |
 | **메신저** ||
 | <br />`telegram_alert` <hr /> `SEMAPHORE_TELEGRAM_ALERT`<br /><br /> | Telegram으로 알림을 보내려면 True로 설정하십시오. `telegram_chat` 및 `telegram_token`과 함께 사용해야 합니다. |
-| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | 알림을 보낼 채팅의 Chat ID로 설정하십시오.  자세한 내용은 [Telegram 알림 설정](/admin-guide/notifications#chat-id)을 참조하십시오. |
-| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | 알림 페이로드를 받을 봇의 Authorization Token으로 설정하십시오.  자세한 내용은 [Telegram 알림 설정](/admin-guide/notifications#bot-setup)을 참조하십시오. |
+| <br />`telegram_chat`  <hr /> `SEMAPHORE_TELEGRAM_CHAT`<br /><br /> | 알림을 보낼 채팅의 Chat ID로 설정하십시오.  자세한 내용은 [Telegram 알림 설정](/admin-guide/notifications/telegram#chat-id)을 참조하십시오. |
+| <br />`telegram_token` <hr /> `SEMAPHORE_TELEGRAM_TOKEN`<br /><br /> | 알림 페이로드를 받을 봇의 Authorization Token으로 설정하십시오.  자세한 내용은 [Telegram 알림 설정](/admin-guide/notifications/telegram#bot-setup)을 참조하십시오. |
 | <br />`slack_alert`    <hr /> `SEMAPHORE_SLACK_ALERT`<br /><br /> | Slack으로 알림을 보내려면 True로 설정하십시오. `slack_url`과 함께 사용해야 합니다.                          |
 | <br />`slack_url`      <hr /> `SEMAPHORE_SLACK_URL`<br /><br /> | Slack webhook URL입니다. Semaphore는 이 URL로 Slack 형식의 JSON 알림을 POST합니다.    |
 | <br />`microsoft_teams_alert` <hr /> `SEMAPHORE_MICROSOFT_TEAMS_ALERT` <br /><br /> | Microsoft Teams 알림을 활성화하는 플래그입니다. |

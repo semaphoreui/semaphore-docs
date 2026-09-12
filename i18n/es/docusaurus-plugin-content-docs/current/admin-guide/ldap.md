@@ -47,9 +47,11 @@ email | {{ .username }}@your-domain.com
 
 Semaphore intenta obtener primero el campo email. Si está vacío, se evalúa la expresión que le sigue.
 
-<div class="warning">
-  La expresión <code>"username_claim": "|"</code> genera un <code>username</code> aleatorio para cada usuario que inicia sesión a través del proveedor.
-</div>
+:::warning
+
+La expresión <code>"username_claim": "|"</code> genera un <code>username</code> aleatorio para cada usuario que inicia sesión a través del proveedor.
+
+:::
 
 ### Solución de problemas {#troubleshooting}
 
@@ -66,9 +68,11 @@ ldapwhoami\
 
 Solicitará la contraseña de forma interactiva y debería devolver el código **0** y mostrar el **DN** especificado.
 
-<div class="warning">
-  Consulte la sección <a href="../faq/troubleshooting.html#6-unable-to-read-ldap-response-packet-unexpected-eof">Solución de problemas</a> si tiene problemas con LDAP.
-</div>
+:::warning
+
+Consulte la sección [Solución de problemas](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof) si tiene problemas con LDAP.
+
+:::
 
 
 ## Ejemplo: uso de un servidor OpenLDAP {#example-using-openldap-server}
