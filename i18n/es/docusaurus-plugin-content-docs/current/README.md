@@ -40,7 +40,7 @@ Para producción, consulte [Instalación](/admin-guide/installation) para las in
         <ul>
           <li><Link to="/admin-guide/installation">Instalación</Link></li>
           <li><Link to="/admin-guide/configuration">Configuración</Link></li>
-          <li><Link to="/category/reverse-proxy">Proxy inverso y TLS</Link></li>
+          <li><Link to="/admin-guide/reverse-proxy">Proxy inverso y TLS</Link></li>
           <li><Link to="/admin-guide/ldap">LDAP</Link> y <Link to="/admin-guide/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">Refuerzo de la seguridad</Link></li>
         </ul>
@@ -72,7 +72,7 @@ Para producción, consulte [Instalación](/admin-guide/installation) para las in
           <li><Link to="/admin-guide/ha">Alta disponibilidad</Link></li>
           <li><Link to="/admin-guide/upgrading">Actualización</Link></li>
           <li><Link to="/admin-guide/logs">Registros</Link> y <Link to="/admin-guide/metrics">Métricas</Link></li>
-          <li><Link to="/category/notifications">Notificaciones</Link></li>
+          <li><Link to="/admin-guide/notifications">Notificaciones</Link></li>
         </ul>
       </div>
     </div>

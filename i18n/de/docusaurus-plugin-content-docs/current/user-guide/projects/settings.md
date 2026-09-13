@@ -13,7 +13,7 @@ Der Tab **Settings** im Projekt-Dashboard steht den **Owners** des Projekts zur 
 | **Telegram Chat ID** | Optional. Sendet Benachrichtigungen für dieses Projekt an einen anderen Telegram-Chat als den global konfigurierten. Siehe [Telegram-Benachrichtigungen](/admin-guide/notifications/telegram#per-project-chat-ids). |
 | **Allow alerts for this project** | Hauptschalter für Benachrichtigungen. Ist er aus, sendet kein Kanal Benachrichtigungen über Tasks dieses Projekts, selbst wenn der Kanal auf dem Server konfiguriert ist. |
 
-**Test alerts** sendet eine Testnachricht über jeden konfigurierten [Benachrichtigungskanal](/category/notifications), sodass Sie die Serverkonfiguration überprüfen können, ohne einen Task auszuführen. **Save** übernimmt die Änderungen.
+**Test alerts** sendet eine Testnachricht über jeden konfigurierten [Benachrichtigungskanal](/admin-guide/notifications), sodass Sie die Serverkonfiguration überprüfen können, ohne einen Task auszuführen. **Save** übernimmt die Änderungen.
 
 ## Danger Zone {#danger-zone}
 
@@ -27,4 +27,4 @@ Der Tab **Settings** im Projekt-Dashboard steht den **Owners** des Projekts zur 
 
 - Mitglieder und Rollen: [Teams](../team)
 - Dem Projekt zugeordnete Runner und Runner-Tags: [Projekt-Runner](./runners)
-- Benachrichtigungskanäle werden auf dem Server konfiguriert: [Benachrichtigungen](/category/notifications)
+- Benachrichtigungskanäle werden auf dem Server konfiguriert: [Benachrichtigungen](/admin-guide/notifications)

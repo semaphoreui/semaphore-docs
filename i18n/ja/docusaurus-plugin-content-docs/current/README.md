@@ -40,7 +40,7 @@ docker run -d -p 3000:3000 \
         <ul>
           <li><Link to="/admin-guide/installation">インストール</Link></li>
           <li><Link to="/admin-guide/configuration">設定</Link></li>
-          <li><Link to="/category/reverse-proxy">リバースプロキシと TLS</Link></li>
+          <li><Link to="/admin-guide/reverse-proxy">リバースプロキシと TLS</Link></li>
           <li><Link to="/admin-guide/ldap">LDAP</Link> と <Link to="/admin-guide/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">セキュリティ強化</Link></li>
         </ul>
@@ -72,7 +72,7 @@ docker run -d -p 3000:3000 \
           <li><Link to="/admin-guide/ha">高可用性</Link></li>
           <li><Link to="/admin-guide/upgrading">アップグレード</Link></li>
           <li><Link to="/admin-guide/logs">ログ</Link> と <Link to="/admin-guide/metrics">メトリクス</Link></li>
-          <li><Link to="/category/notifications">通知</Link></li>
+          <li><Link to="/admin-guide/notifications">通知</Link></li>
         </ul>
       </div>
     </div>

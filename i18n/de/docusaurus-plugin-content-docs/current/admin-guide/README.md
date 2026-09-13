@@ -70,7 +70,7 @@ Dieses Handbuch führt Sie durch die Einrichtung und Verwaltung dieser Funktione
   - [CLI](/admin-guide/cli)
   - [Runner](/admin-guide/runners)
   - [Logs](/admin-guide/logs)
-  - [Benachrichtigungen](/category/notifications)
+  - [Benachrichtigungen](/admin-guide/notifications)
     - [E-Mail](/admin-guide/notifications/email)
     - [Telegram](/admin-guide/notifications/telegram)
     - [Slack](/admin-guide/notifications/slack)
@@ -81,4 +81,4 @@ Dieses Handbuch führt Sie durch die Einrichtung und Verwaltung dieser Funktione
 - Wartung:
   - [Aktualisierung](/admin-guide/upgrading)
   - [Lizenzaktivierung](/admin-guide/license)
-  - [Fehlerbehebung](/admin-guide/troubleshooting)
+  - [Fehlerbehebung](/faq/troubleshooting)

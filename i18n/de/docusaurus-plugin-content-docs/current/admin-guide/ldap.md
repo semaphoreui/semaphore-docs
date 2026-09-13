@@ -70,7 +70,7 @@ Es fragt interaktiv nach dem Passwort, sollte den Rückgabecode **0** liefern un
 
 :::warning
 
-Bitte lesen Sie den Abschnitt [Fehlerbehebung](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof), wenn Sie Probleme mit LDAP haben.
+Bitte lesen Sie den Abschnitt [Fehlerbehebung](/faq/troubleshooting#unable-to-read-ldap-response-packet-unexpected-eof), wenn Sie Probleme mit LDAP haben.
 
 :::
 

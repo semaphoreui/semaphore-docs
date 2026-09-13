@@ -16,7 +16,7 @@
 6. **자동화하고 운영에 적용합니다:**
    - 일정에 따라 실행: [스케줄](/user-guide/schedules).
    - 누가 무엇을 할 수 있는지 제어: [팀 및 사용자 지정 역할](/user-guide/team).
-   - 결과에 대한 알림 받기: [알림](/category/notifications).
+   - 결과에 대한 알림 받기: [알림](/admin-guide/notifications).
 
 ## 핵심 개념 {#key-concepts}
 
@@ -36,6 +36,6 @@
 
 ## 다음 단계 {#next-steps}
 
-- [리버스 프록시](/category/reverse-proxy)를 사용해 Semaphore를 TLS 뒤에 배치하십시오.
+- [리버스 프록시](/admin-guide/reverse-proxy)를 사용해 Semaphore를 TLS 뒤에 배치하십시오.
 - ID 공급자를 연결하십시오: [LDAP](/admin-guide/ldap) 또는 [OpenID Connect](/admin-guide/openid).
 - [API](/admin-guide/api)와 [CLI](/admin-guide/cli)를 사용해 CI나 스크립트에서 Semaphore를 제어하십시오.

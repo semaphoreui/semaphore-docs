@@ -70,7 +70,7 @@ Ela solicitará a senha de forma interativa e deverá retornar o código **0** e
 
 :::warning
 
-Leia a seção [Solução de problemas](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof) se você tiver problemas com o LDAP.
+Leia a seção [Solução de problemas](/faq/troubleshooting#unable-to-read-ldap-response-packet-unexpected-eof) se você tiver problemas com o LDAP.
 
 :::
 

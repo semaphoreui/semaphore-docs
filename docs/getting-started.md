@@ -21,7 +21,7 @@ This page walks you from a fresh install to your first successful task. Each ste
 6. **Automate and operationalize:**
    - Run on a schedule: [Schedules](/user-guide/schedules).
    - Control who can do what: [Teams and custom roles](/user-guide/team).
-   - Get alerted on results: [Notifications](/category/notifications).
+   - Get alerted on results: [Notifications](/admin-guide/notifications).
 
 ## Key concepts {#key-concepts}
 
@@ -41,6 +41,6 @@ These terms appear everywhere in the UI.
 
 ## Next steps {#next-steps}
 
-- Put Semaphore behind TLS with a [reverse proxy](/category/reverse-proxy).
+- Put Semaphore behind TLS with a [reverse proxy](/admin-guide/reverse-proxy).
 - Connect your identity provider: [LDAP](/admin-guide/ldap) or [OpenID Connect](/admin-guide/openid).
 - Drive Semaphore from CI or scripts with the [API](/admin-guide/api) and [CLI](/admin-guide/cli).

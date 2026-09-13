@@ -40,7 +40,7 @@ docker run -d -p 3000:3000 \
         <ul>
           <li><Link to="/admin-guide/installation">설치</Link></li>
           <li><Link to="/admin-guide/configuration">구성</Link></li>
-          <li><Link to="/category/reverse-proxy">리버스 프록시 및 TLS</Link></li>
+          <li><Link to="/admin-guide/reverse-proxy">리버스 프록시 및 TLS</Link></li>
           <li><Link to="/admin-guide/ldap">LDAP</Link> 및 <Link to="/admin-guide/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">보안 강화</Link></li>
         </ul>
@@ -72,7 +72,7 @@ docker run -d -p 3000:3000 \
           <li><Link to="/admin-guide/ha">고가용성</Link></li>
           <li><Link to="/admin-guide/upgrading">업그레이드</Link></li>
           <li><Link to="/admin-guide/logs">로그</Link> 및 <Link to="/admin-guide/metrics">메트릭</Link></li>
-          <li><Link to="/category/notifications">알림</Link></li>
+          <li><Link to="/admin-guide/notifications">알림</Link></li>
         </ul>
       </div>
     </div>

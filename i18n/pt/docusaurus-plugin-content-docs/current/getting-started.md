@@ -16,7 +16,7 @@ Esta página guia você desde uma instalação nova até a sua primeira tarefa e
 6. **Automatize e operacionalize:**
    - Execute em um agendamento: [Agendamentos](/user-guide/schedules).
    - Controle quem pode fazer o quê: [Equipes e papéis personalizados](/user-guide/team).
-   - Receba alertas sobre os resultados: [Notificações](/category/notifications).
+   - Receba alertas sobre os resultados: [Notificações](/admin-guide/notifications).
 
 ## Conceitos principais {#key-concepts}
 
@@ -36,6 +36,6 @@ Estes termos aparecem em toda a interface.
 
 ## Próximos passos {#next-steps}
 
-- Coloque o Semaphore atrás de TLS com um [proxy reverso](/category/reverse-proxy).
+- Coloque o Semaphore atrás de TLS com um [proxy reverso](/admin-guide/reverse-proxy).
 - Conecte o seu provedor de identidade: [LDAP](/admin-guide/ldap) ou [OpenID Connect](/admin-guide/openid).
 - Controle o Semaphore a partir de CI ou scripts com a [API](/admin-guide/api) e a [CLI](/admin-guide/cli).

@@ -22,7 +22,7 @@ const sidebars = {
       type: 'category',
       label: 'Admin Guide',
       collapsed: false,
-      link: { type: 'generated-index' },
+      link: { type: 'doc', id: 'admin-guide/README' },
       items: [
         {
           type: 'category',
@@ -52,8 +52,8 @@ const sidebars = {
         'admin-guide/upgrading',
         {
           type: 'category',
-          label: 'Reverse-proxy',
-          link: { type: 'generated-index' },
+          label: 'Reverse proxy',
+          link: { type: 'doc', id: 'admin-guide/reverse-proxy/README' },
           items: [
             'admin-guide/reverse-proxy/nginx',
             'admin-guide/reverse-proxy/apache',
@@ -121,8 +121,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Notifications',
-          // link: { type: 'doc', id: 'admin-guide/notifications' },
-          link: { type: 'generated-index' },
+          link: { type: 'doc', id: 'admin-guide/notifications' },
           items: [
             'admin-guide/notifications/email',
             'admin-guide/notifications/telegram',
@@ -140,7 +139,7 @@ const sidebars = {
       type: 'category',
       label: 'User Guide',
       collapsed: false,
-      link: { type: 'generated-index' },
+      link: { type: 'doc', id: 'user-guide/README' },
       items: [
         {
           type: 'category',

@@ -40,7 +40,7 @@ Für den Produktionsbetrieb finden Sie unter [Installation](/admin-guide/install
         <ul>
           <li><Link to="/admin-guide/installation">Installation</Link></li>
           <li><Link to="/admin-guide/configuration">Konfiguration</Link></li>
-          <li><Link to="/category/reverse-proxy">Reverse-Proxy und TLS</Link></li>
+          <li><Link to="/admin-guide/reverse-proxy">Reverse-Proxy und TLS</Link></li>
           <li><Link to="/admin-guide/ldap">LDAP</Link> und <Link to="/admin-guide/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">Sicherheitshärtung</Link></li>
         </ul>
@@ -72,7 +72,7 @@ Für den Produktionsbetrieb finden Sie unter [Installation](/admin-guide/install
           <li><Link to="/admin-guide/ha">Hochverfügbarkeit</Link></li>
           <li><Link to="/admin-guide/upgrading">Aktualisierung</Link></li>
           <li><Link to="/admin-guide/logs">Logs</Link> und <Link to="/admin-guide/metrics">Metriken</Link></li>
-          <li><Link to="/category/notifications">Benachrichtigungen</Link></li>
+          <li><Link to="/admin-guide/notifications">Benachrichtigungen</Link></li>
         </ul>
       </div>
     </div>

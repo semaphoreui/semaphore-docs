@@ -70,7 +70,7 @@ Semaphore의 설계 원칙을 이해하면 Semaphore를 최대한 활용하는 �
   - [CLI](/admin-guide/cli)
   - [Runner](/admin-guide/runners)
   - [로그](/admin-guide/logs)
-  - [알림](/category/notifications)
+  - [알림](/admin-guide/notifications)
     - [이메일](/admin-guide/notifications/email)
     - [Telegram](/admin-guide/notifications/telegram)
     - [Slack](/admin-guide/notifications/slack)
@@ -81,4 +81,4 @@ Semaphore의 설계 원칙을 이해하면 Semaphore를 최대한 활용하는 �
 - 유지 관리:
   - [업그레이드](/admin-guide/upgrading)
   - [라이선스 활성화](/admin-guide/license)
-  - [문제 해결](/admin-guide/troubleshooting)
+  - [문제 해결](/faq/troubleshooting)

@@ -40,7 +40,7 @@ Za produkciju pogledajte [Instalacija](/admin-guide/installation) za Docker Comp
         <ul>
           <li><Link to="/admin-guide/installation">Instalacija</Link></li>
           <li><Link to="/admin-guide/configuration">Konfiguracija</Link></li>
-          <li><Link to="/category/reverse-proxy">Reverzni proksi i TLS</Link></li>
+          <li><Link to="/admin-guide/reverse-proxy">Reverzni proksi i TLS</Link></li>
           <li><Link to="/admin-guide/ldap">LDAP</Link> i <Link to="/admin-guide/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">Bezbednosno ojačavanje</Link></li>
         </ul>
@@ -72,7 +72,7 @@ Za produkciju pogledajte [Instalacija](/admin-guide/installation) za Docker Comp
           <li><Link to="/admin-guide/ha">Visoka dostupnost</Link></li>
           <li><Link to="/admin-guide/upgrading">Nadogradnja</Link></li>
           <li><Link to="/admin-guide/logs">Logovi</Link> i <Link to="/admin-guide/metrics">Metrike</Link></li>
-          <li><Link to="/category/notifications">Obaveštenja</Link></li>
+          <li><Link to="/admin-guide/notifications">Obaveštenja</Link></li>
         </ul>
       </div>
     </div>

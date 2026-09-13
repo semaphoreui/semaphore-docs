@@ -39,5 +39,5 @@ echo "Deploying to $TARGET_HOST"
 - 스크립트를 실행 가능하게 만들거나(`chmod +x`) 유효한 셔뱅(`#!/bin/bash`)으로 시작하도록 하십시오.
 - 스크립트는 비대화형으로 실행됩니다. 사용자 입력을 기다리는 프롬프트는 사용하지 마십시오.
 - 종료 코드 `0`은 성공을 의미하며, 0이 아닌 종료 코드는 작업을 실패로 표시합니다.
-- 매우 짧은 스크립트가 로그 출력을 생성하지 않는 경우, 문제 해결 가이드의 [Bash 스크립트 출력이 누락되거나 불완전함](/admin-guide/troubleshooting#bash-script-output-is-missing-or-incomplete)을 참조하십시오.
+- 매우 짧은 스크립트가 로그 출력을 생성하지 않는 경우, 문제 해결 가이드의 [Bash 스크립트 출력이 누락되거나 불완전함](/faq/troubleshooting#bash-script-output-is-missing-or-incomplete)을 참조하십시오.
 - 원격 호스트에서 명령을 실행하려면 대신 [Ansible](./ansible)을 사용하십시오.

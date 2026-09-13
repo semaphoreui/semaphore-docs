@@ -70,7 +70,7 @@ Chiederà interattivamente la password e dovrebbe restituire il codice **0** e s
 
 :::warning
 
-Consultare la sezione [Risoluzione dei problemi](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof) in caso di problemi con LDAP.
+Consultare la sezione [Risoluzione dei problemi](/faq/troubleshooting#unable-to-read-ldap-response-packet-unexpected-eof) in caso di problemi con LDAP.
 
 :::
 

@@ -16,7 +16,7 @@
 6. **自动化并投入运营：**
    - 按计划运行：[计划任务（Schedule）](/user-guide/schedules)。
    - 控制谁能做什么：[团队（Team）与自定义角色](/user-guide/team)。
-   - 获取结果告警：[通知](/category/notifications)。
+   - 获取结果告警：[通知](/admin-guide/notifications)。
 
 ## 核心概念 {#key-concepts}
 
@@ -36,6 +36,6 @@
 
 ## 后续步骤 {#next-steps}
 
-- 通过[反向代理](/category/reverse-proxy)为 Semaphore 启用 TLS。
+- 通过[反向代理](/admin-guide/reverse-proxy)为 Semaphore 启用 TLS。
 - 连接您的身份提供商：[LDAP](/admin-guide/ldap) 或 [OpenID Connect](/admin-guide/openid)。
 - 通过 [API](/admin-guide/api) 和 [CLI](/admin-guide/cli) 从 CI 或脚本驱动 Semaphore。

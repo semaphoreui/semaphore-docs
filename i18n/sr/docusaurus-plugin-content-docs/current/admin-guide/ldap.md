@@ -70,7 +70,7 @@ Alat će interaktivno zatražiti lozinku i trebalo bi da vrati kod **0** i ispi�
 
 :::warning
 
-Ako imate problema sa LDAP-om, pročitajte odeljak [Rešavanje problema](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof).
+Ako imate problema sa LDAP-om, pročitajte odeljak [Rešavanje problema](/faq/troubleshooting#unable-to-read-ldap-response-packet-unexpected-eof).
 
 :::
 

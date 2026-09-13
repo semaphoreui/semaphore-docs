@@ -13,7 +13,7 @@ La pestaña **Ajustes** del panel del proyecto está disponible para los **Propi
 | **Telegram Chat ID** | Opcional. Envía las alertas de este proyecto a un chat de Telegram distinto del configurado globalmente. Consulte [Notificaciones de Telegram](/admin-guide/notifications/telegram#per-project-chat-ids). |
 | **Permitir alertas para este proyecto** | Interruptor general de las notificaciones. Cuando está desactivado, ningún canal envía alertas sobre las tareas de este proyecto, aunque el canal esté configurado en el servidor. |
 
-**Probar alertas** envía un mensaje de prueba a través de todos los [canales de notificación](/category/notifications) configurados, de modo que pueda verificar la configuración del servidor sin ejecutar una tarea. **Guardar** aplica los cambios.
+**Probar alertas** envía un mensaje de prueba a través de todos los [canales de notificación](/admin-guide/notifications) configurados, de modo que pueda verificar la configuración del servidor sin ejecutar una tarea. **Guardar** aplica los cambios.
 
 ## Zona de peligro {#danger-zone}
 
@@ -27,4 +27,4 @@ La pestaña **Ajustes** del panel del proyecto está disponible para los **Propi
 
 - Miembros y roles: [Equipos](../team)
 - Runners asociados al proyecto y etiquetas de runner: [Runners del proyecto](./runners)
-- Los canales de notificación se configuran en el servidor: [Notificaciones](/category/notifications)
+- Los canales de notificación se configuran en el servidor: [Notificaciones](/admin-guide/notifications)

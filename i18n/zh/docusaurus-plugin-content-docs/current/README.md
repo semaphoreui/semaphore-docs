@@ -40,7 +40,7 @@ docker run -d -p 3000:3000 \
         <ul>
           <li><Link to="/admin-guide/installation">安装</Link></li>
           <li><Link to="/admin-guide/configuration">配置</Link></li>
-          <li><Link to="/category/reverse-proxy">反向代理与 TLS</Link></li>
+          <li><Link to="/admin-guide/reverse-proxy">反向代理与 TLS</Link></li>
           <li><Link to="/admin-guide/ldap">LDAP</Link> 和 <Link to="/admin-guide/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">安全加固</Link></li>
         </ul>
@@ -72,7 +72,7 @@ docker run -d -p 3000:3000 \
           <li><Link to="/admin-guide/ha">高可用</Link></li>
           <li><Link to="/admin-guide/upgrading">升级</Link></li>
           <li><Link to="/admin-guide/logs">日志</Link>和<Link to="/admin-guide/metrics">指标</Link></li>
-          <li><Link to="/category/notifications">通知</Link></li>
+          <li><Link to="/admin-guide/notifications">通知</Link></li>
         </ul>
       </div>
     </div>

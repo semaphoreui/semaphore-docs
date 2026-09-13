@@ -70,7 +70,7 @@ ldapwhoami\
 
 :::warning
 
-LDAP에 문제가 있는 경우 [문제 해결](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof) 섹션을 읽어 보십시오.
+LDAP에 문제가 있는 경우 [문제 해결](/faq/troubleshooting#unable-to-read-ldap-response-packet-unexpected-eof) 섹션을 읽어 보십시오.
 
 :::
 

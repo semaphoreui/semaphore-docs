@@ -13,7 +13,7 @@ L'onglet **Paramètres** du tableau de bord du projet est accessible aux **Propr
 | **Identifiant de conversation Telegram** | Facultatif. Envoie les alertes de ce projet vers une conversation Telegram différente de celle configurée globalement. Voir [Notifications Telegram](/admin-guide/notifications/telegram#per-project-chat-ids). |
 | **Autoriser les alertes pour ce projet** | Interrupteur principal des notifications. Lorsqu'il est désactivé, aucun canal n'envoie d'alertes concernant les tâches de ce projet, même si le canal est configuré sur le serveur. |
 
-**Tester les alertes** envoie un message de test via chaque [canal de notification](/category/notifications) configuré, afin que vous puissiez vérifier la configuration du serveur sans exécuter de tâche. **Enregistrer** applique les modifications.
+**Tester les alertes** envoie un message de test via chaque [canal de notification](/admin-guide/notifications) configuré, afin que vous puissiez vérifier la configuration du serveur sans exécuter de tâche. **Enregistrer** applique les modifications.
 
 ## Zone de danger {#danger-zone}
 
@@ -27,4 +27,4 @@ L'onglet **Paramètres** du tableau de bord du projet est accessible aux **Propr
 
 - Membres et rôles : [Équipes](../team)
 - Runners rattachés au projet et étiquettes de runner : [Runners de projet](./runners)
-- Les canaux de notification sont configurés sur le serveur : [Notifications](/category/notifications)
+- Les canaux de notification sont configurés sur le serveur : [Notifications](/admin-guide/notifications)

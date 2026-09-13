@@ -70,7 +70,7 @@ Semaphore UI — это современный веб-интерфейс с от
   - [CLI](/admin-guide/cli)
   - [Runner'ы](/admin-guide/runners)
   - [Логи](/admin-guide/logs)
-  - [Уведомления](/category/notifications)
+  - [Уведомления](/admin-guide/notifications)
     - [Email](/admin-guide/notifications/email)
     - [Telegram](/admin-guide/notifications/telegram)
     - [Slack](/admin-guide/notifications/slack)
@@ -81,4 +81,4 @@ Semaphore UI — это современный веб-интерфейс с от
 - Сопровождение:
   - [Обновление](/admin-guide/upgrading)
   - [Активация лицензии](/admin-guide/license)
-  - [Устранение неполадок](/admin-guide/troubleshooting)
+  - [Устранение неполадок](/faq/troubleshooting)

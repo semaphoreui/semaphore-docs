@@ -39,5 +39,5 @@ echo "Deploying to $TARGET_HOST"
 - Machen Sie Ihr Skript ausführbar (`chmod +x`) oder stellen Sie sicher, dass es mit einem gültigen Shebang (`#!/bin/bash`) beginnt.
 - Skripte laufen nicht interaktiv. Vermeiden Sie Abfragen, die auf Benutzereingaben warten.
 - Exit-Code `0` bedeutet Erfolg; jeder Exit-Code ungleich null markiert den Task als fehlgeschlagen.
-- Wenn ein sehr kurzes Skript keine Log-Ausgabe erzeugt, siehe [Ausgabe eines Bash-Skripts fehlt oder ist unvollständig](/admin-guide/troubleshooting#bash-script-output-is-missing-or-incomplete) in der Anleitung zur Fehlerbehebung.
+- Wenn ein sehr kurzes Skript keine Log-Ausgabe erzeugt, siehe [Ausgabe eines Bash-Skripts fehlt oder ist unvollständig](/faq/troubleshooting#bash-script-output-is-missing-or-incomplete) in der Anleitung zur Fehlerbehebung.
 - Um Befehle auf entfernten Hosts auszuführen, verwenden Sie stattdessen [Ansible](./ansible).

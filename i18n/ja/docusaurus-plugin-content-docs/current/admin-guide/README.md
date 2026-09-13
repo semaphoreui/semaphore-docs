@@ -70,7 +70,7 @@ Semaphore の設計原則を理解しておくと、その能力を最大限に�
   - [CLI](/admin-guide/cli)
   - [ランナー](/admin-guide/runners)
   - [ログ](/admin-guide/logs)
-  - [通知](/category/notifications)
+  - [通知](/admin-guide/notifications)
     - [メール](/admin-guide/notifications/email)
     - [Telegram](/admin-guide/notifications/telegram)
     - [Slack](/admin-guide/notifications/slack)
@@ -81,4 +81,4 @@ Semaphore の設計原則を理解しておくと、その能力を最大限に�
 - 保守:
   - [アップグレード](/admin-guide/upgrading)
   - [ライセンスの有効化](/admin-guide/license)
-  - [トラブルシューティング](/admin-guide/troubleshooting)
+  - [トラブルシューティング](/faq/troubleshooting)

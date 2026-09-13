@@ -16,7 +16,7 @@ Ova stranica vas vodi od sveže instalacije do prvog uspešno izvršenog zadatka
 6. **Automatizujte i uvedite u svakodnevni rad:**
    - Pokretanje po rasporedu: [Rasporedi](/user-guide/schedules).
    - Kontrola ko šta može da radi: [Timovi i prilagođene uloge](/user-guide/team).
-   - Obaveštenja o rezultatima: [Obaveštenja](/category/notifications).
+   - Obaveštenja o rezultatima: [Obaveštenja](/admin-guide/notifications).
 
 ## Ključni pojmovi {#key-concepts}
 
@@ -36,6 +36,6 @@ Ovi pojmovi se pojavljuju svuda u korisničkom interfejsu.
 
 ## Sledeći koraci {#next-steps}
 
-- Postavite Semaphore iza TLS-a pomoću [obrnutog proksija](/category/reverse-proxy).
+- Postavite Semaphore iza TLS-a pomoću [obrnutog proksija](/admin-guide/reverse-proxy).
 - Povežite svog provajdera identiteta: [LDAP](/admin-guide/ldap) ili [OpenID Connect](/admin-guide/openid).
 - Upravljajte Semaphore-om iz CI-ja ili skripti pomoću [API-ja](/admin-guide/api) i [CLI-ja](/admin-guide/cli).

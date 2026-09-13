@@ -70,7 +70,7 @@ ldapwhoami\
 
 :::warning
 
-Если у вас возникают проблемы с LDAP, ознакомьтесь с разделом [Устранение неполадок](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof).
+Если у вас возникают проблемы с LDAP, ознакомьтесь с разделом [Устранение неполадок](/faq/troubleshooting#unable-to-read-ldap-response-packet-unexpected-eof).
 
 :::
 

@@ -39,5 +39,5 @@ echo "Deploying to $TARGET_HOST"
 - スクリプトに実行権限を付与する（`chmod +x`）か、有効なシバン（`#!/bin/bash`）で始まっていることを確認してください。
 - スクリプトは非対話的に実行されます。ユーザーの入力を待つプロンプトは避けてください。
 - 終了コード `0` は成功を意味し、0 以外の終了コードはタスクを失敗として扱います。
-- ごく短いスクリプトでログ出力がまったく得られない場合は、トラブルシューティングガイドの [Bash スクリプトの出力が欠けている、または不完全](/admin-guide/troubleshooting#bash-script-output-is-missing-or-incomplete)を参照してください。
+- ごく短いスクリプトでログ出力がまったく得られない場合は、トラブルシューティングガイドの [Bash スクリプトの出力が欠けている、または不完全](/faq/troubleshooting#bash-script-output-is-missing-or-incomplete)を参照してください。
 - リモートホストでコマンドを実行したい場合は、代わりに [Ansible](./ansible) を使用してください。

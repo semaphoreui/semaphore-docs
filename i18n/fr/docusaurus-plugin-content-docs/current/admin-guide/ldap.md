@@ -70,7 +70,7 @@ Il demandera le mot de passe de manière interactive, et doit renvoyer le code *
 
 :::warning
 
-Veuillez lire la section [Dépannage](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof) si vous rencontrez des problèmes avec LDAP.
+Veuillez lire la section [Dépannage](/faq/troubleshooting#unable-to-read-ldap-response-packet-unexpected-eof) si vous rencontrez des problèmes avec LDAP.
 
 :::
 

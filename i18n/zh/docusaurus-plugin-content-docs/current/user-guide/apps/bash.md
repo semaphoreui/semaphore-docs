@@ -39,5 +39,5 @@ echo "Deploying to $TARGET_HOST"
 - 确保脚本可执行（`chmod +x`），或以有效的 shebang（`#!/bin/bash`）开头。
 - 脚本以非交互方式运行。避免等待用户输入的提示。
 - 退出码 `0` 表示成功；任何非零退出码都会将任务标记为失败。
-- 如果非常短的脚本没有产生日志输出，请参阅故障排除指南中的 [Bash 脚本输出缺失或不完整](/admin-guide/troubleshooting#bash-script-output-is-missing-or-incomplete)。
+- 如果非常短的脚本没有产生日志输出，请参阅故障排除指南中的 [Bash 脚本输出缺失或不完整](/faq/troubleshooting#bash-script-output-is-missing-or-incomplete)。
 - 要在远程主机上运行命令，请改用 [Ansible](./ansible)。

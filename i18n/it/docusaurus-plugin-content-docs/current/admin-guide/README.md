@@ -70,7 +70,7 @@ Questa guida accompagna nella configurazione e nella gestione di queste funziona
   - [CLI](/admin-guide/cli)
   - [Runner](/admin-guide/runners)
   - [Log](/admin-guide/logs)
-  - [Notifiche](/category/notifications)
+  - [Notifiche](/admin-guide/notifications)
     - [Email](/admin-guide/notifications/email)
     - [Telegram](/admin-guide/notifications/telegram)
     - [Slack](/admin-guide/notifications/slack)
@@ -81,4 +81,4 @@ Questa guida accompagna nella configurazione e nella gestione di queste funziona
 - Manutenzione:
   - [Aggiornamento](/admin-guide/upgrading)
   - [Attivazione della licenza](/admin-guide/license)
-  - [Risoluzione dei problemi](/admin-guide/troubleshooting)
+  - [Risoluzione dei problemi](/faq/troubleshooting)

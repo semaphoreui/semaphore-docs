@@ -39,5 +39,5 @@ echo "Deploying to $TARGET_HOST"
 - Učinite skriptu izvršnom (`chmod +x`) ili se pobrinite da počinje važećim shebang-om (`#!/bin/bash`).
 - Skripte se izvršavaju neinteraktivno. Izbegavajte upite koji čekaju unos korisnika.
 - Izlazni kod `0` označava uspeh; svaki izlazni kod različit od nule označava zadatak (Task) kao neuspešan.
-- Ako veoma kratka skripta ne proizvede nikakav izlaz u logu, pogledajte [Izlaz Bash skripte nedostaje ili je nepotpun](/admin-guide/troubleshooting#bash-script-output-is-missing-or-incomplete) u vodiču za rešavanje problema.
+- Ako veoma kratka skripta ne proizvede nikakav izlaz u logu, pogledajte [Izlaz Bash skripte nedostaje ili je nepotpun](/faq/troubleshooting#bash-script-output-is-missing-or-incomplete) u vodiču za rešavanje problema.
 - Za izvršavanje komandi na udaljenim hostovima umesto toga koristite [Ansible](./ansible).

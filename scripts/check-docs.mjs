@@ -59,6 +59,15 @@ for (const id of pages) {
   const fm = text.slice(4, end);
   if (!/^title: .+$/m.test(fm)) fail(`${id}: front matter has no title`);
   if (!/^description: .+$/m.test(fm)) fail(`${id}: front matter has no description`);
+
+  // A colon followed by a space makes YAML read the value as a mapping and the
+  // build dies with an unhelpful gray-matter error. Quote such values.
+  for (const [, key, value] of fm.matchAll(/^(title|description): (.+)$/gm)) {
+    const v = value.trim();
+    if (v && !/^["']/.test(v) && /:\s/.test(v)) {
+      fail(`${id}: front matter ${key} contains ": " and must be quoted`);
+    }
+  }
 }
 
 // --- 2. sidebar reachability ----------------------------------------------
@@ -73,12 +82,6 @@ const sidebar = readFileSync(join(ROOT, 'sidebars.js'), 'utf8')
  * debt recorded by the docs audit (AGENTS/research/docs-structure-audit-2026-09.md)
  * and is resolved in a later phase of the restructuring, not here:
  *
- *   admin-guide/README, admin-guide/introduction, user-guide/README
- *       duplicate or stale section indexes; replaced by authored landing pages.
- *   admin-guide/troubleshooting
- *       merges into faq/troubleshooting.
- *   admin-guide/notifications_old
- *       becomes the Notifications overview page.
  *   admin-guide/configuration/cli, configuration/snap,
  *   admin-guide/installation/cloud, installation/snap
  *       deprecated or stub pages awaiting a keep-or-delete decision.
@@ -87,15 +90,10 @@ const sidebar = readFileSync(join(ROOT, 'sidebars.js'), 'utf8')
  * the build, which is the point: the list may only shrink.
  */
 const KNOWN_ORPHANS = new Set([
-  'admin-guide/README',
-  'admin-guide/introduction',
-  'admin-guide/troubleshooting',
-  'admin-guide/notifications_old',
   'admin-guide/configuration/cli',
   'admin-guide/configuration/snap',
   'admin-guide/installation/cloud',
   'admin-guide/installation/snap',
-  'user-guide/README',
 ]);
 
 const referenced = new Set([

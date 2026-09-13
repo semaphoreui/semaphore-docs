@@ -70,7 +70,7 @@ Esta guía le acompañará en la configuración y gestión de estas funcionalida
   - [CLI](/admin-guide/cli)
   - [Runners](/admin-guide/runners)
   - [Registros](/admin-guide/logs)
-  - [Notificaciones](/category/notifications)
+  - [Notificaciones](/admin-guide/notifications)
     - [Correo electrónico](/admin-guide/notifications/email)
     - [Telegram](/admin-guide/notifications/telegram)
     - [Slack](/admin-guide/notifications/slack)
@@ -81,4 +81,4 @@ Esta guía le acompañará en la configuración y gestión de estas funcionalida
 - Mantenimiento:
   - [Actualización](/admin-guide/upgrading)
   - [Activación de licencia](/admin-guide/license)
-  - [Resolución de problemas](/admin-guide/troubleshooting)
+  - [Resolución de problemas](/faq/troubleshooting)

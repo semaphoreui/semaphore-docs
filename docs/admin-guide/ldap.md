@@ -75,7 +75,7 @@ It will ask interactively for the password, and should return code **0** and ech
 
 :::warning
 
-Please read [Troubleshooting](/faq/troubleshooting#6-unable-to-read-ldap-response-packet-unexpected-eof) section if you have issues with LDAP.
+Please read [Troubleshooting](/faq/troubleshooting#unable-to-read-ldap-response-packet-unexpected-eof) section if you have issues with LDAP.
 
 :::
 

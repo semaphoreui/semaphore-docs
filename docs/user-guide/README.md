@@ -1,48 +1,52 @@
 ---
 title: User Guide
-description: Entry point to the day-to-day guides, with quick links to projects, tasks, templates, variables, and teams.
+description: "For engineers who work inside a Semaphore project: resources, task templates, tasks, schedules, and team access."
 ---
 
 # User Guide
 
-Learn how to use Semaphore day-to-day: create projects, run tasks, manage inventories, keys, variables, and more.
+This section is for people who already have access to a Semaphore project.
+Everything here happens in the web interface or through the project API. Installing
+the server, configuring it, and connecting an identity provider are covered in the
+[Admin Guide](/admin-guide).
 
-## Start here {#start-here}
+Work in Semaphore follows one chain. A **project** holds everything else. Inside it
+you register the resources a run needs: a **repository** with your playbooks or
+scripts, the **keys** used to reach it and your hosts, an **inventory** of target
+machines, and **variable groups** with values and secrets. A **task template**
+combines those into a definition of what to run, and every run of that template is
+a **task**. Schedules, workflows, and incoming webhooks start templates for you.
 
-- Organize work with projects and teams
-- Connect repositories and key store
-- Define inventories and variable groups
-- Create task templates and run tasks on schedule
+## Set up a project {#set-up-a-project}
 
-## Quick links {#quick-links}
+In this order, because each step depends on the previous one.
 
-- Projects: [Overview](/user-guide/projects)
-  - [History](/user-guide/projects/history)
-  - [Activity](/user-guide/projects/activity)
-  - [Settings](/user-guide/projects/settings)
-  - [Runners (Pro)](/user-guide/projects/runners)
-- Tasks and schedules:
-  - [Tasks](/user-guide/tasks)
-  - [Schedules](/user-guide/schedules)
-- Task Templates: [Overview](/user-guide/task-templates)
-  - [Ansible](/user-guide/apps/ansible)
-  - [Terraform/OpenTofu](/user-guide/apps/terraform)
-    - [Workspaces](/user-guide/apps/terraform/workspaces)
-    - [HTTP Backend (Pro)](/user-guide/apps/terraform/states)
-  - [Shell/Bash scripts](/user-guide/apps/bash)
-  - [PowerShell](/user-guide/apps/powershell)
-  - [Python](/user-guide/apps/python)
-  - [Survey Variables](/user-guide/task-templates/survey-vars)
-  - [Prompts](/user-guide/task-templates/prompts)
-- Variables and secrets:
-  - [Variable Groups](/user-guide/environment)
-  - [Key Store](/user-guide/key-store)
-- Inventory:
-  - [Inventory](/user-guide/inventory)
-  - [Kerberos](/user-guide/inventory/kerberos)
-  - [NetBox dynamic inventory](/user-guide/inventory/netbox-dynamic-inventory)
-- Repositories:
-  - [Repositories](/user-guide/repositories)
-  - [Bitbucket Access Token](/user-guide/repositories/bitbucket_access_token)
-- Integrations: [Overview](/user-guide/integrations)
-- Team management: [Overview](/user-guide/team)
+| Page | What it covers |
+|---|---|
+| [Projects](/user-guide/projects) | Creating a project, the sections in the sidebar, backup and restore. |
+| [Teams](/user-guide/team) | The four built-in roles, and custom roles on Enterprise. |
+| [Key Store](/user-guide/key-store) | SSH keys, logins, and external secret storages. |
+| [Repositories](/user-guide/repositories) | Git repositories and local paths that hold your automation. |
+| [Inventory](/user-guide/inventory) | Hosts and connection settings for Ansible, workspaces for Terraform. |
+| [Variable Groups](/user-guide/environment) | Reusable variables and secrets passed into tasks. |
+
+## Define and run work {#define-and-run-work}
+
+| Page | What it covers |
+|---|---|
+| [Task Templates](/user-guide/task-templates) | Every field of the template form, plus template types. |
+| [Apps](/user-guide/apps) | What each application runs: Ansible, Terraform, OpenTofu, Terragrunt, and scripts. |
+| [Tasks](/user-guide/tasks) | Starting a task, task statuses, logs, stopping, and re-running. |
+| [Schedules](/user-guide/schedules) | Running templates on a cron schedule. |
+| [Workflows](/user-guide/workflows) | Chaining templates with approvals and branching. |
+| [Integrations](/user-guide/integrations) | Starting tasks from incoming webhooks. |
+| [Project runners](/user-guide/projects/runners) | Sending a project's tasks to your own runners. |
+| [Your account](/user-guide/account) | Personal settings and API tokens. |
+
+## Where to start {#where-to-start}
+
+If someone has just added you to a project, read [Projects](/user-guide/projects)
+to find your way around, then [Tasks](/user-guide/tasks) to run one and read its
+log. If you are setting a project up from scratch, follow the table above in order.
+
+New to Semaphore entirely? Start with [Getting Started](/getting-started).

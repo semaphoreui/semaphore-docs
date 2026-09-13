@@ -13,7 +13,7 @@ A aba **Configurações** do dashboard do projeto está disponível para os **Ow
 | **Telegram Chat ID** | Opcional. Envia os alertas deste projeto para um chat do Telegram diferente do configurado globalmente. Consulte [Notificações do Telegram](/admin-guide/notifications/telegram#per-project-chat-ids). |
 | **Permitir alertas para este projeto** | Interruptor geral das notificações. Quando está desligado, nenhum canal envia alertas sobre as tarefas deste projeto, mesmo que o canal esteja configurado no servidor. |
 
-**Testar alertas** envia uma mensagem de teste por todos os [canais de notificação](/category/notifications) configurados, para que você possa verificar a configuração do servidor sem executar uma tarefa. **Salvar** aplica as alterações.
+**Testar alertas** envia uma mensagem de teste por todos os [canais de notificação](/admin-guide/notifications) configurados, para que você possa verificar a configuração do servidor sem executar uma tarefa. **Salvar** aplica as alterações.
 
 ## Zona de perigo {#danger-zone}
 
@@ -27,4 +27,4 @@ A aba **Configurações** do dashboard do projeto está disponível para os **Ow
 
 - Membros e papéis: [Equipes](../team)
 - Runners vinculados ao projeto e tags de runner: [Runners do projeto](./runners)
-- Os canais de notificação são configurados no servidor: [Notificações](/category/notifications)
+- Os canais de notificação são configurados no servidor: [Notificações](/admin-guide/notifications)

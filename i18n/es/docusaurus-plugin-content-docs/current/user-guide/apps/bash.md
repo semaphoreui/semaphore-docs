@@ -39,5 +39,5 @@ echo "Deploying to $TARGET_HOST"
 - Haga que su script sea ejecutable (`chmod +x`) o asegúrese de que empiece con un shebang válido (`#!/bin/bash`).
 - Los scripts se ejecutan de forma no interactiva. Evite solicitudes que esperen la intervención del usuario.
 - El código de salida `0` significa éxito; cualquier código de salida distinto de cero marca la tarea como fallida.
-- Si un script muy corto no produce ninguna salida en el registro, consulte [Falta la salida del script de Bash o está incompleta](/admin-guide/troubleshooting#bash-script-output-is-missing-or-incomplete) en la guía de resolución de problemas.
+- Si un script muy corto no produce ninguna salida en el registro, consulte [Falta la salida del script de Bash o está incompleta](/faq/troubleshooting#bash-script-output-is-missing-or-incomplete) en la guía de resolución de problemas.
 - Para ejecutar comandos en hosts remotos, use [Ansible](./ansible) en su lugar.

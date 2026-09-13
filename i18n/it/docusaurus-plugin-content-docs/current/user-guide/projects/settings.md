@@ -13,7 +13,7 @@ La scheda **Settings** della dashboard del Project è disponibile per i **Owner*
 | **Telegram Chat ID** | Facoltativo. Invia gli avvisi di questo Project a una chat Telegram diversa da quella configurata globalmente. Vedere [Notifiche Telegram](/admin-guide/notifications/telegram#per-project-chat-ids). |
 | **Allow alerts for this project** | Interruttore principale delle notifiche. Quando è disattivato, nessun canale invia avvisi relativi ai Task di questo Project, anche se il canale è configurato sul server. |
 
-**Test alerts** invia un messaggio di prova attraverso ogni [canale di notifica](/category/notifications) configurato, così da poter verificare la configurazione del server senza eseguire un Task. **Save** applica le modifiche.
+**Test alerts** invia un messaggio di prova attraverso ogni [canale di notifica](/admin-guide/notifications) configurato, così da poter verificare la configurazione del server senza eseguire un Task. **Save** applica le modifiche.
 
 ## Danger Zone {#danger-zone}
 
@@ -27,4 +27,4 @@ La scheda **Settings** della dashboard del Project è disponibile per i **Owner*
 
 - Membri e ruoli: [Team](../team)
 - Runner associati al Project e runner tag: [Runner del Project](./runners)
-- I canali di notifica si configurano sul server: [Notifiche](/category/notifications)
+- I canali di notifica si configurano sul server: [Notifiche](/admin-guide/notifications)

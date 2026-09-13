@@ -17,11 +17,19 @@
 
 /** @type {import('@docusaurus/plugin-client-redirects').Options['redirects']} */
 const redirects = [
-  // No page has moved yet. Add entries here as the documentation is restructured,
-  // for example when LDAP and OpenID Connect merge into Admin Guide → Authentication:
-  //
-  // { to: '/admin-guide/authentication/ldap', from: ['/admin-guide/ldap'] },
-  // { to: '/admin-guide/authentication/openid', from: ['/admin-guide/openid'] },
+  // Phase 1: authored section landing pages replaced generated category indexes.
+  // `admin-guide/introduction` duplicated the Admin Guide landing, and
+  // `notifications_old` became the Notifications landing.
+  {to: '/admin-guide', from: ['/admin-guide/introduction']},
+  {to: '/admin-guide/notifications', from: ['/admin-guide/notifications_old']},
+  // The hidden admin troubleshooting page was the fuller of the two; it is now
+  // the single Troubleshooting page under FAQ.
+  {to: '/faq/troubleshooting', from: ['/admin-guide/troubleshooting']},
+  // Docusaurus generated these paths for categories that now have real pages.
+  {to: '/admin-guide/reverse-proxy', from: ['/category/reverse-proxy']},
+  {to: '/admin-guide/notifications', from: ['/category/notifications']},
+  {to: '/admin-guide', from: ['/category/admin-guide']},
+  {to: '/user-guide', from: ['/category/user-guide']},
 ];
 
 module.exports = redirects;
