@@ -161,18 +161,6 @@ hr {
   margin-top: 0 !important;
 }
 
-.theme-doc-sidebar-item-link-level-1 > .menu__link,
-.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link {
-  font-weight: bold;
-  font-size: 20px;
-  color: black;
-}
-
-[data-theme='dark'] .theme-doc-sidebar-item-link-level-1 > .menu__link,
-[data-theme='dark'] .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link {
-  color: white;
-}
-
 /* Home page cards */
 .home-cards .col {
   display: flex;
@@ -403,4 +391,123 @@ hr {
   .footer .footer__desc {
     max-width: 100%;
   }
+}
+
+/* ===========================================================================
+   Docs sidebar — compact navigation in the style of the Prometheus docs
+   (reference: https://prometheus.io/docs/introduction/comparison/)
+
+   Traits borrowed from there:
+   - narrow 250px column with a hairline separator from the content
+   - compact 14px rows, 8px/12px padding, 2.5px corner radius
+   - nested pages grouped by a vertical guide line instead of deep indents
+   - active page marked with a tinted accent background + accent text
+   - thin chevron for expandable sections (right = collapsed, down = expanded)
+   =========================================================================== */
+
+html:root {
+  --doc-sidebar-width: 250px;
+
+  /* Infima menu tokens used by the sidebar */
+  --ifm-menu-link-padding-vertical: 8px;
+  --ifm-menu-link-padding-horizontal: 12px;
+  --ifm-menu-color: #212529;
+  --ifm-menu-color-active: var(--ifm-color-primary);
+  --ifm-menu-color-background-active: rgba(0, 136, 144, 0.1);
+  --ifm-menu-color-background-hover: #f8f9fa;
+
+  /* Sidebar-only tokens */
+  --sem-sidebar-border: #dee2e6;
+  --sem-sidebar-radius: 2.5px;
+  --sem-sidebar-guide-indent: 19px;
+  --sem-sidebar-guide-gap: 9px;
+}
+
+/* Same specificity as html:root above, so the dark values win by order */
+html[data-theme='dark'] {
+  --ifm-menu-color: #c9ced4;
+  --ifm-menu-color-background-active: rgba(0, 184, 204, 0.15);
+  --ifm-menu-color-background-hover: rgba(255, 255, 255, 0.05);
+  --sem-sidebar-border: #495057;
+}
+
+/* Hairline between the sidebar and the content */
+aside.theme-doc-sidebar-container {
+  border-right: 1px solid var(--sem-sidebar-border);
+}
+
+.theme-doc-sidebar-menu {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.theme-doc-sidebar-menu .menu__link,
+.theme-doc-sidebar-menu .menu__caret,
+.theme-doc-sidebar-menu .menu__list-item-collapsible {
+  border-radius: var(--sem-sidebar-radius);
+}
+
+/* Rows sit directly on top of each other, as on prometheus.io */
+.theme-doc-sidebar-menu .menu__list-item:not(:first-child) {
+  margin-top: 2px;
+}
+
+/* Section titles (top level) carry a touch more weight than page links */
+.theme-doc-sidebar-item-link-level-1 > .menu__link,
+.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link {
+  font-weight: 600;
+}
+
+/* Nested pages: vertical guide line instead of plain indentation */
+.theme-doc-sidebar-menu .menu__list {
+  margin-top: 2px;
+  margin-left: var(--sem-sidebar-guide-indent);
+  padding-left: var(--sem-sidebar-guide-gap);
+  border-left: 1px solid var(--sem-sidebar-border);
+}
+
+/* Only the page you are on is highlighted — parent sections stay neutral,
+   the way expandable groups behave on prometheus.io */
+.theme-doc-sidebar-menu .menu__link--sublist.menu__link--active {
+  color: var(--ifm-menu-color);
+}
+
+.theme-doc-sidebar-menu .menu__list-item-collapsible--active,
+.theme-doc-sidebar-menu .menu__list-item-collapsible--active:hover {
+  background: var(--ifm-menu-color-background-active);
+}
+
+.theme-doc-sidebar-menu .menu__list-item-collapsible--active > .menu__link {
+  color: var(--ifm-menu-color-active);
+}
+
+/* Thin chevron in place of Infima's filled arrow icon */
+.theme-doc-sidebar-menu .menu__caret {
+  padding-inline: 10px;
+}
+
+.theme-doc-sidebar-menu .menu__caret::before,
+.theme-doc-sidebar-menu .menu__link--sublist-caret::after {
+  width: 0.4em;
+  height: 0.4em;
+  min-width: 0;
+  background: none;
+  filter: none;
+  border: solid currentColor;
+  border-width: 0 1.5px 1.5px 0;
+  border-radius: 1px;
+  opacity: 0.55;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.theme-doc-sidebar-menu .menu__link--sublist-caret::after {
+  margin-left: auto;
+  margin-right: 2px;
+}
+
+.theme-doc-sidebar-menu .menu__list-item--collapsed > .menu__list-item-collapsible .menu__caret::before,
+.theme-doc-sidebar-menu .menu__list-item--collapsed > .menu__link--sublist-caret::after,
+.theme-doc-sidebar-menu .menu__list-item--collapsed > .menu__list-item-collapsible > .menu__link--sublist-caret::after {
+  transform: translateX(-1px) rotate(-45deg);
 }
