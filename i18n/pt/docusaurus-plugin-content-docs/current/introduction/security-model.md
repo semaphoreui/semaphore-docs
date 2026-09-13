@@ -32,9 +32,9 @@ Os usuários se autenticam de uma destas três formas, e todas as três terminam
 
 - **Contas locais.** As senhas são hasheadas com Argon2id (bcrypt antes da 2.20, atualizado
   no primeiro login). A autenticação de dois fatores TOTP pode ser exigida.
-- **[LDAP ou Active Directory](/admin-guide/ldap).** O diretório verifica a senha;
+- **[LDAP ou Active Directory](/admin-guide/authentication/ldap).** O diretório verifica a senha;
   o Semaphore mantém apenas a conta.
-- **[OpenID Connect](/admin-guide/openid).** O provedor autentica e o Semaphore
+- **[OpenID Connect](/admin-guide/authentication/openid).** O provedor autentica e o Semaphore
   mapeia as claims para os usuários.
 
 O acesso não interativo usa **tokens de API** criados por um usuário, carregando as permissões

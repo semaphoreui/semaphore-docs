@@ -32,9 +32,9 @@ Users authenticate in one of three ways, and all three end in the same session:
 
 - **Local accounts.** Passwords are hashed with Argon2id (bcrypt before 2.20, upgraded
   on first login). TOTP two-factor authentication can be required.
-- **[LDAP or Active Directory](/admin-guide/ldap).** The directory verifies the password;
+- **[LDAP or Active Directory](/admin-guide/authentication/ldap).** The directory verifies the password;
   Semaphore keeps only the account.
-- **[OpenID Connect](/admin-guide/openid).** The provider authenticates and Semaphore
+- **[OpenID Connect](/admin-guide/authentication/openid).** The provider authenticates and Semaphore
   maps claims onto users.
 
 Non-interactive access uses **API tokens** created by a user, carrying that user's

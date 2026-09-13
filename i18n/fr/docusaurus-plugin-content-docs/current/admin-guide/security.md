@@ -15,7 +15,7 @@ Semaphore prend en charge une authentification sécurisée et des mécanismes d'
 
   - **OpenID Connect (OIDC)**<br />Permet l'authentification unique avec des fournisseurs d'identité tels que Google, Azure AD ou Keycloak. Prend en charge les revendications personnalisées et les correspondances de groupes.
 
-- **Authentification à deux facteurs (2FA)**<br />La 2FA basée sur TOTP est disponible et recommandée pour tous les utilisateurs. Elle peut être activée par utilisateur et prend en charge des codes de récupération facultatifs. Voir les options de configuration `auth.totp.enabled` et `auth.totp.allow_recovery`.
+- **Authentification à deux facteurs (2FA)**<br />La 2FA basée sur TOTP est disponible et recommandée pour tous les utilisateurs. Elle peut être activée par utilisateur et prend en charge des codes de récupération facultatifs. Voir les options de configuration `mfa.totp.enabled` et `mfa.totp.allow_recovery`.
 
 - **Contrôle d'accès basé sur les rôles**<br />Vous pouvez attribuer différents rôles aux utilisateurs, comme Admin, Maintainer ou Viewer, afin de limiter les accès selon les responsabilités.
 
@@ -77,9 +77,9 @@ head -c32 /dev/urandom | base64
 
 Semaphore exécute des playbooks et des commandes définis par les utilisateurs, ce qui peut présenter des risques :
 
-- **Isolation par conteneur**<br />Les tâches sont exécutées dans des conteneurs Docker isolés. Ces conteneurs n'ont aucun accès au système hôte.
+- **Isolation de l'exécution**<br />Par défaut, une tâche est un processus ordinaire sur le serveur Semaphore, avec son système de fichiers et son accès réseau. L'isolation est facultative : confiez la tâche à un [runner](/admin-guide/runners) configuré avec l'executor `docker` ou `k8s` et chaque tâche obtient un conteneur ou un Pod neuf, supprimé à la fin.
 
-- **Moindre privilège**<br />Les conteneurs s'exécutent avec des permissions minimales et peuvent être restreints davantage à l'aide des options Docker.
+- **Moindre privilège**<br />Avec les executors Docker et Kubernetes, vous choisissez l'image, le réseau et le compte de service : la tâche ne reçoit que ce dont elle a besoin.
 
 - **Exécution en chroot**<br />Semaphore peut exécuter les tâches dans une prison chroot afin d'isoler davantage l'environnement d'exécution du système hôte.
 

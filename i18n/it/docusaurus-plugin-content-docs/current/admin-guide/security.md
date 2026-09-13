@@ -15,7 +15,7 @@ Semaphore supporta un'autenticazione sicura e meccanismi di autorizzazione fless
 
   - **OpenID Connect (OIDC)**<br />Abilita il single sign-on con provider di identità come Google, Azure AD o Keycloak. Supporta claim personalizzati e mappature dei gruppi.
 
-- **Autenticazione a due fattori (2FA)**<br />È disponibile la 2FA basata su TOTP, consigliata per tutti gli utenti. Può essere abilitata per singolo utente e supporta codici di recupero opzionali. Vedere le opzioni di configurazione `auth.totp.enabled` e `auth.totp.allow_recovery`.
+- **Autenticazione a due fattori (2FA)**<br />È disponibile la 2FA basata su TOTP, consigliata per tutti gli utenti. Può essere abilitata per singolo utente e supporta codici di recupero opzionali. Vedere le opzioni di configurazione `mfa.totp.enabled` e `mfa.totp.allow_recovery`.
 
 - **Controllo degli accessi basato sui ruoli**<br />È possibile assegnare ruoli diversi agli utenti, come Admin, Maintainer o Viewer, limitando l'accesso in base alle responsabilità.
 
@@ -79,9 +79,9 @@ Semaphore esegue playbook e comandi definiti dall'utente, il che può comportare
 
 - **Isolamento tramite container**<br />I Task vengono eseguiti in container Docker isolati. Questi container non hanno accesso al sistema host.
 
-- **Privilegio minimo**<br />I container vengono eseguiti con permessi minimi e possono essere ulteriormente limitati tramite i flag di Docker.
+- **Isolamento dell'esecuzione**<br />Per impostazione predefinita un Task è un normale processo sul server Semaphore, con il suo file system e il suo accesso di rete. L'isolamento è facoltativo: affidare il Task a un [runner](/admin-guide/runners) configurato con l'executor `docker` o `k8s` e ogni Task ottiene un container o un Pod nuovo, eliminato al termine.
 
-- **Esecuzione in chroot**<br />Semaphore può eseguire i Task all'interno di una chroot jail per isolare ulteriormente l'ambiente di esecuzione dal sistema host.
+- **Privilegio minimo**<br />Con gli executor Docker e Kubernetes si scelgono immagine, rete e service account, quindi al Task viene dato solo ciò che gli serve.
 
 - **Utente del processo del Task**<br />I Task possono essere eseguiti con un utente di sistema dedicato non root (ad esempio `semaphore`) per ridurre l'impatto di eventuali exploit. Questa opzione è facoltativa e può essere configurata in base alle policy di sistema.
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->

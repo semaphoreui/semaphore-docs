@@ -203,4 +203,4 @@ ldapsearch\
 - Kod rezultata **0** znači da je osnova ispravna i da je problem u
   `ldap_searchfilter`: on ne pronalazi nijedan unos ispod te osnove.
 
-Značenje svake opcije potražite u odeljku [LDAP i AD](/admin-guide/ldap).
+Značenje svake opcije potražite u odeljku [LDAP i AD](/admin-guide/authentication/ldap).

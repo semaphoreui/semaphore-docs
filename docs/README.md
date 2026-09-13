@@ -44,7 +44,7 @@ For production, see [Installation](/admin-guide/installation) for Docker Compose
           <li><Link to="/admin-guide/installation">Installation</Link></li>
           <li><Link to="/admin-guide/configuration">Configuration</Link></li>
           <li><Link to="/admin-guide/reverse-proxy">Reverse proxy and TLS</Link></li>
-          <li><Link to="/admin-guide/ldap">LDAP</Link> and <Link to="/admin-guide/openid">OpenID Connect</Link></li>
+          <li><Link to="/admin-guide/authentication/ldap">LDAP</Link> and <Link to="/admin-guide/authentication/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">Security hardening</Link></li>
         </ul>
       </div>

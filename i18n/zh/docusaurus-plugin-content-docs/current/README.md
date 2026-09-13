@@ -43,7 +43,7 @@ docker run -d -p 3000:3000 \
           <li><Link to="/admin-guide/installation">安装</Link></li>
           <li><Link to="/admin-guide/configuration">配置</Link></li>
           <li><Link to="/admin-guide/reverse-proxy">反向代理与 TLS</Link></li>
-          <li><Link to="/admin-guide/ldap">LDAP</Link> 和 <Link to="/admin-guide/openid">OpenID Connect</Link></li>
+          <li><Link to="/admin-guide/authentication/ldap">LDAP</Link> 和 <Link to="/admin-guide/authentication/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">安全加固</Link></li>
         </ul>
       </div>

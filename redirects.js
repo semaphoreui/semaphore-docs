@@ -41,6 +41,25 @@ const redirects = [
   {to: '/reference/cli/runners', from: ['/admin-guide/cli/runners']},
   {to: '/reference/cli/migrations', from: ['/admin-guide/cli/migrations']},
   {to: '/reference/api', from: ['/admin-guide/api']},
+
+  // Phase 2: LDAP and OpenID Connect were two unrelated top-level entries even
+  // though they answer the same question. They are now one Authentication
+  // section, next to the local accounts they replace.
+  {to: '/admin-guide/authentication/ldap', from: ['/admin-guide/ldap']},
+  {to: '/admin-guide/authentication/ldap/ad', from: ['/admin-guide/ldap/ad']},
+  {to: '/admin-guide/authentication/openid', from: ['/admin-guide/openid']},
+  {to: '/admin-guide/authentication/openid/github', from: ['/admin-guide/openid/github']},
+  {to: '/admin-guide/authentication/openid/google', from: ['/admin-guide/openid/google']},
+  {to: '/admin-guide/authentication/openid/gitlab', from: ['/admin-guide/openid/gitlab']},
+  {to: '/admin-guide/authentication/openid/gitea', from: ['/admin-guide/openid/gitea']},
+  {to: '/admin-guide/authentication/openid/authelia', from: ['/admin-guide/openid/authelia']},
+  {to: '/admin-guide/authentication/openid/authentik', from: ['/admin-guide/openid/authentik']},
+  {to: '/admin-guide/authentication/openid/keycloak', from: ['/admin-guide/openid/keycloak']},
+  {to: '/admin-guide/authentication/openid/okta', from: ['/admin-guide/openid/okta']},
+  {to: '/admin-guide/authentication/openid/pingfederate', from: ['/admin-guide/openid/pingfederate']},
+  {to: '/admin-guide/authentication/openid/azure', from: ['/admin-guide/openid/azure']},
+  {to: '/admin-guide/authentication/openid/zitadel', from: ['/admin-guide/openid/zitadel']},
+  {to: '/admin-guide/authentication/openid/pocket-id', from: ['/admin-guide/openid/pocket-id']},
 ];
 
 module.exports = redirects;

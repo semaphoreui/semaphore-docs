@@ -47,7 +47,7 @@ ses propres tables au premier démarrage et à chaque mise à niveau.
 |---|---|
 | Vos dépôts Git distants | Cloner les dépôts vers lesquels pointent les modèles. |
 | Les hôtes et API cloud que vous automatisez | Effectuer réellement le travail. |
-| Votre fournisseur d'identité, le cas échéant | La connexion [LDAP](/admin-guide/ldap) ou [OpenID Connect](/admin-guide/openid). |
+| Votre fournisseur d'identité, le cas échéant | La connexion [LDAP](/admin-guide/authentication/ldap) ou [OpenID Connect](/admin-guide/authentication/openid). |
 | Vos canaux de notification | E-mail, Telegram, Slack, et les autres. |
 
 Les utilisateurs accèdent à l'interface web sur le port `3000`, sauf si vous le changez. Placez

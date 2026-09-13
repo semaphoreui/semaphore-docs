@@ -15,7 +15,7 @@ O Semaphore oferece suporte a autenticação segura e a mecanismos flexíveis de
 
   - **OpenID Connect (OIDC)**<br />Permite o login único (SSO) com provedores de identidade como Google, Azure AD ou Keycloak. Oferece suporte a claims personalizadas e mapeamento de grupos.
 
-- **Autenticação de dois fatores (2FA)**<br />A 2FA baseada em TOTP está disponível e é recomendada para todos os usuários. Ela pode ser habilitada por usuário e oferece suporte a códigos de recuperação opcionais. Consulte as opções de configuração `auth.totp.enabled` e `auth.totp.allow_recovery`.
+- **Autenticação de dois fatores (2FA)**<br />A 2FA baseada em TOTP está disponível e é recomendada para todos os usuários. Ela pode ser habilitada por usuário e oferece suporte a códigos de recuperação opcionais. Consulte as opções de configuração `mfa.totp.enabled` e `mfa.totp.allow_recovery`.
 
 - **Controle de acesso baseado em funções**<br />Você pode atribuir diferentes funções aos usuários, como Admin, Maintainer ou Viewer, limitando o acesso conforme a responsabilidade.
 
@@ -79,9 +79,9 @@ O Semaphore executa playbooks e comandos definidos pelo usuário, o que pode ser
 
 - **Isolamento em contêineres**<br />As tarefas são executadas em contêineres Docker isolados. Esses contêineres não têm acesso ao sistema host.
 
-- **Privilégio mínimo**<br />Os contêineres são executados com permissões mínimas e podem ser restringidos ainda mais usando flags do Docker.
+- **Isolamento da execução**<br />Por predefinição, uma tarefa é um processo comum no servidor Semaphore, com o sistema de ficheiros e o acesso de rede desse servidor. O isolamento é opcional: entregue a tarefa a um [runner](/admin-guide/runners) configurado com o executor `docker` ou `k8s` e cada tarefa recebe um contentor ou Pod novo, descartado quando termina.
 
-- **Execução em chroot**<br />O Semaphore pode executar tarefas dentro de um chroot jail para isolar ainda mais o ambiente de execução do sistema host.
+- **Privilégio mínimo**<br />Com os executores Docker e Kubernetes, escolhe a imagem, a rede e a conta de serviço, pelo que a tarefa recebe apenas aquilo de que precisa.
 
 - **Usuário do processo da tarefa**<br />As tarefas podem ser executadas sob um usuário de sistema dedicado e não root (por exemplo, `semaphore`) para reduzir o impacto de possíveis exploits. Isso é opcional e pode ser configurado conforme as políticas do sistema.
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->

@@ -32,9 +32,9 @@ Korisnici se autentifikuju na jedan od tri načina, a sva tri završavaju istom 
 
 - **Lokalni nalozi.** Lozinke se heširaju pomoću Argon2id (bcrypt pre verzije 2.20, uz nadogradnju
   pri prvoj prijavi). Može se zahtevati TOTP dvofaktorska autentifikacija.
-- **[LDAP ili Active Directory](/admin-guide/ldap).** Direktorijum proverava lozinku;
+- **[LDAP ili Active Directory](/admin-guide/authentication/ldap).** Direktorijum proverava lozinku;
   Semaphore čuva samo nalog.
-- **[OpenID Connect](/admin-guide/openid).** Provajder vrši autentifikaciju, a Semaphore
+- **[OpenID Connect](/admin-guide/authentication/openid).** Provajder vrši autentifikaciju, a Semaphore
   mapira claim-ove na korisnike.
 
 Neinteraktivni pristup koristi **API tokene** koje kreira korisnik i koji nose dozvole

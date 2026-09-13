@@ -37,5 +37,5 @@
 ## 次のステップ {#next-steps}
 
 - [リバースプロキシ](/admin-guide/reverse-proxy)を使って Semaphore を TLS の背後に配置する。
-- ID プロバイダーを接続する: [LDAP](/admin-guide/ldap) または [OpenID Connect](/admin-guide/openid)。
+- ID プロバイダーを接続する: [LDAP](/admin-guide/authentication/ldap) または [OpenID Connect](/admin-guide/authentication/openid)。
 - [API](/reference/api) と [CLI](/reference/cli) を使って、CI やスクリプトから Semaphore を操作する。

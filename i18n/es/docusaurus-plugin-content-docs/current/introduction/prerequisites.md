@@ -47,7 +47,7 @@ sus propias tablas en el primer arranque y en cada actualización.
 |---|---|
 | Tus remotos Git | Clonar los repositorios a los que apuntan las plantillas. |
 | Los hosts y las APIs de nube que automatizas | Hacer el trabajo propiamente dicho. |
-| Tu proveedor de identidad, si usas uno | Inicio de sesión con [LDAP](/admin-guide/ldap) u [OpenID Connect](/admin-guide/openid). |
+| Tu proveedor de identidad, si usas uno | Inicio de sesión con [LDAP](/admin-guide/authentication/ldap) u [OpenID Connect](/admin-guide/authentication/openid). |
 | Tus canales de notificación | Correo electrónico, Telegram, Slack y los demás. |
 
 Los usuarios acceden a la interfaz web en el puerto `3000`, salvo que lo cambies. Pon

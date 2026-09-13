@@ -47,7 +47,7 @@ sopstvene tabele pri prvom pokretanju i pri svakoj nadogradnji.
 |---|---|
 | Vaših Git remote repozitorijuma | Kloniranja repozitorijuma na koje šabloni pokazuju. |
 | Hostova i cloud API-ja koje automatizujete | Samog obavljanja posla. |
-| Vašeg provajdera identiteta, ako ga koristite | Prijave preko [LDAP-a](/admin-guide/ldap) ili [OpenID Connect-a](/admin-guide/openid). |
+| Vašeg provajdera identiteta, ako ga koristite | Prijave preko [LDAP-a](/admin-guide/authentication/ldap) ili [OpenID Connect-a](/admin-guide/authentication/openid). |
 | Vaših kanala za obaveštenja | E-pošte, Telegram-a, Slack-a i ostalih. |
 
 Korisnici pristupaju veb interfejsu na portu `3000` osim ako ga promenite. Postavite

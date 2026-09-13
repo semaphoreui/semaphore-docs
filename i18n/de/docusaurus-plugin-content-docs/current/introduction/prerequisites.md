@@ -48,7 +48,7 @@ Semaphore erzeugt seine Tabellen beim ersten Start und bei jedem Upgrade selbst.
 |---|---|
 | Ihre Git-Remotes | Klonen der Repositories, auf die Templates verweisen. |
 | Die Hosts und Cloud-APIs, die Sie automatisieren | Die eigentliche Arbeit. |
-| Ihren Identity Provider, falls vorhanden | Anmeldung per [LDAP](/admin-guide/ldap) oder [OpenID Connect](/admin-guide/openid). |
+| Ihren Identity Provider, falls vorhanden | Anmeldung per [LDAP](/admin-guide/authentication/ldap) oder [OpenID Connect](/admin-guide/authentication/openid). |
 | Ihre Benachrichtigungskanäle | E-Mail, Telegram, Slack und die übrigen. |
 
 Benutzer erreichen die Weboberfläche auf Port `3000`, sofern Sie ihn nicht ändern. Setzen

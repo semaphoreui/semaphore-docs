@@ -15,7 +15,7 @@ Semaphore admite mecanismos de autenticación seguros y de autorización flexibl
 
   - **OpenID Connect (OIDC)**<br />Habilita el inicio de sesión único con proveedores de identidad como Google, Azure AD o Keycloak. Admite reclamaciones personalizadas y asignación de grupos.
 
-- **Autenticación de dos factores (2FA)**<br />La 2FA basada en TOTP está disponible y se recomienda para todos los usuarios. Puede activarse por usuario y admite códigos de recuperación opcionales. Consulte las opciones de configuración `auth.totp.enabled` y `auth.totp.allow_recovery`.
+- **Autenticación de dos factores (2FA)**<br />La 2FA basada en TOTP está disponible y se recomienda para todos los usuarios. Puede activarse por usuario y admite códigos de recuperación opcionales. Consulte las opciones de configuración `mfa.totp.enabled` y `mfa.totp.allow_recovery`.
 
 - **Control de acceso basado en roles**<br />Puede asignar distintos roles a los usuarios, como Admin, Maintainer o Viewer, limitando el acceso según su responsabilidad.
 
@@ -77,9 +77,9 @@ head -c32 /dev/urandom | base64
 
 Semaphore ejecuta playbooks y comandos definidos por el usuario, lo que puede resultar arriesgado:
 
-- **Aislamiento en contenedores**<br />Las tareas se ejecutan en contenedores Docker aislados. Estos contenedores no tienen acceso al sistema anfitrión.
+- **Aislamiento de la ejecución**<br />De forma predeterminada, una tarea es un proceso normal en el servidor de Semaphore, con su sistema de archivos y su acceso de red. El aislamiento es opcional: entregue la tarea a un [runner](/admin-guide/runners) configurado con el executor `docker` o `k8s` y cada tarea recibirá un contenedor o Pod nuevo que se descarta al terminar.
 
-- **Privilegio mínimo**<br />Los contenedores se ejecutan con permisos mínimos y pueden restringirse aún más mediante opciones de Docker.
+- **Privilegio mínimo**<br />Con los executors de Docker y Kubernetes usted elige la imagen, la red y la cuenta de servicio, de modo que la tarea recibe solo lo que necesita.
 
 - **Ejecución en chroot**<br />Semaphore puede ejecutar tareas dentro de una jaula chroot para aislar todavía más el entorno de ejecución del sistema anfitrión.
 

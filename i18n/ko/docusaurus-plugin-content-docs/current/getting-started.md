@@ -37,5 +37,5 @@
 ## 다음 단계 {#next-steps}
 
 - [리버스 프록시](/admin-guide/reverse-proxy)를 사용해 Semaphore를 TLS 뒤에 배치하십시오.
-- ID 공급자를 연결하십시오: [LDAP](/admin-guide/ldap) 또는 [OpenID Connect](/admin-guide/openid).
+- ID 공급자를 연결하십시오: [LDAP](/admin-guide/authentication/ldap) 또는 [OpenID Connect](/admin-guide/authentication/openid).
 - [API](/reference/api)와 [CLI](/reference/cli)를 사용해 CI나 스크립트에서 Semaphore를 제어하십시오.

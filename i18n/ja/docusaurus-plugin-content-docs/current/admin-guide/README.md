@@ -27,8 +27,7 @@ SQLite、MySQL、または PostgreSQL に保存し、認証情報は暗号化し
 | [アップグレード](/admin-guide/upgrading) | 新しいリリースへの移行と、最初に確認すべき点です。 |
 | [リバースプロキシ](/admin-guide/reverse-proxy) | nginx、Apache、または Caddy の背後で、TLS を使って Semaphore を公開します。 |
 | [セキュリティ](/admin-guide/security) | パスワードのハッシュ化、シークレットの暗号化、ネットワークの強化、タスクの JWT です。 |
-| [LDAP と AD](/admin-guide/ldap) | ディレクトリサービスに対して認証してサインインします。 |
-| [OpenID Connect](/admin-guide/openid) | GitHub、Google、Keycloak、Okta とさらに 9 つのプロバイダーによるシングルサインオンです。 |
+| [認証](/admin-guide/authentication) | ローカルアカウントと二要素認証、LDAP と Active Directory、そして 12 種類の OpenID Connect プロバイダーによるシングルサインオン。 |
 | [ランナー](/admin-guide/runners) | サーバー以外のマシンでタスクを実行します。 |
 | [高可用性](/admin-guide/ha) | 1 つのデータベースに対して複数の Semaphore ノードを実行します。 |
 

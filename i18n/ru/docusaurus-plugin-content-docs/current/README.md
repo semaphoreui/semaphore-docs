@@ -43,7 +43,7 @@ docker run -d -p 3000:3000 \
           <li><Link to="/admin-guide/installation">Установка</Link></li>
           <li><Link to="/admin-guide/configuration">Настройка</Link></li>
           <li><Link to="/admin-guide/reverse-proxy">Обратный прокси и TLS</Link></li>
-          <li><Link to="/admin-guide/ldap">LDAP</Link> и <Link to="/admin-guide/openid">OpenID Connect</Link></li>
+          <li><Link to="/admin-guide/authentication/ldap">LDAP</Link> и <Link to="/admin-guide/authentication/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">Усиление безопасности</Link></li>
         </ul>
       </div>

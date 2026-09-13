@@ -25,8 +25,8 @@ Semaphore はあなたのインフラへの認証情報を保持し、それに�
 ユーザーは 3 つの方法のいずれかで認証し、3 つとも同じセッションに行き着きます。
 
 - **ローカルアカウント。** パスワードは Argon2id でハッシュ化されます（2.20 より前は bcrypt で、初回ログイン時に移行されます）。TOTP による二要素認証を必須にできます。
-- **[LDAP または Active Directory](/admin-guide/ldap)。** ディレクトリがパスワードを検証し、Semaphore はアカウントだけを保持します。
-- **[OpenID Connect](/admin-guide/openid)。** プロバイダーが認証を行い、Semaphore はクレームをユーザーに対応付けます。
+- **[LDAP または Active Directory](/admin-guide/authentication/ldap)。** ディレクトリがパスワードを検証し、Semaphore はアカウントだけを保持します。
+- **[OpenID Connect](/admin-guide/authentication/openid)。** プロバイダーが認証を行い、Semaphore はクレームをユーザーに対応付けます。
 
 非対話的なアクセスには、ユーザーが作成した **API トークン** を使い、そのユーザーの権限を引き継ぎます。ランナーはユーザーのアイデンティティをまったく使いません。登録時に発行された独自のトークンで認証します。
 

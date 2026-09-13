@@ -43,7 +43,7 @@ docker run -d -p 3000:3000 \
           <li><Link to="/admin-guide/installation">インストール</Link></li>
           <li><Link to="/admin-guide/configuration">設定</Link></li>
           <li><Link to="/admin-guide/reverse-proxy">リバースプロキシと TLS</Link></li>
-          <li><Link to="/admin-guide/ldap">LDAP</Link> と <Link to="/admin-guide/openid">OpenID Connect</Link></li>
+          <li><Link to="/admin-guide/authentication/ldap">LDAP</Link> と <Link to="/admin-guide/authentication/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">セキュリティ強化</Link></li>
         </ul>
       </div>

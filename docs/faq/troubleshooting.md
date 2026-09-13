@@ -203,4 +203,4 @@ ldapsearch\
 - Result code **0** means the base is fine and the problem is in
   `ldap_searchfilter`: it matches no entry below that base.
 
-See [LDAP and AD](/admin-guide/ldap) for the meaning of each option.
+See [LDAP and AD](/admin-guide/authentication/ldap) for the meaning of each option.

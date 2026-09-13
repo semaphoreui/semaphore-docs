@@ -203,4 +203,4 @@ ldapsearch\
 - 结果代码 **0** 说明 base 没有问题，问题出在 `ldap_searchfilter`：
   它在该 base 下没有匹配到任何条目。
 
-关于每个选项的含义，请参阅 [LDAP 与 AD](/admin-guide/ldap)。
+关于每个选项的含义，请参阅 [LDAP 与 AD](/admin-guide/authentication/ldap)。

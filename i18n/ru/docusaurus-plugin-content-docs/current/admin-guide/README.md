@@ -29,8 +29,7 @@ runner'ах. Поэтому рабочая установка сводится �
 | [Обновление](/admin-guide/upgrading) | Переход на более новый выпуск и что проверить в первую очередь. |
 | [Обратный прокси](/admin-guide/reverse-proxy) | Работа Semaphore за nginx, Apache или Caddy с TLS. |
 | [Безопасность](/admin-guide/security) | Хеширование паролей, шифрование секретов, защита сети и JWT задач. |
-| [LDAP и AD](/admin-guide/ldap) | Вход через службу каталогов. |
-| [OpenID Connect](/admin-guide/openid) | Единый вход через GitHub, Google, Keycloak, Okta и ещё девять провайдеров. |
+| [Аутентификация](/admin-guide/authentication) | Локальные учётные записи и двухфакторная аутентификация, LDAP и Active Directory, единый вход через двенадцать провайдеров OpenID Connect. |
 | [Runner'ы](/admin-guide/runners) | Выполнение задач на машинах, отличных от сервера. |
 | [Высокая доступность](/admin-guide/ha) | Запуск нескольких узлов Semaphore на одной базе данных. |
 

@@ -47,7 +47,7 @@ le proprie tabelle al primo avvio e a ogni aggiornamento.
 |---|---|
 | I tuoi remote Git | Clonare i repository a cui puntano i template. |
 | Gli host e le API cloud che automatizzi | Svolgere effettivamente il lavoro. |
-| Il tuo identity provider, se ne usi uno | L'accesso con [LDAP](/admin-guide/ldap) o [OpenID Connect](/admin-guide/openid). |
+| Il tuo identity provider, se ne usi uno | L'accesso con [LDAP](/admin-guide/authentication/ldap) o [OpenID Connect](/admin-guide/authentication/openid). |
 | I tuoi canali di notifica | E-mail, Telegram, Slack e gli altri. |
 
 Gli utenti raggiungono l'interfaccia web sulla porta `3000`, se non la cambi. Metti il

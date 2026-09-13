@@ -50,7 +50,7 @@ Where the HTTP server listens and how users reach it. Set `web_host` to the URL 
 | `tls.key_file` | `SEMAPHORE_TLS_KEY_FILE` | string | — | Path to TLS key file. |
 | `tls.http_redirect_addr` | `SEMAPHORE_TLS_HTTP_REDIRECT_ADDR` | string | — | Address (`host[:port]`) for the HTTP→HTTPS redirect listener. Mutually exclusive with `tls.http_redirect_port`. |
 | `tls.http_redirect_port` | `SEMAPHORE_TLS_HTTP_REDIRECT_PORT` | integer | — | Port to redirect HTTP traffic to HTTPS. Mutually exclusive with `tls.http_redirect_addr`. |
-| `interface` | `SEMAPHORE_INTERFACE` | string | — | Interface ip, put in front of the port. defaults to empty |
+| `interface` | `SEMAPHORE_INTERFACE` | string | — | Ip, put in front of the port. defaults to empty |
 | `web_host` | `SEMAPHORE_WEB_ROOT` | string | — | web host |
 | `cookie_hash` | `SEMAPHORE_COOKIE_HASH` | string | — | cookie hashing & encryption Secret: keep it out of shell history and version control. |
 | `cookie_encryption` | `SEMAPHORE_COOKIE_ENCRYPTION` | string | — | BASE64-encoded key used to encrypt session cookies. Generate with `head -c32 /dev/urandom \| base64`. Changing it signs every user out. Secret: keep it out of shell history and version control. |
@@ -62,8 +62,8 @@ Directories Semaphore writes to. Everything here except the database is a cache 
 | Option | Environment variable | Type | Default | Description |
 |---|---|---|---|---|
 | `tmp_path` | `SEMAPHORE_TMP_PATH` | string | `/tmp/semaphore` | semaphore stores ephemeral projects here |
-| `secrets_path` | `SEMAPHORE_SECRETS_PATH` | string | — | A legacy top-level setting for backwards compatibility. Users should prefer configuring dirs.secrets instead. |
-| `home_dir_mode` | `SEMAPHORE_HOME_DIR_MODE` | string | `template_dir` | How the HOME environment variable is set for tasks. "template_home" (default) — HOME is set to a per-template directory, isolating .ansible/ across parallel tasks. Repo is cloned into a "src" subdirectory under HOME. "project_home" — HOME is set to the project temp directory (legacy behavior). Parallel ansible-galaxy runs in the same project may conflict. "user_home" — HOME is not overridden (keeps the real user HOME). ANSIBLE_HOME is set per template to isolate .ansible/ for Ansible tasks. One of `user_home`, `project_home`, `template_dir`. |
+| `secrets_path` | `SEMAPHORE_SECRETS_PATH` | string | — | Legacy top-level setting for backwards compatibility. Users should prefer configuring dirs.secrets instead. |
+| `home_dir_mode` | `SEMAPHORE_HOME_DIR_MODE` | string | `template_dir` | Controls how the HOME environment variable is set for tasks. "template_home" (default) — HOME is set to a per-template directory, isolating .ansible/ across parallel tasks. Repo is cloned into a "src" subdirectory under HOME. "project_home" — HOME is set to the project temp directory (legacy behavior). Parallel ansible-galaxy runs in the same project may conflict. "user_home" — HOME is not overridden (keeps the real user HOME). ANSIBLE_HOME is set per template to isolate .ansible/ for Ansible tasks. One of `user_home`, `project_home`, `template_dir`. |
 | `dirs.secrets` | `SEMAPHORE_SECRETS_PATH` | string | `/tmp/semaphore` | Path to directory where secrets are stored (for example Vault token files). Default: `/tmp/semaphore`. Legacy top-level `secrets_path` is still accepted when `dirs.secrets` is unset or left at the default. |
 | `dirs.repos` | `SEMAPHORE_REPOS_DIR` | string | — | Path to directory where repositories are stored. |
 | `dirs.ssh_agent_sockets` | `SEMAPHORE_SSH_AGENT_SOCKETS_DIR` | string | `/tmp/semaphore` | Path to directory where SSH agent sockets are stored. Default: /tmp/semaphore |
@@ -75,17 +75,17 @@ Keys that protect stored secrets. Back them up separately from the database: the
 | Option | Environment variable | Type | Default | Description |
 |---|---|---|---|---|
 | `access_key_encryption` | `SEMAPHORE_ACCESS_KEY_ENCRYPTION` | string | — | BASE64 encoded byte array used for encrypting and decrypting access keys stored in database. Legacy entry point kept for backward compatibility; the access keyring is configured via EncryptionKeys.AccessKey (encryption_keys.access_key). Secret: keep it out of shell history and version control. |
-| `option_encryption` | `SEMAPHORE_OPTION_ENCRYPTION` | string | — | A BASE64 encoded key used to encrypt/decrypt DB options (the JWT signing key) with the old single-key scheme (no rotation). It is the option-keyring counterpart of AccessKeyEncryption: when set the option keyring uses this one key; rotation is configured instead via the keys file (encryption.keys_file → option_key). When unset, options fall back to the access keyring. Secret: keep it out of shell history and version control. |
-| `encryption.keys_file` | `SEMAPHORE_ENCRYPTION_KEYS_FILE` | string | — | The path to the EncryptionKeysConfig file (the keyrings). |
+| `option_encryption` | `SEMAPHORE_OPTION_ENCRYPTION` | string | — | BASE64 encoded key used to encrypt/decrypt DB options (the JWT signing key) with the old single-key scheme (no rotation). It is the option-keyring counterpart of AccessKeyEncryption: when set the option keyring uses this one key; rotation is configured instead via the keys file (encryption.keys_file → option_key). When unset, options fall back to the access keyring. Secret: keep it out of shell history and version control. |
+| `encryption.keys_file` | `SEMAPHORE_ENCRYPTION_KEYS_FILE` | string | — | Path to the EncryptionKeysConfig file (the keyrings). |
 | `encryption.keys_poll_interval` | `SEMAPHORE_ENCRYPTION_KEYS_POLL_INTERVAL` | string | `15s` | How often the keys file is checked for changes (a Go duration like "15s"). "0" disables polling (SIGHUP still forces a reload). |
 
 ## Authentication {#authentication}
 
-How users sign in. See [LDAP](/admin-guide/ldap) and [OpenID Connect](/admin-guide/openid) for the provider-side setup.
+How users sign in. See [Authentication](/admin-guide/authentication) for the provider-side setup.
 
 | Option | Environment variable | Type | Default | Description |
 |---|---|---|---|---|
-| `auth.max_session_life_hours` | `SEMAPHORE_AUTH_MAX_SESSION_LIFE_HOURS` | integer | — | The absolute lifetime of a login session in hours, counted from the moment the user logged in. Once exceeded the session is rejected and expired, even if it was active recently, and the user must log in again. 0 (default) means no absolute limit: sessions then only expire after SessionInactivityTimeout without activity. |
+| `auth.max_session_life_hours` | `SEMAPHORE_AUTH_MAX_SESSION_LIFE_HOURS` | integer | — | Absolute lifetime of a login session in hours, counted from the moment the user logged in. Once exceeded the session is rejected and expired, even if it was active recently, and the user must log in again. 0 (default) means no absolute limit: sessions then only expire after SessionInactivityTimeout without activity. |
 | `mfa.totp.enabled` | `SEMAPHORE_TOTP_ENABLED` | boolean | — | Enable Two-factor authentication using TOTP. |
 | `mfa.totp.allow_recovery` | `SEMAPHORE_TOTP_ALLOW_RECOVERY` | boolean | — | Allow users to reset TOTP using a recovery code. |
 | `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | string | — | Issuer label (Semaphore title) shown in TOTP authenticator apps. |
@@ -94,7 +94,7 @@ How users sign in. See [LDAP](/admin-guide/ldap) and [OpenID Connect](/admin-gui
 | `mfa.email.allow_create_external_user` | `SEMAPHORE_EMAIL_2TP_ALLOW_CREATE_EXTERNAL_USER` | boolean | — | Allow creating external users on first login. |
 | `mfa.email.allowed_domains` | `SEMAPHORE_EMAIL_2TP_ALLOWED_DOMAINS` | array | — | JSON array of allowed email domains. |
 | `mfa.email.disable_for_oidc` | `SEMAPHORE_EMAIL_2TP_DISABLE_FOR_OIDC` | boolean | — | Disable email MFA for users authenticated via OIDC. |
-| `ldap_enable` | `SEMAPHORE_LDAP_ENABLE` | boolean | — | ldap settings |
+| `ldap_enable` | `SEMAPHORE_LDAP_ENABLE` | boolean | — | Turns on the legacy single-directory LDAP login configured by the flat ldap_* settings below. Use ldap_providers instead when more than one directory is involved. |
 | `ldap_binddn` | `SEMAPHORE_LDAP_BIND_DN` | string | — | The distinguished name (DN) used to bind to the LDAP server for authentication. |
 | `ldap_bindpassword` | `SEMAPHORE_LDAP_BIND_PASSWORD` | string | — | Password of the bind account used to search the directory. Secret: keep it out of shell history and version control. |
 | `ldap_server` | `SEMAPHORE_LDAP_SERVER` | string | — | The hostname and port of the LDAP server (e.g., ldap-server.com:1389). |
@@ -105,11 +105,11 @@ How users sign in. See [LDAP](/admin-guide/ldap) and [OpenID Connect](/admin-gui
 | `ldap_mappings.uid` | `SEMAPHORE_LDAP_MAPPING_UID` | string | `uid` | LDAP attribute to use as the user ID (UID) mapping for user authentication. |
 | `ldap_mappings.cn` | `SEMAPHORE_LDAP_MAPPING_CN` | string | `cn` | LDAP attribute to use as the common name (CN) mapping for user authentication. |
 | `ldap_needtls` | `SEMAPHORE_LDAP_NEEDTLS` | boolean | — | Flag to enable or disable TLS for LDAP connections. |
-| `ldap_tls_skip_verify` | `SEMAPHORE_LDAP_TLS_SKIP_VERIFY` | boolean | — | LdapTLSSkipVerify disables verification of the LDAP server's TLS certificate for the legacy flat ldap_* config. Defaults to false (certificates are verified). See LdapProvider.TLSSkipVerify. |
-| `ldap_providers` | `SEMAPHORE_LDAP_PROVIDERS` | object | — | LdapProviders configures multiple LDAP directories (like OidcProviders for OIDC). The key is the provider ID shown in identity records; the ID "ldap" is reserved for the legacy flat ldap_* config above. |
-| `oidc_providers` | `SEMAPHORE_OIDC_PROVIDERS` | object | — | oidc settings |
-| `password_login_disable` | `SEMAPHORE_PASSWORD_LOGIN_DISABLED` | boolean | — | feature switches |
-| `external_auth_email_matching` | `SEMAPHORE_EXTERNAL_AUTH_EMAIL_MATCHING` | string | `auto` | Whether an LDAP/OIDC login may be linked to an existing user by email when no external identity record exists yet: "auto" (default) - only external users without any linked identity (one-time adoption of pre-2.20 accounts); "always" - any external user (needed when the same person logs in via several providers); "never" - identities are matched strictly by provider ID. Local (password) accounts are never matched regardless of the mode. One of `auto`, `always`, `never`. |
+| `ldap_tls_skip_verify` | `SEMAPHORE_LDAP_TLS_SKIP_VERIFY` | boolean | — | Disables verification of the LDAP server's TLS certificate for the legacy flat ldap_* config. Defaults to false (certificates are verified). See LdapProvider.TLSSkipVerify. |
+| `ldap_providers` | `SEMAPHORE_LDAP_PROVIDERS` | object | — | Configures multiple LDAP directories (like OidcProviders for OIDC). The key is the provider ID shown in identity records; the ID "ldap" is reserved for the legacy flat ldap_* config above. |
+| `oidc_providers` | `SEMAPHORE_OIDC_PROVIDERS` | object | — | Configures OpenID Connect sign-in. The key is the provider ID that appears in identity records and in the /auth/oidc/\<id>/login URL, so it must stay stable once users have signed in through it. |
+| `password_login_disable` | `SEMAPHORE_PASSWORD_LOGIN_DISABLED` | boolean | — | Rejects the "password" login method, leaving LDAP and OpenID Connect as the only ways in. Set it once an identity provider is configured and working, so that local passwords stop being a second door. |
+| `external_auth_email_matching` | `SEMAPHORE_EXTERNAL_AUTH_EMAIL_MATCHING` | string | `auto` | Controls whether an LDAP/OIDC login may be linked to an existing user by email when no external identity record exists yet: "auto" (default) - only external users without any linked identity (one-time adoption of pre-2.20 accounts); "always" - any external user (needed when the same person logs in via several providers); "never" - identities are matched strictly by provider ID. Local (password) accounts are never matched regardless of the mode. One of `auto`, `always`, `never`. |
 | `non_admin_can_create_project` | `SEMAPHORE_NON_ADMIN_CAN_CREATE_PROJECT` | boolean | — | Allow non-admin users to create projects. |
 
 ## Git {#git}
@@ -118,7 +118,7 @@ How repositories are cloned. See [Repositories](/user-guide/repositories).
 
 | Option | Environment variable | Type | Default | Description |
 |---|---|---|---|---|
-| `ssh_config_path` | `SEMAPHORE_SSH_PATH` | string | — | A path to the custom SSH config file. Default path is ~/.ssh/config. |
+| `ssh_config_path` | `SEMAPHORE_SSH_PATH` | string | — | Path to the custom SSH config file. Default path is ~/.ssh/config. |
 | `ssh.config_path` | `SEMAPHORE_SSH_PATH` | string | — | SshConfigPath is a path to the custom SSH config file. Default path is ~/.ssh/config. |
 | `ssh.known_hosts_file` | `SEMAPHORE_SSH_KNOWN_HOSTS_FILE` | string | — | SshKnownHostsFile is a path to the SSH known_hosts file used to verify git server host keys. When set, host-key checking is strict: a key that is missing from (or changed relative to) this file aborts the connection, preventing a network attacker from impersonating the git server. When empty, Semaphore uses a persistent trust-on-first-use file under TmpPath (StrictHostKeyChecking=accept-new): the first connection to a host is trusted and pinned, and any later host-key change is rejected. |
 | `ssh.strict_host_key_checking` | — | string | `no` | Host key policy for git over SSH: `no` accepts any key, `yes` requires the key to be in the known_hosts file already, `accept-new` pins the key on first connection and rejects later changes. |
@@ -143,11 +143,11 @@ Concurrency, retention, and the environment task processes run in.
 | `process.chroot` | `SEMAPHORE_PROCESS_CHROOT` | string | — | Chroot directory for wrapped processes. |
 | `process.gid` | `SEMAPHORE_PROCESS_GID` | integer | — | ID for group under which wrapped processes (such as Ansible, Terraform, or OpenTofu) will run. |
 | `process.no_new_privs` | `SEMAPHORE_PROCESS_NO_NEW_PRIVS` | boolean | — | Set the `no_new_privs` flag so wrapped processes cannot gain new privileges. |
-| `process.app_namespaces.user` | `SEMAPHORE_PROCESS_APP_NS_USER` | boolean | — | User isolates UIDs/GIDs (CLONE_NEWUSER). Enables unprivileged use of the other namespaces. |
-| `process.app_namespaces.mount` | `SEMAPHORE_PROCESS_APP_NS_MOUNT` | boolean | — | Mount hides host mount points such as secret tmpfs (CLONE_NEWNS). |
-| `process.app_namespaces.pid` | `SEMAPHORE_PROCESS_APP_NS_PID` | boolean | — | PID hides host processes from child apps (CLONE_NEWPID). |
-| `process.app_namespaces.ipc` | `SEMAPHORE_PROCESS_APP_NS_IPC` | boolean | — | IPC isolates SysV IPC and POSIX message queues (CLONE_NEWIPC). |
-| `process.app_namespaces.uts` | `SEMAPHORE_PROCESS_APP_NS_UTS` | boolean | — | UTS isolates hostname and domain (CLONE_NEWUTS). |
+| `process.app_namespaces.user` | `SEMAPHORE_PROCESS_APP_NS_USER` | boolean | — | Isolates UIDs/GIDs (CLONE_NEWUSER). Enables unprivileged use of the other namespaces. |
+| `process.app_namespaces.mount` | `SEMAPHORE_PROCESS_APP_NS_MOUNT` | boolean | — | Hides host mount points such as secret tmpfs (CLONE_NEWNS). |
+| `process.app_namespaces.pid` | `SEMAPHORE_PROCESS_APP_NS_PID` | boolean | — | Hides host processes from child apps (CLONE_NEWPID). |
+| `process.app_namespaces.ipc` | `SEMAPHORE_PROCESS_APP_NS_IPC` | boolean | — | Isolates SysV IPC and POSIX message queues (CLONE_NEWIPC). |
+| `process.app_namespaces.uts` | `SEMAPHORE_PROCESS_APP_NS_UTS` | boolean | — | Isolates hostname and domain (CLONE_NEWUTS). |
 | `schedule.timezone` | `SEMAPHORE_SCHEDULE_TIMEZONE` | string | `UTC` | Timezone used for scheduling tasks and cron jobs. Default: UTC |
 
 ## Runners {#runners}
@@ -161,7 +161,7 @@ Server-side switches first, then the keys a runner reads from its own configurat
 | `runner.registration_token_file` | `SEMAPHORE_RUNNER_REGISTRATION_TOKEN_FILE` | string | — | Path to file containing the runner registration token. |
 | `runner.token` | `SEMAPHORE_RUNNER_TOKEN` | string | — | Authentication token this runner presents to the server. Issued by `semaphore runner register`. Secret: keep it out of shell history and version control. |
 | `runner.token_file` | `SEMAPHORE_RUNNER_TOKEN_FILE` | string | — | Path to token file for runner registration. |
-| `runner.one_off` | `SEMAPHORE_RUNNER_ONE_OFF` | boolean | — | OneOff indicates than runner runs only one job and exit. It is very useful for dynamic runners. How it works? Example: 1) User starts the task. 2) Semaphore found runner for task and calls runner's webhook if it provided. 3) Your server or lambda handling the call and starts the one-off runner. 4) The runner connects to the Semaphore server and handles the enqueued task(s). |
+| `runner.one_off` | `SEMAPHORE_RUNNER_ONE_OFF` | boolean | — | Indicates than runner runs only one job and exit. It is very useful for dynamic runners. How it works? Example: 1) User starts the task. 2) Semaphore found runner for task and calls runner's webhook if it provided. 3) Your server or lambda handling the call and starts the one-off runner. 4) The runner connects to the Semaphore server and handles the enqueued task(s). |
 | `runner.enabled` | `SEMAPHORE_RUNNER_ENABLED` | boolean | — | Enable the runner. |
 | `runner.webhook` | `SEMAPHORE_RUNNER_WEBHOOK` | string | — | Webhook URL for runner. |
 | `runner.name` | `SEMAPHORE_RUNNER_NAME` | string | — | Runner name. |
@@ -169,32 +169,32 @@ Server-side switches first, then the keys a runner reads from its own configurat
 | `runner.max_parallel_tasks` | `SEMAPHORE_RUNNER_MAX_PARALLEL_TASKS` | integer | `9999` | Max number of parallel tasks for the runner. Default: 9999. |
 | `runner.project_id` | `SEMAPHORE_RUNNER_PROJECT_ID` | integer | — | Restrict the runner to a single project. |
 | `runner.check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | integer | `1` | How often the runner polls the server for new jobs. Plain int, not time.Duration, for env-binding simplicity. |
-| `runner.connection.server_ca_cert_file` | `SEMAPHORE_RUNNER_SERVER_CA_CERT_FILE` | string | — | A PEM bundle used to verify the Semaphore server's certificate, in addition to the system trust store. Set this when the server uses a self-signed or internal-CA cert. |
-| `runner.connection.skip_tls_verify` | `SEMAPHORE_RUNNER_SKIP_TLS_VERIFY` | boolean | — | SkipTLSVerify disables server certificate verification entirely. This is insecure (vulnerable to MITM) — use only for testing. |
+| `runner.connection.server_ca_cert_file` | `SEMAPHORE_RUNNER_SERVER_CA_CERT_FILE` | string | — | PEM bundle used to verify the Semaphore server's certificate, in addition to the system trust store. Set this when the server uses a self-signed or internal-CA cert. |
+| `runner.connection.skip_tls_verify` | `SEMAPHORE_RUNNER_SKIP_TLS_VERIFY` | boolean | — | Disables server certificate verification entirely. This is insecure (vulnerable to MITM) — use only for testing. |
 | `runner.executor` | `SEMAPHORE_RUNNER_EXECUTOR` | object | — | The whole executor block as one JSON value, for deployments that configure the runner entirely through environment variables. Equivalent to setting the nested `runner.executor.*` keys. |
 | `runner.executor.type` | `SEMAPHORE_RUNNER_EXECUTOR_TYPE` | string | `local` | Strategy the runner uses to execute each task: `local` (default), `k8s` or `docker`. |
-| `runner.executor.k8s.kubeconfig` <Pro /> | `SEMAPHORE_RUNNER_K8S_KUBECONFIG` | string | — | The path to a kubeconfig file. When empty, in-cluster configuration is used (ServiceAccount token + CA cert mounted by Kubernetes). |
+| `runner.executor.k8s.kubeconfig` <Pro /> | `SEMAPHORE_RUNNER_K8S_KUBECONFIG` | string | — | Path to a kubeconfig file. When empty, in-cluster configuration is used (ServiceAccount token + CA cert mounted by Kubernetes). |
 | `runner.executor.k8s.namespace` <Pro /> | `SEMAPHORE_RUNNER_K8S_NAMESPACE` | string | `semaphore` | Where ephemeral task Pods are created. |
-| `runner.executor.k8s.image` <Pro /> | `SEMAPHORE_RUNNER_K8S_IMAGE` | string | `semaphoreui/job:latest` | The default container image used for the build container of each task Pod. Templates may override this in a future phase. |
-| `runner.executor.k8s.helper_image` <Pro /> | `SEMAPHORE_RUNNER_K8S_HELPER_IMAGE` | string | `semaphoreui/helper:latest` | The image used for the git-clone init container (Phase 3+). |
-| `runner.executor.k8s.service_account` <Pro /> | `SEMAPHORE_RUNNER_K8S_SERVICE_ACCOUNT` | string | `default` | ServiceAccount that task Pods run under. Defaults to the namespace's default SA. |
-| `runner.executor.k8s.pull_secrets` <Pro /> | `SEMAPHORE_RUNNER_K8S_PULL_SECRETS` | string | — | A comma-separated list of imagePullSecrets attached to each Pod. |
-| `runner.executor.k8s.poll_interval_seconds` <Pro /> | `SEMAPHORE_RUNNER_K8S_POLL_INTERVAL_SECONDS` | integer | `3` | How often the executor polls Pod status. Defaults to 3 seconds. Kept as a plain int (not time.Duration) for env-binding simplicity. |
-| `runner.executor.k8s.cleanup_grace_seconds` <Pro /> | `SEMAPHORE_RUNNER_K8S_CLEANUP_GRACE_SECONDS` | integer | `30` | The grace period when deleting Pods. Defaults to 30s. |
-| `runner.executor.docker.host` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_HOST` | string | — | The Docker daemon URL. Supports unix://, tcp:// and npipe:// schemes. When empty the standard environment (DOCKER_HOST) and the platform default socket are used. |
-| `runner.executor.docker.tls_verify` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_TLS_VERIFY` | boolean | — | TLSVerify enables TLS certificate verification for tcp:// connections. |
-| `runner.executor.docker.cert_path` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_CERT_PATH` | string | — | The directory holding ca.pem, cert.pem and key.pem for mutual TLS against a remote daemon. |
-| `runner.executor.docker.image` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_IMAGE` | string | `semaphoreui/job:latest` | The default image used for the build container of each task. |
-| `runner.executor.docker.helper_image` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_HELPER_IMAGE` | string | `semaphoreui/helper:latest` | The image used for the transient git-clone container. |
-| `runner.executor.docker.network` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_NETWORK` | string | `bridge` | The Docker network the build container joins. Defaults to "bridge". |
-| `runner.executor.docker.pull_policy` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_PULL_POLICY` | string | `if-not-present` | Image pulling: always, if-not-present or never. |
+| `runner.executor.k8s.image` <Pro /> | `SEMAPHORE_RUNNER_K8S_IMAGE` | string | `semaphoreui/job:latest` | Default container image used for the build container of each task Pod. Templates may override this in a future phase. |
+| `runner.executor.k8s.helper_image` <Pro /> | `SEMAPHORE_RUNNER_K8S_HELPER_IMAGE` | string | `semaphoreui/helper:latest` | Image used for the git-clone init container (Phase 3+). |
+| `runner.executor.k8s.service_account` <Pro /> | `SEMAPHORE_RUNNER_K8S_SERVICE_ACCOUNT` | string | `default` | That task Pods run under. Defaults to the namespace's default SA. |
+| `runner.executor.k8s.pull_secrets` <Pro /> | `SEMAPHORE_RUNNER_K8S_PULL_SECRETS` | string | — | Comma-separated list of imagePullSecrets attached to each Pod. |
+| `runner.executor.k8s.poll_interval_seconds` <Pro /> | `SEMAPHORE_RUNNER_K8S_POLL_INTERVAL_SECONDS` | integer | `3` | Controls how often the executor polls Pod status. Defaults to 3 seconds. Kept as a plain int (not time.Duration) for env-binding simplicity. |
+| `runner.executor.k8s.cleanup_grace_seconds` <Pro /> | `SEMAPHORE_RUNNER_K8S_CLEANUP_GRACE_SECONDS` | integer | `30` | Grace period when deleting Pods. Defaults to 30s. |
+| `runner.executor.docker.host` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_HOST` | string | — | Docker daemon URL. Supports unix://, tcp:// and npipe:// schemes. When empty the standard environment (DOCKER_HOST) and the platform default socket are used. |
+| `runner.executor.docker.tls_verify` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_TLS_VERIFY` | boolean | — | Enables TLS certificate verification for tcp:// connections. |
+| `runner.executor.docker.cert_path` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_CERT_PATH` | string | — | Directory holding ca.pem, cert.pem and key.pem for mutual TLS against a remote daemon. |
+| `runner.executor.docker.image` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_IMAGE` | string | `semaphoreui/job:latest` | Default image used for the build container of each task. |
+| `runner.executor.docker.helper_image` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_HELPER_IMAGE` | string | `semaphoreui/helper:latest` | Image used for the transient git-clone container. |
+| `runner.executor.docker.network` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_NETWORK` | string | `bridge` | Docker network the build container joins. Defaults to "bridge". |
+| `runner.executor.docker.pull_policy` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_PULL_POLICY` | string | `if-not-present` | Controls image pulling: always, if-not-present or never. |
 | `runner.executor.docker.cpu_limit` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_CPU_LIMIT` | number | — | CPULimit, when > 0, caps the build container CPU (passed as --cpus). |
 | `runner.executor.docker.memory_limit` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_MEMORY_LIMIT` | string | — | MemoryLimit, when non-empty, caps the build container memory (e.g. "2g"). |
-| `runner.executor.docker.poll_interval_seconds` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_POLL_INTERVAL_SECONDS` | integer | `2` | How often container status is polled. Defaults to 2s. |
-| `runner.executor.docker.cleanup_grace_seconds` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_CLEANUP_GRACE_SECONDS` | integer | `30` | The timeout passed to docker stop. Defaults to 30s. |
-| `runner.executor.docker.privileged` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | boolean | — | Privileged runs the build container with --privileged. Dangerous; off by default. |
-| `runners.offline_timeout_sec` | `SEMAPHORE_RUNNERS_OFFLINE_TIMEOUT_SEC` | integer | `120` | The heartbeat staleness after which a runner is considered offline: it receives no new tasks and its "starting" tasks are reassigned to another runner. Must be comfortably larger than the runner poll interval (a few multiples) so a healthy-but-slow runner is never marked offline. |
-| `runners.task_fail_timeout_sec` | `SEMAPHORE_RUNNERS_TASK_FAIL_TIMEOUT_SEC` | integer | `420` | The heartbeat staleness after which a runner's "running" tasks are failed. Between OfflineTimeoutSec and this value a running task is deliberately left alone: an offline runner may still be executing its jobs and resumes reporting if it reconnects in time. Values below OfflineTimeoutSec are clamped to it. |
+| `runner.executor.docker.poll_interval_seconds` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_POLL_INTERVAL_SECONDS` | integer | `2` | Controls how often container status is polled. Defaults to 2s. |
+| `runner.executor.docker.cleanup_grace_seconds` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_CLEANUP_GRACE_SECONDS` | integer | `30` | Timeout passed to docker stop. Defaults to 30s. |
+| `runner.executor.docker.privileged` <Pro /> | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | boolean | — | Runs the build container with --privileged. Dangerous; off by default. |
+| `runners.offline_timeout_sec` | `SEMAPHORE_RUNNERS_OFFLINE_TIMEOUT_SEC` | integer | `120` | Heartbeat staleness after which a runner is considered offline: it receives no new tasks and its "starting" tasks are reassigned to another runner. Must be comfortably larger than the runner poll interval (a few multiples) so a healthy-but-slow runner is never marked offline. |
+| `runners.task_fail_timeout_sec` | `SEMAPHORE_RUNNERS_TASK_FAIL_TIMEOUT_SEC` | integer | `420` | Heartbeat staleness after which a runner's "running" tasks are failed. Between OfflineTimeoutSec and this value a running task is deliberately left alone: an offline runner may still be executing its jobs and resumes reporting if it reconnects in time. Values below OfflineTimeoutSec are clamped to it. |
 | `runners.reconcile_interval_sec` | `SEMAPHORE_RUNNERS_RECONCILE_INTERVAL_SEC` | integer | `30` | How often the server scans dispatched tasks against runner liveness. |
 | `runners.registration_token` | `SEMAPHORE_RUNNER_REGISTRATION_TOKEN` | string | — | RunnerRegistrationToken is deprecated, use Runners field instead of it. |
 | `runners.default_global_runners_mode` | `SEMAPHORE_DEFAULT_GLOBAL_RUNNERS_MODE` | string | — | What projects do with global runners by default: empty leaves the choice to each project, `disable` excludes them, `prefer` uses them ahead of project runners, `require` allows only them. |
@@ -216,7 +216,7 @@ Delivery channels for alerts. See [Notifications](/admin-guide/notifications).
 
 | Option | Environment variable | Type | Default | Description |
 |---|---|---|---|---|
-| `email_alert` | `SEMAPHORE_EMAIL_ALERT` | boolean | — | email alerting |
+| `email_alert` | `SEMAPHORE_EMAIL_ALERT` | boolean | — | Enables the e-mail notification channel. The email_* settings below describe the SMTP server it sends through. |
 | `email_sender` | `SEMAPHORE_EMAIL_SENDER` | string | — | Email address of the sender. |
 | `email_host` | `SEMAPHORE_EMAIL_HOST` | string | — | SMTP server hostname. |
 | `email_port` | `SEMAPHORE_EMAIL_PORT` | string | — | SMTP server port. |
@@ -225,7 +225,7 @@ Delivery channels for alerts. See [Notifications](/admin-guide/notifications).
 | `email_secure` | `SEMAPHORE_EMAIL_SECURE` | boolean | — | Enable StartTLS to upgrade an unencrypted SMTP connection to a secure, encrypted one. |
 | `email_tls` | `SEMAPHORE_EMAIL_TLS` | boolean | — | Use SSL or TLS connection for communication with the SMTP server. |
 | `email_tls_min_version` | `SEMAPHORE_EMAIL_TLS_MIN_VERSION` | string | `1.2` | Minimum TLS version to use for the connection. |
-| `telegram_alert` | `SEMAPHORE_TELEGRAM_ALERT` | boolean | — | Telegram, Slack, Rocket.Chat, Microsoft Teams, DingTalk, and Gotify alerting |
+| `telegram_alert` | `SEMAPHORE_TELEGRAM_ALERT` | boolean | — | Enables the Telegram notification channel, which also needs telegram_token and a default telegram_chat. |
 | `telegram_chat` | `SEMAPHORE_TELEGRAM_CHAT` | string | — | Set to the Chat ID for the chat to send alerts to. Read more in [Telegram Notifications Setup](/admin-guide/notifications/telegram#chat-id) |
 | `telegram_token` | `SEMAPHORE_TELEGRAM_TOKEN` | string | — | Bot token issued by BotFather. Secret: keep it out of shell history and version control. |
 | `slack_alert` | `SEMAPHORE_SLACK_ALERT` | boolean | — | Set to True to enable pushing alerts to slack. It should be used in combination with `slack_url` |
@@ -278,7 +278,7 @@ Activating Pro or Enterprise. See [License](/admin-guide/license).
 
 | Option | Environment variable | Type | Default | Description |
 |---|---|---|---|---|
-| `subscription.key` | `SEMAPHORE_SUBSCRIPTION_KEY` | string | — | A subscription key or token that can be set via config. When this is set, subscription activation from the web interface is disabled. Secret: keep it out of shell history and version control. |
+| `subscription.key` | `SEMAPHORE_SUBSCRIPTION_KEY` | string | — | Subscription key or token that can be set via config. When this is set, subscription activation from the web interface is disabled. Secret: keep it out of shell history and version control. |
 | `subscription.key_file` | `SEMAPHORE_SUBSCRIPTION_KEY_FILE` | string | — | Path to subscription key or token file. |
 | `subscription.server_url` | `SEMAPHORE_SUBSCRIPTION_SERVER_URL` | string | `https://portal.semaphoreui.com/billing` | Subscription / billing server URL. Default: https://portal.semaphoreui.com/billing |
 

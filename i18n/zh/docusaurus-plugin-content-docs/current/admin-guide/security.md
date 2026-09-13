@@ -15,7 +15,7 @@ Semaphore 支持安全的认证和灵活的授权机制：
 
   - **OpenID Connect（OIDC）**<br />支持与 Google、Azure AD 或 Keycloak 等身份提供商的单点登录。支持自定义声明和组映射。
 
-- **双因素认证（2FA）**<br />提供基于 TOTP 的 2FA，并建议所有用户启用。可按用户启用，并支持可选的恢复码。参见配置选项 `auth.totp.enabled` 和 `auth.totp.allow_recovery`。
+- **双因素认证（2FA）**<br />提供基于 TOTP 的 2FA，并建议所有用户启用。可按用户启用，并支持可选的恢复码。参见配置选项 `mfa.totp.enabled` 和 `mfa.totp.allow_recovery`。
 
 - **基于角色的访问控制**<br />你可以为用户分配不同的角色，例如 Admin、Maintainer 或 Viewer，根据职责限制访问。
 
@@ -77,9 +77,9 @@ head -c32 /dev/urandom | base64
 
 Semaphore 会运行用户定义的 playbook 和命令，这可能带来风险：
 
-- **容器隔离**<br />任务在隔离的 Docker 容器中执行。这些容器无法访问宿主机系统。
+- **执行隔离**<br />默认情况下，任务是 Semaphore 服务器上的普通进程，拥有该服务器的文件系统和网络访问权限。隔离需要另行开启：把任务交给配置了 `docker` 或 `k8s` 执行器的[运行器](/admin-guide/runners)，每个任务都会获得一个新的容器或 Pod，结束后即被丢弃。
 
-- **最小权限**<br />容器以最小权限运行，并可通过 Docker 参数进一步限制。
+- **最小权限**<br />使用 Docker 和 Kubernetes 执行器时，镜像、网络和服务账户都由你选择，因此任务只会获得它所需要的东西。
 
 - **Chroot 执行**<br />Semaphore 可以在 chroot 监狱中执行任务，进一步将执行环境与宿主机系统隔离。
 

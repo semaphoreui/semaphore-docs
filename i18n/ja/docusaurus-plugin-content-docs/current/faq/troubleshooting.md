@@ -203,4 +203,4 @@ ldapsearch\
 - 結果コード **0** の場合はベースに問題はなく、原因は `ldap_searchfilter` です。
   そのベースの配下にあるどのエントリにも一致していません。
 
-各オプションの意味については [LDAP と AD](/admin-guide/ldap) を参照してください。
+各オプションの意味については [LDAP と AD](/admin-guide/authentication/ldap) を参照してください。

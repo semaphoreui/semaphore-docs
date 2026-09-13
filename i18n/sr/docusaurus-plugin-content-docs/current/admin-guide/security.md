@@ -15,7 +15,7 @@ Semaphore podržava bezbednu autentifikaciju i fleksibilne mehanizme autorizacij
 
   - **OpenID Connect (OIDC)**<br />Omogućava jedinstveno prijavljivanje (SSO) sa provajderima identiteta kao što su Google, Azure AD ili Keycloak. Podržava prilagođene claim-ove i mapiranje grupa.
 
-- **Dvofaktorska autentifikacija (2FA)**<br />Dostupna je 2FA zasnovana na TOTP-u i preporučuje se za sve korisnike. Može se uključiti po korisniku i podržava opcione kodove za oporavak. Pogledajte konfiguracione opcije `auth.totp.enabled` i `auth.totp.allow_recovery`.
+- **Dvofaktorska autentifikacija (2FA)**<br />Dostupna je 2FA zasnovana na TOTP-u i preporučuje se za sve korisnike. Može se uključiti po korisniku i podržava opcione kodove za oporavak. Pogledajte konfiguracione opcije `mfa.totp.enabled` i `mfa.totp.allow_recovery`.
 
 - **Kontrola pristupa zasnovana na ulogama**<br />Korisnicima možete dodeliti različite uloge, kao što su Admin, Maintainer ili Viewer, čime se pristup ograničava prema odgovornostima.
 
@@ -79,9 +79,9 @@ Semaphore izvršava playbook-ove i komande koje definišu korisnici, što može 
 
 - **Izolacija u kontejnerima**<br />Zadaci se izvršavaju u izolovanim Docker kontejnerima. Ti kontejneri nemaju pristup host sistemu.
 
-- **Najmanje privilegije**<br />Kontejneri rade sa minimalnim dozvolama i mogu se dodatno ograničiti pomoću Docker flegova.
+- **Izolacija izvršavanja**<br />Podrazumevano je zadatak običan proces na Semaphore serveru, sa njegovim fajl sistemom i mrežnim pristupom. Izolacija je opciona: predajte zadatak [raneru](/admin-guide/runners) podešenom sa `docker` ili `k8s` izvršiocem i svaki zadatak dobija nov kontejner ili Pod koji se briše po završetku.
 
-- **Izvršavanje u chroot okruženju**<br />Semaphore može izvršavati zadatke unutar chroot okruženja (chroot jail) kako bi se okruženje izvršavanja dodatno izolovalo od host sistema.
+- **Najmanje privilegije**<br />Sa Docker i Kubernetes izvršiocima sami birate imidž, mrežu i servisni nalog, pa zadatak dobija samo ono što mu je potrebno.
 
 - **Korisnik procesa zadatka**<br />Zadaci se mogu izvršavati pod namenskim sistemskim korisnikom koji nije root (npr. `semaphore`), čime se smanjuje uticaj potencijalnih eksploatacija. Ovo je opciono i može se podesiti u skladu sa sistemskim politikama.
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->

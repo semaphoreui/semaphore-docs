@@ -42,5 +42,5 @@ These terms appear everywhere in the UI.
 ## Next steps {#next-steps}
 
 - Put Semaphore behind TLS with a [reverse proxy](/admin-guide/reverse-proxy).
-- Connect your identity provider: [LDAP](/admin-guide/ldap) or [OpenID Connect](/admin-guide/openid).
+- Connect your identity provider: [LDAP](/admin-guide/authentication/ldap) or [OpenID Connect](/admin-guide/authentication/openid).
 - Drive Semaphore from CI or scripts with the [API](/reference/api) and [CLI](/reference/cli).

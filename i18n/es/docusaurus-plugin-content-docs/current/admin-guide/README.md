@@ -30,8 +30,7 @@ Todo lo que se configura antes de arrancar el servidor o en torno a ese momento.
 | [Actualización](/admin-guide/upgrading) | Pasar a una versión más reciente y qué comprobar antes. |
 | [Proxy inverso](/admin-guide/reverse-proxy) | Servir Semaphore detrás de nginx, Apache o Caddy, con TLS. |
 | [Seguridad](/admin-guide/security) | Hash de contraseñas, cifrado de secretos, refuerzo de la red y JWT de tareas. |
-| [LDAP y AD](/admin-guide/ldap) | Iniciar sesión contra un servicio de directorio. |
-| [OpenID Connect](/admin-guide/openid) | Inicio de sesión único con GitHub, Google, Keycloak, Okta y nueve proveedores más. |
+| [Autenticación](/admin-guide/authentication) | Cuentas locales y doble factor, LDAP y Active Directory, e inicio de sesión único con doce proveedores de OpenID Connect. |
 | [Runners](/admin-guide/runners) | Ejecutar tareas en máquinas distintas del servidor. |
 | [Alta disponibilidad](/admin-guide/ha) | Ejecutar varios nodos de Semaphore contra una misma base de datos. |
 

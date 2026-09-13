@@ -44,7 +44,7 @@ Semaphore 来规划主机规格，并用项目设置**最大并行任务数**限
 |---|---|
 | 你的 Git 远程仓库 | 克隆模板所指向的仓库。 |
 | 你要自动化的主机和云 API | 真正执行工作。 |
-| 你的身份提供方（如果使用） | [LDAP](/admin-guide/ldap) 或 [OpenID Connect](/admin-guide/openid) 登录。 |
+| 你的身份提供方（如果使用） | [LDAP](/admin-guide/authentication/ldap) 或 [OpenID Connect](/admin-guide/authentication/openid) 登录。 |
 | 你的通知渠道 | 电子邮件、Telegram、Slack 等等。 |
 
 除非你更改端口，用户通过 `3000` 端口访问 Web 界面。请在任何人登录之前，

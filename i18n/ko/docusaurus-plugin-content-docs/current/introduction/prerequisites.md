@@ -46,7 +46,7 @@ Semaphore는 단일 바이너리와 컨테이너 이미지로 배포되며 Linux
 |---|---|
 | Git 원격 저장소 | 템플릿이 가리키는 저장소 복제. |
 | 자동화 대상 호스트와 클라우드 API | 실제 작업 수행. |
-| 사용 중인 ID 공급자 | [LDAP](/admin-guide/ldap) 또는 [OpenID Connect](/admin-guide/openid) 로그인. |
+| 사용 중인 ID 공급자 | [LDAP](/admin-guide/authentication/ldap) 또는 [OpenID Connect](/admin-guide/authentication/openid) 로그인. |
 | 알림 채널 | 이메일, Telegram, Slack 등. |
 
 기본 설정에서 사용자는 `3000` 포트로 웹 인터페이스에 접속합니다. 누군가 로그인하기 전에

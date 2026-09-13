@@ -47,7 +47,7 @@ its own tables on first start and on every upgrade.
 |---|---|
 | Your Git remotes | Cloning the repositories templates point at. |
 | The hosts and cloud APIs you automate | Actually doing the work. |
-| Your identity provider, if you use one | [LDAP](/admin-guide/ldap) or [OpenID Connect](/admin-guide/openid) sign-in. |
+| Your identity provider, if you use one | [LDAP](/admin-guide/authentication/ldap) or [OpenID Connect](/admin-guide/authentication/openid) sign-in. |
 | Your notification channels | E-mail, Telegram, Slack, and the rest. |
 
 Users reach the web interface on port `3000` unless you change it. Put

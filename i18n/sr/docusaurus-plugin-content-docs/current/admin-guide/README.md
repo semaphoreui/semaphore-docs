@@ -28,8 +28,7 @@ Sve što konfigurišete pre pokretanja servera ili u vezi sa njim.
 | [Nadogradnja](/admin-guide/upgrading) | Prelazak na noviju verziju i šta prvo proveriti. |
 | [Obrnuti proksi](/admin-guide/reverse-proxy) | Serviranje Semaphore-a iza nginx-a, Apache-a ili Caddy-ja, uz TLS. |
 | [Bezbednost](/admin-guide/security) | Heširanje lozinki, šifrovanje tajni, ojačavanje mreže i JWT-ovi zadataka. |
-| [LDAP i AD](/admin-guide/ldap) | Prijavljivanje preko direktorijumskog servisa. |
-| [OpenID Connect](/admin-guide/openid) | Jedinstvena prijava sa GitHub-om, Google-om, Keycloak-om, Okta-om i još devet provajdera. |
+| [Autentifikacija](/admin-guide/authentication) | Lokalni nalozi i dvofaktorska autentifikacija, LDAP i Active Directory, i jedinstvena prijava preko dvanaest OpenID Connect provajdera. |
 | [Runneri](/admin-guide/runners) | Izvršavanje zadataka na mašinama koje nisu server. |
 | [Visoka dostupnost](/admin-guide/ha) | Pokretanje više Semaphore čvorova nad jednom bazom podataka. |
 

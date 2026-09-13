@@ -20,7 +20,7 @@ Semaphore supports secure authentication and flexible authorization mechanisms:
 
   - **OpenID Connect (OIDC)**<br />Enables single sign-on with identity providers like Google, Azure AD, or Keycloak. Supports custom claims and group mappings.
 
-- **Two-Factor authentication (2FA)**<br />TOTP-based 2FA is available and recommended for all users. It can be enabled per user and supports optional recovery codes. See configuration options `auth.totp.enabled` and `auth.totp.allow_recovery`.
+- **Two-Factor authentication (2FA)**<br />TOTP-based 2FA is available and recommended for all users. It can be enabled per user and supports optional recovery codes. See configuration options `mfa.totp.enabled` and `mfa.totp.allow_recovery`.
 
 - **Role-based access control**<br />You can assign different roles to users such as Admin, Maintainer, or Viewer, limiting access based on responsibility.
 
@@ -82,9 +82,9 @@ head -c32 /dev/urandom | base64
 
 Semaphore runs user-defined playbooks and commands, which can be risky:
 
-- **Container isolation**<br />Tasks are executed in isolated Docker containers. These containers have no access to the host system.
+- **Execution isolation**<br />By default a task is an ordinary process on the Semaphore server, with that server's file system and network access. Isolation is opt-in: give the task to a [runner](/admin-guide/runners) configured with the `docker` or `k8s` executor and each task gets a fresh container or Pod that is discarded when it finishes.
 
-- **Least privilege**<br />Containers run with minimal permissions and can be restricted further using Docker flags.
+- **Least privilege**<br />With the Docker and Kubernetes executors you choose the image, the network, and the service account, so a task is given only what it needs.
 
 - **Chroot execution**<br />Semaphore can execute tasks inside a chroot jail to further isolate the execution environment from the host system.
 

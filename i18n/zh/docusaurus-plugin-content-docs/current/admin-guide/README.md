@@ -25,8 +25,7 @@ SQLite、MySQL 或 PostgreSQL 中，对凭据加密保存，并在服务器本�
 | [升级](/admin-guide/upgrading) | 迁移到更新的版本，以及首先要检查什么。 |
 | [反向代理](/admin-guide/reverse-proxy) | 在 nginx、Apache 或 Caddy 后面提供 Semaphore 服务，并启用 TLS。 |
 | [安全](/admin-guide/security) | 密码哈希、机密加密、网络加固以及任务 JWT。 |
-| [LDAP 与 AD](/admin-guide/ldap) | 使用目录服务登录。 |
-| [OpenID Connect](/admin-guide/openid) | 通过 GitHub、Google、Keycloak、Okta 以及另外九家提供方实现单点登录。 |
+| [身份认证](/admin-guide/authentication) | 本地账户与双因素认证、LDAP 与 Active Directory，以及通过十二家 OpenID Connect 提供方实现的单点登录。 |
 | [运行器](/admin-guide/runners) | 在服务器以外的机器上执行任务。 |
 | [高可用](/admin-guide/ha) | 让多个 Semaphore 节点共用一个数据库运行。 |
 

@@ -43,7 +43,7 @@ Para produção, consulte [Instalação](/admin-guide/installation) para instala
           <li><Link to="/admin-guide/installation">Instalação</Link></li>
           <li><Link to="/admin-guide/configuration">Configuração</Link></li>
           <li><Link to="/admin-guide/reverse-proxy">Proxy reverso e TLS</Link></li>
-          <li><Link to="/admin-guide/ldap">LDAP</Link> e <Link to="/admin-guide/openid">OpenID Connect</Link></li>
+          <li><Link to="/admin-guide/authentication/ldap">LDAP</Link> e <Link to="/admin-guide/authentication/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">Reforço de segurança</Link></li>
         </ul>
       </div>

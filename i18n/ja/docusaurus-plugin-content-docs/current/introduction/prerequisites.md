@@ -34,7 +34,7 @@ Semaphore は単一のバイナリとコンテナーイメージとして提供�
 |---|---|
 | 自分の Git リモート | テンプレートが指すリポジトリのクローン。 |
 | 自動化の対象となるホストとクラウド API | 実際の作業の実行。 |
-| ID プロバイダー（使用する場合） | [LDAP](/admin-guide/ldap) または [OpenID Connect](/admin-guide/openid) によるサインイン。 |
+| ID プロバイダー（使用する場合） | [LDAP](/admin-guide/authentication/ldap) または [OpenID Connect](/admin-guide/authentication/openid) によるサインイン。 |
 | 通知チャネル | 電子メール、Telegram、Slack など。 |
 
 変更しない限り、ユーザーはポート `3000` で Web インターフェイスに接続します。誰かがサインインする前に、その前段に [TLS](/admin-guide/reverse-proxy) を配置してください。セッションと API トークンがその経路を通ります。

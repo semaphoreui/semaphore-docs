@@ -203,4 +203,4 @@ ldapsearch\
 - 결과 코드 **0**은 base에는 문제가 없고 `ldap_searchfilter`에 문제가 있다는
   뜻입니다. 해당 base 아래에서 일치하는 항목이 없습니다.
 
-각 옵션의 의미는 [LDAP 및 AD](/admin-guide/ldap)를 참조하십시오.
+각 옵션의 의미는 [LDAP 및 AD](/admin-guide/authentication/ldap)를 참조하십시오.

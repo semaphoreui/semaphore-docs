@@ -33,9 +33,9 @@ Sitzung:
 
 - **Lokale Konten.** Passwörter werden mit Argon2id gehasht (vor 2.20 mit bcrypt, beim
   ersten Anmelden umgestellt). TOTP-Zwei-Faktor-Authentifizierung kann verpflichtend sein.
-- **[LDAP oder Active Directory](/admin-guide/ldap).** Das Verzeichnis prüft das Passwort;
+- **[LDAP oder Active Directory](/admin-guide/authentication/ldap).** Das Verzeichnis prüft das Passwort;
   Semaphore behält nur das Konto.
-- **[OpenID Connect](/admin-guide/openid).** Der Provider authentifiziert, und Semaphore
+- **[OpenID Connect](/admin-guide/authentication/openid).** Der Provider authentifiziert, und Semaphore
   bildet Claims auf Benutzer ab.
 
 Nicht-interaktiver Zugriff erfolgt über **API-Tokens**, die ein Benutzer erstellt und die

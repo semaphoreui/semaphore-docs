@@ -43,7 +43,7 @@ Für den Produktionsbetrieb finden Sie unter [Installation](/admin-guide/install
           <li><Link to="/admin-guide/installation">Installation</Link></li>
           <li><Link to="/admin-guide/configuration">Konfiguration</Link></li>
           <li><Link to="/admin-guide/reverse-proxy">Reverse-Proxy und TLS</Link></li>
-          <li><Link to="/admin-guide/ldap">LDAP</Link> und <Link to="/admin-guide/openid">OpenID Connect</Link></li>
+          <li><Link to="/admin-guide/authentication/ldap">LDAP</Link> und <Link to="/admin-guide/authentication/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">Sicherheitshärtung</Link></li>
         </ul>
       </div>

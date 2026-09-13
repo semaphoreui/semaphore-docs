@@ -29,8 +29,7 @@ Tutto ciò che si configura prima dell'avvio del server o intorno ad esso.
 | [Aggiornamento](/admin-guide/upgrading) | Passare a una release più recente e che cosa verificare prima di farlo. |
 | [Reverse proxy](/admin-guide/reverse-proxy) | Servire Semaphore dietro nginx, Apache o Caddy, con TLS. |
 | [Sicurezza](/admin-guide/security) | Hashing delle password, cifratura dei segreti, hardening di rete e JWT dei Task. |
-| [LDAP e AD](/admin-guide/ldap) | Accedere tramite un servizio di directory. |
-| [OpenID Connect](/admin-guide/openid) | Single sign-on con GitHub, Google, Keycloak, Okta e altri nove provider. |
+| [Autenticazione](/admin-guide/authentication) | Account locali e autenticazione a due fattori, LDAP e Active Directory e single sign-on con dodici provider OpenID Connect. |
 | [Runner](/admin-guide/runners) | Eseguire i Task su macchine diverse dal server. |
 | [Alta disponibilità](/admin-guide/ha) | Far funzionare più nodi Semaphore su un unico database. |
 

@@ -27,8 +27,7 @@ MySQL 또는 PostgreSQL에 저장하고, 자격 증명은 암호화된 상태로
 | [업그레이드](/admin-guide/upgrading) | 새 릴리스로 이전하는 방법과 먼저 확인할 사항입니다. |
 | [리버스 프록시](/admin-guide/reverse-proxy) | nginx, Apache 또는 Caddy 뒤에서 TLS와 함께 Semaphore를 제공합니다. |
 | [보안](/admin-guide/security) | 비밀번호 해싱, 시크릿 암호화, 네트워크 강화 및 작업 JWT입니다. |
-| [LDAP 및 AD](/admin-guide/ldap) | 디렉터리 서비스를 통해 로그인합니다. |
-| [OpenID Connect](/admin-guide/openid) | GitHub, Google, Keycloak, Okta 및 아홉 개의 추가 공급자를 통한 싱글 사인온입니다. |
+| [인증](/admin-guide/authentication) | 로컬 계정과 2단계 인증, LDAP와 Active Directory, 그리고 12개 OpenID Connect 공급자를 통한 싱글 사인온. |
 | [러너](/admin-guide/runners) | 서버가 아닌 다른 머신에서 작업을 실행합니다. |
 | [고가용성](/admin-guide/ha) | 하나의 데이터베이스에 여러 Semaphore 노드를 연결해 실행합니다. |
 

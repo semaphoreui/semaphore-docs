@@ -32,9 +32,9 @@ Gli utenti si autenticano in uno di tre modi, e tutti e tre sfociano nella stess
 
 - **Account locali.** Le password sono sottoposte ad hashing con Argon2id (bcrypt prima
   della 2.20, aggiornato al primo accesso). L'autenticazione a due fattori TOTP può essere resa obbligatoria.
-- **[LDAP o Active Directory](/admin-guide/ldap).** La directory verifica la password;
+- **[LDAP o Active Directory](/admin-guide/authentication/ldap).** La directory verifica la password;
   Semaphore conserva solo l'account.
-- **[OpenID Connect](/admin-guide/openid).** Il provider autentica e Semaphore
+- **[OpenID Connect](/admin-guide/authentication/openid).** Il provider autentica e Semaphore
   mappa i claim sugli utenti.
 
 L'accesso non interattivo usa **token API** creati da un utente, che portano con sé i
