@@ -12,6 +12,8 @@ Semaphore UI je samostalno hostovani veb interfejs i API za pokretanje **Ansible
 
 Isporučuje se kao jedan Go binarni fajl ili Docker imidž, radi na Linux-u, macOS-u i Windows-u, a podatke čuva u SQLite, MySQL ili PostgreSQL bazi.
 
+Prvi put koristite Semaphore? [Uvod](/introduction) objašnjava šta radi, od čega se sastoji instalacija i šta treba pripremiti pre instalacije.
+
 :::tip[Brzi početak]
 
 Pokrenite Semaphore sa SQLite bazom jednom komandom, zatim otvorite [http://localhost:3000](http://localhost:3000) i prijavite se kao `admin` / `changeme`.

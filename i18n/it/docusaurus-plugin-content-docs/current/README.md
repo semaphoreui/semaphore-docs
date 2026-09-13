@@ -12,6 +12,8 @@ Semaphore UI è un'interfaccia web e un'API self-hosted per eseguire automazioni
 
 Viene distribuito come singolo binario Go o immagine Docker, funziona su Linux, macOS e Windows e memorizza i dati in SQLite, MySQL o PostgreSQL.
 
+È la prima volta che usa Semaphore? L'[Introduzione](/introduction) spiega che cosa fa, com'è composta un'installazione e che cosa preparare prima di installarlo.
+
 :::tip[Avvio rapido]
 
 Avviare Semaphore con SQLite con un solo comando, quindi aprire [http://localhost:3000](http://localhost:3000) e accedere come `admin` / `changeme`.

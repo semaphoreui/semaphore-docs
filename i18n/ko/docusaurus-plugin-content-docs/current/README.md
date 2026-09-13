@@ -12,6 +12,8 @@ Semaphore UI는 **Ansible**, **Terraform/OpenTofu**, **Shell**, **PowerShell**, 
 
 단일 Go 바이너리 또는 Docker 이미지로 제공되며, Linux, macOS, Windows에서 실행되고 데이터는 SQLite, MySQL 또는 PostgreSQL에 저장합니다.
 
+Semaphore를 처음 사용하시나요? [소개](/introduction)에서는 Semaphore가 하는 일, 배포가 어떤 구성으로 이루어지는지, 설치 전에 무엇을 준비해야 하는지를 설명합니다.
+
 :::tip[빠른 시작]
 
 한 줄의 명령으로 SQLite와 함께 Semaphore를 실행한 다음 [http://localhost:3000](http://localhost:3000)을 열고 `admin` / `changeme`로 로그인합니다.

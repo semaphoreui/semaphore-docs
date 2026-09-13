@@ -16,8 +16,21 @@ const sidebars = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   tutorialSidebar: [
     'README',
+    {
+      type: 'category',
+      label: 'Introduction',
+      collapsed: false,
+      link: { type: 'doc', id: 'introduction/README' },
+      items: [
+        'introduction/what-is-semaphore',
+        'introduction/architecture',
+        'introduction/concepts',
+        'introduction/security-model',
+        'editions',
+        'introduction/prerequisites',
+      ],
+    },
     'getting-started',
-    'editions',
     {
       type: 'category',
       label: 'Admin Guide',
@@ -224,6 +237,15 @@ const sidebars = {
         'user-guide/integrations',
         'user-guide/team',
         'user-guide/account',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Reference',
+      link: { type: 'doc', id: 'reference/README' },
+      items: [
+        'reference/configuration',
+        'reference/cli',
       ],
     },
     {

@@ -12,6 +12,8 @@ Semaphore UI 是一个自托管的 Web 界面和 API，用于运行 **Ansible**�
 
 它以单个 Go 二进制文件或 Docker 镜像的形式发布，可运行于 Linux、macOS 和 Windows，并将数据存储在 SQLite、MySQL 或 PostgreSQL 中。
 
+第一次使用 Semaphore？[简介](/introduction)介绍了它能做什么、一次部署由哪些部分组成，以及安装前需要准备什么。
+
 :::tip[快速开始]
 
 用一条命令以 SQLite 方式运行 Semaphore，然后打开 [http://localhost:3000](http://localhost:3000)，使用 `admin` / `changeme` 登录。

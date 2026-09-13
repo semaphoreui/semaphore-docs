@@ -13,6 +13,8 @@ Semaphore UI is a self-hosted web UI and API for running **Ansible**, **Terrafor
 
 It ships as a single Go binary or Docker image, runs on Linux, macOS, and Windows, and stores data in SQLite, MySQL, or PostgreSQL.
 
+New to Semaphore? The [Introduction](/introduction) explains what it does, how a deployment is put together, and what to prepare before installing.
+
 :::tip[Quick start]
 
 Run Semaphore with SQLite in one command, then open [http://localhost:3000](http://localhost:3000) and log in as `admin` / `changeme`.

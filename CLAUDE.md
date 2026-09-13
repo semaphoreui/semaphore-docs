@@ -17,6 +17,7 @@ This repository is the **documentation site** for [Semaphore UI](https://github.
 | Page templates | `templates/` | One markdown skeleton per page type |
 | Edition registry | `src/data/editions.js` | Which features require Pro or Enterprise |
 | Checks | `scripts/check-docs.mjs` | Front matter, orphan pages, translation structure |
+| Generated reference | `docs/reference/` | Written by tools in the product repo. Never edit by hand |
 
 The **sidebar** is defined explicitly in `sidebars.js`. Adding a new page usually means creating the file under `docs/` **and** registering it in `sidebars.js` if it should appear in navigation.
 
@@ -65,6 +66,27 @@ Copy a template from `templates/` before writing a new page and keep its section
 `section.md`. See `templates/README.md` for the type taxonomy and the title grammar
 (nouns for concepts and reference, bare infinitive for tasks and tutorials, sentence
 case, no gerunds).
+
+### Generated pages
+
+`docs/reference/configuration.md` and `docs/reference/cli.md` are generated from the
+Semaphore source by `tools/docsref` and `tools/clidocs` in the
+[product repository](https://github.com/semaphoreui/semaphore). Editing them here is
+pointless: the next `task docs:gen` overwrites the change, and the product repo's CI
+fails if the committed page differs from what the generators produce.
+
+To change one of them, change the thing it is generated from:
+
+| To change | Edit |
+|---|---|
+| A config option's description | The doc comment on the field in `util/config.go` |
+| A description for a field with no doc comment | `tools/docsref/descriptions.json` (a temporary bridge; the count of entries should only fall) |
+| How options are grouped, or a Pro/Enterprise badge | `tools/docsref/groups.json` |
+| A command or flag description | The Cobra command in `cli/cmd/` |
+
+Both pages are **English only**, and `ENGLISH_ONLY` in `scripts/check-docs.mjs` exempts
+them from the translation check. A translated copy would go stale the first time an
+option changed and nobody would notice.
 
 ### Marking Pro and Enterprise features
 

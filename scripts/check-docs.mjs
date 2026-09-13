@@ -96,6 +96,18 @@ const KNOWN_ORPHANS = new Set([
   'admin-guide/installation/snap',
 ]);
 
+/**
+ * Pages that are deliberately published in English only. They are generated from
+ * the Semaphore source (see tools/docsref and tools/clidocs in the product
+ * repository), so a translated copy would go stale the first time an option or a
+ * flag changed, and nobody would notice. The section landing explains this to
+ * readers; this list keeps the translation check from asking for the impossible.
+ */
+const ENGLISH_ONLY = new Set([
+  'reference/configuration',
+  'reference/cli',
+]);
+
 const referenced = new Set([
   ...[...sidebar.matchAll(/'([\w./-]+)'/g)].map((m) => m[1]),
   ...[...sidebar.matchAll(/id:\s*'([^']+)'/g)].map((m) => m[1]),
@@ -122,6 +134,7 @@ const locales = existsSync(I18N)
   : [];
 
 const sidebarPages = pages.filter((id) => {
+  if (ENGLISH_ONLY.has(id)) return false;
   const asCategoryIndex = id.endsWith('/README') ? id.slice(0, -'/README'.length) : null;
   return referenced.has(id) || (asCategoryIndex && referenced.has(asCategoryIndex));
 });
