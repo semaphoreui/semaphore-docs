@@ -107,7 +107,7 @@ chmod 0400 /srv/semaphore/secrets/prod_ssh.json
 그런 다음 **SSH** 유형의 키를 생성하고 **File** 탭을 열어 `/var/lib/semaphore/secrets/prod_ssh.json`
 (컨테이너 **내부**에서 보이는 경로)을 입력합니다.
 
-<div style={{maxWidth: 450}}>
+<div class="dialog-screenshot dialog-screenshot--small">
 
 ![](/assets/key-file-source.webp)
 

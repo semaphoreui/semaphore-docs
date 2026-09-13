@@ -6,7 +6,9 @@ Pored običnih šablona tipa **Zadatak** (Task), Semaphore ima dva tipa šablona
 
 Build šablon proizvodi artefakt: tarball, image kontejnera, paket. Svaki build zadatak dobija automatski uvećanu verziju, počevši od **Početne verzije** (Start Version) šablona (na primer `1.0.0`). Verzija se prikazuje u koloni **Verzija** (Version) u listi šablona i u istoriji zadataka.
 
-![Dijalog Novi zadatak za build šablon](/assets/task-new-build.webp)
+<div class="dialog-screenshot">
+  ![Dijalog Novi zadatak za build šablon](/assets/task-new-build.webp)
+</div>
 
 Koristite verziju u svom playbook-u preko `semaphore_vars.task_details.target_version` da biste imenovali artefakt.
 

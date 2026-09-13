@@ -6,7 +6,9 @@ Oltre ai semplici Task Template di tipo **Task**, Semaphore dispone di due tipi 
 
 Un Task Template di build produce un artefatto: un tarball, un'immagine di container, un pacchetto. Ogni Task di build riceve una versione incrementata automaticamente, a partire dalla **Start Version** del Task Template (ad esempio `1.0.0`). La versione è mostrata nella colonna **Version** dell'elenco dei Task Template e nella cronologia dei Task.
 
-![Finestra di dialogo New Task per un Task Template di build](/assets/task-new-build.webp)
+<div class="dialog-screenshot">
+  ![Finestra di dialogo New Task per un Task Template di build](/assets/task-new-build.webp)
+</div>
 
 Utilizzare la versione nel proprio playbook tramite `semaphore_vars.task_details.target_version` per denominare l'artefatto.
 

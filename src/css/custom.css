@@ -733,3 +733,30 @@ html[data-theme='dark'] {
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 } */
+
+
+.dialog-screenshot {
+  padding: 20px;
+  background: #a4a4a4;
+  max-width: 500px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-screenshot p {
+  margin: 0;
+}
+
+.dialog-screenshot img {
+  display: block;
+  width: 100%;
+}
+
+.dialog-screenshot--small {
+    max-width: 450px;
+}
+
+.schema img {
+  box-shadow: none !important;
+}

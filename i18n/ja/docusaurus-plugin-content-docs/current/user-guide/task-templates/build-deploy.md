@@ -6,7 +6,9 @@
 
 ビルドテンプレートは、tarball、コンテナーイメージ、パッケージなどのアーティファクトを生成します。各ビルドタスクには、テンプレートの **開始バージョン**（たとえば `1.0.0`）から自動的に増加するバージョンが割り当てられます。バージョンは、テンプレート一覧とタスク履歴の **バージョン** 列に表示されます。
 
-![ビルドテンプレートの新しいタスクのダイアログ](/assets/task-new-build.webp)
+<div class="dialog-screenshot">
+  ![ビルドテンプレートの新しいタスクのダイアログ](/assets/task-new-build.webp)
+</div>
 
 playbook では `semaphore_vars.task_details.target_version` を使ってこのバージョンを参照し、アーティファクトの名前に利用できます。
 

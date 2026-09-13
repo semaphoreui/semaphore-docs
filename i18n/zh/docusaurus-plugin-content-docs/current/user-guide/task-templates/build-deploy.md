@@ -6,7 +6,9 @@
 
 构建模板生成制品：tarball、容器镜像或软件包。每个构建任务都会获得一个自动递增的版本号，从模板的 **Start Version** 开始（例如 `1.0.0`）。版本号显示在模板列表的 **Version** 列和任务历史中。
 
-![构建模板的 New Task 对话框](/assets/task-new-build.webp)
+<div class="dialog-screenshot">
+  ![构建模板的 New Task 对话框](/assets/task-new-build.webp)
+</div>
 
 在 playbook 中通过 `semaphore_vars.task_details.target_version` 使用该版本号来命名制品。
 

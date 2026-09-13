@@ -21,7 +21,7 @@ Los runners ejecutan tareas en máquinas distintas del servidor de Semaphore: m�
 
 Necesita el rol **Manager** o superior. Haga clic en **Nuevo runner** y rellene el formulario.
 
-<div style={{maxWidth: 420}}>
+<div class="dialog-screenshot dialog-screenshot--small">
 
 ![Cuadro de diálogo Nuevo runner](/assets/project-runner-new.webp)
 

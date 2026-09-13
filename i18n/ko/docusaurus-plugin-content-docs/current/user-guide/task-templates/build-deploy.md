@@ -6,7 +6,9 @@
 
 빌드 템플릿은 tarball, 컨테이너 이미지, 패키지와 같은 아티팩트를 생성합니다. 모든 빌드 작업에는 템플릿의 **Start Version**(예: `1.0.0`)부터 시작하여 자동으로 증가하는 버전이 부여됩니다. 이 버전은 템플릿 목록과 작업 이력의 **Version** 열에 표시됩니다.
 
-![빌드 템플릿의 새 작업 대화 상자](/assets/task-new-build.webp)
+<div class="dialog-screenshot">
+  ![빌드 템플릿의 새 작업 대화 상자](/assets/task-new-build.webp)
+</div>
 
 playbook에서 `semaphore_vars.task_details.target_version`을 통해 이 버전을 사용하여 아티팩트 이름을 지정하십시오.
 

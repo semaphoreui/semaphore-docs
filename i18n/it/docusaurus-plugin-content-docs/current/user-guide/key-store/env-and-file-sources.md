@@ -107,7 +107,7 @@ chmod 0400 /srv/semaphore/secrets/prod_ssh.json
 Quindi creare una chiave di tipo **SSH**, aprire la scheda **File** e inserire `/var/lib/semaphore/secrets/prod_ssh.json`
 (il percorso come visto **all'interno** del container).
 
-<div style={{maxWidth: 450}}>
+<div class="dialog-screenshot dialog-screenshot--small">
 
 ![](/assets/key-file-source.webp)
 

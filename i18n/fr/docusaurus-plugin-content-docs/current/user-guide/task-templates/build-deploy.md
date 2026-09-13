@@ -6,7 +6,9 @@ En plus des modèles **Task** ordinaires, Semaphore propose deux types de modèl
 
 Un modèle de build produit un artefact : une archive tar, une image de conteneur, un paquet. Chaque tâche de build reçoit une version auto-incrémentée, à partir de la **Version initiale** du modèle (par exemple `1.0.0`). La version est affichée dans la colonne **Version** de la liste des modèles et de l'historique des tâches.
 
-![Boîte de dialogue Nouvelle tâche pour un modèle de build](/assets/task-new-build.webp)
+<div class="dialog-screenshot">
+  ![Boîte de dialogue Nouvelle tâche pour un modèle de build](/assets/task-new-build.webp)
+</div>
 
 Utilisez la version dans votre playbook via `semaphore_vars.task_details.target_version` pour nommer l'artefact.
 

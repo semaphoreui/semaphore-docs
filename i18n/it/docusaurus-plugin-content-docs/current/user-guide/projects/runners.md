@@ -21,7 +21,7 @@ I Runner eseguono i Task su macchine diverse dal server Semaphore: più vicine a
 
 È necessario il ruolo **Manager** o superiore. Fare clic su **New Runner** e compilare il modulo.
 
-<div style={{maxWidth: 420}}>
+<div class="dialog-screenshot dialog-screenshot--small">
 
 ![Finestra di dialogo per un nuovo Runner](/assets/project-runner-new.webp)
 

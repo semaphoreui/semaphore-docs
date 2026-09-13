@@ -6,7 +6,9 @@ Neben einfachen **Task**-Templates kennt Semaphore zwei Typen von Task Templates
 
 Ein Build-Task-Template erzeugt ein Artefakt: ein Tarball, ein Container-Image, ein Paket. Jeder Build-Task erhält eine automatisch hochgezählte Version, beginnend mit der **Start Version** des Task Template (zum Beispiel `1.0.0`). Die Version wird in der Spalte **Version** der Task-Template-Liste und im Task-Verlauf angezeigt.
 
-![Dialog für einen neuen Task bei einem Build-Task-Template](/assets/task-new-build.webp)
+<div class="dialog-screenshot">
+  ![Dialog für einen neuen Task bei einem Build-Task-Template](/assets/task-new-build.webp)
+</div>
 
 Verwenden Sie die Version in Ihrem Playbook über `semaphore_vars.task_details.target_version`, um das Artefakt zu benennen.
 

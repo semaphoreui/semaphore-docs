@@ -22,7 +22,7 @@ Runners execute tasks on machines other than the Semaphore server: closer to the
 
 You need the **Manager** role or higher. Click **New Runner** and fill in the form.
 
-<div style={{maxWidth: 420}}>
+<div class="dialog-screenshot dialog-screenshot--small">
 
 ![New runner dialog](/assets/project-runner-new.webp)
 

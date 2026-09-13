@@ -11,7 +11,9 @@ Besides plain **Task** templates, Semaphore has two template types that form a s
 
 A build template produces an artifact: a tarball, a container image, a package. Every build task gets an auto-incremented version, starting from the **Start Version** of the template (for example `1.0.0`). The version is shown in the **Version** column of the template list and the task history.
 
-![New Task dialog for a build template](/assets/task-new-build.webp)
+<div class="dialog-screenshot">
+  ![New Task dialog for a build template](/assets/task-new-build.webp)
+</div>
 
 Use the version in your playbook through `semaphore_vars.task_details.target_version` to name the artifact.
 

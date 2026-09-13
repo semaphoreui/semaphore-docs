@@ -21,7 +21,7 @@ sidebar_custom_props:
 
 **Manager** 역할 이상이 필요합니다. **새 러너**를 클릭하고 양식을 입력하십시오.
 
-<div style={{maxWidth: 420}}>
+<div class="dialog-screenshot dialog-screenshot--small">
 
 ![새 러너 대화 상자](/assets/project-runner-new.webp)
 

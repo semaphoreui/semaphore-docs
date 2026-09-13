@@ -6,7 +6,9 @@ Además de las plantillas simples de tipo **Task**, Semaphore tiene dos tipos de
 
 Una plantilla de compilación produce un artefacto: un tarball, una imagen de contenedor, un paquete. Cada tarea de compilación recibe una versión autoincrementada, a partir de la **Versión inicial** de la plantilla (por ejemplo, `1.0.0`). La versión se muestra en la columna **Versión** de la lista de plantillas y del historial de tareas.
 
-![Cuadro de diálogo Nueva tarea de una plantilla de compilación](/assets/task-new-build.webp)
+<div class="dialog-screenshot">
+  ![Cuadro de diálogo Nueva tarea de una plantilla de compilación](/assets/task-new-build.webp)
+</div>
 
 Use la versión en su playbook mediante `semaphore_vars.task_details.target_version` para nombrar el artefacto.
 

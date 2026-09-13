@@ -21,7 +21,7 @@ sidebar_custom_props:
 
 **マネージャー** 以上のロールが必要です。**新しいランナー** をクリックし、フォームに入力します。
 
-<div style={{maxWidth: 420}}>
+<div class="dialog-screenshot dialog-screenshot--small">
 
 ![新しいランナーのダイアログ](/assets/project-runner-new.webp)
 

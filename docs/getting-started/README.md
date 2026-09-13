@@ -1,4 +1,6 @@
 ---
+title: Get Started
+description: Install Semaphore UI and run, inspect, and schedule your first Ansible task.
 sidebar_label: Get Started
 ---
 
@@ -198,7 +200,9 @@ The new project opens on an empty Dashboard. The sidebar is the main navigation 
 
 The diagram shows how these resources produce a run:
 
-![How Semaphore resources and triggers become a task run](/assets/getting-started/core-concepts.svg)
+<div class="schema">
+  ![How Semaphore resources and triggers become a task run](/assets/getting-started/core-concepts.svg)
+</div>
 
 A UI action, API request, or schedule can start a **Task Template** directly or start a **Workflow** that uses task templates. Semaphore creates a task run—shown as a **Task** in the UI—and sends it to the Semaphore server or an eligible remote runner. For Ansible, that execution host runs `ansible-playbook`; the Inventory lists the systems Ansible manages.
 
@@ -452,7 +456,7 @@ Once the first Ansible task succeeds:
 - Add the appropriate private credential in [Key Store](/user-guide/key-store) when your Repository requires authentication.
 - Build a **Workflow** when several templates need ordered success, failure, approval, or note paths.
 - Use [Integrations](/user-guide/integrations) for authenticated webhook triggers from GitHub, GitLab, or another system.
-- Use the [API](/admin-guide/api) to manage resources and start templates programmatically.
+- Use the [API](/reference/api) to manage resources and start templates programmatically.
 - Add a [remote runner](/admin-guide/runners) when execution must happen in another network, operating system, or security boundary.
 
 For production, put Semaphore behind HTTPS, back up the database and access-key encryption secret together, configure centralized authentication, and review [Security](/admin-guide/security), [Logs](/admin-guide/logs), and [Upgrading](/admin-guide/upgrading).
