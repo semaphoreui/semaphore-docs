@@ -11,6 +11,10 @@ playbooks Ansible, vos configurations Terraform ou vos scripts shell, vous lui i
 identifiants et quels hôtes utiliser, et il devient l'endroit unique où votre équipe exécute cette
 automatisation, stocke les secrets dont elle a besoin, et conserve une trace de chaque exécution.
 
+Vous pouvez exécuter les tâches individuellement ou les combiner en un seul pipeline avec
+[Workflows](/user-guide/workflows) (Pro), en reliant compilation, tests, déploiements
+et automatisation de l'infrastructure.
+
 Semaphore ne remplace pas Ansible, Terraform ou vos scripts. Il les exécute, sur un
 serveur plutôt que sur le portable de quelqu'un.
 
@@ -35,8 +39,9 @@ Semaphore déplace l'exécution sur un serveur partagé et ajoute les éléments
 
 - **Les équipes infrastructure et plateforme** qui utilisent déjà Ansible ou Terraform et souhaitent
   que leurs collègues les exécutent sans distribuer les identifiants de production.
-- **Les petites équipes sans plateforme CI/CD**, qui ont besoin de travaux d'exploitation planifiés
-  ou à la demande, mais pas d'un pipeline de build.
+- **Les équipes qui créent des pipelines CI/CD** et souhaitent relier les tâches de
+  compilation, de test et de déploiement à l'aide de workflows, tout en exécutant des
+  travaux d'exploitation planifiés ou à la demande.
 - **Les équipes disposant d'une plateforme CI/CD** qui souhaitent garder les exécutions
   d'exploitation — redémarrages, déploiements, renouvellements de certificats — hors du système de
   build et visibles par des personnes qui ne lisent pas le YAML des pipelines.
@@ -58,14 +63,17 @@ Chaque [modèle de tâche](/user-guide/task-templates) choisit une application :
 Les tâches s'exécutent sur le serveur lui-même ou sur des [runners](/admin-guide/runners) placés au
 plus près des systèmes qu'ils administrent.
 
+[Workflows](/user-guide/workflows) (Pro) permet de relier des modèles de tâches dans un
+pipeline à l'aide d'un éditeur visuel. Chaque étape peut exécuter une application différente :
+par exemple, compiler et tester du code source avec des scripts shell, provisionner
+l'infrastructure avec Terraform, puis déployer avec Ansible. Vous pouvez ajouter des étapes
+d'approbation, des pauses temporisées et des branches exécutées en cas de réussite ou d'échec.
+Semaphore lance automatiquement les tâches suivantes lorsque leurs conditions sont remplies.
+
 ## Quand ne pas l'utiliser {#when-not-to-use-it}
 
 Connaître les limites fait gagner du temps par la suite.
 
-- **Compiler et tester du code source.** Semaphore n'a pas d'artefacts de build, pas de builds
-  matriciels, pas de vérifications de pull request et pas de registre de conteneurs. Utilisez GitHub
-  Actions, GitLab CI ou Jenkins pour cela, et [démarrez les tâches Semaphore depuis ces
-  outils](/admin-guide/cicd) lorsqu'un pipeline doit toucher à l'infrastructure.
 - **Remplacer Ansible ou Terraform.** Semaphore ne dispose pas de son propre moteur d'exécution. Si
   votre playbook ne fonctionne pas depuis un shell, il ne fonctionnera pas depuis Semaphore.
 - **Servir de CMDB.** Les [inventaires](/user-guide/inventory) sont les inventaires dont vos

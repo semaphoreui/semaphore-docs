@@ -11,6 +11,10 @@ Terraform konfiguracijama ili shell skriptama, kažete mu koje kredencijale i ho
 koristi, i on postaje jedino mesto na kom vaš tim pokreće tu automatizaciju, čuva
 tajne koje su joj potrebne i vodi evidenciju o svakom pokretanju.
 
+Zadatke možete pokretati pojedinačno ili ih povezati u jedan pipeline pomoću
+[Workflows](/user-guide/workflows) (Pro), objedinjujući build, testiranje, isporuku
+i automatizaciju infrastrukture.
+
 Semaphore ne zamenjuje Ansible, Terraform ili vaše skripte. On ih pokreće, na
 serveru umesto na nečijem laptopu.
 
@@ -35,8 +39,8 @@ Semaphore premešta pokretanje na zajednički server i dodaje delove koji su ned
 
 - **Timovima za infrastrukturu i platforme** koji već koriste Ansible ili Terraform i žele
   da ih njihove kolege pokreću bez deljenja produkcionih kredencijala.
-- **Malim timovima bez CI/CD platforme**, kojima su potrebni operativni poslovi po rasporedu
-  i na zahtev, ali ne i build pipeline.
+- **Timovima koji prave CI/CD pipeline-ove** i žele da povežu zadatke za build,
+  testiranje i isporuku pomoću radnih tokova, uz operativne poslove po rasporedu i na zahtev.
 - **Timovima sa CI/CD platformom** koji žele da operativna pokretanja — restartovanja, isporuke,
   obnove sertifikata — ostanu izvan build sistema i budu vidljiva ljudima koji ne
   čitaju pipeline YAML.
@@ -58,14 +62,17 @@ Svaki [šablon zadatka](/user-guide/task-templates) bira aplikaciju:
 Zadaci se izvršavaju na samom serveru ili na [runner-ima](/admin-guide/runners) postavljenim blizu
 sistema kojima upravljaju.
 
+[Workflows](/user-guide/workflows) (Pro) povezuje šablone zadataka u pipeline pomoću
+vizuelnog editora. Svaki korak može da pokreće drugu aplikaciju: na primer, da gradi i
+testira izvorni kod pomoću shell skripti, priprema infrastrukturu pomoću Terraform-a,
+a zatim vrši isporuku pomoću Ansible-a. Možete dodati korake za odobravanje, vremenske
+pauze i grane koje se pokreću pri uspehu ili neuspehu. Semaphore automatski pokreće
+naredne zadatke kada su njihovi uslovi ispunjeni.
+
 ## Kada ga ne koristiti {#when-not-to-use-it}
 
 Poznavanje granica kasnije štedi vreme.
 
-- **Za građenje i testiranje izvornog koda.** Semaphore nema build artefakte, nema matrične
-  build-ove, nema provere pull request-ova i nema registar kontejnera. Za to koristite GitHub
-  Actions, GitLab CI ili Jenkins, i [iz njih pokrećite Semaphore zadatke](/admin-guide/cicd) kada
-  pipeline treba da dotakne infrastrukturu.
 - **Kao zamenu za Ansible ili Terraform.** Semaphore nema sopstveni izvršni mehanizam. Ako
   vaš playbook ne radi iz shell-a, neće raditi ni iz Semaphore-a.
 - **Kao CMDB.** [Inventari](/user-guide/inventory) su inventari koji su potrebni vašim

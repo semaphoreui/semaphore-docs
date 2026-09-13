@@ -12,6 +12,10 @@ Zugangsdaten und Hosts verwendet werden, und schon ist es der zentrale Ort, an d
 Team diese Automatisierung ausführt, die dafür nötigen Secrets speichert und jeden Lauf
 protokolliert.
 
+Sie können Tasks einzeln ausführen oder mit [Workflows](/user-guide/workflows) (Pro)
+zu einer einzigen Pipeline verbinden, die Builds, Tests, Deployments und
+Infrastrukturautomatisierung zusammenführt.
+
 Semaphore ersetzt weder Ansible noch Terraform oder Ihre Skripte. Es führt sie aus — auf
 einem Server statt auf dem Laptop einer einzelnen Person.
 
@@ -38,8 +42,9 @@ gefehlt hat:
 - **Infrastruktur- und Plattformteams**, die bereits Ansible oder Terraform einsetzen und
   möchten, dass Kolleginnen und Kollegen es ausführen können, ohne Produktionszugangsdaten
   zu erhalten.
-- **Kleine Teams ohne CI/CD-Plattform**, die geplante und bedarfsgesteuerte Betriebsjobs
-  brauchen, aber keine Build-Pipeline.
+- **Teams, die CI/CD-Pipelines erstellen** und Build-, Test- und Deployment-Tasks
+  mithilfe von Workflows verbinden sowie geplante und bedarfsgesteuerte Betriebsjobs
+  ausführen möchten.
 - **Teams mit einer CI/CD-Plattform**, die betriebliche Läufe — Neustarts, Deployments,
   Zertifikatserneuerungen — aus dem Build-System heraushalten und für Personen sichtbar
   machen möchten, die kein Pipeline-YAML lesen.
@@ -61,14 +66,17 @@ Jedes [Task Template](/user-guide/task-templates) wählt eine Anwendung aus:
 Tasks laufen auf dem Server selbst oder auf [Runnern](/admin-guide/runners), die nahe an
 den verwalteten Systemen platziert sind.
 
+[Workflows](/user-guide/workflows) (Pro) verbinden Task Templates über einen visuellen
+Editor zu einer Pipeline. Jeder Schritt kann eine andere Anwendung ausführen: etwa
+Quellcode mit Shell-Skripten bauen und testen, Infrastruktur mit Terraform bereitstellen
+und anschließend mit Ansible deployen. Sie können Freigabeschritte, zeitgesteuerte Pausen
+und Verzweigungen bei Erfolg oder Fehler hinzufügen. Semaphore startet nachfolgende
+Tasks automatisch, sobald deren Bedingungen erfüllt sind.
+
 ## Wann Sie es nicht einsetzen sollten {#when-not-to-use-it}
 
 Die Grenzen zu kennen spart später Zeit.
 
-- **Quellcode bauen und testen.** Semaphore kennt keine Build-Artefakte, keine
-  Matrix-Builds, keine Pull-Request-Prüfungen und keine Container-Registry. Nutzen Sie
-  dafür GitHub Actions, GitLab CI oder Jenkins und [starten Sie Semaphore-Tasks von dort
-  aus](/admin-guide/cicd), wenn eine Pipeline die Infrastruktur anfassen muss.
 - **Ansible oder Terraform ersetzen.** Semaphore hat keine eigene Ausführungs-Engine. Wenn
   Ihr Playbook nicht aus einer Shell heraus funktioniert, funktioniert es auch aus
   Semaphore heraus nicht.

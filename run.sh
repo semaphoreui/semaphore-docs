@@ -1,6 +1,6 @@
 cd scripts
 
-./build-parallel.sh
+# ./build-parallel.sh
 
 cd ../deploy
 if [ -f ~/venv/bin/activate ]; then

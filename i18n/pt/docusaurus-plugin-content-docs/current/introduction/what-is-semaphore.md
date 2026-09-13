@@ -11,6 +11,10 @@ configurações do Terraform ou scripts de shell, diz quais credenciais e hosts
 usar, e ele se torna o único lugar onde a sua equipe executa essa automação, armazena os
 segredos de que ela precisa e mantém o registro de cada execução.
 
+Você pode executar tarefas individualmente ou combiná-las em um único pipeline com
+[Workflows](/user-guide/workflows) (Pro), conectando builds, testes, implantações
+e automação de infraestrutura.
+
 O Semaphore não substitui o Ansible, o Terraform ou os seus scripts. Ele os executa, em um
 servidor em vez de no notebook de alguém.
 
@@ -35,8 +39,8 @@ O Semaphore move a execução para um servidor compartilhado e acrescenta as par
 
 - **Equipes de infraestrutura e plataforma** que já usam Ansible ou Terraform e querem
   que os seus colegas o executem sem distribuir credenciais de produção.
-- **Equipes pequenas sem uma plataforma de CI/CD**, que precisam de jobs operacionais agendados
-  e sob demanda, mas não de um pipeline de build.
+- **Equipes que criam pipelines de CI/CD** e querem conectar tarefas de build, teste
+  e implantação usando workflows, além de jobs operacionais agendados e sob demanda.
 - **Equipes com uma plataforma de CI/CD** que querem manter as execuções operacionais — reinicializações, implantações,
   renovações de certificados — fora do sistema de build e visíveis para pessoas que não
   leem YAML de pipeline.
@@ -58,14 +62,17 @@ Cada [template de tarefa](/user-guide/task-templates) escolhe um aplicativo:
 As tarefas são executadas no próprio servidor ou em [runners](/admin-guide/runners) posicionados perto dos
 sistemas que eles gerenciam.
 
+[Workflows](/user-guide/workflows) (Pro) conecta templates de tarefas em um pipeline
+por meio de um editor visual. Cada etapa pode executar um aplicativo diferente: por exemplo,
+compilar e testar código-fonte com scripts de shell, provisionar infraestrutura com
+Terraform e depois implantar com Ansible. Você pode adicionar etapas de aprovação,
+pausas temporizadas e ramificações executadas em caso de sucesso ou falha. O Semaphore
+inicia as tarefas seguintes automaticamente quando as suas condições são atendidas.
+
 ## Quando não usá-lo {#when-not-to-use-it}
 
 Conhecer os limites poupa tempo depois.
 
-- **Compilar e testar código-fonte.** O Semaphore não tem artefatos de build, nem builds
-  em matriz, nem verificações de pull request, nem registro de contêineres. Use GitHub Actions, GitLab
-  CI ou Jenkins para isso, e [inicie tarefas do Semaphore a partir deles](/admin-guide/cicd) quando
-  um pipeline precisar tocar na infraestrutura.
 - **Substituir o Ansible ou o Terraform.** O Semaphore não tem um motor de execução próprio. Se
   o seu playbook não funciona a partir de um shell, ele não funcionará a partir do Semaphore.
 - **Atuar como um CMDB.** Os [inventários](/user-guide/inventory) são os inventários de que as suas

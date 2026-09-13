@@ -11,6 +11,10 @@ Terraform configurations, or shell scripts, tell it which credentials and hosts 
 use, and it becomes the one place where your team runs that automation, stores the
 secrets it needs, and keeps a record of every run.
 
+You can run tasks individually or combine them into a single pipeline with
+[Workflows](/user-guide/workflows) (Pro), connecting builds, tests, deployments,
+and infrastructure automation.
+
 Semaphore does not replace Ansible, Terraform, or your scripts. It runs them, on a
 server instead of on someone's laptop.
 
@@ -35,8 +39,8 @@ Semaphore moves the run to a shared server and adds the parts that were missing:
 
 - **Infrastructure and platform teams** that already use Ansible or Terraform and want
   their colleagues to run it without handing out production credentials.
-- **Small teams without a CI/CD platform**, who need scheduled and on-demand operational
-  jobs but not a build pipeline.
+- **Teams building CI/CD pipelines** that want to connect build, test, and deployment
+  tasks using workflows, alongside scheduled and on-demand operational jobs.
 - **Teams with a CI/CD platform** that want operational runs — restarts, deployments,
   certificate renewals — kept out of the build system and visible to people who do not
   read pipeline YAML.
@@ -58,14 +62,17 @@ Each [task template](/user-guide/task-templates) chooses an application:
 Tasks run on the server itself or on [runners](/admin-guide/runners) placed close to the
 systems they manage.
 
+[Workflows](/user-guide/workflows) (Pro) connect task templates into a pipeline
+using a visual editor. Each step can run a different application: for example,
+build and test source code with shell scripts, provision infrastructure with
+Terraform, then deploy with Ansible. You can add approval steps, timed pauses,
+and branches that run on success or failure. Semaphore starts downstream tasks
+automatically when their conditions are met.
+
 ## When not to use it {#when-not-to-use-it}
 
 Knowing the edges saves time later.
 
-- **Building and testing source code.** Semaphore has no build artifacts, no matrix
-  builds, no pull-request checks, and no container registry. Use GitHub Actions, GitLab
-  CI, or Jenkins for that, and [start Semaphore tasks from them](/admin-guide/cicd) when
-  a pipeline needs to touch infrastructure.
 - **Replacing Ansible or Terraform.** Semaphore has no execution engine of its own. If
   your playbook does not work from a shell, it will not work from Semaphore.
 - **Acting as a CMDB.** [Inventories](/user-guide/inventory) are the inventories your

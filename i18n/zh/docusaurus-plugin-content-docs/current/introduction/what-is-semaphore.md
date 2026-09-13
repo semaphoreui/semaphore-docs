@@ -10,6 +10,9 @@ Semaphore UI 是一个自托管的 Web 界面和 REST API，用来运行你已�
 告诉它使用哪些凭据和主机，它就会成为团队运行这些自动化、保存所需密钥、
 并记录每一次运行的统一入口。
 
+你可以单独运行任务，也可以使用 [Workflows](/user-guide/workflows)（Pro）将它们组合成一条流水线，
+串联构建、测试、部署和基础设施自动化。
+
 Semaphore 不会取代 Ansible、Terraform 或你的脚本。它只是运行它们——在服务器上运行，
 而不是在某个人的笔记本电脑上。
 
@@ -33,7 +36,8 @@ Semaphore 把运行搬到一台共享服务器上，并补上了缺失的部分�
 
 - **基础设施与平台团队**：已经在使用 Ansible 或 Terraform，希望同事能够运行它们，
   而不必分发生产环境凭据。
-- **没有 CI/CD 平台的小团队**：需要定时和按需的运维作业，但并不需要构建流水线。
+- **构建 CI/CD 流水线的团队**：希望通过工作流连接构建、测试和部署任务，
+  同时运行定时和按需的运维作业。
 - **已有 CI/CD 平台的团队**：希望把运维类运行——重启、部署、证书续期——挪出构建系统，
   并且让那些不阅读流水线 YAML 的人也能看到。
 
@@ -53,13 +57,15 @@ Semaphore 是自托管的。它没有 SaaS 版本：你在自己的基础设施�
 
 任务可以在服务器本身上运行，也可以在靠近被管理系统部署的[运行器](/admin-guide/runners)上运行。
 
+[Workflows](/user-guide/workflows)（Pro）通过可视化编辑器将任务模板连接成流水线。
+每个步骤都可以运行不同的应用：例如，使用 shell 脚本构建和测试源代码，
+使用 Terraform 配置基础设施，然后使用 Ansible 部署。你可以添加审批步骤、
+定时暂停，以及在成功或失败时执行的分支。满足条件后，Semaphore 会自动启动后续任务。
+
 ## 什么时候不该使用它 {#when-not-to-use-it}
 
 了解它的边界可以省下以后的时间。
 
-- **构建和测试源代码。** Semaphore 没有构建产物、没有矩阵构建、没有合并请求检查，
-  也没有容器镜像仓库。这些请使用 GitHub Actions、GitLab CI 或 Jenkins，
-  并在流水线需要操作基础设施时[从它们启动 Semaphore 任务](/admin-guide/cicd)。
 - **取代 Ansible 或 Terraform。** Semaphore 没有自己的执行引擎。如果你的 playbook
   在 shell 里跑不通，那么在 Semaphore 里同样跑不通。
 - **充当 CMDB。** [清单](/user-guide/inventory)是你的运行所需要的清单，
