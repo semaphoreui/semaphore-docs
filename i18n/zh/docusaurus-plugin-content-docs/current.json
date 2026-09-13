@@ -1,26 +1,26 @@
 {
   "version.label": {
-    "message": "Next",
+    "message": "下一版本",
     "description": "The label for version current"
   },
   "sidebar.tutorialSidebar.category.Admin Guide": {
-    "message": "Admin Guide",
+    "message": "管理员指南",
     "description": "The label for category Admin Guide in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Installation": {
-    "message": "Installation",
+    "message": "安装",
     "description": "The label for category Installation in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Configuration": {
-    "message": "Configuration",
+    "message": "配置",
     "description": "The label for category Configuration in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Reverse-proxy": {
-    "message": "Reverse-proxy",
+    "message": "反向代理",
     "description": "The label for category Reverse-proxy in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Security": {
-    "message": "Security",
+    "message": "安全",
     "description": "The label for category Security in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.CLI": {
@@ -28,7 +28,7 @@
     "description": "The label for category CLI in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.LDAP and AD": {
-    "message": "LDAP and AD",
+    "message": "LDAP 与 AD",
     "description": "The label for category LDAP and AD in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.OpenID Connect": {
@@ -36,23 +36,23 @@
     "description": "The label for category OpenID Connect in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Notifications": {
-    "message": "Notifications",
+    "message": "通知",
     "description": "The label for category Notifications in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.User Guide": {
-    "message": "User Guide",
+    "message": "用户指南",
     "description": "The label for category User Guide in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Projects": {
-    "message": "Projects",
+    "message": "项目",
     "description": "The label for category Projects in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Task Templates": {
-    "message": "Task Templates",
+    "message": "任务模板",
     "description": "The label for category Task Templates in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Apps": {
-    "message": "Apps",
+    "message": "应用",
     "description": "The label for category Apps in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Terraform/OpenTofu": {
@@ -60,19 +60,19 @@
     "description": "The label for category Terraform/OpenTofu in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Key Store": {
-    "message": "Key Store",
+    "message": "密钥库",
     "description": "The label for category Key Store in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Inventory": {
-    "message": "Inventory",
+    "message": "清单",
     "description": "The label for category Inventory in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Repositories": {
-    "message": "Repositories",
+    "message": "仓库",
     "description": "The label for category Repositories in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.FAQ": {
-    "message": "FAQ",
+    "message": "常见问题",
     "description": "The label for category FAQ in sidebar tutorialSidebar"
   }
 }

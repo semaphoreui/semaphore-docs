@@ -1,3 +1,8 @@
+---
+title: Netbox Dynamic Inventory Integration with Semaphore
+description: Configuring the netbox.netbox.nb_inventory plugin as a dynamic inventory in Semaphore using a NetBox API token.
+---
+
 # Netbox Dynamic Inventory Integration with Semaphore
 
 ![Ansible Badge](https://img.shields.io/badge/ansible-%23000.svg?style=for-the-badge&logo=ansible&logoColor=white)

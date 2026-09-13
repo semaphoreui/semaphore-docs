@@ -1,44 +1,52 @@
+---
+title: ユーザーガイド
+description: "Semaphore のプロジェクト内で作業するエンジニア向け: リソース、タスクテンプレート、タスク、スケジュール、チームのアクセス権について説明します。"
+---
+
 # ユーザーガイド
 
-Semaphore の日常的な使い方を学びます: プロジェクトの作成、タスクの実行、インベントリ、キー、変数の管理など。
+このセクションは、すでに Semaphore のプロジェクトへのアクセス権を持っている人向けです。
+ここにある作業はすべて、Web インターフェースまたはプロジェクトの API で行います。サーバー
+のインストール、その設定、ID プロバイダーとの接続については、
+[管理者ガイド](/admin-guide)で説明しています。
 
-## ここから始める {#start-here}
+Semaphore での作業は 1 本の流れに沿って進みます。**プロジェクト** が他のすべてを保持します。
+その中に、実行に必要なリソースを登録します。playbook やスクリプトを含む **リポジトリ**、
+リポジトリやホストへの接続に使う **キー**、対象マシンの **インベントリ**、そして値とシークレット
+を持つ **変数グループ** です。**タスクテンプレート** はこれらを組み合わせて実行内容を定義し、
+そのテンプレートの 1 回ごとの実行が **タスク** になります。スケジュール、ワークフロー、受信
+Webhook は、テンプレートを自動的に開始します。
 
-- プロジェクトとチームで作業を整理する
-- リポジトリとキーストアを接続する
-- インベントリと変数グループを定義する
-- タスクテンプレートを作成し、スケジュールでタスクを実行する
+## プロジェクトのセットアップ {#set-up-a-project}
 
-## クイックリンク {#quick-links}
+各ステップは前のステップに依存するため、この順序で進めてください。
 
-- プロジェクト: [概要](/projects)
-  - [履歴](/projects/history)
-  - [アクティビティ](/projects/activity)
-  - [設定](/projects/settings)
-  - [Runner (Pro)](/projects/runners)
-- タスクとスケジュール:
-  - [タスク](/tasks)
-  - [スケジュール](/schedules)
-- タスクテンプレート: [概要](/task-templates/README)
-  - [Ansible](/task-templates/apps/ansible)
-  - [Terraform/OpenTofu](/task-templates/apps/terraform)
-    - [ワークスペース](/task-templates/apps/terraform/workspaces)
-    - [HTTP バックエンド (Pro)](/task-templates/apps/terraform/states)
-  - [Shell/Bash スクリプト](/task-templates/apps/bash)
-  - [PowerShell](/task-templates/apps/powershell)
-  - [Python](/task-templates/apps/python)
-  - [サーベイ変数](/task-templates/survey-vars)
-  - [プロンプト](/task-templates/prompts)
-- 変数とシークレット:
-  - [変数グループ](/environment)
-  - [キーストア](/key-store)
-    - [GitLab](/key-store/gitlab)
-- インベントリ:
-  - [インベントリ](/inventory)
-  - [Kerberos](/inventory/kerberos)
-  - [NetBox 動的インベントリ](/netbox-dynamic-inventory)
-- リポジトリ:
-  - [リポジトリ](/repositories)
-  - [Bitbucket アクセストークン](/repositories/bitbucket_access_token)
-- 連携: [概要](/integrations)
-- チーム管理: [概要](/team)
+| ページ | 内容 |
+|---|---|
+| [プロジェクト](/user-guide/projects) | プロジェクトの作成、サイドバーの各セクション、バックアップと復元です。 |
+| [チーム](/user-guide/team) | 4 つの組み込みロールと、Enterprise のカスタムロールです。 |
+| [キーストア](/user-guide/key-store) | SSH キー、ログイン情報、外部のシークレットストレージです。 |
+| [リポジトリ](/user-guide/repositories) | 自動化のコードを保持する Git リポジトリとローカルパスです。 |
+| [インベントリ](/user-guide/inventory) | Ansible 向けのホストと接続設定、Terraform 向けのワークスペースです。 |
+| [変数グループ](/user-guide/environment) | タスクに渡される再利用可能な変数とシークレットです。 |
+
+## 作業の定義と実行 {#define-and-run-work}
+
+| ページ | 内容 |
+|---|---|
+| [タスクテンプレート](/user-guide/task-templates) | テンプレートフォームのすべてのフィールドと、テンプレートの種類です。 |
+| [アプリ](/user-guide/apps) | 各アプリケーションが実行するものです。Ansible、Terraform、OpenTofu、Terragrunt、スクリプトがあります。 |
+| [タスク](/user-guide/tasks) | タスクの開始、タスクのステータス、ログ、停止、再実行です。 |
+| [スケジュール](/user-guide/schedules) | cron スケジュールでテンプレートを実行します。 |
+| [ワークフロー](/user-guide/workflows) | 承認と分岐を伴うテンプレートの連結です。 |
+| [インテグレーション](/user-guide/integrations) | 受信 Webhook からタスクを開始します。 |
+| [プロジェクトのランナー](/user-guide/projects/runners) | プロジェクトのタスクを自分のランナーに送ります。 |
+| [アカウント](/user-guide/account) | 個人設定と API トークンです。 |
+
+## ここから始める {#where-to-start}
+
+プロジェクトに追加されたばかりなら、まず[プロジェクト](/user-guide/projects)を読んで
+全体像をつかみ、次に[タスク](/user-guide/tasks)でタスクを実行してログを読んでください。
+プロジェクトをゼロからセットアップする場合は、上の表の順に進めてください。
+
+Semaphore 自体が初めてですか？ [はじめに](/getting-started)から始めてください。

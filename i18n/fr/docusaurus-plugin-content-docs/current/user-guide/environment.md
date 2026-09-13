@@ -1,11 +1,13 @@
 # Groupes de variables
 
-La section Groupes de variables de Semaphore permet de stocker des variables supplémentaires pour un inventaire ; elles doivent être stockées au format JSON.
+![Liste des groupes de variables](/assets/variable-groups-list.webp)
 
-Tous les modèles de tâches exigent qu'un groupe de variables soit défini, même s'il est vide. 
+La section Groupes de variables de Semaphore est l'endroit où stocker des variables supplémentaires pour un inventaire ; elles doivent être stockées au format JSON.
+
+Tous les modèles de tâches nécessitent un groupe de variables, même s'il est vide. 
 
 ## Créer un groupe de variables {#create-a-variable-group}
-1. Cliquez sur l'onglet Groupe de variables.
+1. Cliquez sur l'onglet Groupes de variables.
 2. Cliquez sur le bouton Nouveau groupe de variables.
 3. Nommez le groupe de variables et saisissez ou collez des variables JSON valides. Si vous avez simplement besoin d'un groupe de variables vide, saisissez ```{}```.
 
@@ -16,25 +18,25 @@ Tous les modèles de tâches exigent qu'un groupe de variables soit défini, mê
 
 ## Supprimer un groupe de variables {#deleting-the-variable-group}
 Avant de supprimer un groupe de variables, vous devez supprimer toutes les ressources qui lui sont liées.
-Si vous ne savez pas quelles ressources utilisent un groupe de variables, suivez les étapes 1 et 2 ci-dessous. Elles vous indiqueront les ressources utilisées, avec des liens vers celles-ci.
+Si vous ne savez pas quelles ressources sont utilisées dans un groupe de variables, suivez les étapes 1 et 2 ci-dessous. Elles vous indiqueront les ressources utilisées, avec des liens vers celles-ci.
 
 1. Cliquez sur le groupe de variables.
 2. Cliquez sur l'icône de corbeille à côté du groupe de variables.
 3. Cliquez sur Oui si vous êtes sûr de vouloir supprimer le groupe de variables.
 
-## Utilisation des groupes de variables - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
-Lorsque vous souhaitez utiliser une variable ou un secret d'un groupe de variables dans votre modèle Terraform, vous devez préfixer son nom par `TF_VAR_` pour que le script Terraform puisse l'utiliser. 
+## Utiliser les groupes de variables - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
+Lorsque vous souhaitez utiliser une variable ou un secret stocké dans un groupe de variables au sein de votre modèle terraform, vous devez préfixer son nom par `TF_VAR_` pour que le script terraform puisse l'utiliser. 
 
 **Exemple**
-Transmission d'une clé API Hetzner Cloud à un playbook OpenTofu/Terraform. 
+Transmettre une clé d'API Hetzner Cloud à un playbook OpenTofu/Terraform. 
 
-1. Cliquez sur Groupe de variables
+1. Cliquez sur Groupes de variables
 2. Cliquez sur `New Group`
 3. Cliquez sur l'onglet `Secrets`
 4. Ajoutez `TF_VAR_hcloud_token` et saisissez votre `secret` dans le champ masqué
 5. Cliquez sur Enregistrer
 
-Nous référencerons notre secret `TF_VAR_hcloud_token` sous le nom `var.hcloud_token` dans 
+Nous appellerons notre secret `TF_VAR_hcloud_token` sous la forme `var.hcloud_token` dans 
 hetzner.tf
 ```
 terraform {
@@ -70,3 +72,4 @@ resource "hcloud_server" "webserver" {
   }
 }
 ``` 
+

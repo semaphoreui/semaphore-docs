@@ -1,3 +1,8 @@
+---
+title: Logs
+description: Where the server, activity and task logs go, file and syslog forwarding options, task retention, and SIEM integration.
+---
+
 # Logs
 
 Semaphore writes server logs to **stdout** and stores **Task** and **Activity** logs in a **database**, centralizing key log information and eliminating the need to back up log files separately. The only data stored on the file system is caching data.
@@ -188,7 +193,7 @@ Every audit event includes the **action** (`create`, `update`, `delete`, `login_
 
 There are three ways to deliver audit events to your SIEM:
 
-1. **Pull:** read `/api/events` (see [API docs](/admin-guide/api)).
+1. **Pull:** read `/api/events` (see [API docs](/reference/api)).
 2. **File collector:** enable the Activity Log file (Pro, see above) and ship `events.log` (JSON format recommended) with Filebeat, Fluentd or a Splunk Universal Forwarder.
 3. **Audit webhook (Pro):** push events in real time over HTTPS — a generic JSON endpoint or Splunk HTTP Event Collector.
 

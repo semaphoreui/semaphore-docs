@@ -1,3 +1,8 @@
+---
+title: Schedules
+description: How to run templates on a cron schedule, set the scheduler timezone, and pass task parameters, with example use cases.
+---
+
 # Schedules
 
 The schedule function in Semaphore allows to automate the execution of templates (e.g. playbook runs) at predefined intervals. This feature allows to implement routine automation tasks, such as regular backups, compliance checks, system updates, and more.

@@ -188,7 +188,7 @@ Cada evento de auditoría incluye la **acción** (`create`, `update`, `delete`, 
 
 Hay tres formas de entregar los eventos de auditoría a su SIEM:
 
-1. **Pull:** lea `/api/events` (consulte la [documentación de la API](/admin-guide/api)).
+1. **Pull:** lea `/api/events` (consulte la [documentación de la API](/reference/api)).
 2. **Colector de archivos:** habilite el archivo del Registro de actividad (Pro, ver arriba) y envíe `events.log` (se recomienda el formato JSON) con Filebeat, Fluentd o un Splunk Universal Forwarder.
 3. **Webhook de auditoría (Pro):** envíe eventos en tiempo real mediante HTTPS: a un endpoint JSON genérico o a Splunk HTTP Event Collector.
 

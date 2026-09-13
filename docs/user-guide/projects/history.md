@@ -1,90 +1,40 @@
+---
+title: History
+description: The task list of the project dashboard, the meaning of each column, and how to limit how many tasks are kept per template.
+---
 
 # History
 
-The History screen in Semaphore provides a comprehensive view of all task executions within your project. This feature allows you to track, analyze the execution history of your tasks, providing valuable insights into your automation workflows.
+The **History** tab of the project dashboard lists all tasks of the project, newest first. It is the default view when you open a project.
 
-![](/assets/project_history.webp)
+![Project history](/assets/project-dashboard-history.webp)
 
-## Overview {#overview}
+## Columns {#columns}
 
-The History page displays a chronological list of all task executions, including:
+| Column | Content |
+|---|---|
+| **Task** | Task number, the template it was created from, and the commit message of the repository revision that was used. An icon on the left shows the application (Ansible, Terraform, Bash, and so on). |
+| **Version** | For [build and deploy templates](../task-templates/build-deploy): the built or deployed version. For other templates only a status icon. |
+| **Status** | Current status badge, see [Task statuses](../tasks#task-statuses). |
+| **User** | Who started the task. Tasks started by a schedule or an integration have no user. |
+| **Start** | Start date and time in your browser time zone. |
+| **Duration** | How long the task ran. |
 
-- Task templates used
-- Execution status (success, failure, in progress)
-- Start and end times
-- Duration
-- User who initiated the task
-- Task output and logs
+The list is paginated. Click the task number or the template name to open the [task window](../tasks#task-window) with the log, details, and summary. Click the template name in the task window header to go to the template page.
 
-## Viewing Task History {#viewing-task-history}
+## Task retention {#task-retention}
 
-### Accessing History {#accessing-history}
+By default all tasks and their logs are kept forever. To limit the history per template, set `max_tasks_per_template` in `config.json` or the `SEMAPHORE_MAX_TASKS_PER_TEMPLATE` environment variable:
 
-1. Navigate to your project in Semaphore
-2. Click on "History" tab
-3. View the list of all task executions
+```json
+{
+  "max_tasks_per_template": 30
+}
+```
 
-## Task Details {#task-details}
+When the limit is reached, the oldest tasks of that template are deleted together with their logs. See [Configuration](/admin-guide/configuration) for the full list of options.
 
-Clicking on any task in the history list opens a detailed view showing:
+## See also {#see-also}
 
-1. **Task Information**
-   - Task ID
-   - Template used
-   - Start and end times
-   - Duration
-   - Status
-   - User who ran the task
-
-2. **Execution Details**
-   - Complete task output
-   - Error messages (if any)
-   - Environment variables used
-   - Inventory information
-   - Repository details
-
-3. **Task Logs**
-   - Real-time log viewing
-   - Log download option
-   - Log search functionality
-   - Error highlighting
-
-### Statistics {#statistics}
-
-The project provides a statistics page summarizing task outcomes over a selected time range, with filtering by user.
-
-## Task Management {#task-management}
-
-### Actions Available {#actions-available}
-
-From the history view, you can:
-
-- Access complete task logs
-- Download task output
-- Search within logs
-
-## Task Retention {#task-retention}
-
-Semaphore allows you to configure how long task history is retained:
-
-1. **Default Behavior**
-   - All tasks are stored in the database
-   - No automatic deletion by default
-
-2. **Configuring Retention**
-   - Set maximum tasks per template
-   - Configure via environment variable:
-     ```bash
-     SEMAPHORE_MAX_TASKS_PER_TEMPLATE=30
-     ```
-   - Or via config.json:
-     ```json
-     {
-       "max_tasks_per_template": 30
-     }
-     ```
-
-3. **Retention Rules**
-   - When the limit is reached, oldest tasks are automatically deleted
-   - Deletion is per template
-   - Task logs are removed along with task records
+- [Stats](./stats): aggregated task results per day.
+- [Activity](./activity): audit log of changes in the project.

@@ -1,3 +1,8 @@
+---
+title: Workflows (Pro)
+description: Chaining templates into a DAG with task, approval, delay, and note nodes, edge conditions, run monitoring, and permissions.
+---
+
 # Workflows (Pro)
 
 Workflows let you chain multiple task templates into a directed graph (DAG) with
@@ -33,6 +38,8 @@ downstream nodes are launched according to the edge conditions.
    - Click a node or edge to edit its properties in the side panel.
 4. Set a **name** (and optionally a **start version** for run versioning).
 5. Fix any problems listed in the **Problems** panel, then click **Save**.
+
+![Workflow editor](/assets/workflow-editor.webp)
 
 The editor validates the graph before saving. A valid workflow must have at least
 one node, exactly one starting node (no incoming edges), no cycles, and complete
@@ -125,6 +132,6 @@ artifact-producing and -consuming steps on the same execution path.
 
 Workflow templates and runs are available under
 `/api/project/{project_id}/workflows`. See the
-[API documentation](/admin-guide/api) for request and response schemas, including
+[API documentation](/reference/api) for request and response schemas, including
 `delay` node fields (`delay_seconds`) and the stop endpoint
 (`POST …/runs/{run_id}/stop`).

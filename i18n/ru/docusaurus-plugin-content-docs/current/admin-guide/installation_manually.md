@@ -15,8 +15,8 @@
 
 В этой документации подробно описано, как настроить Semaphore при использовании следующих способов установки:
 
-* [Менеджер пакетов](/admin-guide/installation#package-manager)
-* [Бинарный файл](/admin-guide/installation#binary-file)
+* [Менеджер пакетов](/admin-guide/installation/package-manager)
+* [Бинарный файл](/admin-guide/installation/binary-file)
 
 Программный пакет Semaphore — лишь часть системы, необходимой для успешного запуска Ansible с его помощью.
 
@@ -230,7 +230,7 @@ deactivate
 
 ## Обратный прокси {#reverse-proxy}
 
-См.: [Безопасность — Шифрованное соединение](/security#reverse-proxy)
+См.: [Безопасность — Шифрованное соединение](/admin-guide/security/network#reverse-proxy)
 
 ----
 

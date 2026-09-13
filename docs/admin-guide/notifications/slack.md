@@ -1,3 +1,8 @@
+---
+title: Slack
+description: Creating a Slack incoming webhook, testing it with curl, and enabling Slack alerts via config.json or environment variables.
+---
+
 # Slack
 
 Slack notifications allow you to receive real-time updates about your Semaphore workflows directly in your Slack channels. This integration helps teams stay informed about build statuses, deployment results, and other important events without having to constantly check the Semaphore dashboard.

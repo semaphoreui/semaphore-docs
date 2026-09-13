@@ -1,3 +1,8 @@
+---
+title: Keys from environment variables and files
+description: How a key can read its value from a file or an environment variable on the server, the JSON format, and troubleshooting.
+---
+
 # Keys from environment variables and files
 
 Besides storing a secret in the database, a Key Store entry can read its value at task time from
@@ -23,7 +28,7 @@ When you create or edit a key (**Key Store → New Key**), the top of the form h
 | Tab | Where the value comes from | What to enter |
 |-----|---------------------------|---------------|
 | **Local** | Semaphore database (encrypted) | The login, password, or private key in the form |
-| **Storage** ![Static Badge](https://img.shields.io/badge/pro-yellow) | External secret storage such as [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | Storage and the secret path |
+| **Storage** <Pro /> | External secret storage such as [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | Storage and the secret path |
 | **Env** | An environment variable of the Semaphore server process | The variable name, for example `PROD_SSH_KEY` |
 | **File** | A file on the Semaphore server | The **absolute** path to the file, for example `/var/lib/semaphore/secrets/prod.json` |
 

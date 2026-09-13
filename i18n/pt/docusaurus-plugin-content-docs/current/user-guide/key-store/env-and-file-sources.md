@@ -23,7 +23,7 @@ Ao criar ou editar uma chave (**Armazenamento de Chaves → Nova Chave**), a par
 | Aba | De onde vem o valor | O que informar |
 |-----|---------------------|----------------|
 | **Local** | Banco de dados do Semaphore (criptografado) | O login, a senha ou a chave privada no formulário |
-| **Storage** ![Static Badge](https://img.shields.io/badge/pro-yellow) | Armazenamento de segredos externo, como o [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | O armazenamento e o caminho do segredo |
+| **Storage** <Pro /> | Armazenamento de segredos externo, como o [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | O armazenamento e o caminho do segredo |
 | **Env** | Uma variável de ambiente do processo do servidor Semaphore | O nome da variável, por exemplo `PROD_SSH_KEY` |
 | **File** | Um arquivo no servidor Semaphore | O caminho **absoluto** do arquivo, por exemplo `/var/lib/semaphore/secrets/prod.json` |
 

@@ -1,3 +1,8 @@
+---
+title: Snap (deprecated)
+description: Installing the deprecated Semaphore snap, creating the first admin user, and checking the snap service status.
+---
+
 # Snap (deprecated)
 
 To install Semaphore via snap, run following command in terminal:

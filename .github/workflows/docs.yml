@@ -1,0 +1,59 @@
+name: Docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Structure and prose
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Front matter, sidebar reachability, and translation structure.
+      - name: Structural checks
+        run: node scripts/check-docs.mjs
+
+      # Prose linting. Non-blocking for now: the rule set is being tightened
+      # against the existing pages. Remove continue-on-error once it is clean.
+      - name: Vale
+        uses: errata-ai/vale-action@reviewdog
+        continue-on-error: true
+        with:
+          files: docs
+          fail_on_error: true
+          reporter: github-pr-check
+
+  build:
+    name: Build (${{ matrix.locale }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Every locale is built: onBrokenLinks and onBrokenAnchors are set to
+        # 'throw', so a link that only breaks in one translation still fails.
+        locale: [en, de, es, fr, it, ja, ko, pt, ru, sr, zh]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: node scripts/build-locale.cjs ${{ matrix.locale }} build/${{ matrix.locale }}

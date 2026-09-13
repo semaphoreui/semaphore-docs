@@ -1,92 +1,52 @@
+# Runners del proyecto (Pro)
 
-# Runners de proyecto (Pro)
+Los runners ejecutan tareas en máquinas distintas del servidor de Semaphore: más cerca de la infraestructura de destino, en otra zona de red o con un conjunto de herramientas diferente. Los **runners globales** los registra un administrador y dan servicio a todos los proyectos. Los **runners del proyecto** pertenecen a un único proyecto y los gestiona su equipo en la sección **Runners**.
 
-Los runners de proyecto son una potente función de Semaphore Pro que permite la ejecución distribuida de tareas en varios servidores. Esta función le permite ejecutar tareas en servidores distintos de su instancia de Semaphore UI, ofreciendo mayor seguridad, escalabilidad y gestión de recursos.
+![Runners del proyecto](/assets/project-runners-list.webp)
 
-![](/assets/project_runners.webp)
+| Columna | Contenido |
+|---|---|
+| Interruptor | Habilita o deshabilita el runner. Un runner deshabilitado no recibe tareas. Solo los runners del proyecto tienen interruptor; los runners globales los gestiona el administrador. |
+| **Nombre** | Nombre del runner. El distintivo **Global** marca los runners compartidos por todos los proyectos. |
+| **Etiqueta** | Etiquetas del runner. Las plantillas con una **Etiqueta de runner** solo se ejecutan en los runners que tienen esa etiqueta. |
+| **Estado** | **Online** cuando el runner ha consultado al servidor recientemente; **Offline** en caso contrario. |
 
-## Descripción general {#overview}
+## Añadir un runner {#adding-a-runner}
 
-Los runners de proyecto funcionan con un principio similar al de los runners de GitLab o GitHub Actions:
+Necesita el rol **Manager** o superior. Haga clic en **Nuevo runner** y rellene el formulario.
 
-- Un runner se despliega en un servidor distinto del de su Semaphore UI
-- El runner se conecta a su instancia de Semaphore mediante un token seguro
-- Cuando se crean tareas, Semaphore las delega a los runners disponibles
-- Los runners ejecutan las tareas y devuelven los resultados a Semaphore
+<div style={{maxWidth: 420}}>
 
-## Ventajas {#benefits}
+![Cuadro de diálogo Nuevo runner](/assets/project-runner-new.webp)
 
-El uso de runners ofrece varias ventajas clave:
+</div>
 
-1. **Mayor seguridad**
-   - Los runners pueden desplegarse en entornos aislados o redes restringidas
-   - Las operaciones sensibles pueden ejecutarse en entornos controlados
-   - Mejor separación de responsabilidades entre la interfaz y los entornos de ejecución
+| Campo | Descripción |
+|---|---|
+| **Nombre** | Nombre del runner que se muestra en la lista y en los detalles de las tareas. |
+| **Etiquetas** | Opcional. Una o varias etiquetas. Una plantilla con una **Etiqueta de runner** solo la ejecutan los runners que llevan esa etiqueta. |
+| **Es predeterminado** | Los runners con esta marca también toman tareas de plantillas sin etiqueta de runner. Un runner sin esta marca y sin etiquetas nunca recibe tareas. |
+| **Registrar** | Marcado: el runner se crea ya registrado y el cuadro de diálogo muestra el token del runner que debe incluir en su configuración. Sin marcar: el runner se crea sin registrar y obtiene un **token de registro** de un solo uso; el runner se registra por sí mismo con `semaphore runner register` o `semaphore runner start --auto-register`. |
+| **Webhook** | URL opcional a la que Semaphore llama cuando se asigna una tarea al runner. Úsela para arrancar runners a demanda (de un solo uso), por ejemplo con una función en la nube. |
+| **Número máximo de tareas paralelas** | Opcional. Cuántas tareas puede ejecutar el runner a la vez. |
+| **Habilitado** | Si el runner recibe tareas. |
 
-2. **Mejor escalabilidad**
-   - Distribuya la carga de trabajo entre varios servidores
-   - Añada o elimine runners según la demanda
-   - Mejor aprovechamiento de los recursos de su infraestructura
+Tras crearlo, haga clic en el runner para volver a ver su token o su token de registro y para copiar los fragmentos de configuración.
 
-3. **Despliegue flexible**
-   - Despliegue runners cerca de su infraestructura de destino
-   - Ejecute tareas en distintas zonas de red
-   - Compatibilidad con varios modelos de despliegue (local, nube, híbrido)
+## Instalar el runner {#installing-the-runner}
 
-## Uso de runners de proyecto {#using-project-runners}
+El runner es el mismo binario `semaphore` o la imagen de Docker `semaphoreui/runner` iniciada en modo runner. La instalación, el archivo de configuración, los comandos de registro, los ejecutores (local, Docker, Kubernetes) y la seguridad se describen en la guía del administrador: [Runners](/admin-guide/runners) y [CLI: Runners](/reference/cli/runners).
 
-### Requisitos previos {#prerequisites}
+## Dirigir tareas a los runners {#routing-tasks-to-runners}
 
-Para usar runners, necesita:
+1. Asigne al runner una o varias **Etiquetas**, por ejemplo `windows-qa-server`.
+2. En el formulario de la plantilla, establezca **Etiqueta de runner** con el mismo valor.
+3. Las tareas de la plantilla esperan en estado `waiting` hasta que un runner con esa etiqueta esté en línea.
 
-1. Una licencia de Semaphore Pro
-2. Un servidor independiente para ejecutar el runner
-3. Conectividad de red entre el runner y Semaphore UI
-4. Una configuración adecuada tanto en el servidor de Semaphore UI como en el del runner
+Las plantillas sin etiqueta de runner van a los runners marcados como **Es predeterminado**, incluidos los runners globales predeterminados. El runner que ejecutó una tarea se muestra en la pestaña **Detalles** de la [ventana de la tarea](../tasks#task-window).
 
-<!-- ### Configuration
+## Seguridad {#security}
 
-1. **Semaphore UI Configuration**
-  
-
-2. **Runner Setup** -->
-
-
-### Gestión de runners {#managing-runners}
-
-Puede gestionar los runners desde Semaphore UI:
-
-1. Vaya a la sección Runners de su proyecto
-2. Consulte todos los runners registrados y su estado
-3. Añada o elimine runners según sea necesario
-4. Supervise el estado y el rendimiento de los runners
-
-### Consideraciones de seguridad {#security-considerations}
-
-- Use siempre HTTPS para la comunicación entre los runners y Semaphore UI
-- Implemente una seguridad de red adecuada entre los runners y Semaphore UI
-- Considere el uso de entornos aislados para las operaciones sensibles
-
-## Buenas prácticas {#best-practices}
-
-1. **Planificación de recursos**
-   - Dimensione sus runners de forma adecuada a su carga de trabajo
-   - Supervise el uso de recursos de los runners
-   - Escale los runners según la demanda
-
-2. **Configuración de red**
-   - Asegure una conectividad de red adecuada
-   - Configure los cortafuegos correctamente
-   - Use canales de comunicación seguros
-
-3. **Mantenimiento**
-   - Actualice regularmente el software del runner
-   - Supervise el estado de los runners
-   - Implemente un registro y una supervisión adecuados
-   - Disponga de una estrategia de respaldo ante fallos de los runners
-
-4. **Seguridad**
-   - Siga el principio de mínimo privilegio
-   - Implemente controles de acceso adecuados
-   - Realice auditorías de seguridad periódicas
-   - Mantenga el software actualizado
+- Los runners se conectan al servidor, nunca al contrario, por lo que un runner puede estar detrás de un NAT o en una red privada.
+- Cada petición de un runner se autentica con su token. Revoque un runner eliminándolo o deshabilitándolo.
+- Use HTTPS entre los runners y el servidor; consulte [Seguridad de la red](/admin-guide/security/network).

@@ -1,3 +1,7 @@
+---
+title: Network security
+description: Serving Semaphore over TLS or a VPN, the HTTP-to-HTTPS redirect listener, reverse proxies, and certificates.
+---
 
 # Network security
 

@@ -1,3 +1,8 @@
+---
+title: Teams
+description: The four built-in project roles and what they can do, Enterprise custom roles and template permissions, and member management.
+---
+
 # Teams
 
 In Semaphore UI, every project is associated with a **Team**. Only team members and admins can access the project. Each member of the team is assigned one of four built-in roles, which govern their level of access and the actions they can perform.
@@ -7,6 +12,10 @@ In the **Enterprise** edition, built-in roles can be extended with [custom roles
 :::tip
 To avoid losing access to a project, it's recommended to have at least two team members with the <b>Owner</b> role.
 :::
+
+The **Team** section of a project has two tabs: **Members** with users and their roles, and **Roles** with custom roles (Enterprise).
+
+![Team members](/assets/team-members.webp)
 
 ## Built-in roles {#built-in-roles}
 

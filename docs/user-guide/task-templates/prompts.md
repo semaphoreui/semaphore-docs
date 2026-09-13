@@ -1,6 +1,11 @@
+---
+title: Prompts
+description: Built-in runtime options for Ansible and Terraform templates, how to enable them, and how to pass prompt values via API or schedules.
+---
+
 # Prompts
 
-Prompts are predefined flags and options specific to each template type that you can enable to allow runtime customization. Unlike [Survey Variables](/survey-vars) which are custom fields you create, prompts are built-in options that correspond to specific CLI flags for Ansible, Terraform, and other tools.
+Prompts are predefined flags and options specific to each template type that you can enable to allow runtime customization. Unlike [Survey Variables](/user-guide/task-templates/survey-vars) which are custom fields you create, prompts are built-in options that correspond to specific CLI flags for Ansible, Terraform, and other tools.
 
 This feature allows you to:
 - Override template defaults at runtime
@@ -149,7 +154,7 @@ Select which Terraform workspace to use for the task execution.
 2. The workspace selector automatically appears in the task form
 3. Users choose the target workspace when running tasks
 
-See [Terraform Workspaces](/apps/terraform/workspaces) for detailed setup.
+See [Terraform Workspaces](/user-guide/apps/terraform/workspaces) for detailed setup.
 
 ### Destroy Flag {#destroy-flag}
 
@@ -190,7 +195,7 @@ The task form displays these options when running Terraform tasks.
 
 ## Bash, PowerShell, and Python Prompts {#bash-powershell-and-python-prompts}
 
-For Bash, PowerShell, and Python templates, prompts are minimal as most customization is handled through [Survey Variables](/survey-vars).
+For Bash, PowerShell, and Python templates, prompts are minimal as most customization is handled through [Survey Variables](/user-guide/task-templates/survey-vars).
 
 Available prompts are:
 
@@ -381,9 +386,9 @@ Use Terraform destroy for temporary infrastructure:
 
 ## Related Documentation {#related-documentation}
 
-- [Survey Variables](/survey-vars) - Custom fields for templates
-- [Ansible Templates](/apps/ansible) - Ansible-specific configuration
-- [Terraform Templates](/apps/terraform) - Terraform-specific configuration
+- [Survey Variables](/user-guide/task-templates/survey-vars) - Custom fields for templates
+- [Ansible Templates](/user-guide/apps/ansible) - Ansible-specific configuration
+- [Terraform Templates](/user-guide/apps/terraform) - Terraform-specific configuration
 - [Schedules](../schedules) - Automated task execution
 - [Integrations](../integrations) - Webhook-triggered tasks
-- [API Documentation](../../admin-guide/api) - API reference
+- [API Documentation](../../reference/api) - API reference

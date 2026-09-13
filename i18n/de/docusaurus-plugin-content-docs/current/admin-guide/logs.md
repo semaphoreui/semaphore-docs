@@ -188,7 +188,7 @@ Jedes Audit-Ereignis enthält neben dem handelnden Benutzer und dem betroffenen 
 
 Es gibt drei Möglichkeiten, Audit-Ereignisse an Ihr SIEM zu übermitteln:
 
-1. **Pull:** Lesen Sie `/api/events` aus (siehe [API-Dokumentation](/admin-guide/api)).
+1. **Pull:** Lesen Sie `/api/events` aus (siehe [API-Dokumentation](/reference/api)).
 2. **Datei-Collector:** Aktivieren Sie die Aktivitätsprotokolldatei (Pro, siehe oben) und übertragen Sie `events.log` (JSON-Format empfohlen) mit Filebeat, Fluentd oder einem Splunk Universal Forwarder.
 3. **Audit-Webhook (Pro):** Senden Sie Ereignisse in Echtzeit über HTTPS – an einen generischen JSON-Endpunkt oder den Splunk HTTP Event Collector.
 

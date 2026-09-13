@@ -23,7 +23,7 @@ Semaphore はその値をデータベースにコピーしません。タスク�
 | タブ | 値の取得元 | 入力する内容 |
 |-----|---------------------------|---------------|
 | **Local** | Semaphore のデータベース (暗号化済み) | フォームに入力するログイン、パスワード、または秘密鍵 |
-| **Storage** ![Static Badge](https://img.shields.io/badge/pro-yellow) | [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) などの外部シークレットストレージ | ストレージとシークレットのパス |
+| **Storage** <Pro /> | [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) などの外部シークレットストレージ | ストレージとシークレットのパス |
 | **Env** | Semaphore サーバープロセスの環境変数 | 変数名 (例: `PROD_SSH_KEY`) |
 | **File** | Semaphore サーバー上のファイル | ファイルへの**絶対**パス (例: `/var/lib/semaphore/secrets/prod.json`) |
 

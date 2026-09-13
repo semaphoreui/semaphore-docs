@@ -1,3 +1,8 @@
+---
+title: Getting Started
+description: A step-by-step path from a fresh install to your first task run, plus the key concepts used across the UI.
+---
+
 # Getting Started
 
 This page walks you from a fresh install to your first successful task. Each step links to the page with the details.
@@ -16,7 +21,7 @@ This page walks you from a fresh install to your first successful task. Each ste
 6. **Automate and operationalize:**
    - Run on a schedule: [Schedules](/user-guide/schedules).
    - Control who can do what: [Teams and custom roles](/user-guide/team).
-   - Get alerted on results: [Notifications](/category/notifications).
+   - Get alerted on results: [Notifications](/admin-guide/notifications).
 
 ## Key concepts {#key-concepts}
 
@@ -36,6 +41,6 @@ These terms appear everywhere in the UI.
 
 ## Next steps {#next-steps}
 
-- Put Semaphore behind TLS with a [reverse proxy](/category/reverse-proxy).
-- Connect your identity provider: [LDAP](/admin-guide/ldap) or [OpenID Connect](/admin-guide/openid).
-- Drive Semaphore from CI or scripts with the [API](/admin-guide/api) and [CLI](/admin-guide/cli).
+- Put Semaphore behind TLS with a [reverse proxy](/admin-guide/reverse-proxy).
+- Connect your identity provider: [LDAP](/admin-guide/authentication/ldap) or [OpenID Connect](/admin-guide/authentication/openid).
+- Drive Semaphore from CI or scripts with the [API](/reference/api) and [CLI](/reference/cli).

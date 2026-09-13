@@ -1,13 +1,20 @@
+---
+title: Repositories
+description: Supported repository URL types, authentication keys, creating and deleting repositories, and how requirements.yml is processed.
+---
+
 # Repositories
 
 A Repository is a place to store and manage Ansible content like playbooks and roles.
 
-![](/assets/repository.webp)
+![Repositories list](/assets/repositories-list.webp)
+
+The list shows the name, the Git URL with the branch, and the key used for authentication.
 
 Semaphore understands Repositories that are:
   * a local file system (`/path/to/the/repo`)
   * a local Git repository (`file://`)
-  * a remote Git Repository that is accessed over HTTPS (`https://`), SSH(`ssh://`)
+  * a remote Git Repository that is accessed over HTTPS (`https://`), SSH (`ssh://` or the short form `git@host:org/repo.git`)
   * `git://` protocol supported, but it is not recommended for security reasons.
 
 All Task Templates require a Repository in order to run.

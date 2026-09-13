@@ -188,7 +188,7 @@ Semaphore 2.20 이상은 SIEM(Splunk, Elastic Security, QRadar, Wazuh 등)으로
 
 감사 이벤트를 SIEM으로 전달하는 방법은 세 가지입니다:
 
-1. **Pull:** `/api/events`를 읽습니다([API 문서](/admin-guide/api) 참고).
+1. **Pull:** `/api/events`를 읽습니다([API 문서](/reference/api) 참고).
 2. **파일 수집기:** 활동 로그 파일(Pro, 위 참고)을 활성화하고 Filebeat, Fluentd 또는 Splunk Universal Forwarder로 `events.log`(JSON 형식 권장)를 전송합니다.
 3. **감사 webhook(Pro):** HTTPS를 통해 실시간으로 이벤트를 push합니다 — 일반 JSON 엔드포인트 또는 Splunk HTTP Event Collector를 사용할 수 있습니다.
 

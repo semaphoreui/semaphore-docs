@@ -1,6 +1,6 @@
 # Almacenamiento de secretos en AWS Secrets Manager
 
-![Insignia estática](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Semaphore UI Enterprise puede usar **AWS Secrets Manager** como almacenamiento externo para los secretos del Almacén de claves en lugar de la base de datos.
 

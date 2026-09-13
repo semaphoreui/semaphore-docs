@@ -1,8 +1,10 @@
 # 変数グループ
 
-Semaphore の変数グループセクションは、インベントリ用の追加変数を保存する場所であり、変数は JSON 形式で保存する必要があります。
+![変数グループの一覧](/assets/variable-groups-list.webp)
 
-すべてのタスクテンプレートには、たとえ空であっても変数グループを定義する必要があります。 
+Semaphore の変数グループセクションは、インベントリ用の追加変数を保存する場所で、JSON 形式で保存する必要があります。
+
+すべてのタスクテンプレートには、空であっても変数グループの定義が必要です。 
 
 ## 変数グループの作成 {#create-a-variable-group}
 1. 変数グループタブをクリックします。
@@ -20,10 +22,10 @@ Semaphore の変数グループセクションは、インベントリ用の追�
 
 1. 変数グループをクリックします。
 2. 変数グループの横にあるゴミ箱アイコンをクリックします。
-3. 本当に変数グループを削除してよければ、「はい」をクリックします。
+3. 本当に変数グループを削除してよければ「はい」をクリックします。
 
 ## 変数グループの使用 - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
-保存した変数グループの変数やシークレットを Terraform テンプレートで利用したい場合は、Terraform スクリプトがそれを使用できるように、名前の先頭に `TF_VAR_` を付ける必要があります。 
+保存した変数グループの変数やシークレットを terraform テンプレートで利用したい場合は、terraform スクリプトがそれを使用できるように、名前の先頭に `TF_VAR_` を付ける必要があります。 
 
 **例**
 Hetzner Cloud の API キーを OpenTofu/Terraform の playbook に渡します。 
@@ -31,11 +33,11 @@ Hetzner Cloud の API キーを OpenTofu/Terraform の playbook に渡します�
 1. 変数グループをクリックします
 2. `New Group` をクリックします
 3. `Secrets` タブをクリックします
-4. `TF_VAR_hcloud_token` を追加し、非表示フィールドに `secret` を入力します
+4. `TF_VAR_hcloud_token` を追加し、非表示のフィールドに `secret` を入力します
 5. 「保存」をクリックします
 
-シークレット `TF_VAR_hcloud_token` は、hetzner.tf 内では 
-`var.hcloud_token` として参照します
+`TF_VAR_hcloud_token` というシークレットは、hetzner.tf では
+`var.hcloud_token` として参照します。
 ```
 terraform {
   required_providers {

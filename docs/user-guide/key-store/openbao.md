@@ -1,3 +1,8 @@
+---
+title: OpenBao secret storage
+description: Using an OpenBao server as external storage for keys and variable groups, with mount, namespace, and token options.
+---
+
 # OpenBao secret storage
 
 Semaphore UI supports [OpenBao](https://openbao.org) as a storage for secrets.

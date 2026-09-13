@@ -1,130 +1,135 @@
 # Workflows (Pro)
 
-Mit Workflows können Sie mehrere Aufgabenvorlagen zu einem gerichteten Graphen (DAG)
-mit Verzweigungen, Genehmigungen und zeitgesteuerten Pausen verketten. Ein Workflow-Lauf
-schreitet automatisch voran, sobald die einzelnen Schritte abgeschlossen sind — Sie entwerfen
-den Graphen einmal im visuellen Editor und starten anschließend Läufe von der Seite „Workflows“.
+Mit Workflows können Sie mehrere Task Templates zu einem gerichteten Graphen (DAG)
+mit Verzweigungen, Freigaben und zeitgesteuerten Pausen verketten. Ein Workflow-Durchlauf
+läuft automatisch weiter, sobald ein Schritt abgeschlossen ist — Sie entwerfen den Graphen
+einmal im visuellen Editor und starten Durchläufe dann über die Seite Workflows.
 
 :::info
-Workflows sind eine Funktion von **Semaphore Pro**. Der Menüpunkt „Workflows“ erscheint nur,
-wenn Ihr Abonnement diese Funktion enthält.
+Workflows sind eine Funktion von **Semaphore Pro**. Der Menüpunkt Workflows erscheint nur,
+wenn Ihr Abonnement sie umfasst.
 :::
 
 ## Überblick {#overview}
 
 Ein Workflow besteht aus:
 
-- **Knoten** — Schritte im Graphen (eine Vorlage ausführen, auf eine Genehmigung warten,
-  für eine Verzögerung pausieren oder mit einer Notiz kommentieren).
-- **Kanten** — Verbindungen zwischen Knoten, jeweils mit einer **Bedingung** versehen,
-  die steuert, wann der nachgelagerte Knoten startet.
+- **Nodes** — Schritte im Graphen (ein Task Template ausführen, auf eine Freigabe warten,
+  für eine Verzögerung pausieren oder mit einer Notiz versehen).
+- **Edges** — Verbindungen zwischen Nodes, jede mit einer **Bedingung** versehen, die
+  festlegt, wann der nachfolgende Node startet.
 
-Wenn Sie einen Workflow starten, erstellt Semaphore einen **Workflow-Lauf**. Der Server
-steuert den Fortschritt: Sobald Aufgaben abgeschlossen, Genehmigungen erteilt oder Verzögerungen
-abgelaufen sind, werden nachgelagerte Knoten gemäß den Kantenbedingungen gestartet.
+Wenn Sie einen Workflow starten, erstellt Semaphore einen **Workflow-Durchlauf**. Der Server
+steuert den Fortschritt: sobald Tasks abgeschlossen sind, Freigaben erteilt wurden oder
+Verzögerungen ablaufen, werden die nachfolgenden Nodes entsprechend den Bedingungen der Edges gestartet.
 
 ## Einen Workflow erstellen {#creating-a-workflow}
 
-1. Öffnen Sie Ihr Projekt und wechseln Sie zu **Workflows**.
-2. Klicken Sie auf **Neuer Workflow**.
+1. Öffnen Sie Ihr Projekt und gehen Sie zu **Workflows**.
+2. Klicken Sie auf **New Workflow**.
 3. Im grafischen Editor:
-   - Ziehen Sie Knoten aus der Palette auf die Arbeitsfläche.
-   - Verbinden Sie Knoten, indem Sie vom Ausgangs-Handle eines Knotens zu einem anderen ziehen.
-   - Klicken Sie auf einen Knoten oder eine Kante, um dessen Eigenschaften im Seitenbereich zu bearbeiten.
-4. Legen Sie einen **Namen** fest (und optional eine **Startversion** für die Versionierung der Läufe).
-5. Beheben Sie alle im Bereich **Probleme** aufgeführten Probleme und klicken Sie dann auf **Speichern**.
+   - Ziehen Sie Nodes aus der Palette auf die Arbeitsfläche.
+   - Verbinden Sie Nodes, indem Sie vom Ausgangspunkt eines Nodes zu einem anderen ziehen.
+   - Klicken Sie auf einen Node oder eine Edge, um die Eigenschaften im Seitenbereich zu bearbeiten.
+4. Legen Sie einen **Namen** fest (und optional eine **Startversion** für die Versionierung der Durchläufe).
+5. Beheben Sie alle im Bereich **Problems** aufgeführten Probleme und klicken Sie dann auf **Save**.
+
+![Workflow-Editor](/assets/workflow-editor.webp)
 
 Der Editor validiert den Graphen vor dem Speichern. Ein gültiger Workflow muss mindestens
-einen Knoten, genau einen Startknoten (ohne eingehende Kanten), keine Zyklen und eine vollständige
-Konfiguration auf jedem ausführbaren Knoten haben.
+einen Node haben, genau einen Start-Node (ohne eingehende Edges), keine Zyklen und eine
+vollständige Konfiguration auf jedem ausführbaren Node.
 
-## Knotentypen {#node-kinds}
+## Arten von Nodes {#node-kinds}
 
-| Typ | Zweck |
+| Art | Zweck |
 |------|---------|
-| **Aufgabe** | Führt eine Aufgabenvorlage aus. Sie können Vorlagenparameter (Inventory, Umgebung, Ansible-Limit, zusätzliche CLI-Argumente) pro Knoten über **Aufgabenparameter** überschreiben. |
-| **Genehmigung** | Pausiert den Lauf, bis ein Benutzer mit entsprechender Berechtigung genehmigt oder ablehnt. Optional können ein Timeout (Sekunden) und eine Genehmigungsnachricht festgelegt werden. |
-| **Verzögerung** | Wartet die konfigurierte Anzahl von Sekunden, bevor mit den nachgelagerten Knoten fortgefahren wird. Nützlich für Abkühlphasen, Wartungsfenster oder zum zeitlichen Abstand abhängiger Schritte. |
-| **Notiz** | Freie Anmerkung auf der Arbeitsfläche. Notizknoten werden nicht ausgeführt und nicht über Kanten verbunden — sie dienen ausschließlich der Dokumentation. |
+| **Task** | Führt ein Task Template aus. Sie können die Parameter des Task Template (Inventory, Environment, Ansible-Limit, zusätzliche CLI-Argumente) pro Node über **task params** überschreiben. |
+| **Approval** | Hält den Durchlauf an, bis ein Benutzer mit entsprechender Berechtigung freigibt oder ablehnt. Optional können Sie ein Timeout (in Sekunden) und eine Freigabemeldung festlegen. |
+| **Delay** | Wartet eine konfigurierte Anzahl von Sekunden, bevor es mit den nachfolgenden Nodes weitergeht. Nützlich für Abkühlphasen, Wartungsfenster oder um abhängige Schritte zeitlich zu entzerren. |
+| **Note** | Freie Anmerkung auf der Arbeitsfläche. Note-Nodes werden nicht ausgeführt und nicht über Edges verbunden — sie dienen ausschließlich der Dokumentation. |
 
 ### Zusammenführung {#convergence}
 
-Knoten mit mehreren eingehenden Kanten können verlangen, dass **alle** vorgelagerten Knoten
-abgeschlossen sind (Standard) oder **einer beliebige** davon. Legen Sie **Zusammenführung** im Eigenschaftenbereich des Knotens fest.
+Nodes mit mehreren eingehenden Edges können verlangen, dass **alle** vorgelagerten Nodes
+abgeschlossen sind (Standard) oder nur **einer** von ihnen. Legen Sie **Convergence** im
+Eigenschaftsbereich des Nodes fest.
 
-### Verzögerungsknoten {#delay-nodes}
+### Delay-Nodes {#delay-nodes}
 
-Ein Verzögerungsknoten pausiert den Workflow-Lauf für die konfigurierte Dauer (mindestens 1
+Ein Delay-Node hält den Workflow-Durchlauf für die konfigurierte Dauer an (mindestens 1
 Sekunde). Während des Wartens:
 
-- Der Lauf bleibt im Status **running**.
-- Die Laufansicht zeigt einen Live-Countdown auf dem Verzögerungsknoten an.
-- Über Kanten verbundene nachgelagerte Knoten werden erst gestartet, wenn die Verzögerung abgelaufen ist.
+- Der Durchlauf bleibt im Status **running**.
+- Die Durchlaufansicht zeigt einen laufenden Countdown auf dem Delay-Node.
+- Über Edges verbundene nachfolgende Nodes werden erst gestartet, wenn die Verzögerung abgelaufen ist.
 
-Wird der Workflow-Lauf **gestoppt**, während eine Verzögerung aktiv ist, wird die Verzögerung
-abgebrochen und der Lauf endet im Status **stopped**.
+Wird der Workflow-Durchlauf während einer aktiven Verzögerung **gestoppt**, wird die
+Verzögerung abgebrochen und der Durchlauf endet im Status **stopped**.
 
-### Genehmigungsknoten {#approval-nodes}
+### Approval-Nodes {#approval-nodes}
 
-Wenn der Lauf einen Genehmigungsknoten erreicht, wechselt der Status zu **approval**, bis
-jemand genehmigt oder ablehnt. Die Schaltflächen „Genehmigen“/„Ablehnen“ erscheinen in der Laufansicht.
-Abgelehnte Genehmigungen lassen den Lauf gemäß den Bedingungen der verbundenen Kanten fehlschlagen.
+Wenn der Durchlauf einen Approval-Node erreicht, wechselt der Status zu **approval**, bis
+jemand freigibt oder ablehnt. In der Durchlaufansicht erscheinen die Schaltflächen zum
+Freigeben und Ablehnen. Abgelehnte Freigaben lassen den Durchlauf entsprechend den
+Bedingungen der verbundenen Edges fehlschlagen.
 
-## Kantenbedingungen {#edge-conditions}
+## Bedingungen von Edges {#edge-conditions}
 
-Jede Kante hat eine Bedingung, die bestimmt, wann der nachgelagerte Knoten bereit wird:
+Jede Edge hat eine Bedingung, die festlegt, wann der nachfolgende Node bereit wird:
 
-| Bedingung | Nachgelagerter Knoten startet, wenn der vorgelagerte Knoten… |
+| Bedingung | Der nachfolgende Node startet, wenn der vorgelagerte Node… |
 |-----------|-------------------------------------------|
-| **Bei Erfolg** | erfolgreich abgeschlossen wird (Standard). |
-| **Bei Fehler** | mit einem Fehler abgeschlossen wird. |
-| **Immer** | in einem beliebigen Endzustand abgeschlossen wird (Erfolg oder Fehler). |
+| **On success** | Erfolgreich abschließt (Standard). |
+| **On failure** | Mit einem Fehler abschließt. |
+| **Always** | In einem beliebigen Endzustand abschließt (Erfolg oder Fehler). |
 
-Verwenden Sie **Bei Fehler**-Zweige für kompensierende Aktionen oder Benachrichtigungen. Verwenden Sie
-**Immer**, wenn der nächste Schritt unabhängig vom Ergebnis ausgeführt werden soll.
+Verwenden Sie **On failure**-Zweige für ausgleichende Aktionen oder Benachrichtigungen.
+Verwenden Sie **Always**, wenn der nächste Schritt unabhängig vom Ergebnis laufen soll.
 
-## Ausführen und Überwachen {#running-and-monitoring}
+## Ausführen und überwachen {#running-and-monitoring}
 
-- **Workflow ausführen** — startet einen neuen Lauf aus der Workflow-Liste.
-- **Laufansicht** — Vollbild-Graph mit Live-Status auf jedem Knoten (laufend, erfolgreich,
-  fehlgeschlagen, Genehmigung, Verzögerungs-Countdown).
-- **Stoppen** — solange ein Lauf im Status `running` oder `approval` ist, können Benutzer mit
-  `run_project_tasks` ihn stoppen. Alle aktiven Aufgaben werden gestoppt, ausstehende
-  Genehmigungen werden abgelehnt und der Lauf wird als **stopped** markiert.
+- **Run workflow** — startet einen neuen Durchlauf aus der Liste der Workflows.
+- **Durchlaufansicht** — Vollbildgraph mit Live-Status auf jedem Node (running, success,
+  failed, approval, Countdown der Verzögerung).
+- **Stop** — solange ein Durchlauf `running` oder `approval` ist, können Benutzer mit
+  `run_project_tasks` ihn stoppen. Alle aktiven Tasks werden gestoppt, ausstehende
+  Freigaben werden abgelehnt und der Durchlauf wird als **stopped** markiert.
 
-Laufstatus: `running`, `approval`, `success`, `failed`, `stopped`.
+Status von Durchläufen: `running`, `approval`, `success`, `failed`, `stopped`.
 
-## Versionierung von Läufen {#run-versioning}
+## Versionierung von Durchläufen {#run-versioning}
 
-Legen Sie im Workflow eine **Startversion** fest (zum Beispiel `1.0.0`), um Versionsbezeichnungen
-für jeden Lauf zu aktivieren. Semaphore erhöht die Version bei aufeinanderfolgenden Läufen, ähnlich
-wie bei Build-Vorlagen.
+Legen Sie **Start version** für den Workflow fest (zum Beispiel `1.0.0`), um
+Versionsbezeichnungen für jeden Durchlauf zu aktivieren. Semaphore erhöht die Version bei
+jedem weiteren Durchlauf, ähnlich wie bei Build-Task-Templates.
 
 ## Workflow-Artefakte (set_stats) {#workflow-artifacts-set_stats}
 
-Wenn eine Ansible-Aufgabe in einem Workflow `set_stats` verwendet, werden die Variablen als
-**Workflow-Artefakte** für diesen Lauf gespeichert. Nachgelagerte Aufgabenknoten im selben Lauf
-erhalten sie automatisch als zusätzliche Variablen.
+Wenn ein Ansible-Task in einem Workflow `set_stats` verwendet, werden die Variablen als
+**Workflow-Artefakte** für diesen Durchlauf gespeichert. Nachfolgende Task-Nodes im selben
+Durchlauf erhalten sie automatisch als zusätzliche Variablen.
 
 :::warning
-Wenn Schritte im Workflow auf **Remote-Runnern** ausgeführt werden, fließen Workflow-Artefakte noch nicht
-über Remote-Runner-Schritte hinweg — sie werden nur zwischen Aufgaben weitergegeben, die lokal
-auf dem Semaphore-Server ausgeführt werden. Planen Sie die Übergabe von Artefakten entsprechend oder halten Sie
-Artefakte erzeugende und konsumierende Schritte auf demselben Ausführungspfad.
+Wenn Schritte des Workflows auf **Remote-Runnern** laufen, werden Workflow-Artefakte noch
+nicht über Schritte auf Remote-Runnern hinweg weitergegeben — sie werden nur zwischen Tasks
+übergeben, die lokal auf dem Semaphore-Server ausgeführt werden. Planen Sie die Übergabe von
+Artefakten entsprechend oder halten Sie artefakterzeugende und artefaktverbrauchende Schritte
+auf demselben Ausführungspfad.
 :::
 
 ## Berechtigungen {#permissions}
 
-- Das Verwalten von Workflows (Erstellen, Bearbeiten, Löschen) erfordert Berechtigungen zur
+- Das Verwalten von Workflows (erstellen, bearbeiten, löschen) erfordert Berechtigungen zur
   Verwaltung von Projektressourcen.
 - Das Ausführen von Workflows erfordert `run_project_tasks`.
-- Das Erteilen von Genehmigungen erfordert entsprechenden Projektzugriff (dieselben Benutzer, die
-  Aufgaben im Projekt ausführen können).
+- Das Erteilen von Freigaben erfordert entsprechenden Projektzugriff (dieselben Benutzer, die
+  Tasks im Projekt ausführen können).
 
 ## API {#api}
 
-Workflow-Vorlagen und -Läufe sind unter
-`/api/project/{project_id}/workflows` verfügbar. Siehe die
-[API-Dokumentation](/admin-guide/api) für Anfrage- und Antwortschemata, einschließlich der
-Felder von `delay`-Knoten (`delay_seconds`) und des Stopp-Endpunkts
+Workflow-Templates und -Durchläufe sind unter
+`/api/project/{project_id}/workflows` verfügbar. Die Schemas für Anfragen und Antworten
+finden Sie in der [API-Dokumentation](/reference/api), einschließlich der Felder von
+`delay`-Nodes (`delay_seconds`) und des Stop-Endpunkts
 (`POST …/runs/{run_id}/stop`).

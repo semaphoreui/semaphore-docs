@@ -16,7 +16,7 @@
 6. **Автоматизируйте и вводите в эксплуатацию:**
    - Запуск по расписанию: [Расписания](/user-guide/schedules).
    - Контроль того, кто что может делать: [Команды и пользовательские роли](/user-guide/team).
-   - Оповещения о результатах: [Уведомления](/category/notifications).
+   - Оповещения о результатах: [Уведомления](/admin-guide/notifications).
 
 ## Ключевые понятия {#key-concepts}
 
@@ -36,6 +36,6 @@
 
 ## Дальнейшие шаги {#next-steps}
 
-- Разместите Semaphore за TLS с помощью [обратного прокси](/category/reverse-proxy).
-- Подключите провайдера идентификации: [LDAP](/admin-guide/ldap) или [OpenID Connect](/admin-guide/openid).
-- Управляйте Semaphore из CI или скриптов через [API](/admin-guide/api) и [CLI](/admin-guide/cli).
+- Разместите Semaphore за TLS с помощью [обратного прокси](/admin-guide/reverse-proxy).
+- Подключите провайдера идентификации: [LDAP](/admin-guide/authentication/ldap) или [OpenID Connect](/admin-guide/authentication/openid).
+- Управляйте Semaphore из CI или скриптов через [API](/reference/api) и [CLI](/reference/cli).

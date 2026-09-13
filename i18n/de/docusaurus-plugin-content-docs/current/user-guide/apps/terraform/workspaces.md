@@ -1,6 +1,8 @@
 
 # Workspaces
 
+![Workspaces-Tab einer Vorlage](/assets/template-workspaces.webp)
+
 Semaphore bietet integrierte Unterstützung für Terraform-Workspaces, mit denen Sie mehrere Umgebungen und Konfigurationen innerhalb eines einzigen Projekts verwalten können. Diese Funktion hilft Ihnen, separate State-Dateien für verschiedene Umgebungen wie Entwicklung, Staging und Produktion zu pflegen.
 
 ## Funktionen {#features}

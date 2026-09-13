@@ -2,11 +2,15 @@
 
 No Semaphore UI, cada projeto está associado a uma **Equipe**. Apenas os membros da equipe e os administradores podem acessar o projeto. Cada membro da equipe recebe um dos quatro papéis integrados, que determinam o seu nível de acesso e as ações que pode executar.
 
-Na edição **Enterprise**, os papéis integrados podem ser estendidos com [papéis personalizados](#extended-rbac-enterprise), que concedem permissões adicionais e granulares em templates específicos.
+Na edição **Enterprise**, os papéis integrados podem ser estendidos com [papéis personalizados](#extended-rbac-enterprise), que concedem permissões adicionais e granulares em modelos específicos.
 
 :::tip
 Para evitar a perda de acesso a um projeto, recomenda-se ter pelo menos dois membros da equipe com o papel <b>Owner</b>.
 :::
+
+A seção **Team** de um projeto tem duas abas: **Members**, com os usuários e os seus papéis, e **Roles**, com os papéis personalizados (Enterprise).
+
+![Membros da equipe](/assets/team-members.webp)
 
 ## Papéis integrados {#built-in-roles}
 
@@ -45,15 +49,15 @@ Abaixo estão as descrições detalhadas de cada papel e das suas permissões.
 
 ### Task Runner {#task-runner}
 
-- **Executar tarefas:** os Task Runners podem executar qualquer template de tarefa existente no projeto.
+- **Executar tarefas:** os Task Runners podem executar qualquer modelo de tarefa existente no projeto.
 
-- **Somente leitura para os demais recursos:** embora possam executar tarefas, eles têm apenas acesso de leitura aos demais recursos, como inventory, variáveis, repositórios etc.
+- **Somente leitura para os demais recursos:** embora possam executar tarefas, eles têm apenas acesso de leitura aos demais recursos, como inventário, variáveis, repositórios etc.
 
 - **Caso de uso típico:** desenvolvedores ou engenheiros de QA que precisam acionar e monitorar tarefas, mas não precisam modificar as configurações do projeto nem gerenciar os membros da equipe.
 
 ### Guest {#guest}
 
-- **Acesso somente leitura:** os Guests têm acesso de leitura a todos os recursos do projeto (por exemplo, visualizar logs, inventories, painéis).
+- **Acesso somente leitura:** os Guests têm acesso de leitura a todos os recursos do projeto (por exemplo, visualizar logs, inventários, painéis).
 
 - **Sem permissões de escrita:** eles não podem modificar configurações, executar tarefas ou alterar papéis.
 
@@ -69,7 +73,7 @@ O RBAC estendido está disponível na edição **Semaphore Enterprise**, a parti
 
 O RBAC estendido adiciona permissões extras sobre os quatro papéis integrados. Os papéis integrados em si permanecem inalterados. Se você não definir papéis personalizados, cada projeto se comporta exatamente como na edição community.
 
-Com o RBAC estendido, os papéis personalizados podem conceder permissões individuais em todo o projeto. Você também pode conceder a um papel permissões em templates de tarefa selecionados. Isso permite dar a um membro da equipe acesso aos templates de que ele precisa sem promovê-lo a um papel integrado superior.
+Com o RBAC estendido, os papéis personalizados podem conceder permissões individuais em todo o projeto. Você também pode conceder a um papel permissões em modelos de tarefa selecionados. Isso permite dar a um membro da equipe acesso aos modelos de que ele precisa sem promovê-lo a um papel integrado superior.
 
 ### Papéis personalizados {#custom-roles}
 
@@ -85,7 +89,7 @@ Os papéis personalizados estão disponíveis em dois escopos:
 Os papéis personalizados concedem permissões em dois níveis:
 
 - **Permissões em todo o projeto** ampliam o acesso de um usuário em todo o projeto. Você as escolhe ao criar o papel.
-- **Permissões de template** controlam as ações em um único template de tarefa. Você as escolhe na aba **Permissions** desse template após adicionar o papel ao template.
+- **Permissões de modelo** controlam as ações em um único modelo de tarefa. Você as escolhe na aba **Permissions** desse modelo após adicionar o papel ao modelo.
 
 ### Criar um papel personalizado {#create-a-custom-role}
 
@@ -132,43 +136,43 @@ Escolha apenas as permissões em todo o projeto de que o papel precisa:
 | --- | --- |
 | **Can run project tasks** | Executar tarefas do projeto. |
 | **Can update project** | Editar as informações básicas do projeto em **Dashboard** > **Settings**. |
-| **Can manage project resources** | Gerenciar os recursos do projeto, como templates de tarefa, repositórios, inventory, ambientes, entradas do Key Store, agendamentos, integrações e runners. Este é um acesso em todo o projeto. Não pode ser limitado a recursos individuais que não sejam templates. |
+| **Can manage project resources** | Gerenciar os recursos do projeto, como modelos de tarefa, repositórios, inventário, ambientes, entradas do Armazenamento de Chaves, agendamentos, integrações e runners. Este é um acesso em todo o projeto. Não pode ser limitado a recursos individuais que não sejam modelos. |
 | **Can manage project users** | Gerenciar os membros do projeto e as atribuições de papéis. |
 
-As permissões em todo o projeto não podem ser limitadas a um único inventory, repositório, ambiente ou entrada do Key Store. Os templates de tarefa são o único tipo de recurso que suporta atribuições granulares de papéis.
+As permissões em todo o projeto não podem ser limitadas a um único inventário, repositório, ambiente ou entrada do Armazenamento de Chaves. Os modelos de tarefa são o único tipo de recurso que suporta atribuições granulares de papéis.
 
-:::tip Acesso apenas a templates
-Para criar um papel granular que adicione acesso apenas a templates de tarefa selecionados, deixe todas as permissões em todo o projeto desmarcadas. O papel então não adiciona nenhuma permissão em todo o projeto por conta própria. Adicione-o aos templates necessários e escolha apenas as ações de que esse papel precisa neles.
+:::tip Acesso apenas a modelos
+Para criar um papel granular que adicione acesso apenas a modelos de tarefa selecionados, deixe todas as permissões em todo o projeto desmarcadas. O papel então não adiciona nenhuma permissão em todo o projeto por conta própria. Adicione-o aos modelos necessários e escolha apenas as ações de que esse papel precisa neles.
 :::
 
 Selecione **Save** quando a configuração do papel estiver pronta.
 
-### Configurar o acesso a templates de tarefa específicos {#configure-access-to-specific-task-templates}
+### Configurar o acesso a modelos de tarefa específicos {#configure-access-to-specific-task-templates}
 
-As permissões de template adicionam acesso a templates de tarefa selecionados. O exemplo abaixo usa um papel personalizado sem permissões em todo o projeto. Essa configuração de privilégio mínimo é útil quando um membro da equipe precisa apenas de ações selecionadas em templates. Você também pode adicionar permissões de template a um papel que já concede acesso em todo o projeto.
+As permissões de modelo adicionam acesso a modelos de tarefa selecionados. O exemplo abaixo usa um papel personalizado sem permissões em todo o projeto. Essa configuração de privilégio mínimo é útil quando um membro da equipe precisa apenas de ações selecionadas em modelos. Você também pode adicionar permissões de modelo a um papel que já concede acesso em todo o projeto.
 
-**Abra o template desejado**
+**Abra o modelo desejado**
 
-1. Abra **Templates de Tarefa** e selecione o template de destino.
+1. Abra **Modelos de Tarefa** e selecione o modelo de destino.
 2. Abra a aba **Permissions**.
 
-A aba **Permissions** lista os papéis já adicionados ao template.
+A aba **Permissions** lista os papéis já adicionados ao modelo.
 
 ![](https://www.semaphoreui.com/uploads/v2.17/roles2.webp)
 
-**Adicione o papel e conceda as permissões de template**
+**Adicione o papel e conceda as permissões de modelo**
 
-1. Selecione **Add Role** e escolha o papel personalizado a ser adicionado a este template.
-2. Selecione apenas as permissões de template de que o papel precisa, como **Can run tasks** ou **Can update the template**.
+1. Selecione **Add Role** e escolha o papel personalizado a ser adicionado a este modelo.
+2. Selecione apenas as permissões de modelo de que o papel precisa, como **Can run tasks** ou **Can update the template**.
 
 Este exemplo usa um papel criado anteriormente sem permissões em todo o projeto. Você pode escolher qualquer papel personalizado disponível no projeto.
 
-![Caixa de diálogo de permissões do template com os controles necessários destacados](/assets/custom-roles-template-permissions-annotated.png)
+![Caixa de diálogo de permissões do modelo com os controles necessários destacados](/assets/custom-roles-template-permissions-annotated.png)
 
-Para conceder ao mesmo papel acesso a outros templates, repita estes passos para cada template.
+Para conceder ao mesmo papel acesso a outros modelos, repita estes passos para cada modelo.
 
 :::note Acesso existente ao projeto
-As permissões de template são aditivas. Elas adicionam acesso sem substituir ou reduzir o acesso proveniente do papel integrado do usuário ou de outros papéis personalizados. Se um usuário já pode executar ou atualizar todos os templates de tarefa, adicionar um papel específico de template não restringe esse acesso.
+As permissões de modelo são aditivas. Elas adicionam acesso sem substituir ou reduzir o acesso proveniente do papel integrado do usuário ou de outros papéis personalizados. Se um usuário já pode executar ou atualizar todos os modelos de tarefa, adicionar um papel específico de modelo não restringe esse acesso.
 :::
 
 ### Atribuir um papel personalizado em um projeto {#assign-a-custom-role-in-a-project}
@@ -182,7 +186,7 @@ Após criar e configurar um papel global ou de projeto, atribua-o ao membro da e
 ### Não suportado no momento {#not-currently-supported}
 
 - **Mapeamento de grupos LDAP / OIDC.** Os papéis personalizados são atribuídos por usuário. O mapeamento de grupos de diretórios externos para papéis personalizados não é suportado.
-- **Permissões granulares para recursos que não são templates.** Atualmente, apenas os templates podem ser controlados por papéis personalizados no nível de recurso individual.
+- **Permissões granulares para recursos que não são modelos.** Atualmente, apenas os modelos podem ser controlados por papéis personalizados no nível de recurso individual.
 
 ---
 
@@ -204,7 +208,7 @@ Após criar e configurar um papel global ou de projeto, atribua-o ao membro da e
 2. **Siga o princípio do privilégio mínimo:**
    - Dê aos membros da equipe o papel mínimo necessário para as suas tarefas.
    - Use os papéis **Task Runner** ou **Guest** para quem precisa apenas de permissões limitadas.
-   - Na edição Enterprise, prefira [papéis personalizados](#extended-rbac-enterprise) para conceder acesso a templates específicos em vez de elevar o papel integrado de um membro.
+   - Na edição Enterprise, prefira [papéis personalizados](#extended-rbac-enterprise) para conceder acesso a modelos específicos em vez de elevar o papel integrado de um membro.
 3. **Revise os membros regularmente:**
    - À medida que a estrutura da equipe muda, reavalie os papéis.
    - Revogue o acesso ou rebaixe os papéis dos usuários que não precisam mais de privilégios elevados.
@@ -229,10 +233,10 @@ Não. Os Managers só podem adicionar ou remover usuários com os papéis **Task
 O Semaphore UI impede a remoção de um Owner se isso deixar o projeto sem nenhum Owner. Deve haver pelo menos um Owner o tempo todo.
 
 ### 5. Os Guests podem executar tarefas? {#5-can-guests-run-tasks}
-Não. Os Guests têm acesso somente leitura e não podem acionar nem gerenciar tarefas. Na edição Enterprise, você pode conceder a um Guest permissão para executar templates individuais por meio de um [papel personalizado](#extended-rbac-enterprise).
+Não. Os Guests têm acesso somente leitura e não podem acionar nem gerenciar tarefas. Na edição Enterprise, você pode conceder a um Guest permissão para executar modelos individuais por meio de um [papel personalizado](#extended-rbac-enterprise).
 
 ### 6. Os papéis personalizados substituem os papéis integrados? {#6-do-custom-roles-replace-the-built-in-roles}
-Não. Os papéis personalizados estendem os papéis integrados com permissões adicionais no nível do projeto e dos templates. Cada membro da equipe continua tendo exatamente um papel integrado.
+Não. Os papéis personalizados estendem os papéis integrados com permissões adicionais no nível do projeto e dos modelos. Cada membro da equipe continua tendo exatamente um papel integrado.
 
 ### 7. O RBAC estendido está disponível na edição community? {#7-is-extended-rbac-available-in-the-community-edition}
 Não. O RBAC estendido requer uma assinatura do **Semaphore Enterprise**.

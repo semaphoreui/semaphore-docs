@@ -17,7 +17,13 @@ Semaphore kann Shell-Skripte mit `/bin/bash` ausführen. Erstellen Sie dazu ein 
 | **Variablengruppen** | Variablengruppen, deren Werte als Umgebungsvariablen eingefügt werden |
 
 4. Klicken Sie auf **Erstellen**.
-5. Klicken Sie auf **Ausführen**, um das Template auszuführen.
+5. Klicken Sie auf **Ausführen**, um das Template auszuführen. Der Dialog für einen neuen Task enthält bei einem Skript-Template nur die optionale Nachricht sowie Survey-Variablen und Prompts, sofern das Template sie definiert.
+
+<div style={{maxWidth: 420}}>
+
+![Dialog für einen neuen Task bei einem Bash-Template](/assets/task-new-bash.webp)
+
+</div>
 
 ## Variablen an Skripte übergeben {#passing-variables-to-scripts}
 
@@ -33,5 +39,5 @@ echo "Deploying to $TARGET_HOST"
 - Machen Sie Ihr Skript ausführbar (`chmod +x`) oder stellen Sie sicher, dass es mit einem gültigen Shebang (`#!/bin/bash`) beginnt.
 - Skripte laufen nicht interaktiv. Vermeiden Sie Abfragen, die auf Benutzereingaben warten.
 - Exit-Code `0` bedeutet Erfolg; jeder Exit-Code ungleich null markiert den Task als fehlgeschlagen.
-- Wenn ein sehr kurzes Skript keine Log-Ausgabe erzeugt, siehe [Ausgabe eines Bash-Skripts fehlt oder ist unvollständig](/admin-guide/troubleshooting#bash-script-output-is-missing-or-incomplete) in der Anleitung zur Fehlerbehebung.
+- Wenn ein sehr kurzes Skript keine Log-Ausgabe erzeugt, siehe [Ausgabe eines Bash-Skripts fehlt oder ist unvollständig](/faq/troubleshooting#bash-script-output-is-missing-or-incomplete) in der Anleitung zur Fehlerbehebung.
 - Um Befehle auf entfernten Hosts auszuführen, verwenden Sie stattdessen [Ansible](./ansible).

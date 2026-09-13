@@ -1,6 +1,11 @@
+---
+title: Solución de problemas
+description: "Soluciones para los fallos más habituales: error 404 del runner, Gathering Facts de Ansible, SSL de Postgres, clones de Git, salida de scripts ausente y errores de LDAP."
+---
+
 # Solución de problemas
 
-## 1. El runner muestra el error 404 {#1-runner-prints-error-404}
+## El runner muestra el error 404 {#runner-prints-error-404}
 
 ### Cómo solucionarlo {#how-to-fix}
 
@@ -8,7 +13,7 @@
 
 ---
 
-## 2. Problema de Gathering Facts para localhost {#2-gathering-facts-issue-for-localhost}
+## Problema de Gathering Facts para localhost {#gathering-facts-issue-for-localhost}
 
 El problema puede producirse en Semaphore UI instalado mediante [Snap](https://snapcraft.io/semaphore) o [Docker](https://hub.docker.com/r/semaphoreui/semaphore).
 
@@ -44,7 +49,7 @@ Hay dos formas:
 127.0.0.1 ansible_connection=ssh ansible_ssh_user=your_localhost_user
 ```
 ---
-## 3. panic: pq: SSL is not enabled on the server {#3-panic-pq-ssl-is-not-enabled-on-the-server}
+## panic: pq: SSL is not enabled on the server {#panic-pq-ssl-is-not-enabled-on-the-server}
 
 Esto significa que su Postgres no funciona con SSL.
 
@@ -63,12 +68,8 @@ Añada la opción `sslmode=disable` al archivo de configuración:
 		}
 	},
 ```
-
-
 ---
-
-
-## 4. fatal: bad numeric config value '0' for 'GIT_TERMINAL_PROMPT': invalid unit {#4-fatal-bad-numeric-config-value-0-for-git_terminal_prompt-invalid-unit}
+## fatal: bad numeric config value '0' for 'GIT_TERMINAL_PROMPT': invalid unit {#fatal-bad-numeric-config-value-0-for-git_terminal_prompt-invalid-unit}
 
 Esto significa que está intentando acceder a un repositorio a través de HTTPS que requiere autenticación.
 
@@ -80,32 +81,68 @@ Esto significa que está intentando acceder a un repositorio a través de HTTPS 
 * Indique la contraseña. No puede usar la contraseña de su cuenta de GitHub/BitBucket; en su lugar debe usar un Personal Access Token (PAT). Lea más [aquí](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 * Tras crear la clave, vaya a la pantalla **Repositorios**, busque su repositorio e indique la clave.
 
-
 ---
 
-## 5. El clone o pull de Git falla de forma intermitente {#5-git-clone-or-pull-fails-intermittently}
+## El clone o pull de Git falla de forma intermitente {#git-clone-or-pull-fails-intermittently}
 
 Los registros de la tarea pueden mostrar mensajes como `Git pull failed (...), retrying in 2s` seguidos de un éxito o de un fallo definitivo tras varios intentos.
 
 ### Por qué ocurre {#why-this-happens-1}
 
-El servidor git estuvo temporalmente inaccesible o devolvió un error transitorio. Semaphore reintenta automáticamente las operaciones de clone y pull antes de marcar la tarea como fallida.
+El servidor git (GitHub, GitLab, Bitbucket o una instancia autoalojada) estuvo temporalmente inaccesible, devolvió un error HTTP transitorio, o la red entre Semaphore y el servidor sufrió una breve interrupción. Semaphore reintenta automáticamente las operaciones de clone y pull antes de marcar la tarea como fallida.
 
 ### Cómo solucionarlo {#how-to-fix-this-3}
 
-1. **Interrupciones transitorias**: normalmente se resuelven por sí solas. Semaphore reintenta hasta `git_attempts` veces (4 de forma predeterminada) con retroceso exponencial.
-2. **Fallos frecuentes**: aumente `git_attempts` en su configuración o establezca `SEMAPHORE_GIT_ATTEMPTS`.
-3. **Fallos inmediatos y constantes**: compruebe la URL del repositorio, la rama, las claves de acceso y la conectividad de red.
+1. **Interrupciones transitorias**: normalmente se resuelven por sí solas. Semaphore reintenta hasta `git_attempts` veces (4 de forma predeterminada) con retroceso exponencial entre intentos.
+2. **Fallos frecuentes**: aumente el número de intentos en su configuración:
 
-Consulte [Operaciones de Git](/admin-guide/configuration/config-file#git-operations) para los detalles de configuración.
+```json
+{
+  "git_attempts": 8
+}
+```
+
+O con una variable de entorno:
+
+```bash
+export SEMAPHORE_GIT_ATTEMPTS=8
+```
+
+3. **Fallos inmediatos y constantes**: los reintentos no ayudarán. Compruebe la URL del repositorio, el nombre de la rama, las claves de acceso y la conectividad de red desde el servidor de Semaphore o el host del runner.
+
+Consulte [Operaciones de Git](/admin-guide/configuration/config-file#git-operations) para más detalles sobre `git_client` y `git_attempts`.
 
 ---
 
-## 6. unable to read LDAP response packet: unexpected EOF {#6-unable-to-read-ldap-response-packet-unexpected-eof}
+## La salida del script Bash falta o está incompleta {#bash-script-output-is-missing-or-incomplete}
+
+Una tarea Bash termina correctamente, pero el registro muestra poca o ninguna salida de `echo`, `printf` u otros comandos, especialmente cuando el script finaliza rápidamente.
+
+### Por qué ocurre {#why-this-happens-2}
+
+Semaphore captura stdout y stderr de los comandos de shell mientras se ejecutan. Los scripts muy cortos pueden terminar antes de que se lea toda la salida almacenada en el búfer, por lo que las últimas líneas pueden perderse en el registro de la tarea.
+
+### Cómo solucionarlo {#how-to-fix-this-4}
+
+1. **Actualice**: las versiones recientes de Semaphore vacían la salida del proceso antes de marcar una tarea como completada. Actualice el servidor y los runners si usa una versión antigua.
+2. **Vacíe la salida en el script** cuando necesite garantizar su entrega:
+
+```bash
+#!/bin/bash
+echo "Starting deploy"
+echo "Done" >&2
+```
+
+Para diagnósticos críticos, escriba en un archivo dentro del espacio de trabajo del repositorio y haga `cat` de él al final del script.
+3. **Evite salidas anticipadas silenciosas**: use `set -euo pipefail` y mensajes de error explícitos para que los fallos sean visibles incluso cuando la salida sea breve.
+
+---
+
+## unable to read LDAP response packet: unexpected EOF {#unable-to-read-ldap-response-packet-unexpected-eof}
 
 Lo más probable es que esté intentando conectarse al servidor LDAP con un método inseguro, aunque este espera una conexión segura (mediante TLS).
 
-### Cómo solucionarlo {#how-to-fix-this-4}
+### Cómo solucionarlo {#how-to-fix-this-5}
 
 Habilite TLS en su archivo `config.json`:
 
@@ -117,11 +154,11 @@ Habilite TLS en su archivo `config.json`:
 
 ---
 
-## 7. LDAP Result Code 49 "Invalid Credentials" {#7-ldap-result-code-49-invalid-credentials}
+## LDAP Result Code 49 "Invalid Credentials" {#ldap-result-code-49-invalid-credentials}
 
 Tiene una contraseña o un `binddn` incorrectos.
 
-### Cómo solucionarlo {#how-to-fix-this-5}
+### Cómo solucionarlo {#how-to-fix-this-6}
 
 Use la herramienta `ldapwhoami` y compruebe si su binddn funciona:
 
@@ -141,6 +178,29 @@ También puede leer los siguientes artículos:
 
 ---
 
-## 8. LDAP Result Code 32 "No Such Object" {#8-ldap-result-code-32-no-such-object}
+## LDAP Result Code 32 "No Such Object" {#ldap-result-code-32-no-such-object}
 
-Próximamente.
+El directorio no tiene ninguna entrada en el nombre distinguido por el que preguntó
+Semaphore. Casi siempre se debe a un `ldap_searchdn` incorrecto y, con menos frecuencia, a un `ldap_binddn` incorrecto.
+
+### Cómo solucionarlo {#how-to-fix-this-7}
+
+Compruebe que la base de búsqueda existe, usando las mismas credenciales que usa Semaphore:
+
+```bash
+ldapsearch\
+  -H ldap://ldap.example.com:389\
+  -D "CN=/your/ldap_binddn/value/in/config/file"\
+  -b "/your/ldap_searchdn/value/in/config/file"\
+  -x\
+  -W\
+  -s base
+```
+
+- El código de resultado **32** de este comando significa que la propia base no existe.
+  Corrija `ldap_searchdn` en `config.json`; la causa habitual es una errata en algún
+  componente, como `OU=Users` frente al `OU=People` real.
+- El código de resultado **0** significa que la base es correcta y que el problema está en
+  `ldap_searchfilter`: no coincide con ninguna entrada por debajo de esa base.
+
+Consulte [LDAP y AD](/admin-guide/authentication/ldap) para conocer el significado de cada opción.

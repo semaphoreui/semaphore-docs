@@ -1,6 +1,6 @@
 # AWS Secrets Manager シークレットストレージ
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Semaphore UI Enterprise では、キーストアのシークレットの外部ストレージとして、データベースの代わりに **AWS Secrets Manager** を使用できます。
 

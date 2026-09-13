@@ -16,7 +16,7 @@ Cette page vous guide depuis une installation fraîche jusqu'à votre première 
 6. **Automatisez et industrialisez :**
    - Exécution planifiée : [Planifications](/user-guide/schedules).
    - Contrôle de qui peut faire quoi : [Équipes et rôles personnalisés](/user-guide/team).
-   - Alertes sur les résultats : [Notifications](/category/notifications).
+   - Alertes sur les résultats : [Notifications](/admin-guide/notifications).
 
 ## Concepts clés {#key-concepts}
 
@@ -36,6 +36,6 @@ Ces termes apparaissent partout dans l'interface.
 
 ## Étapes suivantes {#next-steps}
 
-- Placez Semaphore derrière TLS avec un [reverse proxy](/category/reverse-proxy).
-- Connectez votre fournisseur d'identité : [LDAP](/admin-guide/ldap) ou [OpenID Connect](/admin-guide/openid).
-- Pilotez Semaphore depuis votre CI ou vos scripts avec l'[API](/admin-guide/api) et la [CLI](/admin-guide/cli).
+- Placez Semaphore derrière TLS avec un [reverse proxy](/admin-guide/reverse-proxy).
+- Connectez votre fournisseur d'identité : [LDAP](/admin-guide/authentication/ldap) ou [OpenID Connect](/admin-guide/authentication/openid).
+- Pilotez Semaphore depuis votre CI ou vos scripts avec l'[API](/reference/api) et la [CLI](/reference/cli).

@@ -1,3 +1,8 @@
+---
+title: Manually installing Semaphore
+description: Setting up the service user, Python and Ansible requirements, systemd unit files, and troubleshooting a manual install.
+---
+
 # Manually installing Semaphore
 
 ----
@@ -15,8 +20,8 @@
 
 This documentation goes into the details on how to set-up Semaphore when using these installation methods:
 
-* [Package manager](/admin-guide/installation#package-manager)
-* [Binary file](/admin-guide/installation#binary-file)
+* [Package manager](/admin-guide/installation/package-manager)
+* [Binary file](/admin-guide/installation/binary-file)
 
 The Semaphore software-package is just a part of the whole system needed to successfully run Ansible with it.
 
@@ -230,7 +235,7 @@ deactivate
 
 ## Reverse Proxy {#reverse-proxy}
 
-See: [Security - Encrypted connection](/security#reverse-proxy)
+See: [Security - Encrypted connection](/admin-guide/security/network#reverse-proxy)
 
 ----
 

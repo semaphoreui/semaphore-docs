@@ -1,33 +1,35 @@
 
-# Workspaces
+# Espaces de travail
 
-Semaphore offre une prise en charge intégrée des workspaces Terraform, ce qui vous permet de gérer plusieurs environnements et configurations au sein d'un même projet. Cette fonctionnalité vous aide à conserver des fichiers d'état distincts pour différents environnements tels que le développement, la préproduction et la production.
+![Onglet Espaces de travail d'un modèle](/assets/template-workspaces.webp)
+
+Semaphore prend en charge nativement les espaces de travail Terraform, ce qui vous permet de gérer plusieurs environnements et configurations au sein d'un même projet. Cette fonctionnalité vous aide à conserver des fichiers d'état distincts pour différents environnements, comme le développement, la préproduction et la production.
 
 ## Fonctionnalités {#features}
 
-- **Gestion des workspaces** : créez, changez et supprimez des workspaces directement depuis l'interface de Semaphore.
-- **Isolation de l'état** : chaque workspace conserve son propre fichier d'état, ce qui évite les conflits entre environnements.
-- **Variables d'environnement** : configurez des variables d'environnement propres à chaque workspace.
-- **Sélection du workspace** : choisissez le workspace cible lors de l'exécution des commandes Terraform.
+- **Gestion des espaces de travail** : créez, changez et supprimez des espaces de travail directement depuis l'interface de Semaphore.
+- **Isolation de l'état** : chaque espace de travail conserve son propre fichier d'état, ce qui évite les conflits entre environnements.
+- **Variables d'environnement** : configurez des variables d'environnement propres à chaque espace de travail.
+- **Sélection de l'espace de travail** : choisissez l'espace de travail cible lors de l'exécution des commandes Terraform.
 
-## Utilisation des workspaces dans Semaphore {#using-workspaces-in-semaphore}
+## Utiliser les espaces de travail dans Semaphore {#using-workspaces-in-semaphore}
 
-### Création d'un workspace {#creating-a-workspace}
+### Créer un espace de travail {#creating-a-workspace}
 
-Dans la section **Workspaces** du modèle Terraform/OpenTofu auquel vous souhaitez ajouter un workspace, suivez ces étapes :
+Dans la section **Espaces de travail** du modèle Terraform/OpenTofu auquel vous souhaitez ajouter un espace de travail, procédez comme suit :
 
 1. Cliquez sur le bouton ➕.  
-2. Dans le menu qui s'affiche, sélectionnez **Nouveau workspace**.  
-3. Dans la boîte de dialogue, saisissez le nom du workspace et sélectionnez la clé SSH à utiliser pour cloner les modules.  
-4. Cliquez sur le bouton **Créer** pour ajouter le nouveau workspace au modèle.  
-5. Vous pouvez maintenant utiliser ce workspace pour exécuter des tâches.
+2. Dans le menu qui s'affiche, sélectionnez **Nouvel espace de travail**.  
+3. Dans la boîte de dialogue, saisissez le nom de l'espace de travail et sélectionnez la clé SSH à utiliser pour cloner les modules.  
+4. Cliquez sur le bouton **Créer** pour ajouter le nouvel espace de travail au modèle.  
+5. Vous pouvez désormais utiliser cet espace de travail pour exécuter des tâches.
 
 
-### Changement de workspace {#switching-workspaces}
+### Changer d'espace de travail {#switching-workspaces}
 
-Vous pouvez définir le workspace par défaut d'un modèle Terraform/OpenTofu en cliquant sur le bouton **DÉFINIR PAR DÉFAUT**.
+Vous pouvez définir l'espace de travail par défaut d'un modèle Terraform/OpenTofu en cliquant sur le bouton **DÉFINIR PAR DÉFAUT**.
 
 
-### Variables propres à un workspace {#workspace-specific-variables}
+### Variables propres à un espace de travail {#workspace-specific-variables}
 
-Semaphore ne prend pas encore en charge les variables propres à un workspace.
+Semaphore ne prend pas encore en charge les variables propres à un espace de travail.

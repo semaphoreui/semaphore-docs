@@ -1,3 +1,7 @@
+---
+title: Nginx config
+description: Example nginx server block for Semaphore with TLS, proxy headers, and the websocket route on /api/ws.
+---
 
 # Nginx config
 

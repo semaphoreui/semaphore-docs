@@ -9,24 +9,56 @@ A segurança é uma prioridade máxima no Semaphore UI. Seja automatizando taref
 O Semaphore oferece suporte a autenticação segura e a mecanismos flexíveis de autorização:
 
 - **Métodos de login:**
-  - **Usuário/senha**<br />Método padrão que usa credenciais armazenadas no banco de dados do Semaphore. As senhas são armazenadas com hash usando um algoritmo forte (bcrypt).
+  - **Usuário/senha**<br />Método padrão que usa credenciais armazenadas no banco de dados do Semaphore. As senhas nunca são armazenadas em texto puro; elas recebem hash com Argon2id (consulte [Hash de senhas](#password-hashing)).
 
   - **LDAP**<br />Permite a integração com serviços de diretório corporativos. Oferece suporte a filtragem de usuários/grupos e a conexões seguras via LDAPS.
 
   - **OpenID Connect (OIDC)**<br />Permite o login único (SSO) com provedores de identidade como Google, Azure AD ou Keycloak. Oferece suporte a claims personalizadas e mapeamento de grupos.
 
-- **Autenticação de dois fatores (2FA)**<br />A 2FA baseada em TOTP está disponível e é recomendada para todos os usuários. Ela pode ser habilitada por usuário e oferece suporte a códigos de recuperação opcionais. Consulte as opções de configuração `auth.totp.enabled` e `auth.totp.allow_recovery`.
+- **Autenticação de dois fatores (2FA)**<br />A 2FA baseada em TOTP está disponível e é recomendada para todos os usuários. Ela pode ser habilitada por usuário e oferece suporte a códigos de recuperação opcionais. Consulte as opções de configuração `mfa.totp.enabled` e `mfa.totp.allow_recovery`.
 
 - **Controle de acesso baseado em funções**<br />Você pode atribuir diferentes funções aos usuários, como Admin, Maintainer ou Viewer, limitando o acesso conforme a responsabilidade.
 
 - **Gerenciamento de sessões**<br />As sessões são protegidas com cookies HTTP seguros. Os mecanismos de expiração de sessão e de logout garantem uma exposição mínima.
 <!-- - **Brute-Force Protection**: Login attempts are rate-limited to prevent brute-force attacks. -->
 
+### Hash de senhas {#password-hashing}
+
+:::info Desde a v2.20
+O hash de senhas com Argon2id está disponível desde o **Semaphore 2.20**. As versões anteriores usam bcrypt.
+:::
+
+As senhas dos usuários locais recebem hash com **Argon2id**, o algoritmo recomendado pela [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html) para o armazenamento de senhas. O Semaphore usa os parâmetros de força mínima da OWASP:
+
+| Parâmetro | Valor |
+|-----------|-------|
+| Memória | 19 MiB (`m=19456`) |
+| Iterações | 2 (`t=2`) |
+| Paralelismo | 1 (`p=1`) |
+| Salt | 16 bytes aleatórios por senha |
+| Tamanho do hash | 32 bytes |
+
+Os hashes são armazenados no [formato de string PHC](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md) padrão, por exemplo `$argon2id$v=19$m=19456,t=2,p=1$<salt>$<hash>`, de modo que os parâmetros usados em cada hash ficam registrados junto com ele.
+
+Isso se aplica a todas as formas de definir uma senha: a interface web, a API e os comandos da CLI `semaphore user add`, `semaphore user change-by-login` e `semaphore setup`.
+
+**Atualizando a partir de versões anteriores à 2.20.** As versões anteriores à 2.20 aplicavam hash às senhas com bcrypt. Nenhuma etapa de migração é necessária:
+
+- Os hashes bcrypt existentes continuam sendo aceitos no login, então todos os usuários continuam funcionando após a atualização.
+- No primeiro login bem-sucedido, a senha recebe um novo hash com Argon2id de forma transparente e o hash bcrypt é substituído.
+- Se os parâmetros do Argon2id do Semaphore forem reforçados em uma versão futura, os hashes criados com os parâmetros antigos serão atualizados da mesma forma no próximo login.
+
+Como o novo hash acontece apenas no login, os usuários que nunca mais fizerem login mantêm o hash bcrypt. Para forçar a atualização dessas contas, redefina a senha delas com `semaphore user change-by-login --password ...` ou pela interface de administração.
+
+:::note
+Os códigos de recuperação da autenticação de dois fatores não são senhas de usuário e continuam usando bcrypt.
+:::
+
 ## Segredos e credenciais {#secrets--credentials}
 
 Gerenciar segredos com segurança é um recurso central:
 
-- **Key Store criptografado**<br />Credenciais e variáveis secretas são criptografadas em repouso usando criptografia AES.
+- **Armazenamento de Chaves criptografado**<br />Credenciais e variáveis secretas são criptografadas em repouso usando criptografia AES.
 
 - **Isolamento de ambiente**<br />Os segredos são passados aos jobs apenas em tempo de execução e não são expostos diretamente ao ambiente do contêiner.
 
@@ -47,9 +79,9 @@ O Semaphore executa playbooks e comandos definidos pelo usuário, o que pode ser
 
 - **Isolamento em contêineres**<br />As tarefas são executadas em contêineres Docker isolados. Esses contêineres não têm acesso ao sistema host.
 
-- **Privilégio mínimo**<br />Os contêineres são executados com permissões mínimas e podem ser restringidos ainda mais usando flags do Docker.
+- **Isolamento da execução**<br />Por predefinição, uma tarefa é um processo comum no servidor Semaphore, com o sistema de ficheiros e o acesso de rede desse servidor. O isolamento é opcional: entregue a tarefa a um [runner](/admin-guide/runners) configurado com o executor `docker` ou `k8s` e cada tarefa recebe um contentor ou Pod novo, descartado quando termina.
 
-- **Execução em chroot**<br />O Semaphore pode executar tarefas dentro de um chroot jail para isolar ainda mais o ambiente de execução do sistema host.
+- **Privilégio mínimo**<br />Com os executores Docker e Kubernetes, escolhe a imagem, a rede e a conta de serviço, pelo que a tarefa recebe apenas aquilo de que precisa.
 
 - **Usuário do processo da tarefa**<br />As tarefas podem ser executadas sob um usuário de sistema dedicado e não root (por exemplo, `semaphore`) para reduzir o impacto de possíveis exploits. Isso é opcional e pode ser configurado conforme as políticas do sistema.
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->

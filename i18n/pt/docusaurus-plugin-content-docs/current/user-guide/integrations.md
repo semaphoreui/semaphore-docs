@@ -2,7 +2,11 @@
 
 As integrações permitem estabelecer a interação entre o Semaphore e serviços externos, como GitHub e GitLab.
 
-![](/assets/integrations_1.jpg)
+![Lista de integrações](/assets/integrations-list.webp)
+
+A URL do webhook do projeto é exibida acima da lista. Cada integração tem um nome e o modelo que ela inicia; clique em uma integração para configurar seus matchers e extratores de valor.
+
+![Detalhes da integração](/assets/integration-detail.webp)
 
 Usando uma integração, você pode acionar um modelo específico chamando um endpoint especial (alias), para o qual você pode configurar um dos seguintes métodos de autenticação:
 * Webhooks do GitHub
@@ -18,9 +22,10 @@ Com os matchers, você pode definir parâmetros da requisição recebida. Quando
 
 ## Extratores de Valor {#value-extractors}
 
-Com um extrator, você pode extrair os dados necessários da requisição recebida e passá-los para a tarefa como variáveis de ambiente. Para que as variáveis extraídas sejam passadas para a
-tarefa, você deve criar um ambiente com as chaves correspondentes. Certifique-se de que as chaves do ambiente correspondam às variáveis definidas no extrator, pois isso permite que a tarefa receba
-e use as variáveis de ambiente corretas.
+Com um extrator, você pode obter dados do cabeçalho ou do corpo da requisição (campo JSON ou string) e passá-los para a tarefa. Cada valor extraído tem um **Tipo de variável**:
+
+* **Ambiente**: o valor é adicionado às variáveis de ambiente da tarefa, sobrescrevendo uma variável de mesmo nome do grupo de variáveis.
+* **Parâmetro da tarefa**: o valor se torna um parâmetro da tarefa, por exemplo uma variável de survey ou um prompt.
 
 ## Parâmetros da tarefa {#task-parameters}
 
@@ -28,4 +33,4 @@ As integrações podem acionar tarefas com parâmetros. Use extratores de valor 
 
 ## Observações sobre aliases e matchers {#notes-on-aliases-and-matchers}
 
-Para integrações configuradas com um endpoint de alias, os matchers não são usados. Prefira a autenticação por token/HMAC conforme necessário e passe os parâmetros por meio de extratores.
+Um alias de projeto (a URL acima da lista de integrações) é compartilhado por todas as integrações do projeto: o Semaphore verifica os matchers de cada integração e inicia os modelos cujos matchers correspondem. Uma integração também pode ter seu próprio alias; as requisições a ele iniciam essa integração sem avaliar os matchers. Prefira a autenticação por token/HMAC conforme necessário e passe os parâmetros por meio de extratores.

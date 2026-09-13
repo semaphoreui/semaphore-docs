@@ -34,6 +34,8 @@ los nodos descendentes se lanzan según las condiciones de las aristas.
 4. Defina un **nombre** (y opcionalmente una **versión inicial** para el versionado de ejecuciones).
 5. Corrija los problemas listados en el panel **Problemas** y luego haga clic en **Guardar**.
 
+![Editor de flujos de trabajo](/assets/workflow-editor.webp)
+
 El editor valida el grafo antes de guardar. Un flujo de trabajo válido debe tener al menos
 un nodo, exactamente un nodo inicial (sin aristas entrantes), ningún ciclo y una
 configuración completa en cada nodo ejecutable.
@@ -125,6 +127,6 @@ los pasos que producen y consumen artefactos en la misma ruta de ejecución.
 
 Las plantillas y ejecuciones de flujos de trabajo están disponibles en
 `/api/project/{project_id}/workflows`. Consulte la
-[documentación de la API](/admin-guide/api) para ver los esquemas de petición y respuesta, incluidos
+[documentación de la API](/reference/api) para ver los esquemas de petición y respuesta, incluidos
 los campos del nodo `delay` (`delay_seconds`) y el endpoint de detención
 (`POST …/runs/{run_id}/stop`).

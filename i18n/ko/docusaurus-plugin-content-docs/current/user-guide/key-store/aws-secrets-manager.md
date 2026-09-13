@@ -1,6 +1,6 @@
 # AWS Secrets Manager 시크릿 스토리지
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Semaphore UI Enterprise는 데이터베이스 대신 **AWS Secrets Manager**를 키 저장소 시크릿의 외부 스토리지로 사용할 수 있습니다.
 

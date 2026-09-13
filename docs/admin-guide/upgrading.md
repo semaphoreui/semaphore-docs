@@ -1,3 +1,8 @@
+---
+title: Upgrading
+description: Commands to upgrade Semaphore from the deb and rpm packages or from the binary archives on Linux and Windows.
+---
+
 # Upgrading
 
 ### Package manager {#package-manager}

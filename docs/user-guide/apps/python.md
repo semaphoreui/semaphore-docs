@@ -1,3 +1,7 @@
+---
+title: Python
+description: Creating a Python task template, reading variables from os.environ, and choosing the Python version and dependencies.
+---
 
 # Python
 

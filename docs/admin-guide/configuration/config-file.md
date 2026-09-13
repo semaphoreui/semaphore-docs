@@ -1,3 +1,8 @@
+---
+title: Configuration file
+description: Generating config.json, an annotated example, passing it to the server and runner, and the secrets directory and git options.
+---
+
 
 # Configuration file
 

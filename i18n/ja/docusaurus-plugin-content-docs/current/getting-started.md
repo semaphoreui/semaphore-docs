@@ -16,7 +16,7 @@
 6. **自動化と運用化:**
    - スケジュールで実行する: [スケジュール](/user-guide/schedules)。
    - 誰が何をできるかを制御する: [チームとカスタムロール](/user-guide/team)。
-   - 結果の通知を受け取る: [通知](/category/notifications)。
+   - 結果の通知を受け取る: [通知](/admin-guide/notifications)。
 
 ## 主要な概念 {#key-concepts}
 
@@ -36,6 +36,6 @@
 
 ## 次のステップ {#next-steps}
 
-- [リバースプロキシ](/category/reverse-proxy)を使って Semaphore を TLS の背後に配置する。
-- ID プロバイダーを接続する: [LDAP](/admin-guide/ldap) または [OpenID Connect](/admin-guide/openid)。
-- [API](/admin-guide/api) と [CLI](/admin-guide/cli) を使って、CI やスクリプトから Semaphore を操作する。
+- [リバースプロキシ](/admin-guide/reverse-proxy)を使って Semaphore を TLS の背後に配置する。
+- ID プロバイダーを接続する: [LDAP](/admin-guide/authentication/ldap) または [OpenID Connect](/admin-guide/authentication/openid)。
+- [API](/reference/api) と [CLI](/reference/cli) を使って、CI やスクリプトから Semaphore を操作する。

@@ -1,92 +1,52 @@
-
 # Projekt-Runner (Pro)
 
-Projekt-Runner sind eine leistungsstarke Funktion in Semaphore Pro, die die verteilte Ausführung von Aufgaben über mehrere Server ermöglicht. Mit dieser Funktion können Sie Aufgaben auf Servern ausführen, die von Ihrer Semaphore-UI-Instanz getrennt sind, und erhalten so mehr Sicherheit, Skalierbarkeit und Ressourcenverwaltung.
+Runner führen Tasks auf anderen Maschinen als dem Semaphore-Server aus: näher an der Zielinfrastruktur, in einer anderen Netzwerkzone oder mit einer anderen Toolchain. **Globale Runner** werden von einem Administrator registriert und stehen allen Projekten zur Verfügung. **Projekt-Runner** gehören zu einem Projekt und werden von seinem Team im Bereich **Runners** verwaltet.
 
-![](/assets/project_runners.webp)
+![Projekt-Runner](/assets/project-runners-list.webp)
 
-## Überblick {#overview}
+| Spalte | Inhalt |
+|---|---|
+| Schalter | Aktiviert oder deaktiviert den Runner. Ein deaktivierter Runner erhält keine Tasks. Nur Projekt-Runner haben den Schalter; globale Runner werden vom Administrator verwaltet. |
+| **Name** | Name des Runners. Das Badge **Global** kennzeichnet Runner, die von allen Projekten gemeinsam genutzt werden. |
+| **Tag** | Tags des Runners. Task Templates mit einem **Runner tag** laufen nur auf Runnern, die dieses Tag haben. |
+| **Status** | **Online**, wenn der Runner den Server kürzlich abgefragt hat, andernfalls **Offline**. |
 
-Projekt-Runner arbeiten nach einem ähnlichen Prinzip wie GitLab- oder GitHub-Actions-Runner:
+## Einen Runner hinzufügen {#adding-a-runner}
 
-- Ein Runner wird auf einem von Ihrer Semaphore UI getrennten Server bereitgestellt
-- Der Runner verbindet sich über ein sicheres Token mit Ihrer Semaphore-Instanz
-- Wenn Aufgaben erstellt werden, delegiert Semaphore sie an verfügbare Runner
-- Die Runner führen die Aufgaben aus und melden die Ergebnisse an Semaphore zurück
+Sie benötigen die Rolle **Manager** oder höher. Klicken Sie auf **New Runner** und füllen Sie das Formular aus.
 
-## Vorteile {#benefits}
+<div style={{maxWidth: 420}}>
 
-Die Verwendung von Runnern bietet mehrere wesentliche Vorteile:
+![Dialog für einen neuen Runner](/assets/project-runner-new.webp)
 
-1. **Mehr Sicherheit**
-   - Runner können in isolierten Umgebungen oder eingeschränkten Netzwerken bereitgestellt werden
-   - Sensible Vorgänge können in kontrollierten Umgebungen ausgeführt werden
-   - Bessere Trennung von Zuständigkeiten zwischen UI und Ausführungsumgebungen
+</div>
 
-2. **Bessere Skalierbarkeit**
-   - Verteilen Sie die Arbeitslast auf mehrere Server
-   - Fügen Sie Runner je nach Bedarf hinzu oder entfernen Sie sie
-   - Bessere Ressourcennutzung in Ihrer gesamten Infrastruktur
+| Feld | Beschreibung |
+|---|---|
+| **Name** | Name des Runners, der in der Liste und in den Task-Details angezeigt wird. |
+| **Tags** | Optional. Ein oder mehrere Tags. Ein Task Template mit einem **Runner tag** wird nur von Runnern ausgeführt, die das Tag tragen. |
+| **Is default** | Runner mit diesem Flag übernehmen auch Tasks von Task Templates ohne Runner-Tag. Ein Runner ohne dieses Flag und ohne Tags erhält niemals Tasks. |
+| **Register** | Aktiviert: Der Runner wird als registriert erstellt und der Dialog zeigt den Runner-Token, den Sie in die Runner-Konfiguration eintragen. Deaktiviert: Der Runner wird unregistriert erstellt und Sie erhalten einen einmalig verwendbaren **Registrierungstoken**; der Runner registriert sich selbst mit `semaphore runner register` oder `semaphore runner start --auto-register`. |
+| **Webhook** | Optionale URL, die Semaphore aufruft, wenn dem Runner ein Task zugewiesen wird. Verwenden Sie sie, um Runner bei Bedarf (einmalig) zu starten, zum Beispiel mit einer Cloud-Funktion. |
+| **Max number of parallel tasks** | Optional. Wie viele Tasks der Runner gleichzeitig ausführen darf. |
+| **Enabled** | Ob der Runner Tasks erhält. |
 
-3. **Flexible Bereitstellung**
-   - Stellen Sie Runner nah an Ihrer Zielinfrastruktur bereit
-   - Führen Sie Aufgaben in verschiedenen Netzwerkzonen aus
-   - Unterstützung verschiedener Bereitstellungsmodelle (On-Premises, Cloud, Hybrid)
+Klicken Sie nach dem Erstellen auf den Runner, um seinen Token oder Registrierungstoken erneut anzuzeigen und die Konfigurations-Snippets zu kopieren.
 
-## Verwendung von Projekt-Runnern {#using-project-runners}
+## Den Runner installieren {#installing-the-runner}
 
-### Voraussetzungen {#prerequisites}
+Der Runner ist dieselbe `semaphore`-Binärdatei bzw. das Docker-Image `semaphoreui/runner`, gestartet im Runner-Modus. Installation, Konfigurationsdatei, Registrierungsbefehle, Executoren (local, Docker, Kubernetes) und Sicherheit sind im Admin-Handbuch beschrieben: [Runner](/admin-guide/runners) und [CLI: Runners](/reference/cli/runners).
 
-Um Runner zu verwenden, benötigen Sie:
+## Tasks an Runner weiterleiten {#routing-tasks-to-runners}
 
-1. Eine Semaphore-Pro-Lizenz
-2. Einen separaten Server zum Betrieb des Runners
-3. Netzwerkverbindung zwischen dem Runner und der Semaphore UI
-4. Korrekte Konfiguration sowohl auf dem Semaphore-UI- als auch auf dem Runner-Server
+1. Geben Sie dem Runner ein oder mehrere **Tags**, zum Beispiel `windows-qa-server`.
+2. Setzen Sie im Formular des Task Template **Runner tag** auf denselben Wert.
+3. Tasks des Task Template warten im Status `waiting`, bis ein Runner mit diesem Tag online ist.
 
-<!-- ### Configuration
+Task Templates ohne Runner-Tag gehen an die Runner, die als **Is default** markiert sind, einschließlich globaler Standard-Runner. Der Runner, der einen Task ausgeführt hat, wird auf dem Tab **Details** des [Task-Fensters](../tasks#task-window) angezeigt.
 
-1. **Semaphore UI Configuration**
-  
+## Sicherheit {#security}
 
-2. **Runner Setup** -->
-
-
-### Runner verwalten {#managing-runners}
-
-Sie können Runner über die Semaphore UI verwalten:
-
-1. Navigieren Sie in Ihrem Projekt zum Bereich Runner
-2. Sehen Sie sich alle registrierten Runner und deren Status an
-3. Fügen Sie Runner nach Bedarf hinzu oder entfernen Sie sie
-4. Überwachen Sie den Zustand und die Leistung der Runner
-
-### Sicherheitsaspekte {#security-considerations}
-
-- Verwenden Sie für die Kommunikation zwischen Runnern und der Semaphore UI immer HTTPS
-- Implementieren Sie angemessene Netzwerksicherheit zwischen Runnern und der Semaphore UI
-- Ziehen Sie für sensible Vorgänge isolierte Umgebungen in Betracht
-
-## Best Practices {#best-practices}
-
-1. **Ressourcenplanung**
-   - Dimensionieren Sie Ihre Runner passend zu Ihrer Arbeitslast
-   - Überwachen Sie die Ressourcennutzung der Runner
-   - Skalieren Sie Runner je nach Bedarf
-
-2. **Netzwerkkonfiguration**
-   - Stellen Sie eine korrekte Netzwerkverbindung sicher
-   - Konfigurieren Sie Firewalls angemessen
-   - Verwenden Sie sichere Kommunikationskanäle
-
-3. **Wartung**
-   - Aktualisieren Sie die Runner-Software regelmäßig
-   - Überwachen Sie den Zustand der Runner
-   - Implementieren Sie angemessenes Logging und Monitoring
-   - Halten Sie eine Backup-Strategie für Runner-Ausfälle bereit
-
-4. **Sicherheit**
-   - Befolgen Sie das Prinzip der geringsten Rechte
-   - Implementieren Sie angemessene Zugriffskontrollen
-   - Regelmäßige Sicherheitsaudits
-   - Halten Sie die Software auf dem neuesten Stand
+- Runner verbinden sich mit dem Server, niemals umgekehrt, sodass ein Runner hinter NAT oder in einem privaten Netzwerk betrieben werden kann.
+- Jede Anfrage eines Runners wird mit seinem Token authentifiziert. Sie entziehen einem Runner den Zugang, indem Sie ihn löschen oder deaktivieren.
+- Verwenden Sie HTTPS zwischen Runnern und dem Server; siehe [Netzwerksicherheit](/admin-guide/security/network).

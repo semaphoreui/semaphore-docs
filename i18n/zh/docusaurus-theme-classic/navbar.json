@@ -4,23 +4,23 @@
     "description": "The title in the navbar"
   },
   "logo.alt": {
-    "message": "Semaphore UI Logo",
+    "message": "Semaphore UI 标志",
     "description": "The alt text of navbar logo"
   },
   "item.label.Product": {
-    "message": "Product",
+    "message": "产品",
     "description": "Navbar item with label Product"
   },
   "item.label.Explore": {
-    "message": "Explore",
+    "message": "探索",
     "description": "Navbar item with label Explore"
   },
   "item.label.Help": {
-    "message": "Help",
+    "message": "帮助",
     "description": "Navbar item with label Help"
   },
   "item.label.Pricing": {
-    "message": "Pricing",
+    "message": "价格",
     "description": "Navbar item with label Pricing"
   },
   "item.label.GitHub": {
@@ -28,35 +28,35 @@
     "description": "Navbar item with label GitHub"
   },
   "item.label.Sign in": {
-    "message": "Sign in",
+    "message": "登录",
     "description": "Navbar item with label Sign in"
   },
   "item.label.Pro · For teams": {
-    "message": "Pro · For teams",
+    "message": "Pro · 面向团队",
     "description": "Navbar item with label Pro · For teams"
   },
   "item.label.Enterprise · For large-scale operations": {
-    "message": "Enterprise · For large-scale operations",
+    "message": "Enterprise · 面向大规模运维",
     "description": "Navbar item with label Enterprise · For large-scale operations"
   },
   "item.label.Community · For homelab": {
-    "message": "Community · For homelab",
+    "message": "Community · 面向家庭实验室",
     "description": "Navbar item with label Community · For homelab"
   },
   "item.label.Features": {
-    "message": "Features",
+    "message": "功能特性",
     "description": "Navbar item with label Features"
   },
   "item.label.Use cases": {
-    "message": "Use cases",
+    "message": "使用场景",
     "description": "Navbar item with label Use cases"
   },
   "item.label.Case studies": {
-    "message": "Case studies",
+    "message": "案例研究",
     "description": "Navbar item with label Case studies"
   },
   "item.label.Blog": {
-    "message": "Blog",
+    "message": "博客",
     "description": "Navbar item with label Blog"
   },
   "item.label.Semaphore UI vs AWX": {
@@ -88,15 +88,15 @@
     "description": "Navbar item with label Semaphore UI vs Tower (AAP)"
   },
   "item.label.Installation": {
-    "message": "Installation",
+    "message": "安装",
     "description": "Navbar item with label Installation"
   },
   "item.label.Docs": {
-    "message": "Docs",
+    "message": "文档",
     "description": "Navbar item with label Docs"
   },
   "item.label.API References": {
-    "message": "API References",
+    "message": "API 参考",
     "description": "Navbar item with label API References"
   }
 }

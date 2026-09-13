@@ -1,15 +1,35 @@
+---
+title: Settings
+description: General project options in the Settings tab, the alert switches, and the Danger Zone actions for backup, cache, and deletion.
+---
 
 # Settings
 
-The Settings page allows you to configure various aspects of your project, including notifications, and project-specific settings. This page is accessible to project administrators and provides centralized management of project configuration.
+The **Settings** tab of the project dashboard is available to project **Owners**. It holds the general project options and the destructive actions.
 
-![](/assets/project_settings.webp)
+![Project settings](/assets/project-settings-general.webp)
 
-## Runners (Pro) {#runners-pro}
+## General {#general}
 
-Project runners can be attached to a project. You can also require a specific runner by tag in a template:
+| Field | Description |
+|---|---|
+| **Project Name** | Display name shown in the project switcher and in alerts. |
+| **Max number of parallel tasks** | Optional. Maximum number of tasks of this project that may run at the same time. Leave it empty for no limit. Tasks above the limit stay in the queue with the status `waiting` until a slot is free. |
+| **Telegram Chat ID** | Optional. Sends alerts for this project to a different Telegram chat than the one configured globally. See [Telegram notifications](/admin-guide/notifications/telegram#per-project-chat-ids). |
+| **Allow alerts for this project** | Master switch for notifications. When it is off, no channel sends alerts about tasks of this project, even if the channel is configured on the server. |
 
-1. In `Project → Runners`, add a runner and specify a tag.
-2. In `Project → Templates → <your template>`, set the required runner tag.
+**Test alerts** sends a test message through every configured [notification channel](/admin-guide/notifications), so you can verify the server configuration without running a task. **Save** applies the changes.
 
-This ensures the task is executed on a runner matching the tag.
+## Danger Zone {#danger-zone}
+
+| Action | Effect |
+|---|---|
+| **Backup project** | Downloads a JSON file with the project definition: templates, inventories, variable groups, keys (without secret values), repositories, schedules, views, and integrations. Restore it through **New Project → Restore project** or with [`semaphore projects import`](/reference/cli/projects). |
+| **Clear cache** | Deletes all cached files of the project on the server, for example cloned repositories. The next task clones the repositories again. The action is irreversible. |
+| **Delete project** | Deletes the project with all its resources and task history. There is no undo. |
+
+## Related settings {#related-settings}
+
+- Members and roles: [Teams](../team)
+- Runners attached to the project and runner tags: [Project runners](./runners)
+- Notification channels are configured on the server: [Notifications](/admin-guide/notifications)

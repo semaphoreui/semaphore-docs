@@ -1,6 +1,6 @@
 # Prompts
 
-Prompts sind vordefinierte Flags und Optionen, die für den jeweiligen Template-Typ spezifisch sind und die Sie aktivieren können, um Anpassungen zur Laufzeit zu ermöglichen. Im Gegensatz zu [Survey-Variablen](/survey-vars), die Sie als eigene Felder selbst erstellen, sind Prompts integrierte Optionen, die bestimmten CLI-Flags von Ansible, Terraform und anderen Tools entsprechen.
+Prompts sind vordefinierte Flags und Optionen, die für den jeweiligen Template-Typ spezifisch sind und die Sie aktivieren können, um Anpassungen zur Laufzeit zu ermöglichen. Im Gegensatz zu [Survey-Variablen](/user-guide/task-templates/survey-vars), die Sie als eigene Felder selbst erstellen, sind Prompts integrierte Optionen, die bestimmten CLI-Flags von Ansible, Terraform und anderen Tools entsprechen.
 
 Diese Funktion ermöglicht Ihnen:
 - Template-Standardwerte zur Laufzeit zu überschreiben
@@ -89,6 +89,27 @@ Aktivieren Sie den `--skip-tags`-Prompt, um Tasks mit bestimmten Tags zu übersp
 
 **Beispiel**: Aktivieren Sie mit dem obigen Playbook Skip Tags und geben Sie `install` ein, um die Paketinstallation zu überspringen und nur die Deployment- und Neustart-Tasks auszuführen.
 
+### Skip Galaxy install {#skip-galaxy-install}
+
+Aktivieren Sie den Prompt, damit Benutzer beim Ausführen des Tasks den Schritt `ansible-galaxy install` für Rollen und Collections überspringen können.
+
+**Anwendungsfälle**:
+- Die Requirements sind bereits im Runner-Image installiert
+- Zeit bei wiederholten Ausführungen sparen, wenn sich in `requirements.yml` nichts geändert hat
+
+### Force Galaxy install {#force-galaxy-install}
+
+Aktivieren Sie den Prompt, damit Benutzer `ansible-galaxy install --force` für jede Requirements-Datei erzwingen können und dabei die Requirements-Prüfsumme ignorieren, die Semaphore zwischen Ausführungen speichert.
+
+**CLI-Entsprechung**: `ansible-galaxy role install -r requirements.yml --force`
+
+**Anwendungsfälle**:
+- Eine Requirements-Datei verweist auf einen Branch statt auf eine feste Version und Sie benötigen den neuesten Commit
+- Eine frühere Installation hat Rollen oder Collections in einem fehlerhaften Zustand hinterlassen
+- Prüfen, ob ein Playbook mit einem sauberen Satz von Abhängigkeiten funktioniert
+
+Siehe [Galaxy-Requirements](../apps/ansible.md#galaxy-requirements) für die Funktionsweise der Standardwerte auf Template-Ebene.
+
 ### Ansible-Prompts aktivieren {#enabling-ansible-prompts}
 
 So aktivieren Sie Ansible-Prompts:
@@ -99,6 +120,9 @@ So aktivieren Sie Ansible-Prompts:
    - ☐ **Limit** – Aktiviert das `--limit`-Flag
    - ☐ **Tags** – Aktiviert das `--tags`-Flag
    - ☐ **Skip Tags** – Aktiviert das `--skip-tags`-Flag
+   - ☐ **Debug** – Aktiviert die Auswahl der Ausführlichkeit (`-v`)
+   - ☐ **Skip Galaxy install** – Erlaubt das Überspringen von `ansible-galaxy install`
+   - ☐ **Force Galaxy install** – Erlaubt das Erzwingen von `ansible-galaxy install --force`
 4. Speichern Sie das Template
 
 ![](/assets/ansible_2.png)
@@ -125,7 +149,7 @@ Wählen Sie, welcher Terraform-Workspace für die Task-Ausführung verwendet wir
 2. Die Workspace-Auswahl erscheint automatisch im Task-Formular
 3. Benutzer wählen beim Ausführen von Tasks den Ziel-Workspace
 
-Siehe [Terraform-Workspaces](/apps/terraform/workspaces) für die detaillierte Einrichtung.
+Siehe [Terraform-Workspaces](/user-guide/apps/terraform/workspaces) für die detaillierte Einrichtung.
 
 ### Destroy-Flag {#destroy-flag}
 
@@ -166,7 +190,7 @@ Das Task-Formular zeigt diese Optionen beim Ausführen von Terraform-Tasks an.
 
 ## Bash-, PowerShell- und Python-Prompts {#bash-powershell-and-python-prompts}
 
-Für Bash-, PowerShell- und Python-Templates sind die Prompts minimal, da die meisten Anpassungen über [Survey-Variablen](/survey-vars) erfolgen.
+Für Bash-, PowerShell- und Python-Templates sind die Prompts minimal, da die meisten Anpassungen über [Survey-Variablen](/user-guide/task-templates/survey-vars) erfolgen.
 
 Verfügbare Prompts sind:
 
@@ -357,9 +381,9 @@ Verwenden Sie Terraform Destroy für temporäre Infrastruktur:
 
 ## Verwandte Dokumentation {#related-documentation}
 
-- [Survey-Variablen](/survey-vars) – Eigene Felder für Templates
-- [Ansible-Templates](/apps/ansible) – Ansible-spezifische Konfiguration
-- [Terraform-Templates](/apps/terraform) – Terraform-spezifische Konfiguration
+- [Survey-Variablen](/user-guide/task-templates/survey-vars) – Eigene Felder für Templates
+- [Ansible-Templates](/user-guide/apps/ansible) – Ansible-spezifische Konfiguration
+- [Terraform-Templates](/user-guide/apps/terraform) – Terraform-spezifische Konfiguration
 - [Zeitpläne](../schedules) – Automatisierte Task-Ausführung
 - [Integrationen](../integrations) – Über Webhooks ausgelöste Tasks
-- [API-Dokumentation](../../admin-guide/api) – API-Referenz
+- [API-Dokumentation](../../reference/api) – API-Referenz

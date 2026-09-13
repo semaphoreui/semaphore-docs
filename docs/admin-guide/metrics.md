@@ -1,3 +1,8 @@
+---
+title: Metrics
+description: Enabling the Prometheus /api/metrics endpoint, the task and process metrics it exposes, and scraping it into Grafana.
+---
+
 # Metrics
 
 :::info

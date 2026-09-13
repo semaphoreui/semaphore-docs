@@ -1,90 +1,35 @@
-
 # Historial
 
-La pantalla Historial de Semaphore ofrece una vista completa de todas las ejecuciones de tareas de su proyecto. Esta función le permite hacer seguimiento y analizar el historial de ejecución de sus tareas, proporcionando información valiosa sobre sus flujos de automatización.
+La pestaña **Historial** del panel del proyecto muestra todas las tareas del proyecto, empezando por las más recientes. Es la vista predeterminada al abrir un proyecto.
 
-![](/assets/project_history.webp)
+![Historial del proyecto](/assets/project-dashboard-history.webp)
 
-## Descripción general {#overview}
+## Columnas {#columns}
 
-La página Historial muestra una lista cronológica de todas las ejecuciones de tareas, incluidos:
+| Columna | Contenido |
+|---|---|
+| **Tarea** | Número de la tarea, la plantilla a partir de la cual se creó y el mensaje del commit de la revisión del repositorio que se usó. Un icono a la izquierda indica la aplicación (Ansible, Terraform, Bash, etc.). |
+| **Versión** | Para las [plantillas de compilación y despliegue](../task-templates/build-deploy): la versión compilada o desplegada. Para las demás plantillas, solo un icono de estado. |
+| **Estado** | Distintivo del estado actual; consulte [Estados de las tareas](../tasks#task-statuses). |
+| **Usuario** | Quién inició la tarea. Las tareas iniciadas por una programación o una integración no tienen usuario. |
+| **Inicio** | Fecha y hora de inicio en la zona horaria de su navegador. |
+| **Duración** | Cuánto tiempo se ejecutó la tarea. |
 
-- Plantillas de tareas utilizadas
-- Estado de la ejecución (éxito, fallo, en curso)
-- Horas de inicio y fin
-- Duración
-- Usuario que inició la tarea
-- Salida y registros de la tarea
-
-## Consultar el historial de tareas {#viewing-task-history}
-
-### Acceder al historial {#accessing-history}
-
-1. Vaya a su proyecto en Semaphore
-2. Haga clic en la pestaña "Historial"
-3. Consulte la lista de todas las ejecuciones de tareas
-
-## Detalles de la tarea {#task-details}
-
-Al hacer clic en cualquier tarea de la lista del historial se abre una vista detallada que muestra:
-
-1. **Información de la tarea**
-   - ID de la tarea
-   - Plantilla utilizada
-   - Horas de inicio y fin
-   - Duración
-   - Estado
-   - Usuario que ejecutó la tarea
-
-2. **Detalles de la ejecución**
-   - Salida completa de la tarea
-   - Mensajes de error (si los hay)
-   - Variables de entorno utilizadas
-   - Información del inventario
-   - Detalles del repositorio
-
-3. **Registros de la tarea**
-   - Visualización de registros en tiempo real
-   - Opción de descarga de registros
-   - Búsqueda en los registros
-   - Resaltado de errores
-
-### Estadísticas {#statistics}
-
-El proyecto ofrece una página de estadísticas que resume los resultados de las tareas en un intervalo de tiempo seleccionado, con filtrado por usuario.
-
-## Gestión de tareas {#task-management}
-
-### Acciones disponibles {#actions-available}
-
-Desde la vista del historial, puede:
-
-- Acceder a los registros completos de la tarea
-- Descargar la salida de la tarea
-- Buscar dentro de los registros
+La lista está paginada. Haga clic en el número de la tarea o en el nombre de la plantilla para abrir la [ventana de la tarea](../tasks#task-window) con el registro, los detalles y el resumen. Haga clic en el nombre de la plantilla en el encabezado de la ventana de la tarea para ir a la página de la plantilla.
 
 ## Retención de tareas {#task-retention}
 
-Semaphore le permite configurar durante cuánto tiempo se conserva el historial de tareas:
+De forma predeterminada, todas las tareas y sus registros se conservan indefinidamente. Para limitar el historial por plantilla, establezca `max_tasks_per_template` en `config.json` o la variable de entorno `SEMAPHORE_MAX_TASKS_PER_TEMPLATE`:
 
-1. **Comportamiento predeterminado**
-   - Todas las tareas se guardan en la base de datos
-   - No hay eliminación automática de forma predeterminada
+```json
+{
+  "max_tasks_per_template": 30
+}
+```
 
-2. **Configurar la retención**
-   - Establezca el número máximo de tareas por plantilla
-   - Configúrelo mediante una variable de entorno:
-     ```bash
-     SEMAPHORE_MAX_TASKS_PER_TEMPLATE=30
-     ```
-   - O mediante config.json:
-     ```json
-     {
-       "max_tasks_per_template": 30
-     }
-     ```
+Cuando se alcanza el límite, las tareas más antiguas de esa plantilla se eliminan junto con sus registros. Consulte [Configuración](/admin-guide/configuration) para ver la lista completa de opciones.
 
-3. **Reglas de retención**
-   - Cuando se alcanza el límite, las tareas más antiguas se eliminan automáticamente
-   - La eliminación se realiza por plantilla
-   - Los registros de la tarea se eliminan junto con los registros de la base de datos
+## Véase también {#see-also}
+
+- [Estadísticas](./stats): resultados de las tareas agregados por día.
+- [Actividad](./activity): registro de auditoría de los cambios del proyecto.

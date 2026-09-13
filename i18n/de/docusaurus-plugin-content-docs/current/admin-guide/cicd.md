@@ -1,94 +1,23 @@
-# Pipelines
+# CI/CD-Integration
 
-Semaphore unterstützt einfache Pipelines mit `build`- und `deploy`-Aufgaben. 
+Semaphore kann ein Schritt in einer externen Pipeline sein und selbst einfache Build- und Deploy-Pipelines ausführen.
 
-Semaphore übergibt die Variable `semaphore_vars` an jedes Ansible-Playbook, das es ausführt.
+## Build- und Deploy-Pipelines innerhalb von Semaphore {#build-and-deploy-pipelines-inside-semaphore}
 
-Sie können sie in Ihren Ansible-Tasks verwenden, um zu ermitteln, welcher Aufgabentyp ausgeführt wurde, welche Version gebaut oder bereitgestellt werden soll, wer die Aufgabe gestartet hat usw.
+Die Vorlagentypen **Build** und **Deploy**, die Artefakt-Versionierung und die Variable `semaphore_vars` werden im Benutzerhandbuch beschrieben: [Build- und Deploy-Vorlagen](/user-guide/task-templates/build-deploy). Mehrstufige Pipelines mit Freigaben werden mit [Workflows](/user-guide/workflows) erstellt.
 
----
+## Semaphore-Tasks aus einem externen CI-System starten {#starting-semaphore-tasks-from-an-external-ci-system}
 
-Beispiel für `semaphore_vars` bei `build`-Aufgaben:
+Es gibt zwei Wege, eine Task aus GitHub Actions, GitLab CI, Jenkins oder einem anderen System auszulösen:
 
-```yaml
-semaphore_vars:
-    task_details:
-        type: build
-        username: user123
-        message: New version of some feature
-        target_version: 1.5.33
-```
-
-Beispiel für `semaphore_vars` bei `deploy`-Aufgaben:
-
-```yaml
-semaphore_vars:
-    task_details:
-        type: deploy
-        username: user123
-        message: Deploy new feature to servers
-        incoming_version: 1.5.33
-```
-
-Für **Bash**-, **PowerShell**- und **Python**-Vorlagen stellt Semaphore dieselben `task_details`-Werte als Umgebungsvariablen bereit:
-
-| `task_details`-Feld | Umgebungsvariable | Hinweise |
-| --- | --- | --- |
-| `type` | `SEMAPHORE_TASK_DETAILS_TYPE` | `build` oder `deploy` |
-| `username` | `SEMAPHORE_TASK_DETAILS_USERNAME` | Benutzer, der die Aufgabe gestartet hat |
-| `message` | `SEMAPHORE_TASK_DETAILS_MESSAGE` | Aufgabennachricht |
-| `target_version` | `SEMAPHORE_TASK_DETAILS_TARGET_VERSION` | Vorhanden bei `build`-Aufgaben |
-| `incoming_version` | `SEMAPHORE_TASK_DETAILS_INCOMING_VERSION` | Vorhanden bei `deploy`-Aufgaben |
-
-Beispiel für Bash:
+- **Integrations**: eine Webhook-URL pro Projekt, die ein Task Template startet, wenn die Anfrage passt. Sie unterstützt GitHub-Signaturen, Tokens und HMAC und kann Felder der Anfrage als Variablen an die Task übergeben. Siehe [Integrations](/user-guide/integrations).
+- **REST-API**: eine Task mit einem API-Token erstellen:
 
 ```bash
-echo "$SEMAPHORE_TASK_DETAILS_TYPE"
-echo "$SEMAPHORE_TASK_DETAILS_TARGET_VERSION"
+curl -X POST https://semaphore.example.com/api/project/1/tasks \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{"template_id": 5, "message": "Triggered by CI"}'
 ```
 
-Beispiel für PowerShell:
-
-```powershell
-$env:SEMAPHORE_TASK_DETAILS_TYPE
-$env:SEMAPHORE_TASK_DETAILS_INCOMING_VERSION
-```
-
-Beispiel für Python:
-
-```python
-import os
-
-task_type = os.getenv("SEMAPHORE_TASK_DETAILS_TYPE")
-target_version = os.getenv("SEMAPHORE_TASK_DETAILS_TARGET_VERSION")
-incoming_version = os.getenv("SEMAPHORE_TASK_DETAILS_INCOMING_VERSION")
-```
-
-### Build {#build}
-
-Dieser Aufgabentyp dient zum Erstellen von [Artefakten](https://en.wikipedia.org/wiki/Artifact\_\(software\_development\)). Jede Build-Aufgabe erhält eine automatisch generierte Version. Verwenden Sie in Ihrem Ansible-Playbook die Variable `semaphore_vars.task_details.target_version`, um zu ermitteln, welche Version des Artefakts erstellt werden soll. Nach der Erstellung kann das Artefakt für die Bereitstellung verwendet werden.
-
----
-
-Beispiel für eine `build`-Ansible-Rolle:
-
-1. App-Quellcode von GitHub abrufen
-2. Quellcode kompilieren
-3. Erstellte Binärdatei in ein Tarball mit dem Namen `app-{{semaphore_vars.task_details.target_version}}.tar.gz` packen
-4. `app-{{semaphore_vars.task_details.target_version}}.tar.gz` in einen S3-Bucket hochladen
-
-
-
-### Deploy {#deploy}
-
-Dieser Aufgabentyp dient zum Bereitstellen von Artefakten auf Zielservern. Jede Deploy-Aufgabe ist mit einer Build-Aufgabe verknüpft. Verwenden Sie in Ihrem Ansible-Playbook die Variable `semaphore_vars.task_details.incoming_version`, um zu ermitteln, welche Version des Artefakts bereitgestellt werden soll.
-
----
-
-Beispiel für eine `deploy`-Ansible-Rolle:
-
-1. `app-{{semaphore_vars.task_details.incoming_version}}.tar.gz` aus einem S3-Bucket auf die Zielserver herunterladen
-2. `app-{{semaphore_vars.task_details.incoming_version}}.tar.gz` in das Zielverzeichnis entpacken
-3. Konfigurationsdateien erstellen oder aktualisieren
-4. App-Dienst neu starten
-
+Die Antwort enthält die Task-ID. Rufen Sie `GET /api/project/1/tasks/{task_id}` ab, bis der `status` `success`, `error` oder `stopped` lautet. Siehe [API](/reference/api) für Tokens und die integrierte Swagger-Referenz.

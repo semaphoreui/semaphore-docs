@@ -1,3 +1,7 @@
+---
+title: Ansible
+description: Creating an Ansible Playbook template, working directory, task build and deploy types, Galaxy options, and forks.
+---
 
 # Ansible
 

@@ -1,94 +1,23 @@
-# Pipeline
+# CI/CD 통합
 
-Semaphore는 `build` 및 `deploy` 작업을 사용하는 간단한 pipeline을 지원합니다. 
+Semaphore는 외부 파이프라인의 한 단계가 될 수 있으며, 자체적으로 간단한 빌드 및 배포 파이프라인을 실행할 수도 있습니다.
 
-Semaphore는 실행하는 각 Ansible playbook에 `semaphore_vars` 변수를 전달합니다.
+## Semaphore 내부의 빌드 및 배포 파이프라인 {#build-and-deploy-pipelines-inside-semaphore}
 
-Ansible 작업에서 이 변수를 사용하여 어떤 유형의 작업이 실행되었는지, 어떤 버전을 빌드하거나 배포해야 하는지, 누가 작업을 실행했는지 등을 확인할 수 있습니다.
+템플릿 유형 **빌드** 및 **배포**, 아티팩트 버전 관리, `semaphore_vars` 변수는 사용자 가이드의 [빌드 및 배포 템플릿](/user-guide/task-templates/build-deploy)에서 설명합니다. 승인 단계가 있는 다단계 파이프라인은 [워크플로](/user-guide/workflows)로 구성합니다.
 
----
+## 외부 CI 시스템에서 Semaphore 작업 시작하기 {#starting-semaphore-tasks-from-an-external-ci-system}
 
-`build` 작업의 `semaphore_vars` 예시:
+GitHub Actions, GitLab CI, Jenkins 또는 기타 시스템에서 작업을 트리거하는 방법은 두 가지가 있습니다.
 
-```yaml
-semaphore_vars:
-    task_details:
-        type: build
-        username: user123
-        message: New version of some feature
-        target_version: 1.5.33
-```
-
-`deploy` 작업의 `semaphore_vars` 예시:
-
-```yaml
-semaphore_vars:
-    task_details:
-        type: deploy
-        username: user123
-        message: Deploy new feature to servers
-        incoming_version: 1.5.33
-```
-
-**Bash**, **PowerShell**, **Python** 템플릿의 경우 Semaphore는 동일한 `task_details` 값을 환경 변수로 제공합니다.
-
-| `task_details` 필드 | 환경 변수 | 비고 |
-| --- | --- | --- |
-| `type` | `SEMAPHORE_TASK_DETAILS_TYPE` | `build` 또는 `deploy` |
-| `username` | `SEMAPHORE_TASK_DETAILS_USERNAME` | 작업을 시작한 사용자 |
-| `message` | `SEMAPHORE_TASK_DETAILS_MESSAGE` | 작업 메시지 |
-| `target_version` | `SEMAPHORE_TASK_DETAILS_TARGET_VERSION` | `build` 작업에서 제공됨 |
-| `incoming_version` | `SEMAPHORE_TASK_DETAILS_INCOMING_VERSION` | `deploy` 작업에서 제공됨 |
-
-Bash 예시:
+- **통합**: 요청이 조건과 일치할 때 템플릿을 시작하는 프로젝트별 웹훅 URL입니다. GitHub 서명, 토큰, HMAC를 지원하며 요청 필드를 변수로 작업에 전달할 수 있습니다. [통합](/user-guide/integrations)을 참조하십시오.
+- **REST API**: API 토큰으로 작업을 생성합니다.
 
 ```bash
-echo "$SEMAPHORE_TASK_DETAILS_TYPE"
-echo "$SEMAPHORE_TASK_DETAILS_TARGET_VERSION"
+curl -X POST https://semaphore.example.com/api/project/1/tasks \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{"template_id": 5, "message": "Triggered by CI"}'
 ```
 
-PowerShell 예시:
-
-```powershell
-$env:SEMAPHORE_TASK_DETAILS_TYPE
-$env:SEMAPHORE_TASK_DETAILS_INCOMING_VERSION
-```
-
-Python 예시:
-
-```python
-import os
-
-task_type = os.getenv("SEMAPHORE_TASK_DETAILS_TYPE")
-target_version = os.getenv("SEMAPHORE_TASK_DETAILS_TARGET_VERSION")
-incoming_version = os.getenv("SEMAPHORE_TASK_DETAILS_INCOMING_VERSION")
-```
-
-### Build {#build}
-
-이 유형의 작업은 [아티팩트](https://en.wikipedia.org/wiki/Artifact\_\(software\_development\))를 생성하는 데 사용됩니다. 각 build 작업에는 자동 생성된 버전이 있습니다. Ansible playbook에서 `semaphore_vars.task_details.target_version` 변수를 사용하여 어떤 버전의 아티팩트를 생성해야 하는지 확인해야 합니다. 아티팩트가 생성되면 배포에 사용할 수 있습니다.
-
----
-
-`build` Ansible 역할 예시:
-
-1. GitHub에서 앱 소스 코드 가져오기
-2. 소스 코드 컴파일
-3. 생성된 바이너리를 `app-{{semaphore_vars.task_details.target_version}}.tar.gz`라는 이름의 tarball로 묶기
-4. `app-{{semaphore_vars.task_details.target_version}}.tar.gz`를 S3 버킷으로 전송
-
-
-
-### Deploy {#deploy}
-
-이 유형의 작업은 아티팩트를 대상 서버에 배포하는 데 사용됩니다. 각 배포 작업은 build 작업과 연결됩니다. Ansible playbook에서 `semaphore_vars.task_details.incoming_version` 변수를 사용하여 어떤 버전의 아티팩트를 배포해야 하는지 확인해야 합니다.
-
----
-
-`deploy` Ansible 역할 예시:
-
-1. S3 버킷에서 `app-{{semaphore_vars.task_details.incoming_version}}.tar.gz`를 대상 서버로 다운로드
-2. `app-{{semaphore_vars.task_details.incoming_version}}.tar.gz`를 대상 디렉터리에 압축 해제
-3. 구성 파일 생성 또는 업데이트
-4. 앱 서비스 재시작
-
+응답에는 작업 ID가 포함됩니다. `status`가 `success`, `error` 또는 `stopped`가 될 때까지 `GET /api/project/1/tasks/{task_id}`를 폴링합니다. 토큰과 내장 Swagger 참조에 대해서는 [API](/reference/api)를 참조하십시오.

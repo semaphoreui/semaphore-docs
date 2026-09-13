@@ -188,7 +188,7 @@ Semaphore 2.20+ ведёт журнал аудита безопасности, �
 
 Есть три способа доставки событий аудита в вашу SIEM:
 
-1. **Pull:** читайте `/api/events` (см. [документацию API](/admin-guide/api)).
+1. **Pull:** читайте `/api/events` (см. [документацию API](/reference/api)).
 2. **Файловый коллектор:** включите запись лога активности в файл (Pro, см. выше) и отправляйте `events.log` (рекомендуется формат JSON) с помощью Filebeat, Fluentd или Splunk Universal Forwarder.
 3. **Webhook аудита (Pro):** отправляйте события в реальном времени по HTTPS — на универсальный JSON-эндпоинт или в Splunk HTTP Event Collector.
 

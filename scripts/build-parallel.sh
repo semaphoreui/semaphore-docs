@@ -61,7 +61,14 @@ while (( finished < ${#locales[@]} )); do
   while (( next < ${#locales[@]} && ${#pids[@]} < jobs )); do
     locale="${locales[$next]}"
     echo "[$locale] Starting"
+    # Each worker needs its own generated-files directory, otherwise the
+    # languages overwrite each other's modules. Webpack's persistent cache is
+    # not keyed by that directory, so it also needs a cache of its own: sharing
+    # node_modules/.cache with a plain `npm run build` makes one of the two
+    # reuse loader output pointing at the other's directory, and every page
+    # fails to resolve. See the separate-webpack-cache plugin in the config.
     DOCUSAURUS_GENERATED_FILES_DIR_NAME="$work_root/generated/$locale" \
+      SEMAPHORE_DOCS_WEBPACK_CACHE_DIR="$work_root/webpack-cache" \
       SEMAPHORE_DOCS_DEV_PROXY=false \
       node scripts/build-locale.cjs "$locale" "$run_dir/output/$locale" \
       > "$run_dir/logs/$locale.log" 2>&1 &

@@ -1,3 +1,7 @@
+---
+title: Database security
+description: How to turn on access key encryption in the database with the access_key_encryption option and how to generate it.
+---
 
 # Database security
 

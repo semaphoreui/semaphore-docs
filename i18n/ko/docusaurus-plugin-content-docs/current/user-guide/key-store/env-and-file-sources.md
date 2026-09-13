@@ -23,7 +23,7 @@ Semaphore는 값을 데이터베이스에 복사하지 않습니다. 작업에�
 | 탭 | 값의 출처 | 입력할 내용 |
 |-----|---------------------------|---------------|
 | **Local** | Semaphore 데이터베이스(암호화됨) | 양식에 로그인, 비밀번호 또는 개인 키 |
-| **Storage** ![Static Badge](https://img.shields.io/badge/pro-yellow) | [HashiCorp Vault](/user-guide/key-store/hashicorp-vault)와 같은 외부 시크릿 스토리지 | 스토리지와 시크릿 경로 |
+| **Storage** <Pro /> | [HashiCorp Vault](/user-guide/key-store/hashicorp-vault)와 같은 외부 시크릿 스토리지 | 스토리지와 시크릿 경로 |
 | **Env** | Semaphore 서버 프로세스의 환경 변수 | 변수 이름, 예: `PROD_SSH_KEY` |
 | **File** | Semaphore 서버의 파일 | 파일의 **절대** 경로, 예: `/var/lib/semaphore/secrets/prod.json` |
 

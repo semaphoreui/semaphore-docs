@@ -1,3 +1,8 @@
+---
+title: Docker
+description: A Docker Compose file for Semaphore with MySQL or Postgres, the required secret variables, and installing extra Python dependencies.
+---
+
 # Docker
 
 &#x20;Create a `docker-compose.yml` file with following content:

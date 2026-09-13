@@ -1,4 +1,11 @@
+---
+title: Variable Groups
+description: Creating, updating, and deleting variable groups, storing secrets, and using TF_VAR_ variables in Terraform templates.
+---
+
 # Variable Groups
+
+![Variable groups list](/assets/variable-groups-list.webp)
 
 The Variable Groups section of Semaphore is a place to store additional variables for an inventory and must be stored in JSON format.
 

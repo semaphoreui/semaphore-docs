@@ -1,6 +1,8 @@
 
 # Workspaces
 
+![Aba Workspaces de um modelo](/assets/template-workspaces.webp)
+
 O Semaphore oferece suporte integrado a workspaces do Terraform, permitindo gerenciar vários ambientes e configurações em um único projeto. Esse recurso ajuda você a manter arquivos de estado separados para diferentes ambientes, como desenvolvimento, homologação e produção.
 
 ## Recursos {#features}

@@ -1,14 +1,19 @@
 ---
 title: Semaphore UI Documentation
+description: Start page for the Semaphore UI docs - a one-command quick start plus entry points for installing, running, operating, and reference.
 sidebar_label: Home
 hide_table_of_contents: true
 ---
+
+import Link from '@docusaurus/Link';
 
 # Semaphore UI Documentation
 
 Semaphore UI is a self-hosted web UI and API for running **Ansible**, **Terraform/OpenTofu**, **Shell**, **PowerShell**, and **Python** automation. It gives your team one place to run playbooks and scripts, keep credentials encrypted, schedule jobs, and see who ran what and when.
 
 It ships as a single Go binary or Docker image, runs on Linux, macOS, and Windows, and stores data in SQLite, MySQL, or PostgreSQL.
+
+New to Semaphore? The [Introduction](/introduction) explains what it does, how a deployment is put together, and what to prepare before installing.
 
 :::tip[Quick start]
 
@@ -36,11 +41,11 @@ For production, see [Installation](/admin-guide/installation) for Docker Compose
       <div className="card__body">
         <p>Get a server running and connect it to your database, identity provider, and network.</p>
         <ul>
-          <li><a href="/admin-guide/installation">Installation</a></li>
-          <li><a href="/admin-guide/configuration">Configuration</a></li>
-          <li><a href="/category/reverse-proxy">Reverse proxy and TLS</a></li>
-          <li><a href="/admin-guide/ldap">LDAP</a> and <a href="/admin-guide/openid">OpenID Connect</a></li>
-          <li><a href="/admin-guide/security">Security hardening</a></li>
+          <li><Link to="/admin-guide/installation">Installation</Link></li>
+          <li><Link to="/admin-guide/configuration">Configuration</Link></li>
+          <li><Link to="/admin-guide/reverse-proxy">Reverse proxy and TLS</Link></li>
+          <li><Link to="/admin-guide/authentication/ldap">LDAP</Link> and <Link to="/admin-guide/authentication/openid">OpenID Connect</Link></li>
+          <li><Link to="/admin-guide/security">Security hardening</Link></li>
         </ul>
       </div>
     </div>
@@ -51,11 +56,11 @@ For production, see [Installation](/admin-guide/installation) for Docker Compose
       <div className="card__body">
         <p>Organize work into projects, connect repositories and credentials, and run tasks on demand or on a schedule.</p>
         <ul>
-          <li><a href="/getting-started">Getting started: first task in six steps</a></li>
-          <li><a href="/user-guide/projects">Projects</a> and <a href="/user-guide/team">Teams</a></li>
-          <li><a href="/user-guide/task-templates">Task templates</a> and <a href="/user-guide/tasks">Tasks</a></li>
-          <li><a href="/user-guide/key-store">Key Store</a>, <a href="/user-guide/inventory">Inventory</a>, <a href="/user-guide/environment">Variable Groups</a></li>
-          <li><a href="/user-guide/schedules">Schedules</a> and <a href="/user-guide/workflows">Workflows</a> (Pro)</li>
+          <li><Link to="/getting-started">Getting started: first task in six steps</Link></li>
+          <li><Link to="/user-guide/projects">Projects</Link> and <Link to="/user-guide/team">Teams</Link></li>
+          <li><Link to="/user-guide/task-templates">Task templates</Link> and <Link to="/user-guide/tasks">Tasks</Link></li>
+          <li><Link to="/user-guide/key-store">Key Store</Link>, <Link to="/user-guide/inventory">Inventory</Link>, <Link to="/user-guide/environment">Variable Groups</Link></li>
+          <li><Link to="/user-guide/schedules">Schedules</Link> and <Link to="/user-guide/workflows">Workflows</Link> (Pro)</li>
         </ul>
       </div>
     </div>
@@ -66,11 +71,11 @@ For production, see [Installation](/admin-guide/installation) for Docker Compose
       <div className="card__body">
         <p>Distribute execution, run redundantly, and keep the service observable and up to date.</p>
         <ul>
-          <li><a href="/admin-guide/runners">Runners</a></li>
-          <li><a href="/admin-guide/ha">High availability</a></li>
-          <li><a href="/admin-guide/upgrading">Upgrading</a></li>
-          <li><a href="/admin-guide/logs">Logs</a> and <a href="/admin-guide/metrics">Metrics</a></li>
-          <li><a href="/category/notifications">Notifications</a></li>
+          <li><Link to="/admin-guide/runners">Runners</Link></li>
+          <li><Link to="/admin-guide/ha">High availability</Link></li>
+          <li><Link to="/admin-guide/upgrading">Upgrading</Link></li>
+          <li><Link to="/admin-guide/logs">Logs</Link> and <Link to="/admin-guide/metrics">Metrics</Link></li>
+          <li><Link to="/admin-guide/notifications">Notifications</Link></li>
         </ul>
       </div>
     </div>
@@ -81,11 +86,11 @@ For production, see [Installation](/admin-guide/installation) for Docker Compose
       <div className="card__body">
         <p>Exact options and endpoints when you already know what you are looking for.</p>
         <ul>
-          <li><a href="/admin-guide/configuration/config-file">Configuration file</a> and <a href="/admin-guide/configuration/env-vars">Environment variables</a></li>
-          <li><a href="/admin-guide/api">REST API</a></li>
-          <li><a href="/admin-guide/cli">CLI</a></li>
-          <li><a href="/admin-guide/cicd">CI/CD integration</a></li>
-          <li><a href="/faq/troubleshooting">Troubleshooting FAQ</a></li>
+          <li><Link to="/admin-guide/configuration/config-file">Configuration file</Link> and <Link to="/admin-guide/configuration/env-vars">Environment variables</Link></li>
+          <li><Link to="/reference/api">REST API</Link></li>
+          <li><Link to="/reference/cli">CLI</Link></li>
+          <li><Link to="/admin-guide/cicd">CI/CD integration</Link></li>
+          <li><Link to="/faq/troubleshooting">Troubleshooting FAQ</Link></li>
         </ul>
       </div>
     </div>
@@ -95,11 +100,11 @@ For production, see [Installation](/admin-guide/installation) for Docker Compose
 ## Guides by tool {#guides-by-tool}
 
 <div className="home-tools margin-bottom--lg">
-  <a className="button button--outline button--primary" href="/user-guide/apps/ansible">Ansible</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/terraform">Terraform / OpenTofu</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/bash">Shell</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/powershell">PowerShell</a>
-  <a className="button button--outline button--primary" href="/user-guide/apps/python">Python</a>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/ansible">Ansible</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/terraform">Terraform / OpenTofu</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/bash">Shell</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/powershell">PowerShell</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/python">Python</Link>
 </div>
 
 ## Help and community {#help-and-community}

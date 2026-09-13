@@ -1,6 +1,11 @@
+---
+title: 문제 해결
+description: "가장 자주 발생하는 오류의 해결 방법: runner 404, Ansible gathering facts, Postgres SSL, git clone, 누락된 스크립트 출력, LDAP 오류."
+---
+
 # 문제 해결
 
-## 1. Runner에서 404 오류가 출력됨 {#1-runner-prints-error-404}
+## Runner에서 404 오류가 출력됨 {#runner-prints-error-404}
 
 ### 해결 방법 {#how-to-fix}
 
@@ -8,7 +13,7 @@
 
 ---
 
-## 2. localhost에 대한 Gathering Facts 문제 {#2-gathering-facts-issue-for-localhost}
+## localhost에 대한 Gathering Facts 문제 {#gathering-facts-issue-for-localhost}
 
 이 문제는 [Snap](https://snapcraft.io/semaphore) 또는 [Docker](https://hub.docker.com/r/semaphoreui/semaphore)로 설치한 Semaphore UI에서 발생할 수 있습니다.
 
@@ -44,7 +49,7 @@ Ansible이 로컬에서 fact를 수집하려고 하지만, Ansible은 이를 허
 127.0.0.1 ansible_connection=ssh ansible_ssh_user=your_localhost_user
 ```
 ---
-## 3. panic: pq: SSL is not enabled on the server {#3-panic-pq-ssl-is-not-enabled-on-the-server}
+## panic: pq: SSL is not enabled on the server {#panic-pq-ssl-is-not-enabled-on-the-server}
 
 Postgres가 SSL로 동작하지 않는다는 의미입니다.
 
@@ -63,12 +68,8 @@ Postgres가 SSL로 동작하지 않는다는 의미입니다.
 		}
 	},
 ```
-
-
 ---
-
-
-## 4. fatal: bad numeric config value '0' for 'GIT_TERMINAL_PROMPT': invalid unit {#4-fatal-bad-numeric-config-value-0-for-git_terminal_prompt-invalid-unit}
+## fatal: bad numeric config value '0' for 'GIT_TERMINAL_PROMPT': invalid unit {#fatal-bad-numeric-config-value-0-for-git_terminal_prompt-invalid-unit}
 
 인증이 필요한 저장소에 HTTPS로 접근하려고 한다는 의미입니다.
 
@@ -80,32 +81,68 @@ Postgres가 SSL로 동작하지 않는다는 의미입니다.
 * 비밀번호를 지정합니다. GitHub/BitBucket에서는 계정 비밀번호를 사용할 수 없으며, 대신 Personal Access Token(PAT)을 사용해야 합니다. 자세한 내용은 [여기](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)를 참조하십시오.
 * 키를 생성한 후 **저장소** 화면으로 이동하여 해당 저장소를 찾고 키를 지정합니다.
 
-
 ---
 
-## 5. Git clone 또는 pull이 간헐적으로 실패함 {#5-git-clone-or-pull-fails-intermittently}
+## Git clone 또는 pull이 간헐적으로 실패함 {#git-clone-or-pull-fails-intermittently}
 
 작업 로그에 `Git pull failed (...), retrying in 2s` 같은 메시지가 표시된 후 성공하거나, 여러 번 시도 후 최종적으로 실패할 수 있습니다.
 
 ### 발생 원인 {#why-this-happens-1}
 
-git 서버에 일시적으로 연결할 수 없었거나 일시적인 오류를 반환했습니다. Semaphore는 작업을 실패 처리하기 전에 clone 및 pull 작업을 자동으로 재시도합니다.
+git 서버(GitHub, GitLab, Bitbucket 또는 자체 호스팅 인스턴스)에 일시적으로 연결할 수 없었거나, 일시적인 HTTP 오류를 반환했거나, Semaphore와 서버 사이의 네트워크에 짧은 장애가 있었습니다. Semaphore는 작업을 실패 처리하기 전에 clone 및 pull 작업을 자동으로 재시도합니다.
 
 ### 해결 방법 {#how-to-fix-this-3}
 
-1. **일시적인 장애**: 보통 저절로 해결됩니다. Semaphore는 지수 백오프를 적용하며 최대 `git_attempts`회(기본값 4)까지 재시도합니다.
-2. **잦은 실패**: 구성에서 `git_attempts`를 늘리거나 `SEMAPHORE_GIT_ATTEMPTS`를 설정하십시오.
-3. **즉각적이고 일관된 실패**: 저장소 URL, 브랜치, 액세스 키, 네트워크 연결을 확인하십시오.
+1. **일시적인 장애**: 보통 저절로 해결됩니다. Semaphore는 시도 사이에 지수 백오프를 적용하며 최대 `git_attempts`회(기본값 4)까지 재시도합니다.
+2. **잦은 실패**: 구성에서 시도 횟수를 늘리십시오:
 
-구성에 대한 자세한 내용은 [Git 작업](/admin-guide/configuration/config-file#git-operations)을 참조하십시오.
+```json
+{
+  "git_attempts": 8
+}
+```
+
+또는 환경 변수를 사용합니다:
+
+```bash
+export SEMAPHORE_GIT_ATTEMPTS=8
+```
+
+3. **즉각적이고 일관된 실패**: 재시도로는 해결되지 않습니다. 저장소 URL, 브랜치 이름, 액세스 키, 그리고 Semaphore 서버 또는 runner 호스트에서의 네트워크 연결을 확인하십시오.
+
+`git_client` 및 `git_attempts`에 대한 자세한 내용은 [Git 작업](/admin-guide/configuration/config-file#git-operations)을 참조하십시오.
 
 ---
 
-## 6. unable to read LDAP response packet: unexpected EOF {#6-unable-to-read-ldap-response-packet-unexpected-eof}
+## Bash 스크립트 출력이 누락되거나 불완전함 {#bash-script-output-is-missing-or-incomplete}
+
+Bash 작업이 성공적으로 완료되었지만 로그에 `echo`, `printf` 또는 기타 명령의 출력이 거의 또는 전혀 표시되지 않습니다. 특히 스크립트가 빠르게 종료될 때 발생합니다.
+
+### 발생 원인 {#why-this-happens-2}
+
+Semaphore는 셸 명령이 실행되는 동안 stdout과 stderr를 캡처합니다. 매우 짧은 스크립트는 버퍼링된 출력이 모두 읽히기 전에 종료될 수 있으므로, 마지막 줄이 작업 로그에서 누락될 수 있습니다.
+
+### 해결 방법 {#how-to-fix-this-4}
+
+1. **업그레이드**: 최신 Semaphore 버전은 작업을 완료로 표시하기 전에 프로세스 출력을 모두 읽어 들입니다. 이전 릴리스를 사용 중이라면 서버와 runner를 업데이트하십시오.
+2. 출력 전달을 보장해야 하는 경우 **스크립트에서 출력을 플러시**하십시오:
+
+```bash
+#!/bin/bash
+echo "Starting deploy"
+echo "Done" >&2
+```
+
+중요한 진단 정보는 저장소 작업 공간 내부의 파일에 기록하고 스크립트 마지막에 `cat`으로 출력하십시오.
+3. **조용한 조기 종료 방지**: 출력이 짧더라도 실패가 드러나도록 `set -euo pipefail`과 명시적인 오류 메시지를 사용하십시오.
+
+---
+
+## unable to read LDAP response packet: unexpected EOF {#unable-to-read-ldap-response-packet-unexpected-eof}
 
 LDAP 서버가 보안 연결(TLS)을 기대하는데 비보안 방식으로 연결하려고 시도하고 있을 가능성이 높습니다.
 
-### 해결 방법 {#how-to-fix-this-4}
+### 해결 방법 {#how-to-fix-this-5}
 
 `config.json` 파일에서 TLS를 활성화하십시오:
 
@@ -117,11 +154,11 @@ LDAP 서버가 보안 연결(TLS)을 기대하는데 비보안 방식으로 연�
 
 ---
 
-## 7. LDAP Result Code 49 "Invalid Credentials" {#7-ldap-result-code-49-invalid-credentials}
+## LDAP Result Code 49 "Invalid Credentials" {#ldap-result-code-49-invalid-credentials}
 
 비밀번호 또는 `binddn`이 잘못되었습니다.
 
-### 해결 방법 {#how-to-fix-this-5}
+### 해결 방법 {#how-to-fix-this-6}
 
 `ldapwhoami` 도구를 사용하여 binddn이 동작하는지 확인하십시오:
 
@@ -141,6 +178,29 @@ ldapwhoami\
 
 ---
 
-## 8. LDAP Result Code 32 "No Such Object" {#8-ldap-result-code-32-no-such-object}
+## LDAP Result Code 32 "No Such Object" {#ldap-result-code-32-no-such-object}
 
-곧 제공될 예정입니다.
+Semaphore가 조회한 distinguished name에 해당하는 항목이 디렉터리에 없습니다. 거의 대부분
+`ldap_searchdn`이 잘못된 경우이며, 드물게 `ldap_binddn`이 잘못된 경우입니다.
+
+### 해결 방법 {#how-to-fix-this-7}
+
+Semaphore가 사용하는 것과 동일한 자격 증명으로 검색 기준(base)이 존재하는지 확인하십시오:
+
+```bash
+ldapsearch\
+  -H ldap://ldap.example.com:389\
+  -D "CN=/your/ldap_binddn/value/in/config/file"\
+  -b "/your/ldap_searchdn/value/in/config/file"\
+  -x\
+  -W\
+  -s base
+```
+
+- 이 명령이 결과 코드 **32**를 반환하면 base 자체가 존재하지 않는 것입니다.
+  `config.json`의 `ldap_searchdn`을 수정하십시오. 실제 값이 `OU=People`인데
+  `OU=Users`라고 적는 것처럼 구성 요소의 오타가 흔한 원인입니다.
+- 결과 코드 **0**은 base에는 문제가 없고 `ldap_searchfilter`에 문제가 있다는
+  뜻입니다. 해당 base 아래에서 일치하는 항목이 없습니다.
+
+각 옵션의 의미는 [LDAP 및 AD](/admin-guide/authentication/ldap)를 참조하십시오.

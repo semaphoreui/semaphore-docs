@@ -1,6 +1,6 @@
 # AWS Secrets Manager als Secret-Speicher
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Semaphore UI Enterprise kann **AWS Secrets Manager** anstelle der Datenbank als externen Speicher für Key-Store-Secrets verwenden.
 

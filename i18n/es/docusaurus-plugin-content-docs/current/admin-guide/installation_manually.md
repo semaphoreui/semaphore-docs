@@ -15,8 +15,8 @@
 
 Esta documentación detalla cómo configurar Semaphore cuando se utilizan estos métodos de instalación:
 
-* [Gestor de paquetes](/admin-guide/installation#package-manager)
-* [Archivo binario](/admin-guide/installation#binary-file)
+* [Gestor de paquetes](/admin-guide/installation/package-manager)
+* [Archivo binario](/admin-guide/installation/binary-file)
 
 El paquete de software de Semaphore es solo una parte de todo el sistema necesario para ejecutar Ansible correctamente con él.
 
@@ -230,7 +230,7 @@ deactivate
 
 ## Proxy inverso {#reverse-proxy}
 
-Consulte: [Seguridad - Conexión cifrada](/security#reverse-proxy)
+Consulte: [Seguridad - Conexión cifrada](/admin-guide/security/network#reverse-proxy)
 
 ----
 

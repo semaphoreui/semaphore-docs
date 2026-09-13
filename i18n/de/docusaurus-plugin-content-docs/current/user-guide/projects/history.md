@@ -1,90 +1,35 @@
-
 # Verlauf
 
-Die Seite Verlauf in Semaphore bietet eine umfassende Übersicht über alle Aufgabenausführungen in Ihrem Projekt. Mit dieser Funktion können Sie den Ausführungsverlauf Ihrer Aufgaben verfolgen und analysieren und erhalten wertvolle Einblicke in Ihre Automatisierungs-Workflows.
+Der Tab **History** im Projekt-Dashboard listet alle Tasks des Projekts auf, die neuesten zuerst. Es ist die Standardansicht, wenn Sie ein Projekt öffnen.
 
-![](/assets/project_history.webp)
+![Projektverlauf](/assets/project-dashboard-history.webp)
 
-## Überblick {#overview}
+## Spalten {#columns}
 
-Die Seite Verlauf zeigt eine chronologische Liste aller Aufgabenausführungen an, darunter:
+| Spalte | Inhalt |
+|---|---|
+| **Task** | Nummer des Tasks, das Task Template, aus dem er erstellt wurde, und die Commit-Nachricht der verwendeten Repository-Revision. Ein Symbol links zeigt die Anwendung (Ansible, Terraform, Bash und so weiter). |
+| **Version** | Bei [Build- und Deploy-Task-Templates](../task-templates/build-deploy): die gebaute oder bereitgestellte Version. Bei anderen Task Templates nur ein Statussymbol. |
+| **Status** | Aktuelles Status-Badge, siehe [Task-Status](../tasks#task-statuses). |
+| **User** | Wer den Task gestartet hat. Tasks, die von einem Schedule oder einer Integration gestartet wurden, haben keinen Benutzer. |
+| **Start** | Startdatum und -zeit in der Zeitzone Ihres Browsers. |
+| **Duration** | Wie lange der Task gelaufen ist. |
 
-- Verwendete Aufgabenvorlagen
-- Ausführungsstatus (erfolgreich, fehlgeschlagen, in Bearbeitung)
-- Start- und Endzeiten
-- Dauer
-- Benutzer, der die Aufgabe gestartet hat
-- Aufgabenausgabe und Protokolle
+Die Liste ist auf Seiten aufgeteilt. Klicken Sie auf die Task-Nummer oder den Namen des Task Template, um das [Task-Fenster](../tasks#task-window) mit dem Protokoll, den Details und der Zusammenfassung zu öffnen. Klicken Sie im Kopfbereich des Task-Fensters auf den Namen des Task Template, um zur Task-Template-Seite zu gelangen.
 
-## Aufgabenverlauf anzeigen {#viewing-task-history}
+## Aufbewahrung von Tasks {#task-retention}
 
-### Zugriff auf den Verlauf {#accessing-history}
+Standardmäßig werden alle Tasks und ihre Protokolle dauerhaft aufbewahrt. Um den Verlauf pro Task Template zu begrenzen, setzen Sie `max_tasks_per_template` in der `config.json` oder die Umgebungsvariable `SEMAPHORE_MAX_TASKS_PER_TEMPLATE`:
 
-1. Navigieren Sie in Semaphore zu Ihrem Projekt
-2. Klicken Sie auf den Tab "Verlauf"
-3. Sehen Sie sich die Liste aller Aufgabenausführungen an
+```json
+{
+  "max_tasks_per_template": 30
+}
+```
 
-## Aufgabendetails {#task-details}
+Wenn das Limit erreicht ist, werden die ältesten Tasks dieses Task Template zusammen mit ihren Protokollen gelöscht. Die vollständige Liste der Optionen finden Sie unter [Konfiguration](/admin-guide/configuration).
 
-Ein Klick auf eine beliebige Aufgabe in der Verlaufsliste öffnet eine Detailansicht mit:
+## Siehe auch {#see-also}
 
-1. **Aufgabeninformationen**
-   - Aufgaben-ID
-   - Verwendete Vorlage
-   - Start- und Endzeiten
-   - Dauer
-   - Status
-   - Benutzer, der die Aufgabe ausgeführt hat
-
-2. **Ausführungsdetails**
-   - Vollständige Aufgabenausgabe
-   - Fehlermeldungen (falls vorhanden)
-   - Verwendete Umgebungsvariablen
-   - Inventory-Informationen
-   - Repository-Details
-
-3. **Aufgabenprotokolle**
-   - Protokollanzeige in Echtzeit
-   - Option zum Herunterladen des Protokolls
-   - Suchfunktion im Protokoll
-   - Hervorhebung von Fehlern
-
-### Statistiken {#statistics}
-
-Das Projekt bietet eine Statistikseite, die die Aufgabenergebnisse über einen ausgewählten Zeitraum zusammenfasst, mit Filterung nach Benutzer.
-
-## Aufgabenverwaltung {#task-management}
-
-### Verfügbare Aktionen {#actions-available}
-
-In der Verlaufsansicht können Sie:
-
-- Auf vollständige Aufgabenprotokolle zugreifen
-- Die Aufgabenausgabe herunterladen
-- In Protokollen suchen
-
-## Aufbewahrung von Aufgaben {#task-retention}
-
-In Semaphore können Sie konfigurieren, wie lange der Aufgabenverlauf aufbewahrt wird:
-
-1. **Standardverhalten**
-   - Alle Aufgaben werden in der Datenbank gespeichert
-   - Standardmäßig keine automatische Löschung
-
-2. **Aufbewahrung konfigurieren**
-   - Maximale Anzahl von Aufgaben pro Vorlage festlegen
-   - Konfiguration über Umgebungsvariable:
-     ```bash
-     SEMAPHORE_MAX_TASKS_PER_TEMPLATE=30
-     ```
-   - Oder über config.json:
-     ```json
-     {
-       "max_tasks_per_template": 30
-     }
-     ```
-
-3. **Aufbewahrungsregeln**
-   - Wenn das Limit erreicht ist, werden die ältesten Aufgaben automatisch gelöscht
-   - Die Löschung erfolgt pro Vorlage
-   - Aufgabenprotokolle werden zusammen mit den Aufgabendatensätzen entfernt
+- [Stats](./stats): aggregierte Task-Ergebnisse pro Tag.
+- [Activity](./activity): Audit-Protokoll der Änderungen im Projekt.

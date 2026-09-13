@@ -1,5 +1,11 @@
+---
+title: Workspaces
+description: Managing Terraform and OpenTofu workspaces in a template, isolating state per environment, and setting the default workspace.
+---
 
 # Workspaces
+
+![Workspaces tab of a template](/assets/template-workspaces.webp)
 
 Semaphore provides built-in support for Terraform workspaces, allowing you to manage multiple environments and configurations within a single project. This feature helps you maintain separate state files for different environments like development, staging, and production.
 

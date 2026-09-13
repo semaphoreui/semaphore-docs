@@ -1,5 +1,7 @@
 # インベントリ
 
+![インベントリの一覧](/assets/inventory-list.webp)
+
 インベントリは、Ansible がプレイを実行する対象ホストの一覧を含むファイルです。
 インベントリには、playbook から使用できる変数も保存されます。インベントリは YAML、JSON、または TOML で保存できます。
 インベントリの詳細については、[Ansible のドキュメント](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html)を参照してください。
@@ -10,14 +12,23 @@ Semaphore UI は、Semaphore のユーザーが読み取りアクセス権を持
 インベントリを作成するには、ユーザー名とログインの組み合わせ、または SSH のいずれかのユーザー認証情報がキーストアに設定されている必要があります。
 認証情報の詳細については、本サイトの[キーストア](key-store)セクションを参照してください。
 
+## インベントリの種類 {#inventory-types}
+
+| 種類 | 説明 |
+|---|---|
+| `static` | Web UI で編集する INI 形式のインベントリです。 |
+| `static-yaml` | Web UI で編集する YAML 形式のインベントリです。[NetBox](./inventory/netbox-dynamic-inventory) や [Consul](./inventory/consul-dynamic-inventory) などのプラグインインベントリに使用します。 |
+| `file` | インベントリファイルへのパスです。相対パスはテンプレートのリポジトリ内を指し、絶対パスはサーバー上のファイルを指します。ファイルが別の Git リポジトリにある場合は、任意で別途 **インベントリリポジトリ** を選択できます。 |
+| `terraform-workspace`、`tofu-workspace`、`terragrunt-workspace` | Ansible のインベントリではなく、[Terraform/OpenTofu](./apps/terraform/workspaces) と [Terragrunt](./apps/terragrunt) テンプレート用のワークスペースです。 |
+
 ## インベントリの作成 {#creating-an-inventory}
 1. キーストアタブをクリックし、login_password または ssh タイプのキーがあることを確認します
 2. インベントリタブをクリックし、「新しいインベントリ」をクリックします
-4. インベントリに名前を付け、ドロップダウンから正しいユーザー認証情報を選択します。必要に応じて、正しい sudo 認証情報を選択します
-5. インベントリの種類を選択します
+3. インベントリに名前を付け、ドロップダウンから正しいユーザー認証情報を選択します。必要に応じて、正しい sudo 認証情報を選択します
+4. インベントリの種類を選択します
   * ファイルを選択した場合は、ファイルの絶対パスを使用します。このファイルが Git リポジトリ内にある場合は、相対パスを使用します。例: `inventory/linux-hosts.yaml`
-  * 静的を選択した場合は、フォームにインベントリを貼り付けるか入力します
-6. 「作成」をクリックします。
+  * static または static-yaml を選択した場合は、フォームにインベントリを貼り付けるか入力します
+5. 「作成」をクリックします。
 
 ## インベントリの更新 {#updating-an-inventory}
 1. インベントリタブをクリックします

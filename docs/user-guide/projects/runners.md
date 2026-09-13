@@ -1,92 +1,57 @@
+---
+title: Project runners (Pro)
+description: Pro project-level runners, adding one, tokens and registration, routing tasks with tags, and runner security notes.
+---
 
 # Project runners (Pro)
 
-Project Runners are a powerful feature in Semaphore Pro that enables distributed task execution across multiple servers. This feature allows you to run tasks on separate servers from your Semaphore UI instance, providing enhanced security, scalability, and resource management.
+Runners execute tasks on machines other than the Semaphore server: closer to the target infrastructure, in another network zone, or with a different toolchain. **Global runners** are registered by an administrator and serve every project. **Project runners** belong to one project and are managed by its team in the **Runners** section.
 
-![](/assets/project_runners.webp)
+![Project runners](/assets/project-runners-list.webp)
 
-## Overview {#overview}
+| Column | Content |
+|---|---|
+| Switch | Enables or disables the runner. A disabled runner receives no tasks. Only project runners have the switch; global runners are managed by the administrator. |
+| **Name** | Runner name. The **Global** badge marks runners shared by all projects. |
+| **Tag** | Tags of the runner. Templates with a **Runner tag** run only on runners that have that tag. |
+| **Status** | **Online** when the runner polled the server recently, **Offline** otherwise. |
 
-Project runners operate on a similar principle to GitLab or GitHub Actions runners:
+## Adding a runner {#adding-a-runner}
 
-- A runner is deployed on a separate server from your Semaphore UI
-- The runner connects to your Semaphore instance using a secure token
-- When tasks are created, Semaphore delegates them to available runners
-- Runners execute the tasks and report results back to Semaphore
+You need the **Manager** role or higher. Click **New Runner** and fill in the form.
 
-## Benefits {#benefits}
+<div style={{maxWidth: 420}}>
 
-Using runners provides several key advantages:
+![New runner dialog](/assets/project-runner-new.webp)
 
-1. **Enhanced Security**
-   - Runners can be deployed in isolated environments or restricted networks
-   - Sensitive operations can be executed in controlled environments
-   - Better separation of concerns between UI and execution environments
+</div>
 
-2. **Improved Scalability**
-   - Distribute workload across multiple servers
-   - Add or remove runners based on demand
-   - Better resource utilization across your infrastructure
+| Field | Description |
+|---|---|
+| **Name** | Runner name shown in the list and in task details. |
+| **Tags** | Optional. One or more tags. A template with a **Runner tag** is executed only by runners that carry the tag. |
+| **Is default** | Runners with this flag also take tasks of templates without a runner tag. A runner without the flag and without tags never receives tasks. |
+| **Register** | Checked: the runner is created as registered and the dialog shows the runner token to put into the runner configuration. Unchecked: the runner is created unregistered and you get a one-time **registration token**; the runner registers itself with `semaphore runner register` or `semaphore runner start --auto-register`. |
+| **Webhook** | Optional URL that Semaphore calls when a task is assigned to the runner. Use it to start on-demand (one-off) runners, for example with a cloud function. |
+| **Max number of parallel tasks** | Optional. How many tasks the runner may execute at the same time. |
+| **Enabled** | Whether the runner receives tasks. |
 
-3. **Flexible Deployment**
-   - Deploy runners close to your target infrastructure
-   - Run tasks in different network zones
-   - Support for various deployment models (on-premises, cloud, hybrid)
+After creation, click the runner to see its token or registration token again and to copy the configuration snippets.
 
-## Using Project Runners {#using-project-runners}
+## Installing the runner {#installing-the-runner}
 
-### Prerequisites {#prerequisites}
+The runner is the same `semaphore` binary or the `semaphoreui/runner` Docker image started in runner mode. Installation, the configuration file, registration commands, executors (local, Docker, Kubernetes), and security are described in the admin guide: [Runners](/admin-guide/runners) and [CLI: Runners](/reference/cli/runners).
 
-To use runners, you need:
+## Routing tasks to runners {#routing-tasks-to-runners}
 
-1. A Semaphore Pro license
-2. A separate server for running the runner
-3. Network connectivity between the runner and Semaphore UI
-4. Proper configuration on both the Semaphore UI and runner servers
+1. Give the runner one or more **Tags**, for example `windows-qa-server`.
+2. In the template form, set **Runner tag** to the same value.
+3. Tasks of the template wait in the `waiting` status until a runner with that tag is online.
 
-<!-- ### Configuration
+Templates without a runner tag go to the runners marked **Is default**, including global default runners. The runner that executed a task is shown on the **Details** tab of the [task window](../tasks#task-window).
 
-1. **Semaphore UI Configuration**
-  
+## Security {#security}
 
-2. **Runner Setup** -->
-
-
-### Managing Runners {#managing-runners}
-
-You can manage runners through the Semaphore UI:
-
-1. Navigate to the Runners section in your project
-2. View all registered runners and their status
-3. Add or remove runners as needed
-4. Monitor runner health and performance
-
-### Security Considerations {#security-considerations}
-
-- Always use HTTPS for communication between runners and Semaphore UI
-- Implement proper network security between runners and Semaphore UI
-- Consider using isolated environments for sensitive operations
-
-## Best Practices {#best-practices}
-
-1. **Resource Planning**
-   - Size your runners appropriately for your workload
-   - Monitor runner resource usage
-   - Scale runners based on demand
-
-2. **Network Configuration**
-   - Ensure proper network connectivity
-   - Configure firewalls appropriately
-   - Use secure communication channels
-
-3. **Maintenance**
-   - Regularly update runner software
-   - Monitor runner health
-   - Implement proper logging and monitoring
-   - Have a backup strategy for runner failures
-
-4. **Security**
-   - Follow the principle of least privilege
-   - Implement proper access controls
-   - Regular security audits
-   - Keep software up to date
+- Runners connect to the server, never the other way round, so a runner can live behind NAT or in a private network.
+- Every request from a runner is authenticated with its token. Revoke a runner by deleting it or disabling it.
+- Use HTTPS between runners and the server; see [Network security](/admin-guide/security/network).

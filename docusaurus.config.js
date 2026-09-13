@@ -27,7 +27,10 @@ const config = {
   organizationName: 'semaphoreui', // Usually your GitHub org/user name.
   projectName: 'semaphore-docs', // Usually your repo name.
 
-  onBrokenLinks: 'ignore',
+  // Broken links and anchors fail the build. Any page move must be accompanied
+  // by an entry in redirects.js, see the comment in that file.
+  onBrokenLinks: 'throw',
+  onBrokenAnchors: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
@@ -337,8 +340,33 @@ const config = {
     }),
 
   plugins: [
+    // Redirects from old URLs of moved or removed pages. See redirects.js.
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: require('./redirects'),
+      },
+    ],
     // Non-default languages reuse the English copy of /docs/assets/* images.
     require('./plugins/shared-locale-assets'),
+    // Webpack's persistent cache is keyed by bundle name, mode and locale, but
+    // not by the directory Docusaurus generates its modules into. A build that
+    // uses a non-default DOCUSAURUS_GENERATED_FILES_DIR_NAME therefore reuses
+    // loader output that imports from the *other* directory, and every page
+    // fails with "Can't resolve @site/.docusaurus/...". scripts/build-parallel.sh
+    // needs both, so it points the cache somewhere of its own through this.
+    ...(process.env.SEMAPHORE_DOCS_WEBPACK_CACHE_DIR ? [
+    function separateWebpackCache() {
+      return {
+        name: 'separate-webpack-cache',
+        configureWebpack() {
+          return {
+            cache: {cacheDirectory: process.env.SEMAPHORE_DOCS_WEBPACK_CACHE_DIR},
+          };
+        },
+      };
+    },
+    ] : []),
     ...(process.env.SEMAPHORE_DOCS_DEV_PROXY === 'true' ? [
     function localizedDevSocket(context) {
       const socketPath = `${context.baseUrl}__webpack_hmr`;
