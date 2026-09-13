@@ -116,28 +116,33 @@ hr {
   }
 }
 
-.navbar a {
+/* White links belong to the teal header, not the mobile sidebar. */
+.navbar__inner a {
   color: white !important;
 }
 
-.navbar a:hover {
+.navbar__inner a:hover {
   color: rgba(255, 255, 255, 0.8) !important;
 }
 
-.navbar .navbar__brand {
+.navbar__inner .navbar__brand {
   color: white !important;
 }
 
-.navbar .navbar__link {
+.navbar__inner .navbar__link {
   color: white !important;
 }
 
-.navbar .navbar__link:hover {
+.navbar__inner .navbar__link:hover {
   color: rgba(255, 255, 255, 0.8) !important;
 }
 
-.navbar .navbar__item {
+.navbar__inner .navbar__item {
   color: white !important;
+}
+
+.navbar-sidebar {
+  color: var(--ifm-font-color-base);
 }
 
 /* Dropdown menus follow the site theme: white in light mode, dark surface in dark mode */
@@ -467,7 +472,7 @@ aside.theme-doc-sidebar-container {
 /* Section titles (top level) carry a touch more weight than page links */
 .theme-doc-sidebar-item-link-level-1 > .menu__link,
 .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* Nested pages: vertical guide line instead of plain indentation */
@@ -563,4 +568,12 @@ html[data-theme='dark'] {
   background-color: var(--sem-sidebar-icon-color);
   -webkit-mask: var(--sem-sidebar-icon) center / contain no-repeat;
   mask: var(--sem-sidebar-icon) center / contain no-repeat;
+}
+
+.menu {
+  scrollbar-width: none; /* Firefox */
+}
+
+.menu::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
