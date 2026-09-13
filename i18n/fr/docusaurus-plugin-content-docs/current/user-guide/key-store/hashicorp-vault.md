@@ -1,4 +1,8 @@
-# Stockage de secrets HashiCorp Vault
+---
+title: "Stockage de secrets HashiCorp Vault"
+---
+
+# Stockage de secrets HashiCorp Vault <Pro />
 
 Semaphore UI prend en charge HashiCorp Vault comme stockage pour les secrets.
 

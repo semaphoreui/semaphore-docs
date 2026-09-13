@@ -1,4 +1,8 @@
-# 高可用性
+---
+title: "高可用性"
+---
+
+# 高可用性 <Enterprise />
 
 :::info
 高可用性は **Semaphore Enterprise** エディションで利用できます。

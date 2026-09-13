@@ -1,4 +1,8 @@
-# Stockage de secrets Devolutions Server
+---
+title: "Stockage de secrets Devolutions Server"
+---
+
+# Stockage de secrets Devolutions Server <Enterprise />
 
 Semaphore UI prend en charge Devolutions Server comme stockage pour les secrets. 
 

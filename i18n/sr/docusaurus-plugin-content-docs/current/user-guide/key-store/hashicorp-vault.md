@@ -1,4 +1,8 @@
-# HashiCorp Vault skladište tajni
+---
+title: "HashiCorp Vault skladište tajni"
+---
+
+# HashiCorp Vault skladište tajni <Pro />
 
 Semaphore UI podržava HashiCorp Vault kao skladište za tajne.
 

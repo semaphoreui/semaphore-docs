@@ -1,4 +1,8 @@
-# Aktivacija licence
+---
+title: "Aktivacija licence"
+---
+
+# Aktivacija licence <Pro />
 
 Funkcije Semaphore Pro i Enterprise izdanja uključuju se licencnim ključem. Licencu možete aktivirati iz veb interfejsa ili navesti ključ u konfiguraciji servera za automatizovane instalacije.
 

@@ -1,4 +1,8 @@
-# Хранилище секретов HashiCorp Vault
+---
+title: "Хранилище секретов HashiCorp Vault"
+---
+
+# Хранилище секретов HashiCorp Vault <Pro />
 
 Semaphore UI поддерживает HashiCorp Vault в качестве хранилища секретов.
 

@@ -1,4 +1,8 @@
-# Devolutions Server als Secret-Speicher
+---
+title: "Devolutions Server als Secret-Speicher"
+---
+
+# Devolutions Server als Secret-Speicher <Enterprise />
 
 Semaphore UI unterstützt Devolutions Server als Speicher für Secrets. 
 

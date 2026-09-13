@@ -1,4 +1,8 @@
-# Devolutions Server 시크릿 스토리지
+---
+title: "Devolutions Server 시크릿 스토리지"
+---
+
+# Devolutions Server 시크릿 스토리지 <Enterprise />
 
 Semaphore UI는 Devolutions Server를 시크릿 스토리지로 지원합니다. 
 

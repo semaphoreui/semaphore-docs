@@ -1,4 +1,8 @@
-# Almacenamiento de secretos en OpenBao
+---
+title: "Almacenamiento de secretos en OpenBao"
+---
+
+# Almacenamiento de secretos en OpenBao <Pro />
 
 Semaphore UI admite [OpenBao](https://openbao.org) como almacenamiento de secretos.
 

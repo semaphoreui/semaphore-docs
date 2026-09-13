@@ -1,4 +1,8 @@
-# Archivio di segreti HashiCorp Vault
+---
+title: "Archivio di segreti HashiCorp Vault"
+---
+
+# Archivio di segreti HashiCorp Vault <Pro />
 
 Semaphore UI supporta HashiCorp Vault come archivio per i segreti.
 

@@ -1,4 +1,8 @@
-# Хранилище секретов Devolutions Server
+---
+title: "Хранилище секретов Devolutions Server"
+---
+
+# Хранилище секретов Devolutions Server <Enterprise />
 
 Semaphore UI поддерживает Devolutions Server в качестве хранилища секретов. 
 

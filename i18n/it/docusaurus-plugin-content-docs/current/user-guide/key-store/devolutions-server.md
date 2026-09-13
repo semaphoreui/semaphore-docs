@@ -1,4 +1,8 @@
-# Archivio di segreti Devolutions Server
+---
+title: "Archivio di segreti Devolutions Server"
+---
+
+# Archivio di segreti Devolutions Server <Enterprise />
 
 Semaphore UI supporta Devolutions Server come archivio per i segreti. 
 

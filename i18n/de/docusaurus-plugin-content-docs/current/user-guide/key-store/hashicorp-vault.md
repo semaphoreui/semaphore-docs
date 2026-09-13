@@ -1,4 +1,8 @@
-# HashiCorp Vault als Secret-Speicher
+---
+title: "HashiCorp Vault als Secret-Speicher"
+---
+
+# HashiCorp Vault als Secret-Speicher <Pro />
 
 Semaphore UI unterstützt HashiCorp Vault als Speicher für Secrets.
 

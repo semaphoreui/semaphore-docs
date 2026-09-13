@@ -1,4 +1,8 @@
-# Activation de la licence
+---
+title: "Activation de la licence"
+---
+
+# Activation de la licence <Pro />
 
 Les fonctionnalités Semaphore Pro et Enterprise sont activées à l'aide d'une clé de licence. Vous pouvez activer la licence depuis l'interface web, ou fournir la clé dans la configuration du serveur pour les déploiements automatisés.
 

@@ -1,4 +1,8 @@
-# OpenBao als Secret-Speicher
+---
+title: "OpenBao als Secret-Speicher"
+---
+
+# OpenBao als Secret-Speicher <Pro />
 
 Semaphore UI unterstützt [OpenBao](https://openbao.org) als Speicher für Secrets.
 

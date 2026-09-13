@@ -1,4 +1,8 @@
-# Devolutions Server 密钥存储
+---
+title: "Devolutions Server 密钥存储"
+---
+
+# Devolutions Server 密钥存储 <Enterprise />
 
 Semaphore UI 支持将 Devolutions Server 用作密钥存储。 
 

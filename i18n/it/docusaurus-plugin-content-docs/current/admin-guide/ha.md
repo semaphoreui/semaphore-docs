@@ -1,4 +1,8 @@
-# Alta disponibilità
+---
+title: "Alta disponibilità"
+---
+
+# Alta disponibilità <Enterprise />
 
 :::info
 L'alta disponibilità è disponibile nell'edizione **Semaphore Enterprise**.

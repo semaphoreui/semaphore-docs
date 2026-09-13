@@ -1,4 +1,8 @@
-# OpenBao シークレットストレージ
+---
+title: "OpenBao シークレットストレージ"
+---
+
+# OpenBao シークレットストレージ <Pro />
 
 Semaphore UI は、シークレットのストレージとして [OpenBao](https://openbao.org) をサポートしています。
 

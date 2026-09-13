@@ -1,4 +1,8 @@
-# Stockage de secrets OpenBao
+---
+title: "Stockage de secrets OpenBao"
+---
+
+# Stockage de secrets OpenBao <Pro />
 
 Semaphore UI prend en charge [OpenBao](https://openbao.org) comme stockage pour les secrets.
 

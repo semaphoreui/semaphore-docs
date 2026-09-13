@@ -1,4 +1,8 @@
-# Visoka dostupnost
+---
+title: "Visoka dostupnost"
+---
+
+# Visoka dostupnost <Enterprise />
 
 :::info
 Visoka dostupnost je dostupna u izdanju **Semaphore Enterprise**.

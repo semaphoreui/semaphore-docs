@@ -1,4 +1,8 @@
-# 고가용성
+---
+title: "고가용성"
+---
+
+# 고가용성 <Enterprise />
 
 :::info
 고가용성은 **Semaphore Enterprise** 에디션에서 사용할 수 있습니다.

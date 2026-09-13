@@ -1,4 +1,8 @@
-# Devolutions Server skladište tajni
+---
+title: "Devolutions Server skladište tajni"
+---
+
+# Devolutions Server skladište tajni <Enterprise />
 
 Semaphore UI podržava Devolutions Server kao skladište za tajne. 
 

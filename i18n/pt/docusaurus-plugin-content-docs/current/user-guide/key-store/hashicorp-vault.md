@@ -1,4 +1,8 @@
-# Armazenamento de segredos no HashiCorp Vault
+---
+title: "Armazenamento de segredos no HashiCorp Vault"
+---
+
+# Armazenamento de segredos no HashiCorp Vault <Pro />
 
 O Semaphore UI oferece suporte ao HashiCorp Vault como armazenamento de segredos.
 

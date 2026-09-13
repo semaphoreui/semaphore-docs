@@ -1,4 +1,8 @@
-# HashiCorp Vault 密钥存储
+---
+title: "HashiCorp Vault 密钥存储"
+---
+
+# HashiCorp Vault 密钥存储 <Pro />
 
 Semaphore UI 支持使用 HashiCorp Vault 作为密钥存储。
 

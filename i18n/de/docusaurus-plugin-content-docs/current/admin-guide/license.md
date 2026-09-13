@@ -1,4 +1,8 @@
-# Lizenzaktivierung
+---
+title: "Lizenzaktivierung"
+---
+
+# Lizenzaktivierung <Pro />
 
 Die Funktionen von Semaphore Pro und Enterprise werden mit einem Lizenzschlüssel freigeschaltet. Sie können die Lizenz über die Weboberfläche aktivieren oder den Schlüssel für automatisierte Deployments in der Serverkonfiguration hinterlegen.
 

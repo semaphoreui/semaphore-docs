@@ -1,4 +1,8 @@
-# Devolutions Server シークレットストレージ
+---
+title: "Devolutions Server シークレットストレージ"
+---
+
+# Devolutions Server シークレットストレージ <Enterprise />
 
 Semaphore UI は、シークレットのストレージとして Devolutions Server をサポートしています。 
 

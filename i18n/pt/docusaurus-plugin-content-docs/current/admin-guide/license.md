@@ -1,4 +1,8 @@
-# Ativação da licença
+---
+title: "Ativação da licença"
+---
+
+# Ativação da licença <Pro />
 
 Os recursos do Semaphore Pro e Enterprise são habilitados com uma chave de licença. Você pode ativar a licença pela interface web ou fornecer a chave na configuração do servidor para implantações automatizadas.
 

@@ -1,4 +1,8 @@
-# Hochverfügbarkeit
+---
+title: "Hochverfügbarkeit"
+---
+
+# Hochverfügbarkeit <Enterprise />
 
 :::info
 Hochverfügbarkeit ist in der Edition **Semaphore Enterprise** verfügbar.

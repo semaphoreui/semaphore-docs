@@ -1,4 +1,8 @@
-# Хранилище секретов OpenBao
+---
+title: "Хранилище секретов OpenBao"
+---
+
+# Хранилище секретов OpenBao <Pro />
 
 Semaphore UI поддерживает [OpenBao](https://openbao.org) в качестве хранилища секретов.
 

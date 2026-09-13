@@ -1,4 +1,8 @@
-# HashiCorp Vault 시크릿 스토리지
+---
+title: "HashiCorp Vault 시크릿 스토리지"
+---
+
+# HashiCorp Vault 시크릿 스토리지 <Pro />
 
 Semaphore UI는 HashiCorp Vault를 시크릿 스토리지로 지원합니다.
 

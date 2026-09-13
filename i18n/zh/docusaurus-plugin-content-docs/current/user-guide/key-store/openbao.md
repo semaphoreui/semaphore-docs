@@ -1,4 +1,8 @@
-# OpenBao 密钥存储
+---
+title: "OpenBao 密钥存储"
+---
+
+# OpenBao 密钥存储 <Pro />
 
 Semaphore UI 支持使用 [OpenBao](https://openbao.org) 作为密钥存储。
 

@@ -1,4 +1,8 @@
-# OpenBao skladište tajni
+---
+title: "OpenBao skladište tajni"
+---
+
+# OpenBao skladište tajni <Pro />
 
 Semaphore UI podržava [OpenBao](https://openbao.org) kao skladište za tajne.
 

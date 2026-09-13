@@ -1,4 +1,8 @@
-# Armazenamento de segredos no Devolutions Server
+---
+title: "Armazenamento de segredos no Devolutions Server"
+---
+
+# Armazenamento de segredos no Devolutions Server <Enterprise />
 
 O Semaphore UI oferece suporte ao Devolutions Server como armazenamento de segredos. 
 

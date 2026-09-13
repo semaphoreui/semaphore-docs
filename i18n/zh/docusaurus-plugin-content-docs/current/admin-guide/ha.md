@@ -1,4 +1,8 @@
-# 高可用
+---
+title: "高可用"
+---
+
+# 高可用 <Enterprise />
 
 :::info
 高可用功能在 **Semaphore Enterprise** 版本中提供。

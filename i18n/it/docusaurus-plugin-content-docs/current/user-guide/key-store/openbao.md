@@ -1,4 +1,8 @@
-# Archivio di segreti OpenBao
+---
+title: "Archivio di segreti OpenBao"
+---
+
+# Archivio di segreti OpenBao <Pro />
 
 Semaphore UI supporta [OpenBao](https://openbao.org) come archivio per i segreti.
 

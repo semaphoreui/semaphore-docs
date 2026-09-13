@@ -1,4 +1,8 @@
-# HashiCorp Vault シークレットストレージ
+---
+title: "HashiCorp Vault シークレットストレージ"
+---
+
+# HashiCorp Vault シークレットストレージ <Pro />
 
 Semaphore UI は、シークレットのストレージとして HashiCorp Vault をサポートしています。
 

@@ -9,7 +9,7 @@
  *   2. sidebar        — every non-empty English page is reachable from sidebars.js.
  *   3. translations   — every locale copy matches the English page structurally:
  *                       same explicit heading ids, same number of code fences,
- *                       links, headings and import lines, and is not a verbatim
+ *                       links, headings, import lines and edition badges, and is not a verbatim
  *                       copy of the English text.
  *
  * The third check is what keeps ten locales honest: a translation that silently
@@ -128,6 +128,11 @@ for (const id of pages) {
 
 const count = (text, re) => (text.match(re) ?? []).length;
 const anchors = (text) => (text.match(/\{#[^}]+\}/g) ?? []).join('|');
+const editionBadges = (text) => JSON.stringify(
+  (text.match(/<(?:Pro|Enterprise|FeatureState)\b[^>]*\/>/g) ?? [])
+    .map((badge) => badge.replace(/\s+/g, ' '))
+    .sort(),
+);
 
 const locales = existsSync(I18N)
   ? readdirSync(I18N).filter((l) => statSync(join(I18N, l)).isDirectory())
@@ -162,6 +167,7 @@ for (const locale of locales) {
     if (count(en, /\]\([^)]+\)/g) !== count(tr, /\]\([^)]+\)/g)) fail(`${locale}/${id}: link count differs`);
     if (count(en, /^#{1,6} /gm) !== count(tr, /^#{1,6} /gm)) fail(`${locale}/${id}: heading count differs`);
     if (count(en, /^import /gm) !== count(tr, /^import /gm)) fail(`${locale}/${id}: import line count differs`);
+    if (editionBadges(en) !== editionBadges(tr)) fail(`${locale}/${id}: edition badges differ`);
     if (en.trim() === tr.trim()) fail(`${locale}/${id}: untranslated (identical to English)`);
   }
 }
