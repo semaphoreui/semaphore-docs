@@ -1,0 +1,102 @@
+{
+  "title": {
+    "message": "Semaphore UI",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Logo di Semaphore UI",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Product": {
+    "message": "Prodotto",
+    "description": "Navbar item with label Product"
+  },
+  "item.label.Explore": {
+    "message": "Esplora",
+    "description": "Navbar item with label Explore"
+  },
+  "item.label.Help": {
+    "message": "Aiuto",
+    "description": "Navbar item with label Help"
+  },
+  "item.label.Pricing": {
+    "message": "Prezzi",
+    "description": "Navbar item with label Pricing"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.Sign in": {
+    "message": "Accedi",
+    "description": "Navbar item with label Sign in"
+  },
+  "item.label.Pro · For teams": {
+    "message": "Pro · Per i team",
+    "description": "Navbar item with label Pro · For teams"
+  },
+  "item.label.Enterprise · For large-scale operations": {
+    "message": "Enterprise · Per operazioni su larga scala",
+    "description": "Navbar item with label Enterprise · For large-scale operations"
+  },
+  "item.label.Community · For homelab": {
+    "message": "Community · Per l'homelab",
+    "description": "Navbar item with label Community · For homelab"
+  },
+  "item.label.Features": {
+    "message": "Funzionalità",
+    "description": "Navbar item with label Features"
+  },
+  "item.label.Use cases": {
+    "message": "Casi d'uso",
+    "description": "Navbar item with label Use cases"
+  },
+  "item.label.Case studies": {
+    "message": "Casi di studio",
+    "description": "Navbar item with label Case studies"
+  },
+  "item.label.Blog": {
+    "message": "Blog",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.Semaphore UI vs AWX": {
+    "message": "Semaphore UI vs AWX",
+    "description": "Navbar item with label Semaphore UI vs AWX"
+  },
+  "item.label.Semaphore UI vs Rundeck": {
+    "message": "Semaphore UI vs Rundeck",
+    "description": "Navbar item with label Semaphore UI vs Rundeck"
+  },
+  "item.label.Semaphore UI vs GitLab": {
+    "message": "Semaphore UI vs GitLab",
+    "description": "Navbar item with label Semaphore UI vs GitLab"
+  },
+  "item.label.Semaphore UI vs Jenkins": {
+    "message": "Semaphore UI vs Jenkins",
+    "description": "Navbar item with label Semaphore UI vs Jenkins"
+  },
+  "item.label.Semaphore UI vs Spacelift": {
+    "message": "Semaphore UI vs Spacelift",
+    "description": "Navbar item with label Semaphore UI vs Spacelift"
+  },
+  "item.label.Semaphore UI vs Gaia": {
+    "message": "Semaphore UI vs Gaia",
+    "description": "Navbar item with label Semaphore UI vs Gaia"
+  },
+  "item.label.Semaphore UI vs Tower (AAP)": {
+    "message": "Semaphore UI vs Tower (AAP)",
+    "description": "Navbar item with label Semaphore UI vs Tower (AAP)"
+  },
+  "item.label.Installation": {
+    "message": "Installazione",
+    "description": "Navbar item with label Installation"
+  },
+  "item.label.Docs": {
+    "message": "Documentazione",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.API References": {
+    "message": "Riferimenti API",
+    "description": "Navbar item with label API References"
+  }
+}

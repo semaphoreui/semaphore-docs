@@ -1,5 +1,7 @@
 {
-    "liveServer.settings.root": "/book/",
+    "liveServer.settings.mount": [
+      ["/docs", "build"]
+    ],
     "filewatcher.commands": [
     ],
     "liveServer.settings.port": 5500,

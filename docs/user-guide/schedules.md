@@ -1,3 +1,8 @@
+---
+title: Schedules
+description: How to run templates on a cron schedule, set the scheduler timezone, and pass task parameters, with example use cases.
+---
+
 # Schedules
 
 The schedule function in Semaphore allows to automate the execution of templates (e.g. playbook runs) at predefined intervals. This feature allows to implement routine automation tasks, such as regular backups, compliance checks, system updates, and more.
@@ -6,7 +11,7 @@ Make sure to restart the Semaphore service after making changes for them to take
 
 [//]: # (## Setup and configuration)
 
-## Timezone configuration
+## Timezone configuration {#timezone-configuration}
 
 By default, the schedule feature operates in the UTC timezone. However, this can be customized to match your local timezone or specific requirements.
 
@@ -30,7 +35,7 @@ You can change the timezone by updating the configuration file or setting an env
 
 For a list of valid timezone values, refer to the [IANA Time Zone Database](https://www.iana.org/time-zones).
 
-### Accessing the schedule feature
+### Accessing the schedule feature {#accessing-the-schedule-feature}
 
 1. Log in to the Semaphore web interface
 2. Navigate to the "Schedule" tab in the main navigation menu
@@ -38,7 +43,7 @@ For a list of valid timezone values, refer to the [IANA Time Zone Database](http
 
 ![](/assets/schedule01.png)
 
-### Creating a new schedule
+### Creating a new schedule {#creating-a-new-schedule}
 
 When creating a new schedule, you'll need to configure the following options:
 
@@ -50,7 +55,7 @@ When creating a new schedule, you'll need to configure the following options:
 
 ![](/assets/schedule02.png) ![](/assets/schedule03.png)
 
-### Cron format syntax
+### Cron format syntax {#cron-format-syntax}
 
 The schedule uses standard cron syntax with five fields:
 
@@ -73,9 +78,9 @@ Examples:
 
 Very helpful cron expression generator: [https://crontab.guru/](https://crontab.guru/)
 
-## Use cases
+## Use cases {#use-cases}
 
-### System maintenance
+### System maintenance {#system-maintenance}
 
 ```yaml
 # Example playbook for system updates
@@ -98,14 +103,14 @@ Very helpful cron expression generator: [https://crontab.guru/](https://crontab.
 
 Schedule this playbook to run weekly during off-hours to ensure systems stay up-to-date.
 
-### Backup operations
+### Backup operations {#backup-operations}
 
 Create schedules for database backups with different frequencies:
 - Daily backups that retain for one week
 - Weekly backups that retain for one month
 - Monthly backups that retain for one year
 
-### Compliance checks
+### Compliance checks {#compliance-checks}
 
 Schedule regular compliance scans to ensure systems meet security requirements:
 
@@ -124,11 +129,11 @@ Schedule regular compliance scans to ensure systems meet security requirements:
         flat: yes
 ```
 
-### Environment provisioning and cleanup
+### Environment provisioning and cleanup {#environment-provisioning-and-cleanup}
 
 For development or testing environments. Schedule cloud environment creation in the morning and teardown in the evening to optimize costs.
 
-## Best practices
+## Best practices {#best-practices}
 
 * Use descriptive names for schedules that indicate both function and timing (e.g. "Weekly-Backup-Sunday-2AM")
 * Avoid scheduling too many resource-intensive tasks concurrently
@@ -138,6 +143,6 @@ For development or testing environments. Schedule cloud environment creation in 
 
 ---
 
-## Task parameters
+## Task parameters {#task-parameters}
 
 Schedules can pass parameters to tasks. Enable prompts for the required fields in the template, then define parameter values in the schedule configuration so each run supplies the desired overrides (for example branch, variables, flags).

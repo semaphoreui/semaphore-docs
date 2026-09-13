@@ -1,22 +1,27 @@
+---
+title: Consul Dynamic Inventory with Semaphore
+description: Step-by-step guide to using a Consul catalog as an Ansible dynamic inventory in Semaphore with a Python inventory script.
+---
+
 # Consul Dynamic Inventory with Semaphore
 
 ![Ansible Badge](https://img.shields.io/badge/ansible-%23000.svg?style=for-the-badge&logo=ansible&logoColor=white)
 ![Consul Badge](https://img.shields.io/badge/Consul-%23F24C53.svg?style=for-the-badge&logo=consul&logoColor=white)
 
-## Overview
+## Overview {#overview}
 
 This guide shows how to use [HashiCorp Consul](https://www.consul.io/) as a dynamic inventory source in Semaphore. Instead of manually listing hosts, Ansible will query Consul's catalog at runtime to discover which hosts to target.
 
 This approach uses a **Python inventory script** committed to your git repository. Semaphore runs the script automatically when executing a playbook.
 
-## Prerequisites
+## Prerequisites {#prerequisites}
 
 - A running Consul cluster with registered nodes
 - A Consul ACL token with read access to the catalog *(only if [ACLs](https://developer.hashicorp.com/consul/docs/security/acl) are enabled)*
 - Python 3 installed on the Semaphore host (or runner)
 - A git repository to store your playbook and inventory script
 
-## Step 1 — Create the Inventory Script
+## Step 1 — Create the Inventory Script {#step-1--create-the-inventory-script}
 
 Create a file called `inventory/consul_inventory.py` in your repository. This script queries the Consul HTTP API and returns host information in the format Ansible expects.
 
@@ -97,7 +102,7 @@ chmod +x inventory/consul_inventory.py
 You can customise this script to group hosts by Consul node metadata, service tags, or datacenters. The example above is a minimal starting point.
 :::
 
-## Step 2 — Set Up Your Repository
+## Step 2 — Set Up Your Repository {#step-2--set-up-your-repository}
 
 Your repository should look like this:
 
@@ -125,9 +130,9 @@ A simple test playbook (`playbook.yml`):
 
 Push this repository to your git provider.
 
-## Step 3 — Configure Semaphore
+## Step 3 — Configure Semaphore {#step-3--configure-semaphore}
 
-### Add a Variable Group
+### Add a Variable Group {#add-a-variable-group}
 
 The inventory script reads the Consul address and token from environment variables. Create a Variable Group in Semaphore to pass these values.
 
@@ -143,14 +148,14 @@ The inventory script reads the Consul address and token from environment variabl
 If your Consul cluster does not have ACLs enabled, you can omit the `CONSUL_HTTP_TOKEN` variable. The inventory script will still work — it simply won't send an authentication token with its API requests.
 :::
 
-### Add the Repository
+### Add the Repository {#add-the-repository}
 
 1. Go to **Repositories** and click **New Repository**
 2. Enter the git URL of your repository
 3. Select the access key for your git provider
 4. Click **Create**
 
-### Add the Inventory
+### Add the Inventory {#add-the-inventory}
 
 1. Go to **Inventory** and click **New Inventory**
 2. Name it (e.g. `consul-dynamic-inventory`)
@@ -163,7 +168,7 @@ If your Consul cluster does not have ACLs enabled, you can omit the `CONSUL_HTTP
 The path is relative to the root of your git repository. Semaphore clones the repo and passes this path to `ansible-playbook -i inventory/consul_inventory.py`.
 :::
 
-### Create a Task Template
+### Create a Task Template {#create-a-task-template}
 
 1. Go to **Task Templates** and click **New Template**
 2. Name it (e.g. `Consul Hello World`)
@@ -171,7 +176,7 @@ The path is relative to the root of your git repository. Semaphore clones the re
 4. Select the repository, inventory, and variable group you created above
 5. Click **Create**
 
-## Step 4 — Run It
+## Step 4 — Run It {#step-4--run-it}
 
 Click **Run** on your task template. Semaphore will:
 
@@ -191,7 +196,7 @@ ok: [node-02] => {
 }
 ```
 
-## Grouping Hosts by Metadata
+## Grouping Hosts by Metadata {#grouping-hosts-by-metadata}
 
 Consul supports [node metadata](https://developer.hashicorp.com/consul/docs/agent/config/config-files#node_meta) — key-value pairs attached to each node. You can use these to create Ansible groups automatically.
 
@@ -222,7 +227,7 @@ This creates groups like `role_webserver`, `env_production`, or `os_ubuntu`. You
         state: restarted
 ```
 
-## Further Reading
+## Further Reading {#further-reading}
 
 - [Ansible Dynamic Inventory Documentation](https://docs.ansible.com/ansible/latest/inventory_guide/intro_dynamic_inventory.html)
 - [Consul Catalog API](https://developer.hashicorp.com/consul/api-docs/catalog)

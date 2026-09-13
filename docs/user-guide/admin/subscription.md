@@ -1,1 +1,1 @@
-# Subscription (Pro)
+# Subscription <Pro />

@@ -1,0 +1,134 @@
+{
+  "link.title. ": {
+    "message": " ",
+    "description": "The title of the footer links column with title=  in the footer"
+  },
+  "link.title.Product": {
+    "message": "제품",
+    "description": "The title of the footer links column with title=Product in the footer"
+  },
+  "link.title.Explore": {
+    "message": "둘러보기",
+    "description": "The title of the footer links column with title=Explore in the footer"
+  },
+  "link.title.Help": {
+    "message": "도움말",
+    "description": "The title of the footer links column with title=Help in the footer"
+  },
+  "link.title.Links": {
+    "message": "링크",
+    "description": "The title of the footer links column with title=Links in the footer"
+  },
+  "link.title.Legal": {
+    "message": "법적 고지",
+    "description": "The title of the footer links column with title=Legal in the footer"
+  },
+  "link.item.label.Community": {
+    "message": "커뮤니티",
+    "description": "The label of footer link with label=Community linking to https://github.com/semaphoreui/semaphore"
+  },
+  "link.item.label.Pro": {
+    "message": "Pro",
+    "description": "The label of footer link with label=Pro linking to https://semaphoreui.com/pro"
+  },
+  "link.item.label.Enterprise": {
+    "message": "Enterprise",
+    "description": "The label of footer link with label=Enterprise linking to https://semaphoreui.com/enterprise"
+  },
+  "link.item.label.Pricing": {
+    "message": "가격",
+    "description": "The label of footer link with label=Pricing linking to https://semaphoreui.com/pricing/"
+  },
+  "link.item.label.Features": {
+    "message": "기능",
+    "description": "The label of footer link with label=Features linking to https://semaphoreui.com/features"
+  },
+  "link.item.label.Use cases": {
+    "message": "활용 사례",
+    "description": "The label of footer link with label=Use cases linking to https://semaphoreui.com/use-cases"
+  },
+  "link.item.label.Case studies": {
+    "message": "고객 사례",
+    "description": "The label of footer link with label=Case studies linking to https://semaphoreui.com/case-studies"
+  },
+  "link.item.label.Roadmap": {
+    "message": "로드맵",
+    "description": "The label of footer link with label=Roadmap linking to https://semaphoreui.com/roadmap"
+  },
+  "link.item.label.What's New": {
+    "message": "새로운 소식",
+    "description": "The label of footer link with label=What's New linking to https://semaphoreui.com/releases/"
+  },
+  "link.item.label.Installation": {
+    "message": "설치",
+    "description": "The label of footer link with label=Installation linking to https://semaphoreui.com/install"
+  },
+  "link.item.label.Documentation": {
+    "message": "문서",
+    "description": "The label of footer link with label=Documentation linking to /"
+  },
+  "link.item.label.API References": {
+    "message": "API 레퍼런스",
+    "description": "The label of footer link with label=API References linking to https://semaphoreui.com/api-docs/"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/semaphoreui/semaphore"
+  },
+  "link.item.label.X (ex. Twitter)": {
+    "message": "X (ex. Twitter)",
+    "description": "The label of footer link with label=X (ex. Twitter) linking to https://twitter.com/semaphoreui"
+  },
+  "link.item.label.Discord": {
+    "message": "Discord",
+    "description": "The label of footer link with label=Discord linking to https://discord.gg/5R6k7hNGcH"
+  },
+  "link.item.label.YouTube": {
+    "message": "YouTube",
+    "description": "The label of footer link with label=YouTube linking to https://www.youtube.com/@semaphoreui"
+  },
+  "link.item.label.LinkedIn": {
+    "message": "LinkedIn",
+    "description": "The label of footer link with label=LinkedIn linking to https://www.linkedin.com/company/semaphoreui"
+  },
+  "link.item.label.Facebook": {
+    "message": "Facebook",
+    "description": "The label of footer link with label=Facebook linking to https://facebook.com/semaphoreui"
+  },
+  "link.item.label.Snapcraft": {
+    "message": "Snapcraft",
+    "description": "The label of footer link with label=Snapcraft linking to https://snapcraft.io/semaphore"
+  },
+  "link.item.label.Terms of Service": {
+    "message": "서비스 이용약관",
+    "description": "The label of footer link with label=Terms of Service linking to https://semaphoreui.com/legal/terms-of-service"
+  },
+  "link.item.label.Subscription Agreement": {
+    "message": "구독 계약",
+    "description": "The label of footer link with label=Subscription Agreement linking to https://semaphoreui.com/legal/subscription-agreement"
+  },
+  "link.item.label.Refund Policy": {
+    "message": "환불 정책",
+    "description": "The label of footer link with label=Refund Policy linking to https://semaphoreui.com/legal/refund-policy"
+  },
+  "link.item.label.Privacy Policy": {
+    "message": "개인정보 처리방침",
+    "description": "The label of footer link with label=Privacy Policy linking to https://semaphoreui.com/privacy/policy"
+  },
+  "link.item.label.Cookie Policy": {
+    "message": "쿠키 정책",
+    "description": "The label of footer link with label=Cookie Policy linking to https://semaphoreui.com/privacy/cookies"
+  },
+  "link.item.label.Security Whitepaper": {
+    "message": "보안 백서",
+    "description": "The label of footer link with label=Security Whitepaper linking to https://semaphoreui.com/security/whitepaper"
+  },
+  "link.item.label.Support Offering": {
+    "message": "지원 서비스",
+    "description": "The label of footer link with label=Support Offering linking to https://semaphoreui.com/legal/support-offering"
+  },
+  "copyright": {
+    "message": "© 2026 Semaphore UI. 모든 권리 보유.",
+    "description": "The footer copyright"
+  }
+}

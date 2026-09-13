@@ -1,0 +1,78 @@
+{
+  "version.label": {
+    "message": "Nächste",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Admin Guide": {
+    "message": "Admin-Handbuch",
+    "description": "The label for category Admin Guide in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Installation": {
+    "message": "Installation",
+    "description": "The label for category Installation in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Configuration": {
+    "message": "Konfiguration",
+    "description": "The label for category Configuration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Reverse-proxy": {
+    "message": "Reverse-Proxy",
+    "description": "The label for category Reverse-proxy in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Security": {
+    "message": "Sicherheit",
+    "description": "The label for category Security in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.CLI": {
+    "message": "CLI",
+    "description": "The label for category CLI in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.LDAP and AD": {
+    "message": "LDAP und AD",
+    "description": "The label for category LDAP and AD in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.OpenID Connect": {
+    "message": "OpenID Connect",
+    "description": "The label for category OpenID Connect in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Notifications": {
+    "message": "Benachrichtigungen",
+    "description": "The label for category Notifications in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.User Guide": {
+    "message": "Benutzerhandbuch",
+    "description": "The label for category User Guide in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Projects": {
+    "message": "Projekte",
+    "description": "The label for category Projects in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Task Templates": {
+    "message": "Aufgabenvorlagen",
+    "description": "The label for category Task Templates in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Apps": {
+    "message": "Apps",
+    "description": "The label for category Apps in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Terraform/OpenTofu": {
+    "message": "Terraform/OpenTofu",
+    "description": "The label for category Terraform/OpenTofu in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Key Store": {
+    "message": "Schlüsselspeicher",
+    "description": "The label for category Key Store in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Inventory": {
+    "message": "Inventar",
+    "description": "The label for category Inventory in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Repositories": {
+    "message": "Repositories",
+    "description": "The label for category Repositories in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.FAQ": {
+    "message": "FAQ",
+    "description": "The label for category FAQ in sidebar tutorialSidebar"
+  }
+}

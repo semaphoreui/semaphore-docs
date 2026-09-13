@@ -1,0 +1,20 @@
+.label {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 0;
+  gap: 0.35rem;
+}
+
+.label > :first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.label > :last-child {
+  flex-shrink: 0;
+  margin-left: auto;
+}

@@ -1,12 +1,17 @@
-# High Availability (Enterprise)
+---
+title: High Availability
+description: Active-active HA architecture with a shared database and Redis, the ha configuration block, load balancer setup, and an FAQ.
+---
 
-Semaphore UI supports active-active high availability (HA) deployments where multiple instances run simultaneously behind a load balancer. Every instance is fully capable of handling UI requests, API calls, scheduled jobs, and task execution. If one instance fails, the remaining nodes continue operating without interruption.
+# High Availability  <Enterprise />
 
 :::info
 High Availability is available in the **Semaphore Enterprise** edition.
 :::
 
-## Architecture
+Semaphore UI supports active-active high availability (HA) deployments where multiple instances run simultaneously behind a load balancer. Every instance is fully capable of handling UI requests, API calls, scheduled jobs, and task execution. If one instance fails, the remaining nodes continue operating without interruption.
+
+## Architecture {#architecture}
 
 A typical active-active deployment consists of the following components:
 
@@ -26,7 +31,7 @@ SQLite and BoltDB are not supported for HA deployments. Use PostgreSQL or MySQL.
 * **Shared Task Queue State** maintains the task queue so that jobs are picked up by exactly one worker. All nodes see the same queue and coordinate execution.
 * **Pub/Sub Messaging** allows nodes to broadcast events such as task updates, cluster notifications, cache invalidation, and UI state changes. This keeps all nodes synchronized in real time.
 
-## Prerequisites
+## Prerequisites {#prerequisites}
 
 Before setting up HA you need:
 
@@ -38,7 +43,7 @@ Before setting up HA you need:
 
 All Semaphore nodes must use the same database, Redis instance, and configuration (except for `ha.node_id`, which must be unique per node).
 
-## Configuration
+## Configuration {#configuration}
 
 Enable HA by adding the `ha` block to your `config.json` on each node:
 
@@ -70,7 +75,7 @@ Enable HA by adding the `ha` block to your `config.json` on each node:
 
 Each node must have a unique `ha.node_id`. All other configuration should be identical across nodes.
 
-### Environment variables
+### Environment variables {#environment-variables}
 
 Alternatively, configure HA using environment variables:
 
@@ -82,7 +87,7 @@ SEMAPHORE_HA_REDIS_DB=0
 SEMAPHORE_HA_REDIS_PASS=***
 ```
 
-### Configuration reference
+### Configuration reference {#configuration-reference}
 
 | Config file option | Environment variable | Description |
 | --- | --- | --- |
@@ -97,11 +102,11 @@ SEMAPHORE_HA_REDIS_PASS=***
 
 See [Configuration](/admin-guide/configuration) for the full list of available options.
 
-## Load balancer
+## Load balancer {#load-balancer}
 
 Place a load balancer in front of the Semaphore nodes to distribute traffic. The load balancer must support **WebSocket connections** for real-time UI updates.
 
-### NGINX example
+### NGINX example {#nginx-example}
 
 ```nginx
 upstream semaphore {
@@ -156,7 +161,7 @@ server {
 
 See [Reverse Proxy](/admin-guide/reverse-proxy/nginx) for more NGINX configuration details.
 
-## How job execution works
+## How job execution works {#how-job-execution-works}
 
 In a multi-node deployment, task execution follows a coordinated flow:
 
@@ -166,7 +171,7 @@ In a multi-node deployment, task execution follows a coordinated flow:
 4. **The task executes.** The node runs the task locally or delegates it to a [remote runner](/admin-guide/runners). Progress and logs are written back to the database.
 5. **Results are broadcast.** Task updates propagate through Redis Pub/Sub so all nodes and connected UI clients remain synchronized.
 
-## Scaling with runners
+## Scaling with runners {#scaling-with-runners}
 
 HA also enables horizontal scaling of task execution. Instead of running jobs only on the Semaphore nodes themselves, execution can be delegated to multiple [runners](/admin-guide/runners). This allows you to:
 
@@ -177,7 +182,7 @@ HA also enables horizontal scaling of task execution. Instead of running jobs on
 
 See [Runners](/admin-guide/runners) for setup instructions.
 
-## Benefits
+## Benefits {#benefits}
 
 * **Improved reliability** — If one instance fails, others continue serving traffic and executing jobs.
 * **Zero-downtime maintenance** — Nodes can be updated or restarted individually without stopping the system.
@@ -185,24 +190,24 @@ See [Runners](/admin-guide/runners) for setup instructions.
 * **No primary node dependency** — All nodes are equal, removing complex failover mechanisms.
 * **Consistent cluster state** — Shared database and Redis coordination keep all instances synchronized.
 
-## FAQ
+## FAQ {#faq}
 
-### What is active-active high availability?
+### What is active-active high availability? {#what-is-active-active-high-availability}
 
 Active-active HA means multiple application instances run simultaneously, and all of them serve requests. There is no primary node — any instance can handle traffic and execute jobs.
 
-### Why does Semaphore use Redis in HA mode?
+### Why does Semaphore use Redis in HA mode? {#why-does-semaphore-use-redis-in-ha-mode}
 
 Redis acts as a coordination layer between instances. It provides distributed locks, shared task queue state, and Pub/Sub messaging to ensure nodes do not execute the same job simultaneously.
 
-### What database should I use for HA deployments?
+### What database should I use for HA deployments? {#what-database-should-i-use-for-ha-deployments}
 
 Semaphore supports PostgreSQL and MySQL as the shared database. SQLite and BoltDB cannot be used in HA mode because they do not support concurrent access from multiple processes.
 
-### What happens if one Semaphore node fails?
+### What happens if one Semaphore node fails? {#what-happens-if-one-semaphore-node-fails}
 
 The load balancer routes traffic to the remaining nodes. Running jobs continue on other instances, and new jobs are picked up by any available node.
 
-### Can I scale horizontally?
+### Can I scale horizontally? {#can-i-scale-horizontally}
 
 Yes. You can add Semaphore nodes behind the load balancer to increase web/API capacity, and add [runners](/admin-guide/runners) to increase task execution capacity.

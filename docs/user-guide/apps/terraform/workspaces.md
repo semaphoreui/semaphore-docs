@@ -1,18 +1,24 @@
+---
+title: Workspaces
+description: Managing Terraform and OpenTofu workspaces in a template, isolating state per environment, and setting the default workspace.
+---
 
 # Workspaces
 
+![Workspaces tab of a template](/assets/template-workspaces.webp)
+
 Semaphore provides built-in support for Terraform workspaces, allowing you to manage multiple environments and configurations within a single project. This feature helps you maintain separate state files for different environments like development, staging, and production.
 
-## Features
+## Features {#features}
 
 - **Workspace Management**: Create, switch, and delete workspaces directly from the Semaphore UI.
 - **State Isolation**: Each workspace maintains its own state file, preventing conflicts between environments.
 - **Environment Variables**: Configure workspace-specific environment variables.
 - **Workspace Selection**: Choose the target workspace when running Terraform commands.
 
-## Using Workspaces in Semaphore
+## Using Workspaces in Semaphore {#using-workspaces-in-semaphore}
 
-### Creating a Workspace
+### Creating a Workspace {#creating-a-workspace}
 
 In the **Workspaces** section of the Terraform/OpenTofu template where you want to add a workspace, follow these steps:
 
@@ -23,11 +29,11 @@ In the **Workspaces** section of the Terraform/OpenTofu template where you want 
 5. You can now use this workspace to run tasks.
 
 
-### Switching workspaces
+### Switching workspaces {#switching-workspaces}
 
 You can set the default workspace for a Terraform/OpenTofu template by clicking the **MAKE DEFAULT** button.
 
 
-### Workspace-specific variables
+### Workspace-specific variables {#workspace-specific-variables}
 
 Semaphore currently does not support workspace-specific variables.

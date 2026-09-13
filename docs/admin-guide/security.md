@@ -1,28 +1,65 @@
+---
+title: Security
+description: Overview of authentication, Argon2id password hashing, secret encryption, task isolation, and secure deployment.
+---
+
 # 🔐 Security
 
-## Introduction
+## Introduction {#introduction}
 
 Security is a top priority in Semaphore UI. Whether you're automating critical infrastructure tasks or managing team access to sensitive systems, Semaphore UI is designed to provide robust, secure operations out of the box. This section outlines how Semaphore handles security and what you should consider when deploying it in production.
 
-## Authentication & authorization
+## Authentication & authorization {#authentication--authorization}
 
 Semaphore supports secure authentication and flexible authorization mechanisms:
 
 - **Login methods:**
-  - **Username/password**<br />Default method using credentials stored in the Semaphore database. Passwords are hashed using a strong algorithm (bcrypt).
+  - **Username/password**<br />Default method using credentials stored in the Semaphore database. Passwords are never stored in plain text; they are hashed with Argon2id (see [Password hashing](#password-hashing)).
 
   - **LDAP**<br />Allows integration with enterprise directory services. Supports user/group filtering and secure connections via LDAPS.
 
   - **OpenID Connect (OIDC)**<br />Enables single sign-on with identity providers like Google, Azure AD, or Keycloak. Supports custom claims and group mappings.
 
-- **Two-Factor authentication (2FA)**<br />TOTP-based 2FA is available and recommended for all users. It can be enabled per user and supports optional recovery codes. See configuration options `auth.totp.enabled` and `auth.totp.allow_recovery`.
+- **Two-Factor authentication (2FA)**<br />TOTP-based 2FA is available and recommended for all users. It can be enabled per user and supports optional recovery codes. See configuration options `mfa.totp.enabled` and `mfa.totp.allow_recovery`.
 
 - **Role-based access control**<br />You can assign different roles to users such as Admin, Maintainer, or Viewer, limiting access based on responsibility.
 
 - **Session management**<br />Sessions are protected with secure HTTP cookies. Session expiration and logout mechanisms ensure minimal exposure.
 <!-- - **Brute-Force Protection**: Login attempts are rate-limited to prevent brute-force attacks. -->
 
-## Secrets & credentials
+### Password hashing {#password-hashing}
+
+:::info Since v2.20
+Argon2id password hashing is available since **Semaphore 2.20**. Earlier versions use bcrypt.
+:::
+
+Local user passwords are hashed with **Argon2id**, the algorithm recommended by [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html) for password storage. Semaphore uses the OWASP minimum-strength parameters:
+
+| Parameter | Value |
+|-----------|-------|
+| Memory | 19 MiB (`m=19456`) |
+| Iterations | 2 (`t=2`) |
+| Parallelism | 1 (`p=1`) |
+| Salt | 16 random bytes per password |
+| Hash length | 32 bytes |
+
+Hashes are stored in the standard [PHC string format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md), for example `$argon2id$v=19$m=19456,t=2,p=1$<salt>$<hash>`, so the parameters used for each hash are recorded alongside it.
+
+This applies to every way a password can be set: the web UI, the API, and the CLI commands `semaphore user add`, `semaphore user change-by-login`, and `semaphore setup`.
+
+**Upgrading from versions before 2.20.** Releases before 2.20 hashed passwords with bcrypt. No migration step is required:
+
+- Existing bcrypt hashes are still accepted at login, so all users keep working after the upgrade.
+- On the first successful login, the password is transparently re-hashed with Argon2id and the bcrypt hash is replaced.
+- If Semaphore's Argon2id parameters are strengthened in a future release, hashes created with the older parameters are upgraded the same way on the next login.
+
+Because the re-hash happens only at login, users who never log in again keep their bcrypt hash. To force an upgrade for such accounts, reset their password with `semaphore user change-by-login --password ...` or via the admin UI.
+
+:::note
+Two-factor recovery codes are not user passwords and continue to use bcrypt.
+:::
+
+## Secrets & credentials {#secrets--credentials}
 
 Managing secrets securely is a core feature:
 
@@ -33,7 +70,7 @@ Managing secrets securely is a core feature:
 - **SSH keys and tokens**<br />Users are responsible for uploading valid SSH keys and tokens. These are encrypted and only used when running tasks.
 - **HashiCorp Vault integration (Pro)**<br />Secrets can be stored in an external Vault instance. Choose storage per-secret when creating or editing a secret.
 
-## Data encryption
+## Data encryption {#data-encryption}
 
 Sensitive data is stored in the database, in an encrypted form. You should set the configuration option `access_key_encryption` in configuration file to enable Access Keys encryption. It must be generated by command:
 
@@ -41,20 +78,20 @@ Sensitive data is stored in the database, in an encrypted form. You should set t
 head -c32 /dev/urandom | base64
 ```
 
-## Running untrusted code / playbooks
+## Running untrusted code / playbooks {#running-untrusted-code--playbooks}
 
 Semaphore runs user-defined playbooks and commands, which can be risky:
 
-- **Container isolation**<br />Tasks are executed in isolated Docker containers. These containers have no access to the host system.
+- **Execution isolation**<br />By default a task is an ordinary process on the Semaphore server, with that server's file system and network access. Isolation is opt-in: give the task to a [runner](/admin-guide/runners) configured with the `docker` or `k8s` executor and each task gets a fresh container or Pod that is discarded when it finishes.
 
-- **Least privilege**<br />Containers run with minimal permissions and can be restricted further using Docker flags.
+- **Least privilege**<br />With the Docker and Kubernetes executors you choose the image, the network, and the service account, so a task is given only what it needs.
 
 - **Chroot execution**<br />Semaphore can execute tasks inside a chroot jail to further isolate the execution environment from the host system.
 
 - **Task process user**<br />Tasks can be executed under a dedicated non-root system user (e.g., `semaphore`) to reduce the impact of potential exploits. This is optional and can be configured based on system policies.
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->
 
-## Secure Deployment
+## Secure Deployment {#secure-deployment}
 
 To ensure Semaphore is securely deployed:
 
@@ -78,7 +115,7 @@ To ensure Semaphore is securely deployed:
 
 - **Database security**<br />Use strong passwords and restrict database access to Semaphore only.
 
-## Updates & patch management
+## Updates & patch management {#updates--patch-management}
 
 Security updates are published regularly:
 
@@ -119,13 +156,13 @@ Semaphore collects minimal user data:
 - **User Deletion**: Admins can delete user accounts and associated data upon request.
 - **GDPR Compliance**: Self-hosted users are responsible for local compliance. -->
 
-## Reporting Vulnerabilities
+## Reporting Vulnerabilities {#reporting-vulnerabilities}
 
 Found a vulnerability? Help us keep Semaphore secure:
 
 - **Responsible disclosure**<br />Please email us at `security@semaphoreui.com`.
  
-### Vulnerability resolution targets
+### Vulnerability resolution targets {#vulnerability-resolution-targets}
 
 We aim to resolve reported vulnerabilities within the following target windows:
 
@@ -136,7 +173,7 @@ We aim to resolve reported vulnerabilities within the following target windows:
 
 Out-of-cycle patches may be released for actively exploited issues affecting latest stable releases.
 
-### Code security tooling
+### Code security tooling {#code-security-tooling}
 
 We use CodeQL, Codacy, Snyk and Renovate to analyze the codebase and dependencies, and to automate dependency updates.
 - **No public exploits**<br />Do not share vulnerabilities publicly until patched.

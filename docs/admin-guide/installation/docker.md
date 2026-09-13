@@ -1,3 +1,8 @@
+---
+title: Docker
+description: A Docker Compose file for Semaphore with MySQL or Postgres, the required secret variables, and installing extra Python dependencies.
+---
+
 # Docker
 
 &#x20;Create a `docker-compose.yml` file with following content:
@@ -100,12 +105,23 @@ docker-compose up
 
 &#x20;Semaphore will be available via the following URL [http://localhost:3000](http://localhost:3000).
 
-## Installing Additional Python Dependencies
+## Installing Additional Python Dependencies {#installing-additional-python-dependencies}
 
-When the Semaphore container starts, it can automatically install additional Python packages that you may need for your Ansible playbooks. To use this feature:
+Some Ansible modules, collections, and Python apps need extra Python packages that are not included in the image.
+Both the server image (`semaphoreui/semaphore`) and the runner image (`semaphoreui/runner`) can install them automatically on container start.
 
-1. Create a `requirements.txt` file with your Python dependencies
-2. Mount this file to the container at the path specified by `SEMAPHORE_CONFIG_PATH` (defaults to `/etc/semaphore`)
+To use this feature:
+
+1. Create a `requirements.txt` file with your Python dependencies. See the [pip requirements file format](https://pip.pypa.io/en/stable/reference/requirements-file-format/).
+2. Mount it into the container as `requirements.txt` inside the config directory. The config directory is set by `SEMAPHORE_CONFIG_PATH` and defaults to `/etc/semaphore`.
+
+Example `requirements.txt`:
+
+```
+netaddr
+pywinrm[kerberos]
+hvac>=2.0
+```
 
 Example update to your `docker-compose.yml`:
 
@@ -117,7 +133,56 @@ services:
       - 3000:3000
     image: semaphoreui/semaphore:latest
     volumes:
-      - ./requirements.txt:/etc/semaphore/requirements.txt
+      - ./requirements.txt:/etc/semaphore/requirements.txt:ro
 ```
 
-During container startup, Semaphore will detect the `requirements.txt` file and automatically run `pip3 install --upgrade -r ${SEMAPHORE_CONFIG_PATH}/requirements.txt` to install the specified packages.
+The same works for a runner container:
+
+```yaml
+services:
+  runner:
+    restart: unless-stopped
+    image: semaphoreui/runner:latest
+    volumes:
+      - ./requirements.txt:/etc/semaphore/requirements.txt:ro
+```
+
+Or with plain `docker run`:
+
+```bash
+docker run -p 3000:3000 \
+  -v "$(pwd)/requirements.txt:/etc/semaphore/requirements.txt:ro" \
+  semaphoreui/semaphore:latest
+```
+
+### How it works {#how-it-works}
+
+During startup the container checks for `${SEMAPHORE_CONFIG_PATH}/requirements.txt`. If the file exists, it runs:
+
+```bash
+pip3 install --upgrade -r ${SEMAPHORE_CONFIG_PATH}/requirements.txt
+```
+
+If the file is missing, the container logs `No additional python dependencies to install` and continues.
+
+Things to keep in mind:
+
+- **Packages go into the Ansible virtual environment.** The image puts the bundled Ansible venv first on `PATH`, so `pip3` installs into that venv rather than the system Python. Ansible and Python apps running in the container see the packages. There is no need for `--break-system-packages`.
+- **Installation runs on every start**, not only the first one. Packages are not persisted between container recreations, so a container restart with a fresh filesystem installs them again. This requires network access to PyPI (or your configured index) at startup.
+- **A failed install stops the container.** If `pip3` exits with an error (a typo in a package name, a missing build dependency, or no network), the container exits before Semaphore starts. Check the container logs for the pip output.
+- **Packages that need compilation** (for example some crypto or database drivers) may fail because the image does not ship a compiler. Prefer wheels, or build a custom image for those.
+
+### Alternative: custom image {#alternative-custom-image}
+
+If you have many dependencies, need system packages, or want faster and offline startups, bake the packages into your own image instead:
+
+```dockerfile
+FROM semaphoreui/semaphore:latest
+
+COPY requirements.txt /tmp/requirements.txt
+RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+```
+
+No virtual environment activation is needed. The base image already sets `PATH` and `VIRTUAL_ENV` to the bundled Ansible venv and switches to the `semaphore` user, which owns that venv. `pip3` in a derived image therefore resolves to the venv's pip and installs there, exactly like the startup hook does.
+
+The same approach works with `semaphoreui/runner` as the base image.

@@ -1,3 +1,8 @@
+---
+title: Installation
+description: The available installation methods - package manager, Docker, cloud, binary, and Helm - and how to add extra Python packages.
+---
+
 # Installation
 
 You can install Semaphore in multiple ways, depending on your operating system, environment, and preferences:
@@ -29,7 +34,7 @@ See also:
 ----
 
 
-### Installing Additional Python Packages
+### Installing Additional Python Packages {#installing-additional-python-packages}
 
 Some Ansible modules and roles require additional python packages to run. To install additional python packages, create a `requirements.txt` file and mount it in the `/etc/semaphore` directory on the container. For example, you could add the following lines to your `docker-compose.yml` file:
 
@@ -38,6 +43,6 @@ volumes:
   - /path/to/requirements.txt:/etc/semaphore/requirements.txt
 ```
 
-The packages specified in the requirements file will be installed when the container starts up.
+The packages specified in the requirements file will be installed into the bundled Ansible virtual environment every time the container starts. The same mount works for the `semaphoreui/runner` image. See [Installing Additional Python Dependencies](/admin-guide/installation/docker#installing-additional-python-dependencies) for details and a custom-image alternative.
 
 For more information about Python requirements files, see the [Pip Requirements File Format reference](https://pip.pypa.io/en/stable/reference/requirements-file-format/)

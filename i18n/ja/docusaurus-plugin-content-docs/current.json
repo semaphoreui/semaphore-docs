@@ -1,0 +1,78 @@
+{
+  "version.label": {
+    "message": "次期バージョン",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Admin Guide": {
+    "message": "管理者ガイド",
+    "description": "The label for category Admin Guide in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Installation": {
+    "message": "インストール",
+    "description": "The label for category Installation in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Configuration": {
+    "message": "設定",
+    "description": "The label for category Configuration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Reverse-proxy": {
+    "message": "リバースプロキシ",
+    "description": "The label for category Reverse-proxy in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Security": {
+    "message": "セキュリティ",
+    "description": "The label for category Security in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.CLI": {
+    "message": "CLI",
+    "description": "The label for category CLI in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.LDAP and AD": {
+    "message": "LDAP と AD",
+    "description": "The label for category LDAP and AD in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.OpenID Connect": {
+    "message": "OpenID Connect",
+    "description": "The label for category OpenID Connect in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Notifications": {
+    "message": "通知",
+    "description": "The label for category Notifications in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.User Guide": {
+    "message": "ユーザーガイド",
+    "description": "The label for category User Guide in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Projects": {
+    "message": "プロジェクト",
+    "description": "The label for category Projects in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Task Templates": {
+    "message": "タスクテンプレート",
+    "description": "The label for category Task Templates in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Apps": {
+    "message": "アプリ",
+    "description": "The label for category Apps in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Terraform/OpenTofu": {
+    "message": "Terraform/OpenTofu",
+    "description": "The label for category Terraform/OpenTofu in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Key Store": {
+    "message": "キーストア",
+    "description": "The label for category Key Store in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Inventory": {
+    "message": "インベントリ",
+    "description": "The label for category Inventory in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Repositories": {
+    "message": "リポジトリ",
+    "description": "The label for category Repositories in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.FAQ": {
+    "message": "よくある質問",
+    "description": "The label for category FAQ in sidebar tutorialSidebar"
+  }
+}

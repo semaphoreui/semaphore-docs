@@ -1,9 +1,13 @@
+---
+title: PowerShell
+description: How to create a PowerShell task template, pass variable groups as environment variables, and run scripts on Windows hosts.
+---
 
 # PowerShell
 
 Semaphore can run PowerShell scripts on Windows hosts (or from a Windows runner). To do this, create a **PowerShell** task template.
 
-## Creating a PowerShell template
+## Creating a PowerShell template {#creating-a-powershell-template}
 
 1. Go to **Task Templates** section and click the **New Template** button.
 2. Select **PowerShell** as the app type.
@@ -19,7 +23,7 @@ Semaphore can run PowerShell scripts on Windows hosts (or from a Windows runner)
 4. Click **Create**.
 5. Click **Run** to execute the template.
 
-## Passing variables to scripts
+## Passing variables to scripts {#passing-variables-to-scripts}
 
 Variables from the selected **Variable Groups** are injected as environment variables before the script runs. Access them in PowerShell with `$env:VARIABLE_NAME`:
 
@@ -27,13 +31,13 @@ Variables from the selected **Variable Groups** are injected as environment vari
 Write-Host "Deploying to $env:TARGET_HOST"
 ```
 
-## Running on Windows hosts
+## Running on Windows hosts {#running-on-windows-hosts}
 
 PowerShell templates require either:
 - A **Windows runner** — a Semaphore runner deployed on a Windows host. See [Runners](/admin-guide/runners).
 - The Semaphore server itself running on Windows.
 
-## Notes
+## Notes {#notes}
 
 - Scripts run non-interactively. Avoid prompts that require user input.
 - Exit code `0` means success; any non-zero exit code marks the task as failed.

@@ -4,30 +4,65 @@
     name: secrets
 
 
-- name: upload assets to s3 bucket
-  community.aws.s3_sync:
-    endpoint_url: "{{ website_bucket_endpoint | default('https://s3.' + aws_region + '.amazonaws.com') }}"
-    bucket: "{{ website_bucket }}"
-    key_prefix: "docs/"
-    file_change_strategy: force
-    file_root: "{{ playbook_dir }}/../{{ website_dist_dir }}/"
-    aws_access_key: "{{ secrets.aws_access_key }}"
-    aws_secret_key: "{{ secrets.aws_access_secret }}"
-    region: "{{ aws_region }}"
-    cache_control: "public, max-age=31536000"
-    exclude: "*.html"
+- name: set facts
+  set_fact:
+    website_bucket_endpoint: "{{ website_bucket_endpoint | default('https://s3.' + aws_region + '.amazonaws.com') }}"
+    website_dist_path: "{{ playbook_dir }}/../{{ website_dist_dir }}/"
 
-- name: upload html to s3 bucket
-  community.aws.s3_sync:
-    endpoint_url: "{{ website_bucket_endpoint | default('https://s3.' + aws_region + '.amazonaws.com') }}"
-    bucket: "{{ website_bucket }}"
-    key_prefix: "docs/"
-    file_change_strategy: force
-    file_root: "{{ playbook_dir }}/../{{ website_dist_dir }}/"
-    aws_access_key: "{{ secrets.aws_access_key }}"
-    aws_secret_key: "{{ secrets.aws_access_secret }}"
-    region: "{{ aws_region }}"
-    cache_control: "public, max-age=600"
-    mime_map:
-      ".html": "text/html; charset=UTF-8"
-    include: "*.html"
+
+- name: Upload assets to S3 bucket (non-HTML)
+  ansible.builtin.command:
+    argv:
+      - s5cmd
+      - --numworkers=256
+      - --endpoint-url={{ website_bucket_endpoint | default('https://s3.' + aws_region + '.amazonaws.com') }}
+      - cp
+      - --cache-control=public, max-age=31536000
+      - --exclude=*.html
+      - --exclude=*.xml
+      - "{{ website_dist_path }}/*"
+      - "s3://{{ website_bucket }}/docs/"
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ secrets.aws_access_key }}"
+    AWS_SECRET_ACCESS_KEY: "{{ secrets.aws_access_secret }}"
+    AWS_REGION: "{{ aws_region }}"
+  changed_when: true
+
+
+- name: Upload roadmaps to S3 bucket
+  ansible.builtin.command:
+    argv:
+      - s5cmd
+      - --numworkers=256
+      - --endpoint-url={{ website_bucket_endpoint | default('https://s3.' + aws_region + '.amazonaws.com') }}
+      - cp
+      - --cache-control=public, max-age=600
+      - --content-type=application/xml; charset=UTF-8
+      - --include=*.xml
+      - "{{ website_dist_path }}/*"
+      - "s3://{{ website_bucket }}/docs/"
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ secrets.aws_access_key }}"
+    AWS_SECRET_ACCESS_KEY: "{{ secrets.aws_access_secret }}"
+    AWS_REGION: "{{ aws_region }}"
+  changed_when: true
+
+
+
+- name: Upload HTML to S3 bucket
+  ansible.builtin.command:
+    argv:
+      - s5cmd
+      - --numworkers=256
+      - --endpoint-url={{ website_bucket_endpoint | default('https://s3.' + aws_region + '.amazonaws.com') }}
+      - cp
+      - --cache-control=public, max-age=600
+      - --content-type=text/html; charset=UTF-8
+      - --include=*.html
+      - "{{ website_dist_path }}/*"
+      - "s3://{{ website_bucket }}/docs/"
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ secrets.aws_access_key }}"
+    AWS_SECRET_ACCESS_KEY: "{{ secrets.aws_access_secret }}"
+    AWS_REGION: "{{ aws_region }}"
+  changed_when: true

@@ -1,4 +1,11 @@
-# HashiCorp Vault secret storage
+---
+title: HashiCorp Vault secret storage
+description: Configuring HashiCorp Vault as external storage for keys and variable groups, including Vault Agent token files.
+sidebar_custom_props:
+  edition: pro
+---
+
+# HashiCorp Vault secret storage  <Pro />
 
 Semaphore UI supports HashiCorp Vault as a storage for secrets.
 
@@ -12,14 +19,14 @@ You can provide the following options:
     - Provided via an environment variable.
     - Provided via a file (useful for Vault Agent).
       :::warning
-      When the token comes from a **file**, that file must be **inside** the secrets directory Semaphore uses. Configure that directory using either the `SEMAPHORE_SECRETS_PATH` environment variable or `dirs.secrets_path` in the Semaphore config. If neither is set, the default is `/tmp/semaphore`. See [Configuration](/admin-guide/configuration) for the full list of options.
+      When the token comes from a **file**, that file must be **inside** the secrets directory Semaphore uses. Configure that directory using `dirs.secrets` or the `SEMAPHORE_SECRETS_PATH` environment variable. The legacy top-level `secrets_path` option is still accepted for older configs. If none are set, the default is `/tmp/semaphore`. See [Secrets directory](/admin-guide/configuration/config-file#secrets-directory) for precedence details.
 
       Example `config.json` fragment:
 
       ```json
       {
         "dirs": {
-          "secrets_path": "/root/path/for/secrets"
+          "secrets": "/root/path/for/secrets"
         }
       }
       ```
@@ -27,7 +34,7 @@ You can provide the following options:
 
 The storage can work in read-only mode.
 
-## How to use
+## How to use {#how-to-use}
 
 1. Configure the HashiCorp Vault connection in the Semaphore settings (URL, mount path, and token).
 2. When creating or editing a key in the Key Store, select **HashiCorp Vault** as the storage type.
@@ -35,7 +42,7 @@ The storage can work in read-only mode.
 
 ![](/assets/vault2.webp)
 
-## HashiCorp Vault Agent
+## HashiCorp Vault Agent {#hashicorp-vault-agent}
 
 Instead of storing the Vault token directly, you can use [HashiCorp Vault Agent](https://developer.hashicorp.com/vault/docs/agent-and-proxy/agent) to automatically handle token retrieval and renewal.
 
@@ -70,7 +77,7 @@ To set this up:
 This approach avoids long-lived static tokens and lets Vault Agent handle authentication and token renewal automatically.
 
 
-## Variable Groups
+## Variable Groups {#variable-groups}
 
 HashiCorp Vault can also be used as a storage for [Variable Groups](/user-guide/environment). When editing a variable group, select **HashiCorp Vault** as the storage type and specify the path of the folder where secrets will be stored.
 

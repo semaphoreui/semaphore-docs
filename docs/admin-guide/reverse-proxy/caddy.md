@@ -1,3 +1,8 @@
+---
+title: Caddy config
+description: A minimal Caddyfile that reverse-proxies Semaphore with automatic TLS and working websockets.
+---
+
 # Caddy config
 
 Caddy supports websockets and will by default only enable secure TLS ciphers (TLS1.2 + TLS1.3), so minimal config is needed.

@@ -16,15 +16,15 @@ rotation works, and how to operate it safely.
 
 | Key | Protects | Active pointer |
 |-----|----------|----------------|
-| **Secrets key** | Access Key secrets stored in the database | `active.secrets_key` |
-| **Options key** | Encrypted DB options (the JWT signing key) | `active.options_key` |
+| **Secrets key** | Access Key secrets stored in the database | `active.secret_key` |
+| **Options key** | Encrypted DB options (the JWT signing key) | `active.option_key` |
 
 If no options key is configured, options fall back to the secrets key.
 :::
 
 ---
 
-## Quick start
+## Quick start {#quick-start}
 
 The simplest setup is a single key supplied in the main config:
 
@@ -37,7 +37,7 @@ encryption:
 keys:
   key1: { value: "REPLACE_WITH_openssl_rand_-base64_32" }
 active:
-  secrets_key: key1
+  secret_key: key1
 ```
 
 Generate a key with:
@@ -56,7 +56,7 @@ Prefer **`file:` references** or a **`keys_folder`** (see below) over inline
 
 ---
 
-## How keys are identified
+## How keys are identified {#how-keys-are-identified}
 
 Every key has a **key id** derived from the key material itself — a fingerprint,
 `base64url(sha256(key))[:8]`. The id (not the key) is stored alongside each
@@ -75,7 +75,7 @@ You never set ids by hand; Semaphore computes them.
 
 ---
 
-## The keys file
+## The keys file {#the-keys-file}
 
 `encryption.keys_file` points to a file whose content is a **registry of keys**
 plus **pointers** to the active key per purpose. It is parsed as **YAML or JSON,
@@ -84,21 +84,21 @@ regardless of file extension**.
 There are two ways to provide the registry — an inline map, a folder of files, or
 both combined.
 
-### Inline map
+### Inline map {#inline-map}
 
 ```yaml
 keys:
   key1: { value: "2hmxtfgK6LkJfJK9ZNZ9GUMmEwTQwHIFamijclUem48=" }   # inline (dev)
-  key2: { file: /run/secrets/secrets_key }                         # from a file (prod)
+  key2: { file: /run/secrets/secret_key }                         # from a file (prod)
 active:
-  secrets_key: key1
-  options_key: key2
+  secret_key: key1
+  option_key: key2
 ```
 
 Each entry is a [`KeySource`](#keysource): either `value` (inline base64) **or**
 `file` (path to a file containing the base64 key) — never both.
 
-### Folder of key files
+### Folder of key files {#folder-of-key-files}
 
 Point `keys_folder` at a directory; **every regular file is one key**, labelled by
 its filename. Ideal for mounted Docker/Kubernetes secrets.
@@ -106,8 +106,8 @@ its filename. Ideal for mounted Docker/Kubernetes secrets.
 ```yaml
 keys_folder: /run/secrets/enc-keys
 active:
-  secrets_key_file: secrets_key_primary.txt   # filename in keys_folder (relative)
-  options_key_file: options_key_primary.txt
+  secret_key_file: secrets_key_primary.txt   # filename in keys_folder (relative)
+  option_key_file: options_key_primary.txt
 ```
 
 ```text title="/run/secrets/enc-keys/"
@@ -122,7 +122,7 @@ symlinks, so it works directly with the way Kubernetes mounts `Secret`/`ConfigMa
 volumes.
 :::
 
-### Combined
+### Combined {#combined}
 
 `keys` and `keys_folder` merge into one registry; `active` may point by label
 *or* by filename:
@@ -132,13 +132,13 @@ keys:
   inline1: { value: "..." }
 keys_folder: /run/secrets/enc-keys
 active:
-  secrets_key: inline1
-  options_key_file: options_key_primary.txt
+  secret_key: inline1
+  option_key_file: options_key_primary.txt
 ```
 
 ---
 
-## Rotation (zero downtime)
+## Rotation (zero downtime) {#rotation-zero-downtime}
 
 The active key encrypts **new** writes; every other key in the registry can still
 **decrypt** old data. Rotation is therefore: add a key, switch the pointer,
@@ -147,7 +147,7 @@ re-encrypt in the background, then drop the old key.
 ```bash
 # 1. Add a new key to the registry (a file in keys_folder, or a keys: entry)
 #    and point the active pointer at it:
-#      active.secrets_key: key2        # (or secrets_key_file: ...)
+#      active.secret_key: key2        # (or secret_key_file: ...)
 
 # 2. Apply it without a restart — within keys_poll_interval (default 15s),
 #    or immediately:
@@ -164,7 +164,7 @@ semaphore vault check --config /etc/semaphore/config.yml
 
 No process restart is needed at any step.
 
-### Applying changes without a restart
+### Applying changes without a restart {#applying-changes-without-a-restart}
 
 Semaphore re-reads the keys file (and the key files it references) and swaps the
 in‑memory keys atomically. Two triggers:
@@ -184,9 +184,9 @@ untouched.
 
 ---
 
-## CLI commands
+## CLI commands {#cli-commands}
 
-### `vault check`
+### `vault check` {#vault-check}
 
 Read‑only. Reports, per key id, how many stored secrets it encrypts, so you can
 see what is on the active key and what is safe to remove.
@@ -205,7 +205,7 @@ JWT signing key: active:IFTi6Ipik8Q
 Statuses: `active`, `retired, rekey pending`, `retired, SAFE TO REMOVE`,
 `legacy (no id)`, and `MISSING KEY` (a referenced key is absent — exit code 1).
 
-### `vault rekey`
+### `vault rekey` {#vault-rekey}
 
 Re‑encrypts all stored secrets (and the JWT signing key) under the active key.
 
@@ -222,7 +222,7 @@ semaphore vault rekey --old-key <base64-old-key> --config ...
 
 ---
 
-## Backward compatibility
+## Backward compatibility {#backward-compatibility}
 
 Upgrading is safe and requires **no data migration**:
 
@@ -242,14 +242,14 @@ keys:
   old: { value: "<the old access_key_encryption value>" }
   new: { value: "<a freshly generated key>" }
 active:
-  secrets_key: new
+  secret_key: new
 ```
 
 Old data decrypts via `old`; run `vault rekey` to move everything onto `new`.
 
 ---
 
-## Kubernetes & Docker
+## Kubernetes & Docker {#kubernetes--docker}
 
 Mount your keys as a `Secret` volume and point `keys_folder` at it:
 
@@ -269,8 +269,8 @@ containers:
 ```yaml title="encryption-keys.yml"
 keys_folder: /run/secrets/enc-keys
 active:
-  secrets_key_file: secrets_key_primary.txt
-  options_key_file: options_key_primary.txt
+  secret_key_file: secrets_key_primary.txt
+  option_key_file: options_key_primary.txt
 ```
 
 When you update the `Secret`, Kubernetes refreshes the mounted files and the
@@ -278,7 +278,7 @@ poller applies the change within `keys_poll_interval` — no pod restart.
 
 ---
 
-## Security best practices
+## Security best practices {#security-best-practices}
 
 :::danger Protect the keys file
 - Restrict permissions: `chmod 0400`, owned by the Semaphore service user.
@@ -290,34 +290,34 @@ poller applies the change within `keys_poll_interval` — no pod restart.
 
 ---
 
-## Reference
+## Reference {#reference}
 
-### `encryption` (main config)
+### `encryption` (main config) {#encryption-main-config}
 
 | Field | Env | Default | Description |
 |-------|-----|---------|-------------|
 | `keys_file` | `SEMAPHORE_ENCRYPTION_KEYS_FILE` | — | Path to the keys file (YAML/JSON). |
 | `keys_poll_interval` | `SEMAPHORE_ENCRYPTION_KEYS_POLL_INTERVAL` | `15s` | How often the keys file is polled. `"0"` disables polling. |
 
-### Legacy flat keys (main config)
+### Legacy flat keys (main config) {#legacy-flat-keys-main-config}
 
 | Field | Env | Description |
 |-------|-----|-------------|
 | `access_key_encryption` | `SEMAPHORE_ACCESS_KEY_ENCRYPTION` | Single secrets key, no rotation. Used when `keys_file` is unset. |
 | `option_encryption` | `SEMAPHORE_OPTION_ENCRYPTION` | Single options key, no rotation. Falls back to the secrets key. |
 
-### Keys file
+### Keys file {#keys-file}
 
 | Field | Description |
 |-------|-------------|
 | `keys` | Map of `label → KeySource` (inline registry). |
 | `keys_folder` | Directory of key files (one regular file per key, labelled by filename). |
-| `active.secrets_key` | Label (in `keys`) of the active secrets key. |
-| `active.options_key` | Label of the active options key. |
-| `active.secrets_key_file` | Filename in `keys_folder` of the active secrets key (relative). |
-| `active.options_key_file` | Filename in `keys_folder` of the active options key (relative). |
+| `active.secret_key` | Label (in `keys`) of the active secrets key. |
+| `active.option_key` | Label of the active options key. |
+| `active.secret_key_file` | Filename in `keys_folder` of the active secrets key (relative). |
+| `active.option_key_file` | Filename in `keys_folder` of the active options key (relative). |
 
-### KeySource
+### KeySource {#keysource}
 
 | Field | Description |
 |-------|-------------|
@@ -329,7 +329,7 @@ bytes** (AES‑128/192/256).
 
 ---
 
-## Troubleshooting
+## Troubleshooting {#troubleshooting}
 
 | Symptom | Cause / fix |
 |---------|-------------|
@@ -337,4 +337,4 @@ bytes** (AES‑128/192/256).
 | `vault check` shows `MISSING KEY <id>` (exit 1) | Data was encrypted with a key no longer in the registry. Add that key back before it can be decrypted. |
 | `cannot decrypt access key, perhaps encryption key was changed` | A legacy (un‑prefixed) value can't be decrypted by any configured key. Ensure the original key is present (in the registry or `access_key_encryption`). |
 | Rotation not applied | Check `keys_poll_interval` (not `"0"`) and that the keys file actually changed; or send `SIGHUP`. |
-| `active.secrets_key: no key labelled "…"` | The active pointer names a label/filename that isn't in `keys`/`keys_folder`. |
+| `active.secret_key: no key labelled "…"` | The active pointer names a label/filename that isn't in `keys`/`keys_folder`. |

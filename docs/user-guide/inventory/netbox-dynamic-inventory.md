@@ -1,25 +1,30 @@
+---
+title: Netbox Dynamic Inventory Integration with Semaphore
+description: Configuring the netbox.netbox.nb_inventory plugin as a dynamic inventory in Semaphore using a NetBox API token.
+---
+
 # Netbox Dynamic Inventory Integration with Semaphore
 
 ![Ansible Badge](https://img.shields.io/badge/ansible-%23000.svg?style=for-the-badge&logo=ansible&logoColor=white)
 ![Netbox Badge](https://img.shields.io/badge/Netbox-%23F00.svg?style=for-the-badge&logo=netbox&logoColor=white)
 <!-- ![Semaphore Badge](https://img.shields.io/badge/Semaphore-%23187EBB.svg?style=for-the-badge&logo=semaphore&logoColor=white) -->
 
-## 🛠 Key Features
+## 🛠 Key Features {#-key-features}
 
 This repository demonstrates the use of the `netbox.netbox.nb_inventory` plugin to create a dynamic inventory in Semaphore. It enables automatic synchronization of data from Netbox, simplifying the management of your infrastructure and the execution of Ansible playbooks.
 
-## 🔧 Setup
+## 🔧 Setup {#-setup}
 
-### Requirements
+### Requirements {#requirements}
 
 - Access to Semaphore
 - Access to Netbox with configured API
 
-### 🔑 Netbox Setup
+### 🔑 Netbox Setup {#-netbox-setup}
 
 Ensure your Netbox is configured and accessible for API interaction. Obtain an API token which will be used to authenticate requests.
 
-### 📡 Configuration in Semaphore
+### 📡 Configuration in Semaphore {#-configuration-in-semaphore}
 
 1. In Semaphore, go to the inventory section.
 2. Create a new inventory.
@@ -35,10 +40,10 @@ Ensure your Netbox is configured and accessible for API interaction. Obtain an A
 
    Replace `http://your_netbox_url_here` and `YOUR_NETBOX_API_TOKEN` with the actual data from your Netbox.
 
-## 🚀 Usage
+## 🚀 Usage {#-usage}
 
 Once configured, you can run Ansible playbooks in Semaphore using the dynamic inventory which automatically updates host data from your Netbox.
 
-## 📚 Further Documentation
+## 📚 Further Documentation {#-further-documentation}
 
 Learn more about the `netbox.netbox.nb_inventory` plugin and its capabilities in the [official Ansible documentation](https://docs.ansible.com/ansible/latest/collections/netbox/netbox/nb_inventory_inventory.html).

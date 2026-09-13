@@ -1,10 +1,15 @@
+---
+title: Logs
+description: Where the server, activity and task logs go, file and syslog forwarding options, task retention, and SIEM integration.
+---
+
 # Logs
 
 Semaphore writes server logs to **stdout** and stores **Task** and **Activity** logs in a **database**, centralizing key log information and eliminating the need to back up log files separately. The only data stored on the file system is caching data.
 
 ---
 
-## Server log
+## Server log {#server-log}
 
 Semaphore does not log to files. Instead, all application logs are written to **stdout**.  
 If Semaphore is running as a systemd service, you can view the logs with the following command:
@@ -22,15 +27,14 @@ This provides a live (streaming) view of the logs.
 
 ---
 
-## Activity log
+## Activity log {#activity-log}
 
-The Activity Log captures all user actions performed in Semaphore, including:
+The Activity Log captures user actions performed in Semaphore, including:
 
 - Adding or removing resources (e.g., Templates, Inventories, Repositories).
 - Adding or removing team members.
-- Starting or stopping tasks.
 
-### Pro version 2.10 and later
+### Pro version 2.10 and later {#pro-version-210-and-later}
 
 **Semaphore Pro** 2.10+ supports writing the Activity Log and Task log to a file. To enable this, add the following configuration to your `config.json`:
 
@@ -64,36 +68,36 @@ Or you can do this using following environment variables:
 
 ```bash
 export SEMAPHORE_EVENT_LOG_ENABLED=True
-export SEMAPHORE_EVENT_LOG_LOGGER={"filename": "./events.log"}
+export SEMAPHORE_EVENT_LOGGER={"filename": "./events.log"}
 
 export SEMAPHORE_TASK_LOG_ENABLED=True
-export SEMAPHORE_EVENT_LOG_LOGGER={"filename": "./tasks.log"}
+export SEMAPHORE_TASK_LOGGER={"filename": "./tasks.log"}
 ```
 
-#### Activity (events) logging options
+#### Activity (events) logging options {#activity-events-logging-options}
 
-The Activity (events) logging options allow you to configure how Semaphore records user actions and system events to a file. These settings control the behavior of event logging, including whether it's enabled, the format of log entries, and specific logger configurations. When enabled, all user actions (like creating templates, managing teams, or running tasks) will be written to the specified log file according to these settings.
+The Activity (events) logging options allow you to configure how Semaphore records user actions and system events to a file. These settings control the behavior of event logging, including whether it's enabled, the format of log entries, and specific logger configurations. When enabled, user actions like creating templates or managing teams will be written to the specified log file according to these settings.
 
 | Parameter             | Environment Variables | Description           |
 | --------------------- | --------------------- | --------------------- |
 | `enabled`             | `SEMAPHORE_EVENT_LOG_ENABLED` | Enable event logging to file. |
-| `format`              | `SEMAPHORE_EVENT_LOG_FORMAT`  | Log record format. Can be `raw` or `json`. |
-| `logger`              | `SEMAPHORE_EVENT_LOG_LOGGER`  | [Logger options](#logger-options). |
+| `format`              | `SEMAPHORE_EVENT_LOG_FORMAT`  | Log record format. Leave empty for raw format, or set to `json`. |
+| `logger`              | `SEMAPHORE_EVENT_LOGGER`      | [Logger options](#logger-options). |
 
-#### Tasks logging options
+#### Tasks logging options {#tasks-logging-options}
 
 The Tasks logging options allow you to configure how Semaphore records task execution details to a file. These settings control the logging of task-related events, including task starts, completions, and their execution status. When enabled, all task operations and their outcomes will be written to the specified log file according to these settings, providing a detailed audit trail of task execution history.
 
 | Parameter             | Environment Variables | Description           |
 | --------------------- | --------------------- | --------------------- |
 | `enabled`             | `SEMAPHORE_TASK_LOG_ENABLED` | Enable task logging to file. |
-| `format`              | `SEMAPHORE_TASK_LOG_FORMAT`  | Log record format. Can be `raw` or `json`. |
-| `logger`              | `SEMAPHORE_TASK_LOG_LOGGER`  | [Logger options](#logger-options). |
+| `format`              | `SEMAPHORE_TASK_LOG_FORMAT`  | Log record format. Leave empty for raw format, or set to `json`. |
+| `logger`              | `SEMAPHORE_TASK_LOGGER`      | [Logger options](#logger-options). |
 | `result_logger`       | `SEMAPHORE_TASK_RESULT_LOGGER`  | Logger options. |
 
 
 
-#### Logger options
+#### Logger options {#logger-options}
 
 | Parameter             | Type | Description           |
 | --------------------- | ------- | --------------------- |
@@ -114,11 +118,11 @@ Each line in the file follows this format:
 
 ---
 
-## Task history
+## Task history {#task-history}
 
 Semaphore stores information about task execution in the database. Task history provides a detailed view of all executed tasks, including their status and logs. You can monitor tasks in real time or review historical logs through the web interface.
 
-### Configuring task retention
+### Configuring task retention {#configuring-task-retention}
 
 By default, Semaphore stores all tasks in the database. If you run a large number of tasks, they can occupy a significant amount of disk space.
 
@@ -139,7 +143,7 @@ When the number of tasks exceeds this limit, the oldest Task Logs are automatica
 
 ---
 
-## Syslog protocol support
+## Syslog protocol support {#syslog-protocol-support}
 
 Semaphore can forward activity and task log entries to an external syslog collector for long‑term storage or centralized monitoring. Syslog forwarding is disabled by default.
 
@@ -163,7 +167,7 @@ SEMAPHORE_SYSLOG_ADDRESS=logs.example.com:514
 SEMAPHORE_SYSLOG_TAG=semaphore
 ```
 
-#### Syslog options
+#### Syslog options {#syslog-options}
 
 | Parameter             | Environment Variables | Description           |
 | --------------------- | --------------------- | --------------------- |
@@ -175,7 +179,61 @@ SEMAPHORE_SYSLOG_TAG=semaphore
 
 Restart the Semaphore service after changing these values so that the new syslog destination is applied.
 
-## Summary
+---
+
+## SIEM integration {#siem-integration}
+
+Semaphore 2.20+ records a security audit trail suitable for forwarding to a SIEM (Splunk, Elastic Security, QRadar, Wazuh, etc.).
+
+Every audit event includes the **action** (`create`, `update`, `delete`, `login_success`, `login_fail`, `logout`), the **client IP address** and the **user agent**, in addition to the acting user and the affected object. Besides resource changes, Semaphore logs:
+
+- Successful logins (password, LDAP and OpenID), logouts, failed login attempts and failed MFA verifications.
+- User account creation, update, deletion and password changes.
+- API token creation and deletion (only the short token prefix is logged, never the secret).
+
+There are three ways to deliver audit events to your SIEM:
+
+1. **Pull:** read `/api/events` (see [API docs](/reference/api)).
+2. **File collector:** enable the Activity Log file (Pro, see above) and ship `events.log` (JSON format recommended) with Filebeat, Fluentd or a Splunk Universal Forwarder.
+3. **Audit webhook (Pro):** push events in real time over HTTPS — a generic JSON endpoint or Splunk HTTP Event Collector.
+
+### Audit webhook {#audit-webhook}
+
+```json
+{
+  "log": {
+    "audit_webhook": {
+      "enabled": true,
+      "url": "https://splunk.example.com:8088/services/collector/event",
+      "format": "splunk_hec",
+      "headers": {
+        "Authorization": "Splunk <your-hec-token>"
+      }
+    }
+  }
+}
+```
+
+Or using environment variables:
+
+```bash
+SEMAPHORE_AUDIT_WEBHOOK_ENABLED=true
+SEMAPHORE_AUDIT_WEBHOOK_URL=https://splunk.example.com:8088/services/collector/event
+SEMAPHORE_AUDIT_WEBHOOK_FORMAT=splunk_hec
+```
+
+#### Audit webhook options {#audit-webhook-options}
+
+| Parameter             | Environment Variables | Description           |
+| --------------------- | --------------------- | --------------------- |
+| `enabled`             | `SEMAPHORE_AUDIT_WEBHOOK_ENABLED` | Turn audit event forwarding on or off. |
+| `url`                 | `SEMAPHORE_AUDIT_WEBHOOK_URL`  | Full receiver endpoint URL. |
+| `format`              | `SEMAPHORE_AUDIT_WEBHOOK_FORMAT`  | Payload format: empty for plain JSON or `splunk_hec` for a Splunk HEC envelope. |
+| `headers`             | `SEMAPHORE_AUDIT_WEBHOOK_HEADERS`  | Extra HTTP headers, e.g. the HEC token: `{"Authorization": "Splunk <token>"}`. |
+
+Delivery is asynchronous: events are queued in memory and retried up to three times with backoff, so an unavailable receiver never slows down or fails user requests. If the receiver stays down, queued events are dropped with a warning in the server log.
+
+## Summary {#summary}
 
 - **Server log:** Written to stdout; viewable via `journalctl` if running under systemd.  
 - **Activity and tasks log:** Tracks all user actions. Optionally, **Pro 2.10+** can write these to a file.  

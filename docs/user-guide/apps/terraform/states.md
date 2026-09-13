@@ -1,16 +1,22 @@
+---
+title: "HTTP Backend"
+description: The Pro HTTP backend for Terraform state, how to override the backend in a template, and aliases for use outside Semaphore.
+sidebar_custom_props:
+  edition: pro
+---
 
-# HTTP Backend (Pro)
+# HTTP Backend <Pro />
 
 The Semaphore UI HTTP backend for Terraform securely stores and manages Terraform state files directly within Semaphore. Available in the Pro plan, it offers several key advantages.
 
-## Features
+## Features {#features}
 
 - **Secure State Storage**: State files are <!-- encrypted and--> stored securely within Semaphore.
 - **State Locking**: Prevents concurrent modifications to the same state file.
 - **Version History**: Track changes to your infrastructure state over time.
 - **UI Integration**: Manage state files directly through the Semaphore interface.
 
-## Configuration
+## Configuration {#configuration}
 
 To start using the built-in HTTP backend, you first need to create a workspace for your Terraform task template.
 
@@ -20,14 +26,14 @@ When creating a workspace, you will be prompted to select an SSH key for cloning
 
 ![](https://github.com/user-attachments/assets/0a6a0b4d-8b10-41df-8500-e3084d5b6c64)
 
-### Using the HTTP backend in tasks
+### Using the HTTP backend in tasks {#using-the-http-backend-in-tasks}
 
 To use the built-in HTTP backend for storing the state of your Terraform tasks, you do not need to manually configure the backend in your Terraform code. Semaphore can automatically create the configuration file during execution. To enable this, simply check the **Override backend settings** option in your task template settings, as shown in the screenshot below.
 
 
 Optionally, you can specify the name of the configuration file that will be dynamically created during execution. This is useful if your code already contains a backend configuration file and you need to override it dynamically to work with Semaphore's built-in backend.
 
-### Using the HTTP backend outside Semaphore
+### Using the HTTP backend outside Semaphore {#using-the-http-backend-outside-semaphore}
 
 You can use the built-in HTTP backend not only when running tasks inside Semaphore, but also when executing Terraform code outside of Semaphore, such as from your local terminal.
 

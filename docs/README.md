@@ -1,80 +1,115 @@
-# Welcome to Semaphore UI
+---
+title: Semaphore UI Documentation
+description: Start page for the Semaphore UI docs - a one-command quick start plus entry points for installing, running, operating, and reference.
+sidebar_label: Home
+hide_table_of_contents: true
+---
 
-Semaphore UI is a modern, open-source web UI and API for running automation with **Ansible**, **Terraform/OpenTofu**, **PowerShell**, **Shell/Bash**, and **Python**.
+import Link from '@docusaurus/Link';
 
-Semaphore is written in **Go** (lightweight, fast) and runs on **Windows**, **macOS**, and **Linux**. It supports **SQLite**, **MySQL**, and **PostgreSQL**.
+# Semaphore UI Documentation
 
-## Choose your path
+Semaphore UI is a self-hosted web UI and API for running **Ansible**, **Terraform/OpenTofu**, **Shell**, **PowerShell**, and **Python** automation. It gives your team one place to run playbooks and scripts, keep credentials encrypted, schedule jobs, and see who ran what and when.
 
-- **I’m installing or operating Semaphore (admins/operators)**
-  - Install: [Installation](/admin-guide/installation)
-  - Configure: [Configuration](/admin-guide/configuration)
-  - Secure: [Security](/admin-guide/security)
-  - Auth: [LDAP](/admin-guide/ldap) or [OpenID Connect](/admin-guide/openid)
-  - Scale & run remotely: [Runners](/admin-guide/runners)
-  - Keep it healthy: [Logs](/admin-guide/logs), [Upgrading](/admin-guide/upgrading), [Troubleshooting](/admin-guide/troubleshooting)
-  - Enterprise setups: [High availability](/admin-guide/ha)
+It ships as a single Go binary or Docker image, runs on Linux, macOS, and Windows, and stores data in SQLite, MySQL, or PostgreSQL.
 
-- **I’m using Semaphore day-to-day (teams/users)**
-  - Organize work: [Projects](/user-guide/projects) and [Teams](/user-guide/team)
-  - Run automation: [Tasks](/user-guide/tasks) and [Schedules](/user-guide/schedules)
-  - Connect your code: [Repositories](/user-guide/repositories)
-  - Targets and variables: [Inventory](/user-guide/inventory) and [Variable Groups](/user-guide/environment)
-  - Credentials: [Key Store](/user-guide/key-store)
-  - Connect tools: [Integrations](/user-guide/integrations)
+New to Semaphore? The [Introduction](/introduction) explains what it does, how a deployment is put together, and what to prepare before installing.
 
-- **I’m here for a specific tool**
-  - [Ansible](/user-guide/apps/ansible)
-  - [Terraform/OpenTofu](/user-guide/apps/terraform)
-  - [Shell/Bash](/user-guide/apps/bash)
-  - [PowerShell](/user-guide/apps/powershell)
-  - [Python](/user-guide/apps/python)
+:::tip[Quick start]
 
-## First run checklist (from zero to first task)
+Run Semaphore with SQLite in one command, then open [http://localhost:3000](http://localhost:3000) and log in as `admin` / `changeme`.
 
-Use this as a simple “happy path” to get productive quickly:
+```bash
+docker run -d -p 3000:3000 \
+  -e SEMAPHORE_DB_DIALECT=sqlite \
+  -e SEMAPHORE_ADMIN=admin \
+  -e SEMAPHORE_ADMIN_PASSWORD=changeme \
+  -e SEMAPHORE_ADMIN_NAME=Admin \
+  -e SEMAPHORE_ADMIN_EMAIL=admin@localhost \
+  -v semaphore-data:/var/lib/semaphore \
+  semaphoreui/semaphore:latest
+```
 
-1. **Install Semaphore** using your preferred method: [Installation](/admin-guide/installation)
-2. **Run initial setup** (config + first admin user): [Interactive setup](/admin-guide/configuration/cli)
-3. **Create a project** to isolate work (teams, infra, apps): [Projects](/user-guide/projects)
-4. **Connect what Semaphore needs**
-   - Source: [Repositories](/user-guide/repositories)
-   - Secrets/credentials: [Key Store](/user-guide/key-store)
-   - Targets: [Inventory](/user-guide/inventory)
-   - Variables: [Variable Groups](/user-guide/environment)
-5. **Create a task template and run it**
-   - App-specific guides: [Ansible](/user-guide/apps/ansible), [Terraform/OpenTofu](/user-guide/apps/terraform), [Shell/Bash](/user-guide/apps/bash)
-   - Run and monitor: [Tasks](/user-guide/tasks)
-6. **Automate & operationalize**
-   - Schedule runs: [Schedules](/user-guide/schedules)
-   - Control access: [RBAC](/user-guide/rbac)
-   - Get alerts: [Notifications](/admin-guide/notifications)
+For production, see [Installation](/admin-guide/installation) for Docker Compose, packages, Kubernetes, and binary installs. Then follow [Getting Started](/getting-started) to run your first task.
 
-## Key concepts (glossary)
+:::
 
-If you’re new, these terms show up everywhere in the UI:
+<div className="row home-cards">
+  <div className="col col--6 margin-bottom--lg">
+    <div className="card">
+      <div className="card__header"><h3>Install and configure</h3></div>
+      <div className="card__body">
+        <p>Get a server running and connect it to your database, identity provider, and network.</p>
+        <ul>
+          <li><Link to="/admin-guide/installation">Installation</Link></li>
+          <li><Link to="/admin-guide/configuration">Configuration</Link></li>
+          <li><Link to="/admin-guide/reverse-proxy">Reverse proxy and TLS</Link></li>
+          <li><Link to="/admin-guide/authentication/ldap">LDAP</Link> and <Link to="/admin-guide/authentication/openid">OpenID Connect</Link></li>
+          <li><Link to="/admin-guide/security">Security hardening</Link></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div className="col col--6 margin-bottom--lg">
+    <div className="card">
+      <div className="card__header"><h3>Run automation</h3></div>
+      <div className="card__body">
+        <p>Organize work into projects, connect repositories and credentials, and run tasks on demand or on a schedule.</p>
+        <ul>
+          <li><Link to="/getting-started">Getting started: first task in six steps</Link></li>
+          <li><Link to="/user-guide/projects">Projects</Link> and <Link to="/user-guide/team">Teams</Link></li>
+          <li><Link to="/user-guide/task-templates">Task templates</Link> and <Link to="/user-guide/tasks">Tasks</Link></li>
+          <li><Link to="/user-guide/key-store">Key Store</Link>, <Link to="/user-guide/inventory">Inventory</Link>, <Link to="/user-guide/environment">Variable Groups</Link></li>
+          <li><Link to="/user-guide/schedules">Schedules</Link> and <Link to="/user-guide/workflows">Workflows</Link> (Pro)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div className="col col--6 margin-bottom--lg">
+    <div className="card">
+      <div className="card__header"><h3>Operate at scale</h3></div>
+      <div className="card__body">
+        <p>Distribute execution, run redundantly, and keep the service observable and up to date.</p>
+        <ul>
+          <li><Link to="/admin-guide/runners">Runners</Link></li>
+          <li><Link to="/admin-guide/ha">High availability</Link></li>
+          <li><Link to="/admin-guide/upgrading">Upgrading</Link></li>
+          <li><Link to="/admin-guide/logs">Logs</Link> and <Link to="/admin-guide/metrics">Metrics</Link></li>
+          <li><Link to="/admin-guide/notifications">Notifications</Link></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div className="col col--6 margin-bottom--lg">
+    <div className="card">
+      <div className="card__header"><h3>Reference</h3></div>
+      <div className="card__body">
+        <p>Exact options and endpoints when you already know what you are looking for.</p>
+        <ul>
+          <li><Link to="/admin-guide/configuration/config-file">Configuration file</Link> and <Link to="/admin-guide/configuration/env-vars">Environment variables</Link></li>
+          <li><Link to="/reference/api">REST API</Link></li>
+          <li><Link to="/reference/cli">CLI</Link></li>
+          <li><Link to="/admin-guide/cicd">CI/CD integration</Link></li>
+          <li><Link to="/faq/troubleshooting">Troubleshooting FAQ</Link></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
-- **Project**: the main unit of separation (teams/infrastructures/applications) — [Projects](/user-guide/projects)
-- **Repository**: where your playbooks/modules/scripts live — [Repositories](/user-guide/repositories)
-- **Inventory**: hosts/groups/connection settings for Ansible-style runs — [Inventory](/user-guide/inventory)
-- **Variable Group (Environment)**: reusable variables and configuration per project — [Variable Groups](/user-guide/environment)
-- **Key Store**: encrypted credentials (SSH keys, tokens, passwords) — [Key Store](/user-guide/key-store)
-- **Task / Task template**: the definition and the run of automation — [Tasks](/user-guide/tasks)
-- **Runner**: where tasks execute (local or remote) — [Runners](/admin-guide/runners)
+## Guides by tool {#guides-by-tool}
 
-## Common workflows
+<div className="home-tools margin-bottom--lg">
+  <Link className="button button--outline button--primary" to="/user-guide/apps/ansible">Ansible</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/terraform">Terraform / OpenTofu</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/bash">Shell</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/powershell">PowerShell</Link>
+  <Link className="button button--outline button--primary" to="/user-guide/apps/python">Python</Link>
+</div>
 
-- **CI/CD in Semaphore**: build, deploy, and rollback — [CI/CD](/admin-guide/cicd)
-- **Run at scale**: distribute execution using runners — [Runners](/admin-guide/runners)
-- **Programmatic automation**: integrate Semaphore into your pipelines — [API](/admin-guide/api)
-- **Manage via CLI**: setup, users, runners, migrations — [CLI](/admin-guide/cli)
+## Help and community {#help-and-community}
 
-## Get help, report issues, or contribute
-
-- **Help / community**: join the [Discord](https://discord.gg/5R6k7hNGcH)
-- **Bug reports / feature requests**: open an issue on [GitHub Issues](https://github.com/semaphoreui/semaphore/issues)
-- **Source code**: [GitHub](https://github.com/semaphoreui/semaphore)
-
-## FAQ
-
-If something isn’t working as expected, start here: [Troubleshooting FAQ](/faq/troubleshooting)
+- **Questions:** ask on [Discord](https://discord.gg/5R6k7hNGcH).
+- **Bugs and feature requests:** open an issue on [GitHub](https://github.com/semaphoreui/semaphore/issues).
+- **Source code:** [github.com/semaphoreui/semaphore](https://github.com/semaphoreui/semaphore).
+- **Pro and Enterprise:** [License activation](/admin-guide/license).

@@ -1,0 +1,102 @@
+{
+  "title": {
+    "message": "Semaphore UI",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Semaphore UI 로고",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Product": {
+    "message": "제품",
+    "description": "Navbar item with label Product"
+  },
+  "item.label.Explore": {
+    "message": "둘러보기",
+    "description": "Navbar item with label Explore"
+  },
+  "item.label.Help": {
+    "message": "도움말",
+    "description": "Navbar item with label Help"
+  },
+  "item.label.Pricing": {
+    "message": "가격",
+    "description": "Navbar item with label Pricing"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.Sign in": {
+    "message": "로그인",
+    "description": "Navbar item with label Sign in"
+  },
+  "item.label.Pro · For teams": {
+    "message": "Pro · 팀용",
+    "description": "Navbar item with label Pro · For teams"
+  },
+  "item.label.Enterprise · For large-scale operations": {
+    "message": "Enterprise · 대규모 운영용",
+    "description": "Navbar item with label Enterprise · For large-scale operations"
+  },
+  "item.label.Community · For homelab": {
+    "message": "커뮤니티 · 홈랩용",
+    "description": "Navbar item with label Community · For homelab"
+  },
+  "item.label.Features": {
+    "message": "기능",
+    "description": "Navbar item with label Features"
+  },
+  "item.label.Use cases": {
+    "message": "활용 사례",
+    "description": "Navbar item with label Use cases"
+  },
+  "item.label.Case studies": {
+    "message": "고객 사례",
+    "description": "Navbar item with label Case studies"
+  },
+  "item.label.Blog": {
+    "message": "블로그",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.Semaphore UI vs AWX": {
+    "message": "Semaphore UI vs AWX",
+    "description": "Navbar item with label Semaphore UI vs AWX"
+  },
+  "item.label.Semaphore UI vs Rundeck": {
+    "message": "Semaphore UI vs Rundeck",
+    "description": "Navbar item with label Semaphore UI vs Rundeck"
+  },
+  "item.label.Semaphore UI vs GitLab": {
+    "message": "Semaphore UI vs GitLab",
+    "description": "Navbar item with label Semaphore UI vs GitLab"
+  },
+  "item.label.Semaphore UI vs Jenkins": {
+    "message": "Semaphore UI vs Jenkins",
+    "description": "Navbar item with label Semaphore UI vs Jenkins"
+  },
+  "item.label.Semaphore UI vs Spacelift": {
+    "message": "Semaphore UI vs Spacelift",
+    "description": "Navbar item with label Semaphore UI vs Spacelift"
+  },
+  "item.label.Semaphore UI vs Gaia": {
+    "message": "Semaphore UI vs Gaia",
+    "description": "Navbar item with label Semaphore UI vs Gaia"
+  },
+  "item.label.Semaphore UI vs Tower (AAP)": {
+    "message": "Semaphore UI vs Tower (AAP)",
+    "description": "Navbar item with label Semaphore UI vs Tower (AAP)"
+  },
+  "item.label.Installation": {
+    "message": "설치",
+    "description": "Navbar item with label Installation"
+  },
+  "item.label.Docs": {
+    "message": "문서",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.API References": {
+    "message": "API 레퍼런스",
+    "description": "Navbar item with label API References"
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "link.title. ": {
+    "message": " ",
+    "description": "The title of the footer links column with title=  in the footer"
+  },
+  "link.title.Product": {
+    "message": "Prodotto",
+    "description": "The title of the footer links column with title=Product in the footer"
+  },
+  "link.title.Explore": {
+    "message": "Esplora",
+    "description": "The title of the footer links column with title=Explore in the footer"
+  },
+  "link.title.Help": {
+    "message": "Aiuto",
+    "description": "The title of the footer links column with title=Help in the footer"
+  },
+  "link.title.Links": {
+    "message": "Collegamenti",
+    "description": "The title of the footer links column with title=Links in the footer"
+  },
+  "link.title.Legal": {
+    "message": "Note legali",
+    "description": "The title of the footer links column with title=Legal in the footer"
+  },
+  "link.item.label.Community": {
+    "message": "Community",
+    "description": "The label of footer link with label=Community linking to https://github.com/semaphoreui/semaphore"
+  },
+  "link.item.label.Pro": {
+    "message": "Pro",
+    "description": "The label of footer link with label=Pro linking to https://semaphoreui.com/pro"
+  },
+  "link.item.label.Enterprise": {
+    "message": "Enterprise",
+    "description": "The label of footer link with label=Enterprise linking to https://semaphoreui.com/enterprise"
+  },
+  "link.item.label.Pricing": {
+    "message": "Prezzi",
+    "description": "The label of footer link with label=Pricing linking to https://semaphoreui.com/pricing/"
+  },
+  "link.item.label.Features": {
+    "message": "Funzionalità",
+    "description": "The label of footer link with label=Features linking to https://semaphoreui.com/features"
+  },
+  "link.item.label.Use cases": {
+    "message": "Casi d'uso",
+    "description": "The label of footer link with label=Use cases linking to https://semaphoreui.com/use-cases"
+  },
+  "link.item.label.Case studies": {
+    "message": "Casi di studio",
+    "description": "The label of footer link with label=Case studies linking to https://semaphoreui.com/case-studies"
+  },
+  "link.item.label.Roadmap": {
+    "message": "Roadmap",
+    "description": "The label of footer link with label=Roadmap linking to https://semaphoreui.com/roadmap"
+  },
+  "link.item.label.What's New": {
+    "message": "Novità",
+    "description": "The label of footer link with label=What's New linking to https://semaphoreui.com/releases/"
+  },
+  "link.item.label.Installation": {
+    "message": "Installazione",
+    "description": "The label of footer link with label=Installation linking to https://semaphoreui.com/install"
+  },
+  "link.item.label.Documentation": {
+    "message": "Documentazione",
+    "description": "The label of footer link with label=Documentation linking to /"
+  },
+  "link.item.label.API References": {
+    "message": "Riferimenti API",
+    "description": "The label of footer link with label=API References linking to https://semaphoreui.com/api-docs/"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/semaphoreui/semaphore"
+  },
+  "link.item.label.X (ex. Twitter)": {
+    "message": "X (ex. Twitter)",
+    "description": "The label of footer link with label=X (ex. Twitter) linking to https://twitter.com/semaphoreui"
+  },
+  "link.item.label.Discord": {
+    "message": "Discord",
+    "description": "The label of footer link with label=Discord linking to https://discord.gg/5R6k7hNGcH"
+  },
+  "link.item.label.YouTube": {
+    "message": "YouTube",
+    "description": "The label of footer link with label=YouTube linking to https://www.youtube.com/@semaphoreui"
+  },
+  "link.item.label.LinkedIn": {
+    "message": "LinkedIn",
+    "description": "The label of footer link with label=LinkedIn linking to https://www.linkedin.com/company/semaphoreui"
+  },
+  "link.item.label.Facebook": {
+    "message": "Facebook",
+    "description": "The label of footer link with label=Facebook linking to https://facebook.com/semaphoreui"
+  },
+  "link.item.label.Snapcraft": {
+    "message": "Snapcraft",
+    "description": "The label of footer link with label=Snapcraft linking to https://snapcraft.io/semaphore"
+  },
+  "link.item.label.Terms of Service": {
+    "message": "Termini di servizio",
+    "description": "The label of footer link with label=Terms of Service linking to https://semaphoreui.com/legal/terms-of-service"
+  },
+  "link.item.label.Subscription Agreement": {
+    "message": "Contratto di abbonamento",
+    "description": "The label of footer link with label=Subscription Agreement linking to https://semaphoreui.com/legal/subscription-agreement"
+  },
+  "link.item.label.Refund Policy": {
+    "message": "Politica di rimborso",
+    "description": "The label of footer link with label=Refund Policy linking to https://semaphoreui.com/legal/refund-policy"
+  },
+  "link.item.label.Privacy Policy": {
+    "message": "Informativa sulla privacy",
+    "description": "The label of footer link with label=Privacy Policy linking to https://semaphoreui.com/privacy/policy"
+  },
+  "link.item.label.Cookie Policy": {
+    "message": "Informativa sui cookie",
+    "description": "The label of footer link with label=Cookie Policy linking to https://semaphoreui.com/privacy/cookies"
+  },
+  "link.item.label.Security Whitepaper": {
+    "message": "Whitepaper sulla sicurezza",
+    "description": "The label of footer link with label=Security Whitepaper linking to https://semaphoreui.com/security/whitepaper"
+  },
+  "link.item.label.Support Offering": {
+    "message": "Offerta di supporto",
+    "description": "The label of footer link with label=Support Offering linking to https://semaphoreui.com/legal/support-offering"
+  },
+  "copyright": {
+    "message": "© 2026 Semaphore UI. Tutti i diritti riservati.",
+    "description": "The footer copyright"
+  }
+}

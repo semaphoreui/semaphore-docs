@@ -1,3 +1,8 @@
+---
+title: Package manager
+description: Installing the Semaphore .deb or .rpm package on Debian, Ubuntu, or CentOS, then running setup and starting the server.
+---
+
 # Package manager
 
 :::tip

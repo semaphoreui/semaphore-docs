@@ -1,6 +1,11 @@
+---
+title: Prompts
+description: Built-in runtime options for Ansible and Terraform templates, how to enable them, and how to pass prompt values via API or schedules.
+---
+
 # Prompts
 
-Prompts are predefined flags and options specific to each template type that you can enable to allow runtime customization. Unlike [Survey Variables](/survey-vars) which are custom fields you create, prompts are built-in options that correspond to specific CLI flags for Ansible, Terraform, and other tools.
+Prompts are predefined flags and options specific to each template type that you can enable to allow runtime customization. Unlike [Survey Variables](/user-guide/task-templates/survey-vars) which are custom fields you create, prompts are built-in options that correspond to specific CLI flags for Ansible, Terraform, and other tools.
 
 This feature allows you to:
 - Override template defaults at runtime
@@ -8,7 +13,7 @@ This feature allows you to:
 - Control execution behavior with CLI flags
 - Pass runtime options via API calls or schedules
 
-## Prompts vs. Survey Variables
+## Prompts vs. Survey Variables {#prompts-vs-survey-variables}
 
 | Feature | Prompts | Survey Variables |
 |---------|---------|-----------------|
@@ -19,11 +24,11 @@ This feature allows you to:
 
 **Prompts** are standardized options built into Semaphore for specific tools, while **Survey Variables** are flexible custom fields you define yourself.
 
-## Ansible Prompts
+## Ansible Prompts {#ansible-prompts}
 
 For Ansible playbook templates, you can enable prompts for the following CLI options:
 
-### Limit
+### Limit {#limit}
 
 Enable the `--limit` prompt to specify which hosts to target when running the playbook.
 
@@ -40,7 +45,7 @@ Enable the `--limit` prompt to specify which hosts to target when running the pl
 - When running the task, specify `web-01.example.com` to target only that server
 - Or specify `webservers:&production` to target production web servers
 
-### Tags
+### Tags {#tags}
 
 Enable the `--tags` prompt to run only tasks with specific tags.
 
@@ -76,7 +81,7 @@ Enable the `--tags` prompt to run only tasks with specific tags.
 
 Enable the Tags prompt and enter `deploy,restart` to skip the installation step.
 
-### Skip Tags
+### Skip Tags {#skip-tags}
 
 Enable the `--skip-tags` prompt to skip tasks with specific tags.
 
@@ -89,7 +94,28 @@ Enable the `--skip-tags` prompt to skip tasks with specific tags.
 
 **Example**: Using the playbook above, enable Skip Tags and enter `install` to skip package installation and only run deployment and restart tasks.
 
-### Enabling Ansible Prompts
+### Skip Galaxy install {#skip-galaxy-install}
+
+Enable the prompt to let the user skip the `ansible-galaxy install` step for roles and collections when running the task.
+
+**Use cases**:
+- Requirements are already installed in the runner image
+- Save time on repeated runs when nothing changed in `requirements.yml`
+
+### Force Galaxy install {#force-galaxy-install}
+
+Enable the prompt to let the user force `ansible-galaxy install --force` for every requirements file, ignoring the requirements checksum Semaphore keeps between runs.
+
+**CLI equivalent**: `ansible-galaxy role install -r requirements.yml --force`
+
+**Use cases**:
+- A requirements file references a branch rather than a fixed version and you need the latest commit
+- A previous install left roles or collections in a broken state
+- Verify that a playbook works from a clean set of dependencies
+
+See [Galaxy requirements](../apps/ansible.md#galaxy-requirements) for how the template-level defaults work.
+
+### Enabling Ansible Prompts {#enabling-ansible-prompts}
 
 To enable Ansible prompts:
 
@@ -99,17 +125,20 @@ To enable Ansible prompts:
    - ☐ **Limit** - Enable `--limit` flag
    - ☐ **Tags** - Enable `--tags` flag
    - ☐ **Skip Tags** - Enable `--skip-tags` flag
+   - ☐ **Debug** - Enable verbosity (`-v`) selection
+   - ☐ **Skip Galaxy install** - Allow skipping `ansible-galaxy install`
+   - ☐ **Force Galaxy install** - Allow forcing `ansible-galaxy install --force`
 4. Save the template
 
 ![](/assets/ansible_2.png)
 
 When enabled, these fields appear in the task run form, API requests, and schedule configurations.
 
-## Terraform/OpenTofu Prompts
+## Terraform/OpenTofu Prompts {#terraformopentofu-prompts}
 
 For Terraform and OpenTofu templates, Semaphore provides several built-in prompts:
 
-### Workspace Selection
+### Workspace Selection {#workspace-selection}
 
 Select which Terraform workspace to use for the task execution.
 
@@ -125,9 +154,9 @@ Select which Terraform workspace to use for the task execution.
 2. The workspace selector automatically appears in the task form
 3. Users choose the target workspace when running tasks
 
-See [Terraform Workspaces](/apps/terraform/workspaces) for detailed setup.
+See [Terraform Workspaces](/user-guide/apps/terraform/workspaces) for detailed setup.
 
-### Destroy Flag
+### Destroy Flag {#destroy-flag}
 
 Enable the `-destroy` flag to tear down infrastructure.
 
@@ -140,7 +169,7 @@ Enable the `-destroy` flag to tear down infrastructure.
 
 **Important**: This is a destructive operation. Use with caution and consider requiring confirmation in your workflows.
 
-### Migrate State Flag
+### Migrate State Flag {#migrate-state-flag}
 
 Enable the `-migrate-state` flag when changing backend configuration.
 
@@ -151,7 +180,7 @@ Enable the `-migrate-state` flag when changing backend configuration.
 - Migrate between storage locations
 - Update backend configuration
 
-### Enabling Terraform Prompts
+### Enabling Terraform Prompts {#enabling-terraform-prompts}
 
 Terraform prompts are available in the template settings:
 
@@ -164,20 +193,20 @@ Terraform prompts are available in the template settings:
 
 The task form displays these options when running Terraform tasks.
 
-## Shell, Bash, PowerShell, and Python Prompts
+## Bash, PowerShell, and Python Prompts {#bash-powershell-and-python-prompts}
 
-For script-based templates (Shell, Bash, PowerShell, Python), prompts are minimal as most customization is handled through [Survey Variables](/survey-vars).
+For Bash, PowerShell, and Python templates, prompts are minimal as most customization is handled through [Survey Variables](/user-guide/task-templates/survey-vars).
 
-Available options typically include:
-- Script path or command selection
-- Execution environment settings
-- Working directory
+Available prompts are:
+
+- CLI args
+- Branch
 
 These template types benefit more from custom Survey Variables for passing parameters to scripts.
 
-## Using Prompts
+## Using Prompts {#using-prompts}
 
-### Manual Task Execution
+### Manual Task Execution {#manual-task-execution}
 
 When running a task from a template with prompts enabled:
 
@@ -188,7 +217,7 @@ When running a task from a template with prompts enabled:
 
 The task executes with your specified prompt values passed as CLI flags.
 
-### API Calls
+### API Calls {#api-calls}
 
 To pass prompt values via API, include them in the request payload:
 
@@ -209,7 +238,7 @@ curl -XPOST \
 
 **Important**: Prompts must be enabled in the template for the values to be accepted. If you pass prompt values via API without enabling them, those values will be ignored.
 
-### Scheduled Tasks
+### Scheduled Tasks {#scheduled-tasks}
 
 Schedules can include prompt values to customize automated task execution:
 
@@ -219,7 +248,7 @@ Schedules can include prompt values to customize automated task execution:
 
 Configure prompt values in the schedule settings so each scheduled run uses the specified options.
 
-### Integrations and Webhooks
+### Integrations and Webhooks {#integrations-and-webhooks}
 
 Integrations can extract values from webhooks and map them to prompts:
 
@@ -230,16 +259,16 @@ Integrations can extract values from webhooks and map them to prompts:
 
 See [Integrations](../integrations) for webhook configuration.
 
-## Best Practices
+## Best Practices {#best-practices}
 
-### Enable only necessary prompts
+### Enable only necessary prompts {#enable-only-necessary-prompts}
 
 Each enabled prompt adds a field to the task form. Only enable prompts that users will actually need to customize.
 
 ✅ **Good**: Enable Limit for operations teams who need to target specific hosts
 ❌ **Bad**: Enable all prompts "just in case"
 
-### Combine with Survey Variables
+### Combine with Survey Variables {#combine-with-survey-variables}
 
 Use prompts for tool-specific CLI options and Survey Variables for custom parameters:
 
@@ -247,7 +276,7 @@ Use prompts for tool-specific CLI options and Survey Variables for custom parame
 - **Prompts**: Limit (which hosts), Tags (which tasks)
 - **Survey Variables**: `app_version` (which version), `enable_rollback` (custom logic)
 
-### Document API usage
+### Document API usage {#document-api-usage}
 
 If templates are triggered via API, document which prompts are available and their expected format:
 
@@ -267,7 +296,7 @@ POST /api/project/1/tasks
 }
 ```
 
-### Use Limit for safe testing
+### Use Limit for safe testing {#use-limit-for-safe-testing}
 
 Always test potentially destructive playbooks with the Limit prompt first:
 
@@ -276,16 +305,16 @@ Always test potentially destructive playbooks with the Limit prompt first:
 3. Verify success
 4. Second run: Specify `limit: "production"` to roll out to all hosts
 
-### Validate prompt combinations
+### Validate prompt combinations {#validate-prompt-combinations}
 
 Some prompt combinations may not make sense. Add documentation or validation:
 
 - Using `--tags deploy` with `--skip-tags deploy` conflicts
 - Specifying both workspace and destroy flag requires extra caution
 
-## Common Use Cases
+## Common Use Cases {#common-use-cases}
 
-### Gradual Rollout with Limit
+### Gradual Rollout with Limit {#gradual-rollout-with-limit}
 
 Deploy to production gradually using Ansible Limit:
 
@@ -295,7 +324,7 @@ Deploy to production gradually using Ansible Limit:
 4. Validate metrics
 5. Run 3: `limit: "webservers:&production"` - Full rollout
 
-### Selective Execution with Tags
+### Selective Execution with Tags {#selective-execution-with-tags}
 
 Use Tags to run only specific parts of a playbook:
 
@@ -303,7 +332,7 @@ Use Tags to run only specific parts of a playbook:
 **Afternoon**: `tags: "config"` - Update configuration
 **Evening**: `tags: "restart"` - Restart services with new config
 
-### Environment Management with Workspaces
+### Environment Management with Workspaces {#environment-management-with-workspaces}
 
 Use Terraform workspace selection for environment management:
 
@@ -311,7 +340,7 @@ Use Terraform workspace selection for environment management:
 - **Staging**: Select `staging` workspace - production-like for testing
 - **Production**: Select `prod` workspace - full production infrastructure
 
-### Cleanup with Destroy
+### Cleanup with Destroy {#cleanup-with-destroy}
 
 Use Terraform destroy for temporary infrastructure:
 
@@ -319,15 +348,15 @@ Use Terraform destroy for temporary infrastructure:
 2. Run integration tests
 3. Clean up: Run with destroy flag enabled and workspace `test-branch-123`
 
-## Troubleshooting
+## Troubleshooting {#troubleshooting}
 
-### Prompt values ignored
+### Prompt values ignored {#prompt-values-ignored}
 
 **Problem**: Passing prompt values but they don't take effect
 
 **Solution**: Verify the corresponding prompt is enabled in the template settings. Prompts must be explicitly enabled.
 
-### Cannot specify limit
+### Cannot specify limit {#cannot-specify-limit}
 
 **Problem**: Limit field not appearing in task form
 
@@ -337,7 +366,7 @@ Use Terraform destroy for temporary infrastructure:
 3. Enable the "Limit" checkbox
 4. Save the template
 
-### API calls fail with prompt values
+### API calls fail with prompt values {#api-calls-fail-with-prompt-values}
 
 **Problem**: API requests with prompt values return errors
 
@@ -346,7 +375,7 @@ Use Terraform destroy for temporary infrastructure:
 2. Check JSON formatting in request body
 3. Verify field names match exactly (`limit`, not `host_limit`)
 
-### Tags not filtering tasks
+### Tags not filtering tasks {#tags-not-filtering-tasks}
 
 **Problem**: Specifying tags but all tasks still run
 
@@ -355,11 +384,11 @@ Use Terraform destroy for temporary infrastructure:
 2. Check for typos in tag names
 3. Ensure tags are comma-separated without spaces: `deploy,restart` not `deploy, restart`
 
-## Related Documentation
+## Related Documentation {#related-documentation}
 
-- [Survey Variables](/survey-vars) - Custom fields for templates
-- [Ansible Templates](/apps/ansible) - Ansible-specific configuration
-- [Terraform Templates](/apps/terraform) - Terraform-specific configuration
+- [Survey Variables](/user-guide/task-templates/survey-vars) - Custom fields for templates
+- [Ansible Templates](/user-guide/apps/ansible) - Ansible-specific configuration
+- [Terraform Templates](/user-guide/apps/terraform) - Terraform-specific configuration
 - [Schedules](../schedules) - Automated task execution
 - [Integrations](../integrations) - Webhook-triggered tasks
-- [API Documentation](../../admin-guide/api) - API reference
+- [API Documentation](../../reference/api) - API reference
