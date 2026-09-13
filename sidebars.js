@@ -31,7 +31,11 @@ const sidebars = {
         'introduction/prerequisites',
       ],
     },
-    { type: 'doc', id: 'getting-started', className: 'sidebar-icon sidebar-icon--rocket' },
+    {
+      type: 'doc', 
+      id: 'getting-started/README', 
+      className: 'sidebar-icon sidebar-icon--rocket' 
+    },
     {
       type: 'category',
       label: 'Admin Guide',

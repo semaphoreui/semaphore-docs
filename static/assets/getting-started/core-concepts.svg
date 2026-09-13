@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" role="img" aria-labelledby="title description">
+  <title id="title">Semaphore UI core concepts</title>
+  <desc id="description">A trigger starts a task template directly or through a workflow. Repository, Inventory, Key Store, and Variable Group provide context to the task template. The template creates a task run that is executed by the Semaphore server or an eligible remote runner and produces logs, details, summary, and history.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B83262" />
+    </marker>
+    <style>
+      .card { fill: #fff1f5; stroke: #d64f7f; stroke-width: 2.5; }
+      .primary { fill: #6f1736; font: 600 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .secondary { fill: #8c3151; font: 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .flow { fill: none; stroke: #b83262; stroke-width: 3; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="card" x="350" y="28" width="300" height="78" rx="14" />
+  <text class="primary" x="500" y="59" text-anchor="middle">Trigger</text>
+  <text class="secondary" x="500" y="84" text-anchor="middle">UI Run · API · Schedule</text>
+
+  <rect class="card" x="690" y="142" width="240" height="78" rx="14" />
+  <text class="primary" x="810" y="189" text-anchor="middle">Workflow</text>
+
+  <rect class="card" x="40" y="126" width="230" height="60" rx="14" />
+  <text class="primary" x="155" y="163" text-anchor="middle">Repository</text>
+
+  <rect class="card" x="40" y="206" width="230" height="60" rx="14" />
+  <text class="primary" x="155" y="243" text-anchor="middle">Inventory</text>
+
+  <rect class="card" x="40" y="286" width="230" height="60" rx="14" />
+  <text class="primary" x="155" y="323" text-anchor="middle">Key Store</text>
+
+  <rect class="card" x="40" y="366" width="230" height="60" rx="14" />
+  <text class="primary" x="155" y="403" text-anchor="middle">Variable Group</text>
+
+  <rect class="card" x="390" y="250" width="240" height="84" rx="14" />
+  <text class="primary" x="510" y="284" text-anchor="middle">Task template</text>
+  <text class="secondary" x="510" y="311" text-anchor="middle">Reusable definition</text>
+
+  <rect class="card" x="390" y="386" width="240" height="76" rx="14" />
+  <text class="primary" x="510" y="432" text-anchor="middle">Task run</text>
+
+  <rect class="card" x="350" y="510" width="320" height="82" rx="14" />
+  <text class="primary" x="510" y="540" text-anchor="middle">Execution host</text>
+  <text class="secondary" x="510" y="567" text-anchor="middle">Server or eligible remote runner</text>
+
+  <rect class="card" x="710" y="510" width="250" height="82" rx="14" />
+  <text class="primary" x="835" y="542" text-anchor="middle">Result</text>
+  <text class="secondary" x="835" y="568" text-anchor="middle">Log · Details · Summary · History</text>
+
+  <path class="flow" d="M 500 106 L 500 242" />
+  <path class="flow" d="M 650 68 C 755 68, 810 92, 810 134" />
+  <path class="flow" d="M 690 181 C 642 181, 618 205, 576 244" />
+  <path class="flow" d="M 270 156 C 330 156, 345 236, 382 264" />
+  <path class="flow" d="M 270 236 C 330 236, 350 265, 382 278" />
+  <path class="flow" d="M 270 316 C 325 316, 350 303, 382 296" />
+  <path class="flow" d="M 270 396 C 330 396, 344 334, 382 314" />
+  <path class="flow" d="M 510 334 L 510 378" />
+  <path class="flow" d="M 510 462 L 510 502" />
+  <path class="flow" d="M 670 551 L 702 551" />
+</svg>
