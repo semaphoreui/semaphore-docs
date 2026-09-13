@@ -135,10 +135,10 @@ helm upgrade --install semaphore semaphoreui/semaphore \
 
 | Способ установки | Когда выбирать | Подробное руководство |
 | --- | --- | --- |
-| **Native package** | Поддерживаемый сервер Linux | [Установка через менеджер пакетов](/admin-guide/installation/package-manager) |
+| **Системный пакет** | Поддерживаемый сервер Linux | [Установка через менеджер пакетов](/admin-guide/installation/package-manager) |
 | **Docker Compose** | Быстрая изолированная установка или хост контейнеров | [Установка в Docker](/admin-guide/installation/docker) |
-| **Binary archive** | macOS, Windows, FreeBSD или Linux без подходящего пакета | [Установка из исполняемого файла](/admin-guide/installation/binary-file) |
-| **Kubernetes with Helm** | Существующий кластер Kubernetes | [Установка в Kubernetes](/admin-guide/installation/k8s) |
+| **Архив с исполняемым файлом** | macOS, Windows, FreeBSD или Linux без подходящего пакета | [Установка из исполняемого файла](/admin-guide/installation/binary-file) |
+| **Kubernetes с Helm** | Существующий кластер Kubernetes | [Установка в Kubernetes](/admin-guide/installation/k8s) |
 
 Подробные руководства описывают базы данных для production, службы, секреты, хранилища, ingress и обновления.
 

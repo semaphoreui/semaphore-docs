@@ -135,10 +135,10 @@ Per una configurazione guidata, usa la [pagina ufficiale di installazione di Sem
 
 | Metodo di installazione | Quando sceglierlo | Guida dettagliata |
 | --- | --- | --- |
-| **Native package** | Un server Linux supportato | [Installazione con gestore di pacchetti](/admin-guide/installation/package-manager) |
+| **Pacchetto nativo** | Un server Linux supportato | [Installazione con gestore di pacchetti](/admin-guide/installation/package-manager) |
 | **Docker Compose** | Una configurazione isolata rapida o un host di container | [Installazione Docker](/admin-guide/installation/docker) |
-| **Binary archive** | macOS, Windows, FreeBSD o Linux senza un pacchetto adatto | [Installazione del binario](/admin-guide/installation/binary-file) |
-| **Kubernetes with Helm** | Un cluster Kubernetes esistente | [Installazione Kubernetes](/admin-guide/installation/k8s) |
+| **Archivio binario** | macOS, Windows, FreeBSD o Linux senza un pacchetto adatto | [Installazione del binario](/admin-guide/installation/binary-file) |
+| **Kubernetes con Helm** | Un cluster Kubernetes esistente | [Installazione Kubernetes](/admin-guide/installation/k8s) |
 
 Le guide dettagliate descrivono database di produzione, servizi, segreti, storage, ingress e aggiornamenti.
 

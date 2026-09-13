@@ -135,10 +135,10 @@ chart 的 `appVersion` 标识 Semaphore 版本。生产使用前，请在 `value
 
 | 安装方式 | 适用场景 | 详细指南 |
 | --- | --- | --- |
-| **Native package** | 支持的 Linux 服务器 | [通过包管理器安装](/admin-guide/installation/package-manager) |
+| **原生软件包** | 支持的 Linux 服务器 | [通过包管理器安装](/admin-guide/installation/package-manager) |
 | **Docker Compose** | 快速搭建隔离环境或在容器主机上运行 | [Docker 安装](/admin-guide/installation/docker) |
-| **Binary archive** | macOS、Windows、FreeBSD，或没有合适软件包的 Linux | [二进制安装](/admin-guide/installation/binary-file) |
-| **Kubernetes with Helm** | 已有 Kubernetes 集群 | [Kubernetes 安装](/admin-guide/installation/k8s) |
+| **二进制压缩包** | macOS、Windows、FreeBSD，或没有合适软件包的 Linux | [二进制安装](/admin-guide/installation/binary-file) |
+| **通过 Helm 安装到 Kubernetes** | 已有 Kubernetes 集群 | [Kubernetes 安装](/admin-guide/installation/k8s) |
 
 详细指南涵盖生产数据库、服务、机密、存储、ingress 和升级。
 

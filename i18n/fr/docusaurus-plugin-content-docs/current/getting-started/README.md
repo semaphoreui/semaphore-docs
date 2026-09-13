@@ -135,10 +135,10 @@ Pour une configuration guidée, utilisez la [page officielle d’installation de
 
 | Méthode d’installation | À choisir pour | Guide détaillé |
 | --- | --- | --- |
-| **Native package** | Un serveur Linux pris en charge | [Installation par gestionnaire de paquets](/admin-guide/installation/package-manager) |
+| **Paquet natif** | Un serveur Linux pris en charge | [Installation par gestionnaire de paquets](/admin-guide/installation/package-manager) |
 | **Docker Compose** | Une installation isolée rapide ou un hôte de conteneurs | [Installation Docker](/admin-guide/installation/docker) |
-| **Binary archive** | macOS, Windows, FreeBSD ou Linux sans paquet adapté | [Installation du binaire](/admin-guide/installation/binary-file) |
-| **Kubernetes with Helm** | Un cluster Kubernetes existant | [Installation Kubernetes](/admin-guide/installation/k8s) |
+| **Archive binaire** | macOS, Windows, FreeBSD ou Linux sans paquet adapté | [Installation du binaire](/admin-guide/installation/binary-file) |
+| **Kubernetes avec Helm** | Un cluster Kubernetes existant | [Installation Kubernetes](/admin-guide/installation/k8s) |
 
 Les guides détaillés couvrent les bases de données de production, les services, les secrets, le stockage, ingress et les mises à niveau.
 

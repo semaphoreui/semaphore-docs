@@ -135,10 +135,10 @@ helm upgrade --install semaphore semaphoreui/semaphore \
 
 | 설치 방법 | 적합한 환경 | 상세 가이드 |
 | --- | --- | --- |
-| **Native package** | 지원되는 Linux 서버 | [패키지 관리자로 설치](/admin-guide/installation/package-manager) |
+| **네이티브 패키지** | 지원되는 Linux 서버 | [패키지 관리자로 설치](/admin-guide/installation/package-manager) |
 | **Docker Compose** | 빠른 격리 환경 구성 또는 컨테이너 호스트 | [Docker 설치](/admin-guide/installation/docker) |
-| **Binary archive** | macOS, Windows, FreeBSD 또는 적합한 패키지가 없는 Linux | [바이너리 설치](/admin-guide/installation/binary-file) |
-| **Kubernetes with Helm** | 기존 Kubernetes 클러스터 | [Kubernetes 설치](/admin-guide/installation/k8s) |
+| **바이너리 압축 파일** | macOS, Windows, FreeBSD 또는 적합한 패키지가 없는 Linux | [바이너리 설치](/admin-guide/installation/binary-file) |
+| **Helm으로 Kubernetes에 설치** | 기존 Kubernetes 클러스터 | [Kubernetes 설치](/admin-guide/installation/k8s) |
 
 상세 가이드는 프로덕션 데이터베이스, 서비스, 시크릿, 스토리지, ingress, 업그레이드를 다룹니다.
 
@@ -253,7 +253,7 @@ Repository는 Semaphore를 Git에 저장된 자동화 코드와 연결합니다.
 2. **Key Store**를 열고 **New Key**를 선택합니다.
 3. `Production hosts`처럼 쉽게 알아볼 이름을 입력하고 **Local**을 선택한 상태로 **SSH Key**를 선택합니다.
 4. `ubuntu` 또는 `ec2-user`처럼 Ansible이 호스트에서 사용할 계정을 입력합니다.
-5. `BEGIN` 및 `END` 줄을 포함한 전체 개인 키를 붙여 넣고 필요한 경우 암호문을 추가합니다.
+5. `BEGIN` 및 `END` 줄을 포함한 전체 개인 키를 붙여 넣고 필요한 경우 암호 구문을 추가합니다.
 6. **Create**를 선택합니다. 다음 단계에서 **Inventory → User Credentials** 아래에 이 키를 선택합니다.
 
 ![관리 대상 호스트에서 사용하는 계정의 New SSH Key 양식](/assets/getting-started/add-managed-host-ssh-key.jpg)

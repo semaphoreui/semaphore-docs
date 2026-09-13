@@ -135,10 +135,10 @@ Nutzen Sie für eine geführte Einrichtung die offizielle [Semaphore-Installatio
 
 | Installationsmethode | Geeignet für | Ausführliche Anleitung |
 | --- | --- | --- |
-| **Native package** | Einen unterstützten Linux-Server | [Installation per Paketmanager](/admin-guide/installation/package-manager) |
+| **Natives Paket** | Einen unterstützten Linux-Server | [Installation per Paketmanager](/admin-guide/installation/package-manager) |
 | **Docker Compose** | Eine schnelle isolierte Einrichtung oder einen Container-Host | [Docker-Installation](/admin-guide/installation/docker) |
-| **Binary archive** | macOS, Windows, FreeBSD oder Linux ohne passendes Paket | [Installation einer Binärdatei](/admin-guide/installation/binary-file) |
-| **Kubernetes with Helm** | Einen vorhandenen Kubernetes-Cluster | [Kubernetes-Installation](/admin-guide/installation/k8s) |
+| **Binärarchiv** | macOS, Windows, FreeBSD oder Linux ohne passendes Paket | [Installation einer Binärdatei](/admin-guide/installation/binary-file) |
+| **Kubernetes mit Helm** | Einen vorhandenen Kubernetes-Cluster | [Kubernetes-Installation](/admin-guide/installation/k8s) |
 
 Die ausführlichen Anleitungen behandeln Produktionsdatenbanken, Dienste, Geheimnisse, Speicher, Ingress und Upgrades.
 

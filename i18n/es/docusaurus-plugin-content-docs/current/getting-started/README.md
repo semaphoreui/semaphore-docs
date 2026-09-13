@@ -135,10 +135,10 @@ Para una configuración guiada, use la [página oficial de instalación de Semap
 
 | Método de instalación | Cuándo elegirlo | Guía detallada |
 | --- | --- | --- |
-| **Native package** | Un servidor Linux compatible | [Instalación mediante gestor de paquetes](/admin-guide/installation/package-manager) |
+| **Paquete nativo** | Un servidor Linux compatible | [Instalación mediante gestor de paquetes](/admin-guide/installation/package-manager) |
 | **Docker Compose** | Una configuración aislada rápida o un host de contenedores | [Instalación con Docker](/admin-guide/installation/docker) |
-| **Binary archive** | macOS, Windows, FreeBSD o Linux sin un paquete adecuado | [Instalación del binario](/admin-guide/installation/binary-file) |
-| **Kubernetes with Helm** | Un clúster Kubernetes existente | [Instalación en Kubernetes](/admin-guide/installation/k8s) |
+| **Archivo binario** | macOS, Windows, FreeBSD o Linux sin un paquete adecuado | [Instalación del binario](/admin-guide/installation/binary-file) |
+| **Kubernetes con Helm** | Un clúster Kubernetes existente | [Instalación en Kubernetes](/admin-guide/installation/k8s) |
 
 Las guías detalladas cubren bases de datos de producción, servicios, secretos, almacenamiento, ingress y actualizaciones.
 

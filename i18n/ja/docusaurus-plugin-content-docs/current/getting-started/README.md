@@ -135,10 +135,10 @@ chart の `appVersion` は Semaphore のバージョンを示します。本番�
 
 | インストール方法 | 適した用途 | 詳細ガイド |
 | --- | --- | --- |
-| **Native package** | 対応する Linux サーバー | [パッケージマネージャーによるインストール](/admin-guide/installation/package-manager) |
+| **ネイティブパッケージ** | 対応する Linux サーバー | [パッケージマネージャーによるインストール](/admin-guide/installation/package-manager) |
 | **Docker Compose** | 分離した環境の迅速な構築、またはコンテナホスト | [Docker インストール](/admin-guide/installation/docker) |
-| **Binary archive** | macOS、Windows、FreeBSD、または適切なパッケージがない Linux | [バイナリのインストール](/admin-guide/installation/binary-file) |
-| **Kubernetes with Helm** | 既存の Kubernetes クラスター | [Kubernetes インストール](/admin-guide/installation/k8s) |
+| **バイナリアーカイブ** | macOS、Windows、FreeBSD、または適切なパッケージがない Linux | [バイナリのインストール](/admin-guide/installation/binary-file) |
+| **Helm による Kubernetes へのインストール** | 既存の Kubernetes クラスター | [Kubernetes インストール](/admin-guide/installation/k8s) |
 
 詳細ガイドでは、本番用データベース、サービス、シークレット、ストレージ、ingress、アップグレードを説明しています。
 

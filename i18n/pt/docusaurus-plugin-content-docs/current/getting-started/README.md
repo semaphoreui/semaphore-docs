@@ -135,10 +135,10 @@ Para uma configuração guiada, use a [página oficial de instalação do Semaph
 
 | Método de instalação | Quando escolher | Guia detalhado |
 | --- | --- | --- |
-| **Native package** | Um servidor Linux compatível | [Instalação pelo gerenciador de pacotes](/admin-guide/installation/package-manager) |
+| **Pacote nativo** | Um servidor Linux compatível | [Instalação pelo gerenciador de pacotes](/admin-guide/installation/package-manager) |
 | **Docker Compose** | Uma configuração isolada rápida ou um host de contêineres | [Instalação com Docker](/admin-guide/installation/docker) |
-| **Binary archive** | macOS, Windows, FreeBSD ou Linux sem um pacote adequado | [Instalação do binário](/admin-guide/installation/binary-file) |
-| **Kubernetes with Helm** | Um cluster Kubernetes existente | [Instalação no Kubernetes](/admin-guide/installation/k8s) |
+| **Arquivo binário** | macOS, Windows, FreeBSD ou Linux sem um pacote adequado | [Instalação do binário](/admin-guide/installation/binary-file) |
+| **Kubernetes com Helm** | Um cluster Kubernetes existente | [Instalação no Kubernetes](/admin-guide/installation/k8s) |
 
 Os guias detalhados cobrem bancos de dados de produção, serviços, segredos, armazenamento, ingress e atualizações.
 
