@@ -15,11 +15,12 @@
 const sidebars = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   tutorialSidebar: [
-    'README',
+    { type: 'doc', id: 'README', className: 'sidebar-icon sidebar-icon--home' },
     {
       type: 'category',
       label: 'Introduction',
-      collapsed: false,
+      className: 'sidebar-icon sidebar-icon--book',
+      collapsed: true,
       link: { type: 'doc', id: 'introduction/README' },
       items: [
         'introduction/what-is-semaphore',
@@ -30,11 +31,12 @@ const sidebars = {
         'introduction/prerequisites',
       ],
     },
-    'getting-started',
+    { type: 'doc', id: 'getting-started', className: 'sidebar-icon sidebar-icon--rocket' },
     {
       type: 'category',
       label: 'Admin Guide',
-      collapsed: false,
+      className: 'sidebar-icon sidebar-icon--server',
+      collapsed: true,
       link: { type: 'doc', id: 'admin-guide/README' },
       items: [
         {
@@ -146,7 +148,8 @@ const sidebars = {
     {
       type: 'category',
       label: 'User Guide',
-      collapsed: false,
+      className: 'sidebar-icon sidebar-icon--user',
+      collapsed: true,
       link: { type: 'doc', id: 'user-guide/README' },
       items: [
         {
@@ -237,6 +240,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Reference',
+      className: 'sidebar-icon sidebar-icon--file-text',
       link: { type: 'doc', id: 'reference/README' },
       items: [
         'reference/configuration',
@@ -259,6 +263,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'FAQ',
+      className: 'sidebar-icon sidebar-icon--help',
       link: { type: 'generated-index' },
       items: [
         'faq/troubleshooting',
