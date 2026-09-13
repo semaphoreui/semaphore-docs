@@ -577,3 +577,10 @@ html[data-theme='dark'] {
 .menu::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
+
+.main-wrapper .theme-doc-sidebar-menu .menu__list-item-collapsible--active,
+.main-wrapper .menu__link--active:not(.menu__link--sublist) {
+    border-right: 1px solid #008890;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
