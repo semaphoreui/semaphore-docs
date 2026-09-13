@@ -72,7 +72,7 @@ I segreti possono essere memorizzati in un'istanza esterna di [OpenBao](https://
 
 ### AWS Secrets Manager {#aws-secrets-manager}
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 I segreti possono essere memorizzati in AWS Secrets Manager. L'autenticazione avviene tramite un ruolo IAM / instance profile oppure con access key statiche.
 

@@ -23,7 +23,7 @@ Semaphore 不会把该值复制到自己的数据库中。每当任务需要该�
 | 选项卡 | 值的来源 | 需要填写的内容 |
 |-----|---------------------------|---------------|
 | **Local** | Semaphore 数据库（加密存储） | 在表单中填写登录名、密码或私钥 |
-| **Storage** ![Static Badge](https://img.shields.io/badge/pro-yellow) | 外部密钥存储，例如 [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | 存储以及密钥路径 |
+| **Storage** <Pro /> | 外部密钥存储，例如 [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | 存储以及密钥路径 |
 | **Env** | Semaphore 服务器进程的环境变量 | 变量名，例如 `PROD_SSH_KEY` |
 | **File** | Semaphore 服务器上的文件 | 文件的**绝对**路径，例如 `/var/lib/semaphore/secrets/prod.json` |
 

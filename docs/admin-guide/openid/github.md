@@ -1,3 +1,8 @@
+---
+title: GitHub config
+description: A working oidc_providers block for GitHub OAuth, with its endpoints, scopes and username and email claim expressions.
+---
+
 
 # GitHub config
 

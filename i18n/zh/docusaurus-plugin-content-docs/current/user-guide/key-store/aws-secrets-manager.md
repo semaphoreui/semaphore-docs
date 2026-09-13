@@ -1,6 +1,6 @@
 # AWS Secrets Manager 密钥存储
 
-![静态徽章](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Semaphore UI Enterprise 可以使用 **AWS Secrets Manager** 作为密钥库（Key Store）密钥的外部存储，以替代数据库。
 

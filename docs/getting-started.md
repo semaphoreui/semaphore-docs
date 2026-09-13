@@ -1,3 +1,8 @@
+---
+title: Getting Started
+description: A step-by-step path from a fresh install to your first task run, plus the key concepts used across the UI.
+---
+
 # Getting Started
 
 This page walks you from a fresh install to your first successful task. Each step links to the page with the details.

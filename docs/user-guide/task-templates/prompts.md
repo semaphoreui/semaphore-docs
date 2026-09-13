@@ -1,3 +1,8 @@
+---
+title: Prompts
+description: Built-in runtime options for Ansible and Terraform templates, how to enable them, and how to pass prompt values via API or schedules.
+---
+
 # Prompts
 
 Prompts are predefined flags and options specific to each template type that you can enable to allow runtime customization. Unlike [Survey Variables](/user-guide/task-templates/survey-vars) which are custom fields you create, prompts are built-in options that correspond to specific CLI flags for Ansible, Terraform, and other tools.

@@ -72,7 +72,7 @@ SSH 및 비밀번호 로그인 키는 작은 JSON 문서로 감싸야 합니다.
 
 ### AWS Secrets Manager {#aws-secrets-manager}
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 시크릿을 AWS Secrets Manager에 저장할 수 있습니다. IAM 역할/인스턴스 프로필 또는 정적 액세스 키로 인증합니다.
 

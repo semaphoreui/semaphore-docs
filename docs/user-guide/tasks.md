@@ -1,3 +1,8 @@
+---
+title: Tasks
+description: Starting tasks from the New Task dialog, the task window tabs, every task status, stopping tasks, and rerunning them.
+---
+
 # Tasks
 
 A task is a single execution of a [task template](./task-templates): one run of an Ansible playbook, a Terraform/OpenTofu/Terragrunt configuration, or a Bash, PowerShell, or Python script. Every task keeps its own log, status, and details, so you can always see what ran, when, by whom, and with which revision of the repository.

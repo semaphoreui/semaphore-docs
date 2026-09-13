@@ -1,3 +1,8 @@
+---
+title: Introduction
+description: What Semaphore UI is, which automation tools it runs, and the design principles behind this administration guide.
+---
+
 # Introduction
 
 Welcome to the Semaphore UI Administration Guide. This guide provides comprehensive information for installing, configuring, and maintaining your Semaphore instance.

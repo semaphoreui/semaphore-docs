@@ -1,3 +1,8 @@
+---
+title: Key Store
+description: Key types in the Key Store, SSH, login with password, and none, plus the external secret storages you can use.
+---
+
 # Key Store
 
 The Key Store in Semaphore is used to store credentials for accessing remote Repositories, accessing remote hosts, sudo credentials, and Ansible vault passwords.
@@ -72,7 +77,7 @@ Secrets can be stored in an external [OpenBao](https://openbao.org) instance (an
 
 ### AWS Secrets Manager {#aws-secrets-manager}
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Secrets can be stored in AWS Secrets Manager. Authenticate with an IAM role/instance profile or static access keys.
 

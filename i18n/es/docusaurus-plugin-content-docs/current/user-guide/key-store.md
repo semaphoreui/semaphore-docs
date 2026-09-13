@@ -72,7 +72,7 @@ Los secretos pueden guardarse en una instancia externa de [OpenBao](https://open
 
 ### AWS Secrets Manager {#aws-secrets-manager}
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Los secretos pueden guardarse en AWS Secrets Manager. Autentíquese con un rol de IAM o un perfil de instancia, o con claves de acceso estáticas.
 

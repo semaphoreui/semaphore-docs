@@ -174,30 +174,30 @@ Semaphore 可以通过以下几种方式进行配置：
 | <br />`ldap_mappings.uid`     <hr /> `SEMAPHORE_LDAP_MAPPING_UID` <br /><br /> | 用户认证时用作用户 ID（UID）映射的 LDAP 属性。 |
 | <br />`ldap_mappings.cn`      <hr /> `SEMAPHORE_LDAP_MAPPING_CN` <br /><br /> | 用户认证时用作通用名称（CN）映射的 LDAP 属性。 |
 | **日志** ||
-| <br />`log.events.format`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOG_FORMAT` <br /><br /> | 事件日志格式。可以是 `json`，或留空表示文本格式。 |
-| <br />`log.events.enabled`     ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOG_ENABLED` <br /><br /> | 启用或禁用事件日志。 |
-| <br />`log.events.logger`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOGGER` <br /><br /> | 包含事件日志记录器配置的 JSON 映射。 |
-| <br />`log.tasks.format`       ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOG_FORMAT` <br /><br /> | 任务日志格式。可以是 `json`，或留空表示文本格式。 |
-| <br />`log.tasks.enabled`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOG_ENABLED` <br /><br /> | 启用或禁用任务日志。 |
-| <br />`log.tasks.logger`       ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOGGER` <br /><br /> | 包含任务日志记录器配置的 JSON 映射。 |
-| <br />`log.tasks.result_logger`  ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_RESULT_LOGGER` <br /><br /> | 包含任务结果日志记录器配置的 JSON 映射。 |
-| <br />`syslog.enabled` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_ENABLED` <br /><br /> | 启用或禁用将日志写入已配置的 syslog 服务器。 |
-| <br />`syslog.network` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_NETWORK` <br /><br /> | 连接 Syslog 服务器所用的协议：`udp` 或 `tcp`。 |
-| <br />`syslog.address` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_ADDRESS` <br /><br /> | Syslog 服务器的主机名和端口。示例：`localhost:514`。 |
-| <br />`syslog.tag` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_TAG` <br /><br /> | 用于在 Syslog 服务器上标记 Semaphore UI 记录的标签。 |
-| <br />`syslog.format` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_FORMAT` <br /><br /> | Syslog 消息的格式。可以是 `rfc5424`，或留空表示默认格式。 |
+| <br />`log.events.format`      <Pro /> <hr /> `SEMAPHORE_EVENT_LOG_FORMAT` <br /><br /> | 事件日志格式。可以是 `json`，或留空表示文本格式。 |
+| <br />`log.events.enabled`     <Pro /> <hr /> `SEMAPHORE_EVENT_LOG_ENABLED` <br /><br /> | 启用或禁用事件日志。 |
+| <br />`log.events.logger`      <Pro /> <hr /> `SEMAPHORE_EVENT_LOGGER` <br /><br /> | 包含事件日志记录器配置的 JSON 映射。 |
+| <br />`log.tasks.format`       <Pro /> <hr /> `SEMAPHORE_TASK_LOG_FORMAT` <br /><br /> | 任务日志格式。可以是 `json`，或留空表示文本格式。 |
+| <br />`log.tasks.enabled`      <Pro /> <hr /> `SEMAPHORE_TASK_LOG_ENABLED` <br /><br /> | 启用或禁用任务日志。 |
+| <br />`log.tasks.logger`       <Pro /> <hr /> `SEMAPHORE_TASK_LOGGER` <br /><br /> | 包含任务日志记录器配置的 JSON 映射。 |
+| <br />`log.tasks.result_logger`  <Pro /> <hr /> `SEMAPHORE_TASK_RESULT_LOGGER` <br /><br /> | 包含任务结果日志记录器配置的 JSON 映射。 |
+| <br />`syslog.enabled` <Pro /> <hr /> `SEMAPHORE_SYSLOG_ENABLED` <br /><br /> | 启用或禁用将日志写入已配置的 syslog 服务器。 |
+| <br />`syslog.network` <Pro /> <hr /> `SEMAPHORE_SYSLOG_NETWORK` <br /><br /> | 连接 Syslog 服务器所用的协议：`udp` 或 `tcp`。 |
+| <br />`syslog.address` <Pro /> <hr /> `SEMAPHORE_SYSLOG_ADDRESS` <br /><br /> | Syslog 服务器的主机名和端口。示例：`localhost:514`。 |
+| <br />`syslog.tag` <Pro /> <hr /> `SEMAPHORE_SYSLOG_TAG` <br /><br /> | 用于在 Syslog 服务器上标记 Semaphore UI 记录的标签。 |
+| <br />`syslog.format` <Pro /> <hr /> `SEMAPHORE_SYSLOG_FORMAT` <br /><br /> | Syslog 消息的格式。可以是 `rfc5424`，或留空表示默认格式。 |
 | **调试** ||
 | <br />`debugging.api_delay` <hr /> `SEMAPHORE_API_DELAY` <br /><br /> | 为 API 响应添加延迟（用于调试）。 |
 | <br />`debugging.pprof_dump_dir` <hr /> `SEMAPHORE_PPROF_DUMP_DIR` <br /><br /> | pprof 转储文件的目录。 |
 | **高可用（HA）** ||
-| <br />`ha.enabled` ![Static Badge](https://img.shields.io/badge/enterprise-yellow) <hr /> `SEMAPHORE_HA_ENABLED` <br /><br /> | 启用高可用（HA）模式。 |
-| <br />`ha.node_id` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_NODE_ID` <br /><br /> | HA 节点的唯一标识符。 |
-| <br />`ha.redis.addr` ![Static Badge](https://img.shields.io/badge/enterprise-yellow) <hr /> `SEMAPHORE_HA_REDIS_ADDR` <br /><br /> | 用于 HA 的 Redis 服务器地址。示例：`localhost:6379`。 |
-| <br />`ha.redis.db` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_DB` <br /><br /> | Redis 数据库编号。 |
-| <br />`ha.redis.pass` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_PASS` <br /><br /> | Redis 服务器的密码。 |
-| <br />`ha.redis.user` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_USER` <br /><br /> | Redis 服务器的用户名。 |
-| <br />`ha.redis.tls` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_TLS` <br /><br /> | 为 Redis 连接启用 TLS。 |
-| <br />`ha.redis.tls_skip_verify` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` <br /><br /> | 跳过 Redis 连接的 TLS 证书验证。 |
+| <br />`ha.enabled` <Enterprise /> <hr /> `SEMAPHORE_HA_ENABLED` <br /><br /> | 启用高可用（HA）模式。 |
+| <br />`ha.node_id` <Enterprise /><hr /> `SEMAPHORE_HA_NODE_ID` <br /><br /> | HA 节点的唯一标识符。 |
+| <br />`ha.redis.addr` <Enterprise /> <hr /> `SEMAPHORE_HA_REDIS_ADDR` <br /><br /> | 用于 HA 的 Redis 服务器地址。示例：`localhost:6379`。 |
+| <br />`ha.redis.db` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_DB` <br /><br /> | Redis 数据库编号。 |
+| <br />`ha.redis.pass` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_PASS` <br /><br /> | Redis 服务器的密码。 |
+| <br />`ha.redis.user` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_USER` <br /><br /> | Redis 服务器的用户名。 |
+| <br />`ha.redis.tls` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_TLS` <br /><br /> | 为 Redis 连接启用 TLS。 |
+| <br />`ha.redis.tls_skip_verify` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` <br /><br /> | 跳过 Redis 连接的 TLS 证书验证。 |
 
 ## 常见问题 {#frequently-asked-questions}
 

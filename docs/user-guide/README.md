@@ -1,3 +1,8 @@
+---
+title: User Guide
+description: Entry point to the day-to-day guides, with quick links to projects, tasks, templates, variables, and teams.
+---
+
 # User Guide
 
 Learn how to use Semaphore day-to-day: create projects, run tasks, manage inventories, keys, variables, and more.

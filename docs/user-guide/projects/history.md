@@ -1,3 +1,8 @@
+---
+title: History
+description: The task list of the project dashboard, the meaning of each column, and how to limit how many tasks are kept per template.
+---
+
 # History
 
 The **History** tab of the project dashboard lists all tasks of the project, newest first. It is the default view when you open a project.

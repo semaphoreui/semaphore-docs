@@ -23,7 +23,7 @@ Semaphore не копирует значение в свою базу данны
 | Вкладка | Откуда берётся значение | Что вводить |
 |---------|-------------------------|-------------|
 | **Local** | База данных Semaphore (в зашифрованном виде) | Логин, пароль или приватный ключ в форме |
-| **Storage** ![Static Badge](https://img.shields.io/badge/pro-yellow) | Внешнее хранилище секретов, например [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | Хранилище и путь к секрету |
+| **Storage** <Pro /> | Внешнее хранилище секретов, например [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | Хранилище и путь к секрету |
 | **Env** | Переменная окружения процесса сервера Semaphore | Имя переменной, например `PROD_SSH_KEY` |
 | **File** | Файл на сервере Semaphore | **Абсолютный** путь к файлу, например `/var/lib/semaphore/secrets/prod.json` |
 

@@ -1,3 +1,8 @@
+---
+title: Applications
+description: The built-in applications a task template can run, how admins enable them, and how to register a custom tool.
+---
+
 # Applications
 
 An application is the tool a task template runs. Semaphore ships with seven built-in applications; administrators can switch them on and off and register their own.

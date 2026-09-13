@@ -1,6 +1,11 @@
+---
+title: AWS Secrets Manager secret storage
+description: Enterprise option for keeping Key Store secrets in AWS Secrets Manager, with IAM role or access key authentication.
+---
+
 # AWS Secrets Manager secret storage
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Semaphore UI Enterprise can use **AWS Secrets Manager** as an external storage for Key Store secrets instead of the database.
 

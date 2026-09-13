@@ -1,3 +1,8 @@
+---
+title: Binary file
+description: Downloading and unpacking the Semaphore release archive on Linux or Windows, running setup, and installing it as a systemd service.
+---
+
 # Binary file
 
 :::tip

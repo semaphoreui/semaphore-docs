@@ -72,7 +72,7 @@ Secrets können in einer externen [OpenBao](https://openbao.org)-Instanz gespeic
 
 ### AWS Secrets Manager {#aws-secrets-manager}
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Secrets können im AWS Secrets Manager gespeichert werden. Die Authentifizierung erfolgt über eine IAM-Rolle/ein Instanzprofil oder über statische Zugriffsschlüssel.
 

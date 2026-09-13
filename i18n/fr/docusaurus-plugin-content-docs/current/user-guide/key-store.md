@@ -72,7 +72,7 @@ Les secrets peuvent être stockés dans une instance [OpenBao](https://openbao.o
 
 ### AWS Secrets Manager {#aws-secrets-manager}
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Les secrets peuvent être stockés dans AWS Secrets Manager. Authentifiez-vous avec un rôle IAM / profil d'instance ou avec des clés d'accès statiques.
 

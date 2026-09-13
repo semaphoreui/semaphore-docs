@@ -1,3 +1,7 @@
+---
+title: Okta config
+description: Example config.json for Okta single sign-on and how to enable IdP-initiated login from the Okta dashboard tile.
+---
 
 # Okta config
 

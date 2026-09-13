@@ -1,6 +1,6 @@
 # Archivio di segreti AWS Secrets Manager
 
-![Badge statico](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Semaphore UI Enterprise può utilizzare **AWS Secrets Manager** come archivio esterno per i segreti del Key Store anziché il database.
 

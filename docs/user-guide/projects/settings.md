@@ -1,3 +1,8 @@
+---
+title: Settings
+description: General project options in the Settings tab, the alert switches, and the Danger Zone actions for backup, cache, and deletion.
+---
+
 # Settings
 
 The **Settings** tab of the project dashboard is available to project **Owners**. It holds the general project options and the destructive actions.

@@ -72,7 +72,7 @@ Semaphore UI 支持多种密钥存储。你可以在创建或编辑密钥时为�
 
 ### AWS Secrets Manager {#aws-secrets-manager}
 
-![静态徽章](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 密钥可以存储在 AWS Secrets Manager 中。使用 IAM 角色/实例配置文件或静态访问密钥进行认证。
 

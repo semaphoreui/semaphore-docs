@@ -1,3 +1,8 @@
+---
+title: GitLab config
+description: A working oidc_providers block for signing in with GitLab, plus a link to the step-by-step blog tutorial.
+---
+
 
 # GitLab config
 

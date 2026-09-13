@@ -23,7 +23,7 @@ Wenn Sie einen Schlüssel erstellen oder bearbeiten (**Key Store → New Key**),
 | Tab | Woher der Wert stammt | Was einzugeben ist |
 |-----|-----------------------|--------------------|
 | **Local** | Semaphore-Datenbank (verschlüsselt) | Login, Passwort oder privater Schlüssel im Formular |
-| **Storage** ![Static Badge](https://img.shields.io/badge/pro-yellow) | Externer Secret-Speicher wie [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | Speicher und Secret-Pfad |
+| **Storage** <Pro /> | Externer Secret-Speicher wie [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | Speicher und Secret-Pfad |
 | **Env** | Eine Umgebungsvariable des Semaphore-Server-Prozesses | Der Variablenname, zum Beispiel `PROD_SSH_KEY` |
 | **File** | Eine Datei auf dem Semaphore-Server | Der **absolute** Pfad zur Datei, zum Beispiel `/var/lib/semaphore/secrets/prod.json` |
 

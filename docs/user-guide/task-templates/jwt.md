@@ -1,3 +1,8 @@
+---
+title: Task JWTs
+description: How to enable per-template JWT issuance, what claims the token carries, and how to exchange SEMAPHORE_JWT for OpenBao secrets.
+---
+
 # Task JWTs
 
 When [JWT issuance is enabled on the server](/admin-guide/security/jwt),

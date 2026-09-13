@@ -174,30 +174,30 @@ Semaphore는 여러 가지 방법으로 설정할 수 있습니다:
 | <br />`ldap_mappings.uid`     <hr /> `SEMAPHORE_LDAP_MAPPING_UID` <br /><br /> | 사용자 인증 시 사용자 ID(UID) 매핑으로 사용할 LDAP 속성입니다. |
 | <br />`ldap_mappings.cn`      <hr /> `SEMAPHORE_LDAP_MAPPING_CN` <br /><br /> | 사용자 인증 시 공통 이름(CN) 매핑으로 사용할 LDAP 속성입니다. |
 | **로깅** ||
-| <br />`log.events.format`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOG_FORMAT` <br /><br /> | 이벤트 로그 형식입니다. `json`을 사용하거나, 텍스트를 사용하려면 비워 둡니다. |
-| <br />`log.events.enabled`     ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOG_ENABLED` <br /><br /> | 이벤트 로깅을 활성화하거나 비활성화합니다. |
-| <br />`log.events.logger`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOGGER` <br /><br /> | 이벤트 로거 설정을 담은 JSON 맵입니다. |
-| <br />`log.tasks.format`       ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOG_FORMAT` <br /><br /> | 작업 로그 형식입니다. `json`을 사용하거나, 텍스트를 사용하려면 비워 둡니다. |
-| <br />`log.tasks.enabled`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOG_ENABLED` <br /><br /> | 작업 로깅을 활성화하거나 비활성화합니다. |
-| <br />`log.tasks.logger`       ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOGGER` <br /><br /> | 작업 로거 설정을 담은 JSON 맵입니다. |
-| <br />`log.tasks.result_logger`  ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_RESULT_LOGGER` <br /><br /> | 작업 결과 로거 설정을 담은 JSON 맵입니다. |
-| <br />`syslog.enabled` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_ENABLED` <br /><br /> | 설정된 syslog 서버에 로그를 기록하는 기능을 활성화하거나 비활성화합니다. |
-| <br />`syslog.network` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_NETWORK` <br /><br /> | Syslog 서버에 연결하는 데 사용되는 프로토콜입니다: `udp` 또는 `tcp`. |
-| <br />`syslog.address` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_ADDRESS` <br /><br /> | Syslog 서버의 호스트명과 포트입니다. 예: `localhost:514`. |
-| <br />`syslog.tag` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_TAG` <br /><br /> | Syslog 서버에서 Semaphore UI 레코드를 표시하는 데 사용되는 태그입니다. |
-| <br />`syslog.format` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_FORMAT` <br /><br /> | Syslog 메시지의 형식입니다. `rfc5424`를 사용하거나, 기본값을 사용하려면 비워 둡니다. |
+| <br />`log.events.format`      <Pro /> <hr /> `SEMAPHORE_EVENT_LOG_FORMAT` <br /><br /> | 이벤트 로그 형식입니다. `json`을 사용하거나, 텍스트를 사용하려면 비워 둡니다. |
+| <br />`log.events.enabled`     <Pro /> <hr /> `SEMAPHORE_EVENT_LOG_ENABLED` <br /><br /> | 이벤트 로깅을 활성화하거나 비활성화합니다. |
+| <br />`log.events.logger`      <Pro /> <hr /> `SEMAPHORE_EVENT_LOGGER` <br /><br /> | 이벤트 로거 설정을 담은 JSON 맵입니다. |
+| <br />`log.tasks.format`       <Pro /> <hr /> `SEMAPHORE_TASK_LOG_FORMAT` <br /><br /> | 작업 로그 형식입니다. `json`을 사용하거나, 텍스트를 사용하려면 비워 둡니다. |
+| <br />`log.tasks.enabled`      <Pro /> <hr /> `SEMAPHORE_TASK_LOG_ENABLED` <br /><br /> | 작업 로깅을 활성화하거나 비활성화합니다. |
+| <br />`log.tasks.logger`       <Pro /> <hr /> `SEMAPHORE_TASK_LOGGER` <br /><br /> | 작업 로거 설정을 담은 JSON 맵입니다. |
+| <br />`log.tasks.result_logger`  <Pro /> <hr /> `SEMAPHORE_TASK_RESULT_LOGGER` <br /><br /> | 작업 결과 로거 설정을 담은 JSON 맵입니다. |
+| <br />`syslog.enabled` <Pro /> <hr /> `SEMAPHORE_SYSLOG_ENABLED` <br /><br /> | 설정된 syslog 서버에 로그를 기록하는 기능을 활성화하거나 비활성화합니다. |
+| <br />`syslog.network` <Pro /> <hr /> `SEMAPHORE_SYSLOG_NETWORK` <br /><br /> | Syslog 서버에 연결하는 데 사용되는 프로토콜입니다: `udp` 또는 `tcp`. |
+| <br />`syslog.address` <Pro /> <hr /> `SEMAPHORE_SYSLOG_ADDRESS` <br /><br /> | Syslog 서버의 호스트명과 포트입니다. 예: `localhost:514`. |
+| <br />`syslog.tag` <Pro /> <hr /> `SEMAPHORE_SYSLOG_TAG` <br /><br /> | Syslog 서버에서 Semaphore UI 레코드를 표시하는 데 사용되는 태그입니다. |
+| <br />`syslog.format` <Pro /> <hr /> `SEMAPHORE_SYSLOG_FORMAT` <br /><br /> | Syslog 메시지의 형식입니다. `rfc5424`를 사용하거나, 기본값을 사용하려면 비워 둡니다. |
 | **디버깅** ||
 | <br />`debugging.api_delay` <hr /> `SEMAPHORE_API_DELAY` <br /><br /> | API 응답에 지연을 추가합니다(디버깅 목적). |
 | <br />`debugging.pprof_dump_dir` <hr /> `SEMAPHORE_PPROF_DUMP_DIR` <br /><br /> | pprof 덤프 파일용 디렉터리입니다. |
 | **고가용성(HA)** ||
-| <br />`ha.enabled` ![Static Badge](https://img.shields.io/badge/enterprise-yellow) <hr /> `SEMAPHORE_HA_ENABLED` <br /><br /> | 고가용성(HA) 모드를 활성화합니다. |
-| <br />`ha.node_id` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_NODE_ID` <br /><br /> | HA 노드의 고유 식별자입니다. |
-| <br />`ha.redis.addr` ![Static Badge](https://img.shields.io/badge/enterprise-yellow) <hr /> `SEMAPHORE_HA_REDIS_ADDR` <br /><br /> | HA에 사용되는 Redis 서버의 주소입니다. 예: `localhost:6379`. |
-| <br />`ha.redis.db` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_DB` <br /><br /> | Redis 데이터베이스 번호입니다. |
-| <br />`ha.redis.pass` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_PASS` <br /><br /> | Redis 서버의 비밀번호입니다. |
-| <br />`ha.redis.user` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_USER` <br /><br /> | Redis 서버의 사용자 이름입니다. |
-| <br />`ha.redis.tls` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_TLS` <br /><br /> | Redis 연결에 TLS를 활성화합니다. |
-| <br />`ha.redis.tls_skip_verify` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` <br /><br /> | Redis 연결에 대해 TLS 인증서 검증을 생략합니다. |
+| <br />`ha.enabled` <Enterprise /> <hr /> `SEMAPHORE_HA_ENABLED` <br /><br /> | 고가용성(HA) 모드를 활성화합니다. |
+| <br />`ha.node_id` <Enterprise /><hr /> `SEMAPHORE_HA_NODE_ID` <br /><br /> | HA 노드의 고유 식별자입니다. |
+| <br />`ha.redis.addr` <Enterprise /> <hr /> `SEMAPHORE_HA_REDIS_ADDR` <br /><br /> | HA에 사용되는 Redis 서버의 주소입니다. 예: `localhost:6379`. |
+| <br />`ha.redis.db` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_DB` <br /><br /> | Redis 데이터베이스 번호입니다. |
+| <br />`ha.redis.pass` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_PASS` <br /><br /> | Redis 서버의 비밀번호입니다. |
+| <br />`ha.redis.user` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_USER` <br /><br /> | Redis 서버의 사용자 이름입니다. |
+| <br />`ha.redis.tls` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_TLS` <br /><br /> | Redis 연결에 TLS를 활성화합니다. |
+| <br />`ha.redis.tls_skip_verify` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` <br /><br /> | Redis 연결에 대해 TLS 인증서 검증을 생략합니다. |
 
 ## 자주 묻는 질문 {#frequently-asked-questions}
 

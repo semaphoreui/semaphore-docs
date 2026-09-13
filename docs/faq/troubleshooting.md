@@ -1,3 +1,8 @@
+---
+title: Troubleshooting
+description: A numbered list of frequent errors and their fixes, from runner 404s and Postgres SSL to LDAP credential problems.
+---
+
 # Troubleshooting
 
 ## 1. Runner prints error 404 {#1-runner-prints-error-404}

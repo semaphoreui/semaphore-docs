@@ -1,6 +1,6 @@
 # Хранилище секретов AWS Secrets Manager
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Semaphore UI Enterprise может использовать **AWS Secrets Manager** в качестве внешнего хранилища секретов хранилища ключей вместо базы данных.
 

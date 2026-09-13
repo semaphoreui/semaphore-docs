@@ -1,3 +1,8 @@
+---
+title: Repositories
+description: Supported repository URL types, authentication keys, creating and deleting repositories, and how requirements.yml is processed.
+---
+
 # Repositories
 
 A Repository is a place to store and manage Ansible content like playbooks and roles.

@@ -1,3 +1,7 @@
+---
+title: Activity
+description: The project audit trail of who changed what and when, including task status changes, resource edits, and permission changes.
+---
 
 # Activity
 

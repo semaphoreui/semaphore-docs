@@ -23,7 +23,7 @@ Kada kreirate ili menjate ključ (**Key Store → New Key**), na vrhu forme nala
 | Kartica | Odakle dolazi vrednost | Šta uneti |
 |-----|---------------------------|---------------|
 | **Local** | Semaphore baza podataka (šifrovano) | Korisničko ime, lozinku ili privatni ključ u formi |
-| **Storage** ![Static Badge](https://img.shields.io/badge/pro-yellow) | Eksterno skladište tajni kao što je [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | Skladište i putanju tajne |
+| **Storage** <Pro /> | Eksterno skladište tajni kao što je [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | Skladište i putanju tajne |
 | **Env** | Promenljiva okruženja procesa Semaphore servera | Naziv promenljive, na primer `PROD_SSH_KEY` |
 | **File** | Datoteka na Semaphore serveru | **Apsolutnu** putanju do datoteke, na primer `/var/lib/semaphore/secrets/prod.json` |
 

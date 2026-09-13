@@ -1,3 +1,8 @@
+---
+title: Projects
+description: Exporting a project to a backup file and importing one or many backups with semaphore projects, including every flag.
+---
+
 # Projects
 
 The `semaphore projects` command exports and imports projects as backup files. A

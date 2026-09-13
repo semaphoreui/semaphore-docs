@@ -1,3 +1,8 @@
+---
+title: Installation
+description: The available installation methods - package manager, Docker, cloud, binary, and Helm - and how to add extra Python packages.
+---
+
 # Installation
 
 You can install Semaphore in multiple ways, depending on your operating system, environment, and preferences:

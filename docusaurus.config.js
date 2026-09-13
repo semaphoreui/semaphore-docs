@@ -27,7 +27,10 @@ const config = {
   organizationName: 'semaphoreui', // Usually your GitHub org/user name.
   projectName: 'semaphore-docs', // Usually your repo name.
 
-  onBrokenLinks: 'ignore',
+  // Broken links and anchors fail the build. Any page move must be accompanied
+  // by an entry in redirects.js, see the comment in that file.
+  onBrokenLinks: 'throw',
+  onBrokenAnchors: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
@@ -337,6 +340,13 @@ const config = {
     }),
 
   plugins: [
+    // Redirects from old URLs of moved or removed pages. See redirects.js.
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: require('./redirects'),
+      },
+    ],
     // Non-default languages reuse the English copy of /docs/assets/* images.
     require('./plugins/shared-locale-assets'),
     ...(process.env.SEMAPHORE_DOCS_DEV_PROXY === 'true' ? [

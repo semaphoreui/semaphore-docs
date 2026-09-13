@@ -1,3 +1,8 @@
+---
+title: Active Directory config
+description: A working config.json example with the LDAP bind, search filter and attribute mappings for Active Directory.
+---
+
 # Active Directory config
 
 ```json title="config.json"

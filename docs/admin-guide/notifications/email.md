@@ -1,3 +1,8 @@
+---
+title: Email
+description: A config.json example for SMTP email alerts, with the StartTLS, TLS and minimum TLS version settings explained.
+---
+
 # Email
 
 Example `config.json` for configuring AWS SMTP email notifications:

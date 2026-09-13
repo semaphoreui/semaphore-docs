@@ -1,3 +1,8 @@
+---
+title: Inventory
+description: Inventory types in Semaphore, the credentials an inventory needs, and how to create, update, and delete inventories.
+---
+
 # Inventory
 
 ![Inventory list](/assets/inventory-list.webp)

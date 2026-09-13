@@ -1,3 +1,8 @@
+---
+title: Your account
+description: The account menu, editing your name, e-mail, alerts and password, the security tab, and personal API tokens.
+---
+
 # Your account
 
 Your personal settings live in the account menu at the bottom of the sidebar. Click your name to open it.

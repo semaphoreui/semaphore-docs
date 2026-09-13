@@ -1,5 +1,6 @@
 ---
 title: Semaphore UI Documentation
+description: Start page for the Semaphore UI docs - a one-command quick start plus entry points for installing, running, operating, and reference.
 sidebar_label: Home
 hide_table_of_contents: true
 ---

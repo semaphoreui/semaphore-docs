@@ -1,3 +1,8 @@
+---
+title: Integrations
+description: Triggering templates from incoming webhooks with aliases, authentication methods, matchers, and value extractors.
+---
+
 # Integrations
 
 Integrations allow establishing interaction between Semaphore and external services, such as GitHub and GitLab.

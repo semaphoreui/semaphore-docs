@@ -1,3 +1,8 @@
+---
+title: OpenID Connect
+description: Configuring OIDC providers in config.json or one environment variable, all provider options, claim expressions and IdP-initiated login.
+---
+
 # OpenID Connect
 
 Semaphore supports authentication via OpenID Connect (OIDC).

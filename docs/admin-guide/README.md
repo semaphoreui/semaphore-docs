@@ -1,3 +1,8 @@
+---
+title: Administration Guide
+description: What Semaphore UI is, its design principles, and links to every installation, configuration, security, authentication, and operations page.
+---
+
 # Administration Guide
 
 Welcome to the Semaphore UI Administration Guide. This guide provides comprehensive information for installing, configuring, and maintaining your Semaphore instance.

@@ -1,3 +1,8 @@
+---
+title: Database Migrations
+description: Applying and rolling back the database schema with semaphore migrate, its flags, and the removed BoltDB import.
+---
+
 # Database Migrations
 
 The `semaphore migrate` command updates or rolls back the Semaphore database

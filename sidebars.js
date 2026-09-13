@@ -17,6 +17,7 @@ const sidebars = {
   tutorialSidebar: [
     'README',
     'getting-started',
+    'editions',
     {
       type: 'category',
       label: 'Admin Guide',
@@ -107,6 +108,7 @@ const sidebars = {
             'admin-guide/openid/pingfederate',
             'admin-guide/openid/azure',
             'admin-guide/openid/zitadel',
+            'admin-guide/openid/pocket-id',
           ],
         },
         'admin-guide/api',

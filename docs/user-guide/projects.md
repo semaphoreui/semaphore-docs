@@ -1,3 +1,8 @@
+---
+title: Projects
+description: What a project contains, the sections in the project sidebar, creating and switching projects, and backup and restore.
+---
+
 # Projects
 
 A project is the main unit of separation in Semaphore UI. Every resource you work with belongs to exactly one project: task templates, tasks, inventories, variable groups, keys, repositories, integrations, schedules, runners, and team members.

@@ -1,3 +1,8 @@
+---
+title: LDAP and Active Directory
+description: Every ldap_* option and its environment variable, claim expressions, an OpenLDAP example, and troubleshooting tips.
+---
+
 # LDAP and Active Directory
 
 Configuration file contains the following LDAP parameters:

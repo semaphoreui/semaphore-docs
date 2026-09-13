@@ -174,30 +174,30 @@ Lista completa de las opciones de configuración disponibles:
 | <br />`ldap_mappings.uid`     <hr /> `SEMAPHORE_LDAP_MAPPING_UID` <br /><br /> | Atributo LDAP que se usará como asignación del ID de usuario (UID) para la autenticación de usuarios. |
 | <br />`ldap_mappings.cn`      <hr /> `SEMAPHORE_LDAP_MAPPING_CN` <br /><br /> | Atributo LDAP que se usará como asignación del nombre común (CN) para la autenticación de usuarios. |
 | **Registro** ||
-| <br />`log.events.format`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOG_FORMAT` <br /><br /> | Formato del registro de eventos. Puede ser `json` o vacío para texto. |
-| <br />`log.events.enabled`     ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOG_ENABLED` <br /><br /> | Habilitar o deshabilitar el registro de eventos. |
-| <br />`log.events.logger`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_EVENT_LOGGER` <br /><br /> | Mapa JSON que contiene la configuración del registrador de eventos. |
-| <br />`log.tasks.format`       ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOG_FORMAT` <br /><br /> | Formato del registro de tareas. Puede ser `json` o vacío para texto. |
-| <br />`log.tasks.enabled`      ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOG_ENABLED` <br /><br /> | Habilitar o deshabilitar el registro de tareas. |
-| <br />`log.tasks.logger`       ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_LOGGER` <br /><br /> | Mapa JSON que contiene la configuración del registrador de tareas. |
-| <br />`log.tasks.result_logger`  ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_TASK_RESULT_LOGGER` <br /><br /> | Mapa JSON que contiene la configuración del registrador de resultados de tareas. |
-| <br />`syslog.enabled` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_ENABLED` <br /><br /> | Habilitar o deshabilitar la escritura de registros en el servidor syslog configurado. |
-| <br />`syslog.network` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_NETWORK` <br /><br /> | Protocolo usado para conectarse al servidor Syslog: `udp` o `tcp`. |
-| <br />`syslog.address` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_ADDRESS` <br /><br /> | Nombre de host y puerto del servidor Syslog. Ejemplo: `localhost:514`. |
-| <br />`syslog.tag` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_TAG` <br /><br /> | La etiqueta usada para marcar los registros de Semaphore UI en el servidor Syslog. |
-| <br />`syslog.format` ![Static Badge](https://img.shields.io/badge/pro-red) <hr /> `SEMAPHORE_SYSLOG_FORMAT` <br /><br /> | Formato de los mensajes de Syslog. Puede ser `rfc5424` o vacío para el valor predeterminado. |
+| <br />`log.events.format`      <Pro /> <hr /> `SEMAPHORE_EVENT_LOG_FORMAT` <br /><br /> | Formato del registro de eventos. Puede ser `json` o vacío para texto. |
+| <br />`log.events.enabled`     <Pro /> <hr /> `SEMAPHORE_EVENT_LOG_ENABLED` <br /><br /> | Habilitar o deshabilitar el registro de eventos. |
+| <br />`log.events.logger`      <Pro /> <hr /> `SEMAPHORE_EVENT_LOGGER` <br /><br /> | Mapa JSON que contiene la configuración del registrador de eventos. |
+| <br />`log.tasks.format`       <Pro /> <hr /> `SEMAPHORE_TASK_LOG_FORMAT` <br /><br /> | Formato del registro de tareas. Puede ser `json` o vacío para texto. |
+| <br />`log.tasks.enabled`      <Pro /> <hr /> `SEMAPHORE_TASK_LOG_ENABLED` <br /><br /> | Habilitar o deshabilitar el registro de tareas. |
+| <br />`log.tasks.logger`       <Pro /> <hr /> `SEMAPHORE_TASK_LOGGER` <br /><br /> | Mapa JSON que contiene la configuración del registrador de tareas. |
+| <br />`log.tasks.result_logger`  <Pro /> <hr /> `SEMAPHORE_TASK_RESULT_LOGGER` <br /><br /> | Mapa JSON que contiene la configuración del registrador de resultados de tareas. |
+| <br />`syslog.enabled` <Pro /> <hr /> `SEMAPHORE_SYSLOG_ENABLED` <br /><br /> | Habilitar o deshabilitar la escritura de registros en el servidor syslog configurado. |
+| <br />`syslog.network` <Pro /> <hr /> `SEMAPHORE_SYSLOG_NETWORK` <br /><br /> | Protocolo usado para conectarse al servidor Syslog: `udp` o `tcp`. |
+| <br />`syslog.address` <Pro /> <hr /> `SEMAPHORE_SYSLOG_ADDRESS` <br /><br /> | Nombre de host y puerto del servidor Syslog. Ejemplo: `localhost:514`. |
+| <br />`syslog.tag` <Pro /> <hr /> `SEMAPHORE_SYSLOG_TAG` <br /><br /> | La etiqueta usada para marcar los registros de Semaphore UI en el servidor Syslog. |
+| <br />`syslog.format` <Pro /> <hr /> `SEMAPHORE_SYSLOG_FORMAT` <br /><br /> | Formato de los mensajes de Syslog. Puede ser `rfc5424` o vacío para el valor predeterminado. |
 | **Depuración** ||
 | <br />`debugging.api_delay` <hr /> `SEMAPHORE_API_DELAY` <br /><br /> | Añadir retardo a las respuestas de la API (con fines de depuración). |
 | <br />`debugging.pprof_dump_dir` <hr /> `SEMAPHORE_PPROF_DUMP_DIR` <br /><br /> | Directorio para los archivos de volcado de pprof. |
 | **Alta disponibilidad (HA)** ||
-| <br />`ha.enabled` ![Static Badge](https://img.shields.io/badge/enterprise-yellow) <hr /> `SEMAPHORE_HA_ENABLED` <br /><br /> | Habilitar el modo de alta disponibilidad (HA). |
-| <br />`ha.node_id` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_NODE_ID` <br /><br /> | Identificador único del nodo de HA. |
-| <br />`ha.redis.addr` ![Static Badge](https://img.shields.io/badge/enterprise-yellow) <hr /> `SEMAPHORE_HA_REDIS_ADDR` <br /><br /> | Dirección del servidor Redis usado para HA. Ejemplo: `localhost:6379`. |
-| <br />`ha.redis.db` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_DB` <br /><br /> | Número de la base de datos de Redis. |
-| <br />`ha.redis.pass` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_PASS` <br /><br /> | Contraseña del servidor Redis. |
-| <br />`ha.redis.user` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_USER` <br /><br /> | Nombre de usuario del servidor Redis. |
-| <br />`ha.redis.tls` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_TLS` <br /><br /> | Habilitar TLS para la conexión con Redis. |
-| <br />`ha.redis.tls_skip_verify` ![Static Badge](https://img.shields.io/badge/enterprise-yellow)<hr /> `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` <br /><br /> | Omitir la verificación del certificado TLS en la conexión con Redis. |
+| <br />`ha.enabled` <Enterprise /> <hr /> `SEMAPHORE_HA_ENABLED` <br /><br /> | Habilitar el modo de alta disponibilidad (HA). |
+| <br />`ha.node_id` <Enterprise /><hr /> `SEMAPHORE_HA_NODE_ID` <br /><br /> | Identificador único del nodo de HA. |
+| <br />`ha.redis.addr` <Enterprise /> <hr /> `SEMAPHORE_HA_REDIS_ADDR` <br /><br /> | Dirección del servidor Redis usado para HA. Ejemplo: `localhost:6379`. |
+| <br />`ha.redis.db` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_DB` <br /><br /> | Número de la base de datos de Redis. |
+| <br />`ha.redis.pass` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_PASS` <br /><br /> | Contraseña del servidor Redis. |
+| <br />`ha.redis.user` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_USER` <br /><br /> | Nombre de usuario del servidor Redis. |
+| <br />`ha.redis.tls` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_TLS` <br /><br /> | Habilitar TLS para la conexión con Redis. |
+| <br />`ha.redis.tls_skip_verify` <Enterprise /><hr /> `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` <br /><br /> | Omitir la verificación del certificado TLS en la conexión con Redis. |
 
 ## Preguntas frecuentes {#frequently-asked-questions}
 

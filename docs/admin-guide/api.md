@@ -1,3 +1,8 @@
+---
+title: API
+description: How to create and revoke Semaphore API tokens, and where to find the Swagger, Postman, and built-in API references.
+---
+
 # API
 
 ## API reference {#api-reference}

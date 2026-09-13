@@ -23,7 +23,7 @@ Lorsque vous créez ou modifiez une clé (**Magasin de clés → Nouvelle clé**
 | Onglet | D'où provient la valeur | Quoi saisir |
 |--------|-------------------------|-------------|
 | **Local** | Base de données Semaphore (chiffrée) | Le login, le mot de passe ou la clé privée dans le formulaire |
-| **Storage** ![Static Badge](https://img.shields.io/badge/pro-yellow) | Un stockage de secrets externe tel que [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | Le stockage et le chemin du secret |
+| **Storage** <Pro /> | Un stockage de secrets externe tel que [HashiCorp Vault](/user-guide/key-store/hashicorp-vault) | Le stockage et le chemin du secret |
 | **Env** | Une variable d'environnement du processus serveur Semaphore | Le nom de la variable, par exemple `PROD_SSH_KEY` |
 | **File** | Un fichier sur le serveur Semaphore | Le chemin **absolu** du fichier, par exemple `/var/lib/semaphore/secrets/prod.json` |
 

@@ -1,3 +1,8 @@
+---
+title: Bitbucket Access Token
+description: How to create a Bitbucket access token and use it as an x-token-auth key store entry for HTTPS repositories.
+---
+
 # Bitbucket Access Token
 
 You can use a Bitbucket Access Token in Semaphore to access repositories from Bitbucket.

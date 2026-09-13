@@ -1,3 +1,8 @@
+---
+title: Project runners (Pro)
+description: Pro project-level runners, adding one, tokens and registration, routing tasks with tags, and runner security notes.
+---
+
 # Project runners (Pro)
 
 Runners execute tasks on machines other than the Semaphore server: closer to the target infrastructure, in another network zone, or with a different toolchain. **Global runners** are registered by an administrator and serve every project. **Project runners** belong to one project and are managed by its team in the **Runners** section.

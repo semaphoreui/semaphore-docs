@@ -1,3 +1,8 @@
+---
+title: CI/CD integration
+description: Build and deploy templates inside Semaphore, and triggering tasks from an external CI system via integrations or the REST API.
+---
+
 # CI/CD integration
 
 Semaphore can be a step in an external pipeline, and it can run its own simple build and deploy pipelines.

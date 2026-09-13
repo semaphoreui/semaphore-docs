@@ -1,3 +1,7 @@
+---
+title: Keycloak config
+description: Example config.json for signing in to Semaphore with Keycloak, plus IdP-initiated login from the Account Console.
+---
 
 # Keycloak config
 

@@ -1,3 +1,8 @@
+---
+title: Views
+description: How to group task templates into view tabs, manage them, assign templates, and choose the columns of the template list.
+---
+
 # Views
 
 Views group task templates into tabs above the template list. A project starts with a single **All** view; you can add your own, for example **Build**, **Deploy**, and **Tools**, so that people find the right template quickly in projects with many templates.

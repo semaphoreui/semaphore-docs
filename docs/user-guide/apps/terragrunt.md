@@ -1,3 +1,8 @@
+---
+title: Terragrunt
+description: Prerequisites, template setup, and run options for Terragrunt code, including how Semaphore invokes terragrunt run.
+---
+
 # Terragrunt
 
 [Terragrunt](https://terragrunt.gruntwork.io/) is a wrapper for Terraform and OpenTofu that keeps configurations DRY and manages dependencies between modules. Semaphore runs it the same way as [Terraform/OpenTofu](./terraform), with a few differences described here.

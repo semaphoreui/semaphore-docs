@@ -1,3 +1,8 @@
+---
+title: Logs
+description: Where the server, activity and task logs go, file and syslog forwarding options, task retention, and SIEM integration.
+---
+
 # Logs
 
 Semaphore writes server logs to **stdout** and stores **Task** and **Activity** logs in a **database**, centralizing key log information and eliminating the need to back up log files separately. The only data stored on the file system is caching data.

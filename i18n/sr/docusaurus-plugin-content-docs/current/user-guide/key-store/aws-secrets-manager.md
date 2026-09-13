@@ -1,6 +1,6 @@
 # AWS Secrets Manager skladište tajni
 
-![Statički bedž](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Semaphore UI Enterprise može koristiti **AWS Secrets Manager** kao spoljno skladište za tajne iz skladišta ključeva (Key Store) umesto baze podataka.
 

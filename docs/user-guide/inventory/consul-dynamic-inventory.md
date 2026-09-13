@@ -1,3 +1,8 @@
+---
+title: Consul Dynamic Inventory with Semaphore
+description: Step-by-step guide to using a Consul catalog as an Ansible dynamic inventory in Semaphore with a Python inventory script.
+---
+
 # Consul Dynamic Inventory with Semaphore
 
 ![Ansible Badge](https://img.shields.io/badge/ansible-%23000.svg?style=for-the-badge&logo=ansible&logoColor=white)

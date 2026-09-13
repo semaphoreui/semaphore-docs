@@ -1,3 +1,7 @@
+---
+title: PowerShell
+description: How to create a PowerShell task template, pass variable groups as environment variables, and run scripts on Windows hosts.
+---
 
 # PowerShell
 

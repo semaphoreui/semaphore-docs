@@ -72,7 +72,7 @@ Tajne se mogu čuvati u spoljnoj [OpenBao](https://openbao.org) instanci (API-ko
 
 ### AWS Secrets Manager {#aws-secrets-manager}
 
-![Statički bedž](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Tajne se mogu čuvati u AWS Secrets Manager-u. Autentifikujte se pomoću IAM uloge/profila instance ili statičkih pristupnih ključeva.
 

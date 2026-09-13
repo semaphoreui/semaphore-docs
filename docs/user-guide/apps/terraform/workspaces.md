@@ -1,3 +1,7 @@
+---
+title: Workspaces
+description: Managing Terraform and OpenTofu workspaces in a template, isolating state per environment, and setting the default workspace.
+---
 
 # Workspaces
 

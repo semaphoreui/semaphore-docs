@@ -1,3 +1,7 @@
+---
+title: Kerberos authentication
+description: Inventory settings, host packages, and krb5.conf changes needed to reach Windows hosts over WinRM with Kerberos.
+---
 
 # Kerberos authentication
 

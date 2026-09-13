@@ -1,3 +1,7 @@
+---
+title: Zitadel config
+description: Example config.json for ZITADEL single sign-on and the known issue with the missing email claim.
+---
 
 # Zitadel config
 

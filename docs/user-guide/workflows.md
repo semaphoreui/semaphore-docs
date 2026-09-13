@@ -1,3 +1,8 @@
+---
+title: Workflows (Pro)
+description: Chaining templates into a DAG with task, approval, delay, and note nodes, edge conditions, run monitoring, and permissions.
+---
+
 # Workflows (Pro)
 
 Workflows let you chain multiple task templates into a directed graph (DAG) with

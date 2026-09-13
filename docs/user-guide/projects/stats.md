@@ -1,3 +1,8 @@
+---
+title: Stats
+description: What the project Stats tab shows, including the daily task status chart and the period and user filters.
+---
+
 # Stats
 
 The **Stats** tab of the project dashboard shows how tasks in the project finished over time.

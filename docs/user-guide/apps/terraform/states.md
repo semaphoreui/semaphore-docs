@@ -1,3 +1,7 @@
+---
+title: HTTP Backend (Pro)
+description: The Pro HTTP backend for Terraform state, how to override the backend in a template, and aliases for use outside Semaphore.
+---
 
 # HTTP Backend (Pro)
 

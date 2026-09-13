@@ -1,3 +1,8 @@
+---
+title: Task Templates
+description: What a task template defines, the template list and template page, template types, and every field of the template form.
+---
+
 # Task Templates
 
 A task template defines what to run and how: the application, the repository and the file to execute, the inventory, variable groups, credentials, and the options a user may change when starting a task. Every [task](../tasks) is created from a template.

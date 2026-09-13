@@ -1,3 +1,8 @@
+---
+title: CLI
+description: Overview of the semaphore command groups, the global flags, the config file lookup order, and the setup, server, runner, and migrate commands.
+---
+
 # CLI
 
 The `semaphore` binary is both the server and a full administration tool. Run it

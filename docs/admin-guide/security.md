@@ -1,3 +1,8 @@
+---
+title: Security
+description: Overview of authentication, Argon2id password hashing, secret encryption, task isolation, and secure deployment.
+---
+
 # 🔐 Security
 
 ## Introduction {#introduction}

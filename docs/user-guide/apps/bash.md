@@ -1,3 +1,7 @@
+---
+title: Shell/Bash scripts
+description: Creating a Bash Script template, passing variable groups as environment variables, and script exit codes.
+---
 
 # Shell/Bash scripts
 

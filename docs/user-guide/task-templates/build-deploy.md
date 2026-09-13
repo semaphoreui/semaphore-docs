@@ -1,3 +1,8 @@
+---
+title: Build and deploy templates
+description: Build and deploy template types, version handling, autorun, and the semaphore_vars values available to playbooks and scripts.
+---
+
 # Build and deploy templates
 
 Besides plain **Task** templates, Semaphore has two template types that form a simple pipeline: **Build** creates a versioned artifact, **Deploy** ships a chosen version to servers. Both types are selected in the template form and change what the user sees when starting a task.

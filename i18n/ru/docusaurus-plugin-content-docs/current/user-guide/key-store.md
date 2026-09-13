@@ -72,7 +72,7 @@ Semaphore UI поддерживает различные хранилища дл
 
 ### AWS Secrets Manager {#aws-secrets-manager}
 
-![Static Badge](https://img.shields.io/badge/enterprise-yellow)
+<Enterprise />
 
 Секреты могут храниться в AWS Secrets Manager. Аутентификация выполняется через IAM-роль либо instance profile или статические ключи доступа.
 

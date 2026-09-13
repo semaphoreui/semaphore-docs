@@ -1,3 +1,8 @@
+---
+title: Azure config
+description: An oidc_providers block with Entra ID endpoints, and how to launch Semaphore from My Apps instead of IdP-initiated login.
+---
+
 # Azure config
 
 ```json title="config.json"

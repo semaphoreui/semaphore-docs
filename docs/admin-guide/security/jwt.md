@@ -1,3 +1,8 @@
+---
+title: Task JWT issuance
+description: Server-side configuration for minting task JWTs, the published JWKS endpoint, and how to rotate the signing key.
+---
+
 # Task JWT issuance
 
 Semaphore can mint a short-lived [JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519)

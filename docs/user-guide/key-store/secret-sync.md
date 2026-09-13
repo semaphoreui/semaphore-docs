@@ -1,3 +1,8 @@
+---
+title: Syncing secrets from remote storages
+description: How sync paths import secrets from an external secret manager into the Key Store, and what a sync creates, updates, or deletes.
+---
+
 # Syncing secrets from remote storages
 
 Semaphore can connect to an external secret manager — such as **HashiCorp Vault**, **OpenBao**, **AWS Secrets Manager**, **Azure Key Vault**, or **Devolutions Server (DVLS)** — and automatically import secrets from it into the Key Store. Instead of copying credentials into Semaphore by hand and keeping them up to date, you point Semaphore at your remote storage and it maintains a local mirror for you.

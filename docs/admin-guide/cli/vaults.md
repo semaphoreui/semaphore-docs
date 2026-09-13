@@ -1,3 +1,8 @@
+---
+title: Vaults
+description: Re-encrypting stored secrets with vault rekey, zero-downtime key rotation, backup and rollback, and reading key usage with vault check.
+---
+
 # Vaults
 
 The `semaphore vault` command manages the encryption of the secrets Semaphore

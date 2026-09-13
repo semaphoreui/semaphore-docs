@@ -1,3 +1,8 @@
+---
+title: Authelia config
+description: Matching Authelia client and claims policy settings with the Semaphore oidc_providers block for this provider.
+---
+
 # Authelia config
 
 ## Authelia configuration {#authelia-configuration}

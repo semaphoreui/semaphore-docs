@@ -1,3 +1,8 @@
+---
+title: Troubleshooting
+description: Fixes for common server errors — runner 404s, Postgres SSL, git retries, LDAP failures, and missing log output.
+---
+
 # Troubleshooting
 
 ## Runner prints error 404 {#runner-prints-error-404}

@@ -1,3 +1,8 @@
+---
+title: Manually installing Semaphore
+description: Setting up the service user, Python and Ansible requirements, systemd unit files, and troubleshooting a manual install.
+---
+
 # Manually installing Semaphore
 
 ----

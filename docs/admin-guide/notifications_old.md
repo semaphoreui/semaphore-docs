@@ -1,3 +1,8 @@
+---
+title: Notifications
+description: The notification providers Semaphore supports, how global notifiers in config.json work, and per-project overrides.
+---
+
 # Notifications
 
 Semaphore can send notifications about task and project activity to popular channels. Configure a global notifier in `config.json`, and (where supported) override certain options per project.

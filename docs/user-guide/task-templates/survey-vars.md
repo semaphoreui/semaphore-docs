@@ -1,3 +1,8 @@
+---
+title: Survey variables
+description: The six survey variable types, default values, extra-variable or environment delivery, and how values reach each application.
+---
+
 # Survey variables
 
 Survey variables are custom input fields you can add to task templates to collect user input when running tasks. Instead of hard-coding values in your playbooks or scripts, you can define custom variables that prompt users for values at runtime.

@@ -1,3 +1,8 @@
+---
+title: Users
+description: Creating, changing, listing, and deleting users from the command line, plus API token and TOTP (2FA) management.
+---
+
 # Users
 
 The `semaphore users` command adds, changes, removes, and inspects users, and
