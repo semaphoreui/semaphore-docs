@@ -35,7 +35,8 @@
 /* Migrated from mdBook theme */
 
 /* Content styling */
-.doc-image-viewer-trigger {
+.doc-image-viewer-trigger,
+.theme-doc-markdown video {
   cursor: zoom-in;
 }
 
