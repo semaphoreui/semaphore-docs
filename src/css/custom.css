@@ -143,6 +143,41 @@ hr {
   margin: unset;
 }
 
+/* Give configuration descriptions half of each table's width. */
+[class~="docs-doc-id-reference/configuration"] .theme-doc-markdown table {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+[class~="docs-doc-id-reference/configuration"] .theme-doc-markdown :is(th, td):nth-child(1) {
+  width: min(33%, 20rem);
+  max-width: 20rem;
+}
+
+[class~="docs-doc-id-reference/configuration"] .theme-doc-markdown td:nth-child(1) code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+[class~="docs-doc-id-reference/configuration"] .theme-doc-markdown th:nth-child(2) {
+  width: 17%;
+}
+
+[class~="docs-doc-id-reference/configuration"] .theme-doc-markdown th:nth-child(3) {
+  width: 50%;
+}
+
+[class~="docs-doc-id-reference/configuration"] .theme-doc-markdown :is(th, td) {
+  overflow-wrap: anywhere;
+}
+
+/* Keep CLI user commands and flags together in their table cells. */
+[class~="docs-doc-id-reference/cli/users"] .theme-doc-markdown td:first-child code {
+  white-space: nowrap;
+}
+
 /* Custom navbar styling */
 .navbar {
   background-color: #008890 !important;
