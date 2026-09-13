@@ -15,6 +15,7 @@
   --ifm-color-primary-lighter: #00a4b6;
   --ifm-color-primary-lightest: #00b8cc;
   --ifm-navbar-height: 52px;
+  --sem-layout-width: var(--ifm-container-width);
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
@@ -95,13 +96,23 @@ hr {
 /* Keep the navbar content the same width as the footer container
    (Infima .container: --ifm-container-width minus its horizontal padding) */
 .navbar__inner {
-  max-width: calc(var(--ifm-container-width) - 2 * var(--ifm-spacing-horizontal));
+  max-width: calc(var(--sem-layout-width) - 2 * var(--ifm-spacing-horizontal));
   margin: 0 auto;
 }
 
+/* Center the complete docs layout, including its sticky sidebar, on the
+   same content edges as the navbar and footer. */
+@media (min-width: 997px) {
+  .docs-doc-page .main-wrapper {
+    width: calc(100% - 2 * var(--ifm-spacing-horizontal));
+    max-width: calc(var(--sem-layout-width) - 2 * var(--ifm-spacing-horizontal));
+    margin-inline: auto;
+  }
+}
+
 @media (min-width: 1440px) {
-  .navbar__inner {
-    max-width: calc(var(--ifm-container-width-xl) - 2 * var(--ifm-spacing-horizontal));
+  :root {
+    --sem-layout-width: var(--ifm-container-width-xl);
   }
 }
 
