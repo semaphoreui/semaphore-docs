@@ -15,11 +15,12 @@
 const sidebars = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   tutorialSidebar: [
-    'README',
-    'getting-started',
+    { type: 'doc', id: 'README', className: 'sidebar-icon sidebar-icon--home' },
+    { type: 'doc', id: 'getting-started', className: 'sidebar-icon sidebar-icon--rocket' },
     {
       type: 'category',
       label: 'Admin Guide',
+      className: 'sidebar-icon sidebar-icon--server',
       collapsed: false,
       link: { type: 'generated-index' },
       items: [
@@ -137,6 +138,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'User Guide',
+      className: 'sidebar-icon sidebar-icon--user',
       collapsed: false,
       link: { type: 'generated-index' },
       items: [
@@ -221,6 +223,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'FAQ',
+      className: 'sidebar-icon sidebar-icon--help',
       link: { type: 'generated-index' },
       items: [
         'faq/troubleshooting',
