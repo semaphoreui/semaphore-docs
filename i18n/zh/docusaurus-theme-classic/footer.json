@@ -4,27 +4,27 @@
     "description": "The title of the footer links column with title=  in the footer"
   },
   "link.title.Product": {
-    "message": "Product",
+    "message": "产品",
     "description": "The title of the footer links column with title=Product in the footer"
   },
   "link.title.Explore": {
-    "message": "Explore",
+    "message": "探索",
     "description": "The title of the footer links column with title=Explore in the footer"
   },
   "link.title.Help": {
-    "message": "Help",
+    "message": "帮助",
     "description": "The title of the footer links column with title=Help in the footer"
   },
   "link.title.Links": {
-    "message": "Links",
+    "message": "链接",
     "description": "The title of the footer links column with title=Links in the footer"
   },
   "link.title.Legal": {
-    "message": "Legal",
+    "message": "法律信息",
     "description": "The title of the footer links column with title=Legal in the footer"
   },
   "link.item.label.Community": {
-    "message": "Community",
+    "message": "社区版",
     "description": "The label of footer link with label=Community linking to https://github.com/semaphoreui/semaphore"
   },
   "link.item.label.Pro": {
@@ -36,39 +36,39 @@
     "description": "The label of footer link with label=Enterprise linking to https://semaphoreui.com/enterprise"
   },
   "link.item.label.Pricing": {
-    "message": "Pricing",
+    "message": "价格",
     "description": "The label of footer link with label=Pricing linking to https://semaphoreui.com/pricing/"
   },
   "link.item.label.Features": {
-    "message": "Features",
+    "message": "功能特性",
     "description": "The label of footer link with label=Features linking to https://semaphoreui.com/features"
   },
   "link.item.label.Use cases": {
-    "message": "Use cases",
+    "message": "使用场景",
     "description": "The label of footer link with label=Use cases linking to https://semaphoreui.com/use-cases"
   },
   "link.item.label.Case studies": {
-    "message": "Case studies",
+    "message": "案例研究",
     "description": "The label of footer link with label=Case studies linking to https://semaphoreui.com/case-studies"
   },
   "link.item.label.Roadmap": {
-    "message": "Roadmap",
+    "message": "路线图",
     "description": "The label of footer link with label=Roadmap linking to https://semaphoreui.com/roadmap"
   },
   "link.item.label.What's New": {
-    "message": "What's New",
+    "message": "最新动态",
     "description": "The label of footer link with label=What's New linking to https://semaphoreui.com/releases/"
   },
   "link.item.label.Installation": {
-    "message": "Installation",
+    "message": "安装",
     "description": "The label of footer link with label=Installation linking to https://semaphoreui.com/install"
   },
   "link.item.label.Documentation": {
-    "message": "Documentation",
+    "message": "文档",
     "description": "The label of footer link with label=Documentation linking to /"
   },
   "link.item.label.API References": {
-    "message": "API References",
+    "message": "API 参考",
     "description": "The label of footer link with label=API References linking to https://semaphoreui.com/api-docs/"
   },
   "link.item.label.GitHub": {
@@ -100,35 +100,35 @@
     "description": "The label of footer link with label=Snapcraft linking to https://snapcraft.io/semaphore"
   },
   "link.item.label.Terms of Service": {
-    "message": "Terms of Service",
+    "message": "服务条款",
     "description": "The label of footer link with label=Terms of Service linking to https://semaphoreui.com/legal/terms-of-service"
   },
   "link.item.label.Subscription Agreement": {
-    "message": "Subscription Agreement",
+    "message": "订阅协议",
     "description": "The label of footer link with label=Subscription Agreement linking to https://semaphoreui.com/legal/subscription-agreement"
   },
   "link.item.label.Refund Policy": {
-    "message": "Refund Policy",
+    "message": "退款政策",
     "description": "The label of footer link with label=Refund Policy linking to https://semaphoreui.com/legal/refund-policy"
   },
   "link.item.label.Privacy Policy": {
-    "message": "Privacy Policy",
+    "message": "隐私政策",
     "description": "The label of footer link with label=Privacy Policy linking to https://semaphoreui.com/privacy/policy"
   },
   "link.item.label.Cookie Policy": {
-    "message": "Cookie Policy",
+    "message": "Cookie 政策",
     "description": "The label of footer link with label=Cookie Policy linking to https://semaphoreui.com/privacy/cookies"
   },
   "link.item.label.Security Whitepaper": {
-    "message": "Security Whitepaper",
+    "message": "安全白皮书",
     "description": "The label of footer link with label=Security Whitepaper linking to https://semaphoreui.com/security/whitepaper"
   },
   "link.item.label.Support Offering": {
-    "message": "Support Offering",
+    "message": "支持服务说明",
     "description": "The label of footer link with label=Support Offering linking to https://semaphoreui.com/legal/support-offering"
   },
   "copyright": {
-    "message": "© 2026 Semaphore UI. All rights reserved.",
+    "message": "© 2026 Semaphore UI. 保留所有权利。",
     "description": "The footer copyright"
   }
 }

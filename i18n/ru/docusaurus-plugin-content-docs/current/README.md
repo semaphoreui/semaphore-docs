@@ -10,7 +10,7 @@ import Link from '@docusaurus/Link';
 
 Semaphore UI — это самостоятельно размещаемый веб-интерфейс и API для запуска автоматизации на **Ansible**, **Terraform/OpenTofu**, **Shell**, **PowerShell** и **Python**. Он даёт вашей команде единое место, где можно запускать playbook'и и скрипты, хранить учётные данные в зашифрованном виде, планировать задания и видеть, кто, что и когда запускал.
 
-Он поставляется в виде единого бинарного файла на Go или Docker-образа, работает на Linux, macOS и Windows и хранит данные в SQLite, MySQL или PostgreSQL.
+Поставляется в виде одного бинарного файла на Go или Docker-образа, работает на Linux, macOS и Windows и хранит данные в SQLite, MySQL или PostgreSQL.
 
 :::tip[Быстрый старт]
 
@@ -39,7 +39,7 @@ docker run -d -p 3000:3000 \
         <p>Запустите сервер и подключите его к базе данных, провайдеру идентификации и сети.</p>
         <ul>
           <li><Link to="/admin-guide/installation">Установка</Link></li>
-          <li><Link to="/admin-guide/configuration">Конфигурация</Link></li>
+          <li><Link to="/admin-guide/configuration">Настройка</Link></li>
           <li><Link to="/category/reverse-proxy">Обратный прокси и TLS</Link></li>
           <li><Link to="/admin-guide/ldap">LDAP</Link> и <Link to="/admin-guide/openid">OpenID Connect</Link></li>
           <li><Link to="/admin-guide/security">Усиление безопасности</Link></li>
@@ -56,8 +56,8 @@ docker run -d -p 3000:3000 \
           <li><Link to="/getting-started">Начало работы: первая задача за шесть шагов</Link></li>
           <li><Link to="/user-guide/projects">Проекты</Link> и <Link to="/user-guide/team">Команды</Link></li>
           <li><Link to="/user-guide/task-templates">Шаблоны задач</Link> и <Link to="/user-guide/tasks">Задачи</Link></li>
-          <li><Link to="/user-guide/key-store">Хранилище ключей</Link>, <Link to="/user-guide/inventory">Inventory</Link>, <Link to="/user-guide/environment">Группы переменных</Link></li>
-          <li><Link to="/user-guide/schedules">Расписания</Link> и <Link to="/user-guide/workflows">Рабочие процессы</Link> (Pro)</li>
+          <li><Link to="/user-guide/key-store">Хранилище ключей</Link>, <Link to="/user-guide/inventory">Инвентарь</Link>, <Link to="/user-guide/environment">Группы переменных</Link></li>
+          <li><Link to="/user-guide/schedules">Расписания</Link> и <Link to="/user-guide/workflows">Workflows</Link> (Pro)</li>
         </ul>
       </div>
     </div>
@@ -66,12 +66,12 @@ docker run -d -p 3000:3000 \
     <div className="card">
       <div className="card__header"><h3>Эксплуатация в масштабе</h3></div>
       <div className="card__body">
-        <p>Распределяйте выполнение, обеспечивайте отказоустойчивость и поддерживайте наблюдаемость и актуальность сервиса.</p>
+        <p>Распределяйте выполнение, работайте с резервированием и поддерживайте наблюдаемость и актуальность сервиса.</p>
         <ul>
           <li><Link to="/admin-guide/runners">Runner'ы</Link></li>
           <li><Link to="/admin-guide/ha">Высокая доступность</Link></li>
           <li><Link to="/admin-guide/upgrading">Обновление</Link></li>
-          <li><Link to="/admin-guide/logs">Логи</Link> и <Link to="/admin-guide/metrics">Метрики</Link></li>
+          <li><Link to="/admin-guide/logs">Журналы</Link> и <Link to="/admin-guide/metrics">Метрики</Link></li>
           <li><Link to="/category/notifications">Уведомления</Link></li>
         </ul>
       </div>
@@ -81,13 +81,13 @@ docker run -d -p 3000:3000 \
     <div className="card">
       <div className="card__header"><h3>Справочник</h3></div>
       <div className="card__body">
-        <p>Точные опции и эндпоинты, когда вы уже знаете, что ищете.</p>
+        <p>Точные параметры и конечные точки, когда вы уже знаете, что ищете.</p>
         <ul>
           <li><Link to="/admin-guide/configuration/config-file">Файл конфигурации</Link> и <Link to="/admin-guide/configuration/env-vars">Переменные окружения</Link></li>
           <li><Link to="/admin-guide/api">REST API</Link></li>
           <li><Link to="/admin-guide/cli">CLI</Link></li>
           <li><Link to="/admin-guide/cicd">Интеграция с CI/CD</Link></li>
-          <li><Link to="/faq/troubleshooting">FAQ по устранению неполадок</Link></li>
+          <li><Link to="/faq/troubleshooting">Частые вопросы: устранение неполадок</Link></li>
         </ul>
       </div>
     </div>

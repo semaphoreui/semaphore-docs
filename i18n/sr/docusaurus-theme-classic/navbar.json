@@ -4,23 +4,23 @@
     "description": "The title in the navbar"
   },
   "logo.alt": {
-    "message": "Semaphore UI Logo",
+    "message": "Semaphore UI logotip",
     "description": "The alt text of navbar logo"
   },
   "item.label.Product": {
-    "message": "Product",
+    "message": "Proizvod",
     "description": "Navbar item with label Product"
   },
   "item.label.Explore": {
-    "message": "Explore",
+    "message": "Istražite",
     "description": "Navbar item with label Explore"
   },
   "item.label.Help": {
-    "message": "Help",
+    "message": "Pomoć",
     "description": "Navbar item with label Help"
   },
   "item.label.Pricing": {
-    "message": "Pricing",
+    "message": "Cene",
     "description": "Navbar item with label Pricing"
   },
   "item.label.GitHub": {
@@ -28,31 +28,31 @@
     "description": "Navbar item with label GitHub"
   },
   "item.label.Sign in": {
-    "message": "Sign in",
+    "message": "Prijava",
     "description": "Navbar item with label Sign in"
   },
   "item.label.Pro · For teams": {
-    "message": "Pro · For teams",
+    "message": "Pro · Za timove",
     "description": "Navbar item with label Pro · For teams"
   },
   "item.label.Enterprise · For large-scale operations": {
-    "message": "Enterprise · For large-scale operations",
+    "message": "Enterprise · Za velike infrastrukture",
     "description": "Navbar item with label Enterprise · For large-scale operations"
   },
   "item.label.Community · For homelab": {
-    "message": "Community · For homelab",
+    "message": "Community · Za kućnu laboratoriju",
     "description": "Navbar item with label Community · For homelab"
   },
   "item.label.Features": {
-    "message": "Features",
+    "message": "Funkcionalnosti",
     "description": "Navbar item with label Features"
   },
   "item.label.Use cases": {
-    "message": "Use cases",
+    "message": "Primeri upotrebe",
     "description": "Navbar item with label Use cases"
   },
   "item.label.Case studies": {
-    "message": "Case studies",
+    "message": "Studije slučaja",
     "description": "Navbar item with label Case studies"
   },
   "item.label.Blog": {
@@ -88,15 +88,15 @@
     "description": "Navbar item with label Semaphore UI vs Tower (AAP)"
   },
   "item.label.Installation": {
-    "message": "Installation",
+    "message": "Instalacija",
     "description": "Navbar item with label Installation"
   },
   "item.label.Docs": {
-    "message": "Docs",
+    "message": "Dokumentacija",
     "description": "Navbar item with label Docs"
   },
   "item.label.API References": {
-    "message": "API References",
+    "message": "API referenca",
     "description": "Navbar item with label API References"
   }
 }
