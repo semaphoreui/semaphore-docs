@@ -570,14 +570,6 @@ html[data-theme='dark'] {
   mask: var(--sem-sidebar-icon) center / contain no-repeat;
 }
 
-.menu {
-  scrollbar-width: none; /* Firefox */
-}
-
-.menu::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
-}
-
 /* Give TOC highlights the same shape and theme colors as sidebar items. */
 .table-of-contents,
 .table-of-contents ul {
@@ -611,7 +603,8 @@ html[data-theme='dark'] {
 }
 
 .main-wrapper .menu {
-  padding-right: 0.5rem;
+  padding-right: 0.5rem !important;
+  scrollbar-width: none !important;
 }
 
 /* .main-wrapper .theme-doc-sidebar-menu .menu__list-item-collapsible--active,
