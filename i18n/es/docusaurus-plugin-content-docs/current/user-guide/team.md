@@ -8,6 +8,10 @@ En la edición **Enterprise**, los roles integrados pueden ampliarse con [roles 
 Para evitar perder el acceso a un proyecto, se recomienda tener al menos dos miembros del equipo con el rol <b>Propietario</b>.
 :::
 
+La sección **Equipo** de un proyecto tiene dos pestañas: **Miembros**, con los usuarios y sus roles, y **Roles**, con los roles personalizados (Enterprise).
+
+![Miembros del equipo](/assets/team-members.webp)
+
 ## Roles integrados {#built-in-roles}
 
 Cada miembro del equipo tiene exactamente uno de estos cuatro roles:

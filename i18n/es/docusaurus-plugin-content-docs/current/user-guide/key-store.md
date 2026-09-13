@@ -1,6 +1,10 @@
 # Almacén de claves
 
-El Almacén de claves de Semaphore se usa para guardar credenciales de acceso a repositorios remotos, de acceso a hosts remotos, credenciales sudo y contraseñas de Ansible vault.
+El Almacén de claves de Semaphore se usa para guardar credenciales de acceso a repositorios remotos, de acceso a hosts remotos, credenciales sudo y contraseñas de vaults de Ansible.
+
+![Almacén de claves](/assets/key-store-keys.webp)
+
+La pestaña **Claves** muestra las credenciales del proyecto con su tipo. La pestaña **Almacenamientos** (Pro) muestra los almacenamientos externos de secretos configurados para el proyecto; consulte [Almacenamientos de secretos](#secret-storages).
 
 ## Tipos {#types}
 
@@ -9,7 +13,7 @@ Las claves SSH se usan para acceder a servidores remotos y también a repositori
 
 Si necesita ayuda para generar rápidamente una clave y colocarla en su host, [aquí tiene una guía rápida.](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
 
-En los repositorios Git que usan autenticación SSH, el repositorio Git desde el que intenta clonar debe tener asociada su clave pública a la clave privada.
+En los repositorios Git que usan autenticación SSH, el repositorio Git del que intenta clonar debe tener su clave pública asociada a la clave privada.
 
 A continuación encontrará enlaces a la documentación de algunos repositorios Git habituales:
 * [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
@@ -17,23 +21,27 @@ A continuación encontrará enlaces a la documentación de algunos repositorios 
 * [Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
 
 ### 2. Inicio de sesión con contraseña {#2-login-with-password}
-Inicio de sesión con contraseña es una combinación de nombre de usuario y contraseña/token de acceso que puede usarse para lo siguiente:
+El inicio de sesión con contraseña es una combinación de nombre de usuario y contraseña o token de acceso que puede usarse para lo siguiente:
 * Autenticarse en hosts remotos (aunque es menos seguro que usar claves SSH)
 * Credenciales sudo en hosts remotos
 * Autenticarse en repositorios Git remotos mediante HTTPS (aunque SSH es más seguro)
 * Desbloquear vaults de Ansible
 
 :::tip
-    Este tipo de secreto puede usarse como token de acceso personal (PAT) o cadena secreta. Simplemente deje vacío el campo Login.
+    Este tipo de secreto puede usarse como token de acceso personal (PAT) o como cadena secreta. Simplemente deje vacío el campo de inicio de sesión.
 :::
 
 ### 3. Ninguno {#3-none}
-Se usa como relleno para repositorios que no requieren autenticación, como un repositorio de código abierto en GitLab.
+Se usa como relleno para los repositorios que no requieren autenticación, como un repositorio de código abierto en GitLab.
 
 
 ## Almacenamientos de secretos {#secret-storages}
 
-Semaphore UI admite distintos almacenamientos para los secretos. Puede elegir el almacenamiento para cada secreto al crearlo o editarlo.
+Semaphore UI admite distintos almacenamientos para los secretos. Puede elegir el almacenamiento de cada secreto al crearlo o editarlo.
+
+Los almacenamientos externos se crean en la pestaña **Almacenamientos** del Almacén de claves (Pro). Cada almacenamiento tiene un nombre y un tipo; las claves hacen referencia después al almacenamiento y a la ruta del secreto dentro de él.
+
+![Almacenamientos de secretos](/assets/key-store-storages.webp)
 
 ### Base de datos {#database}
 
@@ -42,42 +50,42 @@ De forma predeterminada, los secretos se guardan cifrados en la base de datos. L
 
 ### Variable de entorno o archivo {#environment-variable-or-file}
 
-Una clave puede leer su valor desde una variable de entorno del servidor de Semaphore o desde un archivo del servidor
-(por ejemplo, una clave SSH montada en el contenedor). Las pestañas **Env** y **File** del formulario de clave seleccionan este modo.
+Una clave puede leer su valor de una variable de entorno del servidor de Semaphore o de un archivo del servidor
+(por ejemplo, una clave SSH montada en el contenedor). Las pestañas **Env** y **File** del formulario de la clave seleccionan este modo.
 
-Los archivos deben estar dentro del directorio de secretos configurado (`dirs.secrets` / `SEMAPHORE_SECRETS_PATH`, predeterminado `/tmp/semaphore`),
-y las claves SSH y de Inicio de sesión con contraseña deben envolverse en un pequeño documento JSON.
+Los archivos deben estar dentro del directorio de secretos configurado (`dirs.secrets` / `SEMAPHORE_SECRETS_PATH`, `/tmp/semaphore` de forma predeterminada),
+y las claves SSH y de inicio de sesión con contraseña deben envolverse en un pequeño documento JSON.
 
-[Leer más...](/user-guide/key-store/env-and-file-sources)
+[Más información...](/user-guide/key-store/env-and-file-sources)
 
 ### HashiCorp Vault {#hashicorp-vault}
 
 Los secretos pueden guardarse en una instancia externa de HashiCorp Vault en lugar de en la base de datos.
 
-[Leer más...](/user-guide/key-store/hashicorp-vault)
+[Más información...](/user-guide/key-store/hashicorp-vault)
 
 ### OpenBao {#openbao}
 
-Los secretos pueden guardarse en una instancia externa de [OpenBao](https://openbao.org) (un fork de código abierto de HashiCorp Vault, compatible con su API).
+Los secretos pueden guardarse en una instancia externa de [OpenBao](https://openbao.org) (una bifurcación de código abierto y compatible con la API de HashiCorp Vault).
 
-[Leer más...](/user-guide/key-store/openbao)
+[Más información...](/user-guide/key-store/openbao)
 
 ### AWS Secrets Manager {#aws-secrets-manager}
 
-![Insignia estática](https://img.shields.io/badge/enterprise-yellow)
+![Static Badge](https://img.shields.io/badge/enterprise-yellow)
 
-Los secretos pueden guardarse en AWS Secrets Manager. Autentíquese con un rol IAM/perfil de instancia o con claves de acceso estáticas.
+Los secretos pueden guardarse en AWS Secrets Manager. Autentíquese con un rol de IAM o un perfil de instancia, o con claves de acceso estáticas.
 
-[Leer más...](/user-guide/key-store/aws-secrets-manager)
+[Más información...](/user-guide/key-store/aws-secrets-manager)
 
 ### Devolutions Server {#devolutions-server}
 
 Los secretos pueden guardarse en una instancia externa de Devolutions Server en lugar de en la base de datos.
 
-[Leer más...](/user-guide/key-store/devolutions-server)
+[Más información...](/user-guide/key-store/devolutions-server)
 
-## Sincronización de secretos desde almacenamientos remotos {#syncing-secrets-from-remote-storages}
+## Sincronizar secretos desde almacenamientos remotos {#syncing-secrets-from-remote-storages}
 
-Semaphore puede importar automáticamente secretos desde un gestor de secretos externo (HashiCorp Vault, OpenBao, AWS Secrets Manager, Azure Key Vault o Devolutions Server) y mantenerlos sincronizados. Las rutas de sincronización le permiten elegir qué secretos importar y cómo nombrarlos.
+Semaphore puede importar automáticamente secretos de un gestor de secretos externo (HashiCorp Vault, OpenBao, AWS Secrets Manager, Azure Key Vault o Devolutions Server) y mantenerlos sincronizados. Las rutas de sincronización le permiten elegir qué secretos se importan y cómo se nombran.
 
-[Leer más...](/user-guide/key-store/secret-sync)
+[Más información...](/user-guide/key-store/secret-sync)

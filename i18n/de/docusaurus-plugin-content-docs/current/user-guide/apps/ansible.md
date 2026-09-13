@@ -89,6 +89,31 @@ Templates unterstützen Ansible-CLI-Optionen:
 
 Diese können im Template gesetzt und beim Erstellen eines Tasks überschrieben werden. Stellen Sie sicher, dass die entsprechenden Prompts aktiviert sind, wenn Sie diese Werte über die API übergeben möchten.
 
+### Galaxy-Requirements {#galaxy-requirements}
+
+Bevor ein Playbook ausgeführt wird, installiert Semaphore Rollen und Collections aus `requirements.yml`-Dateien, die im Playbook-Verzeichnis, im Repository-Stammverzeichnis sowie in deren Unterverzeichnissen `roles/` und `collections/` gefunden werden, mit `ansible-galaxy install --force`.
+
+Um eine erneute Installation bei jeder Ausführung zu vermeiden, speichert Semaphore eine Prüfsumme jeder Requirements-Datei und führt die Installation nur dann erneut aus, wenn sich die Datei ändert. Zwei Template-Optionen im ausklappbaren Bereich **Galaxy-Installationsoptionen** (unterhalb von **Ansible-Prompts**) steuern dieses Verhalten:
+
+- **Galaxy-Installation überspringen** — `ansible-galaxy` überhaupt nicht ausführen. Verwenden Sie dies, wenn die Requirements bereits im Runner-Image vorinstalliert sind.
+- **Galaxy-Installation erzwingen** — immer `ansible-galaxy install --force` ausführen und die gespeicherte Prüfsumme ignorieren. Verwenden Sie dies, wenn eine Requirements-Datei auf ein bewegliches Ziel verweist (zum Beispiel auf einen Branch statt auf ein Tag) und Sie bei jeder Ausführung die neueste Version möchten.
+
+**Galaxy-Installation überspringen** kann im Formular zum Ausführen eines Tasks angezeigt werden, indem Sie das gleichnamige Kontrollkästchen unter **Prompts** am Ende des Bereichs aktivieren. Wenn ein Prompt aktiviert ist, überschreibt der zur Laufzeit gewählte Wert den Standardwert des Templates.
+
+#### Zusätzliche Galaxy-Argumente {#galaxy-extra-args}
+
+**Argumente für die Rolleninstallation** und **Argumente für die Collection-Installation** (im ausklappbaren Bereich **Galaxy-Installationsoptionen** unterhalb von **Ansible-Prompts**; standardmäßig eingeklappt; der Zähler daneben zeigt, wie viele Galaxy-Einstellungen angepasst sind) hängen Flags an `ansible-galaxy role install` bzw. `ansible-galaxy collection install` an. Sie werden getrennt konfiguriert, weil die beiden Unterbefehle unterschiedliche Flags akzeptieren: `--pre` ist zum Beispiel nur für Collections gültig.
+
+Jeder Eintrag ist ein argv-Token; ein Wert kann entweder inline (`--timeout=60`) oder als nächster Eintrag (`--timeout`, `60`) angegeben werden. Nur die folgenden Flags werden akzeptiert:
+
+| Geltungsbereich | Flags |
+|-------|-------|
+| Beide | `-c`/`--ignore-certs`, `-f`/`--force`, `--force-with-deps`, `-i`/`--ignore-errors`, `-n`/`--no-deps`, `-s`/`--server <url>`, `--timeout <seconds>`, `-v`…`-vvvv`/`--verbose` |
+| Nur Rollen | `-g`/`--keep-scm-meta` |
+| Nur Collections | `--pre`, `-U`/`--upgrade`, `--offline`, `--no-cache`, `--clear-response-cache`, `--disable-gpg-verify`, `--keyring <path>`, `--signature <url>`, `--required-valid-signature-count <n>`, `--ignore-signature-status-code(s) <code>` |
+
+Alles andere wird beim Speichern des Templates abgelehnt. Insbesondere sind `--token`/`--api-key` nicht erlaubt, weil Befehlszeilenargumente in der Prozessliste sichtbar sind — konfigurieren Sie Galaxy-Anmeldedaten stattdessen über Umgebungsvariablen (zum Beispiel `ANSIBLE_GALAXY_SERVER_<NAME>_TOKEN`) in einer Variablengruppe. Die Requirements-Datei (`-r`) wird von Semaphore gesetzt, und Installationspfade (`-p`, `--roles-path`, `--collections-path`) werden absichtlich nicht akzeptiert, damit ein Template nicht außerhalb des Repositorys schreiben kann — setzen Sie stattdessen `roles_path`/`collections_path` in `ansible.cfg` oder über `ANSIBLE_ROLES_PATH`/`ANSIBLE_COLLECTIONS_PATH`.
+
 ### Parallelität (`--forks` / `-f`) {#parallelism---forks---f}
 
 Steuern Sie, mit wie vielen Hosts Ansible parallel Verbindungen aufbaut, indem Sie `--forks` oder

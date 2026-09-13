@@ -1,91 +1,35 @@
+# History
 
-# Cronologia
+La scheda **History** della dashboard del Project elenca tutti i Task del Project, dal più recente al più vecchio. È la vista predefinita quando si apre un Project.
 
-La schermata Cronologia di Semaphore offre una visione completa di tutte le esecuzioni dei task all'interno del progetto. Questa funzionalità consente di tracciare e analizzare la cronologia di esecuzione dei task, fornendo informazioni preziose sui flussi di automazione.
+![Cronologia del Project](/assets/project-dashboard-history.webp)
 
-![](/assets/project_history.webp)
+## Colonne {#columns}
 
-## Panoramica {#overview}
+| Colonna | Contenuto |
+|---|---|
+| **Task** | Numero del Task, il Task Template da cui è stato creato e il messaggio di commit della revisione del Repository utilizzata. L'icona a sinistra indica l'applicazione (Ansible, Terraform, Bash e così via). |
+| **Version** | Per i [Task Template di build e deploy](../task-templates/build-deploy): la versione compilata o distribuita. Per gli altri Task Template solo un'icona di stato. |
+| **Status** | Badge dello stato corrente, vedere [Stati dei Task](../tasks#task-statuses). |
+| **User** | Chi ha avviato il Task. I Task avviati da uno Schedule o da un'Integration non hanno un utente. |
+| **Start** | Data e ora di avvio nel fuso orario del browser. |
+| **Duration** | Durata dell'esecuzione del Task. |
 
-La pagina Cronologia mostra un elenco cronologico di tutte le esecuzioni dei task, tra cui:
+L'elenco è suddiviso in pagine. Fare clic sul numero del Task o sul nome del Task Template per aprire la [finestra del Task](../tasks#task-window) con il log, i dettagli e il riepilogo. Fare clic sul nome del Task Template nell'intestazione della finestra del Task per aprire la pagina del Task Template.
 
-- Modelli di task utilizzati
-- Stato dell'esecuzione (successo, errore, in corso)
-- Orari di inizio e fine
-- Durata
-- Utente che ha avviato il task
-- Output e log del task
+## Conservazione dei Task {#task-retention}
 
-## Visualizzazione della cronologia dei task {#viewing-task-history}
+Per impostazione predefinita tutti i Task e i relativi log vengono conservati per sempre. Per limitare la cronologia per Task Template, impostare `max_tasks_per_template` in `config.json` oppure la variabile d'ambiente `SEMAPHORE_MAX_TASKS_PER_TEMPLATE`:
 
-### Accesso alla cronologia {#accessing-history}
+```json
+{
+  "max_tasks_per_template": 30
+}
+```
 
-1. Accedere al progetto in Semaphore
-2. Fare clic sulla scheda "Cronologia"
-3. Visualizzare l'elenco di tutte le esecuzioni dei task
+Al raggiungimento del limite, i Task più vecchi di quel Task Template vengono eliminati insieme ai loro log. Vedere [Configurazione](/admin-guide/configuration) per l'elenco completo delle opzioni.
 
-## Dettagli del task {#task-details}
+## Vedere anche {#see-also}
 
-Facendo clic su un task nell'elenco della cronologia si apre una vista dettagliata che mostra:
-
-1. **Informazioni sul task**
-   - ID del task
-   - Modello utilizzato
-   - Orari di inizio e fine
-   - Durata
-   - Stato
-   - Utente che ha eseguito il task
-
-2. **Dettagli dell'esecuzione**
-   - Output completo del task
-   - Messaggi di errore (se presenti)
-   - Variabili d'ambiente utilizzate
-   - Informazioni sull'inventory
-   - Dettagli del repository
-
-3. **Log del task**
-   - Visualizzazione dei log in tempo reale
-   - Opzione di download dei log
-   - Funzionalità di ricerca nei log
-   - Evidenziazione degli errori
-
-### Statistiche {#statistics}
-
-Il progetto fornisce una pagina di statistiche che riepiloga gli esiti dei task in un intervallo di tempo selezionato, con filtro per utente.
-
-## Gestione dei task {#task-management}
-
-### Azioni disponibili {#actions-available}
-
-Dalla vista cronologia è possibile:
-
-- Accedere ai log completi del task
-- Scaricare l'output del task
-- Cercare all'interno dei log
-
-## Conservazione dei task {#task-retention}
-
-Semaphore consente di configurare per quanto tempo conservare la cronologia dei task:
-
-1. **Comportamento predefinito**
-   - Tutti i task vengono archiviati nel database
-   - Nessuna eliminazione automatica per impostazione predefinita
-
-2. **Configurazione della conservazione**
-   - Impostare il numero massimo di task per modello
-   - Configurare tramite variabile d'ambiente:
-     ```bash
-     SEMAPHORE_MAX_TASKS_PER_TEMPLATE=30
-     ```
-   - Oppure tramite config.json:
-     ```json
-     {
-       "max_tasks_per_template": 30
-     }
-     ```
-
-3. **Regole di conservazione**
-   - Al raggiungimento del limite, i task più vecchi vengono eliminati automaticamente
-   - L'eliminazione avviene per modello
-   - I log dei task vengono rimossi insieme ai record dei task
-
+- [Stats](./stats): risultati dei Task aggregati per giorno.
+- [Activity](./activity): log di audit delle modifiche nel Project.

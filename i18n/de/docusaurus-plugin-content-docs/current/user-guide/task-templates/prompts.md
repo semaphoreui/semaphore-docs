@@ -89,6 +89,27 @@ Aktivieren Sie den `--skip-tags`-Prompt, um Tasks mit bestimmten Tags zu übersp
 
 **Beispiel**: Aktivieren Sie mit dem obigen Playbook Skip Tags und geben Sie `install` ein, um die Paketinstallation zu überspringen und nur die Deployment- und Neustart-Tasks auszuführen.
 
+### Skip Galaxy install {#skip-galaxy-install}
+
+Aktivieren Sie den Prompt, damit Benutzer beim Ausführen des Tasks den Schritt `ansible-galaxy install` für Rollen und Collections überspringen können.
+
+**Anwendungsfälle**:
+- Die Requirements sind bereits im Runner-Image installiert
+- Zeit bei wiederholten Ausführungen sparen, wenn sich in `requirements.yml` nichts geändert hat
+
+### Force Galaxy install {#force-galaxy-install}
+
+Aktivieren Sie den Prompt, damit Benutzer `ansible-galaxy install --force` für jede Requirements-Datei erzwingen können und dabei die Requirements-Prüfsumme ignorieren, die Semaphore zwischen Ausführungen speichert.
+
+**CLI-Entsprechung**: `ansible-galaxy role install -r requirements.yml --force`
+
+**Anwendungsfälle**:
+- Eine Requirements-Datei verweist auf einen Branch statt auf eine feste Version und Sie benötigen den neuesten Commit
+- Eine frühere Installation hat Rollen oder Collections in einem fehlerhaften Zustand hinterlassen
+- Prüfen, ob ein Playbook mit einem sauberen Satz von Abhängigkeiten funktioniert
+
+Siehe [Galaxy-Requirements](../apps/ansible.md#galaxy-requirements) für die Funktionsweise der Standardwerte auf Template-Ebene.
+
 ### Ansible-Prompts aktivieren {#enabling-ansible-prompts}
 
 So aktivieren Sie Ansible-Prompts:
@@ -99,6 +120,9 @@ So aktivieren Sie Ansible-Prompts:
    - ☐ **Limit** – Aktiviert das `--limit`-Flag
    - ☐ **Tags** – Aktiviert das `--tags`-Flag
    - ☐ **Skip Tags** – Aktiviert das `--skip-tags`-Flag
+   - ☐ **Debug** – Aktiviert die Auswahl der Ausführlichkeit (`-v`)
+   - ☐ **Skip Galaxy install** – Erlaubt das Überspringen von `ansible-galaxy install`
+   - ☐ **Force Galaxy install** – Erlaubt das Erzwingen von `ansible-galaxy install --force`
 4. Speichern Sie das Template
 
 ![](/assets/ansible_2.png)

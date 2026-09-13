@@ -2,20 +2,20 @@
 
 ## Riferimento API {#api-reference}
 
-Semaphore UI fornisce due formati di documentazione API, così da poter scegliere quello più adatto al proprio flusso di lavoro:
+Semaphore UI fornisce due formati di documentazione API, in modo da poter scegliere quello più adatto al proprio flusso di lavoro:
 
 * [Swagger/OpenAPI](https://semaphoreui.com/api-docs) &mdash; ideale se si preferisce un'esperienza interattiva nel browser.
-* [Collezione Postman ufficiale](https://www.postman.com/semaphoreui) &mdash; per esplorare e testare tutti gli endpoint in Postman.
-* **Documentazione API Swagger integrata** &mdash; documentazione API interattiva basata su Swagger UI. È accessibile direttamente sulla propria istanza.
+* [Collezione Postman ufficiale](https://www.postman.com/semaphoreui) &mdash; esplorare e testare tutti gli endpoint in Postman.
+* **Documentazione API Swagger integrata** &mdash; documentazione API interattiva basata su Swagger UI. È accessibile dalla propria istanza.
 
 ![](/assets/swagger-link.webp)
 
-Tutte le opzioni includono la documentazione completa degli endpoint disponibili, dei parametri e di esempi di risposta.
+Tutte le opzioni includono la documentazione completa degli endpoint disponibili, dei parametri e delle risposte di esempio.
 
 ## Primi passi con l'API {#getting-started-with-the-api}
 
-Per iniziare a usare l'API di Semaphore è necessario generare un token API.
-Questo token deve essere incluso nell'header della richiesta come:
+Per iniziare a utilizzare l'API di Semaphore è necessario generare un token API.
+Questo token deve essere incluso nell'intestazione della richiesta nel modo seguente:
 
 ```http
 Authorization: Bearer YOUR_API_TOKEN
@@ -25,19 +25,27 @@ Authorization: Bearer YOUR_API_TOKEN
 
 Esistono due modi per creare un token API:
 - Tramite l'interfaccia web
-- Tramite una richiesta HTTP
+- Tramite richiesta HTTP
 
-#### Tramite l'interfaccia web (dalla 2.14) {#through-the-web-interface-since-214}
+#### Tramite l'interfaccia web (dalla versione 2.14) {#through-the-web-interface-since-214}
 
-È possibile creare e gestire i propri token API dall'interfaccia web di Semaphore:
+Aprire il menu dell'account in fondo alla barra laterale e scegliere **API Tokens**. La pagina elenca i propri token; il collegamento **API Reference** presente nella pagina apre la Swagger UI integrata nella propria istanza.
 
-![Token API](https://www.semaphoreui.com/uploads/v2.14/tokens.webp)
+![Token API](/assets/api-tokens.webp)
 
-#### Tramite una richiesta HTTP {#using-http-request}
+Fare clic su **New Token**, inserire un nome, scegliere la scadenza del token e copiare il valore mostrato dopo la creazione. Vedere [Il proprio account](/user-guide/account#api-tokens).
 
-È anche possibile autenticarsi e generare un token di sessione con una richiesta HTTP diretta.
+<div style={{maxWidth: 420}}>
 
-Effettuare il login a Semaphore (la password deve essere sottoposta a escape, ad esempio `slashy\\pass` invece di `slashy\pass`):
+![Finestra di dialogo per un nuovo token](/assets/api-token-new.webp)
+
+</div>
+
+#### Tramite richiesta HTTP {#using-http-request}
+
+È inoltre possibile autenticarsi e generare un token di sessione tramite una richiesta HTTP diretta.
+
+Accedere a Semaphore (la password deve essere preceduta dai caratteri di escape, ad esempio `slashy\\pass` invece di `slashy\pass`):
 
 ```bash
 curl -v -c /tmp/semaphore-cookie -XPOST \
@@ -47,7 +55,7 @@ curl -v -c /tmp/semaphore-cookie -XPOST \
 http://localhost:3000/api/auth/login
 ```
 
-Generare un nuovo token e ottenerlo:
+Generare un nuovo token e ottenerne il valore:
 
 ```bash
 curl -v -b /tmp/semaphore-cookie -XPOST \
@@ -56,7 +64,7 @@ curl -v -b /tmp/semaphore-cookie -XPOST \
 http://localhost:3000/api/user/tokens
 ```
 
-Il comando dovrebbe restituire qualcosa di simile a:
+Il comando dovrebbe restituire un risultato simile al seguente:
 
 ```json
 {
@@ -68,13 +76,13 @@ Il comando dovrebbe restituire qualcosa di simile a:
 ```
 ---
 
-## Uso del token per le richieste API {#using-token-to-make-api-requests}
+## Utilizzo del token per effettuare richieste API {#using-token-to-make-api-requests}
 
-Una volta ottenuto il token API, includerlo nell'header **Authorization** per autenticare le richieste.
+Una volta ottenuto il token API, includerlo nell'intestazione **Authorization** per autenticare le proprie richieste.
 
-### Avviare un task {#launch-a-task}
+### Avvio di un task {#launch-a-task}
 
-Usare questo token per avviare un task o per qualsiasi altra operazione:
+Utilizzare questo token per avviare un task o per qualsiasi altra operazione:
 
 ```bash
 curl -v -XPOST \
@@ -91,7 +99,7 @@ http://localhost:3000/api/project/1/tasks
 
 Se il token non è più necessario, è consigliabile farlo scadere per mantenere sicuro il proprio account.
 
-Per revocare manualmente (far scadere) un token API, inviare una richiesta DELETE all'endpoint del token:
+Per revocare manualmente (far scadere) un token API, inviare una richiesta DELETE all'endpoint dei token:
 
 ```bash
 curl -v -XDELETE \

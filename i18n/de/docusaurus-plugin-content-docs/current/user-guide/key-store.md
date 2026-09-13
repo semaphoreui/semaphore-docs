@@ -2,6 +2,10 @@
 
 Der Key Store in Semaphore dient zum Speichern von Zugangsdaten für den Zugriff auf entfernte Repositories, den Zugriff auf entfernte Hosts, Sudo-Zugangsdaten und Ansible-Vault-Passwörter.
 
+![Key Store](/assets/key-store-keys.webp)
+
+Der Tab **Keys** listet die Zugangsdaten des Projekts mit ihrem Typ auf. Der Tab **Storages** (Pro) listet die für das Projekt konfigurierten externen Secret-Speicher auf, siehe [Secret-Speicher](#secret-storages).
+
 ## Typen {#types}
 
 ### 1. SSH {#1-ssh}
@@ -34,6 +38,10 @@ Dieser Typ dient als Platzhalter für Repositories, die keine Authentifizierung 
 ## Secret-Speicher {#secret-storages}
 
 Semaphore UI unterstützt verschiedene Speicher für Secrets. Sie können den Speicher pro Secret beim Erstellen oder Bearbeiten eines Secrets auswählen.
+
+Externe Speicher werden auf dem Tab **Storages** des Key Store (Pro) erstellt. Jeder Speicher hat einen Namen und einen Typ; die Schlüssel verweisen dann auf den Speicher und den Pfad des Secrets darin.
+
+![Secret-Speicher](/assets/key-store-storages.webp)
 
 ### Datenbank {#database}
 

@@ -1,27 +1,33 @@
 
-# Script Shell/Bash
+# Script shell/Bash
 
-Semaphore può eseguire script shell tramite `/bin/bash`. Per farlo, creare un template di attività **Bash Script**.
+Semaphore può eseguire script shell tramite `/bin/bash`. Per farlo, creare un Task Template di tipo **Bash Script**.
 
-## Creazione di un template Bash {#creating-a-bash-template}
+## Creazione di un Task Template Bash {#creating-a-bash-template}
 
-1. Andare nella sezione **Template di attività** e fare clic sul pulsante **Nuovo template**.
-2. Selezionare **Bash** come tipo di app.
-3. Configurare il template:
+1. Andare nella sezione **Task Templates** e fare clic sul pulsante **New Template**.
+2. Selezionare **Bash** come tipo di App.
+3. Configurare il Task Template:
 
 | Campo | Descrizione |
 |---|---|
-| **Nome** | Un nome descrittivo per il template |
-| **Repository** | Repository contenente lo script shell |
-| **Playbook / Script** | Percorso relativo dello script, ad es. `scripts/deploy.sh` |
-| **Gruppi di variabili** | Gruppi di variabili i cui valori vengono iniettati come variabili d'ambiente |
+| **Name** | Un nome descrittivo per il Task Template |
+| **Repository** | Il Repository che contiene lo script shell |
+| **Playbook / Script** | Percorso relativo dello script, ad esempio `scripts/deploy.sh` |
+| **Variable Groups** | I Variable Group i cui valori vengono iniettati come variabili d'ambiente |
 
-4. Fare clic su **Crea**.
-5. Fare clic su **Esegui** per eseguire il template.
+4. Fare clic su **Create**.
+5. Fare clic su **Run** per eseguire il Task Template. La finestra di dialogo New Task per un Task Template di script contiene solo il messaggio facoltativo, oltre alle variabili di survey e ai prompt se il Task Template li definisce.
 
-## Passaggio di variabili agli script {#passing-variables-to-scripts}
+<div style={{maxWidth: 420}}>
 
-Le variabili dei **Gruppi di variabili** selezionati vengono iniettate come variabili d'ambiente. È possibile accedervi nello script con `$VARIABLE_NAME`:
+![Finestra di dialogo New Task per un Task Template Bash](/assets/task-new-bash.webp)
+
+</div>
+
+## Passaggio delle variabili agli script {#passing-variables-to-scripts}
+
+Le variabili dei **Variable Group** selezionati vengono iniettate come variabili d'ambiente. Nello script è possibile accedervi con `$VARIABLE_NAME`:
 
 ```bash
 #!/bin/bash
@@ -31,7 +37,7 @@ echo "Deploying to $TARGET_HOST"
 ## Note {#notes}
 
 - Rendere lo script eseguibile (`chmod +x`) oppure assicurarsi che inizi con uno shebang valido (`#!/bin/bash`).
-- Gli script vengono eseguiti in modo non interattivo. Evitare prompt che attendono l'input dell'utente.
-- Il codice di uscita `0` indica successo; qualsiasi codice di uscita diverso da zero contrassegna l'attività come fallita.
+- Gli script vengono eseguiti in modo non interattivo. Evitare richieste che attendono l'input dell'utente.
+- Il codice di uscita `0` indica il successo; qualsiasi codice di uscita diverso da zero segna il Task come fallito.
 - Se uno script molto breve non produce alcun output nel log, vedere [L'output dello script Bash è mancante o incompleto](/admin-guide/troubleshooting#bash-script-output-is-missing-or-incomplete) nella guida alla risoluzione dei problemi.
-- Per eseguire comandi su host remoti, usare invece [Ansible](./ansible).
+- Per eseguire comandi su host remoti, utilizzare invece [Ansible](./ansible).

@@ -1,5 +1,7 @@
 # Variablengruppen
 
+![Liste der Variablengruppen](/assets/variable-groups-list.webp)
+
 Der Bereich Variablengruppen in Semaphore dient zum Speichern zusätzlicher Variablen für ein Inventory und muss im JSON-Format gespeichert werden.
 
 Alle Aufgabenvorlagen erfordern eine definierte Variablengruppe, auch wenn diese leer ist. 

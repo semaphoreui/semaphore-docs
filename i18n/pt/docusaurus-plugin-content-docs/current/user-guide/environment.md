@@ -1,5 +1,7 @@
 # Grupos de Variáveis
 
+![Lista de grupos de variáveis](/assets/variable-groups-list.webp)
+
 A seção Grupos de Variáveis do Semaphore é um local para armazenar variáveis adicionais para um inventário, e elas devem ser armazenadas no formato JSON.
 
 Todos os modelos de tarefa exigem que um grupo de variáveis seja definido, mesmo que esteja vazio. 

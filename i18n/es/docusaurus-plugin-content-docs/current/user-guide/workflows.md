@@ -34,6 +34,8 @@ los nodos descendentes se lanzan según las condiciones de las aristas.
 4. Defina un **nombre** (y opcionalmente una **versión inicial** para el versionado de ejecuciones).
 5. Corrija los problemas listados en el panel **Problemas** y luego haga clic en **Guardar**.
 
+![Editor de flujos de trabajo](/assets/workflow-editor.webp)
+
 El editor valida el grafo antes de guardar. Un flujo de trabajo válido debe tener al menos
 un nodo, exactamente un nodo inicial (sin aristas entrantes), ningún ciclo y una
 configuración completa en cada nodo ejecutable.

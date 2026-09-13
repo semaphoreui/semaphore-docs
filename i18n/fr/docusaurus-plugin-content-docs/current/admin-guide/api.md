@@ -2,40 +2,48 @@
 
 ## Référence de l'API {#api-reference}
 
-Semaphore UI fournit deux formats de documentation d'API, afin que vous puissiez choisir celui qui correspond le mieux à votre façon de travailler :
+Semaphore UI fournit deux formats de documentation de l'API, afin que vous puissiez choisir celui qui convient le mieux à votre flux de travail :
 
 * [Swagger/OpenAPI](https://semaphoreui.com/api-docs) &mdash; idéal si vous préférez une expérience interactive dans le navigateur.
 * [Collection Postman officielle](https://www.postman.com/semaphoreui) &mdash; explorez et testez tous les points de terminaison dans Postman.
-* **Documentation d'API Swagger intégrée** &mdash; documentation d'API interactive propulsée par Swagger UI. Vous pouvez y accéder sur votre instance.
+* **Documentation Swagger intégrée de l'API** &mdash; documentation interactive de l'API propulsée par Swagger UI. Vous pouvez y accéder depuis votre instance.
 
 ![](/assets/swagger-link.webp)
 
-Toutes les options incluent une documentation complète des points de terminaison disponibles, des paramètres et des exemples de réponses.
+Toutes ces options incluent la documentation complète des points de terminaison disponibles, des paramètres et des exemples de réponses.
 
 ## Premiers pas avec l'API {#getting-started-with-the-api}
 
-Pour commencer à utiliser l'API Semaphore, vous devez générer un token d'API.
-Ce token doit être inclus dans l'en-tête de la requête sous la forme :
+Pour commencer à utiliser l'API Semaphore, vous devez générer un jeton d'API.
+Ce jeton doit être inclus dans l'en-tête de la requête sous la forme :
 
 ```http
 Authorization: Bearer YOUR_API_TOKEN
 ```
 
-### Création d'un token d'API {#creating-an-api-token}
+### Créer un jeton d'API {#creating-an-api-token}
 
-Il existe deux façons de créer un token d'API :
-- via l'interface web
-- via une requête HTTP
+Il existe deux façons de créer un jeton d'API :
+- Via l'interface web
+- Avec une requête HTTP
 
 #### Via l'interface web (depuis la version 2.14) {#through-the-web-interface-since-214}
 
-Vous pouvez créer et gérer vos tokens d'API via l'interface web de Semaphore :
+Ouvrez le menu du compte en bas de la barre latérale et choisissez **Jetons d'API**. La page liste vos jetons ; le lien **Référence de l'API** qu'elle contient ouvre l'interface Swagger UI intégrée à votre instance.
 
-![Tokens d'API](https://www.semaphoreui.com/uploads/v2.14/tokens.webp)
+![Jetons d'API](/assets/api-tokens.webp)
 
-#### Via une requête HTTP {#using-http-request}
+Cliquez sur **Nouveau jeton**, saisissez un nom, choisissez la date d'expiration du jeton, puis copiez la valeur affichée après la création. Voir [Votre compte](/user-guide/account#api-tokens).
 
-Vous pouvez également vous authentifier et générer un token de session avec une requête HTTP directe.
+<div style={{maxWidth: 420}}>
+
+![Boîte de dialogue de nouveau jeton](/assets/api-token-new.webp)
+
+</div>
+
+#### Avec une requête HTTP {#using-http-request}
+
+Vous pouvez également vous authentifier et générer un jeton de session à l'aide d'une requête HTTP directe.
 
 Connectez-vous à Semaphore (le mot de passe doit être échappé, par exemple `slashy\\pass` au lieu de `slashy\pass`) :
 
@@ -47,7 +55,7 @@ curl -v -c /tmp/semaphore-cookie -XPOST \
 http://localhost:3000/api/auth/login
 ```
 
-Générez un nouveau token et récupérez-le :
+Générez un nouveau jeton et récupérez-le :
 
 ```bash
 curl -v -b /tmp/semaphore-cookie -XPOST \
@@ -56,7 +64,7 @@ curl -v -b /tmp/semaphore-cookie -XPOST \
 http://localhost:3000/api/user/tokens
 ```
 
-La commande doit renvoyer quelque chose de similaire à :
+La commande doit retourner quelque chose de similaire à :
 
 ```json
 {
@@ -68,13 +76,13 @@ La commande doit renvoyer quelque chose de similaire à :
 ```
 ---
 
-## Utiliser le token pour effectuer des requêtes API {#using-token-to-make-api-requests}
+## Utiliser le jeton pour effectuer des requêtes à l'API {#using-token-to-make-api-requests}
 
-Une fois votre token d'API obtenu, incluez-le dans l'en-tête **Authorization** pour authentifier vos requêtes.
+Une fois votre jeton d'API obtenu, incluez-le dans l'en-tête **Authorization** pour authentifier vos requêtes.
 
 ### Lancer une tâche {#launch-a-task}
 
-Utilisez ce token pour lancer une tâche ou toute autre opération :
+Utilisez ce jeton pour lancer une tâche ou pour toute autre opération :
 
 ```bash
 curl -v -XPOST \
@@ -87,11 +95,11 @@ http://localhost:3000/api/project/1/tasks
 
 ---
 
-## Expirer un token d'API {#expiring-an-api-token}
+## Faire expirer un jeton d'API {#expiring-an-api-token}
 
-Si vous n'avez plus besoin du token, vous devez le faire expirer pour garder votre compte sécurisé.
+Si vous n'avez plus besoin du jeton, vous devez le faire expirer afin de préserver la sécurité de votre compte.
 
-Pour révoquer (faire expirer) manuellement un token d'API, envoyez une requête DELETE au point de terminaison du token :
+Pour révoquer (faire expirer) manuellement un jeton d'API, envoyez une requête DELETE au point de terminaison du jeton :
 
 ```bash
 curl -v -XDELETE \

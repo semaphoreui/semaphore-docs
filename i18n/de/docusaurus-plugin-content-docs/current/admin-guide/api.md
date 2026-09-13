@@ -2,19 +2,19 @@
 
 ## API-Referenz {#api-reference}
 
-Semaphore UI stellt die API-Dokumentation in zwei Formaten bereit, sodass Sie das für Ihren Arbeitsablauf passende wählen können:
+Semaphore UI stellt zwei Formate der API-Dokumentation bereit, damit Sie dasjenige wählen können, das am besten zu Ihrem Workflow passt:
 
-* [Swagger/OpenAPI](https://semaphoreui.com/api-docs) &mdash; ideal, wenn Sie eine interaktive, browserbasierte Oberfläche bevorzugen.
+* [Swagger/OpenAPI](https://semaphoreui.com/api-docs) &mdash; ideal, wenn Sie eine interaktive, browserbasierte Umgebung bevorzugen.
 * [Offizielle Postman-Collection](https://www.postman.com/semaphoreui) &mdash; erkunden und testen Sie alle Endpunkte in Postman.
-* **Integrierte Swagger-API-Dokumentation** &mdash; interaktive API-Dokumentation auf Basis von Swagger UI. Sie können sie direkt auf Ihrer Instanz aufrufen.
+* **Integrierte Swagger-API-Dokumentation** &mdash; interaktive API-Dokumentation auf Basis von Swagger UI. Sie können sie auf Ihrer Instanz aufrufen.
 
 ![](/assets/swagger-link.webp)
 
-Alle Varianten enthalten eine vollständige Dokumentation der verfügbaren Endpunkte, Parameter und Beispielantworten.
+Alle Optionen enthalten eine vollständige Dokumentation der verfügbaren Endpunkte, Parameter und Beispielantworten.
 
 ## Erste Schritte mit der API {#getting-started-with-the-api}
 
-Um die Semaphore-API zu verwenden, müssen Sie ein API-Token erstellen.
+Um die Semaphore-API zu nutzen, müssen Sie ein API-Token erzeugen.
 Dieses Token muss im Request-Header wie folgt übergeben werden:
 
 ```http
@@ -23,21 +23,29 @@ Authorization: Bearer YOUR_API_TOKEN
 
 ### Ein API-Token erstellen {#creating-an-api-token}
 
-Es gibt zwei Möglichkeiten, ein API-Token zu erstellen:
-- Über die Weboberfläche
-- Per HTTP-Anfrage
+Es gibt zwei Wege, ein API-Token zu erstellen:
+- Über die Web-Oberfläche
+- Über einen HTTP-Request
 
-#### Über die Weboberfläche (seit 2.14) {#through-the-web-interface-since-214}
+#### Über die Web-Oberfläche (seit 2.14) {#through-the-web-interface-since-214}
 
-Sie können Ihre API-Tokens über die Weboberfläche von Semaphore erstellen und verwalten:
+Öffnen Sie das Kontomenü am unteren Ende der Seitenleiste und wählen Sie **API-Tokens**. Die Seite listet Ihre Tokens auf; der Link **API-Referenz** öffnet die in Ihrer Instanz integrierte Swagger UI.
 
-![API-Tokens](https://www.semaphoreui.com/uploads/v2.14/tokens.webp)
+![API-Tokens](/assets/api-tokens.webp)
 
-#### Per HTTP-Anfrage {#using-http-request}
+Klicken Sie auf **Neues Token**, geben Sie einen Namen ein, wählen Sie den Ablaufzeitpunkt des Tokens und kopieren Sie den nach der Erstellung angezeigten Wert. Siehe [Ihr Konto](/user-guide/account#api-tokens).
 
-Sie können sich auch per direkter HTTP-Anfrage authentifizieren und ein Sitzungstoken erzeugen.
+<div style={{maxWidth: 420}}>
 
-Melden Sie sich bei Semaphore an (das Passwort muss escaped werden, z. B. `slashy\\pass` statt `slashy\pass`):
+![Dialog für neues Token](/assets/api-token-new.webp)
+
+</div>
+
+#### Über einen HTTP-Request {#using-http-request}
+
+Sie können sich auch über einen direkten HTTP-Request authentifizieren und ein Session-Token erzeugen.
+
+Melden Sie sich bei Semaphore an (das Passwort muss escaped werden, also z. B. `slashy\\pass` anstelle von `slashy\pass`):
 
 ```bash
 curl -v -c /tmp/semaphore-cookie -XPOST \
@@ -56,7 +64,7 @@ curl -v -b /tmp/semaphore-cookie -XPOST \
 http://localhost:3000/api/user/tokens
 ```
 
-Der Befehl sollte eine Ausgabe ähnlich der folgenden liefern:
+Der Befehl sollte etwas Ähnliches wie dies zurückgeben:
 
 ```json
 {
@@ -70,11 +78,11 @@ Der Befehl sollte eine Ausgabe ähnlich der folgenden liefern:
 
 ## Token für API-Anfragen verwenden {#using-token-to-make-api-requests}
 
-Sobald Sie Ihr API-Token haben, übergeben Sie es im **Authorization**-Header, um Ihre Anfragen zu authentifizieren.
+Sobald Sie Ihr API-Token haben, übergeben Sie es im Header **Authorization**, um Ihre Anfragen zu authentifizieren.
 
-### Eine Aufgabe starten {#launch-a-task}
+### Eine Task starten {#launch-a-task}
 
-Verwenden Sie dieses Token, um eine Aufgabe zu starten oder andere Aktionen auszuführen:
+Verwenden Sie dieses Token, um eine Task zu starten oder beliebige andere Aktionen auszuführen:
 
 ```bash
 curl -v -XPOST \

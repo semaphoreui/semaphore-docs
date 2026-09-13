@@ -1,6 +1,8 @@
 # Grupos de variables
 
-La sección Grupos de variables de Semaphore es un lugar para almacenar variables adicionales para un inventario y deben guardarse en formato JSON.
+![Lista de grupos de variables](/assets/variable-groups-list.webp)
+
+La sección Grupos de variables de Semaphore es el lugar donde se guardan variables adicionales para un inventario, y deben almacenarse en formato JSON.
 
 Todas las plantillas de tareas requieren que se defina un grupo de variables, aunque esté vacío. 
 
@@ -12,26 +14,26 @@ Todas las plantillas de tareas requieren que se defina un grupo de variables, au
 ## Actualizar un grupo de variables {#updating-a-variable-group}
 1. Haga clic en la pestaña Grupos de variables.
 2. Haga clic en el icono del lápiz.
-3. Realice los cambios y haga clic en guardar.
+3. Realice sus cambios y haga clic en guardar.
 
 ## Eliminar el grupo de variables {#deleting-the-variable-group}
 Antes de eliminar un grupo de variables, debe eliminar todos los recursos vinculados a él.
-Si no está seguro de qué recursos usan un grupo de variables, siga los pasos 1 y 2 a continuación. Se le mostrará qué recursos lo están usando, con enlaces a dichos recursos.
+Si no está seguro de qué recursos se usan en un grupo de variables, siga los pasos 1 y 2 a continuación. Se le mostrará qué recursos se están usando, con enlaces a dichos recursos.
 
-1. Haga clic en el grupo de variables.
+1. Haga clic en el Grupo de variables.
 2. Haga clic en el icono de la papelera junto al grupo de variables.
 3. Haga clic en Sí si está seguro de que desea eliminar el grupo de variables.
 
-## Uso de grupos de variables - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
-Cuando desee utilizar una variable o un secreto almacenados en un grupo de variables en su plantilla de Terraform, debe añadir el prefijo `TF_VAR_` al nombre para que el script de Terraform pueda usarlo. 
+## Uso de los grupos de variables: Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
+Cuando quiera utilizar una variable o un secreto guardado en un grupo de variables en su plantilla de Terraform, debe añadir el prefijo `TF_VAR_` al nombre para que el script de Terraform pueda usarlo. 
 
 **Ejemplo**
-Pasar la clave de API de Hetzner Cloud a un playbook de OpenTofu/Terraform. 
+Pasar la clave de la API de Hetzner Cloud a un playbook de OpenTofu/Terraform. 
 
 1. Haga clic en Grupo de variables
 2. Haga clic en `New Group`
 3. Haga clic en la pestaña `Secrets`
-4. Añada `TF_VAR_hcloud_token` e introduzca su `secret` en el campo oculto
+4. Añada `TF_VAR_hcloud_token` y escriba su `secret` en el campo oculto
 5. Haga clic en Guardar
 
 Llamaremos a nuestro secreto `TF_VAR_hcloud_token` como `var.hcloud_token` en 

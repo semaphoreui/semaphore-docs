@@ -1,13 +1,15 @@
 # 변수 그룹
 
-Semaphore의 변수 그룹 섹션은 인벤토리를 위한 추가 변수를 저장하는 곳이며, 변수는 JSON 형식으로 저장해야 합니다.
+![변수 그룹 목록](/assets/variable-groups-list.webp)
 
-모든 작업 템플릿은 비어 있더라도 변수 그룹이 정의되어 있어야 합니다. 
+Semaphore의 변수 그룹 섹션은 인벤토리에 대한 추가 변수를 저장하는 공간이며, 변수는 JSON 형식으로 저장해야 합니다.
+
+모든 작업 템플릿은 변수 그룹이 비어 있더라도 반드시 정의되어 있어야 합니다. 
 
 ## 변수 그룹 생성 {#create-a-variable-group}
 1. 변수 그룹 탭을 클릭합니다.
 2. 새 변수 그룹 버튼을 클릭합니다.
-3. 변수 그룹의 이름을 지정하고 유효한 JSON 변수를 입력하거나 붙여넣습니다. 빈 변수 그룹만 필요한 경우 ```{}```를 입력하십시오.
+3. 변수 그룹의 이름을 지정하고 유효한 JSON 변수를 입력하거나 붙여넣습니다. 빈 변수 그룹이 필요한 경우 ```{}```를 입력합니다.
 
 ## 변수 그룹 업데이트 {#updating-a-variable-group}
 1. 변수 그룹 탭을 클릭합니다.
@@ -23,18 +25,18 @@ Semaphore의 변수 그룹 섹션은 인벤토리를 위한 추가 변수를 저
 3. 변수 그룹을 제거하려는 것이 확실하면 예를 클릭합니다.
 
 ## 변수 그룹 사용 - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
-Terraform 템플릿에서 저장된 변수 그룹의 변수나 시크릿을 활용하려면, Terraform 스크립트가 이를 사용할 수 있도록 이름 앞에 `TF_VAR_` 접두사를 붙여야 합니다. 
+저장된 변수 그룹의 변수나 시크릿을 terraform 템플릿에서 사용하려면, terraform 스크립트가 이를 사용할 수 있도록 이름 앞에 `TF_VAR_` 접두사를 붙여야 합니다. 
 
 **예시**
-Hetzner Cloud API 키를 OpenTofu/Terraform playbook에 전달하기. 
+Hetzner Cloud API 키를 OpenTofu/Terraform 플레이북에 전달하기. 
 
 1. 변수 그룹을 클릭합니다
 2. `New Group`을 클릭합니다
 3. `Secrets` 탭을 클릭합니다
-4. `TF_VAR_hcloud_token`을 추가하고 숨겨진 필드에 `secret`을 추가합니다
+4. `TF_VAR_hcloud_token`을 추가하고 숨겨진 필드에 `secret`을 입력합니다
 5. 저장을 클릭합니다
 
-시크릿 `TF_VAR_hcloud_token`은 hetzner.tf에서 
+hetzner.tf에서는 시크릿 `TF_VAR_hcloud_token`을
 `var.hcloud_token`으로 참조합니다
 ```
 terraform {

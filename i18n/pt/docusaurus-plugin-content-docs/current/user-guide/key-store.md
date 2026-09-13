@@ -2,6 +2,10 @@
 
 O Armazenamento de Chaves no Semaphore é usado para armazenar credenciais para acessar Repositórios remotos, acessar hosts remotos, credenciais de sudo e senhas do Ansible vault.
 
+![Armazenamento de Chaves](/assets/key-store-keys.webp)
+
+A aba **Chaves** lista as credenciais do projeto com seus tipos. A aba **Armazenamentos** (Pro) lista os armazenamentos externos de segredos configurados para o projeto, consulte [Armazenamentos de Segredos](#secret-storages).
+
 ## Tipos {#types}
 
 ### 1. SSH {#1-ssh}
@@ -34,6 +38,10 @@ Isso é usado como preenchimento para Repositórios que não exigem autenticaç�
 ## Armazenamentos de Segredos {#secret-storages}
 
 O Semaphore UI oferece suporte a diferentes armazenamentos para segredos. Você pode escolher o armazenamento por segredo ao criar ou editar um segredo.
+
+Os armazenamentos externos são criados na aba **Armazenamentos** do Armazenamento de Chaves (Pro). Cada armazenamento tem um nome e um tipo; as chaves então referenciam o armazenamento e o caminho do segredo dentro dele.
+
+![Armazenamentos de segredos](/assets/key-store-storages.webp)
 
 ### Banco de dados {#database}
 

@@ -1,34 +1,36 @@
-# Gruppi di variabili
+# Variable Group
 
-La sezione Gruppi di variabili di Semaphore è il luogo in cui archiviare variabili aggiuntive per un inventory; devono essere memorizzate in formato JSON.
+![Elenco dei Variable Group](/assets/variable-groups-list.webp)
 
-Tutti i modelli di task richiedono che sia definito un gruppo di variabili, anche se vuoto. 
+La sezione Variable Groups di Semaphore è il luogo in cui memorizzare variabili aggiuntive per un Inventory e deve essere in formato JSON.
 
-## Creare un gruppo di variabili {#create-a-variable-group}
-1. Fare clic sulla scheda Gruppi di variabili.
-2. Fare clic sul pulsante Nuovo gruppo di variabili.
-3. Assegnare un nome al gruppo di variabili e digitare o incollare variabili JSON valide. Se serve solo un gruppo di variabili vuoto, digitare ```{}```.
+Tutti i Task Template richiedono che sia definito un Variable Group, anche se vuoto. 
 
-## Aggiornare un gruppo di variabili {#updating-a-variable-group}
-1. Fare clic sulla scheda Gruppi di variabili.
+## Creazione di un Variable Group {#create-a-variable-group}
+1. Fare clic sulla scheda Variable Group.
+2. Fare clic sul pulsante Nuovo Variable Group.
+3. Assegnare un nome al Variable Group e digitare o incollare variabili JSON valide. Se è necessario soltanto un Variable Group vuoto, digitare ```{}```.
+
+## Aggiornamento di un Variable Group {#updating-a-variable-group}
+1. Fare clic sulla scheda Variable Groups.
 2. Fare clic sull'icona a forma di matita.
-3. Apportare le modifiche e fare clic su Salva.
+3. Apportare le modifiche e fare clic su salva.
 
-## Eliminare un gruppo di variabili {#deleting-the-variable-group}
-Prima di rimuovere un gruppo di variabili, è necessario rimuovere tutte le risorse ad esso collegate.
-Se non si è sicuri di quali risorse utilizzino un gruppo di variabili, seguire i passaggi 1 e 2 riportati di seguito. Verranno mostrate le risorse in uso, con i collegamenti a tali risorse.
+## Eliminazione di un Variable Group {#deleting-the-variable-group}
+Prima di rimuovere un Variable Group, è necessario rimuovere tutte le risorse ad esso collegate.
+Se non si è sicuri di quali risorse vengano utilizzate in un Variable Group, seguire i passaggi 1 e 2 riportati di seguito. Verranno mostrate le risorse in uso, con i collegamenti a tali risorse.
 
-1. Fare clic sul gruppo di variabili.
-2. Fare clic sull'icona del cestino accanto al gruppo di variabili.
-3. Fare clic su Sì se si è sicuri di voler rimuovere il gruppo di variabili.
+1. Fare clic sul Variable Group.
+2. Fare clic sull'icona del cestino accanto al Variable Group.
+3. Fare clic su Sì se si è sicuri di voler rimuovere il Variable Group.
 
-## Utilizzo dei gruppi di variabili - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
-Quando si desidera utilizzare una variabile o un segreto di un gruppo di variabili nel modello Terraform, è necessario aggiungere al nome il prefisso `TF_VAR_` affinché lo script Terraform possa utilizzarlo. 
+## Utilizzo dei Variable Group - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
+Quando si desidera utilizzare una variabile o un segreto memorizzato in un Variable Group all'interno di un Task Template terraform, è necessario anteporre al nome il prefisso `TF_VAR_` affinché lo script terraform lo utilizzi. 
 
 **Esempio**
 Passaggio della chiave API di Hetzner Cloud a un playbook OpenTofu/Terraform. 
 
-1. Fare clic su Gruppi di variabili
+1. Fare clic su Variable Group
 2. Fare clic su `New Group`
 3. Fare clic sulla scheda `Secrets`
 4. Aggiungere `TF_VAR_hcloud_token` e inserire il proprio `secret` nel campo nascosto
@@ -69,4 +71,4 @@ resource "hcloud_server" "webserver" {
     ipv6_enabled = true
   }
 }
-```
+``` 

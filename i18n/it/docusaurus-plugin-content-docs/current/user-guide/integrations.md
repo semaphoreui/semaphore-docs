@@ -1,32 +1,36 @@
-# Integrazioni
+# Integration
 
-Le integrazioni consentono di stabilire un'interazione tra Semaphore e servizi esterni, come GitHub e GitLab.
+Le Integration consentono di stabilire un'interazione tra Semaphore e servizi esterni, come GitHub e GitLab.
 
-![](/assets/integrations_1.jpg)
+![Elenco delle Integration](/assets/integrations-list.webp)
 
-Tramite un'integrazione è possibile avviare un modello specifico chiamando un endpoint speciale (alias), per il quale è possibile configurare uno dei seguenti metodi di autenticazione:
-* Webhook GitHub
+L'URL del webhook del Project è mostrato sopra l'elenco. Ogni Integration ha un nome e il Task Template che avvia; fare clic su un'Integration per configurarne i matcher e gli estrattori di valori.
+
+![Dettaglio di un'Integration](/assets/integration-detail.webp)
+
+Tramite un'Integration è possibile avviare un Task Template specifico chiamando un endpoint dedicato (alias), per il quale si può configurare uno dei seguenti metodi di autenticazione:
+* GitHub Webhooks
 * Token
 * HMAC
 * Nessuna autenticazione
 
-L'alias rappresenta un URL nel seguente formato: `/api/integrations/<random_string>`. Supporta richieste `GET` e `POST`.
+L'alias corrisponde a un URL nel formato seguente: `/api/integrations/<random_string>`. Supporta le richieste `GET` e `POST`.
 
 ## Matcher {#matchers}
 
-Con i matcher è possibile definire i parametri della richiesta in ingresso. Quando questi parametri corrispondono, il modello viene invocato.
+Con i matcher è possibile definire i parametri della richiesta in arrivo. Quando questi parametri corrispondono, il Task Template viene invocato.
 
 ## Estrattori di valori {#value-extractors}
 
-Con un estrattore è possibile estrarre i dati necessari dalla richiesta in ingresso e passarli al task come variabili d'ambiente. Affinché le variabili estratte vengano passate al
-task, è necessario creare un ambiente con le chiavi corrispondenti. Assicurarsi che le chiavi dell'ambiente corrispondano alle variabili definite nell'estrattore, in modo che il task possa ricevere
-e utilizzare le variabili d'ambiente corrette.
+Con un estrattore è possibile prelevare dati dall'intestazione o dal corpo della richiesta (campo JSON o stringa) e passarli al Task. Ogni valore estratto ha un **Variable type**:
 
-## Parametri del task {#task-parameters}
+* **Environment**: il valore viene aggiunto alle variabili d'ambiente del Task, sovrascrivendo una variabile con lo stesso nome proveniente dal Variable Group.
+* **Task parameter**: il valore diventa un parametro del Task, ad esempio una variabile di survey o un prompt.
 
-Le integrazioni possono avviare task con parametri. Utilizzare gli estrattori di valori per costruire un payload JSON per i parametri del task e configurare il modello affinché accetti i valori richiesti all'avvio.
+## Parametri del Task {#task-parameters}
+
+Le Integration possono avviare Task con parametri. Utilizzare gli estrattori di valori per costruire un payload JSON per i parametri del Task e configurare il Task Template in modo che accetti valori richiesti tramite prompt.
 
 ## Note su alias e matcher {#notes-on-aliases-and-matchers}
 
-Per le integrazioni configurate con un endpoint alias, i matcher non vengono utilizzati. Preferire l'autenticazione token/HMAC secondo necessità e passare i parametri tramite gli estrattori.
-
+Un alias di Project (l'URL sopra l'elenco delle Integration) è condiviso da tutte le Integration del Project: Semaphore verifica i matcher di ogni Integration e avvia i Task Template i cui matcher corrispondono. Un'Integration può avere anche un alias proprio; le richieste indirizzate a tale alias avviano quell'Integration senza valutare i matcher. Utilizzare preferibilmente l'autenticazione tramite token/HMAC secondo necessità e passare i parametri tramite gli estrattori.

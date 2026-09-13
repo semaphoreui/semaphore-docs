@@ -1,90 +1,35 @@
-
 # Historique
 
-L'écran Historique de Semaphore offre une vue complète de toutes les exécutions de tâches de votre projet. Cette fonctionnalité vous permet de suivre et d'analyser l'historique d'exécution de vos tâches, et vous fournit des informations précieuses sur vos workflows d'automatisation.
+L'onglet **Historique** du tableau de bord du projet liste toutes les tâches du projet, de la plus récente à la plus ancienne. C'est la vue par défaut lorsque vous ouvrez un projet.
 
-![](/assets/project_history.webp)
+![Historique du projet](/assets/project-dashboard-history.webp)
 
-## Vue d'ensemble {#overview}
+## Colonnes {#columns}
 
-La page Historique affiche une liste chronologique de toutes les exécutions de tâches, avec notamment :
+| Colonne | Contenu |
+|---|---|
+| **Tâche** | Numéro de la tâche, modèle à partir duquel elle a été créée et message du commit de la révision du dépôt utilisée. Une icône à gauche indique l'application (Ansible, Terraform, Bash, etc.). |
+| **Version** | Pour les [modèles de build et de déploiement](../task-templates/build-deploy) : la version construite ou déployée. Pour les autres modèles, seulement une icône de statut. |
+| **Statut** | Badge du statut actuel, voir [Statuts des tâches](../tasks#task-statuses). |
+| **Utilisateur** | Qui a démarré la tâche. Les tâches démarrées par une planification ou une intégration n'ont pas d'utilisateur. |
+| **Début** | Date et heure de début dans le fuseau horaire de votre navigateur. |
+| **Durée** | Durée d'exécution de la tâche. |
 
-- Les modèles de tâches utilisés
-- Le statut d'exécution (succès, échec, en cours)
-- Les heures de début et de fin
-- La durée
-- L'utilisateur ayant lancé la tâche
-- La sortie et les journaux de la tâche
+La liste est paginée. Cliquez sur le numéro de la tâche ou sur le nom du modèle pour ouvrir la [fenêtre de la tâche](../tasks#task-window) avec le journal, les détails et le résumé. Cliquez sur le nom du modèle dans l'en-tête de la fenêtre de la tâche pour accéder à la page du modèle.
 
-## Consulter l'historique des tâches {#viewing-task-history}
+## Conservation des tâches {#task-retention}
 
-### Accéder à l'historique {#accessing-history}
+Par défaut, toutes les tâches et leurs journaux sont conservés indéfiniment. Pour limiter l'historique par modèle, définissez `max_tasks_per_template` dans `config.json` ou la variable d'environnement `SEMAPHORE_MAX_TASKS_PER_TEMPLATE` :
 
-1. Accédez à votre projet dans Semaphore
-2. Cliquez sur l'onglet « Historique »
-3. Consultez la liste de toutes les exécutions de tâches
+```json
+{
+  "max_tasks_per_template": 30
+}
+```
 
-## Détails d'une tâche {#task-details}
+Lorsque la limite est atteinte, les tâches les plus anciennes de ce modèle sont supprimées avec leurs journaux. Consultez [Configuration](/admin-guide/configuration) pour la liste complète des options.
 
-Cliquer sur une tâche dans la liste de l'historique ouvre une vue détaillée présentant :
+## Voir aussi {#see-also}
 
-1. **Informations sur la tâche**
-   - ID de la tâche
-   - Modèle utilisé
-   - Heures de début et de fin
-   - Durée
-   - Statut
-   - Utilisateur ayant exécuté la tâche
-
-2. **Détails de l'exécution**
-   - Sortie complète de la tâche
-   - Messages d'erreur (le cas échéant)
-   - Variables d'environnement utilisées
-   - Informations sur l'inventaire
-   - Détails du dépôt
-
-3. **Journaux de la tâche**
-   - Consultation des journaux en temps réel
-   - Option de téléchargement des journaux
-   - Fonction de recherche dans les journaux
-   - Mise en évidence des erreurs
-
-### Statistiques {#statistics}
-
-Le projet propose une page de statistiques résumant les résultats des tâches sur une période sélectionnée, avec filtrage par utilisateur.
-
-## Gestion des tâches {#task-management}
-
-### Actions disponibles {#actions-available}
-
-Depuis la vue Historique, vous pouvez :
-
-- Accéder aux journaux complets des tâches
-- Télécharger la sortie des tâches
-- Effectuer des recherches dans les journaux
-
-## Rétention des tâches {#task-retention}
-
-Semaphore vous permet de configurer la durée de conservation de l'historique des tâches :
-
-1. **Comportement par défaut**
-   - Toutes les tâches sont stockées dans la base de données
-   - Aucune suppression automatique par défaut
-
-2. **Configurer la rétention**
-   - Définissez un nombre maximal de tâches par modèle
-   - Configurez-le via une variable d'environnement :
-     ```bash
-     SEMAPHORE_MAX_TASKS_PER_TEMPLATE=30
-     ```
-   - Ou via config.json :
-     ```json
-     {
-       "max_tasks_per_template": 30
-     }
-     ```
-
-3. **Règles de rétention**
-   - Lorsque la limite est atteinte, les tâches les plus anciennes sont supprimées automatiquement
-   - La suppression s'effectue par modèle
-   - Les journaux des tâches sont supprimés en même temps que les enregistrements des tâches
+- [Statistiques](./stats) : résultats des tâches agrégés par jour.
+- [Activité](./activity) : journal d'audit des modifications apportées au projet.
