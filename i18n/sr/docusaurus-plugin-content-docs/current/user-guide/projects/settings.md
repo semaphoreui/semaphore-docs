@@ -19,7 +19,7 @@ Kartica **Settings** (Podešavanja) na kontrolnoj tabli projekta (Project) dostu
 
 | Radnja | Efekat |
 |---|---|
-| **Backup project** | Preuzima JSON datoteku sa definicijom projekta: šablonima, inventarima, grupama promenljivih, ključevima (bez tajnih vrednosti), repozitorijumima, rasporedima, prikazima i integracijama. Vratite je preko **New Project → Restore project** ili pomoću [`semaphore projects import`](/admin-guide/cli/projects). |
+| **Backup project** | Preuzima JSON datoteku sa definicijom projekta: šablonima, inventarima, grupama promenljivih, ključevima (bez tajnih vrednosti), repozitorijumima, rasporedima, prikazima i integracijama. Vratite je preko **New Project → Restore project** ili pomoću [`semaphore projects import`](/reference/cli/projects). |
 | **Clear cache** | Briše sve keširane datoteke projekta na serveru, na primer klonirane repozitorijume. Sledeći zadatak ponovo klonira repozitorijume. Radnja je nepovratna. |
 | **Delete project** | Briše projekat sa svim njegovim resursima i istorijom zadataka. Nema opoziva. |
 

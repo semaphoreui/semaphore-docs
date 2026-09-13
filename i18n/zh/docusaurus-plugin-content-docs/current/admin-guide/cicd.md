@@ -20,4 +20,4 @@ curl -X POST https://semaphore.example.com/api/project/1/tasks \
   -d '{"template_id": 5, "message": "Triggered by CI"}'
 ```
 
-响应中包含任务 ID。轮询 `GET /api/project/1/tasks/{task_id}`，直到 `status` 变为 `success`、`error` 或 `stopped`。有关令牌和内置 Swagger 参考，请参阅 [API](/admin-guide/api)。
+响应中包含任务 ID。轮询 `GET /api/project/1/tasks/{task_id}`，直到 `status` 变为 `success`、`error` 或 `stopped`。有关令牌和内置 Swagger 参考，请参阅 [API](/reference/api)。

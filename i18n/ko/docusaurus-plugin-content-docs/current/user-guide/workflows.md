@@ -129,4 +129,4 @@ Delay 노드는 구성된 기간(최소 1초) 동안 워크플로우 실행을 �
 워크플로우 템플릿과 실행은
 `/api/project/{project_id}/workflows`에서 사용할 수 있습니다. `delay` 노드 필드
 (`delay_seconds`)와 중지 엔드포인트(`POST …/runs/{run_id}/stop`)를 포함한 요청 및
-응답 스키마는 [API 문서](/admin-guide/api)를 참고하십시오.
+응답 스키마는 [API 문서](/reference/api)를 참고하십시오.

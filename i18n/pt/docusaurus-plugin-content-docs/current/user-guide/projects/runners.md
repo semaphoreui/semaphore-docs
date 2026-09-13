@@ -35,7 +35,7 @@ Após a criação, clique no runner para ver novamente o seu token ou token de r
 
 ## Instalando o runner {#installing-the-runner}
 
-O runner é o mesmo binário `semaphore` ou a imagem Docker `semaphoreui/runner` iniciados no modo runner. A instalação, o arquivo de configuração, os comandos de registro, os executores (local, Docker, Kubernetes) e a segurança estão descritos no guia do administrador: [Runners](/admin-guide/runners) e [CLI: Runners](/admin-guide/cli/runners).
+O runner é o mesmo binário `semaphore` ou a imagem Docker `semaphoreui/runner` iniciados no modo runner. A instalação, o arquivo de configuração, os comandos de registro, os executores (local, Docker, Kubernetes) e a segurança estão descritos no guia do administrador: [Runners](/admin-guide/runners) e [CLI: Runners](/reference/cli/runners).
 
 ## Roteando tarefas para runners {#routing-tasks-to-runners}
 

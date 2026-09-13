@@ -38,8 +38,8 @@ SQLite、MySQL、または PostgreSQL に保存し、認証情報は暗号化し
 
 | ページ | 内容 |
 |---|---|
-| [CLI](/admin-guide/cli) | シェルからユーザー、プロジェクト、vault、ランナー、データベースマイグレーションを管理します。 |
-| [API](/admin-guide/api) | トークンによる認証と、プログラムからの Semaphore の操作です。 |
+| [CLI](/reference/cli) | シェルからユーザー、プロジェクト、vault、ランナー、データベースマイグレーションを管理します。 |
+| [API](/reference/api) | トークンによる認証と、プログラムからの Semaphore の操作です。 |
 | [CI/CD 連携](/admin-guide/cicd) | 外部のパイプラインから Semaphore のタスクを開始します。 |
 | [ログ](/admin-guide/logs) | サーバーログ、タスクログ、およびそれらの外部への転送です。 |
 | [メトリクス](/admin-guide/metrics) | Prometheus のエンドポイントと、そこで公開されるメトリクスです。 |

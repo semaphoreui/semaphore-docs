@@ -19,7 +19,7 @@ A aba **Configurações** do dashboard do projeto está disponível para os **Ow
 
 | Ação | Efeito |
 |---|---|
-| **Fazer backup do projeto** | Baixa um arquivo JSON com a definição do projeto: templates, inventários, grupos de variáveis, chaves (sem os valores secretos), repositórios, agendamentos, views e integrações. Restaure-o por meio de **Novo Projeto → Restaurar projeto** ou com [`semaphore projects import`](/admin-guide/cli/projects). |
+| **Fazer backup do projeto** | Baixa um arquivo JSON com a definição do projeto: templates, inventários, grupos de variáveis, chaves (sem os valores secretos), repositórios, agendamentos, views e integrações. Restaure-o por meio de **Novo Projeto → Restaurar projeto** ou com [`semaphore projects import`](/reference/cli/projects). |
 | **Limpar cache** | Exclui todos os arquivos em cache do projeto no servidor, por exemplo repositórios clonados. A próxima tarefa clona os repositórios novamente. A ação é irreversível. |
 | **Excluir projeto** | Exclui o projeto com todos os seus recursos e o histórico de tarefas. Não é possível desfazer. |
 

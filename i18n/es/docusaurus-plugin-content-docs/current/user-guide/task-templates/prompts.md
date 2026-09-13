@@ -386,4 +386,4 @@ Use el destroy de Terraform para infraestructura temporal:
 - [Plantillas de Terraform](/user-guide/apps/terraform) - Configuración específica de Terraform
 - [Programaciones](../schedules) - Ejecución automática de tareas
 - [Integraciones](../integrations) - Tareas desencadenadas por webhooks
-- [Documentación de la API](../../admin-guide/api) - Referencia de la API
+- [Documentación de la API](../../reference/api) - Referencia de la API

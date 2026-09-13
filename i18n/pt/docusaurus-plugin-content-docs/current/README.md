@@ -86,8 +86,8 @@ Para produção, consulte [Instalação](/admin-guide/installation) para instala
         <p>Opções e endpoints exatos para quando você já sabe o que está procurando.</p>
         <ul>
           <li><Link to="/admin-guide/configuration/config-file">Arquivo de configuração</Link> e <Link to="/admin-guide/configuration/env-vars">Variáveis de ambiente</Link></li>
-          <li><Link to="/admin-guide/api">API REST</Link></li>
-          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/reference/api">API REST</Link></li>
+          <li><Link to="/reference/cli">CLI</Link></li>
           <li><Link to="/admin-guide/cicd">Integração com CI/CD</Link></li>
           <li><Link to="/faq/troubleshooting">FAQ de solução de problemas</Link></li>
         </ul>

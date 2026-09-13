@@ -35,7 +35,7 @@ Après la création, cliquez sur le runner pour consulter à nouveau son jeton o
 
 ## Installer le runner {#installing-the-runner}
 
-Le runner est le même binaire `semaphore` ou l'image Docker `semaphoreui/runner` démarrés en mode runner. L'installation, le fichier de configuration, les commandes d'enregistrement, les exécuteurs (local, Docker, Kubernetes) et la sécurité sont décrits dans le guide d'administration : [Runners](/admin-guide/runners) et [CLI : Runners](/admin-guide/cli/runners).
+Le runner est le même binaire `semaphore` ou l'image Docker `semaphoreui/runner` démarrés en mode runner. L'installation, le fichier de configuration, les commandes d'enregistrement, les exécuteurs (local, Docker, Kubernetes) et la sécurité sont décrits dans le guide d'administration : [Runners](/admin-guide/runners) et [CLI : Runners](/reference/cli/runners).
 
 ## Acheminer les tâches vers les runners {#routing-tasks-to-runners}
 

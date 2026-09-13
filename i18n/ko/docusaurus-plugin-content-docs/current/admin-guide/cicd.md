@@ -20,4 +20,4 @@ curl -X POST https://semaphore.example.com/api/project/1/tasks \
   -d '{"template_id": 5, "message": "Triggered by CI"}'
 ```
 
-응답에는 작업 ID가 포함됩니다. `status`가 `success`, `error` 또는 `stopped`가 될 때까지 `GET /api/project/1/tasks/{task_id}`를 폴링합니다. 토큰과 내장 Swagger 참조에 대해서는 [API](/admin-guide/api)를 참조하십시오.
+응답에는 작업 ID가 포함됩니다. `status`가 `success`, `error` 또는 `stopped`가 될 때까지 `GET /api/project/1/tasks/{task_id}`를 폴링합니다. 토큰과 내장 Swagger 참조에 대해서는 [API](/reference/api)를 참조하십시오.

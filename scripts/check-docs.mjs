@@ -105,7 +105,7 @@ const KNOWN_ORPHANS = new Set([
  */
 const ENGLISH_ONLY = new Set([
   'reference/configuration',
-  'reference/cli',
+  'reference/cli/commands',
 ]);
 
 const referenced = new Set([

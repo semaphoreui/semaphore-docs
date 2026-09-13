@@ -134,6 +134,6 @@ et consomment des artefacts sur le même chemin d'exécution.
 
 Les modèles et les exécutions de workflow sont disponibles sous
 `/api/project/{project_id}/workflows`. Consultez la
-[documentation de l'API](/admin-guide/api) pour les schémas de requête et de réponse, y
+[documentation de l'API](/reference/api) pour les schémas de requête et de réponse, y
 compris les champs des nœuds `delay` (`delay_seconds`) et le point d'accès d'arrêt
 (`POST …/runs/{run_id}/stop`).

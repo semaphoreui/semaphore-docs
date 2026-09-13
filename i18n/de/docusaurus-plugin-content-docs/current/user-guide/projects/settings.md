@@ -19,7 +19,7 @@ Der Tab **Settings** im Projekt-Dashboard steht den **Owners** des Projekts zur 
 
 | Aktion | Wirkung |
 |---|---|
-| **Backup project** | Lädt eine JSON-Datei mit der Projektdefinition herunter: Task Templates, Inventories, Variable Groups, Schlüssel (ohne geheime Werte), Repositories, Schedules, Ansichten und Integrationen. Stellen Sie sie über **New Project → Restore project** oder mit [`semaphore projects import`](/admin-guide/cli/projects) wieder her. |
+| **Backup project** | Lädt eine JSON-Datei mit der Projektdefinition herunter: Task Templates, Inventories, Variable Groups, Schlüssel (ohne geheime Werte), Repositories, Schedules, Ansichten und Integrationen. Stellen Sie sie über **New Project → Restore project** oder mit [`semaphore projects import`](/reference/cli/projects) wieder her. |
 | **Clear cache** | Löscht alle zwischengespeicherten Dateien des Projekts auf dem Server, zum Beispiel geklonte Repositories. Der nächste Task klont die Repositories erneut. Die Aktion ist nicht umkehrbar. |
 | **Delete project** | Löscht das Projekt mit allen Ressourcen und dem Task-Verlauf. Es gibt kein Zurück. |
 

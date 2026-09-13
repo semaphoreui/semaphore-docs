@@ -38,4 +38,4 @@
 
 - 通过[反向代理](/admin-guide/reverse-proxy)为 Semaphore 启用 TLS。
 - 连接您的身份提供商：[LDAP](/admin-guide/ldap) 或 [OpenID Connect](/admin-guide/openid)。
-- 通过 [API](/admin-guide/api) 和 [CLI](/admin-guide/cli) 从 CI 或脚本驱动 Semaphore。
+- 通过 [API](/reference/api) 和 [CLI](/reference/cli) 从 CI 或脚本驱动 Semaphore。

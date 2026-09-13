@@ -39,8 +39,8 @@ Sve što radite na serveru koji je već pokrenut.
 
 | Stranica | Šta obuhvata |
 |---|---|
-| [CLI](/admin-guide/cli) | Upravljanje korisnicima, projektima, vaultovima, runnerima i migracijama baze podataka iz komandne linije. |
-| [API](/admin-guide/api) | Autentifikacija tokenom i programsko upravljanje Semaphore-om. |
+| [CLI](/reference/cli) | Upravljanje korisnicima, projektima, vaultovima, runnerima i migracijama baze podataka iz komandne linije. |
+| [API](/reference/api) | Autentifikacija tokenom i programsko upravljanje Semaphore-om. |
 | [CI/CD integracija](/admin-guide/cicd) | Pokretanje Semaphore zadataka iz spoljnog pipeline-a. |
 | [Logovi](/admin-guide/logs) | Logovi servera, logovi zadataka i njihovo prosleđivanje drugim sistemima. |
 | [Metrike](/admin-guide/metrics) | Prometheus endpoint i metrike koje izlaže. |

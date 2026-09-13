@@ -386,4 +386,4 @@ Koristite Terraform destroy za privremenu infrastrukturu:
 - [Terraform šabloni](/user-guide/apps/terraform) - Podešavanja specifična za Terraform
 - [Rasporedi](../schedules) - Automatizovano izvršavanje zadataka
 - [Integracije](../integrations) - Zadaci pokrenuti webhook-om
-- [API dokumentacija](../../admin-guide/api) - API referenca
+- [API dokumentacija](../../reference/api) - API referenca

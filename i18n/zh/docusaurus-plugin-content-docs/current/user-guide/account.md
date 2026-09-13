@@ -7,7 +7,7 @@
 | 项目 | 说明 |
 |---|---|
 | 版本 | 服务器上运行的 Semaphore UI 版本。 |
-| **API 令牌（API Tokens）** | 用于 [REST API](/admin-guide/api) 的个人令牌。 |
+| **API 令牌（API Tokens）** | 用于 [REST API](/reference/api) 的个人令牌。 |
 | **编辑账户（Edit Account）** | 您的姓名、用户名、邮箱、告警偏好和密码。 |
 | **退出登录（Sign Out）** | 结束会话。 |
 
@@ -42,4 +42,4 @@
 
 ![新建令牌对话框](/assets/api-token-new.webp)
 
-在 `Authorization: Bearer` 请求头中使用该令牌，参见 [API](/admin-guide/api)。要撤销令牌，请从列表中删除它。
+在 `Authorization: Bearer` 请求头中使用该令牌，参见 [API](/reference/api)。要撤销令牌，请从列表中删除它。

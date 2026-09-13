@@ -188,7 +188,7 @@ Semaphore 2.20 以降は、SIEM(Splunk、Elastic Security、QRadar、Wazuh な�
 
 監査イベントを SIEM に送信する方法は 3 つあります。
 
-1. **プル:** `/api/events` を読み取ります([API ドキュメント](/admin-guide/api)を参照)。
+1. **プル:** `/api/events` を読み取ります([API ドキュメント](/reference/api)を参照)。
 2. **ファイルコレクター:** アクティビティログのファイル出力を有効にし(Pro、上記参照)、`events.log`(JSON 形式を推奨)を Filebeat、Fluentd、または Splunk Universal Forwarder で転送します。
 3. **監査 webhook(Pro):** HTTPS 経由でイベントをリアルタイムにプッシュします。汎用の JSON エンドポイントまたは Splunk HTTP Event Collector に対応しています。
 

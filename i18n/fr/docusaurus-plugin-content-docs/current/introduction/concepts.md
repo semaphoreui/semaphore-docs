@@ -64,7 +64,7 @@ statut, sa durée et le nom de la personne qui l'a lancée, et cet enregistremen
 la fin de l'exécution. Les tâches démarrent depuis l'interface, depuis un
 [planning](/user-guide/schedules), depuis un
 [webhook d'intégration](/user-guide/integrations), depuis l'
-[API](/admin-guide/api), ou depuis un autre modèle dans un
+[API](/reference/api), ou depuis un autre modèle dans un
 [workflow](/user-guide/workflows).
 
 ## Glossaire {#glossary}

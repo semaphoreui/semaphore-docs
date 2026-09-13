@@ -60,7 +60,7 @@ flowchart TD
 템플릿을 시작하면 [태스크](/user-guide/tasks)가 생성됩니다. 태스크는 자체 로그, 상태,
 소요 시간, 시작한 사람의 이름을 가지며, 이 기록은 실행이 끝난 뒤에도 남습니다. 태스크는
 UI에서, [스케줄](/user-guide/schedules)에서,
-[통합 웹훅](/user-guide/integrations)에서, [API](/admin-guide/api)에서, 또는
+[통합 웹훅](/user-guide/integrations)에서, [API](/reference/api)에서, 또는
 [워크플로](/user-guide/workflows) 안의 다른 템플릿에서 시작할 수 있습니다.
 
 ## 용어 사전 {#glossary}

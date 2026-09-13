@@ -20,4 +20,4 @@ curl -X POST https://semaphore.example.com/api/project/1/tasks \
   -d '{"template_id": 5, "message": "Triggered by CI"}'
 ```
 
-レスポンスにはタスク ID が含まれます。`status` が `success`、`error`、`stopped` のいずれかになるまで `GET /api/project/1/tasks/{task_id}` をポーリングしてください。トークンと組み込みの Swagger リファレンスについては [API](/admin-guide/api) を参照してください。
+レスポンスにはタスク ID が含まれます。`status` が `success`、`error`、`stopped` のいずれかになるまで `GET /api/project/1/tasks/{task_id}` をポーリングしてください。トークンと組み込みの Swagger リファレンスについては [API](/reference/api) を参照してください。

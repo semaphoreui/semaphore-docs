@@ -65,7 +65,7 @@ estado, duración y el nombre de quien la inició, y ese registro permanece desp
 termine la ejecución. Las tareas se inician desde la interfaz, desde un
 [horario](/user-guide/schedules), desde un
 [webhook de integración](/user-guide/integrations), desde la
-[API](/admin-guide/api) o desde otra plantilla dentro de un
+[API](/reference/api) o desde otra plantilla dentro de un
 [flujo de trabajo](/user-guide/workflows).
 
 ## Glosario {#glossary}

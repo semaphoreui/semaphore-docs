@@ -391,4 +391,4 @@ Use Terraform destroy for temporary infrastructure:
 - [Terraform Templates](/user-guide/apps/terraform) - Terraform-specific configuration
 - [Schedules](../schedules) - Automated task execution
 - [Integrations](../integrations) - Webhook-triggered tasks
-- [API Documentation](../../admin-guide/api) - API reference
+- [API Documentation](../../reference/api) - API reference

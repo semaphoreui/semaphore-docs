@@ -86,8 +86,8 @@ Za produkciju pogledajte [Instalacija](/admin-guide/installation) za Docker Comp
         <p>Tačne opcije i krajnje tačke kada već znate šta tražite.</p>
         <ul>
           <li><Link to="/admin-guide/configuration/config-file">Konfiguracioni fajl</Link> i <Link to="/admin-guide/configuration/env-vars">Promenljive okruženja</Link></li>
-          <li><Link to="/admin-guide/api">REST API</Link></li>
-          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/reference/api">REST API</Link></li>
+          <li><Link to="/reference/cli">CLI</Link></li>
           <li><Link to="/admin-guide/cicd">CI/CD integracija</Link></li>
           <li><Link to="/faq/troubleshooting">Česta pitanja o rešavanju problema</Link></li>
         </ul>

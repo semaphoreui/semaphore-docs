@@ -8,8 +8,10 @@ This repository is the **documentation site** for [Semaphore UI](https://github.
 |------|------|--------|
 | Doc pages | `docs/` | Markdown (and MDX where used) content |
 | Landing / overview | `docs/README.md` | Home page and high-level navigation |
+| Introduction | `docs/introduction/` | What Semaphore is, architecture, concepts, security model, prerequisites |
 | Admin guide | `docs/admin-guide/` | Install, configure, secure, operate Semaphore (servers, auth, runners, HA, etc.) |
 | User guide | `docs/user-guide/` | Day-to-day use of the Semaphore web UI (projects, tasks, inventory, key store, etc.) |
+| Reference | `docs/reference/` | Exact values: configuration options, CLI, REST API. Two pages are generated |
 | FAQ | `docs/faq/` | Troubleshooting and common questions |
 | Static assets | `static/` | Images and other files referenced from docs |
 | Site config | `docusaurus.config.js`, `sidebars.js` | Docusaurus settings and sidebar order |
@@ -17,7 +19,6 @@ This repository is the **documentation site** for [Semaphore UI](https://github.
 | Page templates | `templates/` | One markdown skeleton per page type |
 | Edition registry | `src/data/editions.js` | Which features require Pro or Enterprise |
 | Checks | `scripts/check-docs.mjs` | Front matter, orphan pages, translation structure |
-| Generated reference | `docs/reference/` | Written by tools in the product repo. Never edit by hand |
 
 The **sidebar** is defined explicitly in `sidebars.js`. Adding a new page usually means creating the file under `docs/` **and** registering it in `sidebars.js` if it should appear in navigation.
 
@@ -69,7 +70,7 @@ case, no gerunds).
 
 ### Generated pages
 
-`docs/reference/configuration.md` and `docs/reference/cli.md` are generated from the
+`docs/reference/configuration.md` and `docs/reference/cli/commands.md` are generated from the
 Semaphore source by `tools/docsref` and `tools/clidocs` in the
 [product repository](https://github.com/semaphoreui/semaphore). Editing them here is
 pointless: the next `task docs:gen` overwrites the change, and the product repo's CI

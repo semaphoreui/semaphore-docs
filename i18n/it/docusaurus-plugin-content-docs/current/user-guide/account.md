@@ -7,7 +7,7 @@ Le impostazioni personali si trovano nel menu dell'account in fondo alla barra l
 | Voce | Descrizione |
 |---|---|
 | Version | La versione di Semaphore UI in esecuzione sul server. |
-| **API Tokens** | Token personali per l'[API REST](/admin-guide/api). |
+| **API Tokens** | Token personali per l'[API REST](/reference/api). |
 | **Edit Account** | Il proprio nome, nome utente, e-mail, preferenza sugli avvisi e password. |
 | **Sign Out** | Termina la sessione. |
 
@@ -42,4 +42,4 @@ Fare clic su **New Token**, assegnare un nome al token e scegliere quando scade.
 
 ![Finestra di dialogo per un nuovo token](/assets/api-token-new.webp)
 
-Utilizzare il token nell'intestazione `Authorization: Bearer`, vedere [API](/admin-guide/api). Per revocare un token, eliminarlo dall'elenco.
+Utilizzare il token nell'intestazione `Authorization: Bearer`, vedere [API](/reference/api). Per revocare un token, eliminarlo dall'elenco.

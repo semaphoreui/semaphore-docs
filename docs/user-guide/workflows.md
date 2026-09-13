@@ -132,6 +132,6 @@ artifact-producing and -consuming steps on the same execution path.
 
 Workflow templates and runs are available under
 `/api/project/{project_id}/workflows`. See the
-[API documentation](/admin-guide/api) for request and response schemas, including
+[API documentation](/reference/api) for request and response schemas, including
 `delay` node fields (`delay_seconds`) and the stop endpoint
 (`POST …/runs/{run_id}/stop`).

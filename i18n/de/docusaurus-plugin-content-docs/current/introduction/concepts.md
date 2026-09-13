@@ -65,7 +65,7 @@ eigenes Log, seinen Status, seine Dauer und den Namen der Person, die ihn gestar
 und dieser Eintrag bleibt nach dem Lauf erhalten. Tasks starten aus der UI, über einen
 [Zeitplan](/user-guide/schedules), über einen
 [Integrations-Webhook](/user-guide/integrations), über die
-[API](/admin-guide/api) oder über ein anderes Template in einem
+[API](/reference/api) oder über ein anderes Template in einem
 [Workflow](/user-guide/workflows).
 
 ## Glossar {#glossary}

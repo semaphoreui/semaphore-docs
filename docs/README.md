@@ -87,8 +87,8 @@ For production, see [Installation](/admin-guide/installation) for Docker Compose
         <p>Exact options and endpoints when you already know what you are looking for.</p>
         <ul>
           <li><Link to="/admin-guide/configuration/config-file">Configuration file</Link> and <Link to="/admin-guide/configuration/env-vars">Environment variables</Link></li>
-          <li><Link to="/admin-guide/api">REST API</Link></li>
-          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/reference/api">REST API</Link></li>
+          <li><Link to="/reference/cli">CLI</Link></li>
           <li><Link to="/admin-guide/cicd">CI/CD integration</Link></li>
           <li><Link to="/faq/troubleshooting">Troubleshooting FAQ</Link></li>
         </ul>

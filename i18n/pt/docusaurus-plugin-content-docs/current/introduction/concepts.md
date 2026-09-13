@@ -64,7 +64,7 @@ status, duração e o nome de quem a iniciou, e esse registro permanece depois q
 a execução termina. As tarefas começam pela interface, por um
 [agendamento](/user-guide/schedules), por um
 [webhook de integração](/user-guide/integrations), pela
-[API](/admin-guide/api) ou por outro template em um
+[API](/reference/api) ou por outro template em um
 [workflow](/user-guide/workflows).
 
 ## Glossário {#glossary}

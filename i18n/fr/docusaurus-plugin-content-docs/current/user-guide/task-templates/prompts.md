@@ -386,4 +386,4 @@ Utilisez destroy de Terraform pour une infrastructure temporaire :
 - [Modèles Terraform](/user-guide/apps/terraform) - Configuration propre à Terraform
 - [Planifications](../schedules) - Exécution automatisée des tâches
 - [Intégrations](../integrations) - Tâches déclenchées par webhook
-- [Documentation de l'API](../../admin-guide/api) - Référence de l'API
+- [Documentation de l'API](../../reference/api) - Référence de l'API

@@ -119,6 +119,6 @@ Semaphore 会在后续运行中递增版本号，与构建模板类似。
 
 工作流模板和运行可通过
 `/api/project/{project_id}/workflows` 访问。请参阅
-[API 文档](/admin-guide/api)了解请求和响应结构，包括
+[API 文档](/reference/api)了解请求和响应结构，包括
 `delay` 节点字段（`delay_seconds`）以及停止端点
 （`POST …/runs/{run_id}/stop`）。

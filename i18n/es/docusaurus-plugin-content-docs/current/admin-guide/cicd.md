@@ -20,4 +20,4 @@ curl -X POST https://semaphore.example.com/api/project/1/tasks \
   -d '{"template_id": 5, "message": "Triggered by CI"}'
 ```
 
-La respuesta contiene el identificador de la tarea. Consulte `GET /api/project/1/tasks/{task_id}` de forma periódica hasta que el `status` sea `success`, `error` o `stopped`. Consulte [API](/admin-guide/api) para obtener información sobre los tokens y la referencia de Swagger integrada.
+La respuesta contiene el identificador de la tarea. Consulte `GET /api/project/1/tasks/{task_id}` de forma periódica hasta que el `status` sea `success`, `error` o `stopped`. Consulte [API](/reference/api) para obtener información sobre los tokens y la referencia de Swagger integrada.

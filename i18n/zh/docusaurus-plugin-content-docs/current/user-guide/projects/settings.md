@@ -19,7 +19,7 @@
 
 | 操作 | 效果 |
 |---|---|
-| **Backup project** | 下载包含项目定义的 JSON 文件：模板、清单、变量组、密钥（不含密钥值）、仓库、计划任务、视图和集成。可通过 **New Project → Restore project** 或 [`semaphore projects import`](/admin-guide/cli/projects) 恢复。 |
+| **Backup project** | 下载包含项目定义的 JSON 文件：模板、清单、变量组、密钥（不含密钥值）、仓库、计划任务、视图和集成。可通过 **New Project → Restore project** 或 [`semaphore projects import`](/reference/cli/projects) 恢复。 |
 | **Clear cache** | 删除服务器上该项目的所有缓存文件，例如已克隆的仓库。下一个任务会重新克隆仓库。此操作不可逆。 |
 | **Delete project** | 删除项目及其所有资源和任务历史。无法撤销。 |
 

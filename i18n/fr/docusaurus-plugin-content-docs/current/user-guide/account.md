@@ -7,7 +7,7 @@ Vos paramètres personnels se trouvent dans le menu du compte, en bas de la barr
 | Élément | Description |
 |---|---|
 | Version | La version de Semaphore UI qui s'exécute sur le serveur. |
-| **Jetons d'API** | Jetons personnels pour l'[API REST](/admin-guide/api). |
+| **Jetons d'API** | Jetons personnels pour l'[API REST](/reference/api). |
 | **Modifier le compte** | Votre nom, nom d'utilisateur, adresse e-mail, préférence d'alertes et mot de passe. |
 | **Se déconnecter** | Met fin à la session. |
 
@@ -42,4 +42,4 @@ Cliquez sur **Nouveau jeton**, donnez un nom au jeton et choisissez sa date d'ex
 
 ![Boîte de dialogue de nouveau jeton](/assets/api-token-new.webp)
 
-Utilisez le jeton dans l'en-tête `Authorization: Bearer`, voir [API](/admin-guide/api). Pour révoquer un jeton, supprimez-le de la liste.
+Utilisez le jeton dans l'en-tête `Authorization: Bearer`, voir [API](/reference/api). Pour révoquer un jeton, supprimez-le de la liste.

@@ -386,4 +386,4 @@ Tags を使って playbook の特定の部分のみを実行します。
 - [Terraform のテンプレート](/user-guide/apps/terraform) - Terraform 固有の設定
 - [スケジュール](../schedules) - タスクの自動実行
 - [インテグレーション](../integrations) - Webhook で開始するタスク
-- [API ドキュメント](../../admin-guide/api) - API リファレンス
+- [API ドキュメント](../../reference/api) - API リファレンス

@@ -64,7 +64,7 @@ status, duration, and the name of whoever started it, and that record stays afte
 the run finishes. Tasks start from the UI, from a
 [schedule](/user-guide/schedules), from an
 [integration webhook](/user-guide/integrations), from the
-[API](/admin-guide/api), or from another template in a
+[API](/reference/api), or from another template in a
 [workflow](/user-guide/workflows).
 
 ## Glossary {#glossary}

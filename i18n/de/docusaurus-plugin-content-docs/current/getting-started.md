@@ -38,4 +38,4 @@ Diese Begriffe tauchen überall in der Benutzeroberfläche auf.
 
 - Betreiben Sie Semaphore hinter TLS mit einem [Reverse-Proxy](/admin-guide/reverse-proxy).
 - Verbinden Sie Ihren Identitätsanbieter: [LDAP](/admin-guide/ldap) oder [OpenID Connect](/admin-guide/openid).
-- Steuern Sie Semaphore aus CI oder Skripten über die [API](/admin-guide/api) und die [CLI](/admin-guide/cli).
+- Steuern Sie Semaphore aus CI oder Skripten über die [API](/reference/api) und die [CLI](/reference/cli).

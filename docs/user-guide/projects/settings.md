@@ -24,7 +24,7 @@ The **Settings** tab of the project dashboard is available to project **Owners**
 
 | Action | Effect |
 |---|---|
-| **Backup project** | Downloads a JSON file with the project definition: templates, inventories, variable groups, keys (without secret values), repositories, schedules, views, and integrations. Restore it through **New Project → Restore project** or with [`semaphore projects import`](/admin-guide/cli/projects). |
+| **Backup project** | Downloads a JSON file with the project definition: templates, inventories, variable groups, keys (without secret values), repositories, schedules, views, and integrations. Restore it through **New Project → Restore project** or with [`semaphore projects import`](/reference/cli/projects). |
 | **Clear cache** | Deletes all cached files of the project on the server, for example cloned repositories. The next task clones the repositories again. The action is irreversible. |
 | **Delete project** | Deletes the project with all its resources and task history. There is no undo. |
 

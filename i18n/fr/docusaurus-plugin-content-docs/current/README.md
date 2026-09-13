@@ -86,8 +86,8 @@ Pour la production, consultez [Installation](/admin-guide/installation) pour les
         <p>Les options et points de terminaison exacts lorsque vous savez déjà ce que vous cherchez.</p>
         <ul>
           <li><Link to="/admin-guide/configuration/config-file">Fichier de configuration</Link> et <Link to="/admin-guide/configuration/env-vars">Variables d'environnement</Link></li>
-          <li><Link to="/admin-guide/api">API REST</Link></li>
-          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/reference/api">API REST</Link></li>
+          <li><Link to="/reference/cli">CLI</Link></li>
           <li><Link to="/admin-guide/cicd">Intégration CI/CD</Link></li>
           <li><Link to="/faq/troubleshooting">FAQ de dépannage</Link></li>
         </ul>

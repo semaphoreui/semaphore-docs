@@ -39,8 +39,8 @@ Everything you do on a server that is already running.
 
 | Page | What it covers |
 |---|---|
-| [CLI](/admin-guide/cli) | Managing users, projects, vaults, runners, and database migrations from the shell. |
-| [API](/admin-guide/api) | Authenticating with a token and driving Semaphore programmatically. |
+| [CLI](/reference/cli) | Managing users, projects, vaults, runners, and database migrations from the shell. |
+| [API](/reference/api) | Authenticating with a token and driving Semaphore programmatically. |
 | [CI/CD integration](/admin-guide/cicd) | Starting Semaphore tasks from an external pipeline. |
 | [Logs](/admin-guide/logs) | Server logs, task logs, and forwarding them elsewhere. |
 | [Metrics](/admin-guide/metrics) | The Prometheus endpoint and the metrics it exposes. |

@@ -35,7 +35,7 @@
 
 ## Установка раннера {#installing-the-runner}
 
-Раннер — это тот же бинарный файл `semaphore` или Docker-образ `semaphoreui/runner`, запущенный в режиме раннера. Установка, файл конфигурации, команды регистрации, исполнители (local, Docker, Kubernetes) и вопросы безопасности описаны в руководстве администратора: [Раннеры](/admin-guide/runners) и [CLI: Раннеры](/admin-guide/cli/runners).
+Раннер — это тот же бинарный файл `semaphore` или Docker-образ `semaphoreui/runner`, запущенный в режиме раннера. Установка, файл конфигурации, команды регистрации, исполнители (local, Docker, Kubernetes) и вопросы безопасности описаны в руководстве администратора: [Раннеры](/admin-guide/runners) и [CLI: Раннеры](/reference/cli/runners).
 
 ## Направление задач на раннеры {#routing-tasks-to-runners}
 

@@ -7,7 +7,7 @@ Ihre persönlichen Einstellungen finden Sie im Kontomenü am unteren Ende der Se
 | Eintrag | Beschreibung |
 |---|---|
 | Version | Die auf dem Server laufende Version von Semaphore UI. |
-| **API Tokens** | Persönliche Tokens für die [REST-API](/admin-guide/api). |
+| **API Tokens** | Persönliche Tokens für die [REST-API](/reference/api). |
 | **Edit Account** | Ihr Name, Benutzername, Ihre E-Mail-Adresse, Ihre Benachrichtigungseinstellung und Ihr Passwort. |
 | **Sign Out** | Beendet die Sitzung. |
 
@@ -42,4 +42,4 @@ Klicken Sie auf **New Token**, geben Sie dem Token einen Namen und wählen Sie d
 
 ![Dialog für neues Token](/assets/api-token-new.webp)
 
-Verwenden Sie das Token im Header `Authorization: Bearer`, siehe [API](/admin-guide/api). Um ein Token zu widerrufen, löschen Sie es aus der Liste.
+Verwenden Sie das Token im Header `Authorization: Bearer`, siehe [API](/reference/api). Um ein Token zu widerrufen, löschen Sie es aus der Liste.

@@ -127,6 +127,6 @@ i passaggi che producono e consumano artefatti sullo stesso percorso di esecuzio
 
 I template e le esecuzioni dei Workflow sono disponibili in
 `/api/project/{project_id}/workflows`. Vedere la
-[documentazione API](/admin-guide/api) per gli schemi di richiesta e risposta, inclusi
+[documentazione API](/reference/api) per gli schemi di richiesta e risposta, inclusi
 i campi dei nodi `delay` (`delay_seconds`) e l'endpoint di interruzione
 (`POST …/runs/{run_id}/stop`).

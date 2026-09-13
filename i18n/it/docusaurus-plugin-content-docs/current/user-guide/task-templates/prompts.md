@@ -386,4 +386,4 @@ Utilizzare destroy di Terraform per l'infrastruttura temporanea:
 - [Task Template Terraform](/user-guide/apps/terraform) - Configurazione specifica di Terraform
 - [Schedule](../schedules) - Esecuzione automatica dei Task
 - [Integration](../integrations) - Task avviati da webhook
-- [Documentazione API](../../admin-guide/api) - Riferimento dell'API
+- [Documentazione API](../../reference/api) - Riferimento dell'API

@@ -30,6 +30,17 @@ const redirects = [
   {to: '/admin-guide/notifications', from: ['/category/notifications']},
   {to: '/admin-guide', from: ['/category/admin-guide']},
   {to: '/user-guide', from: ['/category/user-guide']},
+
+  // The CLI and the REST API describe exact commands, flags and endpoints, so
+  // they belong in Reference next to the generated pages rather than in the
+  // Admin Guide, which explains tasks.
+  {to: '/reference/cli', from: ['/admin-guide/cli']},
+  {to: '/reference/cli/users', from: ['/admin-guide/cli/users']},
+  {to: '/reference/cli/projects', from: ['/admin-guide/cli/projects']},
+  {to: '/reference/cli/vaults', from: ['/admin-guide/cli/vaults']},
+  {to: '/reference/cli/runners', from: ['/admin-guide/cli/runners']},
+  {to: '/reference/cli/migrations', from: ['/admin-guide/cli/migrations']},
+  {to: '/reference/api', from: ['/admin-guide/api']},
 ];
 
 module.exports = redirects;

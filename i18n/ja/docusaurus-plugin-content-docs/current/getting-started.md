@@ -38,4 +38,4 @@
 
 - [リバースプロキシ](/admin-guide/reverse-proxy)を使って Semaphore を TLS の背後に配置する。
 - ID プロバイダーを接続する: [LDAP](/admin-guide/ldap) または [OpenID Connect](/admin-guide/openid)。
-- [API](/admin-guide/api) と [CLI](/admin-guide/cli) を使って、CI やスクリプトから Semaphore を操作する。
+- [API](/reference/api) と [CLI](/reference/cli) を使って、CI やスクリプトから Semaphore を操作する。

@@ -36,8 +36,8 @@ SQLite、MySQL 或 PostgreSQL 中，对凭据加密保存，并在服务器本�
 
 | 页面 | 涵盖内容 |
 |---|---|
-| [CLI](/admin-guide/cli) | 在命令行中管理用户、项目、密钥保险库、运行器和数据库迁移。 |
-| [API](/admin-guide/api) | 使用令牌进行身份验证，并以编程方式驱动 Semaphore。 |
+| [CLI](/reference/cli) | 在命令行中管理用户、项目、密钥保险库、运行器和数据库迁移。 |
+| [API](/reference/api) | 使用令牌进行身份验证，并以编程方式驱动 Semaphore。 |
 | [CI/CD 集成](/admin-guide/cicd) | 从外部流水线启动 Semaphore 任务。 |
 | [日志](/admin-guide/logs) | 服务器日志、任务日志，以及把它们转发到别处。 |
 | [指标](/admin-guide/metrics) | Prometheus 端点及其暴露的指标。 |

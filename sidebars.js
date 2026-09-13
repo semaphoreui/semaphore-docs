@@ -87,18 +87,6 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'CLI',
-          link: { type: 'doc', id: 'admin-guide/cli' },
-          items: [
-            'admin-guide/cli/users',
-            'admin-guide/cli/projects',
-            'admin-guide/cli/vaults',
-            'admin-guide/cli/runners',
-            'admin-guide/cli/migrations',
-          ],
-        },
-        {
-          type: 'category',
           label: 'LDAP and AD',
           link: { type: 'doc', id: 'admin-guide/ldap' },
           items: [
@@ -124,7 +112,6 @@ const sidebars = {
             'admin-guide/openid/pocket-id',
           ],
         },
-        'admin-guide/api',
         'admin-guide/cicd',
         'admin-guide/runners',
         'admin-guide/logs',
@@ -245,7 +232,20 @@ const sidebars = {
       link: { type: 'doc', id: 'reference/README' },
       items: [
         'reference/configuration',
-        'reference/cli',
+        {
+          type: 'category',
+          label: 'CLI',
+          link: { type: 'doc', id: 'reference/cli/README' },
+          items: [
+            'reference/cli/commands',
+            'reference/cli/users',
+            'reference/cli/projects',
+            'reference/cli/vaults',
+            'reference/cli/runners',
+            'reference/cli/migrations',
+          ],
+        },
+        'reference/api',
       ],
     },
     {

@@ -64,7 +64,7 @@ status, trajanje i ime onoga ko ga je pokrenuo, a taj zapis ostaje i nakon
 završetka pokretanja. Zadaci se pokreću iz korisničkog interfejsa, iz
 [rasporeda](/user-guide/schedules), iz
 [integracionog webhook-a](/user-guide/integrations), iz
-[API-ja](/admin-guide/api) ili iz drugog šablona u okviru
+[API-ja](/reference/api) ili iz drugog šablona u okviru
 [toka rada](/user-guide/workflows).
 
 ## Rečnik pojmova {#glossary}

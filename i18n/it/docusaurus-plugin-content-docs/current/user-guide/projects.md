@@ -54,4 +54,4 @@ Un Project può essere esportato in un file JSON e importato nella stessa istanz
 - **Esportazione**: aprire **Dashboard → Settings** e fare clic su **Backup project** (vedere [Settings](./projects/settings)).
 - **Importazione**: fare clic sul nome del Project nella barra laterale, scegliere **Restore project** e caricare il file di backup.
 
-Entrambe le operazioni sono disponibili anche da riga di comando, vedere [CLI: Project](/admin-guide/cli/projects).
+Entrambe le operazioni sono disponibili anche da riga di comando, vedere [CLI: Project](/reference/cli/projects).

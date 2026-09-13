@@ -38,4 +38,4 @@
 
 - Разместите Semaphore за TLS с помощью [обратного прокси](/admin-guide/reverse-proxy).
 - Подключите провайдера идентификации: [LDAP](/admin-guide/ldap) или [OpenID Connect](/admin-guide/openid).
-- Управляйте Semaphore из CI или скриптов через [API](/admin-guide/api) и [CLI](/admin-guide/cli).
+- Управляйте Semaphore из CI или скриптов через [API](/reference/api) и [CLI](/reference/cli).

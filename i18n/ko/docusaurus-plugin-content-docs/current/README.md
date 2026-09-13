@@ -86,8 +86,8 @@ docker run -d -p 3000:3000 \
         <p>찾는 내용을 이미 알고 있을 때 확인하는 정확한 옵션과 엔드포인트입니다.</p>
         <ul>
           <li><Link to="/admin-guide/configuration/config-file">구성 파일</Link> 및 <Link to="/admin-guide/configuration/env-vars">환경 변수</Link></li>
-          <li><Link to="/admin-guide/api">REST API</Link></li>
-          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/reference/api">REST API</Link></li>
+          <li><Link to="/reference/cli">CLI</Link></li>
           <li><Link to="/admin-guide/cicd">CI/CD 통합</Link></li>
           <li><Link to="/faq/troubleshooting">문제 해결 FAQ</Link></li>
         </ul>

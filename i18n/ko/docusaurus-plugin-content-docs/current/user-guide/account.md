@@ -7,7 +7,7 @@
 | 항목 | 설명 |
 |---|---|
 | 버전 | 서버에서 실행 중인 Semaphore UI 버전입니다. |
-| **API 토큰** | [REST API](/admin-guide/api)용 개인 토큰입니다. |
+| **API 토큰** | [REST API](/reference/api)용 개인 토큰입니다. |
 | **계정 편집** | 이름, 사용자 이름, 이메일, 알림 설정, 비밀번호입니다. |
 | **로그아웃** | 세션을 종료합니다. |
 
@@ -42,4 +42,4 @@
 
 ![새 토큰 대화 상자](/assets/api-token-new.webp)
 
-토큰은 `Authorization: Bearer` 헤더에 사용합니다. [API](/admin-guide/api)를 참조하십시오. 토큰을 취소하려면 목록에서 삭제하십시오.
+토큰은 `Authorization: Bearer` 헤더에 사용합니다. [API](/reference/api)를 참조하십시오. 토큰을 취소하려면 목록에서 삭제하십시오.

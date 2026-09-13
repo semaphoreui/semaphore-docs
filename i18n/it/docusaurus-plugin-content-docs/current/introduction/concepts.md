@@ -64,7 +64,7 @@ stato, durata e il nome di chi lo ha avviato, e questa registrazione resta anche
 la fine dell'esecuzione. I task si avviano dalla UI, da una
 [pianificazione](/user-guide/schedules), da un
 [webhook di integrazione](/user-guide/integrations), dall'
-[API](/admin-guide/api) o da un altro template all'interno di un
+[API](/reference/api) o da un altro template all'interno di un
 [workflow](/user-guide/workflows).
 
 ## Glossario {#glossary}

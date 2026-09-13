@@ -19,7 +19,7 @@ La pestaña **Ajustes** del panel del proyecto está disponible para los **Propi
 
 | Acción | Efecto |
 |---|---|
-| **Copia de seguridad del proyecto** | Descarga un archivo JSON con la definición del proyecto: plantillas, inventarios, grupos de variables, claves (sin los valores secretos), repositorios, programaciones, vistas e integraciones. Restáurelo mediante **Nuevo proyecto → Restaurar proyecto** o con [`semaphore projects import`](/admin-guide/cli/projects). |
+| **Copia de seguridad del proyecto** | Descarga un archivo JSON con la definición del proyecto: plantillas, inventarios, grupos de variables, claves (sin los valores secretos), repositorios, programaciones, vistas e integraciones. Restáurelo mediante **Nuevo proyecto → Restaurar proyecto** o con [`semaphore projects import`](/reference/cli/projects). |
 | **Borrar caché** | Elimina del servidor todos los archivos en caché del proyecto, por ejemplo los repositorios clonados. La siguiente tarea vuelve a clonar los repositorios. La acción es irreversible. |
 | **Eliminar proyecto** | Elimina el proyecto con todos sus recursos y su historial de tareas. No se puede deshacer. |
 

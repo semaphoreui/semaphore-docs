@@ -86,8 +86,8 @@ docker run -d -p 3000:3000 \
         <p>Точные параметры и конечные точки, когда вы уже знаете, что ищете.</p>
         <ul>
           <li><Link to="/admin-guide/configuration/config-file">Файл конфигурации</Link> и <Link to="/admin-guide/configuration/env-vars">Переменные окружения</Link></li>
-          <li><Link to="/admin-guide/api">REST API</Link></li>
-          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/reference/api">REST API</Link></li>
+          <li><Link to="/reference/cli">CLI</Link></li>
           <li><Link to="/admin-guide/cicd">Интеграция с CI/CD</Link></li>
           <li><Link to="/faq/troubleshooting">Частые вопросы: устранение неполадок</Link></li>
         </ul>

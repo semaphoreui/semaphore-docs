@@ -86,8 +86,8 @@ docker run -d -p 3000:3000 \
         <p>探しているものが分かっている場合に参照する、正確なオプションとエンドポイントです。</p>
         <ul>
           <li><Link to="/admin-guide/configuration/config-file">設定ファイル</Link> と <Link to="/admin-guide/configuration/env-vars">環境変数</Link></li>
-          <li><Link to="/admin-guide/api">REST API</Link></li>
-          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/reference/api">REST API</Link></li>
+          <li><Link to="/reference/cli">CLI</Link></li>
           <li><Link to="/admin-guide/cicd">CI/CD 連携</Link></li>
           <li><Link to="/faq/troubleshooting">トラブルシューティング FAQ</Link></li>
         </ul>

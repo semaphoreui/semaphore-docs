@@ -19,7 +19,7 @@ La scheda **Settings** della dashboard del Project è disponibile per i **Owner*
 
 | Azione | Effetto |
 |---|---|
-| **Backup project** | Scarica un file JSON con la definizione del Project: Task Template, Inventory, Variable Group, chiavi (senza i valori segreti), Repository, Schedule, viste e Integration. Per ripristinarlo utilizzare **New Project → Restore project** oppure [`semaphore projects import`](/admin-guide/cli/projects). |
+| **Backup project** | Scarica un file JSON con la definizione del Project: Task Template, Inventory, Variable Group, chiavi (senza i valori segreti), Repository, Schedule, viste e Integration. Per ripristinarlo utilizzare **New Project → Restore project** oppure [`semaphore projects import`](/reference/cli/projects). |
 | **Clear cache** | Elimina dal server tutti i file in cache del Project, ad esempio i Repository clonati. Il Task successivo clona di nuovo i Repository. L'azione è irreversibile. |
 | **Delete project** | Elimina il Project con tutte le sue risorse e la cronologia dei Task. Non è possibile annullare l'operazione. |
 

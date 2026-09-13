@@ -35,7 +35,7 @@
 
 ## 러너 설치 {#installing-the-runner}
 
-러너는 동일한 `semaphore` 바이너리 또는 러너 모드로 시작한 `semaphoreui/runner` Docker 이미지입니다. 설치, 설정 파일, 등록 명령, 익스큐터(local, Docker, Kubernetes), 보안에 대한 내용은 관리자 가이드에 설명되어 있습니다: [러너](/admin-guide/runners) 및 [CLI: 러너](/admin-guide/cli/runners).
+러너는 동일한 `semaphore` 바이너리 또는 러너 모드로 시작한 `semaphoreui/runner` Docker 이미지입니다. 설치, 설정 파일, 등록 명령, 익스큐터(local, Docker, Kubernetes), 보안에 대한 내용은 관리자 가이드에 설명되어 있습니다: [러너](/admin-guide/runners) 및 [CLI: 러너](/reference/cli/runners).
 
 ## 러너로 작업 라우팅 {#routing-tasks-to-runners}
 

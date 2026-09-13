@@ -86,8 +86,8 @@ docker run -d -p 3000:3000 \
         <p>当您已经明确要找什么时，可在此查阅精确的选项和端点。</p>
         <ul>
           <li><Link to="/admin-guide/configuration/config-file">配置文件</Link>和<Link to="/admin-guide/configuration/env-vars">环境变量</Link></li>
-          <li><Link to="/admin-guide/api">REST API</Link></li>
-          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/reference/api">REST API</Link></li>
+          <li><Link to="/reference/cli">CLI</Link></li>
           <li><Link to="/admin-guide/cicd">CI/CD 集成</Link></li>
           <li><Link to="/faq/troubleshooting">故障排查 FAQ</Link></li>
         </ul>

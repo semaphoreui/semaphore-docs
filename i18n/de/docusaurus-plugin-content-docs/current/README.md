@@ -86,8 +86,8 @@ Für den Produktionsbetrieb finden Sie unter [Installation](/admin-guide/install
         <p>Genaue Optionen und Endpunkte, wenn Sie bereits wissen, wonach Sie suchen.</p>
         <ul>
           <li><Link to="/admin-guide/configuration/config-file">Konfigurationsdatei</Link> und <Link to="/admin-guide/configuration/env-vars">Umgebungsvariablen</Link></li>
-          <li><Link to="/admin-guide/api">REST-API</Link></li>
-          <li><Link to="/admin-guide/cli">CLI</Link></li>
+          <li><Link to="/reference/api">REST-API</Link></li>
+          <li><Link to="/reference/cli">CLI</Link></li>
           <li><Link to="/admin-guide/cicd">CI/CD-Integration</Link></li>
           <li><Link to="/faq/troubleshooting">FAQ zur Fehlerbehebung</Link></li>
         </ul>

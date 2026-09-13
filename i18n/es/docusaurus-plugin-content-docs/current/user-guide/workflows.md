@@ -127,6 +127,6 @@ los pasos que producen y consumen artefactos en la misma ruta de ejecución.
 
 Las plantillas y ejecuciones de flujos de trabajo están disponibles en
 `/api/project/{project_id}/workflows`. Consulte la
-[documentación de la API](/admin-guide/api) para ver los esquemas de petición y respuesta, incluidos
+[documentación de la API](/reference/api) para ver los esquemas de petición y respuesta, incluidos
 los campos del nodo `delay` (`delay_seconds`) y el endpoint de detención
 (`POST …/runs/{run_id}/stop`).

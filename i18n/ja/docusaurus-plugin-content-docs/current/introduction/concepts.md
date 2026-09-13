@@ -44,7 +44,7 @@ flowchart TD
 
 ### タスクが実行そのもの {#tasks-are-the-runs}
 
-テンプレートを開始すると [タスク](/user-guide/tasks) が作成されます。タスクは固有のログ、ステータス、所要時間、開始した人の名前を持ち、その記録は実行終了後も残ります。タスクは UI、[スケジュール](/user-guide/schedules)、[インテグレーションの Webhook](/user-guide/integrations)、[API](/admin-guide/api)、または [ワークフロー](/user-guide/workflows) 内の別のテンプレートから開始できます。
+テンプレートを開始すると [タスク](/user-guide/tasks) が作成されます。タスクは固有のログ、ステータス、所要時間、開始した人の名前を持ち、その記録は実行終了後も残ります。タスクは UI、[スケジュール](/user-guide/schedules)、[インテグレーションの Webhook](/user-guide/integrations)、[API](/reference/api)、または [ワークフロー](/user-guide/workflows) 内の別のテンプレートから開始できます。
 
 ## 用語集 {#glossary}
 

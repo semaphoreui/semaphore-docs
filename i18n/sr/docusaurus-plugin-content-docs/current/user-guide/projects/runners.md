@@ -35,7 +35,7 @@ Nakon kreiranja kliknite na runner da ponovo vidite njegov token ili token za re
 
 ## Instaliranje runnera {#installing-the-runner}
 
-Runner je isti `semaphore` binarni fajl ili Docker slika `semaphoreui/runner` pokrenuta u režimu runnera. Instalacija, konfiguraciona datoteka, komande za registraciju, izvršioci (lokalni, Docker, Kubernetes) i bezbednost opisani su u vodiču za administratore (Admin Guide): [Runneri](/admin-guide/runners) i [CLI: Runneri](/admin-guide/cli/runners).
+Runner je isti `semaphore` binarni fajl ili Docker slika `semaphoreui/runner` pokrenuta u režimu runnera. Instalacija, konfiguraciona datoteka, komande za registraciju, izvršioci (lokalni, Docker, Kubernetes) i bezbednost opisani su u vodiču za administratore (Admin Guide): [Runneri](/admin-guide/runners) i [CLI: Runneri](/reference/cli/runners).
 
 ## Usmeravanje zadataka na runnere {#routing-tasks-to-runners}
 

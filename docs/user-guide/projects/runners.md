@@ -40,7 +40,7 @@ After creation, click the runner to see its token or registration token again an
 
 ## Installing the runner {#installing-the-runner}
 
-The runner is the same `semaphore` binary or the `semaphoreui/runner` Docker image started in runner mode. Installation, the configuration file, registration commands, executors (local, Docker, Kubernetes), and security are described in the admin guide: [Runners](/admin-guide/runners) and [CLI: Runners](/admin-guide/cli/runners).
+The runner is the same `semaphore` binary or the `semaphoreui/runner` Docker image started in runner mode. Installation, the configuration file, registration commands, executors (local, Docker, Kubernetes), and security are described in the admin guide: [Runners](/admin-guide/runners) and [CLI: Runners](/reference/cli/runners).
 
 ## Routing tasks to runners {#routing-tasks-to-runners}
 

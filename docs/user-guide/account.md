@@ -12,7 +12,7 @@ Your personal settings live in the account menu at the bottom of the sidebar. Cl
 | Item | Description |
 |---|---|
 | Version | The Semaphore UI version running on the server. |
-| **API Tokens** | Personal tokens for the [REST API](/admin-guide/api). |
+| **API Tokens** | Personal tokens for the [REST API](/reference/api). |
 | **Edit Account** | Your name, username, e-mail, alert preference, and password. |
 | **Sign Out** | Ends the session. |
 
@@ -47,4 +47,4 @@ Click **New Token**, give the token a name, and choose when it expires. The toke
 
 ![New token dialog](/assets/api-token-new.webp)
 
-Use the token in the `Authorization: Bearer` header, see [API](/admin-guide/api). To revoke a token, delete it from the list.
+Use the token in the `Authorization: Bearer` header, see [API](/reference/api). To revoke a token, delete it from the list.

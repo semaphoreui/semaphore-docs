@@ -56,7 +56,7 @@ flowchart TD
 状态、时长以及启动者的名字，这条记录在运行结束后依然保留。任务可以从 UI、
 从[定时计划](/user-guide/schedules)、从
 [集成 Webhook](/user-guide/integrations)、从
-[API](/admin-guide/api)，或者从[工作流](/user-guide/workflows)中的另一个模板启动。
+[API](/reference/api)，或者从[工作流](/user-guide/workflows)中的另一个模板启动。
 
 ## 词汇表 {#glossary}
 

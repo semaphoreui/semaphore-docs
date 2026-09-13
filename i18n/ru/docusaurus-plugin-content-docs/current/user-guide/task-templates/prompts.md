@@ -386,4 +386,4 @@ POST /api/project/1/tasks
 - [Шаблоны Terraform](/user-guide/apps/terraform) — настройка, специфичная для Terraform
 - [Расписания](../schedules) — автоматическое выполнение задач
 - [Интеграции](../integrations) — задачи, запускаемые вебхуками
-- [Документация API](../../admin-guide/api) — справочник по API
+- [Документация API](../../reference/api) — справочник по API

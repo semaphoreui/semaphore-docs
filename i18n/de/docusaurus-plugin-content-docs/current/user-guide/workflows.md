@@ -130,6 +130,6 @@ auf demselben Ausführungspfad.
 
 Workflow-Templates und -Durchläufe sind unter
 `/api/project/{project_id}/workflows` verfügbar. Die Schemas für Anfragen und Antworten
-finden Sie in der [API-Dokumentation](/admin-guide/api), einschließlich der Felder von
+finden Sie in der [API-Dokumentation](/reference/api), einschließlich der Felder von
 `delay`-Nodes (`delay_seconds`) und des Stop-Endpunkts
 (`POST …/runs/{run_id}/stop`).

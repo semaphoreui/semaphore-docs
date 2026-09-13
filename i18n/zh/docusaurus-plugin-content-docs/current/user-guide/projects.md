@@ -54,4 +54,4 @@
 - **导出**：打开 **Dashboard → Settings**，点击 **Backup project**（请参阅[设置](./projects/settings)）。
 - **导入**：点击侧边栏中的项目名称，选择 **Restore project**，然后上传备份文件。
 
-这两项操作也可以通过命令行完成，请参阅 [CLI：项目](/admin-guide/cli/projects)。
+这两项操作也可以通过命令行完成，请参阅 [CLI：项目](/reference/cli/projects)。

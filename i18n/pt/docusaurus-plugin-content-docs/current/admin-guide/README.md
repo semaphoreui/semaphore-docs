@@ -40,8 +40,8 @@ Tudo o que você faz em um servidor que já está em execução.
 
 | Página | O que aborda |
 |---|---|
-| [CLI](/admin-guide/cli) | Gerenciar usuários, projetos, vaults, runners e migrações de banco de dados pelo shell. |
-| [API](/admin-guide/api) | Autenticar-se com um token e controlar o Semaphore programaticamente. |
+| [CLI](/reference/cli) | Gerenciar usuários, projetos, vaults, runners e migrações de banco de dados pelo shell. |
+| [API](/reference/api) | Autenticar-se com um token e controlar o Semaphore programaticamente. |
 | [Integração com CI/CD](/admin-guide/cicd) | Iniciar tarefas do Semaphore a partir de um pipeline externo. |
 | [Logs](/admin-guide/logs) | Logs do servidor, logs de tarefas e como encaminhá-los para outro lugar. |
 | [Métricas](/admin-guide/metrics) | O endpoint do Prometheus e as métricas que ele expõe. |

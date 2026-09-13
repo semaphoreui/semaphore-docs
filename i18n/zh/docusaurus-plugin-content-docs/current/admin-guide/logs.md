@@ -188,7 +188,7 @@ Semaphore 2.20+ 会记录适合转发到 SIEM（Splunk、Elastic Security、QRad
 
 有三种方式可将审计事件传送到您的 SIEM：
 
-1. **拉取：** 读取 `/api/events`（参见 [API 文档](/admin-guide/api)）。
+1. **拉取：** 读取 `/api/events`（参见 [API 文档](/reference/api)）。
 2. **文件收集器：** 启用活动日志文件（Pro，见上文），并使用 Filebeat、Fluentd 或 Splunk Universal Forwarder 发送 `events.log`（推荐 JSON 格式）。
 3. **审计 Webhook（Pro）：** 通过 HTTPS 实时推送事件——可推送到通用 JSON 端点或 Splunk HTTP Event Collector。
 

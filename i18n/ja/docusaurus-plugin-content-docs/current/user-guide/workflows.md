@@ -125,5 +125,5 @@
 ワークフローのテンプレートと実行は
 `/api/project/{project_id}/workflows` で利用できます。リクエストとレスポンスのスキーマ
 （`delay` ノードのフィールド（`delay_seconds`）や停止のエンドポイント
-（`POST …/runs/{run_id}/stop`）を含む）については、[API ドキュメント](/admin-guide/api)を
+（`POST …/runs/{run_id}/stop`）を含む）については、[API ドキュメント](/reference/api)を
 参照してください。

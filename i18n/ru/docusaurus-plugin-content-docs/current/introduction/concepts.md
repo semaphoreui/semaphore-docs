@@ -64,7 +64,7 @@ flowchart TD
 завершения запуска. Задачи запускаются из UI, по
 [расписанию](/user-guide/schedules), по
 [вебхуку интеграции](/user-guide/integrations), через
-[API](/admin-guide/api) или из другого шаблона в
+[API](/reference/api) или из другого шаблона в
 [рабочем процессе](/user-guide/workflows).
 
 ## Глоссарий {#glossary}

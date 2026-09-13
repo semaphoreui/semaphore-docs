@@ -127,6 +127,6 @@ as etapas que produzem e consomem artefatos no mesmo caminho de execução.
 
 Os modelos e as execuções de workflow estão disponíveis em
 `/api/project/{project_id}/workflows`. Consulte a
-[documentação da API](/admin-guide/api) para os esquemas de requisição e resposta, incluindo
+[documentação da API](/reference/api) para os esquemas de requisição e resposta, incluindo
 os campos do nó `delay` (`delay_seconds`) e o endpoint de parada
 (`POST …/runs/{run_id}/stop`).

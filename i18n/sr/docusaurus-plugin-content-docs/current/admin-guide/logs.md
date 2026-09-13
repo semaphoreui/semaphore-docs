@@ -188,7 +188,7 @@ Svaki revizioni događaj sadrži **radnju** (`create`, `update`, `delete`, `logi
 
 Postoje tri načina da isporučite revizione događaje svom SIEM sistemu:
 
-1. **Preuzimanje (pull):** čitajte `/api/events` (pogledajte [API dokumentaciju](/admin-guide/api)).
+1. **Preuzimanje (pull):** čitajte `/api/events` (pogledajte [API dokumentaciju](/reference/api)).
 2. **Kolektor fajlova:** uključite fajl loga aktivnosti (Pro, vidi iznad) i šaljite `events.log` (preporučuje se JSON format) pomoću Filebeat-a, Fluentd-a ili Splunk Universal Forwarder-a.
 3. **Revizioni webhook (Pro):** šaljite događaje u realnom vremenu preko HTTPS-a — na generičku JSON krajnju tačku ili Splunk HTTP Event Collector.
 

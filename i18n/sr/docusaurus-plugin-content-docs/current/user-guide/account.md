@@ -7,7 +7,7 @@ Vaša lična podešavanja nalaze se u meniju naloga na dnu bočne trake. Kliknit
 | Stavka | Opis |
 |---|---|
 | Verzija | Verzija Semaphore UI koja radi na serveru. |
-| **API tokeni** (API Tokens) | Lični tokeni za [REST API](/admin-guide/api). |
+| **API tokeni** (API Tokens) | Lični tokeni za [REST API](/reference/api). |
 | **Izmeni nalog** (Edit Account) | Vaše ime, korisničko ime, e-mail, podešavanje obaveštenja i lozinka. |
 | **Odjava** (Sign Out) | Završava sesiju. |
 
@@ -42,4 +42,4 @@ Kliknite **Novi token** (New Token), dajte tokenu naziv i izaberite kada ističe
 
 ![Dijalog za novi token](/assets/api-token-new.webp)
 
-Token koristite u zaglavlju `Authorization: Bearer`, pogledajte [API](/admin-guide/api). Da biste opozvali token, obrišite ga sa liste.
+Token koristite u zaglavlju `Authorization: Bearer`, pogledajte [API](/reference/api). Da biste opozvali token, obrišite ga sa liste.

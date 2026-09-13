@@ -41,8 +41,8 @@ Alles, was Sie auf einem bereits laufenden Server tun.
 
 | Seite | Inhalt |
 |---|---|
-| [CLI](/admin-guide/cli) | Benutzer, Projekte, Vaults, Runner und Datenbankmigrationen über die Shell verwalten. |
-| [API](/admin-guide/api) | Authentifizierung mit einem Token und programmatische Steuerung von Semaphore. |
+| [CLI](/reference/cli) | Benutzer, Projekte, Vaults, Runner und Datenbankmigrationen über die Shell verwalten. |
+| [API](/reference/api) | Authentifizierung mit einem Token und programmatische Steuerung von Semaphore. |
 | [CI/CD-Integration](/admin-guide/cicd) | Semaphore-Tasks aus einer externen Pipeline starten. |
 | [Protokolle](/admin-guide/logs) | Serverprotokolle, Task-Protokolle und deren Weiterleitung an andere Systeme. |
 | [Metriken](/admin-guide/metrics) | Der Prometheus-Endpunkt und die Metriken, die er bereitstellt. |

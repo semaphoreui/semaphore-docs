@@ -386,4 +386,4 @@ POST /api/project/1/tasks
 - [Terraform 模板](/user-guide/apps/terraform) - Terraform 特定配置
 - [计划任务](../schedules) - 自动执行任务
 - [集成](../integrations) - 由 webhook 触发的任务
-- [API 文档](../../admin-guide/api) - API 参考
+- [API 文档](../../reference/api) - API 参考

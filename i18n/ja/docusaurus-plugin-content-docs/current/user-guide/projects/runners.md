@@ -35,7 +35,7 @@
 
 ## ランナーのインストール {#installing-the-runner}
 
-ランナーは、ランナーモードで起動した同じ `semaphore` バイナリ、または `semaphoreui/runner` の Docker イメージです。インストール、設定ファイル、登録コマンド、エグゼキューター（local、Docker、Kubernetes）、セキュリティについては、管理者ガイドの[ランナー](/admin-guide/runners)と [CLI: ランナー](/admin-guide/cli/runners)で説明しています。
+ランナーは、ランナーモードで起動した同じ `semaphore` バイナリ、または `semaphoreui/runner` の Docker イメージです。インストール、設定ファイル、登録コマンド、エグゼキューター（local、Docker、Kubernetes）、セキュリティについては、管理者ガイドの[ランナー](/admin-guide/runners)と [CLI: ランナー](/reference/cli/runners)で説明しています。
 
 ## タスクのランナーへの振り分け {#routing-tasks-to-runners}
 

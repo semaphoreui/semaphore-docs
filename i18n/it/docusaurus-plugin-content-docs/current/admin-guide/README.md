@@ -40,8 +40,8 @@ Tutto ciò che si fa su un server già in esecuzione.
 
 | Pagina | Contenuto |
 |---|---|
-| [CLI](/admin-guide/cli) | Gestire utenti, Project, vault, runner e migrazioni del database dalla shell. |
-| [API](/admin-guide/api) | Autenticarsi con un token e pilotare Semaphore in modo programmatico. |
+| [CLI](/reference/cli) | Gestire utenti, Project, vault, runner e migrazioni del database dalla shell. |
+| [API](/reference/api) | Autenticarsi con un token e pilotare Semaphore in modo programmatico. |
 | [Integrazione CI/CD](/admin-guide/cicd) | Avviare Task di Semaphore da una pipeline esterna. |
 | [Log](/admin-guide/logs) | Log del server, log dei Task e il loro inoltro verso altri sistemi. |
 | [Metriche](/admin-guide/metrics) | L'endpoint Prometheus e le metriche che espone. |

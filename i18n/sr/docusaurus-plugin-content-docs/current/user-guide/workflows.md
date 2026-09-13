@@ -129,6 +129,6 @@ izvršavanja.
 
 Šabloni tokova rada i izvršavanja dostupni su na putanji
 `/api/project/{project_id}/workflows`. Pogledajte
-[dokumentaciju API-ja](/admin-guide/api) za šeme zahteva i odgovora, uključujući polja
+[dokumentaciju API-ja](/reference/api) za šeme zahteva i odgovora, uključujući polja
 čvora `delay` (`delay_seconds`) i krajnju tačku za zaustavljanje
 (`POST …/runs/{run_id}/stop`).

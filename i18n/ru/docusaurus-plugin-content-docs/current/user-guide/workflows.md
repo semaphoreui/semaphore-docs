@@ -135,4 +135,4 @@
 Шаблоны рабочих процессов и их выполнения доступны по пути
 `/api/project/{project_id}/workflows`. Схемы запросов и ответов, включая поля узла
 `delay` (`delay_seconds`) и эндпоинт остановки (`POST …/runs/{run_id}/stop`), описаны в
-[документации API](/admin-guide/api).
+[документации API](/reference/api).

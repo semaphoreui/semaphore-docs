@@ -35,7 +35,7 @@
 
 ## 安装运行器 {#installing-the-runner}
 
-运行器就是以运行器模式启动的同一个 `semaphore` 二进制文件或 `semaphoreui/runner` Docker 镜像。安装、配置文件、注册命令、执行器（本地、Docker、Kubernetes）以及安全性在管理员指南中有详细说明：[运行器](/admin-guide/runners)和 [CLI：运行器](/admin-guide/cli/runners)。
+运行器就是以运行器模式启动的同一个 `semaphore` 二进制文件或 `semaphoreui/runner` Docker 镜像。安装、配置文件、注册命令、执行器（本地、Docker、Kubernetes）以及安全性在管理员指南中有详细说明：[运行器](/admin-guide/runners)和 [CLI：运行器](/reference/cli/runners)。
 
 ## 将任务路由到运行器 {#routing-tasks-to-runners}
 

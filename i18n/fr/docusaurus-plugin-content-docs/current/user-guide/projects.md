@@ -54,4 +54,4 @@ Un projet peut être exporté vers un fichier JSON et importé dans la même ins
 - **Export** : ouvrez **Tableau de bord → Paramètres** et cliquez sur **Sauvegarder le projet** (voir [Paramètres](./projects/settings)).
 - **Import** : cliquez sur le nom du projet dans la barre latérale, choisissez **Restaurer le projet** et téléversez le fichier de sauvegarde.
 
-Ces deux opérations sont également disponibles en ligne de commande, voir [CLI : Projets](/admin-guide/cli/projects).
+Ces deux opérations sont également disponibles en ligne de commande, voir [CLI : Projets](/reference/cli/projects).

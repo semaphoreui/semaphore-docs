@@ -19,7 +19,7 @@ L'onglet **Paramètres** du tableau de bord du projet est accessible aux **Propr
 
 | Action | Effet |
 |---|---|
-| **Sauvegarder le projet** | Télécharge un fichier JSON contenant la définition du projet : modèles, inventaires, groupes de variables, clés (sans les valeurs secrètes), dépôts, planifications, vues et intégrations. Restaurez-le via **Nouveau projet → Restaurer le projet** ou avec [`semaphore projects import`](/admin-guide/cli/projects). |
+| **Sauvegarder le projet** | Télécharge un fichier JSON contenant la définition du projet : modèles, inventaires, groupes de variables, clés (sans les valeurs secrètes), dépôts, planifications, vues et intégrations. Restaurez-le via **Nouveau projet → Restaurer le projet** ou avec [`semaphore projects import`](/reference/cli/projects). |
 | **Vider le cache** | Supprime tous les fichiers mis en cache du projet sur le serveur, par exemple les dépôts clonés. La tâche suivante clonera de nouveau les dépôts. Cette action est irréversible. |
 | **Supprimer le projet** | Supprime le projet avec toutes ses ressources et l'historique de ses tâches. Il n'y a pas de retour en arrière. |
 

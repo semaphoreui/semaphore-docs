@@ -54,4 +54,4 @@ Projekat se može izvesti u JSON datoteku i uvesti u istu ili drugu Semaphore in
 - **Izvoz**: otvorite **Dashboard → Settings** i kliknite **Backup project** (pogledajte [Podešavanja](./projects/settings)).
 - **Uvoz**: kliknite na naziv projekta u bočnoj traci, izaberite **Restore project** i otpremite datoteku rezervne kopije.
 
-Obe operacije su dostupne i iz komandne linije, pogledajte [CLI: Projekti](/admin-guide/cli/projects).
+Obe operacije su dostupne i iz komandne linije, pogledajte [CLI: Projekti](/reference/cli/projects).

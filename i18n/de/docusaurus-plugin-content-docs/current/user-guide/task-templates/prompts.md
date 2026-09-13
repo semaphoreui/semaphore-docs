@@ -386,4 +386,4 @@ Verwenden Sie Terraform Destroy für temporäre Infrastruktur:
 - [Terraform-Templates](/user-guide/apps/terraform) – Terraform-spezifische Konfiguration
 - [Zeitpläne](../schedules) – Automatisierte Task-Ausführung
 - [Integrationen](../integrations) – Über Webhooks ausgelöste Tasks
-- [API-Dokumentation](../../admin-guide/api) – API-Referenz
+- [API-Dokumentation](../../reference/api) – API-Referenz

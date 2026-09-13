@@ -38,4 +38,4 @@ Ovi pojmovi se pojavljuju svuda u korisničkom interfejsu.
 
 - Postavite Semaphore iza TLS-a pomoću [obrnutog proksija](/admin-guide/reverse-proxy).
 - Povežite svog provajdera identiteta: [LDAP](/admin-guide/ldap) ili [OpenID Connect](/admin-guide/openid).
-- Upravljajte Semaphore-om iz CI-ja ili skripti pomoću [API-ja](/admin-guide/api) i [CLI-ja](/admin-guide/cli).
+- Upravljajte Semaphore-om iz CI-ja ili skripti pomoću [API-ja](/reference/api) i [CLI-ja](/reference/cli).

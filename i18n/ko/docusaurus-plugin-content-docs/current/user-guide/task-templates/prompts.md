@@ -386,4 +386,4 @@ Terraform 워크스페이스 선택을 사용하여 환경을 관리합니다:
 - [Terraform 템플릿](/user-guide/apps/terraform) - Terraform 전용 구성
 - [스케줄](../schedules) - 작업 자동 실행
 - [통합](../integrations) - 웹훅으로 트리거되는 작업
-- [API 문서](../../admin-guide/api) - API 레퍼런스
+- [API 문서](../../reference/api) - API 레퍼런스
