@@ -578,9 +578,45 @@ html[data-theme='dark'] {
   display: none; /* Safari and Chrome */
 }
 
-.main-wrapper .theme-doc-sidebar-menu .menu__list-item-collapsible--active,
+/* Give TOC highlights the same shape and theme colors as sidebar items. */
+.table-of-contents,
+.table-of-contents ul {
+  padding-left: 0;
+}
+
+.table-of-contents li {
+  margin: 0;
+}
+
+.table-of-contents__link {
+  padding: calc(var(--ifm-toc-padding-vertical) / 2) var(--ifm-menu-link-padding-horizontal);
+  border-left: 1px solid transparent;
+  border-radius: 0 var(--sem-sidebar-radius) var(--sem-sidebar-radius) 0;
+}
+
+/* Overlap the TOC guide line, including for nested headings. */
+.table-of-contents__left-border .table-of-contents__link {
+  margin-left: -1px;
+}
+
+.table-of-contents ul .table-of-contents__link {
+  padding-left: calc(var(--ifm-menu-link-padding-horizontal) + 2 * var(--ifm-toc-padding-horizontal));
+}
+
+.table-of-contents__link--active,
+.table-of-contents__link--active:hover {
+  color: var(--ifm-menu-color-active);
+  background-color: var(--ifm-menu-color-background-active);
+  border-left-color: var(--ifm-menu-color-active);
+}
+
+.main-wrapper .menu {
+  padding-right: 0.5rem;
+}
+
+/* .main-wrapper .theme-doc-sidebar-menu .menu__list-item-collapsible--active,
 .main-wrapper .menu__link--active:not(.menu__link--sublist) {
     border-right: 1px solid #008890;
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
-}
+} */
