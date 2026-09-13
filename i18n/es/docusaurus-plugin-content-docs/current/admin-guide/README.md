@@ -1,84 +1,60 @@
+---
+title: Guía de administración
+description: Para administradores que instalan, configuran, protegen y operan un servidor de Semaphore para sus equipos.
+---
+
 # Guía de administración
 
-Bienvenido a la Guía de administración de Semaphore UI. Esta guía proporciona información completa para instalar, configurar y mantener su instancia de Semaphore.
+Esta sección está dirigida a los administradores que instalan y operan Semaphore
+para otras personas. Todo lo que aquí se describe exige acceso al propio servidor:
+al archivo de configuración, a las variables de entorno, a la línea de comandos o a
+la máquina en la que se ejecuta Semaphore. El trabajo que se realiza dentro de un
+proyecto a través de la interfaz web se explica en la
+[Guía del usuario](/user-guide).
 
-## ¿Qué es Semaphore UI? {#what-is-semaphore-ui}
+Semaphore es un único binario de Go con una interfaz web y una API REST. Almacena
+sus datos en SQLite, MySQL o PostgreSQL, mantiene las credenciales cifradas y
+ejecuta las tareas en el propio servidor o en runners independientes. Por tanto, una
+instalación en funcionamiento se reduce a cuatro decisiones: cómo instalarlo, dónde
+reside la base de datos, cómo inician sesión los usuarios y dónde se ejecutan las
+tareas.
 
-Semaphore UI es una interfaz web moderna y de código abierto para ejecutar tareas de automatización. Está diseñada como una alternativa ligera, rápida y fácil de usar frente a plataformas de automatización más complejas.
+## Preparar la instalación {#set-up}
 
-Permite gestionar y ejecutar de forma segura tareas para:
-*   Playbooks de **Ansible**
-*   Infraestructura como código con **Terraform/OpenTofu**
-*   Scripts de **PowerShell** y **Shell**
-*   Scripts de **Python**
+Todo lo que se configura antes de arrancar el servidor o en torno a ese momento.
 
-## Características principales y filosofía {#core-features--philosophy}
+| Página | Qué cubre |
+|---|---|
+| [Instalación](/admin-guide/installation) | Gestor de paquetes, Docker, binario, Kubernetes y una instalación manual. |
+| [Configuración](/admin-guide/configuration) | El archivo `config.json`, las variables de entorno y todas las opciones admitidas. |
+| [Actualización](/admin-guide/upgrading) | Pasar a una versión más reciente y qué comprobar antes. |
+| [Proxy inverso](/admin-guide/reverse-proxy) | Servir Semaphore detrás de nginx, Apache o Caddy, con TLS. |
+| [Seguridad](/admin-guide/security) | Hash de contraseñas, cifrado de secretos, refuerzo de la red y JWT de tareas. |
+| [LDAP y AD](/admin-guide/ldap) | Iniciar sesión contra un servicio de directorio. |
+| [OpenID Connect](/admin-guide/openid) | Inicio de sesión único con GitHub, Google, Keycloak, Okta y nueve proveedores más. |
+| [Runners](/admin-guide/runners) | Ejecutar tareas en máquinas distintas del servidor. |
+| [Alta disponibilidad](/admin-guide/ha) | Ejecutar varios nodos de Semaphore contra una misma base de datos. |
 
-Comprender los principios de diseño de Semaphore le ayudará a sacarle el máximo partido:
+## Operar {#operate}
 
-*   **Ligero y eficiente**: Semaphore está escrito en **Go** y se distribuye como un **único archivo binario**. Tiene requisitos de recursos mínimos (CPU/RAM) y no necesita dependencias externas como Kubernetes, Docker o una JVM. Esto lo hace rápido, eficiente y fácil de desplegar.
-*   **Fácil de instalar y mantener**: Puede tener Semaphore funcionando en minutos. La instalación puede ser tan sencilla como descargar el binario y ejecutarlo. Su arquitectura simple hace que las actualizaciones y el mantenimiento sean directos.
-*   **Despliegue flexible**: Ejecútelo como binario, como servicio de systemd o en un contenedor de Docker. Es adecuado para todo, desde un homelab personal hasta entornos empresariales.
-*   **Autoalojado y seguro**: Semaphore es una solución autoalojada. Todos sus datos, credenciales y registros permanecen en su propia infraestructura, lo que le da control total. Las credenciales siempre se almacenan cifradas en la base de datos.
-*   **Integraciones potentes**: Aunque es simple, Semaphore admite funcionalidades avanzadas como autenticación LDAP/OpenID, control de acceso basado en roles (RBAC) detallado por proyecto, runners remotos para escalar la ejecución de tareas y una API REST completa para el acceso programático.
+Todo lo que se hace en un servidor que ya está en marcha.
 
-Esta guía le acompañará en la configuración y gestión de estas funcionalidades según sus necesidades específicas.
+| Página | Qué cubre |
+|---|---|
+| [CLI](/admin-guide/cli) | Gestionar usuarios, proyectos, vaults, runners y migraciones de la base de datos desde el shell. |
+| [API](/admin-guide/api) | Autenticarse con un token y controlar Semaphore mediante programación. |
+| [Integración CI/CD](/admin-guide/cicd) | Iniciar tareas de Semaphore desde una canalización externa. |
+| [Registros](/admin-guide/logs) | Registros del servidor, registros de tareas y su reenvío a otros sistemas. |
+| [Métricas](/admin-guide/metrics) | El endpoint de Prometheus y las métricas que expone. |
+| [Notificaciones](/admin-guide/notifications) | Canales de entrega de las alertas: correo electrónico, Telegram, Slack y otros. |
+| [Licencia](/admin-guide/license) | Activar una suscripción Pro o Enterprise. |
 
-<!-- ## Start here
+## Por dónde empezar {#where-to-start}
 
-- Installation options: package manager, Docker/Compose, binary, Kubernetes (Helm), Snap (deprecated)
-- Post-install configuration: config file, environment variables, interactive CLI setup
-- Security essentials: reverse proxy, TLS, database and network hardening
-- Authentication: LDAP and OpenID Connect providers
-- Operations: CLI, runners, logs, notifications
-- Maintenance: upgrading and troubleshooting -->
+Si instala Semaphore por primera vez, lea
+[Instalación](/admin-guide/installation) y elija un método; después,
+[Configuración](/admin-guide/configuration) para saber cómo se proporcionan las
+opciones. Ponga el servidor detrás de un [proxy inverso](/admin-guide/reverse-proxy)
+con TLS antes de que lo use nadie más.
 
-## Enlaces rápidos {#quick-links}
-
-- Instalación: [Descripción general](/admin-guide/installation)
-  - [Gestor de paquetes](/admin-guide/installation/package-manager)
-  - [Docker](/admin-guide/installation/docker)
-  - [Archivo binario](/admin-guide/installation/binary-file)
-  - [Kubernetes (chart de Helm)](/admin-guide/installation/k8s)
-  - [Nube](/admin-guide/installation/cloud)
-  - [Instalación manual](/admin-guide/installation_manually)
-- Configuración: [Descripción general](/admin-guide/configuration)
-  - [Archivo de configuración](/admin-guide/configuration/config-file)
-  - [Variables de entorno](/admin-guide/configuration/env-vars)
-  - [Configuración interactiva](/admin-guide/configuration/cli)
-- Seguridad: [Descripción general](/admin-guide/security)
-  - [Seguridad de la base de datos](/admin-guide/security/database)
-  - [Seguridad de la red](/admin-guide/security/network)
-  - [Configuración de NGINX](/admin-guide/reverse-proxy/nginx)
-  - [Configuración de Apache](/admin-guide/reverse-proxy/apache)
-  - [Kerberos](/admin-guide/security/kerberos)
-- Autenticación:
-  - [LDAP](/admin-guide/ldap)
-  - [OpenID](/admin-guide/openid)
-    - [GitHub](/admin-guide/openid/github)
-    - [Google](/admin-guide/openid/google)
-    - [GitLab](/admin-guide/openid/gitlab)
-    - [Gitea](/admin-guide/openid/gitea)
-    - [Authelia](/admin-guide/openid/authelia)
-    - [Authentik](/admin-guide/openid/authentik)
-    - [Keycloak](/admin-guide/openid/keycloak)
-    - [Okta](/admin-guide/openid/okta)
-    - [PingFederate](/admin-guide/openid/pingfederate)
-    - [Azure](/admin-guide/openid/azure)
-    - [Zitadel](/admin-guide/openid/zitadel)
-- Operaciones:
-  - [CLI](/admin-guide/cli)
-  - [Runners](/admin-guide/runners)
-  - [Registros](/admin-guide/logs)
-  - [Notificaciones](/admin-guide/notifications)
-    - [Correo electrónico](/admin-guide/notifications/email)
-    - [Telegram](/admin-guide/notifications/telegram)
-    - [Slack](/admin-guide/notifications/slack)
-    - [Teams](/admin-guide/notifications/teams)
-    - [Rocket.Chat](/admin-guide/notifications/rocket)
-    - [DingTalk](/admin-guide/notifications/ding)
-    - [Gotify](/admin-guide/notifications/gotify)
-- Mantenimiento:
-  - [Actualización](/admin-guide/upgrading)
-  - [Activación de licencia](/admin-guide/license)
-  - [Resolución de problemas](/faq/troubleshooting)
+Para ver qué añade una suscripción de pago, consulte [Ediciones](/editions).

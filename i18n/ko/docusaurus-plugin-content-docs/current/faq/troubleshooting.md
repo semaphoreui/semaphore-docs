@@ -1,3 +1,8 @@
+---
+title: 문제 해결
+description: "가장 자주 발생하는 오류의 해결 방법: runner 404, Ansible gathering facts, Postgres SSL, git clone, 누락된 스크립트 출력, LDAP 오류."
+---
+
 # 문제 해결
 
 ## Runner에서 404 오류가 출력됨 {#runner-prints-error-404}
@@ -175,4 +180,27 @@ ldapwhoami\
 
 ## LDAP Result Code 32 "No Such Object" {#ldap-result-code-32-no-such-object}
 
-곧 제공될 예정입니다.
+Semaphore가 조회한 distinguished name에 해당하는 항목이 디렉터리에 없습니다. 거의 대부분
+`ldap_searchdn`이 잘못된 경우이며, 드물게 `ldap_binddn`이 잘못된 경우입니다.
+
+### 해결 방법 {#how-to-fix-this-7}
+
+Semaphore가 사용하는 것과 동일한 자격 증명으로 검색 기준(base)이 존재하는지 확인하십시오:
+
+```bash
+ldapsearch\
+  -H ldap://ldap.example.com:389\
+  -D "CN=/your/ldap_binddn/value/in/config/file"\
+  -b "/your/ldap_searchdn/value/in/config/file"\
+  -x\
+  -W\
+  -s base
+```
+
+- 이 명령이 결과 코드 **32**를 반환하면 base 자체가 존재하지 않는 것입니다.
+  `config.json`의 `ldap_searchdn`을 수정하십시오. 실제 값이 `OU=People`인데
+  `OU=Users`라고 적는 것처럼 구성 요소의 오타가 흔한 원인입니다.
+- 결과 코드 **0**은 base에는 문제가 없고 `ldap_searchfilter`에 문제가 있다는
+  뜻입니다. 해당 base 아래에서 일치하는 항목이 없습니다.
+
+각 옵션의 의미는 [LDAP 및 AD](/admin-guide/ldap)를 참조하십시오.

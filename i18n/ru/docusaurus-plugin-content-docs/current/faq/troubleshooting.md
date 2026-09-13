@@ -1,3 +1,8 @@
+---
+title: Устранение неполадок
+description: "Решения самых частых проблем: ошибка 404 у runner'а, Gathering Facts в Ansible, SSL в Postgres, клонирование git, пропавший вывод скрипта и ошибки LDAP."
+---
+
 # Устранение неполадок
 
 ## Runner выдаёт ошибку 404 {#runner-prints-error-404}
@@ -175,4 +180,27 @@ ldapwhoami\
 
 ## LDAP Result Code 32 "No Such Object" {#ldap-result-code-32-no-such-object}
 
-Скоро будет.
+В каталоге нет записи с тем distinguished name, который запросил Semaphore. Почти
+всегда причина — неверный `ldap_searchdn`, реже — неверный `ldap_binddn`.
+
+### Как это исправить {#how-to-fix-this-7}
+
+Проверьте, что база поиска существует, используя те же учётные данные, что и Semaphore:
+
+```bash
+ldapsearch\
+  -H ldap://ldap.example.com:389\
+  -D "CN=/your/ldap_binddn/value/in/config/file"\
+  -b "/your/ldap_searchdn/value/in/config/file"\
+  -x\
+  -W\
+  -s base
+```
+
+- Код результата **32** от этой команды означает, что самой базы не существует.
+  Исправьте `ldap_searchdn` в `config.json`; обычная причина — опечатка в
+  компоненте, например `OU=Users` вместо фактического `OU=People`.
+- Код результата **0** означает, что с базой всё в порядке, а проблема в
+  `ldap_searchfilter`: он не находит ни одной записи ниже этой базы.
+
+Значение каждой опции см. в разделе [LDAP и AD](/admin-guide/ldap).

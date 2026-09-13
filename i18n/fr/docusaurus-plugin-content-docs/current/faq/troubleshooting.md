@@ -1,3 +1,8 @@
+---
+title: Dépannage
+description: "Corrections des erreurs les plus fréquentes : erreur 404 du runner, Gathering Facts d'Ansible, SSL de Postgres, clones Git, sortie de script manquante et erreurs LDAP."
+---
+
 # Dépannage
 
 ## Le runner affiche l'erreur 404 {#runner-prints-error-404}
@@ -175,4 +180,27 @@ Vous pouvez également lire les articles suivants :
 
 ## LDAP Result Code 32 "No Such Object" {#ldap-result-code-32-no-such-object}
 
-Bientôt disponible.
+L'annuaire ne contient aucune entrée au nom distinctif demandé par Semaphore. Il s'agit
+presque toujours d'un `ldap_searchdn` incorrect, plus rarement d'un `ldap_binddn` incorrect.
+
+### Comment corriger {#how-to-fix-this-7}
+
+Vérifiez que la base de recherche existe, en utilisant les mêmes identifiants que Semaphore :
+
+```bash
+ldapsearch\
+  -H ldap://ldap.example.com:389\
+  -D "CN=/your/ldap_binddn/value/in/config/file"\
+  -b "/your/ldap_searchdn/value/in/config/file"\
+  -x\
+  -W\
+  -s base
+```
+
+- Le code de résultat **32** renvoyé par cette commande signifie que la base elle-même
+  n'existe pas. Corrigez `ldap_searchdn` dans `config.json` ; la cause habituelle est une
+  faute de frappe dans un composant, par exemple `OU=Users` au lieu du véritable `OU=People`.
+- Le code de résultat **0** signifie que la base est correcte et que le problème vient de
+  `ldap_searchfilter` : il ne correspond à aucune entrée sous cette base.
+
+Consultez [LDAP et AD](/admin-guide/ldap) pour la signification de chaque option.
