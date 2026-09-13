@@ -8,3 +8,4 @@ node_modules/
 /.docusaurus-dev
 /.docusaurus-build
 /deploy/invs/aws
+.DS_Store
