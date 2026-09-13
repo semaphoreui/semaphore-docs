@@ -1,4 +1,10 @@
-# Runneri projekta (Pro)
+---
+title: "Runneri projekta"
+sidebar_custom_props:
+  edition: pro
+---
+
+# Runneri projekta <Pro />
 
 Runneri (Runners) izvršavaju zadatke (Tasks) na mašinama koje nisu Semaphore server: bliže ciljnoj infrastrukturi, u drugoj mrežnoj zoni ili sa drugačijim skupom alata. **Globalne runnere** registruje administrator i oni služe svim projektima. **Runneri projekta** pripadaju jednom projektu (Project) i njima upravlja njegov tim u odeljku **Runners**.
 

@@ -1,4 +1,10 @@
-# Workflows (Pro)
+---
+title: "Workflows"
+sidebar_custom_props:
+  edition: pro
+---
+
+# Workflows <Pro />
 
 Mit Workflows können Sie mehrere Task Templates zu einem gerichteten Graphen (DAG)
 mit Verzweigungen, Freigaben und zeitgesteuerten Pausen verketten. Ein Workflow-Durchlauf

@@ -1,4 +1,10 @@
-# Workflows (Pro)
+---
+title: "Workflows"
+sidebar_custom_props:
+  edition: pro
+---
+
+# Workflows <Pro />
 
 Os workflows permitem encadear vários modelos de tarefa em um grafo direcionado (DAG) com
 ramificações, aprovações e pausas temporizadas. Uma execução de workflow avança automaticamente

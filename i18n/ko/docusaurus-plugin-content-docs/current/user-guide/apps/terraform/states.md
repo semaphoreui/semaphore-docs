@@ -1,5 +1,10 @@
+---
+title: "HTTP 백엔드"
+sidebar_custom_props:
+  edition: pro
+---
 
-# HTTP 백엔드 (Pro)
+# HTTP 백엔드 <Pro />
 
 Terraform용 Semaphore UI HTTP 백엔드는 Terraform 상태 파일을 Semaphore 내부에 직접 안전하게 저장하고 관리합니다. Pro 플랜에서 사용할 수 있으며, 다음과 같은 주요 이점을 제공합니다.
 

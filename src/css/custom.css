@@ -161,6 +161,26 @@ hr {
   word-break: break-word;
 }
 
+[class~="docs-doc-id-reference/configuration"] .theme-doc-markdown td:first-child > code:first-of-type {
+  background-color: #e0f2f1;
+  color: #115e59;
+}
+
+[class~="docs-doc-id-reference/configuration"] .theme-doc-markdown td:first-child > code:nth-of-type(2) {
+  background-color: #ede9fe;
+  color: #5b21b6;
+}
+
+[data-theme='dark'][class~="docs-doc-id-reference/configuration"] .theme-doc-markdown td:first-child > code:first-of-type {
+  background-color: #134e4a;
+  color: #ccfbf1;
+}
+
+[data-theme='dark'][class~="docs-doc-id-reference/configuration"] .theme-doc-markdown td:first-child > code:nth-of-type(2) {
+  background-color: #4c1d95;
+  color: #ede9fe;
+}
+
 [class~="docs-doc-id-reference/configuration"] .theme-doc-markdown th:nth-child(2) {
   width: 17%;
 }

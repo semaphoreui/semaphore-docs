@@ -1,5 +1,10 @@
+---
+title: "HTTP-бэкенд"
+sidebar_custom_props:
+  edition: pro
+---
 
-# HTTP-бэкенд (Pro)
+# HTTP-бэкенд <Pro />
 
 HTTP-бэкенд Semaphore UI для Terraform безопасно хранит файлы состояния Terraform и управляет ими непосредственно внутри Semaphore. Он доступен в плане Pro и даёт несколько ключевых преимуществ.
 

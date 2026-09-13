@@ -1,4 +1,10 @@
-# Flujos de trabajo (Pro)
+---
+title: "Flujos de trabajo"
+sidebar_custom_props:
+  edition: pro
+---
+
+# Flujos de trabajo <Pro />
 
 Los flujos de trabajo permiten encadenar varias plantillas de tareas en un grafo dirigido (DAG) con
 ramificaciones, aprobaciones y pausas temporizadas. Una ejecución de flujo de trabajo avanza automáticamente

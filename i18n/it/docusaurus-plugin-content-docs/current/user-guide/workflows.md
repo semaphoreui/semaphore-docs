@@ -1,4 +1,10 @@
-# Workflow (Pro)
+---
+title: "Workflow"
+sidebar_custom_props:
+  edition: pro
+---
+
+# Workflow <Pro />
 
 I Workflow consentono di concatenare più Task Template in un grafo diretto (DAG) con
 diramazioni, approvazioni e pause temporizzate. L'esecuzione di un Workflow avanza automaticamente

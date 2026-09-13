@@ -1,4 +1,10 @@
-# 工作流（Pro）
+---
+title: "工作流"
+sidebar_custom_props:
+  edition: pro
+---
+
+# 工作流 <Pro />
 
 工作流（Workflow）可以将多个任务模板（Task Templates）串联成一个有向图（DAG），
 支持分支、审批和定时暂停。工作流运行会在每个步骤完成后自动推进——你只需在

@@ -1,4 +1,10 @@
-# Runners de projet (Pro)
+---
+title: "Runners de projet"
+sidebar_custom_props:
+  edition: pro
+---
+
+# Runners de projet <Pro />
 
 Les runners exécutent les tâches sur des machines autres que le serveur Semaphore : plus près de l'infrastructure cible, dans une autre zone réseau ou avec une chaîne d'outils différente. Les **runners globaux** sont enregistrés par un administrateur et servent tous les projets. Les **runners de projet** appartiennent à un seul projet et sont gérés par son équipe dans la section **Runners**.
 

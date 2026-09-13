@@ -1,4 +1,10 @@
-# Runner del Project (Pro)
+---
+title: "Runner del Project"
+sidebar_custom_props:
+  edition: pro
+---
+
+# Runner del Project <Pro />
 
 I Runner eseguono i Task su macchine diverse dal server Semaphore: più vicine all'infrastruttura di destinazione, in un'altra zona di rete oppure con una toolchain differente. I **Runner globali** vengono registrati da un amministratore e servono tutti i Project. I **Runner di Project** appartengono a un solo Project e vengono gestiti dal relativo Team nella sezione **Runners**.
 

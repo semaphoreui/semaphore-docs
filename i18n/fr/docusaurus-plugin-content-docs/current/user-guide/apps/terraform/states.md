@@ -1,5 +1,10 @@
+---
+title: "Backend HTTP"
+sidebar_custom_props:
+  edition: pro
+---
 
-# Backend HTTP (Pro)
+# Backend HTTP <Pro />
 
 Le backend HTTP de Semaphore UI pour Terraform stocke et gère de manière sécurisée les fichiers d'état Terraform directement dans Semaphore. Disponible dans l'offre Pro, il offre plusieurs avantages clés.
 

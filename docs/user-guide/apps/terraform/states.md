@@ -1,9 +1,11 @@
 ---
-title: HTTP Backend (Pro)
+title: "HTTP Backend"
 description: The Pro HTTP backend for Terraform state, how to override the backend in a template, and aliases for use outside Semaphore.
+sidebar_custom_props:
+  edition: pro
 ---
 
-# HTTP Backend (Pro)
+# HTTP Backend <Pro />
 
 The Semaphore UI HTTP backend for Terraform securely stores and manages Terraform state files directly within Semaphore. Available in the Pro plan, it offers several key advantages.
 

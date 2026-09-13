@@ -1,5 +1,10 @@
+---
+title: "HTTP 后端"
+sidebar_custom_props:
+  edition: pro
+---
 
-# HTTP 后端（Pro）
+# HTTP 后端 <Pro />
 
 Semaphore UI 的 Terraform HTTP 后端可在 Semaphore 内部直接安全地存储和管理 Terraform 状态文件。该功能在 Pro 版中提供，具有以下几项关键优势。
 

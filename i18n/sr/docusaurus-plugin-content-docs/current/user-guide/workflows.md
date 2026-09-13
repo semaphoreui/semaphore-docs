@@ -1,4 +1,10 @@
-# Tokovi rada (Pro)
+---
+title: "Tokovi rada"
+sidebar_custom_props:
+  edition: pro
+---
+
+# Tokovi rada <Pro />
 
 Tokovi rada (Workflow) omogućavaju da povežete više šablona zadataka (Task Template) u
 usmereni graf (DAG) sa grananjem, odobrenjima i vremenskim pauzama. Izvršavanje toka rada

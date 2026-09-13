@@ -1,4 +1,10 @@
-# Projekt-Runner (Pro)
+---
+title: "Projekt-Runner"
+sidebar_custom_props:
+  edition: pro
+---
+
+# Projekt-Runner <Pro />
 
 Runner führen Tasks auf anderen Maschinen als dem Semaphore-Server aus: näher an der Zielinfrastruktur, in einer anderen Netzwerkzone oder mit einer anderen Toolchain. **Globale Runner** werden von einem Administrator registriert und stehen allen Projekten zur Verfügung. **Projekt-Runner** gehören zu einem Projekt und werden von seinem Team im Bereich **Runners** verwaltet.
 

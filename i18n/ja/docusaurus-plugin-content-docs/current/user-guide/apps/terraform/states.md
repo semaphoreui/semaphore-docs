@@ -1,5 +1,10 @@
+---
+title: "HTTP バックエンド"
+sidebar_custom_props:
+  edition: pro
+---
 
-# HTTP バックエンド (Pro)
+# HTTP バックエンド <Pro />
 
 Semaphore UI の Terraform 用 HTTP バックエンドは、Terraform のステートファイルを Semaphore 内で直接、安全に保存・管理します。Pro プランで利用でき、いくつかの重要な利点があります。
 
