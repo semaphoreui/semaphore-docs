@@ -1,6 +1,7 @@
 import React from 'react';
 import DocSidebarItemLink from '@theme-original/DocSidebarItem/Link';
 import FeatureState from '@site/src/components/FeatureState';
+import styles from './styles.module.css';
 
 export default function DocSidebarItemLinkWithEdition(props) {
   const {item} = props;
@@ -16,9 +17,9 @@ export default function DocSidebarItemLinkWithEdition(props) {
       item={{
         ...item,
         label: (
-          <span>
-            {item.label}
-            <FeatureState edition={edition} inline />
+          <span className={styles.label}>
+            <span>{item.label}</span>
+            <FeatureState edition={edition} inline compact />
           </span>
         ),
       }}

@@ -3,7 +3,7 @@ title: Devolutions Server secret storage
 description: Connection options for using a Devolutions Server vault as external storage for Key Store secrets.
 ---
 
-# Devolutions Server secret storage
+# Devolutions Server secret storage <Enterprise />
 
 Semaphore UI supports Devolutions Server as a storage for secrets. 
 

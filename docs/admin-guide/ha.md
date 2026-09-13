@@ -3,7 +3,7 @@ title: High Availability
 description: Active-active HA architecture with a shared database and Redis, the ha configuration block, load balancer setup, and an FAQ.
 ---
 
-# High Availability
+# High Availability  <Enterprise />
 
 :::info
 High Availability is available in the **Semaphore Enterprise** edition.

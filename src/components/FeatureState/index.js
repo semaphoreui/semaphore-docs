@@ -17,7 +17,7 @@ import styles from './styles.module.css';
  * Prefer the `feature` form: it reads the edition and the version from
  * src/data/editions.js, so the marker cannot drift from the registry.
  */
-export default function FeatureState({feature, edition, since, inline = false}) {
+export default function FeatureState({feature, edition, since, inline = false, compact = false}) {
   const entry = feature ? getFeature(feature) : undefined;
 
   if (feature && !entry) {
@@ -56,7 +56,7 @@ export default function FeatureState({feature, edition, since, inline = false}) 
       {...(!inline && {to: '/editions'})}
       className={`${styles.badge} ${styles[resolvedEdition]}`}
       title={title}>
-      {label}
+      {compact && resolvedEdition === 'enterprise' ? 'Ent' : label}
       {resolvedSince && (
         <span className={styles.since}>
           <Translate

@@ -1,9 +1,11 @@
 ---
 title: License activation
 description: How to activate a Pro or Enterprise license key from the web UI or the server configuration, and how to replace it.
+sidebar_custom_props:
+  edition: pro
 ---
 
-# License activation
+# License activation <Pro />
 
 Semaphore Pro and Enterprise features are enabled with a license key. You can activate the license from the web UI, or provide the key in the server configuration for automated deployments.
 
