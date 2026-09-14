@@ -690,6 +690,30 @@ html[data-theme='dark'] {
   --sem-sidebar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='10' width='14' height='11' rx='2'/%3E%3Cpath d='M8 10V6a4 4 0 0 1 8 0v4M12 15v2'/%3E%3C/svg%3E");
 }
 
+.sidebar-icon--ansible {
+  --sem-sidebar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M7 17l5 -11l5 11l-7 -5'/%3E%3C/svg%3E");
+}
+
+.sidebar-icon--terraform {
+  --sem-sidebar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 26' fill='black'%3E%3Cpath d='M2 2l6 3.5v7L2 9zm7 4l6 3.5v7L9 13zm7 3.5L22 6v7l-6 3.5zM9 14l6 3.5v7L9 21z'/%3E%3C/svg%3E");
+}
+
+.sidebar-icon--terragrunt {
+  --sem-sidebar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2l9 5v10l-9 5l-9 -5V7zM3 7l9 5v10M12 12l4.5 -2.5L21 12l-9 5M12 17l4.5 -2.5L21 17M7.5 9.5L12 7l4.5 2.5L21 7'/%3E%3C/svg%3E");
+}
+
+.sidebar-icon--bash {
+  --sem-sidebar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Cpath d='M6 9l4 3l-4 3M13 16h5'/%3E%3C/svg%3E");
+}
+
+.sidebar-icon--powershell {
+  --sem-sidebar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 4h17l-3 16H2zM9 8l4 4l-6 4M13 16h4'/%3E%3C/svg%3E");
+}
+
+.sidebar-icon--python {
+  --sem-sidebar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3H9a3 3 0 0 0 -3 3v3h6M6 8H5a3 3 0 0 0 -3 3v3a3 3 0 0 0 3 3h2M12 3h3a3 3 0 0 1 3 3v3a3 3 0 0 1 -3 3H9a3 3 0 0 0 -3 3v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3 -3v-3h-6M18 16h1a3 3 0 0 0 3 -3v-3a3 3 0 0 0 -3 -3h-2M9 6h.01M15 18h.01'/%3E%3C/svg%3E");
+}
+
 .theme-doc-sidebar-menu .sidebar-icon > .menu__link::before,
 .theme-doc-sidebar-menu .sidebar-icon > .menu__list-item-collapsible > .menu__link::before {
   content: '';
