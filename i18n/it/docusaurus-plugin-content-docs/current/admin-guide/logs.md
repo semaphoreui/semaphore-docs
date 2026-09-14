@@ -29,7 +29,7 @@ Il registro attività (Activity Log) acquisisce le azioni degli utenti eseguite 
 - Aggiunta o rimozione di risorse (ad es. template, inventory, repository).
 - Aggiunta o rimozione di membri del team.
 
-### Versione Pro 2.10 e successive {#pro-version-210-and-later}
+### Versione Pro 2.10 e successive <Pro /> {#pro-version-210-and-later}
 
 **Semaphore Pro** 2.10+ supporta la scrittura del registro attività e del log delle attività su file. Per abilitare questa funzione, aggiungere la seguente configurazione al file `config.json`:
 
@@ -138,7 +138,7 @@ Quando il numero di attività supera questo limite, i log delle attività più v
 
 ---
 
-## Supporto del protocollo syslog {#syslog-protocol-support}
+## Supporto del protocollo syslog <Enterprise /> {#syslog-protocol-support}
 
 Semaphore può inoltrare le voci del registro attività e dei log delle attività a un collettore syslog esterno per l'archiviazione a lungo termine o il monitoraggio centralizzato. L'inoltro syslog è disabilitato per impostazione predefinita.
 
@@ -176,7 +176,7 @@ Riavviare il servizio Semaphore dopo aver modificato questi valori affinché la 
 
 ---
 
-## Integrazione SIEM {#siem-integration}
+## Integrazione SIEM <Enterprise /> {#siem-integration}
 
 Semaphore 2.20+ registra una traccia di audit di sicurezza adatta all'inoltro a un SIEM (Splunk, Elastic Security, QRadar, Wazuh, ecc.).
 

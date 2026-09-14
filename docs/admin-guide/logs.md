@@ -34,7 +34,7 @@ The Activity Log captures user actions performed in Semaphore, including:
 - Adding or removing resources (e.g., Templates, Inventories, Repositories).
 - Adding or removing team members.
 
-### Pro version 2.10 and later {#pro-version-210-and-later}
+### Pro version 2.10 and later <Pro /> {#pro-version-210-and-later}
 
 **Semaphore Pro** 2.10+ supports writing the Activity Log and Task log to a file. To enable this, add the following configuration to your `config.json`:
 
@@ -143,7 +143,7 @@ When the number of tasks exceeds this limit, the oldest Task Logs are automatica
 
 ---
 
-## Syslog protocol support {#syslog-protocol-support}
+## Syslog protocol support <Enterprise /> {#syslog-protocol-support}
 
 Semaphore can forward activity and task log entries to an external syslog collector for long‑term storage or centralized monitoring. Syslog forwarding is disabled by default.
 
@@ -181,7 +181,7 @@ Restart the Semaphore service after changing these values so that the new syslog
 
 ---
 
-## SIEM integration {#siem-integration}
+## SIEM integration <Enterprise /> {#siem-integration}
 
 Semaphore 2.20+ records a security audit trail suitable for forwarding to a SIEM (Splunk, Elastic Security, QRadar, Wazuh, etc.).
 

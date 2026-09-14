@@ -29,7 +29,7 @@ Log aktivnosti beleži korisničke radnje izvršene u Semaphore-u, uključujući
 - Dodavanje ili uklanjanje resursa (npr. šablona, inventara, repozitorijuma).
 - Dodavanje ili uklanjanje članova tima.
 
-### Pro verzija 2.10 i novije {#pro-version-210-and-later}
+### Pro verzija 2.10 i novije <Pro /> {#pro-version-210-and-later}
 
 **Semaphore Pro** 2.10+ podržava upisivanje loga aktivnosti i loga zadataka u fajl. Da biste ovo omogućili, dodajte sledeću konfiguraciju u svoj `config.json`:
 
@@ -138,7 +138,7 @@ Kada broj zadataka premaši ovo ograničenje, najstariji logovi zadataka se auto
 
 ---
 
-## Podrška za syslog protokol {#syslog-protocol-support}
+## Podrška za syslog protokol <Enterprise /> {#syslog-protocol-support}
 
 Semaphore može da prosleđuje zapise iz loga aktivnosti i loga zadataka spoljnom syslog kolektoru radi dugoročnog čuvanja ili centralizovanog nadzora. Prosleđivanje na syslog je podrazumevano isključeno.
 
@@ -176,7 +176,7 @@ Ponovo pokrenite Semaphore servis nakon izmene ovih vrednosti da bi se primenilo
 
 ---
 
-## SIEM integracija {#siem-integration}
+## SIEM integracija <Enterprise /> {#siem-integration}
 
 Semaphore 2.20+ beleži bezbednosni revizioni trag pogodan za prosleđivanje SIEM sistemu (Splunk, Elastic Security, QRadar, Wazuh itd.).
 

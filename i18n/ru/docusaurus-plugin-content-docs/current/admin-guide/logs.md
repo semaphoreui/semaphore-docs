@@ -29,7 +29,7 @@ docker logs -f my-semaphore-container
 - Добавление или удаление ресурсов (например, шаблонов, инвентарей, репозиториев).
 - Добавление или удаление участников команды.
 
-### Pro-версия 2.10 и новее {#pro-version-210-and-later}
+### Pro-версия 2.10 и новее <Pro /> {#pro-version-210-and-later}
 
 **Semaphore Pro** 2.10+ поддерживает запись лога активности и лога задач в файл. Чтобы включить эту возможность, добавьте следующую конфигурацию в ваш `config.json`:
 
@@ -138,7 +138,7 @@ Semaphore хранит информацию о выполнении задач �
 
 ---
 
-## Поддержка протокола syslog {#syslog-protocol-support}
+## Поддержка протокола syslog <Enterprise /> {#syslog-protocol-support}
 
 Semaphore может пересылать записи лога активности и лога задач во внешний коллектор syslog для долгосрочного хранения или централизованного мониторинга. По умолчанию пересылка в syslog отключена.
 
@@ -176,7 +176,7 @@ SEMAPHORE_SYSLOG_TAG=semaphore
 
 ---
 
-## Интеграция с SIEM {#siem-integration}
+## Интеграция с SIEM <Enterprise /> {#siem-integration}
 
 Semaphore 2.20+ ведёт журнал аудита безопасности, пригодный для пересылки в SIEM (Splunk, Elastic Security, QRadar, Wazuh и т. д.).
 

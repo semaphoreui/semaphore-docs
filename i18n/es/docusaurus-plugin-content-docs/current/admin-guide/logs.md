@@ -29,7 +29,7 @@ El Registro de actividad captura acciones de usuario realizadas en Semaphore, in
 - Añadir o eliminar recursos (p. ej., Plantillas, Inventarios, Repositorios).
 - Añadir o eliminar miembros del equipo.
 
-### Versión Pro 2.10 y posteriores {#pro-version-210-and-later}
+### Versión Pro 2.10 y posteriores <Pro /> {#pro-version-210-and-later}
 
 **Semaphore Pro** 2.10+ permite escribir el Registro de actividad y el registro de Tareas en un archivo. Para habilitarlo, añada la siguiente configuración a su `config.json`:
 
@@ -138,7 +138,7 @@ Cuando el número de tareas supera este límite, los registros de tareas más an
 
 ---
 
-## Compatibilidad con el protocolo syslog {#syslog-protocol-support}
+## Compatibilidad con el protocolo syslog <Enterprise /> {#syslog-protocol-support}
 
 Semaphore puede reenviar las entradas del registro de actividad y de tareas a un colector syslog externo para su almacenamiento a largo plazo o para una supervisión centralizada. El reenvío a syslog está deshabilitado de forma predeterminada.
 
@@ -176,7 +176,7 @@ Reinicie el servicio de Semaphore después de cambiar estos valores para que se 
 
 ---
 
-## Integración con SIEM {#siem-integration}
+## Integración con SIEM <Enterprise /> {#siem-integration}
 
 Semaphore 2.20+ registra una traza de auditoría de seguridad adecuada para reenviarla a un SIEM (Splunk, Elastic Security, QRadar, Wazuh, etc.).
 

@@ -65,7 +65,7 @@
 
 ---
 
-## 扩展 RBAC（Enterprise） {#extended-rbac-enterprise}
+## 扩展 RBAC <Enterprise /> {#extended-rbac-enterprise}
 
 :::info
 扩展 RBAC 在 **Semaphore Enterprise** 版中可用，从 [Semaphore v2.17](https://semaphoreui.com/releases/semaphore-v2_17) 开始提供。

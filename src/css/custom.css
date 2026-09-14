@@ -772,3 +772,9 @@ html[data-theme='dark'] {
 .InstallationMethod:first-child {
   border-top-left-radius: 0;
 }
+
+video {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}

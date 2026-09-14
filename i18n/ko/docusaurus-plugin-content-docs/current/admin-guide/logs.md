@@ -29,7 +29,7 @@ docker logs -f my-semaphore-container
 - 리소스 추가 또는 제거(예: 템플릿, 인벤토리, 저장소).
 - 팀 구성원 추가 또는 제거.
 
-### Pro 버전 2.10 이상 {#pro-version-210-and-later}
+### Pro 버전 2.10 이상 <Pro /> {#pro-version-210-and-later}
 
 **Semaphore Pro** 2.10 이상에서는 활동 로그와 Task 로그를 파일에 기록할 수 있습니다. 이 기능을 활성화하려면 `config.json`에 다음 설정을 추가합니다:
 
@@ -138,7 +138,7 @@ Semaphore는 작업 실행에 대한 정보를 데이터베이스에 저장합�
 
 ---
 
-## Syslog 프로토콜 지원 {#syslog-protocol-support}
+## Syslog 프로토콜 지원 <Enterprise /> {#syslog-protocol-support}
 
 Semaphore는 장기 보관이나 중앙 집중식 모니터링을 위해 활동 로그와 작업 로그 항목을 외부 syslog 수집기로 전달할 수 있습니다. syslog 전달은 기본적으로 비활성화되어 있습니다.
 
@@ -176,7 +176,7 @@ SEMAPHORE_SYSLOG_TAG=semaphore
 
 ---
 
-## SIEM 연동 {#siem-integration}
+## SIEM 연동 <Enterprise /> {#siem-integration}
 
 Semaphore 2.20 이상은 SIEM(Splunk, Elastic Security, QRadar, Wazuh 등)으로 전달하기에 적합한 보안 감사 추적을 기록합니다.
 

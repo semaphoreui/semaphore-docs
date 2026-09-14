@@ -1,29 +1,32 @@
+---
+title: 설정
+description: Semaphore는 설정 파일과 환경 변수에서 설정을 읽습니다. 온라인 설정 도구를 사용하면 양식을 통해 두 형식 모두 준비할 수 있습니다. 서버 운영 방식에 맞는 방법을 선택하세요.
+---
+
 # 설정
 
-Semaphore는 여러 가지 방법으로 설정할 수 있습니다:
+Semaphore는 설정 파일과 환경 변수에서 설정을 읽습니다. 온라인 설정 도구를 사용하면 양식을 통해 두 형식 모두 준비할 수 있습니다. 서버 운영 방식에 맞는 방법을 선택하세요.
 
-* [온라인 설정 도구](https://semaphoreui.com/install) &mdash; 온라인으로 설정을 생성하는 웹 인터페이스입니다.
-* [설정 파일](/admin-guide/configuration/config-file) &mdash; Semaphore를 설정하는 기본적이며 가장 유연한 방법입니다.
-* [환경 변수](/admin-guide/configuration/env-vars) &mdash; 컨테이너 기반 또는 클라우드 네이티브 배포에 유용합니다.
+## 이 섹션의 내용 {#in-this-section}
 
+| 방법 | 사용할 상황 |
+|---|---|
+| [온라인 설정 도구](/admin-guide/configuration/online) | 양식으로 바이너리 또는 Docker 설치에 사용할 설정과 시작 명령을 생성하려는 경우. |
+| [설정 파일](/admin-guide/configuration/config-file) | 서버 설정을 `config.json` 파일에 저장하려는 경우. |
+| [환경 변수](/admin-guide/configuration/env-vars) | Docker, 서비스 정의 또는 배포 도구로 설정을 관리하는 경우. |
 
 ## 설정 옵션 {#configuration-options}
 
-모든 옵션과 해당 환경 변수, 타입, 기본값은
-[구성 옵션 레퍼런스](/reference/configuration)에 정리되어 있습니다. 이 페이지는 Semaphore
-소스에서 생성되므로 실행 중인 릴리스와 항상 일치합니다.
+환경 변수는 설정 파일의 해당 값보다 우선합니다. 둘 다 지정하지 않으면 기본값을 사용합니다. 파일을 수정해도 반영되지 않으면 Semaphore 프로세스에 전달된 환경 변수를 확인하세요.
 
-값은 한 가지 순서로 결정됩니다. 환경 변수가 구성 파일보다 우선하며, 내장 기본값은 둘 다
-설정되지 않았을 때만 적용됩니다.
+[설정 옵션 참조](/reference/configuration)에는 이름, 환경 변수, 유형 및 기본값이 나와 있습니다. Semaphore 소스 코드에서 생성되므로 이전 서버를 설정할 때는 해당 버전의 문서를 사용하세요.
 
-## 자주 묻는 질문 {#frequently-asked-questions}
+<span id="frequently-asked-questions" />
 
-### 1. Semaphore UI의 공개 URL을 설정하는 방법 {#1-how-to-configure-a-public-url-for-semaphore-ui}
+## 공개 URL {#1-how-to-configure-a-public-url-for-semaphore-ui}
 
-Semaphore 앞에 nginx 또는 다른 웹 서버를 사용하는 경우 `web_host` 설정 옵션을 지정해야 합니다.
+`web_host`(또는 `SEMAPHORE_WEB_ROOT`)를 사용자가 브라우저에서 여는 주소로 설정하세요. 리버스 프록시가 `https://example.com/semaphore`에서 Semaphore를 제공한다면 `/semaphore`를 포함한 전체 주소를 사용하세요. 프록시가 연결하는 내부 주소가 아닌 공개 주소입니다.
 
-예를 들어 Semaphore로 요청을 프록시하는 서버에 NGINX를 설정했다고 가정합니다.
+## 시작하기 {#where-to-start}
 
-서버 주소가 `https://example.com`이고 `https://example.com/semaphore`로 들어오는 모든 요청을 Semaphore로 프록시합니다.
-
-이 경우 `web_host`는 `https://example.com/semaphore`가 됩니다.
+새 서버는 위의 온라인 설정 도구 가이드를 열고 바이너리 또는 Docker 단계를 따르세요. 기존 서버는 서비스가 사용하는 파일이나 환경 변수를 수정한 뒤 Semaphore를 다시 시작하세요.

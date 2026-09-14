@@ -29,7 +29,7 @@ Das Aktivitätsprotokoll erfasst Benutzeraktionen in Semaphore, darunter:
 - Hinzufügen oder Entfernen von Ressourcen (z. B. Vorlagen, Inventories, Repositories).
 - Hinzufügen oder Entfernen von Teammitgliedern.
 
-### Pro-Version 2.10 und neuer {#pro-version-210-and-later}
+### Pro-Version 2.10 und neuer <Pro /> {#pro-version-210-and-later}
 
 **Semaphore Pro** 2.10+ unterstützt das Schreiben des Aktivitätsprotokolls und des Task-Protokolls in eine Datei. Um dies zu aktivieren, fügen Sie folgende Konfiguration zu Ihrer `config.json` hinzu:
 
@@ -138,7 +138,7 @@ Wenn die Anzahl der Tasks diesen Grenzwert überschreitet, werden die ältesten 
 
 ---
 
-## Unterstützung des Syslog-Protokolls {#syslog-protocol-support}
+## Unterstützung des Syslog-Protokolls <Enterprise /> {#syslog-protocol-support}
 
 Semaphore kann Aktivitäts- und Task-Protokolleinträge zur Langzeitspeicherung oder zentralen Überwachung an einen externen Syslog-Collector weiterleiten. Die Syslog-Weiterleitung ist standardmäßig deaktiviert.
 
@@ -176,7 +176,7 @@ Starten Sie den Semaphore-Dienst nach dem Ändern dieser Werte neu, damit das ne
 
 ---
 
-## SIEM-Integration {#siem-integration}
+## SIEM-Integration <Enterprise /> {#siem-integration}
 
 Semaphore 2.20+ zeichnet einen Sicherheits-Audit-Trail auf, der sich zur Weiterleitung an ein SIEM (Splunk, Elastic Security, QRadar, Wazuh usw.) eignet.
 

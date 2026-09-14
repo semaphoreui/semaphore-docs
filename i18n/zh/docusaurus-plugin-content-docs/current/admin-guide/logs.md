@@ -29,7 +29,7 @@ docker logs -f my-semaphore-container
 - 添加或删除资源（例如模板、清单、仓库）。
 - 添加或移除团队成员。
 
-### Pro 2.10 及更高版本 {#pro-version-210-and-later}
+### Pro 2.10 及更高版本 <Pro /> {#pro-version-210-and-later}
 
 **Semaphore Pro** 2.10+ 支持将活动日志和任务日志写入文件。要启用此功能，请在 `config.json` 中添加以下配置：
 
@@ -138,7 +138,7 @@ Semaphore 将任务执行信息存储在数据库中。任务历史提供所有�
 
 ---
 
-## Syslog 协议支持 {#syslog-protocol-support}
+## Syslog 协议支持 <Enterprise /> {#syslog-protocol-support}
 
 Semaphore 可以将活动日志和任务日志条目转发到外部 syslog 收集器，用于长期存储或集中监控。Syslog 转发默认处于禁用状态。
 
@@ -176,7 +176,7 @@ SEMAPHORE_SYSLOG_TAG=semaphore
 
 ---
 
-## SIEM 集成 {#siem-integration}
+## SIEM 集成 <Enterprise /> {#siem-integration}
 
 Semaphore 2.20+ 会记录适合转发到 SIEM（Splunk、Elastic Security、QRadar、Wazuh 等）的安全审计记录。
 

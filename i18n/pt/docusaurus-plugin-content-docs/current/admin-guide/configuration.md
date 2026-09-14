@@ -1,31 +1,32 @@
+---
+title: Configuração
+description: O Semaphore lê as configurações de um arquivo e de variáveis de ambiente. O configurador online ajuda a prepará-las por meio de um formulário. Escolha o método adequado ao seu servidor.
+---
+
 # Configuração
 
-O Semaphore pode ser configurado usando vários métodos:
+O Semaphore lê as configurações de um arquivo e de variáveis de ambiente. O configurador online ajuda a prepará-las por meio de um formulário. Escolha o método adequado ao seu servidor.
 
-* [Configurador online](https://semaphoreui.com/install) &mdash; interface web para gerar a configuração online.
-* [Arquivo de configuração](/admin-guide/configuration/config-file) &mdash; a forma principal e mais flexível de configurar o Semaphore.
-* [Variáveis de ambiente](/admin-guide/configuration/env-vars) &mdash; úteis para implantações em contêineres ou nativas em nuvem.
+## Nesta seção {#in-this-section}
 
+| Método | Quando usar |
+|---|---|
+| [Configurador online](/admin-guide/configuration/online) | Você quer um formulário que gere configurações e comandos de inicialização para uma instalação binária ou Docker. |
+| [Arquivo de configuração](/admin-guide/configuration/config-file) | Você quer manter as configurações do servidor em um arquivo `config.json`. |
+| [Variáveis de ambiente](/admin-guide/configuration/env-vars) | Você gerencia as configurações pelo Docker, por uma definição de serviço ou por ferramentas de implantação. |
 
 ## Opções de configuração {#configuration-options}
 
-Todas as opções, com a respetiva variável de ambiente, tipo e valor por omissão, estão
-listadas na [referência das opções de configuração](/reference/configuration). Essa página
-é gerada a partir do código-fonte do Semaphore, por isso corresponde sempre à versão que
-está a executar.
+Uma variável de ambiente substitui o valor correspondente no arquivo. O valor padrão se aplica quando nenhum dos dois está definido. Se editar o arquivo não tiver efeito, verifique o ambiente do processo do Semaphore.
 
-Os valores são resolvidos por uma única ordem: uma variável de ambiente prevalece sobre o
-ficheiro de configuração, e o valor por omissão só se aplica quando nenhum dos dois está
-definido.
+A [referência de opções de configuração](/reference/configuration) lista nomes, variáveis de ambiente, tipos e valores padrão. Ela é gerada a partir do código do Semaphore; use a documentação da sua versão ao configurar um servidor antigo.
 
-## Perguntas frequentes {#frequently-asked-questions}
+<span id="frequently-asked-questions" />
 
-### 1. Como configurar uma URL pública para o Semaphore UI {#1-how-to-configure-a-public-url-for-semaphore-ui}
+## URL pública {#1-how-to-configure-a-public-url-for-semaphore-ui}
 
-Se você usa nginx ou outro servidor web na frente do Semaphore, deve informar a opção de configuração `web_host`.
+Defina `web_host` (ou `SEMAPHORE_WEB_ROOT`) como o endereço que os usuários abrem no navegador. Se um proxy reverso disponibiliza o Semaphore em `https://example.com/semaphore`, use o endereço completo, incluindo `/semaphore`. Esse é o endereço público, não o endereço interno usado pelo proxy.
 
-Por exemplo, você configurou o NGINX no servidor que encaminha as requisições para o Semaphore.
+## Por onde começar {#where-to-start}
 
-O endereço do servidor é `https://example.com` e você encaminha todas as requisições de `https://example.com/semaphore` para o Semaphore.
-
-Seu `web_host` será `https://example.com/semaphore`.
+Para um novo servidor, abra o guia do configurador online e siga os passos para binários ou Docker. Para um servidor existente, altere o arquivo ou as variáveis de ambiente do serviço e reinicie o Semaphore.

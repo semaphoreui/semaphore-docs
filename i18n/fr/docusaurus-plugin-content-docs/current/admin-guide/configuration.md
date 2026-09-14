@@ -1,31 +1,32 @@
+---
+title: Configuration
+description: Semaphore lit ses paramètres dans un fichier de configuration et dans les variables d’environnement. Le configurateur en ligne permet de les préparer à l’aide d’un formulaire. Choisissez la méthode adaptée à votre serveur.
+---
+
 # Configuration
 
-Semaphore peut être configuré de plusieurs façons :
+Semaphore lit ses paramètres dans un fichier de configuration et dans les variables d’environnement. Le configurateur en ligne permet de les préparer à l’aide d’un formulaire. Choisissez la méthode adaptée à votre serveur.
 
-* [Configurateur en ligne](https://semaphoreui.com/install) &mdash; interface web permettant de générer la configuration en ligne.
-* [Fichier de configuration](/admin-guide/configuration/config-file) &mdash; la méthode principale et la plus flexible pour configurer Semaphore.
-* [Variables d'environnement](/admin-guide/configuration/env-vars) &mdash; pratiques pour les déploiements conteneurisés ou cloud-native.
+## Dans cette section {#in-this-section}
 
+| Méthode | Quand l’utiliser |
+|---|---|
+| [Configurateur en ligne](/admin-guide/configuration/online) | Vous voulez un formulaire qui génère la configuration et les commandes de démarrage pour une installation binaire ou Docker. |
+| [Fichier de configuration](/admin-guide/configuration/config-file) | Vous voulez conserver les paramètres du serveur dans un fichier `config.json`. |
+| [Variables d'environnement](/admin-guide/configuration/env-vars) | Vous gérez les paramètres via Docker, une définition de service ou vos outils de déploiement. |
 
 ## Options de configuration {#configuration-options}
 
-Chaque option, avec sa variable d'environnement, son type et sa valeur par défaut, est
-listée dans la [référence des options de configuration](/reference/configuration). Cette
-page est générée à partir des sources de Semaphore : elle correspond donc toujours à la
-version que vous exécutez.
+Une variable d’environnement remplace la valeur correspondante du fichier. La valeur par défaut s’applique si aucune des deux n’est définie. Si modifier le fichier ne change rien, vérifiez l’environnement du processus Semaphore.
 
-Les valeurs sont résolues dans un ordre unique : une variable d'environnement l'emporte
-sur le fichier de configuration, et la valeur par défaut ne s'applique que si aucun des
-deux n'est défini.
+La [référence des options de configuration](/reference/configuration) répertorie les noms, variables d’environnement, types et valeurs par défaut. Elle est générée à partir du code de Semaphore ; utilisez la documentation de votre version pour un serveur plus ancien.
 
-## Questions fréquentes {#frequently-asked-questions}
+<span id="frequently-asked-questions" />
 
-### 1. Comment configurer une URL publique pour Semaphore UI {#1-how-to-configure-a-public-url-for-semaphore-ui}
+## URL publique {#1-how-to-configure-a-public-url-for-semaphore-ui}
 
-Si vous utilisez nginx ou un autre serveur web devant Semaphore, vous devez renseigner l'option de configuration `web_host`.
+Définissez `web_host` (ou `SEMAPHORE_WEB_ROOT`) sur l’adresse ouverte par les utilisateurs dans leur navigateur. Si un proxy inverse expose Semaphore sur `https://example.com/semaphore`, utilisez l’adresse complète, avec `/semaphore`. Il s’agit de l’adresse publique, pas de l’adresse interne utilisée par le proxy.
 
-Par exemple, vous avez configuré NGINX sur le serveur, qui relaie les requêtes vers Semaphore.
+## Par où commencer {#where-to-start}
 
-L'adresse du serveur est `https://example.com` et vous relayez toutes les requêtes `https://example.com/semaphore` vers Semaphore.
-
-Votre `web_host` sera alors `https://example.com/semaphore`.
+Pour un nouveau serveur, ouvrez le guide du configurateur en ligne et suivez les étapes pour une installation binaire ou Docker. Pour un serveur existant, modifiez le fichier ou les variables d’environnement de son service, puis redémarrez Semaphore.

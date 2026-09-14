@@ -29,7 +29,7 @@ O Log de Atividade registra ações de usuários realizadas no Semaphore, inclui
 - Adição ou remoção de recursos (por exemplo, Templates, Inventários, Repositórios).
 - Adição ou remoção de membros da equipe.
 
-### Versão Pro 2.10 e posteriores {#pro-version-210-and-later}
+### Versão Pro 2.10 e posteriores <Pro /> {#pro-version-210-and-later}
 
 O **Semaphore Pro** 2.10+ permite gravar o Log de Atividade e o log de Tarefas em um arquivo. Para habilitar isso, adicione a seguinte configuração ao seu `config.json`:
 
@@ -138,7 +138,7 @@ Quando o número de tarefas excede esse limite, os Logs de Tarefas mais antigos 
 
 ---
 
-## Suporte ao protocolo syslog {#syslog-protocol-support}
+## Suporte ao protocolo syslog <Enterprise /> {#syslog-protocol-support}
 
 O Semaphore pode encaminhar entradas de log de atividade e de tarefas para um coletor syslog externo, para armazenamento de longo prazo ou monitoramento centralizado. O encaminhamento via syslog é desabilitado por padrão.
 
@@ -176,7 +176,7 @@ Reinicie o serviço do Semaphore após alterar esses valores para que o novo des
 
 ---
 
-## Integração com SIEM {#siem-integration}
+## Integração com SIEM <Enterprise /> {#siem-integration}
 
 O Semaphore 2.20+ registra uma trilha de auditoria de segurança adequada para encaminhamento a um SIEM (Splunk, Elastic Security, QRadar, Wazuh etc.).
 

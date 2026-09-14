@@ -65,7 +65,7 @@
 
 ---
 
-## Расширенный RBAC (Enterprise) {#extended-rbac-enterprise}
+## Расширенный RBAC <Enterprise /> {#extended-rbac-enterprise}
 
 :::info
 Расширенный RBAC доступен в редакции **Semaphore Enterprise**, начиная с [Semaphore v2.17](https://semaphoreui.com/releases/semaphore-v2_17).

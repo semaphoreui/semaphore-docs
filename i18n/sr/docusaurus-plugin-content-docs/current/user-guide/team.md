@@ -65,7 +65,7 @@ Ispod slede detaljni opisi svake uloge i njenih dozvola.
 
 ---
 
-## Prošireni RBAC (Enterprise) {#extended-rbac-enterprise}
+## Prošireni RBAC <Enterprise /> {#extended-rbac-enterprise}
 
 :::info
 Prošireni RBAC dostupan je u izdanju **Semaphore Enterprise**, počev od [Semaphore v2.17](https://semaphoreui.com/releases/semaphore-v2_17).

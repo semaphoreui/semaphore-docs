@@ -70,7 +70,7 @@ Below are detailed descriptions of each role and its permissions.
 
 ---
 
-## Extended RBAC (Enterprise) {#extended-rbac-enterprise}
+## Extended RBAC <Enterprise /> {#extended-rbac-enterprise}
 
 :::info
 Extended RBAC is available in the **Semaphore Enterprise** edition, starting with [Semaphore v2.17](https://semaphoreui.com/releases/semaphore-v2_17).

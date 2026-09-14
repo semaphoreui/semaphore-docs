@@ -29,7 +29,7 @@ Le journal d'activité enregistre les actions effectuées par les utilisateurs d
 - L'ajout ou la suppression de ressources (par ex. modèles, inventaires, dépôts).
 - L'ajout ou la suppression de membres d'équipe.
 
-### Version Pro 2.10 et ultérieures {#pro-version-210-and-later}
+### Version Pro 2.10 et ultérieures <Pro /> {#pro-version-210-and-later}
 
 **Semaphore Pro** 2.10+ prend en charge l'écriture du journal d'activité et du journal des tâches dans un fichier. Pour l'activer, ajoutez la configuration suivante à votre `config.json` :
 
@@ -138,7 +138,7 @@ Lorsque le nombre de tâches dépasse cette limite, les journaux de tâches les 
 
 ---
 
-## Prise en charge du protocole syslog {#syslog-protocol-support}
+## Prise en charge du protocole syslog <Enterprise /> {#syslog-protocol-support}
 
 Semaphore peut transférer les entrées du journal d'activité et du journal des tâches vers un collecteur syslog externe pour un stockage à long terme ou une supervision centralisée. Le transfert syslog est désactivé par défaut.
 
@@ -176,7 +176,7 @@ Redémarrez le service Semaphore après avoir modifié ces valeurs afin que la n
 
 ---
 
-## Intégration SIEM {#siem-integration}
+## Intégration SIEM <Enterprise /> {#siem-integration}
 
 Semaphore 2.20+ enregistre une piste d'audit de sécurité adaptée au transfert vers un SIEM (Splunk, Elastic Security, QRadar, Wazuh, etc.).
 

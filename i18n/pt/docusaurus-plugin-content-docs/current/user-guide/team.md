@@ -65,7 +65,7 @@ Abaixo estão as descrições detalhadas de cada papel e das suas permissões.
 
 ---
 
-## RBAC estendido (Enterprise) {#extended-rbac-enterprise}
+## RBAC estendido <Enterprise /> {#extended-rbac-enterprise}
 
 :::info
 O RBAC estendido está disponível na edição **Semaphore Enterprise**, a partir do [Semaphore v2.17](https://semaphoreui.com/releases/semaphore-v2_17).

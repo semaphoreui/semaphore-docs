@@ -1,29 +1,32 @@
+---
+title: 設定
+description: Semaphore は設定ファイルと環境変数から設定を読み込みます。オンライン設定ツールでは、フォームからどちらの形式も作成できます。サーバーの運用方法に合った手順を選んでください。
+---
+
 # 設定
 
-Semaphore は、いくつかの方法で設定できます。
+Semaphore は設定ファイルと環境変数から設定を読み込みます。オンライン設定ツールでは、フォームからどちらの形式も作成できます。サーバーの運用方法に合った手順を選んでください。
 
-* [オンライン設定ツール](https://semaphoreui.com/install) &mdash; オンラインで設定を生成する Web インターフェースです。
-* [設定ファイル](/admin-guide/configuration/config-file) &mdash; Semaphore を設定する主要かつ最も柔軟な方法です。
-* [環境変数](/admin-guide/configuration/env-vars) &mdash; コンテナー環境やクラウドネイティブなデプロイに便利です。
+## このセクションの内容 {#in-this-section}
 
+| 方法 | 適した用途 |
+|---|---|
+| [オンライン設定ツール](/admin-guide/configuration/online) | バイナリまたは Docker のインストール用に、フォームから設定と起動コマンドを生成したい場合。 |
+| [設定ファイル](/admin-guide/configuration/config-file) | サーバーの設定を `config.json` ファイルに保存したい場合。 |
+| [環境変数](/admin-guide/configuration/env-vars) | Docker、サービス定義、デプロイツールで設定を管理する場合。 |
 
 ## 設定オプション {#configuration-options}
 
-すべてのオプションと、その環境変数・型・既定値は
-[設定オプションのリファレンス](/reference/configuration)にまとめられています。このページは
-Semaphore のソースから生成されるため、実行中のリリースと常に一致します。
+環境変数は設定ファイルの対応する値より優先されます。どちらも指定されていない場合は、既定値が適用されます。ファイルを変更しても反映されない場合は、Semaphore プロセスに渡される環境変数を確認してください。
 
-値の解決順序は 1 つだけです。環境変数が設定ファイルより優先され、組み込みの既定値は
-どちらも設定されていない場合にのみ適用されます。
+[設定オプションのリファレンス](/reference/configuration)には、名前、環境変数、型、既定値が記載されています。Semaphore のソースコードから生成されるため、古いサーバーを設定する場合はそのバージョンのドキュメントを使用してください。
 
-## よくある質問 {#frequently-asked-questions}
+<span id="frequently-asked-questions" />
 
-### 1. Semaphore UI の公開 URL を設定する方法 {#1-how-to-configure-a-public-url-for-semaphore-ui}
+## 公開 URL {#1-how-to-configure-a-public-url-for-semaphore-ui}
 
-Semaphore の前段に nginx やその他の Web サーバーを使用している場合は、設定オプション `web_host` を指定してください。
+`web_host`（または `SEMAPHORE_WEB_ROOT`）には、ユーザーがブラウザーで開くアドレスを指定します。リバースプロキシが `https://example.com/semaphore` で Semaphore を公開する場合、`/semaphore` を含む完全なアドレスを使用します。プロキシの接続先となる内部アドレスではなく、公開アドレスです。
 
-たとえば、Semaphore へリクエストをプロキシするサーバーに NGINX を設定したとします。
+## はじめに {#where-to-start}
 
-サーバーのアドレスが `https://example.com` で、`https://example.com/semaphore` へのすべてのリクエストを Semaphore にプロキシしているとします。
-
-この場合、`web_host` は `https://example.com/semaphore` になります。
+新しいサーバーでは、上のオンライン設定ツールのガイドを開き、バイナリまたは Docker の手順に従ってください。既存のサーバーでは、サービスが使用するファイルまたは環境変数を更新し、Semaphore を再起動してください。

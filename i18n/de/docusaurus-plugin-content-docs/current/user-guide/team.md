@@ -65,7 +65,7 @@ Nachfolgend finden Sie detaillierte Beschreibungen jeder Rolle und ihrer Berecht
 
 ---
 
-## Erweitertes RBAC (Enterprise) {#extended-rbac-enterprise}
+## Erweitertes RBAC <Enterprise /> {#extended-rbac-enterprise}
 
 :::info
 Erweitertes RBAC ist in der Edition **Semaphore Enterprise** ab [Semaphore v2.17](https://semaphoreui.com/releases/semaphore-v2_17) verfügbar.

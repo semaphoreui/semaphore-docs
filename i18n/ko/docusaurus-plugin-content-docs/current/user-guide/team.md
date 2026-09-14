@@ -65,7 +65,7 @@ Semaphore UI에서 모든 프로젝트는 **팀**과 연결됩니다. 팀 구성
 
 ---
 
-## 확장 RBAC (Enterprise) {#extended-rbac-enterprise}
+## 확장 RBAC <Enterprise /> {#extended-rbac-enterprise}
 
 :::info
 확장 RBAC는 [Semaphore v2.17](https://semaphoreui.com/releases/semaphore-v2_17)부터 **Semaphore Enterprise** 에디션에서 사용할 수 있습니다.

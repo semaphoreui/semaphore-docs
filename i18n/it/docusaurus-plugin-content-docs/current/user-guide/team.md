@@ -65,7 +65,7 @@ Di seguito sono riportate le descrizioni dettagliate di ciascun ruolo e dei rela
 
 ---
 
-## RBAC estesa (Enterprise) {#extended-rbac-enterprise}
+## RBAC estesa <Enterprise /> {#extended-rbac-enterprise}
 
 :::info
 La RBAC estesa è disponibile nell'edizione **Semaphore Enterprise**, a partire da [Semaphore v2.17](https://semaphoreui.com/releases/semaphore-v2_17).

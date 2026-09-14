@@ -65,7 +65,7 @@ Semaphore UI では、すべてのプロジェクトが **チーム** に関連�
 
 ---
 
-## 拡張 RBAC（Enterprise） {#extended-rbac-enterprise}
+## 拡張 RBAC <Enterprise /> {#extended-rbac-enterprise}
 
 :::info
 拡張 RBAC は **Semaphore Enterprise** エディションで、[Semaphore v2.17](https://semaphoreui.com/releases/semaphore-v2_17) 以降で利用できます。

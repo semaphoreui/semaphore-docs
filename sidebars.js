@@ -62,6 +62,7 @@ const sidebars = {
           label: 'Configuration',
           link: { type: 'doc', id: 'admin-guide/configuration' },
           items: [
+            'admin-guide/configuration/online',
             'admin-guide/configuration/config-file',
             'admin-guide/configuration/env-vars',
             // 'admin-guide/configuration/cli',
