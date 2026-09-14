@@ -18,7 +18,7 @@ Semaphore UI는 Ansible, Terraform/OpenTofu, Bash, PowerShell, Python으로 반�
 Semaphore를 실행할 환경에 맞는 설치 방법을 선택합니다. 기본값은 네이티브 패키지입니다.
 
 <Tabs groupId="installation-method">
-  <TabItem value="package" label="네이티브 패키지" default>
+  <TabItem value="package" label="네이티브 패키지" default className="InstallationMethod">
 
 `amd64`의 Debian 또는 Ubuntu:
 
@@ -44,7 +44,7 @@ semaphore server --config ./config.json
 로컬 평가용으로는 SQLite를 선택하고, 데이터베이스 및 플레이북 경로를 수락하거나 지정하고, 공개 URL을 입력한 뒤 안내에 따라 첫 관리자를 생성합니다.
 
   </TabItem>
-  <TabItem value="docker" label="Docker Compose">
+  <TabItem value="docker" label="Docker Compose" className="InstallationMethod">
 
 `compose.yaml`을 생성합니다.
 
@@ -89,7 +89,7 @@ docker compose logs -f semaphore
 ```
 
   </TabItem>
-  <TabItem value="binary" label="바이너리 압축 파일">
+  <TabItem value="binary" label="바이너리 압축 파일" className="InstallationMethod">
 
 [GitHub Releases](https://github.com/semaphoreui/semaphore/releases)에서 운영 체제와 CPU 아키텍처에 맞는 압축 파일을 다운로드합니다. Linux `amd64` 예제:
 
@@ -105,7 +105,7 @@ tar -xzf semaphore_2.19.12_linux_amd64.tar.gz
 macOS는 `darwin` 압축 파일, Windows는 `.zip`을 선택합니다. 이 가이드 뒷부분의 Ansible 절차에는 Ansible이 설치된 Linux, macOS, WSL, 컨테이너 또는 Linux 러너 실행 환경이 필요합니다.
 
   </TabItem>
-  <TabItem value="helm" label="Helm으로 Kubernetes에 설치">
+  <TabItem value="helm" label="Helm으로 Kubernetes에 설치" className="InstallationMethod">
 
 공식 차트를 추가하고 설치 전에 기본값을 확인합니다.
 
@@ -130,8 +130,6 @@ helm upgrade --install semaphore semaphoreui/semaphore \
 
 <details>
 <summary>어떤 설치 방법을 선택할지 모르겠나요?</summary>
-
-<br />
 
 | 설치 방법 | 적합한 환경 | 상세 가이드 |
 | --- | --- | --- |
@@ -180,8 +178,6 @@ Semaphore를 프로덕션에서 사용하기 전에 [설정](/admin-guide/config
 
 <details>
 <summary>이 단계 보기</summary>
-
-<br />
 
 ![빈 Semaphore 인스턴스에서 첫 프로젝트 생성](/assets/getting-started/create-first-project.gif)
 
@@ -364,8 +360,6 @@ localhost ansible_connection=local
 <details>
 <summary>이 단계 보기</summary>
 
-<br />
-
 ![Ansible 활성화 및 첫 Ansible 작업 템플릿 생성](/assets/getting-started/create-ansible-template.gif)
 
 </details>
@@ -413,8 +407,6 @@ Semaphore는 작업을 대기열에 넣고 저장소를 준비한 뒤 인벤토�
 
 <details>
 <summary>실행과 결과 보기</summary>
-
-<br />
 
 ![Ansible 작업 실행 후 로그와 상세 정보 확인](/assets/getting-started/run-and-inspect-task.gif)
 

@@ -18,7 +18,7 @@ Ce guide utilise Ansible pour le premier exemple pratique. Utilisez un playbook 
 Choisissez la méthode d’installation adaptée à l’environnement où Semaphore sera exécuté. Le paquet natif est sélectionné par défaut.
 
 <Tabs groupId="installation-method">
-  <TabItem value="package" label="Paquet natif" default>
+  <TabItem value="package" label="Paquet natif" default className="InstallationMethod">
 
 Pour Debian ou Ubuntu sur `amd64` :
 
@@ -44,7 +44,7 @@ semaphore server --config ./config.json
 Pour une évaluation locale, choisissez SQLite, acceptez ou définissez les chemins de la base de données et des playbooks, indiquez l’URL publique et créez le premier administrateur à l’invite.
 
   </TabItem>
-  <TabItem value="docker" label="Docker Compose">
+  <TabItem value="docker" label="Docker Compose" className="InstallationMethod">
 
 Créez `compose.yaml` :
 
@@ -89,7 +89,7 @@ docker compose logs -f semaphore
 ```
 
   </TabItem>
-  <TabItem value="binary" label="Archive binaire">
+  <TabItem value="binary" label="Archive binaire" className="InstallationMethod">
 
 Téléchargez l’archive correspondant à votre système d’exploitation et à l’architecture du processeur depuis [GitHub Releases](https://github.com/semaphoreui/semaphore/releases). Exemple pour Linux `amd64` :
 
@@ -105,7 +105,7 @@ Pour une évaluation locale, choisissez SQLite, acceptez ou définissez les chem
 Choisissez une archive `darwin` pour macOS ou un fichier `.zip` pour Windows. La procédure Ansible présentée plus loin nécessite toujours un environnement Linux, macOS, WSL, un conteneur ou un runner Linux avec Ansible installé.
 
   </TabItem>
-  <TabItem value="helm" label="Kubernetes avec Helm">
+  <TabItem value="helm" label="Kubernetes avec Helm" className="InstallationMethod">
 
 Ajoutez le chart officiel et examinez ses valeurs par défaut avant l’installation :
 
@@ -130,8 +130,6 @@ Pour une configuration guidée, utilisez la [page officielle d’installation de
 
 <details>
 <summary>Vous hésitez sur la méthode d’installation ?</summary>
-
-<br />
 
 | Méthode d’installation | À choisir pour | Guide détaillé |
 | --- | --- | --- |
@@ -180,8 +178,6 @@ Le nouveau projet comporte les sections **Task Templates**, **Workflows**, **Sch
 
 <details>
 <summary>Voir cette étape</summary>
-
-<br />
 
 ![Création du premier projet dans une instance Semaphore vide](/assets/getting-started/create-first-project.gif)
 
@@ -364,8 +360,6 @@ Si vous avez créé `get-started.yml` dans votre dépôt, effectuez un commit et
 <details>
 <summary>Voir cette étape</summary>
 
-<br />
-
 ![Activation d’Ansible et création du premier modèle de tâche Ansible](/assets/getting-started/create-ansible-template.gif)
 
 </details>
@@ -413,8 +407,6 @@ Si **Summary** n’est pas disponible, vérifiez l’exécution dans **Log** ; `
 
 <details>
 <summary>Voir l’exécution et le résultat</summary>
-
-<br />
 
 ![Exécution de la tâche Ansible et examen du journal et des détails](/assets/getting-started/run-and-inspect-task.gif)
 

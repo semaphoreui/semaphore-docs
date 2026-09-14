@@ -18,7 +18,7 @@ Semaphore UI は、Ansible、Terraform/OpenTofu、Bash、PowerShell、Python に
 Semaphore の実行環境に合うインストール方法を選びます。デフォルトではネイティブパッケージが選択されています。
 
 <Tabs groupId="installation-method">
-  <TabItem value="package" label="ネイティブパッケージ" default>
+  <TabItem value="package" label="ネイティブパッケージ" default className="InstallationMethod">
 
 `amd64` の Debian または Ubuntu の場合：
 
@@ -44,7 +44,7 @@ semaphore server --config ./config.json
 ローカルでの評価では SQLite を選び、データベースと playbook のパスをそのまま使うか設定し、公開 URL を入力して、指示に従って最初の管理者を作成します。
 
   </TabItem>
-  <TabItem value="docker" label="Docker Compose">
+  <TabItem value="docker" label="Docker Compose" className="InstallationMethod">
 
 `compose.yaml` を作成します。
 
@@ -89,7 +89,7 @@ docker compose logs -f semaphore
 ```
 
   </TabItem>
-  <TabItem value="binary" label="バイナリアーカイブ">
+  <TabItem value="binary" label="バイナリアーカイブ" className="InstallationMethod">
 
 OS と CPU アーキテクチャに対応するアーカイブを [GitHub Releases](https://github.com/semaphoreui/semaphore/releases) からダウンロードします。Linux `amd64` の例：
 
@@ -105,7 +105,7 @@ tar -xzf semaphore_2.19.12_linux_amd64.tar.gz
 macOS では `darwin` アーカイブ、Windows では `.zip` を選びます。このガイドの後半の Ansible 手順には、Ansible がインストールされた Linux、macOS、WSL、コンテナ、または Linux runner の実行環境が必要です。
 
   </TabItem>
-  <TabItem value="helm" label="Helm による Kubernetes へのインストール">
+  <TabItem value="helm" label="Helm による Kubernetes へのインストール" className="InstallationMethod">
 
 公式 chart を追加し、インストール前にデフォルト値を確認します。
 
@@ -130,8 +130,6 @@ chart の `appVersion` は Semaphore のバージョンを示します。本番�
 
 <details>
 <summary>インストール方法に迷った場合</summary>
-
-<br />
 
 | インストール方法 | 適した用途 | 詳細ガイド |
 | --- | --- | --- |
@@ -180,8 +178,6 @@ Semaphore を本番で使用する前に、[設定](/admin-guide/configuration)�
 
 <details>
 <summary>この手順を動画で見る</summary>
-
-<br />
 
 ![空の Semaphore インスタンスに最初のプロジェクトを作成](/assets/getting-started/create-first-project.gif)
 
@@ -364,8 +360,6 @@ localhost ansible_connection=local
 <details>
 <summary>この手順を動画で見る</summary>
 
-<br />
-
 ![Ansible を有効にして最初の Ansible タスクテンプレートを作成](/assets/getting-started/create-ansible-template.gif)
 
 </details>
@@ -413,8 +407,6 @@ Semaphore はタスクをキューに追加し、リポジトリを準備して�
 
 <details>
 <summary>実行と結果を動画で見る</summary>
-
-<br />
 
 ![Ansible タスクを実行し、ログと詳細を確認](/assets/getting-started/run-and-inspect-task.gif)
 

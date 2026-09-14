@@ -18,7 +18,7 @@ Semaphore UI — веб-интерфейс и API для повторяемой 
 Выберите способ установки с учётом того, где будет работать Semaphore. По умолчанию выбран системный пакет.
 
 <Tabs groupId="installation-method">
-  <TabItem value="package" label="Системный пакет" default>
+  <TabItem value="package" label="Системный пакет" default className="InstallationMethod">
 
 Для Debian или Ubuntu на `amd64`:
 
@@ -44,7 +44,7 @@ semaphore server --config ./config.json
 Для локального ознакомления выберите SQLite, подтвердите или задайте пути к базе данных и playbook, укажите публичный URL и создайте первого администратора по запросу.
 
   </TabItem>
-  <TabItem value="docker" label="Docker Compose">
+  <TabItem value="docker" label="Docker Compose" className="InstallationMethod">
 
 Создайте `compose.yaml`:
 
@@ -89,7 +89,7 @@ docker compose logs -f semaphore
 ```
 
   </TabItem>
-  <TabItem value="binary" label="Архив с исполняемым файлом">
+  <TabItem value="binary" label="Архив с исполняемым файлом" className="InstallationMethod">
 
 Скачайте архив для своей операционной системы и архитектуры процессора из [GitHub Releases](https://github.com/semaphoreui/semaphore/releases). Пример для Linux `amd64`:
 
@@ -105,7 +105,7 @@ tar -xzf semaphore_2.19.12_linux_amd64.tar.gz
 Для macOS выберите архив `darwin`, для Windows — `.zip`. Пример с Ansible далее в руководстве требует среды выполнения Linux, macOS, WSL, контейнера или Linux-раннера с установленным Ansible.
 
   </TabItem>
-  <TabItem value="helm" label="Kubernetes с Helm">
+  <TabItem value="helm" label="Kubernetes с Helm" className="InstallationMethod">
 
 Добавьте официальный чарт и изучите его настройки по умолчанию перед установкой:
 
@@ -130,8 +130,6 @@ helm upgrade --install semaphore semaphoreui/semaphore \
 
 <details>
 <summary>Не знаете, какой способ установки выбрать?</summary>
-
-<br />
 
 | Способ установки | Когда выбирать | Подробное руководство |
 | --- | --- | --- |
@@ -180,8 +178,6 @@ helm upgrade --install semaphore semaphoreui/semaphore \
 
 <details>
 <summary>Посмотрите этот шаг</summary>
-
-<br />
 
 ![Создание первого проекта в пустом экземпляре Semaphore](/assets/getting-started/create-first-project.gif)
 
@@ -364,8 +360,6 @@ localhost ansible_connection=local
 <details>
 <summary>Посмотрите этот шаг</summary>
 
-<br />
-
 ![Включение Ansible и создание первого шаблона задачи Ansible](/assets/getting-started/create-ansible-template.gif)
 
 </details>
@@ -413,8 +407,6 @@ Semaphore ставит задачу в очередь, подготавлива�
 
 <details>
 <summary>Посмотрите запуск и результат</summary>
-
-<br />
 
 ![Запуск задачи Ansible и просмотр её журнала и подробностей](/assets/getting-started/run-and-inspect-task.gif)
 

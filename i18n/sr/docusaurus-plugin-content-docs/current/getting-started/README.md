@@ -18,7 +18,7 @@ Ovaj vodič koristi Ansible za prvi funkcionalni primer. Koristite playbook iz s
 Izaberite način instalacije prema okruženju u kome će Semaphore raditi. Podrazumevano je izabran nativni paket.
 
 <Tabs groupId="installation-method">
-  <TabItem value="package" label="Nativni paket" default>
+  <TabItem value="package" label="Nativni paket" default className="InstallationMethod">
 
 Za Debian ili Ubuntu na `amd64`:
 
@@ -44,7 +44,7 @@ semaphore server --config ./config.json
 Za lokalno isprobavanje izaberite SQLite, prihvatite ili podesite putanje baze podataka i playbook-ova, unesite javni URL i napravite prvog administratora kada se to zatraži.
 
   </TabItem>
-  <TabItem value="docker" label="Docker Compose">
+  <TabItem value="docker" label="Docker Compose" className="InstallationMethod">
 
 Napravite `compose.yaml`:
 
@@ -89,7 +89,7 @@ docker compose logs -f semaphore
 ```
 
   </TabItem>
-  <TabItem value="binary" label="Binarna arhiva">
+  <TabItem value="binary" label="Binarna arhiva" className="InstallationMethod">
 
 Preuzmite arhivu za svoj operativni sistem i arhitekturu procesora sa stranice [GitHub Releases](https://github.com/semaphoreui/semaphore/releases). Primer za Linux `amd64`:
 
@@ -105,7 +105,7 @@ Za lokalno isprobavanje izaberite SQLite, prihvatite ili podesite putanje baze p
 Za macOS izaberite arhivu `darwin`, a za Windows `.zip`. Ansible postupak u nastavku ovog vodiča i dalje zahteva Linux, macOS, WSL, kontejner ili Linux runner kao izvršno okruženje sa instaliranim Ansible-om.
 
   </TabItem>
-  <TabItem value="helm" label="Kubernetes pomoću Helm-a">
+  <TabItem value="helm" label="Kubernetes pomoću Helm-a" className="InstallationMethod">
 
 Dodajte zvanični chart i pregledajte podrazumevane vrednosti pre instalacije:
 
@@ -130,8 +130,6 @@ Za vođeno podešavanje koristite zvaničnu [stranicu za instalaciju Semaphore-a
 
 <details>
 <summary>Niste sigurni koji način instalacije da izaberete?</summary>
-
-<br />
 
 | Način instalacije | Kada ga izabrati | Detaljan vodič |
 | --- | --- | --- |
@@ -180,8 +178,6 @@ Novi projekat sadrži odeljke **Task Templates**, **Workflows**, **Schedule**, *
 
 <details>
 <summary>Pogledajte ovaj korak</summary>
-
-<br />
 
 ![Pravljenje prvog projekta u praznoj Semaphore instanci](/assets/getting-started/create-first-project.gif)
 
@@ -364,8 +360,6 @@ Ako ste napravili `get-started.yml` u svom repozitorijumu, napravite commit i po
 <details>
 <summary>Pogledajte ovaj korak</summary>
 
-<br />
-
 ![Uključivanje Ansible-a i pravljenje prvog šablona Ansible zadatka](/assets/getting-started/create-ansible-template.gif)
 
 </details>
@@ -413,8 +407,6 @@ Ako **Summary** nije dostupan, proverite izvršavanje u **Log**; `PLAY RECAP` os
 
 <details>
 <summary>Pogledajte izvršavanje i rezultat</summary>
-
-<br />
 
 ![Pokretanje Ansible zadatka i pregled njegovog dnevnika i detalja](/assets/getting-started/run-and-inspect-task.gif)
 

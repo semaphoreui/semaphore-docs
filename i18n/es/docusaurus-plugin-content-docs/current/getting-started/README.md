@@ -18,7 +18,7 @@ Esta guía utiliza Ansible como primer ejemplo práctico. Use un playbook de su 
 Elija el método de instalación según dónde vaya a ejecutar Semaphore. El paquete nativo está seleccionado de forma predeterminada.
 
 <Tabs groupId="installation-method">
-  <TabItem value="package" label="Paquete nativo" default>
+  <TabItem value="package" label="Paquete nativo" default className="InstallationMethod">
 
 Para Debian o Ubuntu en `amd64`:
 
@@ -44,7 +44,7 @@ semaphore server --config ./config.json
 Para una evaluación local, elija SQLite, acepte o establezca las rutas de la base de datos y los playbooks, indique la URL pública y cree el primer administrador cuando se le solicite.
 
   </TabItem>
-  <TabItem value="docker" label="Docker Compose">
+  <TabItem value="docker" label="Docker Compose" className="InstallationMethod">
 
 Cree `compose.yaml`:
 
@@ -89,7 +89,7 @@ docker compose logs -f semaphore
 ```
 
   </TabItem>
-  <TabItem value="binary" label="Archivo binario">
+  <TabItem value="binary" label="Archivo binario" className="InstallationMethod">
 
 Descargue el archivo para su sistema operativo y arquitectura de CPU desde [GitHub Releases](https://github.com/semaphoreui/semaphore/releases). Ejemplo para Linux `amd64`:
 
@@ -105,7 +105,7 @@ Para una evaluación local, elija SQLite, acepte o establezca las rutas de la ba
 Elija un archivo `darwin` para macOS o un `.zip` para Windows. El tutorial de Ansible que sigue requiere un entorno de ejecución Linux, macOS, WSL, un contenedor o un runner Linux con Ansible instalado.
 
   </TabItem>
-  <TabItem value="helm" label="Kubernetes con Helm">
+  <TabItem value="helm" label="Kubernetes con Helm" className="InstallationMethod">
 
 Añada el chart oficial y revise sus valores predeterminados antes de instalarlo:
 
@@ -130,8 +130,6 @@ Para una configuración guiada, use la [página oficial de instalación de Semap
 
 <details>
 <summary>¿No sabe qué método de instalación elegir?</summary>
-
-<br />
 
 | Método de instalación | Cuándo elegirlo | Guía detallada |
 | --- | --- | --- |
@@ -180,8 +178,6 @@ El nuevo proyecto contiene las secciones **Task Templates**, **Workflows**, **Sc
 
 <details>
 <summary>Vea este paso</summary>
-
-<br />
 
 ![Creación del primer proyecto en una instancia vacía de Semaphore](/assets/getting-started/create-first-project.gif)
 
@@ -364,8 +360,6 @@ Si creó `get-started.yml` en su repositorio, haga commit y push a la rama conec
 <details>
 <summary>Vea este paso</summary>
 
-<br />
-
 ![Activación de Ansible y creación de la primera plantilla de tarea de Ansible](/assets/getting-started/create-ansible-template.gif)
 
 </details>
@@ -413,8 +407,6 @@ Si **Summary** no está disponible, compruebe la ejecución en **Log**; `PLAY RE
 
 <details>
 <summary>Vea la ejecución y el resultado</summary>
-
-<br />
 
 ![Ejecución de la tarea de Ansible y revisión del registro y los detalles](/assets/getting-started/run-and-inspect-task.gif)
 

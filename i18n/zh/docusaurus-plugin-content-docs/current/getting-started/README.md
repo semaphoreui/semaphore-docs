@@ -18,7 +18,7 @@ Semaphore UI 提供 Web 界面和 API，用于通过 Ansible、Terraform/OpenTof
 根据 Semaphore 的运行环境选择安装方式。默认选中原生软件包。
 
 <Tabs groupId="installation-method">
-  <TabItem value="package" label="原生软件包" default>
+  <TabItem value="package" label="原生软件包" default className="InstallationMethod">
 
 对于 `amd64` 上的 Debian 或 Ubuntu：
 
@@ -44,7 +44,7 @@ semaphore server --config ./config.json
 本地试用时，选择 SQLite，接受或设置数据库和 playbook 路径，输入公共 URL，并按提示创建首个管理员。
 
   </TabItem>
-  <TabItem value="docker" label="Docker Compose">
+  <TabItem value="docker" label="Docker Compose" className="InstallationMethod">
 
 创建 `compose.yaml`：
 
@@ -89,7 +89,7 @@ docker compose logs -f semaphore
 ```
 
   </TabItem>
-  <TabItem value="binary" label="二进制压缩包">
+  <TabItem value="binary" label="二进制压缩包" className="InstallationMethod">
 
 从 [GitHub Releases](https://github.com/semaphoreui/semaphore/releases) 下载适合您的操作系统和 CPU 架构的压缩包。Linux `amd64` 示例：
 
@@ -105,7 +105,7 @@ tar -xzf semaphore_2.19.12_linux_amd64.tar.gz
 macOS 请选择 `darwin` 压缩包，Windows 请选择 `.zip`。本指南后续的 Ansible 操作仍需要安装了 Ansible 的 Linux、macOS、WSL、容器或 Linux runner 执行环境。
 
   </TabItem>
-  <TabItem value="helm" label="通过 Helm 安装到 Kubernetes">
+  <TabItem value="helm" label="通过 Helm 安装到 Kubernetes" className="InstallationMethod">
 
 添加官方 chart，并在安装前查看其默认配置：
 
@@ -130,8 +130,6 @@ chart 的 `appVersion` 标识 Semaphore 版本。生产使用前，请在 `value
 
 <details>
 <summary>不确定该选择哪种安装方式？</summary>
-
-<br />
 
 | 安装方式 | 适用场景 | 详细指南 |
 | --- | --- | --- |
@@ -180,8 +178,6 @@ chart 的 `appVersion` 标识 Semaphore 版本。生产使用前，请在 `value
 
 <details>
 <summary>观看此步骤</summary>
-
-<br />
 
 ![在空的 Semaphore 实例中创建第一个项目](/assets/getting-started/create-first-project.gif)
 
@@ -364,8 +360,6 @@ localhost ansible_connection=local
 <details>
 <summary>观看此步骤</summary>
 
-<br />
-
 ![启用 Ansible 并创建第一个 Ansible 任务模板](/assets/getting-started/create-ansible-template.gif)
 
 </details>
@@ -413,8 +407,6 @@ Semaphore 将任务加入队列，准备仓库，应用 inventory 和可选变�
 
 <details>
 <summary>观看运行过程和结果</summary>
-
-<br />
 
 ![运行 Ansible 任务并检查日志和详情](/assets/getting-started/run-and-inspect-task.gif)
 
