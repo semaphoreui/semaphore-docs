@@ -15,7 +15,11 @@ Supported providers:
 ## How it works {#how-it-works}
 
 - **Global configuration**: Enable a provider and set its connection options in `config.json` on the Semaphore server. See each provider page for the exact keys.
-- **Events**: Notifications are sent on key task lifecycle events (e.g., start, success, failure) and are posted to the configured channel/webhook.
-- **Per-project overrides**: Some providers allow per-project overrides. For example, Telegram supports a project-specific chat ID.
+- **Project opt-in**: Each project must have **Allow alerts for this project** enabled (Project → Settings). Tasks from projects without this flag do not trigger outbound notifications.
+- **When notifications fire**:
+  - **Email** — only when a task **fails** (to users who have alerts enabled on their account).
+  - **Slack, Telegram, Microsoft Teams, Rocket.Chat, DingTalk, Gotify** — when a task **succeeds**, **fails**, or is **waiting for confirmation**.
+- **Per-template suppression**: In the template editor, enable **Suppress success alerts** and/or **Suppress error alerts** (v2.20.5+) to skip notifications for that outcome. This applies to every channel above for that template.
+- **Per-project overrides**: Telegram supports a project-specific chat ID (`alert_chat` on the project), which overrides the global `telegram_chat` when set.
 
 

@@ -20,6 +20,22 @@ docker logs -f my-semaphore-container
 
 This provides a live (streaming) view of the logs.
 
+### Log level and debug namespaces {#log-level-and-debug-namespaces}
+
+Set verbosity with the `SEMAPHORE_LOG_LEVEL` environment variable or the `--log-level` flag on any Semaphore CLI command (`DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`, `PANIC`). See the [CLI reference](/admin-guide/cli#global-options).
+
+At `DEBUG` level you can narrow output to specific subsystems with `SEMAPHORE_DEBUG_FILTER` or `--debug-filter`. The filter matches the `context` field on structured log lines (for example `task_pool`, `task_logger`, `runner`, `git`). Syntax mirrors the Node.js [`debug`](https://www.npmjs.com/package/debug) package:
+
+- `runner` — only the `runner` namespace
+- `task_*` — any context starting with `task_`
+- `*,-db` — everything except `db`
+
+The filter only affects **DEBUG** lines and has no effect unless the global level is `DEBUG`.
+
+### Task dispatch fields {#task-dispatch-fields}
+
+When the task pool queues or starts a task, server logs include structured fields such as `task_id`, `task_name`, and `username` (the Semaphore user who started the task, or the API identity for scheduled and integration runs). Use these fields when correlating journalctl or container logs with a specific run in the UI.
+
 ---
 
 ## Activity log {#activity-log}
