@@ -200,7 +200,7 @@ Il nuovo progetto si apre su una Dashboard vuota. La barra laterale è la naviga
 
 Il diagramma mostra come queste risorse producono un’esecuzione:
 
-<div class="schema">
+<div class="BlockSchema">
   ![Come risorse e trigger di Semaphore generano l’esecuzione di un’attività](/assets/getting-started/core-concepts.svg)
 </div>
 

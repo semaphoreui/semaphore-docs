@@ -200,7 +200,7 @@ Semaphore를 프로덕션에서 사용하기 전에 [설정](/admin-guide/config
 
 다음 다이어그램은 이러한 리소스가 실행으로 이어지는 과정을 보여 줍니다.
 
-<div class="schema">
+<div class="BlockSchema">
   ![Semaphore 리소스와 트리거가 작업 실행으로 이어지는 과정](/assets/getting-started/core-concepts.svg)
 </div>
 

@@ -21,7 +21,7 @@ sidebar_custom_props:
 
 你需要 **Manager** 或更高的角色。点击 **New Runner** 并填写表单。
 
-<div class="dialog-screenshot dialog-screenshot--small">
+<div class="DialogScreenshot DialogScreenshot--small">
 
 ![新建运行器对话框](/assets/project-runner-new.webp)
 

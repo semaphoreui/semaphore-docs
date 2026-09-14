@@ -2,7 +2,9 @@
 
 Vaša lična podešavanja nalaze se u meniju naloga na dnu bočne trake. Kliknite na svoje ime da biste ga otvorili.
 
+<div class="DialogScreenshot" style={{maxWidth: 300}}>
 ![Meni naloga](/assets/user-menu.webp)
+</div>
 
 | Stavka | Opis |
 |---|---|
@@ -15,7 +17,9 @@ Pored menija nalaze se prekidač za **tamni režim** (dark mode) i birač **jezi
 
 ## Izmena naloga {#edit-account}
 
+<div class="DialogScreenshot">
 ![Dijalog za izmenu naloga](/assets/account-edit.webp)
+</div>
 
 Kartica **Podešavanja** (Settings) sadrži:
 
@@ -30,7 +34,9 @@ Oznake pored polja za potvrdu prikazuju vaše globalne atribute: **Pro korisnik*
 
 Kartica **Bezbednost** (Security) omogućava promenu lozinke. Ako je administrator uključio vremenski ograničene jednokratne lozinke, drugi faktor se konfiguriše na istoj kartici.
 
+<div class="DialogScreenshot">
 ![Kartica Bezbednost](/assets/account-security.webp)
+</div>
 
 ## API tokeni {#api-tokens}
 
@@ -40,6 +46,8 @@ Izaberite **API tokeni** (API Tokens) u meniju naloga. Stranica prikazuje vaše 
 
 Kliknite **Novi token** (New Token), dajte tokenu naziv i izaberite kada ističe. Vrednost tokena se prikazuje samo jednom, nakon kreiranja, pa je odmah kopirajte.
 
+<div class="DialogScreenshot">
 ![Dijalog za novi token](/assets/api-token-new.webp)
+</div>
 
 Token koristite u zaglavlju `Authorization: Bearer`, pogledajte [API](/reference/api). Da biste opozvali token, obrišite ga sa liste.

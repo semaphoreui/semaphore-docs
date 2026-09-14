@@ -11,7 +11,9 @@
 
 두 방법 모두 **New Task** 대화 상자를 엽니다. 대화 상자의 내용은 애플리케이션과 템플릿에서 활성화된 옵션에 따라 달라집니다.
 
+<div class="DialogScreenshot">
 ![Ansible 템플릿의 새 작업 대화 상자](/assets/task-new-ansible.webp)
+</div>
 
 | 필드 | 표시 대상 | 설명 |
 |---|---|---|
@@ -22,7 +24,9 @@
 | **Plan**, **Destroy**, **Auto Approve**, **Upgrade**, **Reconfigure** | Terraform, OpenTofu, Terragrunt | `plan`만 실행하거나 `-destroy`, `-auto-approve`, `-upgrade`, `-reconfigure`를 추가합니다. [Terraform/OpenTofu](./apps/terraform)를 참고하십시오. |
 | **Branch**, **Inventory**, **CLI args** | 모든 애플리케이션 | 이번 실행에 대해 템플릿 값을 재정의합니다. 각 재정의는 템플릿 설정에서 허용되어 있어야 합니다. |
 
+<div class="DialogScreenshot">
 ![Terraform 템플릿의 새 작업 대화 상자](/assets/task-new-terraform.webp)
+</div>
 
 **Run**(또는 **Build** / **Deploy**)을 클릭하면 작업이 대기열에 추가됩니다.
 
@@ -42,9 +46,13 @@ UI에서 작업을 클릭하면 작업 창이 열립니다. 헤더에는 템플�
 | **Details** | 템플릿 정보(애플리케이션, 템플릿), 커밋 정보(메시지와 해시), 실행 정보(메시지, 생성 시각, 시작 시각, 종료 시각, 소요 시간), 그리고 설정된 경우 해당 실행에 사용된 러너, 브랜치, limit, 변수가 표시됩니다. |
 | **Summary** (Pro) | Ansible 작업의 경우 정상적으로 완료된 호스트 수와 실패한 호스트 수를 서버별 실패 작업 표와 함께 보여줍니다. |
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![작업 세부 정보](/assets/task-details.webp)
+</div>
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![작업 요약](/assets/task-summary.webp)
+</div>
 
 ## 작업 상태 {#task-statuses}
 
@@ -67,7 +75,7 @@ UI에서 작업을 클릭하면 작업 창이 열립니다. 헤더에는 템플�
 
 하나의 템플릿에서 실행 중이거나 대기 중인 모든 작업을 중지하려면 템플릿 페이지를 열고 **Stop all**을 사용하십시오. 드롭다운에서 **Stop**과 **Force stop**을 모두 선택할 수 있습니다.
 
-<div style={{maxWidth: 200}}>
+<div class="DialogScreenshot" style={{maxWidth: 200}}>
 
 ![모두 중지 메뉴](/assets/task-stop-all-menu.webp)
 

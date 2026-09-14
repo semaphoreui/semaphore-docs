@@ -2,7 +2,9 @@
 
 개인 설정은 사이드바 하단의 계정 메뉴에 있습니다. 이름을 클릭하면 열립니다.
 
+<div class="DialogScreenshot" style={{maxWidth: 300}}>
 ![계정 메뉴](/assets/user-menu.webp)
+</div>
 
 | 항목 | 설명 |
 |---|---|
@@ -15,7 +17,9 @@
 
 ## 계정 편집 {#edit-account}
 
+<div class="DialogScreenshot">
 ![계정 편집 대화 상자](/assets/account-edit.webp)
+</div>
 
 **설정** 탭에는 다음 항목이 있습니다:
 
@@ -30,7 +34,9 @@
 
 **보안** 탭에서는 비밀번호를 변경할 수 있습니다. 관리자가 시간 기반 일회용 비밀번호를 활성화한 경우 같은 탭에서 2차 인증 요소를 설정합니다.
 
+<div class="DialogScreenshot">
 ![보안 탭](/assets/account-security.webp)
+</div>
 
 ## API 토큰 {#api-tokens}
 
@@ -40,6 +46,8 @@
 
 **새 토큰**을 클릭하고 토큰 이름을 지정한 후 만료 시점을 선택합니다. 토큰 값은 생성 후 한 번만 표시되므로 즉시 복사하십시오.
 
+<div class="DialogScreenshot">
 ![새 토큰 대화 상자](/assets/api-token-new.webp)
+</div>
 
 토큰은 `Authorization: Bearer` 헤더에 사용합니다. [API](/reference/api)를 참조하십시오. 토큰을 취소하려면 목록에서 삭제하십시오.

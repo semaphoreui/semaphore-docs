@@ -2,7 +2,9 @@
 
 個人設定は、サイドバー下部のアカウントメニューにあります。自分の名前をクリックして開きます。
 
+<div class="DialogScreenshot" style={{maxWidth: 300}}>
 ![アカウントメニュー](/assets/user-menu.webp)
+</div>
 
 | 項目 | 説明 |
 |---|---|
@@ -15,7 +17,9 @@
 
 ## アカウントの編集 {#edit-account}
 
+<div class="DialogScreenshot">
 ![アカウントの編集ダイアログ](/assets/account-edit.webp)
+</div>
 
 **設定** タブには次の項目があります。
 
@@ -30,7 +34,9 @@
 
 **セキュリティ** タブではパスワードを変更できます。管理者が時間ベースのワンタイムパスワードを有効にしている場合は、同じタブで 2 段階目の認証要素を設定します。
 
+<div class="DialogScreenshot">
 ![セキュリティタブ](/assets/account-security.webp)
+</div>
 
 ## API トークン {#api-tokens}
 
@@ -40,6 +46,8 @@
 
 **新しいトークン** をクリックし、トークンに名前を付けて、有効期限を選択します。トークンの値は作成後に一度だけ表示されるため、すぐにコピーしてください。
 
+<div class="DialogScreenshot">
 ![新しいトークンのダイアログ](/assets/api-token-new.webp)
+</div>
 
 トークンは `Authorization: Bearer` ヘッダーで使用します。[API](/reference/api) を参照してください。トークンを取り消すには、一覧から削除します。

@@ -19,7 +19,7 @@ Semaphore kann Shell-Skripte mit `/bin/bash` ausführen. Erstellen Sie dazu ein 
 4. Klicken Sie auf **Erstellen**.
 5. Klicken Sie auf **Ausführen**, um das Template auszuführen. Der Dialog für einen neuen Task enthält bei einem Skript-Template nur die optionale Nachricht sowie Survey-Variablen und Prompts, sofern das Template sie definiert.
 
-<div style={{maxWidth: 420}}>
+<div class="DialogScreenshot">
 
 ![Dialog für einen neuen Task bei einem Bash-Template](/assets/task-new-bash.webp)
 

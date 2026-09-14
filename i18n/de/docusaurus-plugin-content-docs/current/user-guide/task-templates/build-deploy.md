@@ -6,7 +6,7 @@ Neben einfachen **Task**-Templates kennt Semaphore zwei Typen von Task Templates
 
 Ein Build-Task-Template erzeugt ein Artefakt: ein Tarball, ein Container-Image, ein Paket. Jeder Build-Task erhält eine automatisch hochgezählte Version, beginnend mit der **Start Version** des Task Template (zum Beispiel `1.0.0`). Die Version wird in der Spalte **Version** der Task-Template-Liste und im Task-Verlauf angezeigt.
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
   ![Dialog für einen neuen Task bei einem Build-Task-Template](/assets/task-new-build.webp)
 </div>
 
@@ -16,7 +16,9 @@ Verwenden Sie die Version in Ihrem Playbook über `semaphore_vars.task_details.t
 
 Ein Deploy-Task-Template wird über das Feld **Build Template** mit einem Build-Task-Template verknüpft. Wenn ein Benutzer auf **Deploy** klickt, fragt der Dialog für einen neuen Task nach der **Build Version**, die bereitgestellt werden soll; der letzte erfolgreiche Build ist vorausgewählt.
 
+<div class="DialogScreenshot">
 ![Dialog für einen neuen Task bei einem Deploy-Task-Template](/assets/task-new-deploy.webp)
+</div>
 
 Aktivieren Sie **Autorun** im Deploy-Task-Template, um nach jedem erfolgreichen Build automatisch ein Deploy zu starten. Die bereitzustellende Version steht im Playbook als `semaphore_vars.task_details.incoming_version` zur Verfügung.
 

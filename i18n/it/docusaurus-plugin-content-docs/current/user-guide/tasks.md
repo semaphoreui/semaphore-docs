@@ -11,7 +11,9 @@ Un Task è una singola esecuzione di un [Task Template](./task-templates): un'es
 
 Entrambi aprono la finestra di dialogo **New Task**. Il suo contenuto dipende dall'applicazione e dalle opzioni abilitate nel Task Template.
 
+<div class="DialogScreenshot">
 ![Finestra di dialogo New Task per un Task Template Ansible](/assets/task-new-ansible.webp)
+</div>
 
 | Campo | Mostrato per | Descrizione |
 |---|---|---|
@@ -22,7 +24,9 @@ Entrambi aprono la finestra di dialogo **New Task**. Il suo contenuto dipende da
 | **Plan**, **Destroy**, **Auto Approve**, **Upgrade**, **Reconfigure** | Terraform, OpenTofu, Terragrunt | Esegue solo `plan`, aggiunge `-destroy`, `-auto-approve`, `-upgrade` oppure `-reconfigure`. Vedere [Terraform/OpenTofu](./apps/terraform). |
 | **Branch**, **Inventory**, **CLI args** | qualsiasi applicazione | Sovrascrive i valori del Task Template per questa esecuzione. Ogni override deve essere consentito nelle impostazioni del Task Template. |
 
+<div class="DialogScreenshot">
 ![Finestra di dialogo New Task per un Task Template Terraform](/assets/task-new-terraform.webp)
+</div>
 
 Fare clic su **Run** (oppure **Build** / **Deploy**) per mettere il Task in coda.
 
@@ -42,9 +46,13 @@ Facendo clic su un Task in qualsiasi punto dell'interfaccia si apre la finestra 
 | **Details** | Informazioni sul Task Template (applicazione, Task Template), informazioni sul commit (messaggio e hash) e informazioni sull'esecuzione: messaggio, data di creazione, di avvio e di fine, durata e, quando impostati, il Runner, il branch, il limit e le variabili utilizzate per l'esecuzione. |
 | **Summary** (Pro) | Per i Task Ansible: quanti host sono terminati con esito OK e quanti sono falliti, con una tabella dei task falliti per server. |
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Dettagli del Task](/assets/task-details.webp)
+</div>
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Riepilogo del Task](/assets/task-summary.webp)
+</div>
 
 ## Stati dei Task {#task-statuses}
 
@@ -67,7 +75,7 @@ Aprire la finestra del Task di un Task in esecuzione e fare clic su **Stop**. Se
 
 Per interrompere tutti i Task in esecuzione e in coda di un Task Template, aprire la pagina del Task Template e utilizzare **Stop all**. Il menu a discesa offre sia **Stop** sia **Force stop**.
 
-<div style={{maxWidth: 200}}>
+<div class="DialogScreenshot" style={{maxWidth: 200}}>
 
 ![Menu Stop all](/assets/task-stop-all-menu.webp)
 

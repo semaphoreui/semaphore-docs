@@ -6,7 +6,7 @@ Además de las plantillas simples de tipo **Task**, Semaphore tiene dos tipos de
 
 Una plantilla de compilación produce un artefacto: un tarball, una imagen de contenedor, un paquete. Cada tarea de compilación recibe una versión autoincrementada, a partir de la **Versión inicial** de la plantilla (por ejemplo, `1.0.0`). La versión se muestra en la columna **Versión** de la lista de plantillas y del historial de tareas.
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
   ![Cuadro de diálogo Nueva tarea de una plantilla de compilación](/assets/task-new-build.webp)
 </div>
 
@@ -16,7 +16,9 @@ Use la versión en su playbook mediante `semaphore_vars.task_details.target_vers
 
 Una plantilla de despliegue se vincula a una plantilla de compilación mediante el campo **Plantilla de compilación**. Cuando un usuario hace clic en **Deploy**, el cuadro de diálogo Nueva tarea solicita la **Versión de compilación** que se desplegará; la última compilación correcta aparece preseleccionada.
 
+<div class="DialogScreenshot">
 ![Cuadro de diálogo Nueva tarea de una plantilla de despliegue](/assets/task-new-deploy.webp)
+</div>
 
 Habilite **Autorun** en la plantilla de despliegue para iniciar un despliegue automáticamente después de cada compilación correcta. La versión que se desplegará está disponible en el playbook como `semaphore_vars.task_details.incoming_version`.
 

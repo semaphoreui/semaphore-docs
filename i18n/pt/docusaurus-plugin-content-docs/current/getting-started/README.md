@@ -200,7 +200,7 @@ O novo projeto abre em um Dashboard vazio. A barra lateral é a navegação prin
 
 O diagrama mostra como esses recursos produzem uma execução:
 
-<div class="schema">
+<div class="BlockSchema">
   ![Como recursos e gatilhos do Semaphore geram uma execução de tarefa](/assets/getting-started/core-concepts.svg)
 </div>
 

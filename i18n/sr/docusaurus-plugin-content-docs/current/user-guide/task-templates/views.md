@@ -25,8 +25,4 @@ Otvorite formu šablona i izaberite karticu u polju **Prikaz** (View). Šablon i
 
 Ikona zupčanika u gornjem desnom uglu liste šablona otvara birač kolona. Važi za sve prikaze i čuva se u vašem pregledaču.
 
-<div style={{maxWidth: 420}}>
-
 ![Birač kolona](/assets/templates-columns.webp)
-
-</div>

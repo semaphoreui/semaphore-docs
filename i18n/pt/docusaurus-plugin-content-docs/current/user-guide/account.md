@@ -2,7 +2,9 @@
 
 Suas configurações pessoais ficam no menu da conta, na parte inferior da barra lateral. Clique no seu nome para abri-lo.
 
+<div class="DialogScreenshot" style={{maxWidth: 300}}>
 ![Menu da conta](/assets/user-menu.webp)
+</div>
 
 | Item | Descrição |
 |---|---|
@@ -15,7 +17,9 @@ Ao lado do menu você encontra o botão de **modo escuro** e o seletor de **idio
 
 ## Editar conta {#edit-account}
 
+<div class="DialogScreenshot">
 ![Diálogo de edição da conta](/assets/account-edit.webp)
+</div>
 
 A aba **Configurações** contém:
 
@@ -30,7 +34,9 @@ Os selos ao lado das caixas de seleção mostram suas flags globais: **Usuário 
 
 A aba **Segurança** permite alterar a sua senha. Se o administrador habilitou senhas de uso único baseadas em tempo, o segundo fator é configurado na mesma aba.
 
+<div class="DialogScreenshot">
 ![Aba Segurança](/assets/account-security.webp)
+</div>
 
 ## Tokens de API {#api-tokens}
 
@@ -40,6 +46,8 @@ Escolha **Tokens de API** no menu da conta. A página lista seus tokens com a da
 
 Clique em **Novo Token**, dê um nome ao token e escolha quando ele expira. O valor do token é exibido uma única vez após a criação; copie-o imediatamente.
 
+<div class="DialogScreenshot">
 ![Diálogo de novo token](/assets/api-token-new.webp)
+</div>
 
 Use o token no cabeçalho `Authorization: Bearer`; consulte [API](/reference/api). Para revogar um token, exclua-o da lista.

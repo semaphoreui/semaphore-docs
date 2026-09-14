@@ -200,7 +200,7 @@ helm upgrade --install semaphore semaphoreui/semaphore \
 
 На схеме показано, как эти ресурсы участвуют в запуске:
 
-<div class="schema">
+<div class="BlockSchema">
   ![Как ресурсы и триггеры Semaphore приводят к запуску задачи](/assets/getting-started/core-concepts.svg)
 </div>
 

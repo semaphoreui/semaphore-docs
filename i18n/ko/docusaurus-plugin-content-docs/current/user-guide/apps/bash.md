@@ -19,7 +19,7 @@ Semaphore는 `/bin/bash`를 사용해 셸 스크립트를 실행할 수 있습�
 4. **생성**을 클릭합니다.
 5. **실행**을 클릭해 템플릿을 실행합니다. 스크립트 템플릿의 새 작업 대화 상자에는 선택적 메시지만 있으며, 템플릿이 정의한 경우 설문 변수와 프롬프트가 추가로 표시됩니다.
 
-<div style={{maxWidth: 420}}>
+<div class="DialogScreenshot">
 
 ![Bash 템플릿의 새 작업 대화 상자](/assets/task-new-bash.webp)
 

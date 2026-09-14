@@ -2,7 +2,9 @@
 
 Sus ajustes personales se encuentran en el menú de la cuenta, en la parte inferior de la barra lateral. Haga clic en su nombre para abrirlo.
 
+<div class="DialogScreenshot" style={{maxWidth: 300}}>
 ![Menú de la cuenta](/assets/user-menu.webp)
+</div>
 
 | Elemento | Descripción |
 |---|---|
@@ -15,7 +17,9 @@ Junto al menú encontrará el interruptor de **modo oscuro** y el selector de **
 
 ## Editar cuenta {#edit-account}
 
+<div class="DialogScreenshot">
 ![Diálogo de edición de la cuenta](/assets/account-edit.webp)
+</div>
 
 La pestaña **Ajustes** contiene:
 
@@ -30,7 +34,9 @@ Las etiquetas situadas junto a las casillas muestran sus indicadores globales: *
 
 La pestaña **Seguridad** le permite cambiar su contraseña. Si el administrador ha habilitado las contraseñas de un solo uso basadas en tiempo, el segundo factor se configura en esta misma pestaña.
 
+<div class="DialogScreenshot">
 ![Pestaña de seguridad](/assets/account-security.webp)
+</div>
 
 ## Tokens de API {#api-tokens}
 
@@ -40,6 +46,8 @@ Elija **Tokens de API** en el menú de la cuenta. La página muestra la lista de
 
 Haga clic en **Nuevo token**, asigne un nombre al token y elija cuándo caduca. El valor del token se muestra una sola vez tras la creación, cópielo de inmediato.
 
+<div class="DialogScreenshot">
 ![Diálogo de nuevo token](/assets/api-token-new.webp)
+</div>
 
 Use el token en la cabecera `Authorization: Bearer`, consulte [API](/reference/api). Para revocar un token, elimínelo de la lista.

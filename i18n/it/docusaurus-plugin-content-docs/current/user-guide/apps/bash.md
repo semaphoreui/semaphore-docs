@@ -19,7 +19,7 @@ Semaphore può eseguire script shell tramite `/bin/bash`. Per farlo, creare un T
 4. Fare clic su **Create**.
 5. Fare clic su **Run** per eseguire il Task Template. La finestra di dialogo New Task per un Task Template di script contiene solo il messaggio facoltativo, oltre alle variabili di survey e ai prompt se il Task Template li definisce.
 
-<div style={{maxWidth: 420}}>
+<div class="DialogScreenshot">
 
 ![Finestra di dialogo New Task per un Task Template Bash](/assets/task-new-bash.webp)
 

@@ -11,7 +11,9 @@ Potrebna vam je uloga **Izvršilac zadataka** (Task Runner) ili viša u projektu
 
 Oba otvaraju dijalog **Novi zadatak** (New Task). Njegov sadržaj zavisi od aplikacije i opcija uključenih u šablonu.
 
+<div class="DialogScreenshot">
 ![Dijalog Novi zadatak za Ansible šablon](/assets/task-new-ansible.webp)
+</div>
 
 | Polje | Prikazuje se za | Opis |
 |---|---|---|
@@ -22,7 +24,9 @@ Oba otvaraju dijalog **Novi zadatak** (New Task). Njegov sadržaj zavisi od apli
 | **Plan**, **Destroy**, **Auto Approve**, **Upgrade**, **Reconfigure** | Terraform, OpenTofu, Terragrunt | Pokreće samo `plan`, dodaje `-destroy`, `-auto-approve`, `-upgrade` ili `-reconfigure`. Pogledajte [Terraform/OpenTofu](./apps/terraform). |
 | **Grana** (Branch), **Inventar** (Inventory), **CLI argumenti** (CLI args) | bilo koju aplikaciju | Zamenjuju vrednosti šablona za ovo pokretanje. Svaka zamena mora biti dozvoljena u podešavanjima šablona. |
 
+<div class="DialogScreenshot">
 ![Dijalog Novi zadatak za Terraform šablon](/assets/task-new-terraform.webp)
+</div>
 
 Kliknite na **Pokreni** (Run) (ili **Build** / **Deploy**) da biste zadatak stavili u red.
 
@@ -42,9 +46,13 @@ Klik na zadatak bilo gde u korisničkom interfejsu otvara prozor zadatka. Zaglav
 | **Detalji** (Details) | Informacije o šablonu (aplikacija, šablon), informacije o commit-u (poruka i heš) i informacije o izvršavanju: poruka, vreme kreiranja, početka i završetka, trajanje i, kada su postavljeni, runner, grana, limit i promenljive korišćene za pokretanje. |
 | **Rezime** (Summary) (Pro) | Za Ansible zadatke: koliko je hostova završilo uspešno, a koliko neuspešno, sa tabelom neuspelih taskova po serveru. |
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Detalji zadatka](/assets/task-details.webp)
+</div>
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Rezime zadatka](/assets/task-summary.webp)
+</div>
 
 ## Statusi zadatka {#task-statuses}
 
@@ -67,7 +75,7 @@ Otvorite prozor pokrenutog zadatka i kliknite na **Zaustavi** (Stop). Semaphore 
 
 Da biste zaustavili sve pokrenute zadatke i zadatke u redu jednog šablona, otvorite stranicu šablona i koristite **Zaustavi sve** (Stop all). Padajući meni nudi i **Zaustavi** (Stop) i **Prisilno zaustavi** (Force stop).
 
-<div style={{maxWidth: 200}}>
+<div class="DialogScreenshot" style={{maxWidth: 200}}>
 
 ![Meni Zaustavi sve](/assets/task-stop-all-menu.webp)
 

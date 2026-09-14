@@ -25,8 +25,4 @@
 
 템플릿 목록 오른쪽 상단의 톱니바퀴 아이콘을 클릭하면 열 선택기가 열립니다. 이 설정은 모든 뷰에 적용되며 브라우저에 저장됩니다.
 
-<div style={{maxWidth: 420}}>
-
 ![열 선택기](/assets/templates-columns.webp)
-
-</div>

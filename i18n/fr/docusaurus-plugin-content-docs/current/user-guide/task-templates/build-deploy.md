@@ -6,7 +6,7 @@ En plus des modèles **Task** ordinaires, Semaphore propose deux types de modèl
 
 Un modèle de build produit un artefact : une archive tar, une image de conteneur, un paquet. Chaque tâche de build reçoit une version auto-incrémentée, à partir de la **Version initiale** du modèle (par exemple `1.0.0`). La version est affichée dans la colonne **Version** de la liste des modèles et de l'historique des tâches.
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
   ![Boîte de dialogue Nouvelle tâche pour un modèle de build](/assets/task-new-build.webp)
 </div>
 
@@ -16,7 +16,9 @@ Utilisez la version dans votre playbook via `semaphore_vars.task_details.target_
 
 Un modèle de déploiement est lié à un modèle de build par le champ **Modèle de build**. Lorsqu'un utilisateur clique sur **Deploy**, la boîte de dialogue Nouvelle tâche demande la **Version de build** à déployer ; le dernier build réussi est présélectionné.
 
+<div class="DialogScreenshot">
 ![Boîte de dialogue Nouvelle tâche pour un modèle de déploiement](/assets/task-new-deploy.webp)
+</div>
 
 Activez l'**Exécution automatique** dans le modèle de déploiement pour démarrer automatiquement un déploiement après chaque build réussi. La version à déployer est disponible dans le playbook sous la forme `semaphore_vars.task_details.incoming_version`.
 

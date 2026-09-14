@@ -200,7 +200,7 @@ Le nouveau projet s’ouvre sur un Dashboard vide. La barre latérale constitue 
 
 Le schéma montre comment ces ressources produisent une exécution :
 
-<div class="schema">
+<div class="BlockSchema">
   ![Comment les ressources et déclencheurs Semaphore produisent une exécution de tâche](/assets/getting-started/core-concepts.svg)
 </div>
 

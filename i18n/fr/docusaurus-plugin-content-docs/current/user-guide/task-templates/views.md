@@ -25,8 +25,4 @@ Ouvrez le formulaire du modèle et choisissez l'onglet dans le champ **Vue**. Un
 
 L'icône d'engrenage en haut à droite de la liste des modèles ouvre le sélecteur de colonnes. Il s'applique à toutes les vues et est enregistré dans votre navigateur.
 
-<div style={{maxWidth: 420}}>
-
 ![Sélecteur de colonnes](/assets/templates-columns.webp)
-
-</div>

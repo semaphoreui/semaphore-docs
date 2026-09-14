@@ -2,7 +2,9 @@
 
 Ihre persönlichen Einstellungen finden Sie im Kontomenü am unteren Ende der Seitenleiste. Klicken Sie auf Ihren Namen, um es zu öffnen.
 
+<div class="DialogScreenshot" style={{maxWidth: 300}}>
 ![Kontomenü](/assets/user-menu.webp)
+</div>
 
 | Eintrag | Beschreibung |
 |---|---|
@@ -15,7 +17,9 @@ Neben dem Menü finden Sie den Schalter für den **Dunkelmodus** und die **Sprac
 
 ## Konto bearbeiten {#edit-account}
 
+<div class="DialogScreenshot">
 ![Dialog zum Bearbeiten des Kontos](/assets/account-edit.webp)
+</div>
 
 Der Tab **Settings** enthält:
 
@@ -30,7 +34,9 @@ Die Badges neben den Checkboxen zeigen Ihre globalen Kennzeichen: **Pro user** a
 
 Im Tab **Security** können Sie Ihr Passwort ändern. Wenn der Administrator zeitbasierte Einmalpasswörter aktiviert hat, wird der zweite Faktor im selben Tab konfiguriert.
 
+<div class="DialogScreenshot">
 ![Tab Security](/assets/account-security.webp)
+</div>
 
 ## API-Tokens {#api-tokens}
 
@@ -40,6 +46,8 @@ Wählen Sie im Kontomenü **API Tokens**. Die Seite listet Ihre Tokens mit Erste
 
 Klicken Sie auf **New Token**, geben Sie dem Token einen Namen und wählen Sie den Ablaufzeitpunkt. Der Token-Wert wird nach der Erstellung nur einmal angezeigt, kopieren Sie ihn also sofort.
 
+<div class="DialogScreenshot">
 ![Dialog für neues Token](/assets/api-token-new.webp)
+</div>
 
 Verwenden Sie das Token im Header `Authorization: Bearer`, siehe [API](/reference/api). Um ein Token zu widerrufen, löschen Sie es aus der Liste.

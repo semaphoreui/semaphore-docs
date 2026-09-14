@@ -6,7 +6,7 @@
 
 ビルドテンプレートは、tarball、コンテナーイメージ、パッケージなどのアーティファクトを生成します。各ビルドタスクには、テンプレートの **開始バージョン**（たとえば `1.0.0`）から自動的に増加するバージョンが割り当てられます。バージョンは、テンプレート一覧とタスク履歴の **バージョン** 列に表示されます。
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
   ![ビルドテンプレートの新しいタスクのダイアログ](/assets/task-new-build.webp)
 </div>
 
@@ -16,7 +16,9 @@ playbook では `semaphore_vars.task_details.target_version` を使ってこの�
 
 デプロイテンプレートは、**ビルドテンプレート** フィールドでビルドテンプレートに関連付けられます。ユーザーが **デプロイ** をクリックすると、新しいタスクのダイアログでデプロイする **ビルドバージョン** を尋ねられます。直近の成功したビルドがあらかじめ選択されています。
 
+<div class="DialogScreenshot">
 ![デプロイテンプレートの新しいタスクのダイアログ](/assets/task-new-deploy.webp)
+</div>
 
 デプロイテンプレートで **自動実行** を有効にすると、ビルドが成功するたびに自動的にデプロイが開始されます。デプロイするバージョンは、playbook 内で `semaphore_vars.task_details.incoming_version` として利用できます。
 

@@ -21,7 +21,7 @@ Les runners exécutent les tâches sur des machines autres que le serveur Semaph
 
 Vous devez avoir le rôle **Manager** ou supérieur. Cliquez sur **Nouveau runner** et remplissez le formulaire.
 
-<div class="dialog-screenshot dialog-screenshot--small">
+<div class="DialogScreenshot DialogScreenshot--small">
 
 ![Boîte de dialogue de nouveau runner](/assets/project-runner-new.webp)
 

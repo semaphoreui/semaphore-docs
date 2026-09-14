@@ -200,7 +200,7 @@ Semaphore を本番で使用する前に、[設定](/admin-guide/configuration)�
 
 次の図は、これらのリソースがどのように実行につながるかを示しています。
 
-<div class="schema">
+<div class="BlockSchema">
   ![Semaphore のリソースとトリガーがタスク実行につながる仕組み](/assets/getting-started/core-concepts.svg)
 </div>
 

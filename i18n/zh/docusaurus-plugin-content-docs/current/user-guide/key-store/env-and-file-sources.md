@@ -105,7 +105,7 @@ chmod 0400 /srv/semaphore/secrets/prod_ssh.json
 然后创建一个类型为 **SSH** 的密钥，打开 **File** 选项卡，输入 `/var/lib/semaphore/secrets/prod_ssh.json`
 （即容器**内部**看到的路径）。
 
-<div class="dialog-screenshot dialog-screenshot--small">
+<div class="DialogScreenshot DialogScreenshot--small">
 
 ![](/assets/key-file-source.webp)
 

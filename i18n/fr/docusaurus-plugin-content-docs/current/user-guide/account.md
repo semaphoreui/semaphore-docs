@@ -2,7 +2,9 @@
 
 Vos paramètres personnels se trouvent dans le menu du compte, en bas de la barre latérale. Cliquez sur votre nom pour l'ouvrir.
 
+<div class="DialogScreenshot" style={{maxWidth: 300}}>
 ![Menu du compte](/assets/user-menu.webp)
+</div>
 
 | Élément | Description |
 |---|---|
@@ -15,7 +17,9 @@ Vos paramètres personnels se trouvent dans le menu du compte, en bas de la barr
 
 ## Modifier le compte {#edit-account}
 
+<div class="DialogScreenshot">
 ![Boîte de dialogue de modification du compte](/assets/account-edit.webp)
+</div>
 
 L'onglet **Paramètres** contient :
 
@@ -30,7 +34,9 @@ Les badges à côté des cases à cocher indiquent vos indicateurs globaux : **P
 
 L'onglet **Sécurité** vous permet de changer votre mot de passe. Si l'administrateur a activé les mots de passe à usage unique basés sur le temps, le second facteur se configure dans ce même onglet.
 
+<div class="DialogScreenshot">
 ![Onglet Sécurité](/assets/account-security.webp)
+</div>
 
 ## Jetons d'API {#api-tokens}
 
@@ -40,6 +46,8 @@ Choisissez **Jetons d'API** dans le menu du compte. La page liste vos jetons ave
 
 Cliquez sur **Nouveau jeton**, donnez un nom au jeton et choisissez sa date d'expiration. La valeur du jeton n'est affichée qu'une seule fois après la création : copiez-la immédiatement.
 
+<div class="DialogScreenshot">
 ![Boîte de dialogue de nouveau jeton](/assets/api-token-new.webp)
+</div>
 
 Utilisez le jeton dans l'en-tête `Authorization: Bearer`, voir [API](/reference/api). Pour révoquer un jeton, supprimez-le de la liste.

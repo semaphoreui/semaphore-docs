@@ -11,7 +11,9 @@ Você precisa do papel **Task Runner** ou superior no projeto (consulte [Equipes
 
 Ambos abrem a janela **New Task**. O seu conteúdo depende da aplicação e das opções ativadas no modelo.
 
+<div class="DialogScreenshot">
 ![Janela New Task de um modelo Ansible](/assets/task-new-ansible.webp)
+</div>
 
 | Campo | Exibido para | Descrição |
 |---|---|---|
@@ -22,7 +24,9 @@ Ambos abrem a janela **New Task**. O seu conteúdo depende da aplicação e das 
 | **Plan**, **Destroy**, **Auto Approve**, **Upgrade**, **Reconfigure** | Terraform, OpenTofu, Terragrunt | Executa apenas o `plan`, adiciona `-destroy`, `-auto-approve`, `-upgrade` ou `-reconfigure`. Consulte [Terraform/OpenTofu](./apps/terraform). |
 | **Branch**, **Inventory**, **CLI args** | qualquer aplicação | Substitui os valores do modelo nesta execução. Cada substituição deve ser permitida nas configurações do modelo. |
 
+<div class="DialogScreenshot">
 ![Janela New Task de um modelo Terraform](/assets/task-new-terraform.webp)
+</div>
 
 Clique em **Run** (ou **Build** / **Deploy**) para colocar a tarefa na fila.
 
@@ -42,9 +46,13 @@ Clicar em uma tarefa em qualquer lugar da interface abre a janela da tarefa. O c
 | **Details** | Informações do modelo (aplicação, modelo), informações do commit (mensagem e hash) e informações da execução: mensagem, horários de criação, início e fim, duração e, quando definidos, o runner, o branch, o limit e as variáveis usadas na execução. |
 | **Summary** (Pro) | Para tarefas do Ansible: quantos hosts terminaram com OK e quantos falharam, com uma tabela das tarefas que falharam por servidor. |
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Detalhes da tarefa](/assets/task-details.webp)
+</div>
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Resumo da tarefa](/assets/task-summary.webp)
+</div>
 
 ## Status das tarefas {#task-statuses}
 
@@ -67,7 +75,7 @@ Abra a janela de uma tarefa em execução e clique em **Stop**. O Semaphore envi
 
 Para interromper todas as tarefas em execução e na fila de um modelo, abra a página do modelo e use **Stop all**. O menu suspenso oferece tanto **Stop** como **Force stop**.
 
-<div style={{maxWidth: 200}}>
+<div class="DialogScreenshot" style={{maxWidth: 200}}>
 
 ![Menu Stop all](/assets/task-stop-all-menu.webp)
 

@@ -18,7 +18,7 @@ This guide uses Ansible for the first working example. Use a playbook from your 
 Choose the installation method that matches where Semaphore will run. The native package is selected by default.
 
 <Tabs groupId="installation-method">
-  <TabItem value="package" label="Native package" default>
+  <TabItem value="package" label="Native package" default className="InstallationMethod">
 
 For Debian or Ubuntu on `amd64`:
 
@@ -44,7 +44,7 @@ semaphore server --config ./config.json
 For a local evaluation, choose SQLite, accept or set the database and playbook paths, enter the public URL, and create the first administrator when prompted.
 
   </TabItem>
-  <TabItem value="docker" label="Docker Compose">
+  <TabItem value="docker" label="Docker Compose" className="InstallationMethod">
 
 Create `compose.yaml`:
 
@@ -89,7 +89,7 @@ docker compose logs -f semaphore
 ```
 
   </TabItem>
-  <TabItem value="binary" label="Binary archive">
+  <TabItem value="binary" label="Binary archive" className="InstallationMethod">
 
 Download the archive for your operating system and CPU architecture from [GitHub Releases](https://github.com/semaphoreui/semaphore/releases). Linux `amd64` example:
 
@@ -105,7 +105,7 @@ For a local evaluation, choose SQLite, accept or set the database and playbook p
 Choose a `darwin` archive for macOS or a `.zip` for Windows. The Ansible walkthrough later in this guide still needs a Linux, macOS, WSL, container, or Linux runner execution environment with Ansible installed.
 
   </TabItem>
-  <TabItem value="helm" label="Kubernetes with Helm">
+  <TabItem value="helm" label="Kubernetes with Helm" className="InstallationMethod">
 
 Add the official chart and inspect its defaults before installing:
 
@@ -126,12 +126,11 @@ The chart's `appVersion` identifies the Semaphore version. Configure persistent 
   </TabItem>
 </Tabs>
 
+
 For a guided setup, use the official [Semaphore Installation page](https://semaphoreui.com/install) to select the release, build the configuration, and get the matching download or run commands.
 
 <details>
 <summary>Not sure which installation method to choose?</summary>
-
-<br />
 
 | Installation method | Choose it for | Detailed guide |
 | --- | --- | --- |
@@ -181,8 +180,6 @@ The new project opens with sections for **Task Templates**, **Workflows**, **Sch
 <details>
 <summary>Watch this step</summary>
 
-<br />
-
 ![Creating the first project on an empty Semaphore instance](/assets/getting-started/create-first-project.gif)
 
 </details>
@@ -200,7 +197,7 @@ The new project opens on an empty Dashboard. The sidebar is the main navigation 
 
 The diagram shows how these resources produce a run:
 
-<div class="schema">
+<div class="BlockSchema">
   ![How Semaphore resources and triggers become a task run](/assets/getting-started/core-concepts.svg)
 </div>
 
@@ -364,8 +361,6 @@ If you created `get-started.yml` in your own repository, commit and push it to t
 <details>
 <summary>Watch this step</summary>
 
-<br />
-
 ![Enabling Ansible and creating the first Ansible task template](/assets/getting-started/create-ansible-template.gif)
 
 </details>
@@ -413,8 +408,6 @@ If **Summary** is unavailable, verify the run in **Log**; `PLAY RECAP` remains t
 
 <details>
 <summary>Watch the run and result</summary>
-
-<br />
 
 ![Running the Ansible task and inspecting its log and details](/assets/getting-started/run-and-inspect-task.gif)
 

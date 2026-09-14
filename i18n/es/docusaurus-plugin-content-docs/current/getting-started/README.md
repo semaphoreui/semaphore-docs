@@ -200,7 +200,7 @@ El nuevo proyecto abre un Dashboard vacío. La barra lateral es la navegación p
 
 El diagrama muestra cómo estos recursos producen una ejecución:
 
-<div class="schema">
+<div class="BlockSchema">
   ![Cómo los recursos y disparadores de Semaphore generan una ejecución de tarea](/assets/getting-started/core-concepts.svg)
 </div>
 

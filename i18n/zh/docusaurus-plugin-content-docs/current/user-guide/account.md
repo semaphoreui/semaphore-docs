@@ -2,7 +2,9 @@
 
 您的个人设置位于侧边栏底部的账户菜单中。点击您的名字即可打开。
 
+<div class="DialogScreenshot" style={{maxWidth: 300}}>
 ![账户菜单](/assets/user-menu.webp)
+</div>
 
 | 项目 | 说明 |
 |---|---|
@@ -15,7 +17,9 @@
 
 ## 编辑账户 {#edit-account}
 
+<div class="DialogScreenshot">
 ![编辑账户对话框](/assets/account-edit.webp)
+</div>
 
 **设置**（Settings）标签页包含：
 
@@ -30,7 +34,9 @@
 
 **安全**（Security）标签页可用于修改密码。如果管理员启用了基于时间的一次性密码（TOTP），第二因素也在同一标签页中配置。
 
+<div class="DialogScreenshot">
 ![安全标签页](/assets/account-security.webp)
+</div>
 
 ## API 令牌 {#api-tokens}
 
@@ -40,6 +46,8 @@
 
 点击**新建令牌**（New Token），为令牌命名并选择过期时间。令牌值仅在创建后显示一次，请立即复制。
 
+<div class="DialogScreenshot">
 ![新建令牌对话框](/assets/api-token-new.webp)
+</div>
 
 在 `Authorization: Bearer` 请求头中使用该令牌，参见 [API](/reference/api)。要撤销令牌，请从列表中删除它。

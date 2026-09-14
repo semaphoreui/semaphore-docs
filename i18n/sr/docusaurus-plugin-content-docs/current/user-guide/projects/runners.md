@@ -21,7 +21,7 @@ Runneri (Runners) izvršavaju zadatke (Tasks) na mašinama koje nisu Semaphore s
 
 Potrebna vam je uloga **Manager** ili viša. Kliknite **New Runner** i popunite formu.
 
-<div class="dialog-screenshot dialog-screenshot--small">
+<div class="DialogScreenshot DialogScreenshot--small">
 
 ![Dijalog za novi runner](/assets/project-runner-new.webp)
 

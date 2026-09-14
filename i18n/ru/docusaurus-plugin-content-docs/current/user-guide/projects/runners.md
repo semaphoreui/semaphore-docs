@@ -21,7 +21,7 @@ sidebar_custom_props:
 
 Требуется роль **Manager** или выше. Нажмите **New Runner** и заполните форму.
 
-<div class="dialog-screenshot dialog-screenshot--small">
+<div class="DialogScreenshot DialogScreenshot--small">
 
 ![Диалог создания раннера](/assets/project-runner-new.webp)
 

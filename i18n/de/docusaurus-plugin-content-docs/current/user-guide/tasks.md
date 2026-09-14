@@ -11,7 +11,9 @@ Sie benötigen im Projekt die Rolle **Task Runner** oder höher (siehe [Teams](.
 
 Beide öffnen den Dialog **New Task**. Sein Inhalt hängt von der Anwendung und von den im Task Template aktivierten Optionen ab.
 
+<div class="DialogScreenshot">
 ![Dialog New Task für ein Ansible-Task-Template](/assets/task-new-ansible.webp)
+</div>
 
 | Feld | Angezeigt für | Beschreibung |
 |---|---|---|
@@ -22,7 +24,9 @@ Beide öffnen den Dialog **New Task**. Sein Inhalt hängt von der Anwendung und 
 | **Plan**, **Destroy**, **Auto Approve**, **Upgrade**, **Reconfigure** | Terraform, OpenTofu, Terragrunt | Nur `plan` ausführen, `-destroy`, `-auto-approve`, `-upgrade` oder `-reconfigure` hinzufügen. Siehe [Terraform/OpenTofu](./apps/terraform). |
 | **Branch**, **Inventory**, **CLI args** | jede Anwendung | Die Werte des Task Template für diesen Durchlauf überschreiben. Jede Überschreibung muss in den Einstellungen des Task Template erlaubt sein. |
 
+<div class="DialogScreenshot">
 ![Dialog New Task für ein Terraform-Task-Template](/assets/task-new-terraform.webp)
+</div>
 
 Klicken Sie auf **Run** (oder **Build** / **Deploy**), um den Task in die Warteschlange zu stellen.
 
@@ -42,9 +46,13 @@ Ein Klick auf einen Task an beliebiger Stelle in der Oberfläche öffnet das Tas
 | **Details** | Informationen zum Task Template (Anwendung, Task Template), Commit-Informationen (Nachricht und Hash) und Ausführungsinformationen: Nachricht, Erstellungs-, Start- und Endzeit, Dauer und, falls gesetzt, der Runner, der Branch, das Limit und die für den Durchlauf verwendeten Variablen. |
 | **Summary** (Pro) | Bei Ansible-Tasks: wie viele Hosts erfolgreich abgeschlossen haben und wie viele fehlgeschlagen sind, mit einer Tabelle der fehlgeschlagenen Tasks pro Server. |
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Task-Details](/assets/task-details.webp)
+</div>
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Task-Zusammenfassung](/assets/task-summary.webp)
+</div>
 
 ## Task-Status {#task-statuses}
 
@@ -67,7 +75,7 @@ Ein Klick auf einen Task an beliebiger Stelle in der Oberfläche öffnet das Tas
 
 Um alle laufenden und wartenden Tasks eines Task Template zu stoppen, öffnen Sie die Seite des Task Template und verwenden Sie **Stop all**. Das Dropdown bietet sowohl **Stop** als auch **Force stop**.
 
-<div style={{maxWidth: 200}}>
+<div class="DialogScreenshot" style={{maxWidth: 200}}>
 
 ![Menü Stop all](/assets/task-stop-all-menu.webp)
 

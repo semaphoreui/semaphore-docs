@@ -25,8 +25,4 @@ Abra o formulário do modelo e escolha a aba no campo **View**. Um modelo perten
 
 O ícone de engrenagem no canto superior direito da lista de modelos abre o seletor de colunas. Ele se aplica a todas as visualizações e é armazenado no seu navegador.
 
-<div style={{maxWidth: 420}}>
-
 ![Seletor de colunas](/assets/templates-columns.webp)
-
-</div>

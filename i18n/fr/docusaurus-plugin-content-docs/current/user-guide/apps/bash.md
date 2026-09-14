@@ -19,7 +19,7 @@ Semaphore peut exécuter des scripts shell avec `/bin/bash`. Pour cela, créez u
 4. Cliquez sur **Créer**.
 5. Cliquez sur **Exécuter** pour lancer le modèle. La boîte de dialogue Nouvelle tâche d'un modèle de script ne comporte que le message facultatif, ainsi que les variables de questionnaire et les invites si le modèle en définit.
 
-<div style={{maxWidth: 420}}>
+<div class="DialogScreenshot">
 
 ![Boîte de dialogue Nouvelle tâche pour un modèle Bash](/assets/task-new-bash.webp)
 

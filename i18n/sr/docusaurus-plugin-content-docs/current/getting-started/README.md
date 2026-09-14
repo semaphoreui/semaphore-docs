@@ -200,7 +200,7 @@ Novi projekat otvara prazan Dashboard. Bočna traka je glavna navigacija projekt
 
 Dijagram pokazuje kako ovi resursi dovode do izvršavanja:
 
-<div class="schema">
+<div class="BlockSchema">
   ![Kako Semaphore resursi i okidači dovode do izvršavanja zadatka](/assets/getting-started/core-concepts.svg)
 </div>
 

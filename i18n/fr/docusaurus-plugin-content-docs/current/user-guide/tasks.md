@@ -11,7 +11,9 @@ Vous devez disposer du rôle **Task Runner** ou supérieur dans le projet (voir 
 
 Les deux ouvrent la boîte de dialogue **Nouvelle tâche**. Son contenu dépend de l'application et des options activées dans le modèle.
 
+<div class="DialogScreenshot">
 ![Boîte de dialogue Nouvelle tâche pour un modèle Ansible](/assets/task-new-ansible.webp)
+</div>
 
 | Champ | Affiché pour | Description |
 |---|---|---|
@@ -22,7 +24,9 @@ Les deux ouvrent la boîte de dialogue **Nouvelle tâche**. Son contenu dépend 
 | **Plan**, **Destroy**, **Auto Approve**, **Upgrade**, **Reconfigure** | Terraform, OpenTofu, Terragrunt | Exécuter uniquement `plan`, ajouter `-destroy`, `-auto-approve`, `-upgrade` ou `-reconfigure`. Voir [Terraform/OpenTofu](./apps/terraform). |
 | **Branche**, **Inventaire**, **Arguments CLI** | toute application | Remplacer les valeurs du modèle pour cette exécution. Chaque remplacement doit être autorisé dans les paramètres du modèle. |
 
+<div class="DialogScreenshot">
 ![Boîte de dialogue Nouvelle tâche pour un modèle Terraform](/assets/task-new-terraform.webp)
+</div>
 
 Cliquez sur **Run** (ou **Build** / **Deploy**) pour placer la tâche dans la file d'attente.
 
@@ -42,9 +46,13 @@ Cliquer sur une tâche n'importe où dans l'interface ouvre la fenêtre de tâch
 | **Détails** | Informations sur le modèle (application, modèle), informations sur le commit (message et hachage) et informations d'exécution : message, dates de création, de démarrage et de fin, durée et, le cas échéant, le runner, la branche, la limite et les variables utilisées pour l'exécution. |
 | **Résumé** (Pro) | Pour les tâches Ansible : combien d'hôtes se sont terminés correctement et combien ont échoué, avec un tableau des tâches en échec par serveur. |
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Détails de la tâche](/assets/task-details.webp)
+</div>
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Résumé de la tâche](/assets/task-summary.webp)
+</div>
 
 ## Statuts des tâches {#task-statuses}
 
@@ -67,7 +75,7 @@ Ouvrez la fenêtre de tâche d'une tâche en cours d'exécution et cliquez sur *
 
 Pour arrêter toutes les tâches en cours d'exécution et en file d'attente d'un modèle, ouvrez la page du modèle et utilisez **Tout arrêter**. Le menu déroulant propose à la fois **Stop** et **Force stop**.
 
-<div style={{maxWidth: 200}}>
+<div class="DialogScreenshot" style={{maxWidth: 200}}>
 
 ![Menu Tout arrêter](/assets/task-stop-all-menu.webp)
 

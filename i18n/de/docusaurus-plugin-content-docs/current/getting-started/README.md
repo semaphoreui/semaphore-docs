@@ -200,7 +200,7 @@ Das neue Projekt öffnet ein leeres Dashboard. Die Seitenleiste ist die Hauptnav
 
 Das Diagramm zeigt, wie diese Ressourcen zu einer Ausführung führen:
 
-<div class="schema">
+<div class="BlockSchema">
   ![Wie Semaphore-Ressourcen und Auslöser eine Aufgabenausführung erzeugen](/assets/getting-started/core-concepts.svg)
 </div>
 

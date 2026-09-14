@@ -25,8 +25,4 @@ Aprire il modulo del Task Template e scegliere la scheda nel campo **View**. Un 
 
 L'icona a forma di ingranaggio nell'angolo in alto a destra dell'elenco dei Task Template apre il selettore delle colonne. Si applica a tutte le viste ed è memorizzato nel browser.
 
-<div style={{maxWidth: 420}}>
-
 ![Selettore delle colonne](/assets/templates-columns.webp)
-
-</div>

@@ -25,8 +25,4 @@
 
 模板列表右上角的齿轮图标用于打开列选择器。它对所有视图生效，并保存在你的浏览器中。
 
-<div style={{maxWidth: 420}}>
-
 ![列选择器](/assets/templates-columns.webp)
-
-</div>

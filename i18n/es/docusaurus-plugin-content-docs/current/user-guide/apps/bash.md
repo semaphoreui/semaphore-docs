@@ -19,7 +19,7 @@ Semaphore puede ejecutar scripts de shell mediante `/bin/bash`. Para ello, cree 
 4. Haga clic en **Crear**.
 5. Haga clic en **Ejecutar** para ejecutar la plantilla. El cuadro de diálogo Nueva tarea de una plantilla de script solo incluye el mensaje opcional, además de las variables de encuesta y las solicitudes si la plantilla las define.
 
-<div style={{maxWidth: 420}}>
+<div class="DialogScreenshot">
 
 ![Cuadro de diálogo Nueva tarea de una plantilla de Bash](/assets/task-new-bash.webp)
 

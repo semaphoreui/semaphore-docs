@@ -2,7 +2,9 @@
 
 Le impostazioni personali si trovano nel menu dell'account in fondo alla barra laterale. Fare clic sul proprio nome per aprirlo.
 
+<div class="DialogScreenshot" style={{maxWidth: 300}}>
 ![Menu dell'account](/assets/user-menu.webp)
+</div>
 
 | Voce | Descrizione |
 |---|---|
@@ -15,7 +17,9 @@ Accanto al menu si trovano l'interruttore della **modalità scura** e il seletto
 
 ## Modifica dell'account {#edit-account}
 
+<div class="DialogScreenshot">
 ![Finestra di dialogo di modifica dell'account](/assets/account-edit.webp)
+</div>
 
 La scheda **Settings** contiene:
 
@@ -30,7 +34,9 @@ I badge accanto alle caselle di controllo mostrano i propri flag globali: **Pro 
 
 La scheda **Security** consente di modificare la password. Se l'amministratore ha abilitato le password monouso basate sul tempo, il secondo fattore si configura nella stessa scheda.
 
+<div class="DialogScreenshot">
 ![Scheda Security](/assets/account-security.webp)
+</div>
 
 ## Token API {#api-tokens}
 
@@ -40,6 +46,8 @@ Scegliere **API Tokens** nel menu dell'account. La pagina elenca i propri token 
 
 Fare clic su **New Token**, assegnare un nome al token e scegliere quando scade. Il valore del token viene mostrato una sola volta dopo la creazione: copiarlo immediatamente.
 
+<div class="DialogScreenshot">
 ![Finestra di dialogo per un nuovo token](/assets/api-token-new.webp)
+</div>
 
 Utilizzare il token nell'intestazione `Authorization: Bearer`, vedere [API](/reference/api). Per revocare un token, eliminarlo dall'elenco.

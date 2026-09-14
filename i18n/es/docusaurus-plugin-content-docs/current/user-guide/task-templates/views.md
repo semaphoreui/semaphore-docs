@@ -25,8 +25,4 @@ Abra el formulario de la plantilla y elija la pestaña en el campo **Vista**. Un
 
 El icono del engranaje de la esquina superior derecha de la lista de plantillas abre el selector de columnas. Se aplica a todas las vistas y se guarda en su navegador.
 
-<div style={{maxWidth: 420}}>
-
 ![Selector de columnas](/assets/templates-columns.webp)
-
-</div>

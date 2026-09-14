@@ -19,7 +19,7 @@ O Semaphore pode executar scripts shell usando `/bin/bash`. Para isso, crie um m
 4. Clique em **Criar**.
 5. Clique em **Executar** para executar o modelo. A caixa de diálogo Nova Tarefa de um modelo de script tem apenas a mensagem opcional, além das variáveis de survey e dos prompts, caso o modelo os defina.
 
-<div style={{maxWidth: 420}}>
+<div class="DialogScreenshot">
 
 ![Caixa de diálogo Nova Tarefa de um modelo Bash](/assets/task-new-bash.webp)
 

@@ -11,7 +11,9 @@
 
 两者都会打开 **New Task** 对话框。对话框的内容取决于应用（App）以及模板中启用的选项。
 
+<div class="DialogScreenshot">
 ![Ansible 模板的 New Task 对话框](/assets/task-new-ansible.webp)
+</div>
 
 | 字段 | 显示条件 | 说明 |
 |---|---|---|
@@ -22,7 +24,9 @@
 | **Plan**、**Destroy**、**Auto Approve**、**Upgrade**、**Reconfigure** | Terraform、OpenTofu、Terragrunt | 只运行 `plan`，或添加 `-destroy`、`-auto-approve`、`-upgrade` 或 `-reconfigure`。请参阅 [Terraform/OpenTofu](./apps/terraform)。 |
 | **Branch**、**Inventory**、**CLI args** | 任意应用 | 为本次运行覆盖模板中的值。每项覆盖都必须在模板设置中允许。 |
 
+<div class="DialogScreenshot">
 ![Terraform 模板的 New Task 对话框](/assets/task-new-terraform.webp)
+</div>
 
 点击 **Run**（或 **Build** / **Deploy**）将任务放入队列。
 
@@ -42,9 +46,13 @@
 | **Details** | 模板信息（应用、模板）、提交信息（提交消息和哈希），以及运行信息：消息、创建时间、开始时间、结束时间、持续时间，以及（如果设置了）本次运行使用的运行器（Runner）、分支、limit 和变量。 |
 | **Summary**（Pro） | 对于 Ansible 任务：显示多少台主机成功完成、多少台失败，并附带每台服务器上失败任务的表格。 |
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![任务详情](/assets/task-details.webp)
+</div>
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![任务摘要](/assets/task-summary.webp)
+</div>
 
 ## 任务状态 {#task-statuses}
 
@@ -67,7 +75,7 @@
 
 要停止某个模板的所有正在运行和排队中的任务，打开模板页面并使用 **Stop all**。下拉菜单同时提供 **Stop** 和 **Force stop**。
 
-<div style={{maxWidth: 200}}>
+<div class="DialogScreenshot" style={{maxWidth: 200}}>
 
 ![Stop all 菜单](/assets/task-stop-all-menu.webp)
 

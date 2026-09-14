@@ -735,7 +735,7 @@ html[data-theme='dark'] {
 } */
 
 
-.dialog-screenshot {
+.DialogScreenshot {
   padding: 20px;
   background: #a4a4a4;
   max-width: 500px;
@@ -744,19 +744,31 @@ html[data-theme='dark'] {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-.dialog-screenshot p {
+.DialogScreenshot p {
   margin: 0;
 }
 
-.dialog-screenshot img {
+.DialogScreenshot img {
   display: block;
   width: 100%;
 }
 
-.dialog-screenshot--small {
+.DialogScreenshot--small {
     max-width: 450px;
 }
 
-.schema img {
+.BlockSchema img {
   box-shadow: none !important;
+}
+
+.InstallationMethod {
+  padding: 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #e6f6e6;
+  margin-top: -1px;
+}
+
+.InstallationMethod:first-child {
+  border-top-left-radius: 0;
 }

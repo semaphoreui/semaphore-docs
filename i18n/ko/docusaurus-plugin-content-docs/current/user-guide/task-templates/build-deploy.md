@@ -6,7 +6,7 @@
 
 빌드 템플릿은 tarball, 컨테이너 이미지, 패키지와 같은 아티팩트를 생성합니다. 모든 빌드 작업에는 템플릿의 **Start Version**(예: `1.0.0`)부터 시작하여 자동으로 증가하는 버전이 부여됩니다. 이 버전은 템플릿 목록과 작업 이력의 **Version** 열에 표시됩니다.
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
   ![빌드 템플릿의 새 작업 대화 상자](/assets/task-new-build.webp)
 </div>
 
@@ -16,7 +16,9 @@ playbook에서 `semaphore_vars.task_details.target_version`을 통해 이 버전
 
 배포 템플릿은 **Build Template** 필드를 통해 빌드 템플릿과 연결됩니다. 사용자가 **Deploy**를 클릭하면 새 작업 대화 상자에서 배포할 **Build Version**을 묻습니다. 가장 최근에 성공한 빌드가 미리 선택됩니다.
 
+<div class="DialogScreenshot">
 ![배포 템플릿의 새 작업 대화 상자](/assets/task-new-deploy.webp)
+</div>
 
 배포 템플릿에서 **Autorun**을 활성화하면 빌드가 성공할 때마다 배포가 자동으로 시작됩니다. 배포할 버전은 playbook에서 `semaphore_vars.task_details.incoming_version`으로 사용할 수 있습니다.
 

@@ -21,7 +21,7 @@ Runner führen Tasks auf anderen Maschinen als dem Semaphore-Server aus: näher 
 
 Sie benötigen die Rolle **Manager** oder höher. Klicken Sie auf **New Runner** und füllen Sie das Formular aus.
 
-<div class="dialog-screenshot dialog-screenshot--small">
+<div class="DialogScreenshot DialogScreenshot--small">
 
 ![Dialog für einen neuen Runner](/assets/project-runner-new.webp)
 

@@ -7,7 +7,7 @@ description: The account menu, editing your name, e-mail, alerts and password, t
 
 Your personal settings live in the account menu at the bottom of the sidebar. Click your name to open it.
 
-<div class="dialog-screenshot" style={{maxWidth: 300}}>
+<div class="DialogScreenshot" style={{maxWidth: 300}}>
 ![Account menu](/assets/user-menu.webp)
 </div>
 
@@ -22,7 +22,7 @@ Next to the menu you find the **dark mode** switch and the **language** switcher
 
 ## Edit account {#edit-account}
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
 ![Edit account dialog](/assets/account-edit.webp)
 </div>
 
@@ -39,7 +39,7 @@ Badges next to the checkboxes show your global flags: **Pro user** on a Pro inst
 
 The **Security** tab lets you change your password. If the administrator enabled time-based one-time passwords, the second factor is configured on the same tab.
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
 ![Security tab](/assets/account-security.webp)
 </div>
 
@@ -52,7 +52,7 @@ Choose **API Tokens** in the account menu. The page lists your tokens with their
 
 Click **New Token**, give the token a name, and choose when it expires. The token value is shown once after creation, copy it right away.
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
 ![New token dialog](/assets/api-token-new.webp)
 </div>
 

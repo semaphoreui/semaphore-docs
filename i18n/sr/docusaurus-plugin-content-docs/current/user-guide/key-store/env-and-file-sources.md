@@ -107,7 +107,7 @@ chmod 0400 /srv/semaphore/secrets/prod_ssh.json
 Zatim kreirajte ključ tipa **SSH**, otvorite karticu **File** i unesite `/var/lib/semaphore/secrets/prod_ssh.json`
 (putanju kako se vidi **unutar** kontejnera).
 
-<div class="dialog-screenshot dialog-screenshot--small">
+<div class="DialogScreenshot DialogScreenshot--small">
 
 ![](/assets/key-file-source.webp)
 

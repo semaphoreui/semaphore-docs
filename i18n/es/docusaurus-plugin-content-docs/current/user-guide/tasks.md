@@ -11,7 +11,9 @@ Necesita el rol **Task Runner** o superior en el proyecto (consulte [Equipos](./
 
 Ambas opciones abren el cuadro de diálogo **Nueva tarea**. Su contenido depende de la aplicación y de las opciones habilitadas en la plantilla.
 
+<div class="DialogScreenshot">
 ![Cuadro de diálogo Nueva tarea para una plantilla de Ansible](/assets/task-new-ansible.webp)
+</div>
 
 | Campo | Se muestra en | Descripción |
 |---|---|---|
@@ -22,7 +24,9 @@ Ambas opciones abren el cuadro de diálogo **Nueva tarea**. Su contenido depende
 | **Plan**, **Destroy**, **Auto Approve**, **Upgrade**, **Reconfigure** | Terraform, OpenTofu, Terragrunt | Ejecutar solo `plan`, añadir `-destroy`, `-auto-approve`, `-upgrade` o `-reconfigure`. Consulte [Terraform/OpenTofu](./apps/terraform). |
 | **Rama**, **Inventario**, **CLI args** | cualquier aplicación | Sustituir los valores de la plantilla para esta ejecución. Cada sustitución debe estar permitida en los ajustes de la plantilla. |
 
+<div class="DialogScreenshot">
 ![Cuadro de diálogo Nueva tarea para una plantilla de Terraform](/assets/task-new-terraform.webp)
+</div>
 
 Haga clic en **Run** (o **Build** / **Deploy**) para poner la tarea en la cola.
 
@@ -42,9 +46,13 @@ Al hacer clic en una tarea en cualquier parte de la interfaz se abre la ventana 
 | **Detalles** | Información de la plantilla (aplicación, plantilla), información del commit (mensaje y hash) e información de la ejecución: mensaje, hora de creación, de inicio y de finalización, duración y, cuando se han definido, el runner, la rama, el limit y las variables usadas en la ejecución. |
 | **Resumen** (Pro) | En las tareas de Ansible: cuántos hosts terminaron correctamente y cuántos fallaron, con una tabla de las tareas fallidas por servidor. |
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Detalles de la tarea](/assets/task-details.webp)
+</div>
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Resumen de la tarea](/assets/task-summary.webp)
+</div>
 
 ## Estados de las tareas {#task-statuses}
 
@@ -67,7 +75,7 @@ Abra la ventana de la tarea de una tarea en ejecución y haga clic en **Stop**. 
 
 Para detener todas las tareas en ejecución y en cola de una plantilla, abra la página de la plantilla y use **Stop all**. El menú desplegable ofrece tanto **Stop** como **Force stop**.
 
-<div style={{maxWidth: 200}}>
+<div class="DialogScreenshot" style={{maxWidth: 200}}>
 
 ![Menú Stop all](/assets/task-stop-all-menu.webp)
 

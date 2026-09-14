@@ -6,7 +6,7 @@
 
 构建模板生成制品：tarball、容器镜像或软件包。每个构建任务都会获得一个自动递增的版本号，从模板的 **Start Version** 开始（例如 `1.0.0`）。版本号显示在模板列表的 **Version** 列和任务历史中。
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
   ![构建模板的 New Task 对话框](/assets/task-new-build.webp)
 </div>
 
@@ -16,7 +16,9 @@
 
 部署模板通过 **Build Template** 字段与构建模板关联。当用户点击 **Deploy** 时，New Task 对话框会询问要部署的 **Build Version**；默认预选最近一次成功的构建。
 
+<div class="DialogScreenshot">
 ![部署模板的 New Task 对话框](/assets/task-new-deploy.webp)
+</div>
 
 在部署模板中启用 **Autorun**，即可在每次构建成功后自动启动部署。要部署的版本在 playbook 中以 `semaphore_vars.task_details.incoming_version` 的形式提供。
 

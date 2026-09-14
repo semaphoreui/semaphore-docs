@@ -19,7 +19,7 @@ Semaphore može da pokreće shell skripte pomoću `/bin/bash`. Da biste to uradi
 4. Kliknite **Kreiraj** (Create).
 5. Kliknite **Pokreni** (Run) da biste izvršili šablon. Dijalog Novi zadatak (New Task) za šablon sa skriptom sadrži samo opcionu poruku, kao i anketne promenljive i upite ako ih šablon definiše.
 
-<div style={{maxWidth: 420}}>
+<div class="DialogScreenshot">
 
 ![Dijalog Novi zadatak za Bash šablon](/assets/task-new-bash.webp)
 

@@ -23,7 +23,7 @@ Semaphore can run shell scripts using `/bin/bash`. To do this, create a **Bash S
 4. Click **Create**.
 5. Click **Run** to execute the template. The New Task dialog for a script template has only the optional message, plus survey variables and prompts if the template defines them.
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
 
 ![New Task dialog for a Bash template](/assets/task-new-bash.webp)
 

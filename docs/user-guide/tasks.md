@@ -16,7 +16,7 @@ You need the **Task Runner** role or higher in the project (see [Teams](./team))
 
 Both open the **New Task** dialog. Its content depends on the application and on the options enabled in the template.
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
 ![New Task dialog for an Ansible template](/assets/task-new-ansible.webp)
 </div>
 
@@ -29,7 +29,7 @@ Both open the **New Task** dialog. Its content depends on the application and on
 | **Plan**, **Destroy**, **Auto Approve**, **Upgrade**, **Reconfigure** | Terraform, OpenTofu, Terragrunt | Run `plan` only, add `-destroy`, `-auto-approve`, `-upgrade`, or `-reconfigure`. See [Terraform/OpenTofu](./apps/terraform). |
 | **Branch**, **Inventory**, **CLI args** | any application | Override the template values for this run. Each override must be allowed in the template settings. |
 
-<div class="dialog-screenshot">
+<div class="DialogScreenshot">
 ![New Task dialog for a Terraform template](/assets/task-new-terraform.webp)
 </div>
 
@@ -51,11 +51,11 @@ Clicking a task anywhere in the UI opens the task window. The header shows the t
 | **Details** | Template info (application, template), commit info (message and hash), and running info: message, created, started, and end time, duration, and, when set, the runner, branch, limit, and variables used for the run. |
 | **Summary** (Pro) | For Ansible tasks: how many hosts finished OK and how many failed, with a table of failed tasks per server. |
 
-<div class="dialog-screenshot" style={{maxWidth: 1000}}>
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Task details](/assets/task-details.webp)
 </div>
 
-<div class="dialog-screenshot" style={{maxWidth: 1000}}>
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Task summary](/assets/task-summary.webp)
 </div>
 
@@ -81,7 +81,7 @@ Open the task window of a running task and click **Stop**. Semaphore sends a ter
 To stop every running and queued task of one template, open the template page and use **Stop all**. The dropdown offers both **Stop** and **Force stop**.
 
 
-<div class="dialog-screenshot" style={{maxWidth: 200}}>
+<div class="DialogScreenshot" style={{maxWidth: 200}}>
 
 ![Stop all menu](/assets/task-stop-all-menu.webp)
 

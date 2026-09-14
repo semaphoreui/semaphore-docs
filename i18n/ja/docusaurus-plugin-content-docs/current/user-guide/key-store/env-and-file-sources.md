@@ -107,7 +107,7 @@ chmod 0400 /srv/semaphore/secrets/prod_ssh.json
 次に、種類が **SSH** のキーを作成し、**File** タブを開いて `/var/lib/semaphore/secrets/prod_ssh.json`
 (コンテナの**内部**から見たパス) を入力します。
 
-<div class="dialog-screenshot dialog-screenshot--small">
+<div class="DialogScreenshot DialogScreenshot--small">
 
 ![](/assets/key-file-source.webp)
 

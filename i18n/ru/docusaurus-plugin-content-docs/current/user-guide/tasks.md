@@ -11,7 +11,9 @@
 
 Оба способа открывают диалог **New Task**. Его содержимое зависит от приложения и от опций, включённых в шаблоне.
 
+<div class="DialogScreenshot">
 ![Диалог New Task для шаблона Ansible](/assets/task-new-ansible.webp)
+</div>
 
 | Поле | Для каких шаблонов | Описание |
 |---|---|---|
@@ -22,7 +24,9 @@
 | **Plan**, **Destroy**, **Auto Approve**, **Upgrade**, **Reconfigure** | Terraform, OpenTofu, Terragrunt | Выполнить только `plan` либо добавить `-destroy`, `-auto-approve`, `-upgrade` или `-reconfigure`. См. [Terraform/OpenTofu](./apps/terraform). |
 | **Branch**, **Inventory**, **CLI args** | любого приложения | Переопределить значения шаблона для этого запуска. Каждое переопределение должно быть разрешено в настройках шаблона. |
 
+<div class="DialogScreenshot">
 ![Диалог New Task для шаблона Terraform](/assets/task-new-terraform.webp)
+</div>
 
 Нажмите **Run** (или **Build** / **Deploy**), чтобы поставить задачу в очередь.
 
@@ -42,9 +46,13 @@
 | **Details** | Сведения о шаблоне (приложение, шаблон), сведения о коммите (сообщение и хеш) и сведения о запуске: сообщение, время создания, начала и окончания, длительность, а также, если заданы, раннер, ветка, ограничение limit и переменные, использованные при запуске. |
 | **Summary** (Pro) | Для задач Ansible: сколько хостов завершилось успешно и сколько с ошибкой, с таблицей неуспешных задач по серверам. |
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Подробности задачи](/assets/task-details.webp)
+</div>
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Сводка по задаче](/assets/task-summary.webp)
+</div>
 
 ## Статусы задач {#task-statuses}
 
@@ -67,7 +75,7 @@
 
 Чтобы остановить все выполняющиеся и стоящие в очереди задачи одного шаблона, откройте страницу шаблона и воспользуйтесь кнопкой **Stop all**. В выпадающем меню доступны **Stop** и **Force stop**.
 
-<div style={{maxWidth: 200}}>
+<div class="DialogScreenshot" style={{maxWidth: 200}}>
 
 ![Меню Stop all](/assets/task-stop-all-menu.webp)
 

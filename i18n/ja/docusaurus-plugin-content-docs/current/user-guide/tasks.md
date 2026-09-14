@@ -11,7 +11,9 @@
 
 どちらの場合も **新しいタスク** のダイアログが開きます。その内容は、アプリケーションとテンプレートで有効にしたオプションによって異なります。
 
+<div class="DialogScreenshot">
 ![Ansible テンプレートの新しいタスクのダイアログ](/assets/task-new-ansible.webp)
+</div>
 
 | フィールド | 表示される対象 | 説明 |
 |---|---|---|
@@ -22,7 +24,9 @@
 | **Plan**、**Destroy**、**Auto Approve**、**Upgrade**、**Reconfigure** | Terraform、OpenTofu、Terragrunt | `plan` のみを実行する、または `-destroy`、`-auto-approve`、`-upgrade`、`-reconfigure` を追加します。[Terraform/OpenTofu](./apps/terraform) を参照してください。 |
 | **ブランチ**、**インベントリ**、**CLI 引数** | すべてのアプリケーション | この実行に限りテンプレートの値を上書きします。各上書きはテンプレートの設定で許可されている必要があります。 |
 
+<div class="DialogScreenshot">
 ![Terraform テンプレートの新しいタスクのダイアログ](/assets/task-new-terraform.webp)
+</div>
 
 **実行**（または **ビルド** / **デプロイ**）をクリックすると、タスクがキューに入ります。
 
@@ -42,9 +46,13 @@ UI 上のどこかでタスクをクリックすると、タスクのウィン�
 | **詳細** | テンプレートの情報（アプリケーション、テンプレート）、コミットの情報（メッセージとハッシュ）、および実行の情報（メッセージ、作成時刻、開始時刻、終了時刻、所要時間、設定されている場合はランナー、ブランチ、limit、実行に使用された変数）です。 |
 | **サマリー** (Pro) | Ansible のタスクの場合: 正常に完了したホスト数と失敗したホスト数、およびサーバーごとの失敗したタスクの表です。 |
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![タスクの詳細](/assets/task-details.webp)
+</div>
 
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![タスクのサマリー](/assets/task-summary.webp)
+</div>
 
 ## タスクのステータス {#task-statuses}
 
@@ -67,7 +75,7 @@ UI 上のどこかでタスクをクリックすると、タスクのウィン�
 
 1 つのテンプレートの実行中およびキュー待ちのすべてのタスクを停止するには、テンプレートのページを開いて **すべて停止** を使用します。ドロップダウンには **停止** と **強制停止** の両方が用意されています。
 
-<div style={{maxWidth: 200}}>
+<div class="DialogScreenshot" style={{maxWidth: 200}}>
 
 ![すべて停止のメニュー](/assets/task-stop-all-menu.webp)
 

@@ -25,8 +25,4 @@ Ziehen Sie die Views im Dialog, um die Reihenfolge der Tabs zu ändern. Das Lös
 
 Das Zahnradsymbol in der oberen rechten Ecke der Liste der Task Templates öffnet die Spaltenauswahl. Sie gilt für jeden View und wird in Ihrem Browser gespeichert.
 
-<div style={{maxWidth: 420}}>
-
 ![Spaltenauswahl](/assets/templates-columns.webp)
-
-</div>

@@ -200,7 +200,7 @@ chart 的 `appVersion` 标识 Semaphore 版本。生产使用前，请在 `value
 
 下图展示这些资源如何产生一次运行：
 
-<div class="schema">
+<div class="BlockSchema">
   ![Semaphore 资源和触发器如何产生任务运行](/assets/getting-started/core-concepts.svg)
 </div>
 

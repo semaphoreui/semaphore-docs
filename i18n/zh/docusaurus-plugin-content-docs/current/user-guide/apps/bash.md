@@ -19,7 +19,7 @@ Semaphore 可以使用 `/bin/bash` 运行 shell 脚本。为此，请创建一�
 4. 点击**创建**（Create）。
 5. 点击**运行**（Run）执行模板。脚本模板的新建任务对话框只包含可选的消息，以及模板定义的调查变量和提示（如果有）。
 
-<div style={{maxWidth: 420}}>
+<div class="DialogScreenshot">
 
 ![Bash 模板的新建任务对话框](/assets/task-new-bash.webp)
 
