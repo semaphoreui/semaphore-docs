@@ -30,8 +30,4 @@ Open the template form and choose the tab in the **View** field. A template belo
 
 The gear icon in the top right corner of the template list opens the column chooser. It applies to every view and is stored in your browser.
 
-<div style={{maxWidth: 420}}>
-
 ![Column chooser](/assets/templates-columns.webp)
-
-</div>

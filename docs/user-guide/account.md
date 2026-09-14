@@ -7,10 +7,12 @@ description: The account menu, editing your name, e-mail, alerts and password, t
 
 Your personal settings live in the account menu at the bottom of the sidebar. Click your name to open it.
 
+<div class="dialog-screenshot" style={{maxWidth: 300}}>
 ![Account menu](/assets/user-menu.webp)
+</div>
 
 | Item | Description |
-|---|---|
+|---|---|ß
 | Version | The Semaphore UI version running on the server. |
 | **API Tokens** | Personal tokens for the [REST API](/reference/api). |
 | **Edit Account** | Your name, username, e-mail, alert preference, and password. |
@@ -20,7 +22,9 @@ Next to the menu you find the **dark mode** switch and the **language** switcher
 
 ## Edit account {#edit-account}
 
+<div class="dialog-screenshot">
 ![Edit account dialog](/assets/account-edit.webp)
+</div>
 
 The **Settings** tab contains:
 
@@ -35,16 +39,21 @@ Badges next to the checkboxes show your global flags: **Pro user** on a Pro inst
 
 The **Security** tab lets you change your password. If the administrator enabled time-based one-time passwords, the second factor is configured on the same tab.
 
+<div class="dialog-screenshot">
 ![Security tab](/assets/account-security.webp)
+</div>
 
 ## API tokens {#api-tokens}
 
 Choose **API Tokens** in the account menu. The page lists your tokens with their creation date, expiration date, and status. The **API Reference** link opens the Swagger UI built into your instance.
 
+
 ![API tokens](/assets/api-tokens.webp)
 
 Click **New Token**, give the token a name, and choose when it expires. The token value is shown once after creation, copy it right away.
 
+<div class="dialog-screenshot">
 ![New token dialog](/assets/api-token-new.webp)
+</div>
 
 Use the token in the `Authorization: Bearer` header, see [API](/reference/api). To revoke a token, delete it from the list.

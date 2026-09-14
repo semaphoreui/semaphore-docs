@@ -21,7 +21,9 @@ Use the version in your playbook through `semaphore_vars.task_details.target_ver
 
 A deploy template is linked to a build template with the **Build Template** field. When a user clicks **Deploy**, the New Task dialog asks for the **Build Version** to deploy; the latest successful build is preselected.
 
+<div class="dialog-screenshot">
 ![New Task dialog for a deploy template](/assets/task-new-deploy.webp)
+</div>
 
 Enable **Autorun** in the deploy template to start a deploy automatically after every successful build. The version to deploy is available in the playbook as `semaphore_vars.task_details.incoming_version`.
 
