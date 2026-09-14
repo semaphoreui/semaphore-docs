@@ -75,9 +75,9 @@ const sidebars = {
           label: 'Reverse proxy',
           link: { type: 'doc', id: 'admin-guide/reverse-proxy/README' },
           items: [
-            'admin-guide/reverse-proxy/nginx',
-            'admin-guide/reverse-proxy/apache',
-            'admin-guide/reverse-proxy/caddy',
+            { type: 'doc', id: 'admin-guide/reverse-proxy/nginx', className: 'sidebar-icon sidebar-icon--nginx' },
+            { type: 'doc', id: 'admin-guide/reverse-proxy/apache', className: 'sidebar-icon sidebar-icon--apache' },
+            { type: 'doc', id: 'admin-guide/reverse-proxy/caddy', className: 'sidebar-icon sidebar-icon--caddy' },
           ],
         },
         {
