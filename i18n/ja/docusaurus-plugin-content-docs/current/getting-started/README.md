@@ -13,6 +13,16 @@ Semaphore UI は、Ansible、Terraform/OpenTofu、Bash、PowerShell、Python に
 
 このガイドでは、最初の動作例に Ansible を使用します。自分のリポジトリの playbook を使うか、公開リポジトリ [`semaphoreui/semaphore-demo`](https://github.com/semaphoreui/semaphore-demo) を使ってスクリーンショットの例を再現してください。
 
+<div className="VideoEmbed">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/LVKwud2Wno4"
+    title="Semaphore UI クイックスタート: Ansible のインストール、実行、スケジュール設定"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  ></iframe>
+</div>
+
 ## 1. Semaphore をインストールする
 
 Semaphore の実行環境に合うインストール方法を選びます。デフォルトではネイティブパッケージが選択されています。

@@ -13,6 +13,16 @@ Semaphore UI je veb interfejs i API za ponovljivu automatizaciju pomoću alata A
 
 Ovaj vodič koristi Ansible za prvi funkcionalni primer. Koristite playbook iz svog repozitorijuma ili ponovite primer sa snimaka ekrana pomoću javnog repozitorijuma [`semaphoreui/semaphore-demo`](https://github.com/semaphoreui/semaphore-demo).
 
+<div className="VideoEmbed">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/LVKwud2Wno4"
+    title="Semaphore UI brzi početak: instaliranje, pokretanje i zakazivanje Ansible zadataka"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  ></iframe>
+</div>
+
 ## 1. Instalirajte Semaphore
 
 Izaberite način instalacije prema okruženju u kome će Semaphore raditi. Podrazumevano je izabran nativni paket.

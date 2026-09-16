@@ -13,6 +13,16 @@ Semaphore UI — веб-интерфейс и API для повторяемой 
 
 В этом руководстве первый рабочий пример использует Ansible. Возьмите playbook из своего репозитория или повторите пример со скриншотов с помощью публичного репозитория [`semaphoreui/semaphore-demo`](https://github.com/semaphoreui/semaphore-demo).
 
+<div className="VideoEmbed">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/LVKwud2Wno4"
+    title="Быстрый старт Semaphore UI: установка, запуск и планирование Ansible"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  ></iframe>
+</div>
+
 ## 1. Установите Semaphore
 
 Выберите способ установки с учётом того, где будет работать Semaphore. По умолчанию выбран системный пакет.

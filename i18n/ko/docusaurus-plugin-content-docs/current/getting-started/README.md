@@ -13,6 +13,16 @@ Semaphore UI는 Ansible, Terraform/OpenTofu, Bash, PowerShell, Python으로 반�
 
 이 가이드에서는 첫 실행 예제로 Ansible을 사용합니다. 자신의 저장소에 있는 플레이북을 사용하거나 공개 저장소 [`semaphoreui/semaphore-demo`](https://github.com/semaphoreui/semaphore-demo)로 스크린샷의 예제를 재현하세요.
 
+<div className="VideoEmbed">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/LVKwud2Wno4"
+    title="Semaphore UI 빠른 시작: Ansible 설치, 실행 및 예약"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  ></iframe>
+</div>
+
 ## 1. Semaphore 설치하기
 
 Semaphore를 실행할 환경에 맞는 설치 방법을 선택합니다. 기본값은 네이티브 패키지입니다.

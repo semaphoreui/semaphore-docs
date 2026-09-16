@@ -13,6 +13,16 @@ Semaphore UI bietet eine Weboberfläche und eine API für wiederholbare Automati
 
 Diese Anleitung verwendet Ansible für das erste praktische Beispiel. Verwenden Sie ein Playbook aus Ihrem eigenen Repository oder folgen Sie dem reproduzierbaren Beispiel in den Screenshots mit dem öffentlichen Repository [`semaphoreui/semaphore-demo`](https://github.com/semaphoreui/semaphore-demo).
 
+<div className="VideoEmbed">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/LVKwud2Wno4"
+    title="Semaphore UI Schnellstart: Ansible installieren, ausführen und planen"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  ></iframe>
+</div>
+
 ## 1. Semaphore installieren
 
 Wählen Sie die Installationsmethode passend zur Ausführungsumgebung von Semaphore. Standardmäßig ist das native Paket ausgewählt.

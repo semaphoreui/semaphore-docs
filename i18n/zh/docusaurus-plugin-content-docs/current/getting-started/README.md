@@ -13,6 +13,16 @@ Semaphore UI 提供 Web 界面和 API，用于通过 Ansible、Terraform/OpenTof
 
 本指南使用 Ansible 作为第一个可运行示例。您可以使用自己仓库中的 playbook，也可以使用公共仓库 [`semaphoreui/semaphore-demo`](https://github.com/semaphoreui/semaphore-demo) 重现截图中的示例。
 
+<div className="VideoEmbed">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/LVKwud2Wno4"
+    title="Semaphore UI 快速入门：安装、运行和计划 Ansible"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  ></iframe>
+</div>
+
 ## 1. 安装 Semaphore
 
 根据 Semaphore 的运行环境选择安装方式。默认选中原生软件包。
