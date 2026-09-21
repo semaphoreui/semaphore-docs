@@ -50,6 +50,12 @@ Al crear una nueva programación, deberá configurar las siguientes opciones:
 
 ![](/assets/schedule02.png) ![](/assets/schedule03.png)
 
+### Alertas {#alerts}
+
+Una programación puede usar las alertas de su plantilla o un conjunto distinto de alertas del
+proyecto, de modo que las tareas iniciadas por la programación informen en otro lugar que las
+ejecuciones manuales. Consulte [Alertas de programación](./projects/alerts#schedule-alerts).
+
 ### Sintaxis del formato cron {#cron-format-syntax}
 
 La programación utiliza la sintaxis cron estándar con cinco campos:

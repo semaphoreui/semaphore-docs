@@ -50,6 +50,12 @@ Beim Erstellen eines neuen Zeitplans müssen Sie die folgenden Optionen konfigur
 
 ![](/assets/schedule02.png) ![](/assets/schedule03.png)
 
+### Benachrichtigungen {#alerts}
+
+Ein Zeitplan kann die Benachrichtigungen seiner Vorlage oder eine andere Auswahl an
+Projektbenachrichtigungen verwenden, sodass vom Zeitplan gestartete Aufgaben anders melden als
+manuelle Läufe. Siehe [Zeitplanbenachrichtigungen](./projects/alerts#schedule-alerts).
+
 ### Syntax des Cron-Formats {#cron-format-syntax}
 
 Der Zeitplan verwendet die Standard-Cron-Syntax mit fünf Feldern:

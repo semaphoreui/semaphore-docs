@@ -50,6 +50,10 @@ Semaphore 的计划任务（Schedule）功能允许按预定义的时间间隔�
 
 ![](/assets/schedule02.png) ![](/assets/schedule03.png)
 
+### 告警 {#alerts}
+
+计划任务可以使用其模板的告警，也可以使用另一组项目告警，使计划任务启动的任务报告到与手动运行不同的地方。参见[计划任务告警](./projects/alerts#schedule-alerts)。
+
 ### Cron 格式语法 {#cron-format-syntax}
 
 计划任务使用标准的五字段 cron 语法：

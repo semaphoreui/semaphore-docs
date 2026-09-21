@@ -50,6 +50,12 @@ Ao criar um novo agendamento, você precisará configurar as seguintes opções:
 
 ![](/assets/schedule02.png) ![](/assets/schedule03.png)
 
+### Alertas {#alerts}
+
+Um agendamento pode usar os alertas do seu modelo ou um conjunto diferente de alertas do projeto,
+para que as tarefas iniciadas pelo agendamento reportem em outro lugar que as execuções manuais.
+Veja [Alertas do agendamento](./projects/alerts#schedule-alerts).
+
 ### Sintaxe do formato cron {#cron-format-syntax}
 
 O agendamento usa a sintaxe cron padrão com cinco campos:
