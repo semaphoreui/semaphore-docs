@@ -76,7 +76,7 @@ Clicking a task anywhere in the UI opens the task window. The header shows the t
 
 ## Stopping tasks {#stopping-tasks}
 
-Open the task window of a running task and click **Stop**. Semaphore sends a termination signal and the task goes to the `stopping` status while the process exits. If the process does not react, the button changes to **Force Stop**; click it to kill the process immediately.
+Open the task window of a running task and click **Stop**. Semaphore sends a termination signal and the task goes to the `stopping` status while the process exits. On Linux and macOS runners, the signal is sent to the task's **process group**, so shell scripts that spawn child processes (for example `ansible-playbook` or background jobs started from a wrapper) are stopped together with the main command. Semaphore waits up to about **15 seconds** for a graceful exit before escalating. If the process does not react, the button changes to **Force Stop**; click it to mark the task **stopped** immediately and kill the runner job without waiting for a graceful shutdown.
 
 To stop every running and queued task of one template, open the template page and use **Stop all**. The dropdown offers both **Stop** and **Force stop**.
 
