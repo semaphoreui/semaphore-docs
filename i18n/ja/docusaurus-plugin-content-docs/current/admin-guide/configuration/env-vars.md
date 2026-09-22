@@ -41,6 +41,48 @@ export SEMAPHORE_FORWARDED_ENV_VARS='["AWS_ACCESS_KEY_ID","AWS_SECRET_ACCESS_KEY
 注意:
 - 転送は明示的です。`forwarded_env_vars` に列挙された変数のみがアプリプロセスに引き継がれます。
 - シークレットは安全な方法 (例えば Docker/Kubernetes のシークレット) で提供し、その上で `forwarded_env_vars` を使って転送してください。
+- 同じリストはリポジトリのクローンと更新を行う `git` プロセスにも使われます。`git` がホスト環境から必要とするものも、同じように転送する必要があります。
+
+---
+
+## 企業プロキシの背後での実行 {#running-behind-a-corporate-proxy}
+
+Semaphore は自身の環境を、起動するプロセスにそのまま引き渡しません。`PATH` を除き、変数がタスクや `git` のクローンに届くのは、`forwarded_env_vars` に列挙されているか `env_vars` で設定されている場合だけです。
+
+これが最も問題になるのはパッケージ (systemd) インストールです。ユニットファイルで設定したプロキシ変数は Semaphore サーバー自体には適用されますが、`git` には適用されません。
+
+```ini
+[Service]
+Environment="HTTPS_PROXY=http://proxy.internal:3128"
+Environment="HTTP_PROXY=http://proxy.internal:3128"
+Environment="NO_PROXY=.corp.example.com"
+```
+
+上記の設定だけの場合、リポジトリのクローンは次のように失敗します。
+
+```
+fatal: Authentication failed for 'https://git.corp.example.com/team/_git/infra'
+```
+
+`git` は `NO_PROXY` を認識できなかったため、内部ホスト宛てのリクエストを外部プロキシ経由で送信し、拒否されました。3 つの変数を明示的に転送すると解決します。
+
+```json
+{
+  "forwarded_env_vars": ["HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY"]
+}
+```
+
+環境変数として指定する場合は次のとおりです。
+
+```bash
+export SEMAPHORE_FORWARDED_ENV_VARS='["HTTP_PROXY","HTTPS_PROXY","NO_PROXY"]'
+```
+
+注意:
+- プロキシ変数と一緒に `NO_PROXY` も転送してください。これがないと、内部 Git サーバーへの通信もプロキシ経由になります。
+- 多くのツールは小文字表記 (`http_proxy`、`https_proxy`、`no_proxy`) を読み取ります。Linux と macOS では変数名の大文字と小文字が区別されるため、環境が小文字で設定している場合は両方の表記を列挙してください。
+- カスタム CA バンドルも同じ仕組みです。プロキシが TLS を終端する場合は、証明書の検証を無効にするのではなく、必要に応じて `GIT_SSL_CAINFO`、`SSL_CERT_FILE`、`REQUESTS_CA_BUNDLE` を転送してください。
+- Docker インストールでは、プロキシ変数がコンテナ全体に設定されるため、通常はそのまま動作するように見えます。それでも明示的に転送しておくことを推奨します。同じ設定が両方の環境で同じように動作するためです。
 
 ---
 

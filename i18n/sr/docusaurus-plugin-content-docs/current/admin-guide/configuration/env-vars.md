@@ -41,6 +41,48 @@ export SEMAPHORE_FORWARDED_ENV_VARS='["AWS_ACCESS_KEY_ID","AWS_SECRET_ACCESS_KEY
 Napomene:
 - Prosleđivanje je eksplicitno: procesi aplikacija nasleđuju samo promenljive navedene u `forwarded_env_vars`.
 - Tajne treba obezbediti na siguran način (na primer preko Docker/Kubernetes tajni) i zatim ih proslediti pomoću `forwarded_env_vars`.
+- Ista lista važi i za `git` procese koji kloniraju i ažuriraju repozitorijume, pa sve što je `git`-u potrebno iz okruženja hosta takođe mora da se prosledi.
+
+---
+
+## Rad iza korporativnog proksija {#running-behind-a-corporate-proxy}
+
+Semaphore ne prosleđuje sopstveno okruženje procesima koje pokreće. Osim `PATH`, promenljiva stiže do zadatka ili do `git` kloniranja samo ako je navedena u `forwarded_env_vars` ili postavljena u `env_vars`.
+
+To je najvažnije kod instalacije iz paketa (systemd). Proksi promenljive postavljene u unit fajlu važe za sam Semaphore server, ali ne i za `git`:
+
+```ini
+[Service]
+Environment="HTTPS_PROXY=http://proxy.internal:3128"
+Environment="HTTP_PROXY=http://proxy.internal:3128"
+Environment="NO_PROXY=.corp.example.com"
+```
+
+Sa gornjom konfiguracijom i ničim drugim, kloniranje repozitorijuma ne uspeva:
+
+```
+fatal: Authentication failed for 'https://git.corp.example.com/team/_git/infra'
+```
+
+`git` nikada nije video `NO_PROXY`, pa je zahtev za interni host poslao preko spoljnog proksija, koji ga je odbio. Prosledite tri promenljive eksplicitno da biste to rešili:
+
+```json
+{
+  "forwarded_env_vars": ["HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY"]
+}
+```
+
+Ili, kao promenljivu okruženja:
+
+```bash
+export SEMAPHORE_FORWARDED_ENV_VARS='["HTTP_PROXY","HTTPS_PROXY","NO_PROXY"]'
+```
+
+Napomene:
+- Prosledite `NO_PROXY` zajedno sa proksi promenljivima. Bez nje se i saobraćaj ka internim Git serverima usmerava kroz proksi.
+- Mnogi alati čitaju zapise malim slovima (`http_proxy`, `https_proxy`, `no_proxy`). Na Linuxu i macOS-u imena promenljivih razlikuju velika i mala slova, pa navedite oba zapisa ako ih vaše okruženje postavlja malim slovima.
+- Prilagođeni CA paketi rade na isti način. Ako vaš proksi terminira TLS, prosledite `GIT_SSL_CAINFO`, `SSL_CERT_FILE` ili `REQUESTS_CA_BUNDLE` po potrebi, umesto da isključujete proveru sertifikata.
+- Kod Docker instalacija ovo obično deluje kao da radi samo od sebe, jer su proksi promenljive postavljene za ceo kontejner. Ipak se preporučuje da ih prosledite eksplicitno, kako bi se ista konfiguracija ponašala identično u oba slučaja.
 
 ---
 
