@@ -47,7 +47,7 @@ export SEMAPHORE_FORWARDED_ENV_VARS='["AWS_ACCESS_KEY_ID","AWS_SECRET_ACCESS_KEY
 
 ## 在企业代理后运行 {#running-behind-a-corporate-proxy}
 
-Semaphore 不会把自身的环境原样传给它启动的进程。除 `PATH` 外，只有在 `forwarded_env_vars` 中列出或在 `env_vars` 中设置的变量，才会传递给任务或 `git` 克隆。
+Semaphore 不会把自身的全部环境传给它启动的进程。尤其是代理变量，只有在 `forwarded_env_vars` 中列出或在 `env_vars` 中设置时，才会传递给任务或 `git` 克隆。
 
 这一点在使用软件包（systemd）安装时尤为重要。在 unit 文件中设置的代理变量只对 Semaphore 服务本身生效，对 `git` 不生效：
 

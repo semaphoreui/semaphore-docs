@@ -47,7 +47,7 @@ export SEMAPHORE_FORWARDED_ENV_VARS='["AWS_ACCESS_KEY_ID","AWS_SECRET_ACCESS_KEY
 
 ## 企業プロキシの背後での実行 {#running-behind-a-corporate-proxy}
 
-Semaphore は自身の環境を、起動するプロセスにそのまま引き渡しません。`PATH` を除き、変数がタスクや `git` のクローンに届くのは、`forwarded_env_vars` に列挙されているか `env_vars` で設定されている場合だけです。
+Semaphore は自身の環境をすべて、起動するプロセスに引き渡すわけではありません。特にプロキシ変数がタスクや `git` のクローンに届くのは、`forwarded_env_vars` に列挙されているか `env_vars` で設定されている場合だけです。
 
 これが最も問題になるのはパッケージ (systemd) インストールです。ユニットファイルで設定したプロキシ変数は Semaphore サーバー自体には適用されますが、`git` には適用されません。
 

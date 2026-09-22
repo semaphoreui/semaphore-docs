@@ -47,7 +47,7 @@ Hinweise:
 
 ## Betrieb hinter einem Unternehmens-Proxy {#running-behind-a-corporate-proxy}
 
-Semaphore gibt seine eigene Umgebung nicht an die Prozesse weiter, die es startet. Abgesehen von `PATH` erreicht eine Variable eine Aufgabe oder einen `git`-Klon nur dann, wenn sie in `forwarded_env_vars` aufgeführt oder in `env_vars` gesetzt ist.
+Semaphore gibt nicht seine gesamte Umgebung an die Prozesse weiter, die es startet. Insbesondere Proxy-Variablen erreichen eine Aufgabe oder einen `git`-Klon nur dann, wenn sie in `forwarded_env_vars` aufgeführt oder in `env_vars` gesetzt sind.
 
 Am wichtigsten ist das bei einer Paketinstallation (systemd). Proxy-Variablen aus der Unit-Datei gelten für den Semaphore-Server selbst, aber nicht für `git`:
 

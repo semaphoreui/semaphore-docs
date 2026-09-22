@@ -47,7 +47,7 @@ export SEMAPHORE_FORWARDED_ENV_VARS='["AWS_ACCESS_KEY_ID","AWS_SECRET_ACCESS_KEY
 
 ## 회사 프록시 뒤에서 실행하기 {#running-behind-a-corporate-proxy}
 
-Semaphore는 자신의 환경을 자신이 시작하는 프로세스에 그대로 넘기지 않습니다. `PATH`를 제외하면, 변수는 `forwarded_env_vars`에 나열되어 있거나 `env_vars`에 설정된 경우에만 작업이나 `git` 클론에 전달됩니다.
+Semaphore는 자신의 환경 전체를 자신이 시작하는 프로세스에 넘기지 않습니다. 특히 프록시 변수는 `forwarded_env_vars`에 나열되어 있거나 `env_vars`에 설정된 경우에만 작업이나 `git` 클론에 전달됩니다.
 
 이 점은 패키지(systemd) 설치에서 특히 중요합니다. 유닛 파일에 설정한 프록시 변수는 Semaphore 서버 자체에는 적용되지만 `git`에는 적용되지 않습니다.
 

@@ -52,9 +52,9 @@ Notes:
 
 ## Running behind a corporate proxy {#running-behind-a-corporate-proxy}
 
-Semaphore does not pass its own environment on to the processes it starts. Apart
-from `PATH`, a variable reaches a task or a `git` clone only if it is listed in
-`forwarded_env_vars` or set in `env_vars`.
+Semaphore does not pass its whole environment on to the processes it starts.
+Proxy variables in particular reach a task or a `git` clone only if they are
+listed in `forwarded_env_vars` or set in `env_vars`.
 
 This matters most for a package (systemd) installation. Proxy variables set in
 the unit file apply to the Semaphore server itself, but not to `git`:

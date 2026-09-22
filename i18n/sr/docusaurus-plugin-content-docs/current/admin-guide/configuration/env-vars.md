@@ -47,7 +47,7 @@ Napomene:
 
 ## Rad iza korporativnog proksija {#running-behind-a-corporate-proxy}
 
-Semaphore ne prosleđuje sopstveno okruženje procesima koje pokreće. Osim `PATH`, promenljiva stiže do zadatka ili do `git` kloniranja samo ako je navedena u `forwarded_env_vars` ili postavljena u `env_vars`.
+Semaphore ne prosleđuje celo svoje okruženje procesima koje pokreće. Konkretno, proksi promenljive stižu do zadatka ili do `git` kloniranja samo ako su navedene u `forwarded_env_vars` ili postavljene u `env_vars`.
 
 To je najvažnije kod instalacije iz paketa (systemd). Proksi promenljive postavljene u unit fajlu važe za sam Semaphore server, ali ne i za `git`:
 
