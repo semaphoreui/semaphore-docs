@@ -10,7 +10,7 @@ Semaphore reports task results to chat and e-mail in two ways:
 - **Server channels** are configured once on the server, in `config.json` or through
   environment variables, and are available to every project. This page describes them.
 - **Project alerts** are named destinations created by project members in the
-  project's [Alerts](/user-guide/projects/alerts) tab, with their own chat, webhook
+  project's [Alerts](/user-guide/alerts) tab, with their own chat, webhook
   or recipients, and bound to templates and schedules.
 
 ## How delivery works {#how-delivery-works}
@@ -21,7 +21,7 @@ must allow it:
 1. **The channel is configured on the server.** Each provider has its own keys in
    `config.json`. See the page for that provider below.
 2. **The project uses server channels.** *Send alerts of this project to server
-   channels* in the project's [Alerts](/user-guide/projects/alerts#server-channels)
+   channels* in the project's [Alerts](/user-guide/alerts#server-channels)
    tab is the master switch. With it off, server channels send nothing about that
    project. Project alerts are not affected by this switch.
 3. **The template asks for it.** A task template using *project defaults* sends to
@@ -56,9 +56,9 @@ token reuses the server-wide pair.
 ## Per-project overrides {#per-project-overrides}
 
 Telegram supports a per-project chat: set **Telegram Chat ID** in the project's
-[Alerts](/user-guide/projects/alerts#server-channels) tab to route one project's
+[Alerts](/user-guide/alerts#server-channels) tab to route one project's
 server-channel messages to a different chat than the server-wide one. For any other
-per-project destination create a [project alert](/user-guide/projects/alerts#project-alerts).
+per-project destination create a [project alert](/user-guide/alerts#project-alerts).
 
 ## Where to start {#where-to-start}
 

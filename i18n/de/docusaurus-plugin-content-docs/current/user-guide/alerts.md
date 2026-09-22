@@ -12,15 +12,21 @@ Der Tab **Benachrichtigungen** eines Projekts legt fest, wohin Aufgabenergebniss
 
 Beide Teile können gleichzeitig verwendet werden.
 
+![Tab Benachrichtigungen eines Projekts](/assets/alerts-page.webp)
+
 ## Serverkanäle {#server-channels}
 
 Die Karte oben auf der Seite listet die auf dem Server konfigurierten Kanäle. Schalten Sie **Benachrichtigungen dieses Projekts an Serverkanäle senden** ein, um jedes Aufgabenergebnis dieses Projekts darüber zu erhalten. Das ist derselbe Schalter, der in älteren Versionen in den Projekteinstellungen **Allow alerts for this project** hieß.
 
-Wenn Telegram auf dem Server konfiguriert ist, leitet **Telegram Chat ID** die Nachrichten dieses Projekts in einen anderen Chat als den serverweiten.
+Telegram erscheint, sobald der Server ein Bot-Token hat, und bleibt grau, bis ein Chat bekannt ist. Klicken Sie auf den Chip, um die **Telegram Chat ID** dieses Projekts einzugeben; sie überschreibt den serverweiten Chat und ist Pflicht, wenn der Server keinen hat.
 
 Serverkanäle melden jeden relevanten Status: Erfolg, Fehler und *Warten auf Bestätigung*. E-Mail meldet nur Fehler. Eine Vorlage kann Erfolgs- oder Fehlerbenachrichtigungen weiterhin unterdrücken, siehe [Vorlagenbenachrichtigungen](#template-alerts).
 
+![Karte Serverkanäle mit geöffneter Telegram-Chat-ID](/assets/alerts-server-channels.webp)
+
 ## Projektbenachrichtigungen {#project-alerts}
+
+![Menü Neue Benachrichtigung](/assets/alerts-new-menu.webp)
 
 Klicken Sie auf **Neue Benachrichtigung**, um ein Ziel anzulegen. Jede Benachrichtigung hat:
 
@@ -40,6 +46,10 @@ Geheimnisse werden nie auf der Benachrichtigung gespeichert: Sie liegen verschl�
 Verwenden Sie **Testnachricht senden** in der Liste, um eine Benachrichtigung zu prüfen, und **Alle testen** in der Werkzeugleiste, um einen Test an jedes aktivierte Ziel des Projekts zu senden, Serverkanäle eingeschlossen.
 
 Eine Benachrichtigung, die an eine Vorlage oder einen Zeitplan gebunden ist, kann nicht gelöscht werden. Der Dialog listet die Objekte, die sie verwenden.
+
+![Telegram-Benachrichtigung mit eigenem Bot-Token](/assets/alert-form-telegram.webp)
+
+![E-Mail-Benachrichtigung mit eigenem SMTP-Server](/assets/alert-form-email.webp)
 
 ### Nachrichtenvorlagen {#message-templates}
 
@@ -71,9 +81,13 @@ Im Abschnitt **Erweitert** einer Aufgabenvorlage wählt **Benachrichtigungen** z
 
 **Erfolgsbenachrichtigungen unterdrücken** und **Fehlerbenachrichtigungen unterdrücken** gelten für beide Optionen. Benachrichtigungen über eine Aufgabe, die auf Bestätigung wartet, werden nie unterdrückt.
 
+![Aufgabenvorlage mit eigener Auswahl an Benachrichtigungen](/assets/template-form-alerts.webp)
+
 ## Zeitplanbenachrichtigungen {#schedule-alerts}
 
 Ein Zeitplan kann **die Benachrichtigungen der Vorlage verwenden** oder **eine andere Auswahl an Benachrichtigungen verwenden**. Die zweite Option ersetzt die Vorlagenauswahl für Aufgaben dieses Zeitplans vollständig, sodass ein nächtlicher Job an einen Bereitschaftskanal melden kann, während manuelle Läufe still bleiben.
+
+![Zeitplan mit eigener Auswahl an Benachrichtigungen](/assets/schedule-form-alerts.webp)
 
 ## Wie eine Aufgabe zugestellt wird {#how-a-task-is-routed}
 
@@ -81,4 +95,4 @@ Die Ziele einer Aufgabe werden beim Anlegen der Aufgabe festgelegt. Wird eine Be
 
 ## Sicherungen {#backups}
 
-Projektbenachrichtigungen sind Teil der [Projektsicherung](./settings#danger-zone). Vorlagen und Zeitpläne verweisen per Name auf sie, daher behält ein wiederhergestelltes Projekt seine Bindungen. Benachrichtigungen verweisen per Name auf ihren Zugriffsschlüssel; wie bei jedem Schlüssel wird der Geheimniswert selbst nicht exportiert.
+Projektbenachrichtigungen sind Teil der [Projektsicherung](./projects/settings#danger-zone). Vorlagen und Zeitpläne verweisen per Name auf sie, daher behält ein wiederhergestelltes Projekt seine Bindungen. Benachrichtigungen verweisen per Name auf ihren Zugriffsschlüssel; wie bei jedem Schlüssel wird der Geheimniswert selbst nicht exportiert.

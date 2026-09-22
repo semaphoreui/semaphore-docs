@@ -12,15 +12,21 @@ Kartica **Obaveštenja** projekta odlučuje gde se prijavljuju rezultati zadatak
 
 Oba dela mogu da se koriste istovremeno.
 
+![Kartica Obaveštenja projekta](/assets/alerts-page.webp)
+
 ## Serverski kanali {#server-channels}
 
 Kartica na vrhu stranice prikazuje kanale podešene na serveru. Uključite **Šalji obaveštenja ovog projekta na serverske kanale** da biste preko njih primali svaki rezultat zadatka ovog projekta. To je isti prekidač koji se u starijim verzijama zvao **Allow alerts for this project** u podešavanjima projekta.
 
-Kada je Telegram podešen na serveru, **Telegram Chat ID** usmerava poruke ovog projekta u ćaskanje različito od serverskog.
+Telegram se prikazuje čim server ima token bota, zasivljen dok ćaskanje nije poznato. Kliknite na čip da biste uneli **Telegram Chat ID** ovog projekta; on prepisuje serversko ćaskanje i obavezan je kada ga server nema.
 
 Serverski kanali prijavljuju svaki bitan status: uspeh, grešku i *čekanje potvrde*. E-mail prijavljuje samo greške. Šablon i dalje može da potisne obaveštenja o uspehu ili grešci, pogledajte [Obaveštenja šablona](#template-alerts).
 
+![Kartica serverskih kanala sa otvorenim Telegram chat ID-jem](/assets/alerts-server-channels.webp)
+
 ## Obaveštenja projekta {#project-alerts}
+
+![Meni Novo obaveštenje](/assets/alerts-new-menu.webp)
 
 Pritisnite **Novo obaveštenje** da biste kreirali odredište. Svako obaveštenje ima:
 
@@ -40,6 +46,10 @@ Tajne se nikada ne čuvaju na obaveštenju: nalaze se šifrovane u Skladištu kl
 Koristite **Pošalji test poruku** u listi da biste proverili jedno obaveštenje i **Testiraj sve** u traci sa alatkama da biste poslali test na svako uključeno odredište projekta, uključujući serverske kanale.
 
 Obaveštenje vezano za šablon ili raspored ne može da se obriše. Dijalog prikazuje objekte koji ga koriste.
+
+![Telegram obaveštenje sa sopstvenim tokenom bota](/assets/alert-form-telegram.webp)
+
+![E-mail obaveštenje sa sopstvenim SMTP serverom](/assets/alert-form-email.webp)
 
 ### Šabloni poruka {#message-templates}
 
@@ -71,9 +81,13 @@ U odeljku **Napredno** šablona zadatka, **Obaveštenja** bira između:
 
 **Potisni obaveštenja o uspehu** i **Potisni obaveštenja o grešci** važe za oba izbora. Obaveštenja o zadatku koji čeka potvrdu se nikada ne potiskuju.
 
+![Šablon zadatka sa prilagođenim skupom obaveštenja](/assets/template-form-alerts.webp)
+
 ## Obaveštenja rasporeda {#schedule-alerts}
 
 Raspored može da **koristi obaveštenja šablona** ili da **koristi drugačiji skup obaveštenja**. Drugi izbor u potpunosti zamenjuje izbor šablona za zadatke pokrenute tim rasporedom, pa noćni posao može da prijavljuje dežurnom kanalu dok ručna pokretanja ostaju tiha.
+
+![Raspored sa sopstvenim skupom obaveštenja](/assets/schedule-form-alerts.webp)
 
 ## Kako se zadatak usmerava {#how-a-task-is-routed}
 
@@ -81,4 +95,4 @@ Odredišta zadatka se fiksiraju pri njegovom kreiranju. Izmena obaveštenja, ša
 
 ## Rezervne kopije {#backups}
 
-Obaveštenja projekta su deo [rezervne kopije projekta](./settings#danger-zone). Šabloni i rasporedi ih referenciraju po nazivu, pa vraćeni projekat zadržava veze. Obaveštenja referenciraju svoj pristupni ključ po nazivu; kao i kod svakog ključa, sama vrednost tajne se ne izvozi.
+Obaveštenja projekta su deo [rezervne kopije projekta](./projects/settings#danger-zone). Šabloni i rasporedi ih referenciraju po nazivu, pa vraćeni projekat zadržava veze. Obaveštenja referenciraju svoj pristupni ključ po nazivu; kao i kod svakog ključa, sama vrednost tajne se ne izvozi.

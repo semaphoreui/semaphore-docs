@@ -12,15 +12,21 @@ description: 项目的“告警”标签页，在这里开启服务器渠道，�
 
 两部分可以同时使用。
 
+![项目的告警标签页](/assets/alerts-page.webp)
+
 ## 服务器渠道 {#server-channels}
 
 页面顶部的卡片列出服务器上已配置的渠道。开启 **将本项目的告警发送到服务器渠道**，即可通过它们接收本项目的所有任务结果。这与旧版本项目设置中的 **Allow alerts for this project** 是同一个开关。
 
-如果服务器配置了 Telegram，**Telegram Chat ID** 可将本项目的消息发送到与全局不同的聊天。
+只要服务器有机器人令牌，就会列出 Telegram，在未设置聊天前显示为灰色。点击该标签输入本项目的 **Telegram Chat ID**；它会覆盖服务器全局聊天，服务器未设置聊天时为必填。
 
 服务器渠道会报告所有需通知的状态：成功、失败和*等待确认*。邮件只报告失败。模板仍然可以抑制成功或失败通知，参见[模板告警](#template-alerts)。
 
+![打开了 Telegram Chat ID 的服务器渠道卡片](/assets/alerts-server-channels.webp)
+
 ## 项目告警 {#project-alerts}
+
+![新建告警菜单](/assets/alerts-new-menu.webp)
 
 点击 **新建告警** 创建一个目标。每个告警包含：
 
@@ -40,6 +46,10 @@ description: 项目的“告警”标签页，在这里开启服务器渠道，�
 使用列表中的 **发送测试消息** 检查单个告警，使用工具栏中的 **全部测试** 向项目所有已启用的目标（包括服务器渠道）发送测试。
 
 已绑定到模板或计划任务的告警无法删除。对话框会列出使用它的对象。
+
+![使用自有机器人令牌的 Telegram 告警](/assets/alert-form-telegram.webp)
+
+![使用自有 SMTP 服务器的邮件告警](/assets/alert-form-email.webp)
 
 ### 消息模板 {#message-templates}
 
@@ -71,9 +81,13 @@ description: 项目的“告警”标签页，在这里开启服务器渠道，�
 
 **抑制成功通知** 和 **抑制错误通知** 对两种选择都生效。关于等待确认任务的通知永不被抑制。
 
+![使用自定义告警集合的任务模板](/assets/template-form-alerts.webp)
+
 ## 计划任务告警 {#schedule-alerts}
 
 计划任务可以 **使用模板的告警**，或 **使用另一组告警**。后者会为该计划任务启动的任务完全替换模板的选择，因此夜间作业可以报告到值班渠道，而手动运行保持安静。
+
+![使用自有告警集合的计划任务](/assets/schedule-form-alerts.webp)
 
 ## 任务如何路由 {#how-a-task-is-routed}
 
@@ -81,4 +95,4 @@ description: 项目的“告警”标签页，在这里开启服务器渠道，�
 
 ## 备份 {#backups}
 
-项目告警是[项目备份](./settings#danger-zone)的一部分。模板和计划任务按名称引用它们，因此恢复后的项目保留其绑定。告警按名称引用其访问密钥；与所有密钥一样，机密值本身不会导出。
+项目告警是[项目备份](./projects/settings#danger-zone)的一部分。模板和计划任务按名称引用它们，因此恢复后的项目保留其绑定。告警按名称引用其访问密钥；与所有密钥一样，机密值本身不会导出。

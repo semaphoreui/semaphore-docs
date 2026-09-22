@@ -12,15 +12,21 @@ The **Alerts** tab of a project decides where task results are reported. It has 
 
 Both parts can be used at the same time.
 
+![Alerts tab of a project](/assets/alerts-page.webp)
+
 ## Server channels {#server-channels}
 
 The card at the top of the page lists the channels the server has configured. Turn on **Send alerts of this project to server channels** to receive every task result of this project through them. This is the same switch that older versions called **Allow alerts for this project** in the project settings.
 
-When Telegram is configured on the server, **Telegram Chat ID** routes this project's messages to a different chat than the server-wide one.
+Telegram is listed as soon as the server has a bot token, greyed out until a chat is known. Click the chip to enter the **Telegram Chat ID** of this project; it overrides the server-wide chat and is required when the server has none.
 
 Server channels report every notifiable status: success, failure and *waiting for confirmation*. E-mail reports failures only. A template can still suppress success or failure notifications, see [Template alerts](#template-alerts).
 
+![Server channels card with the Telegram chat ID opened](/assets/alerts-server-channels.webp)
+
 ## Project alerts {#project-alerts}
+
+![New Alert menu](/assets/alerts-new-menu.webp)
 
 Press **New Alert** to create a destination. Each alert has:
 
@@ -40,6 +46,10 @@ Secrets are never stored on the alert: they live encrypted in the Key Store and 
 Use **Send test message** in the list to check one alert and **Test all** in the toolbar to send a test through every enabled destination of the project, server channels included.
 
 An alert that is bound to a template or a schedule can not be deleted. The dialog lists the objects that use it.
+
+![Telegram alert with an own bot token](/assets/alert-form-telegram.webp)
+
+![E-mail alert with an own SMTP server](/assets/alert-form-email.webp)
 
 ### Message templates {#message-templates}
 
@@ -71,9 +81,13 @@ In the **Advanced** section of a task template, **Alerts** chooses between:
 
 **Suppress success notifications** and **Suppress error notifications** apply to both choices. Notifications about a task waiting for confirmation are never suppressed.
 
+![Task template with a custom set of alerts](/assets/template-form-alerts.webp)
+
 ## Schedule alerts {#schedule-alerts}
 
 A schedule can **use the alerts of the template** or **use a different set of alerts**. The second choice replaces the template selection entirely for tasks started by that schedule, so a nightly job can report to an on-call channel while manual runs stay quiet.
+
+![Schedule with its own set of alerts](/assets/schedule-form-alerts.webp)
 
 ## How a task is routed {#how-a-task-is-routed}
 
@@ -81,4 +95,4 @@ The destinations of a task are fixed when the task is created. Changing an alert
 
 ## Backups {#backups}
 
-Project alerts are part of the [project backup](./settings#danger-zone). Templates and schedules refer to them by name, so a restored project keeps its bindings. Alerts refer to their access key by name; like every key, the secret value itself is not exported.
+Project alerts are part of the [project backup](./projects/settings#danger-zone). Templates and schedules refer to them by name, so a restored project keeps its bindings. Alerts refer to their access key by name; like every key, the secret value itself is not exported.

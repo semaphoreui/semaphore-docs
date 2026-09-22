@@ -12,15 +12,21 @@ L’onglet **Alertes** d’un projet décide où les résultats des tâches sont
 
 Les deux parties peuvent être utilisées en même temps.
 
+![Onglet Alertes d’un projet](/assets/alerts-page.webp)
+
 ## Canaux du serveur {#server-channels}
 
 La carte en haut de la page liste les canaux configurés sur le serveur. Activez **Envoyer les alertes de ce projet aux canaux du serveur** pour recevoir par eux chaque résultat de tâche de ce projet. C’est le même interrupteur que les anciennes versions appelaient **Allow alerts for this project** dans les paramètres du projet.
 
-Lorsque Telegram est configuré sur le serveur, **Telegram Chat ID** dirige les messages de ce projet vers un chat différent de celui du serveur.
+Telegram apparaît dès que le serveur possède un jeton de bot, grisé tant qu’aucun chat n’est connu. Cliquez sur la puce pour saisir le **Telegram Chat ID** de ce projet ; il remplace le chat du serveur et est obligatoire lorsque le serveur n’en a pas.
 
 Les canaux du serveur signalent tous les statuts notables : succès, échec et *en attente de confirmation*. L’e-mail ne signale que les échecs. Un modèle peut toujours supprimer les notifications de succès ou d’échec, voir [Alertes du modèle](#template-alerts).
 
+![Carte des canaux du serveur avec l’ID de chat Telegram ouvert](/assets/alerts-server-channels.webp)
+
 ## Alertes du projet {#project-alerts}
+
+![Menu Nouvelle alerte](/assets/alerts-new-menu.webp)
 
 Cliquez sur **Nouvelle alerte** pour créer une destination. Chaque alerte possède :
 
@@ -40,6 +46,10 @@ Les secrets ne sont jamais stockés sur l’alerte : ils vivent chiffrés dans l
 Utilisez **Envoyer un message de test** dans la liste pour vérifier une alerte et **Tout tester** dans la barre d’outils pour envoyer un test à chaque destination activée du projet, canaux du serveur compris.
 
 Une alerte liée à un modèle ou à une planification ne peut pas être supprimée. La boîte de dialogue liste les objets qui l’utilisent.
+
+![Alerte Telegram avec un jeton de bot propre](/assets/alert-form-telegram.webp)
+
+![Alerte e-mail avec un serveur SMTP propre](/assets/alert-form-email.webp)
 
 ### Modèles de message {#message-templates}
 
@@ -71,9 +81,13 @@ Dans la section **Avancé** d’un modèle de tâche, **Alertes** propose :
 
 **Supprimer les notifications de succès** et **Supprimer les notifications d’erreur** s’appliquent aux deux choix. Les notifications d’une tâche en attente de confirmation ne sont jamais supprimées.
 
+![Modèle de tâche avec un ensemble personnalisé d’alertes](/assets/template-form-alerts.webp)
+
 ## Alertes de planification {#schedule-alerts}
 
 Une planification peut **utiliser les alertes du modèle** ou **utiliser un autre ensemble d’alertes**. Le second choix remplace entièrement la sélection du modèle pour les tâches lancées par cette planification : un job nocturne peut signaler à un canal d’astreinte tandis que les exécutions manuelles restent silencieuses.
+
+![Planification avec son propre ensemble d’alertes](/assets/schedule-form-alerts.webp)
 
 ## Comment une tâche est acheminée {#how-a-task-is-routed}
 
@@ -81,4 +95,4 @@ Les destinations d’une tâche sont fixées à sa création. Modifier une alert
 
 ## Sauvegardes {#backups}
 
-Les alertes du projet font partie de la [sauvegarde du projet](./settings#danger-zone). Les modèles et les planifications s’y réfèrent par nom, un projet restauré conserve donc ses liaisons. Les alertes désignent leur clé d’accès par son nom ; comme pour toute clé, la valeur secrète n’est pas exportée.
+Les alertes du projet font partie de la [sauvegarde du projet](./projects/settings#danger-zone). Les modèles et les planifications s’y réfèrent par nom, un projet restauré conserve donc ses liaisons. Les alertes désignent leur clé d’accès par son nom ; comme pour toute clé, la valeur secrète n’est pas exportée.

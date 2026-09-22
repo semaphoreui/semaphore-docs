@@ -16,7 +16,7 @@ The **Settings** tab of the project dashboard is available to project **Owners**
 | **Project Name** | Display name shown in the project switcher and in alerts. |
 | **Max number of parallel tasks** | Optional. Maximum number of tasks of this project that may run at the same time. Leave it empty for no limit. Tasks above the limit stay in the queue with the status `waiting` until a slot is free. |
 
-**Save** applies the changes. Notification settings (server channels, the per-project Telegram chat, named alerts and the test button) live in the [Alerts](./alerts) tab.
+**Save** applies the changes. Notification settings (server channels, the per-project Telegram chat, named alerts and the test button) live in the [Alerts](../alerts) tab.
 
 ## Danger Zone {#danger-zone}
 
@@ -30,5 +30,5 @@ The **Settings** tab of the project dashboard is available to project **Owners**
 
 - Members and roles: [Teams](../team)
 - Runners attached to the project and runner tags: [Project runners](./runners)
-- Where task results are reported: [Alerts](./alerts)
+- Where task results are reported: [Alerts](../alerts)
 - Notification channels are configured on the server: [Notifications](/admin-guide/notifications)

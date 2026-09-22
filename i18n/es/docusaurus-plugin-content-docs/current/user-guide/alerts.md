@@ -12,15 +12,21 @@ La pestaña **Alertas** de un proyecto decide a dónde se informan los resultado
 
 Ambas partes pueden usarse a la vez.
 
+![Pestaña Alertas de un proyecto](/assets/alerts-page.webp)
+
 ## Canales del servidor {#server-channels}
 
 La tarjeta de la parte superior de la página muestra los canales configurados en el servidor. Active **Enviar alertas de este proyecto a los canales del servidor** para recibir por ellos todos los resultados de tareas de este proyecto. Es el mismo interruptor que en versiones anteriores se llamaba **Allow alerts for this project** en la configuración del proyecto.
 
-Cuando Telegram está configurado en el servidor, **Telegram Chat ID** dirige los mensajes de este proyecto a un chat distinto del global.
+Telegram aparece en cuanto el servidor tiene un token de bot, en gris hasta que se conozca un chat. Pulse el chip para introducir el **Telegram Chat ID** de este proyecto; anula el chat global y es obligatorio cuando el servidor no tiene ninguno.
 
 Los canales del servidor informan de todos los estados relevantes: éxito, fallo y *esperando confirmación*. El correo electrónico solo informa de fallos. Una plantilla aún puede suprimir las notificaciones de éxito o de fallo, consulte [Alertas de plantilla](#template-alerts).
 
+![Tarjeta de canales del servidor con el chat ID de Telegram abierto](/assets/alerts-server-channels.webp)
+
 ## Alertas del proyecto {#project-alerts}
+
+![Menú Nueva alerta](/assets/alerts-new-menu.webp)
 
 Pulse **Nueva alerta** para crear un destino. Cada alerta tiene:
 
@@ -40,6 +46,10 @@ Los secretos nunca se guardan en la alerta: viven cifrados en el Almacén de cla
 Use **Enviar mensaje de prueba** en la lista para comprobar una alerta y **Probar todo** en la barra de herramientas para enviar una prueba a todos los destinos habilitados del proyecto, incluidos los canales del servidor.
 
 Una alerta vinculada a una plantilla o a una programación no se puede eliminar. El diálogo muestra los objetos que la usan.
+
+![Alerta de Telegram con token de bot propio](/assets/alert-form-telegram.webp)
+
+![Alerta de correo con servidor SMTP propio](/assets/alert-form-email.webp)
 
 ### Plantillas de mensaje {#message-templates}
 
@@ -71,9 +81,13 @@ En la sección **Avanzado** de una plantilla de tarea, **Alertas** elige entre:
 
 **Suprimir notificaciones de éxito** y **Suprimir notificaciones de error** se aplican a ambas opciones. Las notificaciones de una tarea esperando confirmación nunca se suprimen.
 
+![Plantilla de tarea con un conjunto personalizado de alertas](/assets/template-form-alerts.webp)
+
 ## Alertas de programación {#schedule-alerts}
 
 Una programación puede **usar las alertas de la plantilla** o **usar un conjunto distinto de alertas**. La segunda opción sustituye por completo la selección de la plantilla para las tareas iniciadas por esa programación, de modo que un trabajo nocturno puede informar a un canal de guardia mientras las ejecuciones manuales permanecen en silencio.
+
+![Programación con su propio conjunto de alertas](/assets/schedule-form-alerts.webp)
 
 ## Cómo se enruta una tarea {#how-a-task-is-routed}
 
@@ -81,4 +95,4 @@ Los destinos de una tarea se fijan al crearla. Cambiar una alerta, una plantilla
 
 ## Copias de seguridad {#backups}
 
-Las alertas del proyecto forman parte de la [copia de seguridad del proyecto](./settings#danger-zone). Las plantillas y programaciones se refieren a ellas por nombre, así que un proyecto restaurado conserva sus vínculos. Las alertas se refieren a su clave de acceso por nombre; como con cualquier clave, el valor secreto no se exporta.
+Las alertas del proyecto forman parte de la [copia de seguridad del proyecto](./projects/settings#danger-zone). Las plantillas y programaciones se refieren a ellas por nombre, así que un proyecto restaurado conserva sus vínculos. Las alertas se refieren a su clave de acceso por nombre; como con cualquier clave, el valor secreto no se exporta.

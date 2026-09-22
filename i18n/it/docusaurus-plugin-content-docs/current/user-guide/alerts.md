@@ -12,15 +12,21 @@ La scheda **Avvisi** di un progetto decide dove vengono segnalati i risultati de
 
 Le due parti possono essere usate insieme.
 
+![Scheda Avvisi di un progetto](/assets/alerts-page.webp)
+
 ## Canali del server {#server-channels}
 
 La scheda in cima alla pagina elenca i canali configurati sul server. Attiva **Invia gli avvisi di questo progetto ai canali del server** per ricevere tramite essi ogni risultato delle attività di questo progetto. È lo stesso interruttore che nelle versioni precedenti si chiamava **Allow alerts for this project** nelle impostazioni del progetto.
 
-Quando Telegram è configurato sul server, **Telegram Chat ID** indirizza i messaggi di questo progetto a una chat diversa da quella globale.
+Telegram compare non appena il server ha un token del bot, in grigio finché non è noto un chat. Fai clic sul chip per inserire il **Telegram Chat ID** di questo progetto; sostituisce la chat del server ed è obbligatorio quando il server non ne ha una.
 
 I canali del server segnalano ogni stato rilevante: successo, errore e *in attesa di conferma*. L’e-mail segnala solo gli errori. Un modello può comunque sopprimere le notifiche di successo o di errore, vedi [Avvisi del modello](#template-alerts).
 
+![Scheda dei canali del server con l’ID chat Telegram aperto](/assets/alerts-server-channels.webp)
+
 ## Avvisi del progetto {#project-alerts}
+
+![Menu Nuovo avviso](/assets/alerts-new-menu.webp)
 
 Premi **Nuovo avviso** per creare una destinazione. Ogni avviso ha:
 
@@ -40,6 +46,10 @@ I segreti non vengono mai salvati sull’avviso: risiedono cifrati nel Key Store
 Usa **Invia messaggio di prova** nell’elenco per verificare un avviso e **Prova tutto** nella barra degli strumenti per inviare una prova a ogni destinazione abilitata del progetto, canali del server compresi.
 
 Un avviso collegato a un modello o a una pianificazione non può essere eliminato. La finestra elenca gli oggetti che lo usano.
+
+![Avviso Telegram con token del bot proprio](/assets/alert-form-telegram.webp)
+
+![Avviso e-mail con server SMTP proprio](/assets/alert-form-email.webp)
 
 ### Modelli di messaggio {#message-templates}
 
@@ -71,9 +81,13 @@ Nella sezione **Avanzate** di un modello di attività, **Avvisi** sceglie tra:
 
 **Sopprimi le notifiche di successo** e **Sopprimi le notifiche di errore** valgono per entrambe le scelte. Le notifiche di un’attività in attesa di conferma non vengono mai soppresse.
 
+![Modello di attività con un insieme personalizzato di avvisi](/assets/template-form-alerts.webp)
+
 ## Avvisi della pianificazione {#schedule-alerts}
 
 Una pianificazione può **usare gli avvisi del modello** o **usare un insieme diverso di avvisi**. La seconda scelta sostituisce del tutto la selezione del modello per le attività avviate da quella pianificazione: un job notturno può segnalare a un canale di reperibilità mentre le esecuzioni manuali restano silenziose.
+
+![Pianificazione con un proprio insieme di avvisi](/assets/schedule-form-alerts.webp)
 
 ## Come viene instradata un’attività {#how-a-task-is-routed}
 
@@ -81,4 +95,4 @@ Le destinazioni di un’attività vengono fissate alla sua creazione. Modificare
 
 ## Backup {#backups}
 
-Gli avvisi del progetto fanno parte del [backup del progetto](./settings#danger-zone). Modelli e pianificazioni vi fanno riferimento per nome, quindi un progetto ripristinato mantiene i collegamenti. Gli avvisi fanno riferimento alla propria chiave di accesso per nome; come per ogni chiave, il valore segreto non viene esportato.
+Gli avvisi del progetto fanno parte del [backup del progetto](./projects/settings#danger-zone). Modelli e pianificazioni vi fanno riferimento per nome, quindi un progetto ripristinato mantiene i collegamenti. Gli avvisi fanno riferimento alla propria chiave di accesso per nome; come per ogni chiave, il valore segreto non viene esportato.

@@ -59,7 +59,7 @@ When creating a new schedule, you'll need to configure the following options:
 
 A schedule can use the alerts of its template or a different set of project alerts, so
 tasks started by the schedule report elsewhere than manual runs. See
-[Schedule alerts](./projects/alerts#schedule-alerts).
+[Schedule alerts](./alerts#schedule-alerts).
 
 ### Cron format syntax {#cron-format-syntax}
 

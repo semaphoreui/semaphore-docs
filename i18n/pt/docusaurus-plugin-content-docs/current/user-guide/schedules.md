@@ -54,7 +54,7 @@ Ao criar um novo agendamento, você precisará configurar as seguintes opções:
 
 Um agendamento pode usar os alertas do seu modelo ou um conjunto diferente de alertas do projeto,
 para que as tarefas iniciadas pelo agendamento reportem em outro lugar que as execuções manuais.
-Veja [Alertas do agendamento](./projects/alerts#schedule-alerts).
+Veja [Alertas do agendamento](./alerts#schedule-alerts).
 
 ### Sintaxe do formato cron {#cron-format-syntax}
 

@@ -92,7 +92,7 @@ Users with the **Manager** role or higher can create and edit templates with **N
 | Field | Description |
 |---|---|
 | **Allow parallel tasks** | Let several tasks of this template run at the same time, see [Parallel tasks](#parallel-tasks). |
-| **Alerts** | *Use project defaults* sends to the server channels enabled for the project and to the alerts marked as project default; *Use a custom set of alerts* sends only to the selected alerts. See [Alerts](../projects/alerts#template-alerts). |
+| **Alerts** | *Use project defaults* sends to the server channels enabled for the project and to the alerts marked as project default; *Use a custom set of alerts* sends only to the selected alerts. See [Alerts](../alerts#template-alerts). |
 | **Suppress success notifications**, **Suppress error notifications** | Skip notifications for successful or failed tasks of this template. |
 | **Runner tag** (Pro) | Run tasks only on runners with this tag, see [Project runners](../projects/runners). |
 | **Executor image** | Container image for Docker and Kubernetes runners, see [Executor image](#executor-image-docker-and-kubernetes-runners). |

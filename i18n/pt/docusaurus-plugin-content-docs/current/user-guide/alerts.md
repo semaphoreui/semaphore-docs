@@ -12,15 +12,21 @@ A aba **Alertas** de um projeto decide para onde os resultados das tarefas são 
 
 As duas partes podem ser usadas ao mesmo tempo.
 
+![Aba Alertas de um projeto](/assets/alerts-page.webp)
+
 ## Canais do servidor {#server-channels}
 
 O cartão no topo da página lista os canais configurados no servidor. Ative **Enviar alertas deste projeto aos canais do servidor** para receber por eles todos os resultados de tarefas deste projeto. É o mesmo interruptor que versões anteriores chamavam de **Allow alerts for this project** nas configurações do projeto.
 
-Quando o Telegram está configurado no servidor, **Telegram Chat ID** direciona as mensagens deste projeto para um chat diferente do global.
+O Telegram aparece assim que o servidor tem um token de bot, em cinza até que um chat seja conhecido. Clique no chip para informar o **Telegram Chat ID** deste projeto; ele substitui o chat global e é obrigatório quando o servidor não tem nenhum.
 
 Os canais do servidor reportam todos os estados relevantes: sucesso, falha e *aguardando confirmação*. O e-mail reporta apenas falhas. Um modelo ainda pode suprimir notificações de sucesso ou falha, veja [Alertas do modelo](#template-alerts).
 
+![Cartão de canais do servidor com o chat ID do Telegram aberto](/assets/alerts-server-channels.webp)
+
 ## Alertas do projeto {#project-alerts}
+
+![Menu Novo alerta](/assets/alerts-new-menu.webp)
 
 Pressione **Novo alerta** para criar um destino. Cada alerta tem:
 
@@ -40,6 +46,10 @@ Segredos nunca são armazenados no alerta: ficam criptografados no Repositório 
 Use **Enviar mensagem de teste** na lista para verificar um alerta e **Testar tudo** na barra de ferramentas para enviar um teste a todos os destinos ativados do projeto, incluindo os canais do servidor.
 
 Um alerta vinculado a um modelo ou agendamento não pode ser excluído. A caixa de diálogo lista os objetos que o usam.
+
+![Alerta do Telegram com token de bot próprio](/assets/alert-form-telegram.webp)
+
+![Alerta de e-mail com servidor SMTP próprio](/assets/alert-form-email.webp)
 
 ### Modelos de mensagem {#message-templates}
 
@@ -71,9 +81,13 @@ Na seção **Avançado** de um modelo de tarefa, **Alertas** escolhe entre:
 
 **Suprimir notificações de sucesso** e **Suprimir notificações de erro** valem para as duas opções. Notificações de uma tarefa aguardando confirmação nunca são suprimidas.
 
+![Modelo de tarefa com um conjunto personalizado de alertas](/assets/template-form-alerts.webp)
+
 ## Alertas do agendamento {#schedule-alerts}
 
 Um agendamento pode **usar os alertas do modelo** ou **usar um conjunto diferente de alertas**. A segunda opção substitui totalmente a seleção do modelo para as tarefas iniciadas por aquele agendamento, então um job noturno pode reportar a um canal de plantão enquanto execuções manuais ficam em silêncio.
+
+![Agendamento com seu próprio conjunto de alertas](/assets/schedule-form-alerts.webp)
 
 ## Como uma tarefa é roteada {#how-a-task-is-routed}
 
@@ -81,4 +95,4 @@ Os destinos de uma tarefa são fixados quando ela é criada. Alterar um alerta, 
 
 ## Backups {#backups}
 
-Os alertas do projeto fazem parte do [backup do projeto](./settings#danger-zone). Modelos e agendamentos os referenciam por nome, então um projeto restaurado mantém seus vínculos. Os alertas referenciam sua chave de acesso pelo nome; como em toda chave, o valor secreto em si não é exportado.
+Os alertas do projeto fazem parte do [backup do projeto](./projects/settings#danger-zone). Modelos e agendamentos os referenciam por nome, então um projeto restaurado mantém seus vínculos. Os alertas referenciam sua chave de acesso pelo nome; como em toda chave, o valor secreto em si não é exportado.

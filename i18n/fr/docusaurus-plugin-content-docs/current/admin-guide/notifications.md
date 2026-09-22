@@ -10,7 +10,7 @@ Semaphore signale les résultats des tâches par chat et par e-mail de deux mani
 - **Les canaux du serveur** sont configurés une fois sur le serveur, dans `config.json` ou via des
   variables d’environnement, et sont disponibles pour tous les projets. Cette page les décrit.
 - **Les alertes du projet** sont des destinations nommées créées par les membres du projet dans
-  l’onglet [Alertes](/user-guide/projects/alerts) du projet, avec leur propre chat, webhook ou
+  l’onglet [Alertes](/user-guide/alerts) du projet, avec leur propre chat, webhook ou
   destinataires, et liées aux modèles et aux planifications.
 
 ## Fonctionnement de l’envoi {#how-delivery-works}
@@ -21,7 +21,7 @@ l’autoriser :
 1. **Le canal est configuré sur le serveur.** Chaque fournisseur a ses propres clés dans
    `config.json`. Voir la page de ce fournisseur ci-dessous.
 2. **Le projet utilise les canaux du serveur.** *Envoyer les alertes de ce projet aux canaux du
-   serveur* dans l’onglet [Alertes](/user-guide/projects/alerts#server-channels) du projet est
+   serveur* dans l’onglet [Alertes](/user-guide/alerts#server-channels) du projet est
    l’interrupteur principal. S’il est désactivé, les canaux du serveur n’envoient rien pour ce
    projet. Les alertes du projet ne dépendent pas de cet interrupteur.
 3. **Le modèle le demande.** Un modèle utilisant les *valeurs par défaut du projet* envoie aux
@@ -57,9 +57,9 @@ serveur.
 ## Redéfinitions par projet {#per-project-overrides}
 
 Telegram prend en charge un chat par projet : définissez **Telegram Chat ID** dans l’onglet
-[Alertes](/user-guide/projects/alerts#server-channels) du projet pour diriger les messages de
+[Alertes](/user-guide/alerts#server-channels) du projet pour diriger les messages de
 canal du serveur d’un projet vers un chat différent de celui du serveur. Pour toute autre
-destination par projet, créez une [alerte du projet](/user-guide/projects/alerts#project-alerts).
+destination par projet, créez une [alerte du projet](/user-guide/alerts#project-alerts).
 
 ## Par où commencer {#where-to-start}
 

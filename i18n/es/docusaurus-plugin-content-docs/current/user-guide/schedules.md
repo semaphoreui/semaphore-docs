@@ -54,7 +54,7 @@ Al crear una nueva programación, deberá configurar las siguientes opciones:
 
 Una programación puede usar las alertas de su plantilla o un conjunto distinto de alertas del
 proyecto, de modo que las tareas iniciadas por la programación informen en otro lugar que las
-ejecuciones manuales. Consulte [Alertas de programación](./projects/alerts#schedule-alerts).
+ejecuciones manuales. Consulte [Alertas de programación](./alerts#schedule-alerts).
 
 ### Sintaxis del formato cron {#cron-format-syntax}
 

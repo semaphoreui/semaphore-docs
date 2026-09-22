@@ -10,7 +10,7 @@ Semaphore segnala i risultati delle attività via chat ed e-mail in due modi:
 - **I canali del server** sono configurati una volta sul server, in `config.json` o tramite
   variabili d’ambiente, e sono disponibili per ogni progetto. Questa pagina li descrive.
 - **Gli avvisi del progetto** sono destinazioni con nome create dai membri del progetto nella
-  scheda [Avvisi](/user-guide/projects/alerts) del progetto, con chat, webhook o destinatari
+  scheda [Avvisi](/user-guide/alerts) del progetto, con chat, webhook o destinatari
   propri, e collegate a modelli e pianificazioni.
 
 ## Come funziona la consegna {#how-delivery-works}
@@ -21,7 +21,7 @@ devono consentirlo:
 1. **Il canale è configurato sul server.** Ogni provider ha le proprie chiavi in `config.json`.
    Vedi la pagina di quel provider qui sotto.
 2. **Il progetto usa i canali del server.** *Invia gli avvisi di questo progetto ai canali del
-   server* nella scheda [Avvisi](/user-guide/projects/alerts#server-channels) del progetto è
+   server* nella scheda [Avvisi](/user-guide/alerts#server-channels) del progetto è
    l’interruttore principale. Se è spento, i canali del server non inviano nulla su quel
    progetto. Gli avvisi del progetto non dipendono da questo interruttore.
 3. **Il modello lo richiede.** Un modello che usa i *predefiniti del progetto* invia ai canali
@@ -55,9 +55,9 @@ server, e un avviso Gotify senza URL e token propri riutilizza la coppia del ser
 ## Sovrascritture per progetto {#per-project-overrides}
 
 Telegram supporta una chat per progetto: imposta **Telegram Chat ID** nella scheda
-[Avvisi](/user-guide/projects/alerts#server-channels) del progetto per indirizzare i messaggi
+[Avvisi](/user-guide/alerts#server-channels) del progetto per indirizzare i messaggi
 dei canali del server di un progetto a una chat diversa da quella del server. Per qualsiasi
-altra destinazione per progetto crea un [avviso del progetto](/user-guide/projects/alerts#project-alerts).
+altra destinazione per progetto crea un [avviso del progetto](/user-guide/alerts#project-alerts).
 
 ## Da dove iniziare {#where-to-start}
 

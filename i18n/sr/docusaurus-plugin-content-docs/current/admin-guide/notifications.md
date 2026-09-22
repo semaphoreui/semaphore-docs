@@ -10,7 +10,7 @@ Semaphore prijavljuje rezultate zadataka u ćaskanja i e-poštom na dva načina:
 - **Serverski kanali** se podešavaju jednom na serveru, u `config.json` ili preko promenljivih
   okruženja, i dostupni su svakom projektu. Ova stranica ih opisuje.
 - **Obaveštenja projekta** su imenovana odredišta koja članovi projekta kreiraju na kartici
-  [Obaveštenja](/user-guide/projects/alerts) projekta, sa sopstvenim ćaskanjem, webhook-om ili
+  [Obaveštenja](/user-guide/alerts) projekta, sa sopstvenim ćaskanjem, webhook-om ili
   primaocima, i vezuju za šablone i rasporede.
 
 ## Kako funkcioniše isporuka {#how-delivery-works}
@@ -20,7 +20,7 @@ Za serverski kanal tri podešavanja odlučuju da li se poruka šalje, i sva tri 
 1. **Kanal je podešen na serveru.** Svaki provajder ima sopstvene ključeve u `config.json`.
    Pogledajte stranicu tog provajdera ispod.
 2. **Projekat koristi serverske kanale.** *Šalji obaveštenja ovog projekta na serverske kanale*
-   na kartici [Obaveštenja](/user-guide/projects/alerts#server-channels) projekta je glavni
+   na kartici [Obaveštenja](/user-guide/alerts#server-channels) projekta je glavni
    prekidač. Ako je isključen, serverski kanali ne šalju ništa o tom projektu. Obaveštenja
    projekta ne zavise od ovog prekidača.
 3. **Šablon to traži.** Šablon koji koristi *podrazumevana podešavanja projekta* šalje na
@@ -53,9 +53,9 @@ projekta bez sopstvenog URL-a i tokena ponovo koristi serverski par.
 ## Prepisivanja po projektu {#per-project-overrides}
 
 Telegram podržava ćaskanje po projektu: podesite **Telegram Chat ID** na kartici
-[Obaveštenja](/user-guide/projects/alerts#server-channels) projekta da biste poruke serverskih
+[Obaveštenja](/user-guide/alerts#server-channels) projekta da biste poruke serverskih
 kanala jednog projekta usmerili u ćaskanje različito od serverskog. Za bilo koje drugo odredište
-po projektu kreirajte [obaveštenje projekta](/user-guide/projects/alerts#project-alerts).
+po projektu kreirajte [obaveštenje projekta](/user-guide/alerts#project-alerts).
 
 ## Odakle početi {#where-to-start}
 

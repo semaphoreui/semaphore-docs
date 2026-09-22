@@ -54,7 +54,7 @@ Quando si crea una nuova pianificazione, è necessario configurare le seguenti o
 
 Una pianificazione può usare gli avvisi del suo modello o un insieme diverso di avvisi del
 progetto, così le attività avviate dalla pianificazione segnalano altrove rispetto alle
-esecuzioni manuali. Vedi [Avvisi della pianificazione](./projects/alerts#schedule-alerts).
+esecuzioni manuali. Vedi [Avvisi della pianificazione](./alerts#schedule-alerts).
 
 ### Sintassi del formato cron {#cron-format-syntax}
 

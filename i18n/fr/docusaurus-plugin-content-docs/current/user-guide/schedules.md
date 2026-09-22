@@ -54,7 +54,7 @@ Lors de la création d'une nouvelle planification, vous devez configurer les opt
 
 Une planification peut utiliser les alertes de son modèle ou un autre ensemble d’alertes du
 projet, afin que les tâches lancées par la planification soient signalées ailleurs que les
-exécutions manuelles. Voir [Alertes de planification](./projects/alerts#schedule-alerts).
+exécutions manuelles. Voir [Alertes de planification](./alerts#schedule-alerts).
 
 ### Syntaxe du format cron {#cron-format-syntax}
 

@@ -10,7 +10,7 @@ Semaphore informa de los resultados de las tareas por chat y correo electrónico
 - **Los canales del servidor** se configuran una vez en el servidor, en `config.json` o mediante
   variables de entorno, y están disponibles para todos los proyectos. Esta página los describe.
 - **Las alertas del proyecto** son destinos con nombre que los miembros del proyecto crean en la
-  pestaña [Alertas](/user-guide/projects/alerts) del proyecto, con su propio chat, webhook o
+  pestaña [Alertas](/user-guide/alerts) del proyecto, con su propio chat, webhook o
   destinatarios, y que se vinculan a plantillas y programaciones.
 
 ## Cómo funciona la entrega {#how-delivery-works}
@@ -21,7 +21,7 @@ permitirlo:
 1. **El canal está configurado en el servidor.** Cada proveedor tiene sus propias claves en
    `config.json`. Consulte la página de ese proveedor más abajo.
 2. **El proyecto usa los canales del servidor.** *Enviar alertas de este proyecto a los canales
-   del servidor* en la pestaña [Alertas](/user-guide/projects/alerts#server-channels) del proyecto
+   del servidor* en la pestaña [Alertas](/user-guide/alerts#server-channels) del proyecto
    es el interruptor principal. Si está apagado, los canales del servidor no envían nada sobre
    ese proyecto. Las alertas del proyecto no se ven afectadas por este interruptor.
 3. **La plantilla lo solicita.** Una plantilla que usa los *valores por defecto del proyecto*
@@ -56,9 +56,9 @@ global.
 ## Anulaciones por proyecto {#per-project-overrides}
 
 Telegram admite un chat por proyecto: establezca **Telegram Chat ID** en la pestaña
-[Alertas](/user-guide/projects/alerts#server-channels) del proyecto para dirigir los mensajes
+[Alertas](/user-guide/alerts#server-channels) del proyecto para dirigir los mensajes
 de canal del servidor de un proyecto a un chat distinto del global. Para cualquier otro destino
-por proyecto cree una [alerta del proyecto](/user-guide/projects/alerts#project-alerts).
+por proyecto cree una [alerta del proyecto](/user-guide/alerts#project-alerts).
 
 ## Por dónde empezar {#where-to-start}
 

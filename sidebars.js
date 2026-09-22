@@ -166,10 +166,10 @@ const sidebars = {
             'user-guide/projects/stats',
             'user-guide/projects/activity',
             'user-guide/projects/settings',
-            'user-guide/projects/alerts',
             'user-guide/projects/runners',
           ],
         },
+        'user-guide/alerts',
         {
           type: 'category',
           label: 'Task Templates',

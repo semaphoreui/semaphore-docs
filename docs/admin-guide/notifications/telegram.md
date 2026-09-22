@@ -55,4 +55,4 @@ telegram_token: <token>
 
 ### Per-project Chat IDs {#per-project-chat-ids}
 
-Each project can use a unique Chat ID.  This allows you to separate notifications by project rather than have them all go to the same chat. This overrides the global Chat ID from above. Set it in the project's [Alerts](/user-guide/projects/alerts#server-channels) tab, or create a [project alert](/user-guide/projects/alerts#project-alerts) of type Telegram to target several chats or a forum topic.
+Each project can use a unique Chat ID.  This allows you to separate notifications by project rather than have them all go to the same chat. This overrides the global Chat ID from above. Set it in the project's [Alerts](/user-guide/alerts#server-channels) tab, or create a [project alert](/user-guide/alerts#project-alerts) of type Telegram to target several chats or a forum topic.

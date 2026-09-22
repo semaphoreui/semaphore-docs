@@ -54,7 +54,7 @@ Beim Erstellen eines neuen Zeitplans müssen Sie die folgenden Optionen konfigur
 
 Ein Zeitplan kann die Benachrichtigungen seiner Vorlage oder eine andere Auswahl an
 Projektbenachrichtigungen verwenden, sodass vom Zeitplan gestartete Aufgaben anders melden als
-manuelle Läufe. Siehe [Zeitplanbenachrichtigungen](./projects/alerts#schedule-alerts).
+manuelle Läufe. Siehe [Zeitplanbenachrichtigungen](./alerts#schedule-alerts).
 
 ### Syntax des Cron-Formats {#cron-format-syntax}
 

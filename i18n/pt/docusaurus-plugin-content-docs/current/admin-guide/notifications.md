@@ -10,7 +10,7 @@ O Semaphore reporta resultados de tarefas por chat e e-mail de duas formas:
 - **Canais do servidor** são configurados uma vez no servidor, em `config.json` ou por variáveis
   de ambiente, e ficam disponíveis para todos os projetos. Esta página os descreve.
 - **Alertas do projeto** são destinos nomeados criados pelos membros do projeto na aba
-  [Alertas](/user-guide/projects/alerts) do projeto, com chat, webhook ou destinatários
+  [Alertas](/user-guide/alerts) do projeto, com chat, webhook ou destinatários
   próprios, e vinculados a modelos e agendamentos.
 
 ## Como funciona a entrega {#how-delivery-works}
@@ -21,7 +21,7 @@ precisam permitir:
 1. **O canal está configurado no servidor.** Cada provedor tem suas próprias chaves em
    `config.json`. Veja a página desse provedor abaixo.
 2. **O projeto usa os canais do servidor.** *Enviar alertas deste projeto aos canais do
-   servidor* na aba [Alertas](/user-guide/projects/alerts#server-channels) do projeto é o
+   servidor* na aba [Alertas](/user-guide/alerts#server-channels) do projeto é o
    interruptor principal. Desligado, os canais do servidor não enviam nada sobre esse projeto.
    Os alertas do projeto não são afetados por esse interruptor.
 3. **O modelo pede.** Um modelo que usa os *padrões do projeto* envia aos canais do servidor;
@@ -54,9 +54,9 @@ servidor, e um alerta Gotify sem URL e token próprios reutiliza o par global.
 ## Substituições por projeto {#per-project-overrides}
 
 O Telegram suporta um chat por projeto: defina **Telegram Chat ID** na aba
-[Alertas](/user-guide/projects/alerts#server-channels) do projeto para direcionar as mensagens
+[Alertas](/user-guide/alerts#server-channels) do projeto para direcionar as mensagens
 de canal do servidor de um projeto a um chat diferente do global. Para qualquer outro destino por
-projeto crie um [alerta do projeto](/user-guide/projects/alerts#project-alerts).
+projeto crie um [alerta do projeto](/user-guide/alerts#project-alerts).
 
 ## Por onde começar {#where-to-start}
 
