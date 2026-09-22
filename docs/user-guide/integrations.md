@@ -16,10 +16,35 @@ The project webhook URL is shown above the list. Every integration has a name an
 Using integration, you can trigger a specific template by calling a special endpoint (alias), for which you can configure one of the following authentication methods:
 * GitHub Webhooks
 * Token
-* HMAC
+* HMAC (SHA-256)
+* HMAC (SHA-512)
 * No authentication
 
 The alias represents a URL in the following format: `/api/integrations/<random_string>`. Supports `GET` and `POST` requests.
+
+## HMAC authentication {#hmac-authentication}
+
+HMAC auth methods (`hmac` / SHA-256 and `hmac-sha512` / SHA-512) verify that the webhook body was signed with a shared secret.
+
+Configure:
+
+1. **Auth header** — the request header that carries the signature (for example `X-Signature` or `X-Hub-Signature-256`).
+2. **Auth secret** — a key-store login/password credential; Semaphore uses the **password** value as the HMAC secret.
+
+The sender must put a **raw hexadecimal** HMAC digest of the raw request body into that header (no `sha256=` / `sha512=` prefix). Semaphore compares it with `HMAC-SHA256` or `HMAC-SHA512` of the body using the configured secret.
+
+Example (SHA-512) with OpenSSL:
+
+```bash
+SECRET='your-webhook-secret'
+BODY='{"event":"deploy"}'
+SIG="$(printf '%s' "$BODY" | openssl dgst -sha512 -hmac "$SECRET" | awk '{print $2}')"
+
+curl -X POST "https://semaphore.example.com/api/integrations/<alias>" \
+  -H "Content-Type: application/json" \
+  -H "X-Signature: ${SIG}" \
+  --data "$BODY"
+```
 
 ## Matchers {#matchers}
 
