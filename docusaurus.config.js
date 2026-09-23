@@ -236,6 +236,7 @@ const config = {
                   <div class="footer__contact">
                     <div class="footer__contactTitle">Contact us</div>
                     <div class="footer__contactRow"><span class="footer__contactLabel">Sales</span><a href="mailto:sales@semaphoreui.com">sales@semaphoreui.com</a></div>
+                    <div class="footer__contactRow"><span class="footer__contactLabel">Partnership</span><a href="mailto:partners@semaphoreui.com">partners@semaphoreui.com</a></div>
                     <div class="footer__contactRow"><span class="footer__contactLabel">Support</span><a href="mailto:support@semaphoreui.com">support@semaphoreui.com</a></div>
                     <div class="footer__contactRow"><span class="footer__contactLabel">Security</span><a href="mailto:security@semaphoreui.com">security@semaphoreui.com</a></div>
                     <div class="footer__contactRow"><span class="footer__contactLabel">Legal</span><a href="mailto:legal@semaphoreui.com">legal@semaphoreui.com</a></div>
@@ -251,6 +252,7 @@ const config = {
               { label: 'Pro', href: websiteUrl('/pro'), target: '_self' },
               { label: 'Enterprise', href: websiteUrl('/enterprise'), target: '_self' },
               { label: 'Pricing', href: websiteUrl('/pricing/'), target: '_self' },
+              { label: 'Partnership', href: websiteUrl('/partners/'), target: '_self' },
             ],
           },
           {

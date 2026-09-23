@@ -39,6 +39,10 @@
     "message": "Цены",
     "description": "The label of footer link with label=Pricing linking to https://semaphoreui.com/pricing/"
   },
+  "link.item.label.Partnership": {
+    "message": "Партнёрство",
+    "description": "The label of footer link with label=Partnership linking to https://semaphoreui.com/partners/"
+  },
   "link.item.label.Features": {
     "message": "Возможности",
     "description": "The label of footer link with label=Features linking to https://semaphoreui.com/features"
