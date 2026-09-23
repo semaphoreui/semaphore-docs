@@ -41,6 +41,48 @@ export SEMAPHORE_FORWARDED_ENV_VARS='["AWS_ACCESS_KEY_ID","AWS_SECRET_ACCESS_KEY
 Hinweise:
 - Die Weitergabe ist explizit: Nur in `forwarded_env_vars` aufgeführte Variablen werden von App-Prozessen geerbt.
 - Geheimnisse sollten auf sicherem Weg bereitgestellt (zum Beispiel über Docker-/Kubernetes-Secrets) und anschließend über `forwarded_env_vars` weitergereicht werden.
+- Dieselbe Liste gilt für die `git`-Prozesse, die Repositories klonen und aktualisieren. Alles, was `git` aus der Host-Umgebung braucht, muss also ebenfalls weitergereicht werden.
+
+---
+
+## Betrieb hinter einem Unternehmens-Proxy {#running-behind-a-corporate-proxy}
+
+Semaphore gibt nicht seine gesamte Umgebung an die Prozesse weiter, die es startet. Insbesondere Proxy-Variablen erreichen eine Aufgabe oder einen `git`-Klon nur dann, wenn sie in `forwarded_env_vars` aufgeführt oder in `env_vars` gesetzt sind.
+
+Am wichtigsten ist das bei einer Paketinstallation (systemd). Proxy-Variablen aus der Unit-Datei gelten für den Semaphore-Server selbst, aber nicht für `git`:
+
+```ini
+[Service]
+Environment="HTTPS_PROXY=http://proxy.internal:3128"
+Environment="HTTP_PROXY=http://proxy.internal:3128"
+Environment="NO_PROXY=.corp.example.com"
+```
+
+Mit der obigen Konfiguration und sonst nichts schlägt das Klonen eines Repositories fehl:
+
+```
+fatal: Authentication failed for 'https://git.corp.example.com/team/_git/infra'
+```
+
+`git` hat `NO_PROXY` nie gesehen und schickte die Anfrage für den internen Host über den externen Proxy, der sie abgelehnt hat. Reichen Sie die drei Variablen explizit weiter, um das zu beheben:
+
+```json
+{
+  "forwarded_env_vars": ["HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY"]
+}
+```
+
+Oder als Umgebungsvariable:
+
+```bash
+export SEMAPHORE_FORWARDED_ENV_VARS='["HTTP_PROXY","HTTPS_PROXY","NO_PROXY"]'
+```
+
+Hinweise:
+- Reichen Sie `NO_PROXY` zusammen mit den Proxy-Variablen weiter. Ohne diese Variable wird auch der Verkehr zu internen Git-Servern über den Proxy geleitet.
+- Viele Werkzeuge lesen die Kleinschreibung (`http_proxy`, `https_proxy`, `no_proxy`). Unter Linux und macOS wird bei Variablennamen zwischen Groß- und Kleinschreibung unterschieden. Führen Sie daher beide Schreibweisen auf, wenn Ihre Umgebung sie klein schreibt.
+- Eigene CA-Bundles funktionieren genauso. Wenn Ihr Proxy TLS terminiert, reichen Sie je nach Bedarf `GIT_SSL_CAINFO`, `SSL_CERT_FILE` oder `REQUESTS_CA_BUNDLE` weiter, anstatt die Zertifikatsprüfung abzuschalten.
+- Bei Docker-Installationen scheint das meist von selbst zu funktionieren, weil die Proxy-Variablen für den gesamten Container gesetzt sind. Trotzdem empfiehlt es sich, sie explizit weiterzureichen, damit dieselbe Konfiguration auf beiden Wegen identisch funktioniert.
 
 ---
 

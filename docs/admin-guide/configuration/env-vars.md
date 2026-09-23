@@ -46,6 +46,60 @@ export SEMAPHORE_FORWARDED_ENV_VARS='["AWS_ACCESS_KEY_ID","AWS_SECRET_ACCESS_KEY
 Notes:
 - Forwarding is explicit: only variables listed in `forwarded_env_vars` are inherited by app processes.
 - Secrets should be provided securely (for example via Docker/Kubernetes secrets) and then forwarded using `forwarded_env_vars`.
+- The same list is used for the `git` processes that clone and update repositories, so anything `git` needs from the host environment has to be forwarded too.
+
+---
+
+## Running behind a corporate proxy {#running-behind-a-corporate-proxy}
+
+Semaphore does not pass its whole environment on to the processes it starts.
+Proxy variables in particular reach a task or a `git` clone only if they are
+listed in `forwarded_env_vars` or set in `env_vars`.
+
+This matters most for a package (systemd) installation. Proxy variables set in
+the unit file apply to the Semaphore server itself, but not to `git`:
+
+```ini
+[Service]
+Environment="HTTPS_PROXY=http://proxy.internal:3128"
+Environment="HTTP_PROXY=http://proxy.internal:3128"
+Environment="NO_PROXY=.corp.example.com"
+```
+
+With the configuration above and nothing else, cloning a repository fails with:
+
+```
+fatal: Authentication failed for 'https://git.corp.example.com/team/_git/infra'
+```
+
+`git` never saw `NO_PROXY`, so it sent the request for the internal host through
+the external proxy, which rejected it. Forward the three variables explicitly to
+fix it:
+
+```json
+{
+  "forwarded_env_vars": ["HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY"]
+}
+```
+
+Or, as an environment variable:
+
+```bash
+export SEMAPHORE_FORWARDED_ENV_VARS='["HTTP_PROXY","HTTPS_PROXY","NO_PROXY"]'
+```
+
+Notes:
+- Forward `NO_PROXY` alongside the proxy variables. Without it, traffic to
+  internal Git servers is routed through the proxy as well.
+- Many tools read the lowercase spellings (`http_proxy`, `https_proxy`,
+  `no_proxy`). On Linux and macOS variable names are case sensitive, so list
+  both spellings if your environment sets them in lowercase.
+- Custom CA bundles work the same way. If your proxy terminates TLS, forward
+  `GIT_SSL_CAINFO`, `SSL_CERT_FILE` or `REQUESTS_CA_BUNDLE` as needed rather
+  than disabling certificate verification.
+- Docker installations usually appear to "just work" here because the proxy
+  variables are set for the whole container. Forwarding them explicitly is still
+  recommended, so the same configuration behaves identically on both.
 
 ---
 

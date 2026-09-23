@@ -41,6 +41,48 @@ export SEMAPHORE_FORWARDED_ENV_VARS='["AWS_ACCESS_KEY_ID","AWS_SECRET_ACCESS_KEY
 注意事项：
 - 转发是显式的：只有在 `forwarded_env_vars` 中列出的变量才会被应用进程继承。
 - 密钥应以安全的方式提供（例如通过 Docker/Kubernetes secrets），然后使用 `forwarded_env_vars` 进行转发。
+- 克隆和更新仓库的 `git` 进程使用同一份列表，因此 `git` 需要从宿主环境获取的内容也必须一并转发。
+
+---
+
+## 在企业代理后运行 {#running-behind-a-corporate-proxy}
+
+Semaphore 不会把自身的全部环境传给它启动的进程。尤其是代理变量，只有在 `forwarded_env_vars` 中列出或在 `env_vars` 中设置时，才会传递给任务或 `git` 克隆。
+
+这一点在使用软件包（systemd）安装时尤为重要。在 unit 文件中设置的代理变量只对 Semaphore 服务本身生效，对 `git` 不生效：
+
+```ini
+[Service]
+Environment="HTTPS_PROXY=http://proxy.internal:3128"
+Environment="HTTP_PROXY=http://proxy.internal:3128"
+Environment="NO_PROXY=.corp.example.com"
+```
+
+只有上面这段配置时，克隆仓库会失败并报错：
+
+```
+fatal: Authentication failed for 'https://git.corp.example.com/team/_git/infra'
+```
+
+`git` 从未见到 `NO_PROXY`，因此把发往内部主机的请求送到了外部代理，代理将其拒绝。显式转发这三个变量即可解决：
+
+```json
+{
+  "forwarded_env_vars": ["HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY"]
+}
+```
+
+也可以使用环境变量：
+
+```bash
+export SEMAPHORE_FORWARDED_ENV_VARS='["HTTP_PROXY","HTTPS_PROXY","NO_PROXY"]'
+```
+
+注意事项：
+- 请把 `NO_PROXY` 与代理变量一起转发。缺少它时，发往内部 Git 服务器的流量也会经过代理。
+- 许多工具读取小写形式（`http_proxy`、`https_proxy`、`no_proxy`）。在 Linux 和 macOS 上变量名区分大小写，因此如果你的环境使用小写，请把两种写法都列出来。
+- 自定义 CA 包的处理方式相同。如果代理终结 TLS，请按需转发 `GIT_SSL_CAINFO`、`SSL_CERT_FILE` 或 `REQUESTS_CA_BUNDLE`，而不是关闭证书校验。
+- Docker 安装通常看起来“开箱即用”，因为代理变量是为整个容器设置的。仍然建议显式转发，这样同一份配置在两种部署方式下表现一致。
 
 ---
 
