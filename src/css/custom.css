@@ -553,7 +553,7 @@ html:root {
 
 /* Same specificity as html:root above, so the dark values win by order */
 html[data-theme='dark'] {
-  --ifm-menu-color: #c9ced4;
+  --ifm-menu-color: #e9ecef;
   --ifm-menu-color-background-active: rgba(0, 184, 204, 0.15);
   --ifm-menu-color-background-hover: rgba(255, 255, 255, 0.05);
   --sem-sidebar-border: #495057;
@@ -568,6 +568,15 @@ aside.theme-doc-sidebar-container {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.35;
+}
+
+/* Keep sidebar labels readable when Docusaurus changes the global theme color. */
+.theme-doc-sidebar-menu .menu__link {
+  color: var(--ifm-menu-color);
+}
+
+.theme-doc-sidebar-menu .menu__link--active:not(.menu__link--sublist) {
+  color: var(--ifm-menu-color-active);
 }
 
 .theme-doc-sidebar-menu .menu__link,
@@ -826,11 +835,20 @@ html[data-theme='dark'] {
 }
 
 .InstallationMethod {
+  --sem-installation-method-background: #e6f6e6;
+  --sem-installation-method-border: #ccc;
+
   padding: 18px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--sem-installation-method-border);
   border-radius: 8px;
-  background: #e6f6e6;
+  background: var(--sem-installation-method-background);
+  color: var(--ifm-font-color-base);
   margin-top: -1px;
+}
+
+[data-theme='dark'] .InstallationMethod {
+  --sem-installation-method-background: #172a2a;
+  --sem-installation-method-border: #3c5959;
 }
 
 .InstallationMethod:first-child {
