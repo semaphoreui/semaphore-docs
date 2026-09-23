@@ -11,10 +11,35 @@ A URL do webhook do projeto é exibida acima da lista. Cada integração tem um 
 Usando uma integração, você pode acionar um modelo específico chamando um endpoint especial (alias), para o qual você pode configurar um dos seguintes métodos de autenticação:
 * Webhooks do GitHub
 * Token
-* HMAC
+* HMAC (SHA-256)
+* HMAC (SHA-512)
 * Sem autenticação
 
 O alias representa uma URL no seguinte formato: `/api/integrations/<random_string>`. Suporta requisições `GET` e `POST`.
+
+## Autenticação HMAC {#hmac-authentication}
+
+Os métodos de autenticação HMAC (`hmac` / SHA-256 e `hmac-sha512` / SHA-512) verificam se o corpo do webhook foi assinado com um segredo compartilhado.
+
+Configure:
+
+1. **Auth header** — o cabeçalho da requisição que contém a assinatura (por exemplo, `X-Signature` ou `X-Hub-Signature-256`).
+2. **Auth secret** — uma credencial de login e senha do armazenamento de chaves; o Semaphore usa o valor da **senha** como segredo HMAC.
+
+O remetente deve colocar nesse cabeçalho um resumo HMAC **hexadecimal puro** do corpo original da requisição (sem o prefixo `sha256=` / `sha512=`). O Semaphore o compara com o `HMAC-SHA256` ou `HMAC-SHA512` do corpo calculado com o segredo configurado.
+
+Exemplo (SHA-512) com OpenSSL:
+
+```bash
+SECRET='your-webhook-secret'
+BODY='{"event":"deploy"}'
+SIG="$(printf '%s' "$BODY" | openssl dgst -sha512 -hmac "$SECRET" | awk '{print $2}')"
+
+curl -X POST "https://semaphore.example.com/api/integrations/<alias>" \
+  -H "Content-Type: application/json" \
+  -H "X-Signature: ${SIG}" \
+  --data "$BODY"
+```
 
 ## Matchers {#matchers}
 

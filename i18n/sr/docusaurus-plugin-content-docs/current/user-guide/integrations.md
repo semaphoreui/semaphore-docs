@@ -11,10 +11,35 @@ Webhook URL projekta (Project) prikazan je iznad liste. Svaka integracija ima na
 Pomoću integracije možete pokrenuti određeni šablon pozivanjem posebne krajnje tačke (alias), za koju možete podesiti jedan od sledećih načina autentifikacije:
 * GitHub Webhooks
 * Token
-* HMAC
+* HMAC (SHA-256)
+* HMAC (SHA-512)
 * Bez autentifikacije
 
 Alias predstavlja URL u sledećem formatu: `/api/integrations/<random_string>`. Podržava `GET` i `POST` zahteve.
+
+## HMAC autentifikacija {#hmac-authentication}
+
+HMAC metode autentifikacije (`hmac` / SHA-256 i `hmac-sha512` / SHA-512) proveravaju da li je telo webhook zahteva potpisano deljenom tajnom.
+
+Podesite:
+
+1. **Auth header** — zaglavlje zahteva koje prenosi potpis (na primer `X-Signature` ili `X-Hub-Signature-256`).
+2. **Auth secret** — kredencijal za prijavu i lozinku iz skladišta ključeva; Semaphore koristi vrednost **lozinke** kao HMAC tajnu.
+
+Pošiljalac mora u to zaglavlje da postavi HMAC sažetak neobrađenog tela zahteva kao **sirovu heksadecimalnu vrednost** (bez prefiksa `sha256=` / `sha512=`). Semaphore ga poredi sa `HMAC-SHA256` ili `HMAC-SHA512` vrednošću tela izračunatom pomoću podešene tajne.
+
+Primer (SHA-512) sa OpenSSL-om:
+
+```bash
+SECRET='your-webhook-secret'
+BODY='{"event":"deploy"}'
+SIG="$(printf '%s' "$BODY" | openssl dgst -sha512 -hmac "$SECRET" | awk '{print $2}')"
+
+curl -X POST "https://semaphore.example.com/api/integrations/<alias>" \
+  -H "Content-Type: application/json" \
+  -H "X-Signature: ${SIG}" \
+  --data "$BODY"
+```
 
 ## Uparivači {#matchers}
 
