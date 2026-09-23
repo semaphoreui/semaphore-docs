@@ -39,10 +39,6 @@
     "message": "料金",
     "description": "The label of footer link with label=Pricing linking to https://semaphoreui.com/pricing/"
   },
-  "link.item.label.Partnership": {
-    "message": "パートナーシップ",
-    "description": "The label of footer link with label=Partnership linking to https://semaphoreui.com/partners/"
-  },
   "link.item.label.Features": {
     "message": "機能",
     "description": "The label of footer link with label=Features linking to https://semaphoreui.com/features"

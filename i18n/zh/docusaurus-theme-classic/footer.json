@@ -39,10 +39,6 @@
     "message": "价格",
     "description": "The label of footer link with label=Pricing linking to https://semaphoreui.com/pricing/"
   },
-  "link.item.label.Partnership": {
-    "message": "合作",
-    "description": "The label of footer link with label=Partnership linking to https://semaphoreui.com/partners/"
-  },
   "link.item.label.Features": {
     "message": "功能特性",
     "description": "The label of footer link with label=Features linking to https://semaphoreui.com/features"

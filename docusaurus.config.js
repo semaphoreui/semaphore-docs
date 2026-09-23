@@ -252,7 +252,6 @@ const config = {
               { label: 'Pro', href: websiteUrl('/pro'), target: '_self' },
               { label: 'Enterprise', href: websiteUrl('/enterprise'), target: '_self' },
               { label: 'Pricing', href: websiteUrl('/pricing/'), target: '_self' },
-              { label: 'Partnership', href: websiteUrl('/partners/'), target: '_self' },
             ],
           },
           {
