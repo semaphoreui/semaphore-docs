@@ -11,10 +11,35 @@
 インテグレーションを使用すると、専用のエンドポイント（エイリアス）を呼び出して特定のテンプレートをトリガーできます。エンドポイントには、次のいずれかの認証方式を設定できます。
 * GitHub Webhooks
 * トークン
-* HMAC
+* HMAC (SHA-256)
+* HMAC (SHA-512)
 * 認証なし
 
 エイリアスは次の形式の URL を表します: `/api/integrations/<random_string>`。`GET` と `POST` のリクエストに対応しています。
+
+## HMAC 認証 {#hmac-authentication}
+
+HMAC 認証方式（`hmac` / SHA-256 および `hmac-sha512` / SHA-512）は、Webhook の本文が共有シークレットで署名されていることを検証します。
+
+次の項目を設定します。
+
+1. **Auth header** — 署名を格納するリクエストヘッダー（例: `X-Signature` または `X-Hub-Signature-256`）。
+2. **Auth secret** — キーストアのログイン/パスワード認証情報。Semaphore は **パスワード** の値を HMAC シークレットとして使用します。
+
+送信側は、未加工のリクエスト本文に対する HMAC ダイジェストを **プレフィックスのない16進数** でこのヘッダーに設定する必要があります（`sha256=` / `sha512=` プレフィックスは付けません）。Semaphore は、設定されたシークレットを使用して本文から計算した `HMAC-SHA256` または `HMAC-SHA512` と比較します。
+
+OpenSSL を使用した SHA-512 の例:
+
+```bash
+SECRET='your-webhook-secret'
+BODY='{"event":"deploy"}'
+SIG="$(printf '%s' "$BODY" | openssl dgst -sha512 -hmac "$SECRET" | awk '{print $2}')"
+
+curl -X POST "https://semaphore.example.com/api/integrations/<alias>" \
+  -H "Content-Type: application/json" \
+  -H "X-Signature: ${SIG}" \
+  --data "$BODY"
+```
 
 ## マッチャー {#matchers}
 

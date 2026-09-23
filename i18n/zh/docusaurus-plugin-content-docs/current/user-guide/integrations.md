@@ -11,10 +11,35 @@
 通过集成，你可以调用一个特殊的端点（别名）来触发指定模板，并为其配置以下认证方式之一：
 * GitHub Webhooks
 * Token
-* HMAC
+* HMAC (SHA-256)
+* HMAC (SHA-512)
 * 无认证
 
 别名是如下格式的 URL：`/api/integrations/<random_string>`。支持 `GET` 和 `POST` 请求。
+
+## HMAC 认证 {#hmac-authentication}
+
+HMAC 认证方式（`hmac` / SHA-256 和 `hmac-sha512` / SHA-512）用于验证 Webhook 请求正文是否使用共享密钥签名。
+
+请配置：
+
+1. **Auth header** — 用于携带签名的请求标头（例如 `X-Signature` 或 `X-Hub-Signature-256`）。
+2. **Auth secret** — 密钥存储中的登录名/密码凭据；Semaphore 使用其中的**密码**值作为 HMAC 密钥。
+
+发送方必须将原始请求正文的 HMAC 摘要以**不带前缀的十六进制值**放入该标头（不使用 `sha256=` / `sha512=` 前缀）。Semaphore 会使用配置的密钥计算正文的 `HMAC-SHA256` 或 `HMAC-SHA512`，并与该值进行比较。
+
+使用 OpenSSL 的 SHA-512 示例：
+
+```bash
+SECRET='your-webhook-secret'
+BODY='{"event":"deploy"}'
+SIG="$(printf '%s' "$BODY" | openssl dgst -sha512 -hmac "$SECRET" | awk '{print $2}')"
+
+curl -X POST "https://semaphore.example.com/api/integrations/<alias>" \
+  -H "Content-Type: application/json" \
+  -H "X-Signature: ${SIG}" \
+  --data "$BODY"
+```
 
 ## 匹配器 {#matchers}
 
