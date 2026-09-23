@@ -137,7 +137,7 @@ Concurrency, retention, and the environment task processes run in.
 | `max_parallel_tasks`<br />`SEMAPHORE_MAX_PARALLEL_TASKS` | integer<br />Default: `9999` | task concurrency |
 | `apps`<br />`SEMAPHORE_APPS` | object | JSON map which contains apps configuration. |
 | `env_vars`<br />`SEMAPHORE_ENV_VARS` | object | JSON map which contains environment variables exposed to task runs. |
-| `forwarded_env_vars`<br />`SEMAPHORE_FORWARDED_ENV_VARS` | array | JSON array of host environment variables which will be forwarded into task runs. |
+| `forwarded_env_vars`<br />`SEMAPHORE_FORWARDED_ENV_VARS` | array | Lists host environment variables copied into task runs and into the child git processes that clone and update repositories. Proxy variables are not forwarded implicitly: they reach a task only if they are named here or set in env_vars. A bare-metal (systemd) installation behind a corporate proxy therefore has to list the proxy variables explicitly, including the bypass list for internal hosts: ["HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY"]. |
 | `process.user`<br />`SEMAPHORE_PROCESS_USER` | string | User under which wrapped processes (such as Ansible, Terraform, or OpenTofu) will run. |
 | `process.uid`<br />`SEMAPHORE_PROCESS_UID` | integer | ID of user under which wrapped processes (such as Ansible, Terraform, or OpenTofu) will run. |
 | `process.chroot`<br />`SEMAPHORE_PROCESS_CHROOT` | string | Chroot directory for wrapped processes. |
