@@ -50,4 +50,4 @@ Primer `config.json`:
 
 ### ID-jevi ćaskanja po projektu {#per-project-chat-ids}
 
-Svaki projekat (Project) može koristiti jedinstven ID ćaskanja.  To vam omogućava da razdvojite obaveštenja po projektima umesto da sva idu u isto ćaskanje. Ovo ima prednost nad globalnim ID-jem ćaskanja opisanim iznad.
+Svaki projekat (Project) može koristiti jedinstven ID ćaskanja.  To vam omogućava da razdvojite obaveštenja po projektima umesto da sva idu u isto ćaskanje. Ovo ima prednost nad globalnim ID-jem ćaskanja opisanim iznad. Podesite ga na kartici [Obaveštenja](/user-guide/alerts#server-channels) projekta, ili kreirajte [obaveštenje projekta](/user-guide/alerts#project-alerts) tipa Telegram da biste ciljali više ćaskanja ili forum-topik.

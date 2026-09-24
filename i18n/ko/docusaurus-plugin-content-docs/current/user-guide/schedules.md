@@ -50,6 +50,10 @@ Semaphore의 스케줄 기능을 사용하면 템플릿 실행(예: playbook 실
 
 ![](/assets/schedule02.png) ![](/assets/schedule03.png)
 
+### 알림 {#alerts}
+
+스케줄은 템플릿의 알림을 사용하거나 다른 프로젝트 알림 집합을 사용할 수 있으므로, 스케줄로 시작한 작업을 수동 실행과 다른 곳에 보고할 수 있습니다. [스케줄 알림](./alerts#schedule-alerts)을 참고하세요.
+
 ### Cron 형식 문법 {#cron-format-syntax}
 
 스케줄은 다섯 개의 필드로 구성된 표준 cron 문법을 사용합니다:

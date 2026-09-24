@@ -1,38 +1,45 @@
 ---
 title: Notifiche
-description: Come Semaphore recapita gli avvisi sui Task, i canali che supporta e i due interruttori che devono essere attivi perché venga inviato qualcosa.
+description: Come Semaphore consegna gli avvisi delle attività, i canali supportati e il rapporto tra canali del server e avvisi per progetto.
 ---
 
 # Notifiche
 
-Semaphore comunica i risultati dei Task via chat ed email. Un canale si configura una
-sola volta sul server, in `config.json` oppure tramite variabili d'ambiente, e vale
-poi per tutti i Project. Quali Task producano un avviso viene deciso per singolo
-Project e per singolo Task Template nell'interfaccia web.
+Semaphore segnala i risultati delle attività via chat ed e-mail in due modi:
 
-## Come funziona il recapito {#how-delivery-works}
+- **I canali del server** sono configurati una volta sul server, in `config.json` o tramite
+  variabili d’ambiente, e sono disponibili per ogni progetto. Questa pagina li descrive.
+- **Gli avvisi del progetto** sono destinazioni con nome create dai membri del progetto nella
+  scheda [Avvisi](/user-guide/alerts) del progetto, con chat, webhook o destinatari
+  propri, e collegate a modelli e pianificazioni.
 
-Tre impostazioni determinano se un messaggio viene inviato, e tutte e tre devono
-consentirlo:
+## Come funziona la consegna {#how-delivery-works}
 
-1. **Il canale è configurato sul server.** Ogni provider ha le proprie chiavi in
-   `config.json`. Vedere più sotto la pagina del provider corrispondente.
-2. **Il Project consente gli avvisi.** *Allow alerts for this project* nelle
-   [impostazioni del Project](/user-guide/projects/settings) è l'interruttore
-   principale. Se è disattivato, nessun canale invia alcunché riguardo a quel
-   Project.
-3. **Il Task Template lo richiede.** Un Task Template sceglie se inviare un avviso in
-   caso di successo, in caso di errore oppure mai, vedere
-   [Task Template](/user-guide/task-templates).
+Per un canale del server tre impostazioni decidono se un messaggio viene inviato, e tutte e tre
+devono consentirlo:
 
-Utilizzare **Test alerts** nelle impostazioni del Project per inviare un messaggio di
-prova attraverso ogni canale configurato senza eseguire un Task.
+1. **Il canale è configurato sul server.** Ogni provider ha le proprie chiavi in `config.json`.
+   Vedi la pagina di quel provider qui sotto.
+2. **Il progetto usa i canali del server.** *Invia gli avvisi di questo progetto ai canali del
+   server* nella scheda [Avvisi](/user-guide/alerts#server-channels) del progetto è
+   l’interruttore principale. Se è spento, i canali del server non inviano nulla su quel
+   progetto. Gli avvisi del progetto non dipendono da questo interruttore.
+3. **Il modello lo richiede.** Un modello che usa i *predefiniti del progetto* invia ai canali
+   del server; un modello con un elenco personalizzato di avvisi no. I modelli possono anche
+   sopprimere le notifiche di successo o errore, vedi
+   [Modelli di attività](/user-guide/task-templates).
+
+I canali chat segnalano successi, errori e attività in attesa di conferma; l’e-mail segnala solo
+gli errori. Gli avvisi del progetto possono sovrascrivere gli eventi per destinazione.
+
+Usa **Prova tutto** nella scheda Avvisi per inviare un messaggio di prova tramite ogni canale del
+server e ogni avviso del progetto abilitato senza eseguire un’attività.
 
 ## Canali {#channels}
 
 | Canale | Pagina |
 |---|---|
-| Email (SMTP) | [Email](/admin-guide/notifications/email) |
+| E-mail (SMTP) | [Email](/admin-guide/notifications/email) |
 | Telegram | [Telegram](/admin-guide/notifications/telegram) |
 | Slack | [Slack](/admin-guide/notifications/slack) |
 | Microsoft Teams | [Teams](/admin-guide/notifications/teams) |
@@ -40,18 +47,20 @@ prova attraverso ogni canale configurato senza eseguire un Task.
 | DingTalk | [DingTalk](/admin-guide/notifications/ding) |
 | Gotify | [Gotify](/admin-guide/notifications/gotify) |
 
-È possibile abilitare più canali contemporaneamente; ciascuno riceve tutti gli avvisi
-che superano i tre controlli descritti sopra.
+Più canali possono essere abilitati contemporaneamente; ognuno riceve ogni avviso che supera i
+tre controlli sopra. Gli stessi provider sono disponibili per gli avvisi del progetto; gli avvisi
+e-mail e Telegram riutilizzano il server SMTP e il token del bot dalla configurazione del
+server, e un avviso Gotify senza URL e token propri riutilizza la coppia del server.
 
-## Override per Project {#per-project-overrides}
+## Sovrascritture per progetto {#per-project-overrides}
 
-Telegram supporta una chat per singolo Project: impostare **Telegram Chat ID** nelle
-[impostazioni del Project](/user-guide/projects/settings) per instradare gli avvisi
-di un Project verso una chat diversa da quella valida per l'intero server. Gli altri
-canali usano la configurazione del server per tutti i Project.
+Telegram supporta una chat per progetto: imposta **Telegram Chat ID** nella scheda
+[Avvisi](/user-guide/alerts#server-channels) del progetto per indirizzare i messaggi
+dei canali del server di un progetto a una chat diversa da quella del server. Per qualsiasi
+altra destinazione per progetto crea un [avviso del progetto](/user-guide/alerts#project-alerts).
 
 ## Da dove iniziare {#where-to-start}
 
-Configurare prima un solo canale, attivare *Allow alerts for this project* e premere
-**Test alerts**. Una volta arrivato il messaggio di prova, abilitare gli avvisi sui
-Task Template che interessano.
+Configura prima un canale, apri la scheda Avvisi del progetto, attiva *Invia gli avvisi di questo
+progetto ai canali del server* e premi **Prova tutto**. Quando arriva un messaggio di prova,
+sistema i modelli che contano.

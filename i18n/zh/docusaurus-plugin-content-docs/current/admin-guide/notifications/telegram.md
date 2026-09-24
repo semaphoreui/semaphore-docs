@@ -50,4 +50,4 @@ telegram_token: <token>
 
 ### 按项目设置聊天 ID {#per-project-chat-ids}
 
-每个项目（Project）都可以使用独立的聊天 ID。这样您可以按项目分开接收通知，而不是全部发送到同一个聊天。此设置会覆盖上文的全局聊天 ID。
+每个项目（Project）都可以使用独立的聊天 ID。这样您可以按项目分开接收通知，而不是全部发送到同一个聊天。此设置会覆盖上文的全局聊天 ID。 请在项目的[告警](/user-guide/alerts#server-channels)标签页中设置，或创建 Telegram 类型的[项目告警](/user-guide/alerts#project-alerts)以面向多个聊天或论坛话题。

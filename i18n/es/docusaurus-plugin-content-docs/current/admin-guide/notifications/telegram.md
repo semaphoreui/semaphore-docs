@@ -50,4 +50,4 @@ Ejemplo de `config.json`:
 
 ### IDs de chat por proyecto {#per-project-chat-ids}
 
-Cada proyecto puede usar un ID de chat único.  Esto permite separar las notificaciones por proyecto en lugar de enviarlas todas al mismo chat. Esta opción sobrescribe el ID de chat global indicado arriba.
+Cada proyecto puede usar un ID de chat único.  Esto permite separar las notificaciones por proyecto en lugar de enviarlas todas al mismo chat. Esta opción sobrescribe el ID de chat global indicado arriba. Establézcalo en la pestaña [Alertas](/user-guide/alerts#server-channels) del proyecto, o cree una [alerta del proyecto](/user-guide/alerts#project-alerts) de tipo Telegram para apuntar a varios chats o a un tema de foro.

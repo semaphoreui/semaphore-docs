@@ -50,6 +50,12 @@ Quando si crea una nuova pianificazione, è necessario configurare le seguenti o
 
 ![](/assets/schedule02.png) ![](/assets/schedule03.png)
 
+### Avvisi {#alerts}
+
+Una pianificazione può usare gli avvisi del suo modello o un insieme diverso di avvisi del
+progetto, così le attività avviate dalla pianificazione segnalano altrove rispetto alle
+esecuzioni manuali. Vedi [Avvisi della pianificazione](./alerts#schedule-alerts).
+
 ### Sintassi del formato cron {#cron-format-syntax}
 
 La pianificazione utilizza la sintassi cron standard con cinque campi:

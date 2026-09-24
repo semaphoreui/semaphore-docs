@@ -55,6 +55,12 @@ When creating a new schedule, you'll need to configure the following options:
 
 ![](/assets/schedule02.png) ![](/assets/schedule03.png)
 
+### Alerts {#alerts}
+
+A schedule can use the alerts of its template or a different set of project alerts, so
+tasks started by the schedule report elsewhere than manual runs. See
+[Schedule alerts](./alerts#schedule-alerts).
+
 ### Cron format syntax {#cron-format-syntax}
 
 The schedule uses standard cron syntax with five fields:

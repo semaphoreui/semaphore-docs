@@ -27,6 +27,7 @@ In this order, because each step depends on the previous one.
 | [Teams](/user-guide/team) | The four built-in roles, and custom roles on Enterprise. |
 | [Key Store](/user-guide/key-store) | SSH keys, logins, and external secret storages. |
 | [Repositories](/user-guide/repositories) | Git repositories and local paths that hold your automation. |
+| [Host config](/user-guide/host-config) | Credentials for Git hosts and repository URLs that the repository key does not cover: submodules, Galaxy roles, Terraform modules. |
 | [Inventory](/user-guide/inventory) | Hosts and connection settings for Ansible, workspaces for Terraform. |
 | [Variable Groups](/user-guide/environment) | Reusable variables and secrets passed into tasks. |
 

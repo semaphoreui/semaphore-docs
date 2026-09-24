@@ -29,6 +29,7 @@ Dans cet ordre, car chaque étape dépend de la précédente.
 | [Équipes](/user-guide/team) | Les quatre rôles intégrés, et les rôles personnalisés sur Enterprise. |
 | [Magasin de clés](/user-guide/key-store) | Clés SSH, identifiants de connexion et stockages de secrets externes. |
 | [Dépôts](/user-guide/repositories) | Dépôts Git et chemins locaux qui contiennent votre automatisation. |
+| [Host config](/user-guide/host-config) | Identifiants pour les hôtes Git et les URL de dépôts que la clé du dépôt ne couvre pas : sous-modules, rôles Galaxy, modules Terraform. |
 | [Inventaire](/user-guide/inventory) | Hôtes et paramètres de connexion pour Ansible, espaces de travail pour Terraform. |
 | [Groupes de variables](/user-guide/environment) | Variables et secrets réutilisables transmis aux tâches. |
 

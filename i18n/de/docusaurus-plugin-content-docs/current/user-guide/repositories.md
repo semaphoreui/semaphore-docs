@@ -19,6 +19,8 @@ Für entfernte Repositories, die SSH verwenden, müssen Sie Ihren SSH-Schlüssel
 
 Für entfernte Repositories ohne Authentifizierung können Sie einen Schlüssel vom Typ `None` erstellen.
 
+Der Schlüssel eines Repositories wird nur für dieses Repository verwendet. Um Submodule, Rollen aus `requirements.yml` oder andere anderswo gehostete Repositories mit eigenen Zugangsdaten zu erreichen, fügen Sie eine Zuordnung in der [Host config](/user-guide/host-config) hinzu.
+
 ## Ein neues Repository erstellen {#creating-a-new-repository}
 1. Stellen Sie sicher, dass Sie den Schlüssel für das hinzuzufügende Repository im Bereich Key Store konfiguriert haben.
 

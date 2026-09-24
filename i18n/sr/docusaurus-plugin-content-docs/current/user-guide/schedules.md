@@ -50,6 +50,12 @@ Prilikom kreiranja novog rasporeda potrebno je da podesite sledeće opcije:
 
 ![](/assets/schedule02.png) ![](/assets/schedule03.png)
 
+### Obaveštenja {#alerts}
+
+Raspored može da koristi obaveštenja svog šablona ili drugačiji skup obaveštenja projekta, tako
+da zadaci pokrenuti rasporedom prijavljuju na drugo mesto nego ručna pokretanja. Pogledajte
+[Obaveštenja rasporeda](./alerts#schedule-alerts).
+
 ### Sintaksa cron formata {#cron-format-syntax}
 
 Raspored koristi standardnu cron sintaksu sa pet polja:

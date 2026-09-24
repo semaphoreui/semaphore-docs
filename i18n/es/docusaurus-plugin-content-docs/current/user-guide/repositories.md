@@ -19,6 +19,8 @@ Para repositorios remotos que usan SSH, deberá usar su clave SSH en el **Almac�
 
 Para repositorios remotos sin autenticación, puede crear una clave de tipo `None`.
 
+La clave de un repositorio se usa solo para ese repositorio. Para acceder a submódulos, roles de `requirements.yml` u otros repositorios alojados en otro lugar con sus propias credenciales, añada una asignación en [Host config](/user-guide/host-config).
+
 ## Crear un nuevo repositorio {#creating-a-new-repository}
 1. Asegúrese de haber configurado en la sección del almacén de claves la clave del repositorio que va a añadir.
 

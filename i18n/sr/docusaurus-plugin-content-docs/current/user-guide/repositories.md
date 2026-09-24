@@ -21,6 +21,8 @@ Za udaljene repozitorijume koji koriste SSH moraćete da koristite svoj SSH klju
 
 Za udaljene repozitorijume koji nemaju autentifikaciju možete kreirati ključ tipa `None`.
 
+Ključ repozitorijuma koristi se samo za taj repozitorijum. Da biste dosegli submodule, uloge iz `requirements.yml` ili druge repozitorijume hostovane na drugom mestu sa sopstvenim pristupnim podacima, dodajte mapiranje u [Host config](/user-guide/host-config).
+
 ## Kreiranje novog repozitorijuma {#creating-a-new-repository}
 1. Proverite da ste u odeljku skladišta ključeva konfigurisali ključ za repozitorijum koji dodajete.
 

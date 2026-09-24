@@ -1,37 +1,44 @@
 ---
 title: Notificações
-description: Como o Semaphore entrega alertas de tarefas, os canais que ele suporta e as duas chaves que precisam estar ligadas para que algo seja enviado.
+description: Como o Semaphore entrega alertas de tarefas, os canais suportados e a relação entre canais do servidor e alertas por projeto.
 ---
 
 # Notificações
 
-O Semaphore informa os resultados das tarefas em chats e por e-mail. Um canal é
-configurado uma única vez no servidor, no `config.json` ou por variáveis de
-ambiente, e então vale para todos os projetos. Quais tarefas geram um alerta é
-decidido por projeto e por modelo na interface web.
+O Semaphore reporta resultados de tarefas por chat e e-mail de duas formas:
+
+- **Canais do servidor** são configurados uma vez no servidor, em `config.json` ou por variáveis
+  de ambiente, e ficam disponíveis para todos os projetos. Esta página os descreve.
+- **Alertas do projeto** são destinos nomeados criados pelos membros do projeto na aba
+  [Alertas](/user-guide/alerts) do projeto, com chat, webhook ou destinatários
+  próprios, e vinculados a modelos e agendamentos.
 
 ## Como funciona a entrega {#how-delivery-works}
 
-Três configurações decidem se uma mensagem é enviada, e todas as três precisam
-permitir isso:
+Para um canal do servidor, três configurações decidem se uma mensagem é enviada, e as três
+precisam permitir:
 
-1. **O canal está configurado no servidor.** Cada provedor tem suas próprias
-   chaves no `config.json`. Consulte a página desse provedor abaixo.
-2. **O projeto permite alertas.** *Allow alerts for this project*, nas
-   [configurações do projeto](/user-guide/projects/settings), é a chave mestra.
-   Com ela desligada, nenhum canal envia nada sobre esse projeto.
-3. **O modelo solicita o alerta.** Um modelo de tarefa escolhe se alerta em caso
-   de sucesso, em caso de erro ou nunca; veja
-   [Modelos de Tarefa](/user-guide/task-templates).
+1. **O canal está configurado no servidor.** Cada provedor tem suas próprias chaves em
+   `config.json`. Veja a página desse provedor abaixo.
+2. **O projeto usa os canais do servidor.** *Enviar alertas deste projeto aos canais do
+   servidor* na aba [Alertas](/user-guide/alerts#server-channels) do projeto é o
+   interruptor principal. Desligado, os canais do servidor não enviam nada sobre esse projeto.
+   Os alertas do projeto não são afetados por esse interruptor.
+3. **O modelo pede.** Um modelo que usa os *padrões do projeto* envia aos canais do servidor;
+   um modelo com uma lista de alertas personalizada não envia. Modelos também podem suprimir
+   notificações de sucesso ou falha, veja [Modelos de tarefas](/user-guide/task-templates).
 
-Use **Test alerts** nas configurações do projeto para enviar uma mensagem de teste
-por todos os canais configurados sem executar uma tarefa.
+Canais de chat reportam sucesso, falha e tarefas aguardando confirmação; o e-mail reporta apenas
+falhas. Alertas do projeto podem sobrescrever os eventos por destino.
+
+Use **Testar tudo** na aba Alertas para enviar uma mensagem de teste por todos os canais do
+servidor e todos os alertas do projeto ativados sem executar uma tarefa.
 
 ## Canais {#channels}
 
 | Canal | Página |
 |---|---|
-| E-mail (SMTP) | [E-mail](/admin-guide/notifications/email) |
+| E-mail (SMTP) | [Email](/admin-guide/notifications/email) |
 | Telegram | [Telegram](/admin-guide/notifications/telegram) |
 | Slack | [Slack](/admin-guide/notifications/slack) |
 | Microsoft Teams | [Teams](/admin-guide/notifications/teams) |
@@ -39,18 +46,20 @@ por todos os canais configurados sem executar uma tarefa.
 | DingTalk | [DingTalk](/admin-guide/notifications/ding) |
 | Gotify | [Gotify](/admin-guide/notifications/gotify) |
 
-Vários canais podem ser habilitados ao mesmo tempo; cada um recebe todos os
-alertas que passam pelas três verificações acima.
+Vários canais podem ser ativados ao mesmo tempo; cada um recebe todos os alertas que passam nas
+três verificações acima. Os mesmos provedores estão disponíveis para os alertas do projeto;
+alertas de e-mail e Telegram reutilizam o servidor SMTP e o token do bot da configuração do
+servidor, e um alerta Gotify sem URL e token próprios reutiliza o par global.
 
-## Sobrescritas por projeto {#per-project-overrides}
+## Substituições por projeto {#per-project-overrides}
 
-O Telegram suporta um chat por projeto: defina **Telegram Chat ID** nas
-[configurações do projeto](/user-guide/projects/settings) para encaminhar os
-alertas de um projeto a um chat diferente do configurado para todo o servidor. Os
-demais canais usam a configuração do servidor para todos os projetos.
+O Telegram suporta um chat por projeto: defina **Telegram Chat ID** na aba
+[Alertas](/user-guide/alerts#server-channels) do projeto para direcionar as mensagens
+de canal do servidor de um projeto a um chat diferente do global. Para qualquer outro destino por
+projeto crie um [alerta do projeto](/user-guide/alerts#project-alerts).
 
 ## Por onde começar {#where-to-start}
 
-Configure um canal primeiro, ligue *Allow alerts for this project* e pressione
-**Test alerts**. Assim que uma mensagem de teste chegar, habilite os alertas nos
-modelos que importam.
+Configure um canal primeiro, abra a aba Alertas do projeto, ative *Enviar alertas deste projeto
+aos canais do servidor* e pressione **Testar tudo**. Quando uma mensagem de teste chegar, ajuste
+os modelos que importam.

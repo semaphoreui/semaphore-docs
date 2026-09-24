@@ -19,6 +19,8 @@ Pour les dépôts distants utilisant SSH, vous devrez utiliser votre clé SSH da
 
 Pour les dépôts distants sans authentification, vous pouvez créer une clé de type `None`.
 
+La clé d'un dépôt n'est utilisée que pour ce dépôt. Pour atteindre des sous-modules, des rôles de `requirements.yml` ou d'autres dépôts hébergés ailleurs avec leurs propres identifiants, ajoutez un mappage dans [Host config](/user-guide/host-config).
+
 ## Créer un nouveau dépôt {#creating-a-new-repository}
 1. Assurez-vous d'avoir configuré, dans la section du magasin de clés, la clé correspondant au dépôt que vous allez ajouter.
 
