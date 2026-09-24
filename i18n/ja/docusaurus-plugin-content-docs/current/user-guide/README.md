@@ -27,6 +27,7 @@ Webhook は、テンプレートを自動的に開始します。
 | [チーム](/user-guide/team) | 4 つの組み込みロールと、Enterprise のカスタムロールです。 |
 | [キーストア](/user-guide/key-store) | SSH キー、ログイン情報、外部のシークレットストレージです。 |
 | [リポジトリ](/user-guide/repositories) | 自動化のコードを保持する Git リポジトリとローカルパスです。 |
+| [Host config](/user-guide/host-config) | リポジトリのキーでは届かない Git ホストやリポジトリ URL の認証情報です。サブモジュール、Galaxy ロール、Terraform モジュールに使います。 |
 | [インベントリ](/user-guide/inventory) | Ansible 向けのホストと接続設定、Terraform 向けのワークスペースです。 |
 | [変数グループ](/user-guide/environment) | タスクに渡される再利用可能な変数とシークレットです。 |
 

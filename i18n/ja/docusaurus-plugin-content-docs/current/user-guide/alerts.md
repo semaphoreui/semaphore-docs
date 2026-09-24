@@ -49,8 +49,6 @@ description: プロジェクトの「アラート」タブ。サーバーチャ�
 
 ![独自のボットトークンを使う Telegram アラート](/assets/alert-form-telegram.webp)
 
-![独自の SMTP サーバーを使うメールアラート](/assets/alert-form-email.webp)
-
 ### メッセージテンプレート {#message-templates}
 
 本文は Go の `text/template`（メールは `html/template`）です。使えるフィールドは次のとおりです。

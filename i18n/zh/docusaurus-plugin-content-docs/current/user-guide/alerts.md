@@ -49,8 +49,6 @@ description: 项目的“告警”标签页，在这里开启服务器渠道，�
 
 ![使用自有机器人令牌的 Telegram 告警](/assets/alert-form-telegram.webp)
 
-![使用自有 SMTP 服务器的邮件告警](/assets/alert-form-email.webp)
-
 ### 消息模板 {#message-templates}
 
 正文是 Go 的 `text/template`（邮件为 `html/template`）。可用字段如下：

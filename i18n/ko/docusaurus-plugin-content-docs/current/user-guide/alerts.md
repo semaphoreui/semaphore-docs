@@ -49,8 +49,6 @@ description: 프로젝트의 알림 탭입니다. 서버 채널을 켜고, 이�
 
 ![자체 봇 토큰을 사용하는 Telegram 알림](/assets/alert-form-telegram.webp)
 
-![자체 SMTP 서버를 사용하는 이메일 알림](/assets/alert-form-email.webp)
-
 ### 메시지 템플릿 {#message-templates}
 
 본문은 Go `text/template`(이메일은 `html/template`)입니다. 사용 가능한 필드는 다음과 같습니다.

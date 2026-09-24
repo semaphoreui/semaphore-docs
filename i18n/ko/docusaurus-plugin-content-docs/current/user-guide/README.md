@@ -26,6 +26,7 @@ Semaphore의 작업은 하나의 흐름을 따릅니다. **프로젝트**가 나
 | [팀](/user-guide/team) | 네 가지 기본 제공 역할과 Enterprise의 사용자 지정 역할입니다. |
 | [키 저장소](/user-guide/key-store) | SSH 키, 로그인 정보 및 외부 시크릿 저장소입니다. |
 | [리포지토리](/user-guide/repositories) | 자동화 코드가 있는 Git 리포지토리와 로컬 경로입니다. |
+| [Host config](/user-guide/host-config) | 리포지토리 키로는 접근할 수 없는 Git 호스트와 리포지토리 URL의 자격 증명입니다. 서브모듈, Galaxy 역할, Terraform 모듈에 사용합니다. |
 | [인벤토리](/user-guide/inventory) | Ansible을 위한 호스트와 연결 설정, Terraform을 위한 워크스페이스입니다. |
 | [변수 그룹](/user-guide/environment) | 작업에 전달되는 재사용 가능한 변수와 시크릿입니다. |
 

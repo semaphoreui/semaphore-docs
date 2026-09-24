@@ -49,8 +49,6 @@ Obaveštenje vezano za šablon ili raspored ne može da se obriše. Dijalog prik
 
 ![Telegram obaveštenje sa sopstvenim tokenom bota](/assets/alert-form-telegram.webp)
 
-![E-mail obaveštenje sa sopstvenim SMTP serverom](/assets/alert-form-email.webp)
-
 ### Šabloni poruka {#message-templates}
 
 Telo je Go `text/template` (`html/template` za e-mail). Dostupna polja su:

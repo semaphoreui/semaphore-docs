@@ -28,6 +28,7 @@ Ovim redosledom, jer svaki korak zavisi od prethodnog.
 | [Timovi](/user-guide/team) | Četiri ugrađene uloge i prilagođene uloge u izdanju Enterprise. |
 | [Skladište ključeva](/user-guide/key-store) | SSH ključevi, prijave i spoljna skladišta tajni. |
 | [Repozitorijumi](/user-guide/repositories) | Git repozitorijumi i lokalne putanje koje sadrže vašu automatizaciju. |
+| [Host config](/user-guide/host-config) | Pristupni podaci za Git hostove i URL-ove repozitorijuma koje ključ repozitorijuma ne pokriva: podmoduli, Galaxy uloge, Terraform moduli. |
 | [Inventar](/user-guide/inventory) | Hostovi i podešavanja veze za Ansible, radni prostori za Terraform. |
 | [Grupe promenljivih](/user-guide/environment) | Promenljive i tajne koje se prosleđuju zadacima i mogu se ponovo koristiti. |
 

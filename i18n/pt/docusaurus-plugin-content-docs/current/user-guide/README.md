@@ -28,6 +28,7 @@ Nesta ordem, porque cada etapa depende da anterior.
 | [Equipes](/user-guide/team) | Os quatro papéis integrados e os papéis personalizados no Enterprise. |
 | [Armazenamento de Chaves](/user-guide/key-store) | Chaves SSH, logins e armazenamentos externos de segredos. |
 | [Repositórios](/user-guide/repositories) | Repositórios Git e caminhos locais que contêm sua automação. |
+| [Host config](/user-guide/host-config) | Credenciais para hosts Git e URLs de repositórios que a chave do repositório não cobre: submódulos, roles do Galaxy, módulos do Terraform. |
 | [Inventário](/user-guide/inventory) | Hosts e configurações de conexão para o Ansible, workspaces para o Terraform. |
 | [Grupos de Variáveis](/user-guide/environment) | Variáveis e segredos reutilizáveis passados para as tarefas. |
 

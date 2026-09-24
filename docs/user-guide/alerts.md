@@ -41,15 +41,13 @@ Press **New Alert** to create a destination. Each alert has:
 | **Enabled** | A disabled alert is never sent and is not a project default. |
 | **Message template** | Optional Go template for the message body. Leave the built-in text to follow future server updates. |
 
-Secrets are never stored on the alert: they live encrypted in the Key Store and the key can not be deleted while an alert uses it. When the server has no bot token, SMTP server or Gotify pair configured, the form only offers *Use my own*. Webhook URLs must use `http` or `https` and may not point at the server itself.
+Secrets are never stored on the alert: they live encrypted in the Key Store and the key can not be deleted while an alert uses it. When the server has no bot token, SMTP server or Gotify pair configured, the form only offers *Use my own*. Webhook URLs must use `http` or `https` and may not point at the server itself. The same outbound policy applies to an own SMTP host: `localhost`, loopback, link-local and cloud metadata addresses (such as `169.254.169.254`) are rejected, and the host is checked again when the connection is opened. The server-wide SMTP settings from the configuration are not restricted.
 
 Use **Send test message** in the list to check one alert and **Test all** in the toolbar to send a test through every enabled destination of the project, server channels included.
 
 An alert that is bound to a template or a schedule can not be deleted. The dialog lists the objects that use it.
 
 ![Telegram alert with an own bot token](/assets/alert-form-telegram.webp)
-
-![E-mail alert with an own SMTP server](/assets/alert-form-email.webp)
 
 ### Message templates {#message-templates}
 

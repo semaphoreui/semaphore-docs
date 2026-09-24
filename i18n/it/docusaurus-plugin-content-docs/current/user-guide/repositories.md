@@ -19,6 +19,8 @@ Per i repository remoti che utilizzano SSH, è necessario utilizzare la propria 
 
 Per i repository remoti che non richiedono autenticazione, è possibile creare una chiave di tipo `None`.
 
+La chiave di un Repository viene usata solo per quel Repository. Per raggiungere submoduli, ruoli di `requirements.yml` o altri repository ospitati altrove con credenziali proprie, aggiungere una mappatura in [Host config](/user-guide/host-config).
+
 ## Creazione di un nuovo repository {#creating-a-new-repository}
 1. Assicurarsi di aver configurato nella sezione Key Store la chiave per il repository che si sta per aggiungere.
 

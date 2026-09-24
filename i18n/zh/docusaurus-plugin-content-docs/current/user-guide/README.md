@@ -24,6 +24,7 @@ Semaphore 中的工作遵循同一条链路。**项目**承载其他一切。在
 | [团队](/user-guide/team) | 四种内置角色，以及 Enterprise 版的自定义角色。 |
 | [密钥库](/user-guide/key-store) | SSH 密钥、登录凭据和外部机密存储。 |
 | [仓库](/user-guide/repositories) | 存放自动化代码的 Git 仓库和本地路径。 |
+| [Host config](/user-guide/host-config) | 仓库密钥覆盖不到的 Git 主机和仓库 URL 的凭据：子模块、Galaxy 角色、Terraform 模块。 |
 | [清单](/user-guide/inventory) | Ansible 的主机与连接设置，Terraform 的工作区。 |
 | [变量组](/user-guide/environment) | 传入任务、可复用的变量和机密。 |
 

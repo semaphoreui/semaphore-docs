@@ -21,6 +21,8 @@ Semaphore 支持以下类型的仓库：
 
 对于不需要认证的远程仓库，可以创建类型为 `None` 的密钥。
 
+仓库的密钥仅用于该仓库。要访问托管在别处、拥有各自凭据的子模块、`requirements.yml` 角色或其他仓库，请在 [Host config](/user-guide/host-config) 中添加一条映射。
+
 ## 创建新仓库 {#creating-a-new-repository}
 1. 确保你已经在密钥库分区中为即将添加的仓库配置好了密钥。
 

@@ -21,6 +21,8 @@ Para Repositórios remotos que usam SSH, você precisará usar a sua chave SSH n
 
 Para Repositórios remotos que não têm autenticação, você pode criar uma Chave do tipo `None`.
 
+A chave de um Repositório é usada apenas para esse Repositório. Para alcançar submódulos, roles do `requirements.yml` ou outros repositórios hospedados em outro lugar com credenciais próprias, adicione um mapeamento em [Host config](/user-guide/host-config).
+
 ## Criando um novo Repositório {#creating-a-new-repository}
 1. Certifique-se de ter configurado a chave do Repositório que você está prestes a adicionar na seção Armazenamento de Chaves.
 

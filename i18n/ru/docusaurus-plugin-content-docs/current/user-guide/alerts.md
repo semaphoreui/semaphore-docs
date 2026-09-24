@@ -49,8 +49,6 @@ Telegram появляется, как только на сервере есть 
 
 ![Оповещение Telegram со своим токеном бота](/assets/alert-form-telegram.webp)
 
-![Оповещение по почте со своим SMTP-сервером](/assets/alert-form-email.webp)
-
 ### Шаблоны сообщений {#message-templates}
 
 Тело — это Go `text/template` (`html/template` для электронной почты). Доступные поля:

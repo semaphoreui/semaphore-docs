@@ -49,8 +49,6 @@ Un avviso collegato a un modello o a una pianificazione non può essere eliminat
 
 ![Avviso Telegram con token del bot proprio](/assets/alert-form-telegram.webp)
 
-![Avviso e-mail con server SMTP proprio](/assets/alert-form-email.webp)
-
 ### Modelli di messaggio {#message-templates}
 
 Il corpo è un `text/template` Go (`html/template` per l’e-mail). I campi disponibili sono:

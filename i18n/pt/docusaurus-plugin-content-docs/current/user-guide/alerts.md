@@ -49,8 +49,6 @@ Um alerta vinculado a um modelo ou agendamento não pode ser excluído. A caixa 
 
 ![Alerta do Telegram com token de bot próprio](/assets/alert-form-telegram.webp)
 
-![Alerta de e-mail com servidor SMTP próprio](/assets/alert-form-email.webp)
-
 ### Modelos de mensagem {#message-templates}
 
 O corpo é um `text/template` Go (`html/template` para e-mail). Os campos disponíveis são:

@@ -239,6 +239,7 @@ const sidebars = {
             'user-guide/repositories/bitbucket_access_token',
           ],
         },
+        'user-guide/host-config',
         'user-guide/integrations',
         'user-guide/team',
         'user-guide/account',

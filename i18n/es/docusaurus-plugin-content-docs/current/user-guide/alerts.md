@@ -49,8 +49,6 @@ Una alerta vinculada a una plantilla o a una programación no se puede eliminar.
 
 ![Alerta de Telegram con token de bot propio](/assets/alert-form-telegram.webp)
 
-![Alerta de correo con servidor SMTP propio](/assets/alert-form-email.webp)
-
 ### Plantillas de mensaje {#message-templates}
 
 El cuerpo es una `text/template` de Go (`html/template` para correo). Los campos disponibles son:

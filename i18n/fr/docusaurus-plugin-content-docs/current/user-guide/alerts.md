@@ -49,8 +49,6 @@ Une alerte liée à un modèle ou à une planification ne peut pas être supprim
 
 ![Alerte Telegram avec un jeton de bot propre](/assets/alert-form-telegram.webp)
 
-![Alerte e-mail avec un serveur SMTP propre](/assets/alert-form-email.webp)
-
 ### Modèles de message {#message-templates}
 
 Le corps est un `text/template` Go (`html/template` pour l’e-mail). Les champs disponibles sont :

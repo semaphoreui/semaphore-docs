@@ -49,8 +49,6 @@ Eine Benachrichtigung, die an eine Vorlage oder einen Zeitplan gebunden ist, kan
 
 ![Telegram-Benachrichtigung mit eigenem Bot-Token](/assets/alert-form-telegram.webp)
 
-![E-Mail-Benachrichtigung mit eigenem SMTP-Server](/assets/alert-form-email.webp)
-
 ### Nachrichtenvorlagen {#message-templates}
 
 Der Text ist eine Go-`text/template` (`html/template` für E-Mail). Verfügbare Felder:

@@ -26,6 +26,8 @@ For remote Repositories that use SSH, you will need to use your SSH key in the *
 
 For Remote Repositories that do not have authentication, you can create a Key with the type of `None`.
 
+The key of a Repository is used for that Repository only. To reach submodules, `requirements.yml` roles or other repositories hosted elsewhere with their own credentials, add a mapping in [Host config](/user-guide/host-config).
+
 ## Creating a New Repository {#creating-a-new-repository}
 1. Make sure you have configured the key for the Repository you are about to add in the key store section.
 
