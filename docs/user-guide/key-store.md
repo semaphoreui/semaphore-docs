@@ -89,8 +89,16 @@ Secrets can be stored in an external Devolutions Server instance instead of the 
 
 [Read more...](/user-guide/key-store/devolutions-server)
 
+### CyberArk {#cyberark}
+
+<Enterprise />
+
+Secrets can be read from and stored in CyberArk Privileged Access Manager (Self-Hosted or Privilege Cloud) through the PVWA REST API.
+
+[Read more...](/user-guide/key-store/cyberark)
+
 ## Syncing secrets from remote storages {#syncing-secrets-from-remote-storages}
 
-Semaphore can automatically import secrets from an external secret manager (HashiCorp Vault, OpenBao, AWS Secrets Manager, Azure Key Vault, or Devolutions Server) and keep them in sync. Sync paths let you choose which secrets to import and how to name them.
+Semaphore can automatically import secrets from an external secret manager (HashiCorp Vault, OpenBao, AWS Secrets Manager, Azure Key Vault, Devolutions Server, or CyberArk) and keep them in sync. Sync paths let you choose which secrets to import and how to name them.
 
 [Read more...](/user-guide/key-store/secret-sync)
