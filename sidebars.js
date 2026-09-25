@@ -217,6 +217,7 @@ const sidebars = {
             'user-guide/key-store/openbao',
             { type: 'doc', id: 'user-guide/key-store/aws-secrets-manager', customProps: { edition: 'enterprise' } },
             { type: 'doc', id: 'user-guide/key-store/devolutions-server', customProps: { edition: 'enterprise' } },
+            { type: 'doc', id: 'user-guide/key-store/cyberark', customProps: { edition: 'enterprise' } },
             'user-guide/key-store/secret-sync',
           ],
         },
