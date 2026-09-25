@@ -1,11 +1,55 @@
 ---
 title: Configuração de hosts
-description: "Associe um host Git ou a URL de um repositório a uma credencial do Armazenamento de Chaves, para que submódulos, roles do Galaxy, módulos do Terraform e repositórios de inventário hospedados em outro lugar possam ser acessados com a própria chave."
+description: "Dê a submódulos privados, roles do Galaxy, módulos do Terraform e hosts do inventário uma credencial própria do Armazenamento de Chaves, sem alterar o repositório."
 ---
 
 # Configuração de hosts
 
-Uma tarefa se autentica no seu repositório com a chave selecionada no [Repositório](/user-guide/repositories). Todo o resto que a tarefa busca do Git não recebe credencial própria: um submódulo em outro servidor, uma role do `requirements.yml`, um módulo do Terraform, um inventário mantido em um segundo repositório. **Host config** (configuração de hosts) fecha essa lacuna. Um mapeamento vincula um host Git ou a URL de um repositório a uma credencial do [Armazenamento de Chaves](/user-guide/key-store), e toda operação Git do projeto a usa ao alcançar esse host ou essa URL.
+## Por que você precisa disso {#why}
+
+Um [Repositório](/user-guide/repositories) tem exatamente uma chave: aquela que o Semaphore usa para cloná-lo. Isso basta enquanto tudo o que a tarefa precisa está nesse repositório. Na prática, uma tarefa alcança outros lugares, e cada um deles pode exigir uma credencial diferente:
+
+```mermaid
+flowchart LR
+  Task[Tarefa] -->|chave do repositório| Repo[Repositório principal]
+  Repo -.-> Sub[Submódulo em outro servidor]
+  Repo -.-> Req[Roles do requirements.yml]
+  Repo -.-> Mod[Módulos do Terraform / OpenTofu]
+  Task -.-> InvRepo[Inventário em um segundo repositório]
+  Task -.-> Hosts[Hosts do inventário com chave SSH própria]
+  classDef gap stroke-dasharray: 5 5,stroke:#c62828,color:#c62828
+  class Sub,Req,Mod,InvRepo,Hosts gap
+```
+
+As setas tracejadas são a lacuna: a chave do repositório não é oferecida a esses servidores, então a tarefa falha com **Permission denied** ou **Authentication failed** assim que os alcança. Até agora, as únicas soluções eram dar a uma única chave acesso a tudo, ou embutir credenciais nos arquivos do repositório.
+
+**Host config** (configuração de hosts) resolve isso sem tocar no repositório. Você diz ao Semaphore *"sempre que o projeto se conectar a este host ou a esta URL, use aquela credencial do [Armazenamento de Chaves](/user-guide/key-store)"*. O mapeamento é aplicado a toda conexão Git e SSH da tarefa, de onde quer que ela seja iniciada.
+
+| Você tem | O que há no repositório | Sem mapeamento | Com mapeamento |
+|---|---|---|---|
+| Um **submódulo privado** em outro servidor Git | `.gitmodules` apontando para `git@gitlab.example.com:infra/common.git` | `git submodule update` é rejeitado: a deploy key do repositório principal não é conhecida lá | Um mapeamento **Host** para `gitlab.example.com` com a chave permitida nesse servidor |
+| **Roles ou collections privadas** no `requirements.yml` do Ansible | `src: https://gitlab.example.com/ansible/role-nginx.git` | `ansible-galaxy install` pede um login e falha | Um mapeamento **URL** para `https://gitlab.example.com/ansible/` com um token de acesso do GitLab |
+| **Módulos privados do Terraform / OpenTofu** buscados do Git | `source = "git::https://github.com/acme/tf-modules.git"` | `terraform init` não consegue baixar o módulo | Um mapeamento **URL** para `https://github.com/acme/` com uma chave SSH ou um token |
+| Um **inventário** cujos hosts precisam de uma **chave SSH diferente** da do repositório | Um inventário com `db-01.internal`, `db-02.internal` | O inventário só pode nomear uma chave, e a chave do repositório é a errada para esses hosts | Um mapeamento **Host** para cada nome de host, ou um único mapeamento com a chave do inventário para o host que eles compartilham |
+
+Um mapeamento atende a todos esses casos de uma vez; você não os configura por modelo. Quando um projeto não tem mapeamentos, nada muda: as tarefas continuam usando a chave do repositório, exatamente como antes.
+
+## Como funciona {#how-it-works}
+
+Um mapeamento é uma regra com três partes: **o que** corresponder (um nome de host ou um prefixo de URL), **qual** credencial do Armazenamento de Chaves usar, e nada mais. O Semaphore instala os mapeamentos do projeto antes do primeiro comando Git de uma tarefa e os remove quando a tarefa termina. Toda conexão que a tarefa abre, da sua própria clonagem até um módulo `git` dentro de um playbook, passa por eles.
+
+```mermaid
+flowchart LR
+  Task["Tarefa<br/>clonagem · submódulos · requirements.yml<br/>terraform init · hosts do inventário"] --> HC
+  subgraph Projeto
+    KS[Armazenamento de Chaves]
+    HC[Host config]
+  end
+  KS -->|chave A| HC
+  KS -->|token B| HC
+  HC -->|"Host github.com → chave A"| GH[github.com]
+  HC -->|"URL https://gitlab.example.com/ansible/ → token B"| GL[gitlab.example.com]
+```
 
 A página fica no menu do projeto, abaixo de **Repositories**. Adicionar, editar e excluir mapeamentos exige a permissão de gerenciar recursos do projeto, a mesma que o Armazenamento de Chaves precisa.
 

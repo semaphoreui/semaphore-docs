@@ -1,11 +1,56 @@
 ---
 title: ホスト設定
-description: Git ホストやリポジトリの URL をキーストアの認証情報に対応付け、別の場所にあるサブモジュール、Galaxy ロール、Terraform モジュール、インベントリのリポジトリに専用のキーでアクセスできるようにします。
+description: プライベートなサブモジュール、Galaxy ロール、Terraform モジュール、インベントリのホストに、リポジトリを変更することなくキーストアの専用の認証情報を与えます。
 ---
 
 # ホスト設定
 
-タスクは、[リポジトリ](/user-guide/repositories) で選択したキーを使ってそのリポジトリに認証します。タスクが Git から取得するそれ以外のもの、つまり別サーバー上のサブモジュール、`requirements.yml` のロール、Terraform モジュール、二つ目のリポジトリに保管されたインベントリには、独自の認証情報がありません。**Host config**（ホスト設定）はこの隙間を埋めます。マッピングは Git ホストまたはリポジトリの URL を [キーストア](/user-guide/key-store) の認証情報に結び付け、プロジェクトのすべての Git 操作は、そのホストや URL にアクセスするときにその認証情報を使います。
+## なぜ必要か {#why}
+
+[リポジトリ](/user-guide/repositories) が持つキーは一つだけで、Semaphore がそのリポジトリをクローンするために使うものです。タスクに必要なものがすべてそのリポジトリにある限り、それで十分です。しかし実際には、タスクは他の場所にもアクセスし、それぞれが別の認証情報を要求することがあります。
+
+```mermaid
+flowchart LR
+  Task[タスク] -->|リポジトリのキー| Repo[メインリポジトリ]
+  Repo -.-> Sub[別サーバー上のサブモジュール]
+  Repo -.-> Req[requirements.yml のロール]
+  Repo -.-> Mod[Terraform / OpenTofu モジュール]
+  Task -.-> InvRepo[二つ目のリポジトリにあるインベントリ]
+  Task -.-> Hosts[独自の SSH キーを持つインベントリのホスト]
+  classDef gap stroke-dasharray: 5 5,stroke:#c62828,color:#c62828
+  class Sub,Req,Mod,InvRepo,Hosts gap
+```
+
+破線の矢印が隙間です。リポジトリのキーはそれらのサーバーには提示されないため、タスクはそれらに触れた時点で **Permission denied** または **Authentication failed** で失敗します。これまでの回避策は、一つのキーにあらゆる場所へのアクセス権を与えるか、リポジトリのファイルに認証情報を埋め込むことしかありませんでした。
+
+**Host config**（ホスト設定）は、リポジトリに手を加えることなくこの問題を解決します。Semaphore に *「プロジェクトがこのホストまたはこの URL に接続するときは、常に [キーストア](/user-guide/key-store) のあの認証情報を使う」* と指示するだけです。マッピングは、どこから開始されたかにかかわらず、タスクのすべての Git 接続と SSH 接続に適用されます。
+
+| 状況 | リポジトリにあるもの | マッピングなし | マッピングあり |
+|---|---|---|---|
+| 別の Git サーバー上の **プライベートなサブモジュール** | `git@gitlab.example.com:infra/common.git` を指す `.gitmodules` | `git submodule update` が拒否される。メインリポジトリのデプロイキーはそのサーバーでは知られていない | そのサーバーで許可されたキーを持つ `gitlab.example.com` の **Host** マッピング |
+| Ansible の `requirements.yml` にある **プライベートなロールやコレクション** | `src: https://gitlab.example.com/ansible/role-nginx.git` | `ansible-galaxy install` がログインを求めて失敗する | GitLab のアクセストークンを持つ `https://gitlab.example.com/ansible/` の **URL** マッピング |
+| Git から取得する **プライベートな Terraform / OpenTofu モジュール** | `source = "git::https://github.com/acme/tf-modules.git"` | `terraform init` がモジュールをダウンロードできない | SSH キーまたはトークンを持つ `https://github.com/acme/` の **URL** マッピング |
+| ホストがリポジトリとは **別の SSH キー** を必要とする **インベントリ** | `db-01.internal`、`db-02.internal` を含むインベントリ | インベントリで指定できるキーは一つだけで、リポジトリのキーはそれらのホストには合わない | ホスト名ごとの **Host** マッピング、または共通するホストに対してインベントリのキーを持つ一つのマッピング |
+
+一つのマッピングでこれらすべてに同時に対応でき、テンプレートごとに設定する必要はありません。プロジェクトにマッピングがない場合は何も変わらず、タスクはこれまでどおりリポジトリのキーを使い続けます。
+
+## 仕組み {#how-it-works}
+
+マッピングは三つの要素からなるルールです。**何に** 一致させるか（ホスト名または URL のプレフィックス）、キーストアの **どの** 認証情報を使うか、そしてそれ以外はありません。Semaphore は、タスクの最初の Git コマンドの前にプロジェクトのマッピングを設定し、タスクの終了時に取り除きます。タスクが開く接続はすべて、自身のクローンからプレイブック内の `git` モジュールに至るまで、このマッピングを通ります。
+
+```mermaid
+flowchart LR
+  Task["タスク<br/>クローン · サブモジュール · requirements.yml<br/>terraform init · インベントリのホスト"] --> HC
+  subgraph Project[プロジェクト]
+    KS[キーストア]
+    HC[ホスト設定]
+  end
+  KS -->|キー A| HC
+  KS -->|トークン B| HC
+  HC -->|"Host github.com → キー A"| GH[github.com]
+  HC -->|"URL https://gitlab.example.com/ansible/ → トークン B"| GL[gitlab.example.com]
+```
+
 
 このページはプロジェクトメニューの **Repositories** の下にあります。マッピングの追加、編集、削除には、キーストアと同じくプロジェクトリソースを管理する権限が必要です。
 

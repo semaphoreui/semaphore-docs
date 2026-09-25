@@ -1,11 +1,55 @@
 ---
 title: Konfiguracija hostova
-description: "Povežite Git host ili URL repozitorijuma sa pristupnim podacima iz Skladišta ključeva, tako da se submoduli, Galaxy uloge, Terraform moduli i repozitorijumi inventara hostovani na drugom mestu dosežu sopstvenim ključem."
+description: "Dajte privatnim submodulima, Galaxy ulogama, Terraform modulima i hostovima inventara sopstvene pristupne podatke iz Skladišta ključeva, bez izmene repozitorijuma."
 ---
 
 # Konfiguracija hostova
 
-Zadatak se autentifikuje na svoj repozitorijum ključem izabranim u [repozitorijumu](/user-guide/repositories). Sve ostalo što zadatak preuzima iz Git-a nema sopstvene pristupne podatke: submodul na drugom serveru, uloga iz `requirements.yml`, Terraform modul, inventar koji se čuva u drugom repozitorijumu. **Host config** (konfiguracija hostova) zatvara tu prazninu. Mapiranje vezuje Git host ili URL repozitorijuma za pristupne podatke iz [Skladišta ključeva](/user-guide/key-store), a svaka Git operacija projekta koristi ih kada dođe do tog hosta ili URL-a.
+## Zašto vam je potrebna {#why}
+
+[Repozitorijum](/user-guide/repositories) ima tačno jedan ključ: onaj kojim ga Semaphore klonira. To je dovoljno sve dok sve što je zadatku potrebno živi u tom repozitorijumu. U praksi zadatak poseže i za drugim mestima, a svako od njih može da zahteva različite pristupne podatke:
+
+```mermaid
+flowchart LR
+  Task[Zadatak] -->|ključ repozitorijuma| Repo[Glavni repozitorijum]
+  Repo -.-> Sub[Submodul na drugom serveru]
+  Repo -.-> Req[Uloge iz requirements.yml]
+  Repo -.-> Mod[Terraform / OpenTofu moduli]
+  Task -.-> InvRepo[Inventar u drugom repozitorijumu]
+  Task -.-> Hosts[Hostovi inventara sa sopstvenim SSH ključem]
+  classDef gap stroke-dasharray: 5 5,stroke:#c62828,color:#c62828
+  class Sub,Req,Mod,InvRepo,Hosts gap
+```
+
+Isprekidane strelice su praznina: ključ repozitorijuma se ne nudi tim serverima, pa zadatak ne uspeva uz **Permission denied** ili **Authentication failed** čim ih dotakne. Do sada su jedina zaobilazna rešenja bila da se jednom ključu da pristup svuda ili da se pristupni podaci ugrade u fajlove repozitorijuma.
+
+**Host config** (konfiguracija hostova) rešava ovo bez diranja repozitorijuma. Vi kažete Semaphore-u *„kad god se projekat poveže na ovaj host ili ovaj URL, koristi te pristupne podatke iz [Skladišta ključeva](/user-guide/key-store)"*. Mapiranje se primenjuje na svaku Git i SSH vezu zadatka, bez obzira odakle je pokrenut.
+
+| Imate | Šta je u repozitorijumu | Bez mapiranja | Sa mapiranjem |
+|---|---|---|---|
+| **Privatni submodul** na drugom Git serveru | `.gitmodules` koji pokazuje na `git@gitlab.example.com:infra/common.git` | `git submodule update` se odbija: deploy ključ glavnog repozitorijuma tamo nije poznat | Mapiranje tipa **Host** za `gitlab.example.com` sa ključem dozvoljenim na tom serveru |
+| **Privatne uloge ili kolekcije** u Ansible `requirements.yml` | `src: https://gitlab.example.com/ansible/role-nginx.git` | `ansible-galaxy install` traži prijavu i ne uspeva | Mapiranje tipa **URL** za `https://gitlab.example.com/ansible/` sa GitLab pristupnim tokenom |
+| **Privatni Terraform / OpenTofu moduli** koji se preuzimaju iz Git-a | `source = "git::https://github.com/acme/tf-modules.git"` | `terraform init` ne može da preuzme modul | Mapiranje tipa **URL** za `https://github.com/acme/` sa SSH ključem ili tokenom |
+| **Inventar** čijim hostovima treba **drugačiji SSH ključ** od ključa repozitorijuma | Inventar sa `db-01.internal`, `db-02.internal` | Inventar može da imenuje samo jedan ključ, a ključ repozitorijuma je pogrešan za te hostove | Mapiranje tipa **Host** za svaki naziv hosta, ili jedno mapiranje sa ključem inventara za host koji dele |
+
+Jedno mapiranje pokriva sve ovo odjednom; ne podešavate ih po šablonu. Kada projekat nema mapiranja, ništa se ne menja: zadaci nastavljaju da koriste ključ repozitorijuma, tačno kao i ranije.
+
+## Kako radi {#how-it-works}
+
+Mapiranje je pravilo sa tri dela: **šta** se poklapa (naziv hosta ili URL prefiks), **koji** pristupni podaci iz Skladišta ključeva se koriste, i ništa više. Semaphore instalira mapiranja projekta pre prve Git komande zadatka i uklanja ih kada se zadatak završi. Svaka veza koju zadatak otvori, od njegovog sopstvenog kloniranja do modula `git` unutar playbook-a, prolazi kroz njih.
+
+```mermaid
+flowchart LR
+  Task["Zadatak<br/>kloniranje · submoduli · requirements.yml<br/>terraform init · hostovi inventara"] --> HC
+  subgraph Project
+    KS[Skladište ključeva]
+    HC[Host config]
+  end
+  KS -->|ključ A| HC
+  KS -->|token B| HC
+  HC -->|"Host github.com → ključ A"| GH[github.com]
+  HC -->|"URL https://gitlab.example.com/ansible/ → token B"| GL[gitlab.example.com]
+```
 
 Stranica se nalazi u meniju projekta, ispod stavke **Repositories**. Dodavanje, izmena i brisanje mapiranja zahtevaju dozvolu za upravljanje resursima projekta, istu koju zahteva i Skladište ključeva.
 

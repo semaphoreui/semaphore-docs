@@ -1,11 +1,55 @@
 ---
 title: Host config
-description: "Git 호스트 또는 리포지토리 URL을 키 저장소의 자격 증명에 매핑하여, 다른 곳에 호스팅된 서브모듈, Galaxy 역할, Terraform 모듈, 인벤토리 리포지토리에 각자의 키로 접근할 수 있게 합니다."
+description: "리포지토리를 바꾸지 않고 비공개 서브모듈, Galaxy 역할, Terraform 모듈, 인벤토리 호스트에 키 저장소의 자체 자격 증명을 제공합니다."
 ---
 
 # Host config
 
-작업은 [리포지토리](/user-guide/repositories)에서 선택한 키로 자신의 리포지토리에 인증합니다. 작업이 Git에서 가져오는 그 밖의 모든 것, 즉 다른 서버의 서브모듈, `requirements.yml`의 역할, Terraform 모듈, 두 번째 리포지토리에 보관된 인벤토리에는 별도의 자격 증명이 주어지지 않습니다. **Host config**(호스트 설정)가 이 빈틈을 메웁니다. 매핑은 Git 호스트 또는 리포지토리 URL을 [키 저장소](/user-guide/key-store)의 자격 증명에 연결하며, 프로젝트의 모든 Git 작업이 해당 호스트나 URL에 접근할 때 그 자격 증명을 사용합니다.
+## 왜 필요한가 {#why}
+
+[리포지토리](/user-guide/repositories)에는 키가 정확히 하나, 즉 Semaphore가 복제할 때 사용하는 키만 있습니다. 작업에 필요한 모든 것이 그 리포지토리 안에 있는 한 이것으로 충분합니다. 하지만 실제로는 작업이 다른 곳에도 접근하며, 그 각각은 서로 다른 자격 증명을 요구할 수 있습니다:
+
+```mermaid
+flowchart LR
+  Task[작업] -->|리포지토리 키| Repo[메인 리포지토리]
+  Repo -.-> Sub[다른 서버의 서브모듈]
+  Repo -.-> Req[requirements.yml의 역할]
+  Repo -.-> Mod[Terraform / OpenTofu 모듈]
+  Task -.-> InvRepo[두 번째 리포지토리의 인벤토리]
+  Task -.-> Hosts[자체 SSH 키가 있는 인벤토리 호스트]
+  classDef gap stroke-dasharray: 5 5,stroke:#c62828,color:#c62828
+  class Sub,Req,Mod,InvRepo,Hosts gap
+```
+
+점선 화살표가 바로 빈틈입니다. 리포지토리 키는 그 서버들에 제공되지 않으므로, 작업이 그곳에 접근하는 즉시 **Permission denied** 또는 **Authentication failed**로 실패합니다. 지금까지의 유일한 해결책은 키 하나에 모든 곳의 접근 권한을 주거나, 자격 증명을 리포지토리 파일에 직접 넣는 것이었습니다.
+
+**Host config**(호스트 설정)는 리포지토리를 건드리지 않고 이 문제를 해결합니다. Semaphore에 *"프로젝트가 이 호스트나 이 URL에 연결할 때마다 [키 저장소](/user-guide/key-store)의 저 자격 증명을 사용하라"*고 알려 주면 됩니다. 매핑은 어디에서 시작되었든 작업의 모든 Git 및 SSH 연결에 적용됩니다.
+
+| 상황 | 리포지토리에 있는 것 | 매핑이 없을 때 | 매핑이 있을 때 |
+|---|---|---|---|
+| 다른 Git 서버의 **비공개 서브모듈** | `git@gitlab.example.com:infra/common.git`을 가리키는 `.gitmodules` | `git submodule update`가 거부됩니다. 메인 리포지토리의 배포 키가 그곳에는 알려져 있지 않기 때문입니다 | 해당 서버에서 허용된 키를 사용하는 `gitlab.example.com`의 **Host** 매핑 |
+| Ansible `requirements.yml`의 **비공개 역할 또는 컬렉션** | `src: https://gitlab.example.com/ansible/role-nginx.git` | `ansible-galaxy install`이 로그인을 요구하고 실패합니다 | GitLab 액세스 토큰을 사용하는 `https://gitlab.example.com/ansible/`의 **URL** 매핑 |
+| Git에서 가져오는 **비공개 Terraform / OpenTofu 모듈** | `source = "git::https://github.com/acme/tf-modules.git"` | `terraform init`이 모듈을 내려받지 못합니다 | SSH 키 또는 토큰을 사용하는 `https://github.com/acme/`의 **URL** 매핑 |
+| 호스트에 리포지토리와 **다른 SSH 키**가 필요한 **인벤토리** | `db-01.internal`, `db-02.internal`이 있는 인벤토리 | 인벤토리는 키를 하나만 지정할 수 있고, 리포지토리 키는 그 호스트들에 맞지 않습니다 | 호스트 이름마다 **Host** 매핑 하나씩, 또는 호스트들이 공유하는 인벤토리 키로 매핑 하나 |
+
+매핑 하나로 이 모든 경우를 한 번에 처리하며, 템플릿마다 설정할 필요가 없습니다. 프로젝트에 매핑이 없으면 아무것도 바뀌지 않습니다. 작업은 이전과 똑같이 리포지토리의 키를 계속 사용합니다.
+
+## 동작 방식 {#how-it-works}
+
+매핑은 세 부분으로 이루어진 규칙입니다. **무엇**과 일치시킬지(호스트 이름 또는 URL 접두사), 키 저장소의 **어떤** 자격 증명을 사용할지, 그리고 그 밖에는 아무것도 없습니다. Semaphore는 작업의 첫 Git 명령 전에 프로젝트의 매핑을 설치하고 작업이 끝나면 제거합니다. 작업이 여는 모든 연결은, 자체 복제부터 플레이북 안의 `git` 모듈까지, 이 매핑을 거칩니다.
+
+```mermaid
+flowchart LR
+  Task["작업<br/>복제 · 서브모듈 · requirements.yml<br/>terraform init · 인벤토리 호스트"] --> HC
+  subgraph Project
+    KS[키 저장소]
+    HC[Host config]
+  end
+  KS -->|키 A| HC
+  KS -->|토큰 B| HC
+  HC -->|"Host github.com → 키 A"| GH[github.com]
+  HC -->|"URL https://gitlab.example.com/ansible/ → 토큰 B"| GL[gitlab.example.com]
+```
 
 이 페이지는 프로젝트 메뉴의 **Repositories** 아래에 있습니다. 매핑을 추가, 편집, 삭제하려면 키 저장소와 마찬가지로 프로젝트 리소스 관리 권한이 필요합니다.
 

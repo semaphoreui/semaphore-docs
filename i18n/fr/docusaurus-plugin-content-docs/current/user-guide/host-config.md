@@ -1,11 +1,55 @@
 ---
 title: Host config
-description: Associez un hôte Git ou l’URL d’un dépôt à un identifiant du Magasin de clés, afin que les sous-modules, les rôles Galaxy, les modules Terraform et les dépôts d’inventaire hébergés ailleurs soient accessibles avec leur propre clé.
+description: Donnez aux sous-modules privés, aux rôles Galaxy, aux modules Terraform et aux hôtes d’inventaire leur propre identifiant du Magasin de clés, sans modifier le dépôt.
 ---
 
 # Host config
 
-Une tâche s’authentifie auprès de son dépôt avec la clé sélectionnée dans le [Dépôt](/user-guide/repositories). Tout ce que la tâche récupère par ailleurs depuis Git ne reçoit aucun identifiant propre : un sous-module sur un autre serveur, un rôle de `requirements.yml`, un module Terraform, un inventaire conservé dans un second dépôt. **Host config** (configuration des hôtes) comble cette lacune. Un mappage lie un hôte Git ou l’URL d’un dépôt à un identifiant du [Magasin de clés](/user-guide/key-store), et chaque opération Git du projet l’utilise lorsqu’elle atteint cet hôte ou cette URL.
+## Pourquoi en avez-vous besoin {#why}
+
+Un [Dépôt](/user-guide/repositories) possède exactement une clé : celle que Semaphore utilise pour le cloner. Cela suffit tant que tout ce dont la tâche a besoin se trouve dans ce dépôt. En pratique, une tâche va chercher des éléments ailleurs, et chacun de ces endroits peut exiger un identifiant différent :
+
+```mermaid
+flowchart LR
+  Task[Tâche] -->|clé du dépôt| Repo[Dépôt principal]
+  Repo -.-> Sub[Sous-module sur un autre serveur]
+  Repo -.-> Req[Rôles de requirements.yml]
+  Repo -.-> Mod[Modules Terraform / OpenTofu]
+  Task -.-> InvRepo[Inventaire dans un second dépôt]
+  Task -.-> Hosts[Hôtes d’inventaire avec leur propre clé SSH]
+  classDef gap stroke-dasharray: 5 5,stroke:#c62828,color:#c62828
+  class Sub,Req,Mod,InvRepo,Hosts gap
+```
+
+Les flèches en pointillés marquent la lacune : la clé du dépôt n’est pas présentée à ces serveurs, si bien que la tâche échoue avec **Permission denied** ou **Authentication failed** dès qu’elle y accède. Jusqu’ici, les seules solutions de contournement consistaient à donner accès partout à une seule et même clé, ou à inscrire les identifiants dans les fichiers du dépôt.
+
+**Host config** (configuration des hôtes) résout ce problème sans toucher au dépôt. Vous indiquez à Semaphore *« chaque fois que le projet se connecte à cet hôte ou à cette URL, utilise cet identifiant du [Magasin de clés](/user-guide/key-store) »*. Le mappage s’applique à chaque connexion Git et SSH de la tâche, quel que soit l’endroit d’où elle est lancée.
+
+| Vous avez | Ce que contient le dépôt | Sans mappage | Avec un mappage |
+|---|---|---|---|
+| Un **sous-module privé** sur un autre serveur Git | Un `.gitmodules` pointant vers `git@gitlab.example.com:infra/common.git` | `git submodule update` est rejeté : la clé de déploiement du dépôt principal n’y est pas connue | Un mappage **Host** pour `gitlab.example.com` avec la clé autorisée sur ce serveur |
+| Des **rôles ou collections privés** dans le `requirements.yml` d’Ansible | `src: https://gitlab.example.com/ansible/role-nginx.git` | `ansible-galaxy install` demande un login et échoue | Un mappage **URL** pour `https://gitlab.example.com/ansible/` avec un jeton d’accès GitLab |
+| Des **modules Terraform / OpenTofu privés** récupérés depuis Git | `source = "git::https://github.com/acme/tf-modules.git"` | `terraform init` ne peut pas télécharger le module | Un mappage **URL** pour `https://github.com/acme/` avec une clé SSH ou un jeton |
+| Un **inventaire** dont les hôtes exigent une **clé SSH différente** de celle du dépôt | Un inventaire contenant `db-01.internal`, `db-02.internal` | L’inventaire ne peut désigner qu’une seule clé, et la clé du dépôt n’est pas la bonne pour ces hôtes | Un mappage **Host** pour chaque nom d’hôte, ou un seul mappage avec la clé de l’inventaire pour l’hôte qu’ils partagent |
+
+Un même mappage couvre tous ces cas à la fois ; vous ne le configurez pas modèle par modèle. Lorsqu’un projet n’a aucun mappage, rien ne change : les tâches continuent d’utiliser la clé du dépôt, exactement comme avant.
+
+## Fonctionnement {#how-it-works}
+
+Un mappage est une règle en trois parties : **quoi** reconnaître (un nom d’hôte ou un préfixe d’URL), **quel** identifiant du Magasin de clés utiliser, et rien de plus. Semaphore installe les mappages du projet avant la première commande Git d’une tâche et les retire à la fin de celle-ci. Chaque connexion ouverte par la tâche, de son propre clonage jusqu’à un module `git` dans un playbook, passe par eux.
+
+```mermaid
+flowchart LR
+  Task["Tâche<br/>clonage · sous-modules · requirements.yml<br/>terraform init · hôtes d’inventaire"] --> HC
+  subgraph Projet
+    KS[Magasin de clés]
+    HC[Host config]
+  end
+  KS -->|clé A| HC
+  KS -->|jeton B| HC
+  HC -->|"Host github.com → clé A"| GH[github.com]
+  HC -->|"URL https://gitlab.example.com/ansible/ → jeton B"| GL[gitlab.example.com]
+```
 
 La page se trouve dans le menu du projet, sous **Dépôts**. Ajouter, modifier et supprimer des mappages requiert l’autorisation de gérer les ressources du projet, la même que celle dont a besoin le Magasin de clés.
 

@@ -1,11 +1,55 @@
 ---
 title: Host config
-description: "将 Git 主机或仓库 URL 映射到密钥库中的凭据，使托管在别处的子模块、Galaxy 角色、Terraform 模块和清单仓库能够用各自的密钥访问。"
+description: "让私有子模块、Galaxy 角色、Terraform 模块和清单主机使用密钥库中各自的凭据，而无需修改仓库。"
 ---
 
 # Host config
 
-任务使用在[仓库](/user-guide/repositories)中选择的密钥向其仓库进行认证。任务从 Git 获取的其他所有内容都没有自己的凭据：另一台服务器上的子模块、`requirements.yml` 中的角色、Terraform 模块、保存在第二个仓库中的清单。**Host config**（主机配置）填补了这一空缺。一条映射将 Git 主机或仓库 URL 绑定到[密钥库](/user-guide/key-store)中的一个凭据，项目的每一次 Git 操作在访问该主机或 URL 时都会使用它。
+## 为什么需要它 {#why}
+
+一个[仓库](/user-guide/repositories)只有一个密钥：Semaphore 用来克隆它的那个。只要任务所需的一切都在该仓库中，这就足够了。但实际上，任务还会访问其他地方，而每个地方可能需要不同的凭据：
+
+```mermaid
+flowchart LR
+  Task[任务] -->|仓库密钥| Repo[主仓库]
+  Repo -.-> Sub[另一台服务器上的子模块]
+  Repo -.-> Req[requirements.yml 中的角色]
+  Repo -.-> Mod[Terraform / OpenTofu 模块]
+  Task -.-> InvRepo[第二个仓库中的清单]
+  Task -.-> Hosts[使用自己 SSH 密钥的清单主机]
+  classDef gap stroke-dasharray: 5 5,stroke:#c62828,color:#c62828
+  class Sub,Req,Mod,InvRepo,Hosts gap
+```
+
+虚线箭头就是那个空缺：仓库密钥不会提供给这些服务器，因此任务一旦触及它们，就会因 **Permission denied** 或 **Authentication failed** 而失败。在此之前，唯一的变通办法是让一个密钥在所有地方都拥有访问权限，或者把凭据写死在仓库的文件里。
+
+**Host config**（主机配置）无需改动仓库即可解决这个问题。你告诉 Semaphore *"每当项目连接到这个主机或这个 URL 时，就使用[密钥库](/user-guide/key-store)中的那个凭据"*。该映射会应用于任务的每一次 Git 和 SSH 连接，无论它从何处发起。
+
+| 你有 | 仓库中的内容 | 没有映射时 | 有映射时 |
+|---|---|---|---|
+| 另一台 Git 服务器上的**私有子模块** | 指向 `git@gitlab.example.com:infra/common.git` 的 `.gitmodules` | `git submodule update` 被拒绝：主仓库的部署密钥在那里不被识别 | 为 `gitlab.example.com` 添加一条 **Host** 映射，使用在该服务器上被允许的密钥 |
+| Ansible `requirements.yml` 中的**私有角色或集合** | `src: https://gitlab.example.com/ansible/role-nginx.git` | `ansible-galaxy install` 要求登录并失败 | 为 `https://gitlab.example.com/ansible/` 添加一条 **URL** 映射，使用 GitLab 访问令牌 |
+| 从 Git 获取的**私有 Terraform / OpenTofu 模块** | `source = "git::https://github.com/acme/tf-modules.git"` | `terraform init` 无法下载模块 | 为 `https://github.com/acme/` 添加一条 **URL** 映射，使用 SSH 密钥或令牌 |
+| 一个**清单**，其主机需要与仓库**不同的 SSH 密钥** | 包含 `db-01.internal`、`db-02.internal` 的清单 | 清单只能指定一个密钥，而仓库密钥对这些主机来说是错误的 | 为每个主机名添加一条 **Host** 映射，或为它们共用的主机添加一条使用清单密钥的映射 |
+
+一条映射同时服务于以上所有场景；你无需按模板逐一配置。当项目没有任何映射时，一切照旧：任务继续使用仓库的密钥，与之前完全相同。
+
+## 工作原理 {#how-it-works}
+
+一条映射是一条由三部分组成的规则：**匹配什么**（主机名或 URL 前缀）、**使用密钥库中的哪个**凭据，仅此而已。Semaphore 在任务的第一条 Git 命令之前安装项目的映射，并在任务结束时将其移除。任务打开的每一个连接，从它自己的克隆到 playbook 内部的 `git` 模块，都会经过这些映射。
+
+```mermaid
+flowchart LR
+  Task["任务<br/>克隆 · 子模块 · requirements.yml<br/>terraform init · 清单主机"] --> HC
+  subgraph Project
+    KS[密钥库]
+    HC[Host config]
+  end
+  KS -->|密钥 A| HC
+  KS -->|令牌 B| HC
+  HC -->|"Host github.com → 密钥 A"| GH[github.com]
+  HC -->|"URL https://gitlab.example.com/ansible/ → 令牌 B"| GL[gitlab.example.com]
+```
 
 该页面位于项目菜单中的 **Repositories** 下方。添加、编辑和删除映射需要管理项目资源的权限，与密钥库所需的权限相同。
 

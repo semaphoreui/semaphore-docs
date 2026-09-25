@@ -1,11 +1,55 @@
 ---
 title: Host config
-description: Asocie un host Git o la URL de un repositorio a una credencial del Almacén de claves, para que los submódulos, los roles de Galaxy, los módulos de Terraform y los repositorios de inventario alojados en otro lugar sean accesibles con su propia clave.
+description: Dé a los submódulos privados, los roles de Galaxy, los módulos de Terraform y los hosts del inventario su propia credencial del Almacén de claves, sin cambiar el repositorio.
 ---
 
 # Host config
 
-Una tarea se autentica en su repositorio con la clave seleccionada en el [Repositorio](/user-guide/repositories). Todo lo demás que la tarea obtiene de Git no recibe ninguna credencial propia: un submódulo en otro servidor, un rol de `requirements.yml`, un módulo de Terraform, un inventario guardado en un segundo repositorio. **Host config** (configuración de hosts) cierra esa brecha. Una asignación vincula un host Git o la URL de un repositorio a una credencial del [Almacén de claves](/user-guide/key-store), y todas las operaciones Git del proyecto la usan cuando llegan a ese host o a esa URL.
+## Por qué lo necesita {#why}
+
+Un [Repositorio](/user-guide/repositories) tiene exactamente una clave: la que Semaphore usa para clonarlo. Eso basta mientras todo lo que la tarea necesita vive en ese repositorio. En la práctica, una tarea accede a otros lugares, y cada uno de ellos puede exigir una credencial distinta:
+
+```mermaid
+flowchart LR
+  Task[Tarea] -->|clave del repositorio| Repo[Repositorio principal]
+  Repo -.-> Sub[Submódulo en otro servidor]
+  Repo -.-> Req[Roles de requirements.yml]
+  Repo -.-> Mod[Módulos de Terraform / OpenTofu]
+  Task -.-> InvRepo[Inventario en un segundo repositorio]
+  Task -.-> Hosts[Hosts del inventario con su propia clave SSH]
+  classDef gap stroke-dasharray: 5 5,stroke:#c62828,color:#c62828
+  class Sub,Req,Mod,InvRepo,Hosts gap
+```
+
+Las flechas discontinuas son la brecha: la clave del repositorio no se ofrece a esos servidores, así que la tarea falla con **Permission denied** o **Authentication failed** en cuanto llega a ellos. Hasta ahora, las únicas soluciones eran dar a una sola clave acceso a todas partes, o incrustar las credenciales en los archivos del repositorio.
+
+**Host config** (configuración de hosts) lo resuelve sin tocar el repositorio. Usted le dice a Semaphore *"siempre que el proyecto se conecte a este host o a esta URL, usa esa credencial del [Almacén de claves](/user-guide/key-store)"*. La asignación se aplica a todas las conexiones Git y SSH de la tarea, desde donde quiera que se inicien.
+
+| Tiene | Qué hay en el repositorio | Sin asignación | Con asignación |
+|---|---|---|---|
+| Un **submódulo privado** en otro servidor Git | `.gitmodules` apuntando a `git@gitlab.example.com:infra/common.git` | `git submodule update` es rechazado: la clave de despliegue del repositorio principal no se conoce allí | Una asignación **Host** para `gitlab.example.com` con la clave permitida en ese servidor |
+| **Roles o colecciones privados** en el `requirements.yml` de Ansible | `src: https://gitlab.example.com/ansible/role-nginx.git` | `ansible-galaxy install` pide un inicio de sesión y falla | Una asignación **URL** para `https://gitlab.example.com/ansible/` con un token de acceso de GitLab |
+| **Módulos privados de Terraform / OpenTofu** obtenidos de Git | `source = "git::https://github.com/acme/tf-modules.git"` | `terraform init` no puede descargar el módulo | Una asignación **URL** para `https://github.com/acme/` con una clave SSH o un token |
+| Un **inventario** cuyos hosts necesitan una **clave SSH distinta** de la del repositorio | Un inventario con `db-01.internal`, `db-02.internal` | El inventario solo puede nombrar una clave, y la del repositorio no es la correcta para esos hosts | Una asignación **Host** para cada nombre de host, o una sola asignación con la clave del inventario para el host que comparten |
+
+Una sola asignación sirve para todos estos casos a la vez; no se configura nada por plantilla. Cuando un proyecto no tiene asignaciones, nada cambia: las tareas siguen usando la clave del repositorio, exactamente como antes.
+
+## Cómo funciona {#how-it-works}
+
+Una asignación es una regla con tres partes: **con qué** debe coincidir (un nombre de host o un prefijo de URL), **qué** credencial del Almacén de claves usar, y nada más. Semaphore instala las asignaciones del proyecto antes del primer comando Git de una tarea y las retira cuando la tarea termina. Todas las conexiones que la tarea abre, desde su propia clonación hasta un módulo `git` dentro de un playbook, pasan por ellas.
+
+```mermaid
+flowchart LR
+  Task["Tarea<br/>clonación · submódulos · requirements.yml<br/>terraform init · hosts del inventario"] --> HC
+  subgraph Project
+    KS[Almacén de claves]
+    HC[Host config]
+  end
+  KS -->|clave A| HC
+  KS -->|token B| HC
+  HC -->|"Host github.com → clave A"| GH[github.com]
+  HC -->|"URL https://gitlab.example.com/ansible/ → token B"| GL[gitlab.example.com]
+```
 
 La página está en el menú del proyecto, debajo de **Repositorios**. Añadir, editar y eliminar asignaciones requiere el permiso para gestionar los recursos del proyecto, el mismo que necesita el Almacén de claves.
 

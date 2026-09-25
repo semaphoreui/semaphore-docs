@@ -1,11 +1,55 @@
 ---
 title: Configurazione host
-description: "Associa un host Git o l'URL di un repository a una credenziale del Key Store, così submoduli, ruoli Galaxy, moduli Terraform e repository di inventario ospitati altrove sono raggiungibili con la propria chiave."
+description: "Assegna a submoduli privati, ruoli Galaxy, moduli Terraform e host di inventario una credenziale propria dal Key Store, senza modificare il repository."
 ---
 
 # Configurazione host
 
-Un'attività si autentica al proprio repository con la chiave selezionata nel [Repository](/user-guide/repositories). Tutto il resto che l'attività scarica da Git non ha una credenziale propria: un submodulo su un altro server, un ruolo di `requirements.yml`, un modulo Terraform, un inventario conservato in un secondo repository. **Host config** (configurazione degli host) colma questa lacuna. Una mappatura associa un host Git o l'URL di un repository a una credenziale del [Key Store](/user-guide/key-store), e ogni operazione Git del progetto la usa quando raggiunge quell'host o quell'URL.
+## Perché serve {#why}
+
+Un [Repository](/user-guide/repositories) ha esattamente una chiave: quella con cui Semaphore lo clona. È sufficiente finché tutto ciò che serve all'attività si trova in quel repository. In pratica un'attività raggiunge anche altri posti, e ognuno di essi può richiedere una credenziale diversa:
+
+```mermaid
+flowchart LR
+  Task[Attività] -->|chiave del repository| Repo[Repository principale]
+  Repo -.-> Sub[Submodulo su un altro server]
+  Repo -.-> Req[Ruoli da requirements.yml]
+  Repo -.-> Mod[Moduli Terraform / OpenTofu]
+  Task -.-> InvRepo[Inventario in un secondo repository]
+  Task -.-> Hosts[Host di inventario con una chiave SSH propria]
+  classDef gap stroke-dasharray: 5 5,stroke:#c62828,color:#c62828
+  class Sub,Req,Mod,InvRepo,Hosts gap
+```
+
+Le frecce tratteggiate sono la lacuna: la chiave del repository non viene offerta a quei server, quindi l'attività fallisce con **Permission denied** o **Authentication failed** non appena li tocca. Finora le uniche soluzioni erano dare a una sola chiave accesso ovunque, oppure inserire le credenziali nei file del repository.
+
+**Host config** (configurazione degli host) risolve il problema senza toccare il repository. Dici a Semaphore *"ogni volta che il progetto si connette a questo host o a questo URL, usa quella credenziale del [Key Store](/user-guide/key-store)"*. La mappatura si applica a ogni connessione Git e SSH dell'attività, da qualunque punto venga avviata.
+
+| Hai | Cosa c'è nel repository | Senza mappatura | Con una mappatura |
+|---|---|---|---|
+| Un **submodulo privato** su un altro server Git | `.gitmodules` che punta a `git@gitlab.example.com:infra/common.git` | `git submodule update` viene rifiutato: la deploy key del repository principale non è conosciuta lì | Una mappatura **Host** per `gitlab.example.com` con la chiave autorizzata su quel server |
+| **Ruoli o collection privati** nel `requirements.yml` di Ansible | `src: https://gitlab.example.com/ansible/role-nginx.git` | `ansible-galaxy install` chiede un login e fallisce | Una mappatura **URL** per `https://gitlab.example.com/ansible/` con un access token di GitLab |
+| **Moduli Terraform / OpenTofu privati** scaricati da Git | `source = "git::https://github.com/acme/tf-modules.git"` | `terraform init` non riesce a scaricare il modulo | Una mappatura **URL** per `https://github.com/acme/` con una chiave SSH o un token |
+| Un **inventario** i cui host richiedono una **chiave SSH diversa** da quella del repository | Un inventario con `db-01.internal`, `db-02.internal` | L'inventario può indicare una sola chiave, e quella del repository è sbagliata per quegli host | Una mappatura **Host** per ogni nome host, oppure una sola mappatura con la chiave dell'inventario per l'host che condividono |
+
+Una sola mappatura copre tutti questi casi insieme; non la configuri per ogni modello. Quando un progetto non ha mappature, non cambia nulla: le attività continuano a usare la chiave del repository, esattamente come prima.
+
+## Come funziona {#how-it-works}
+
+Una mappatura è una regola con tre parti: **cosa** far corrispondere (un nome host o un prefisso di URL), **quale** credenziale del Key Store usare, e nient'altro. Semaphore installa le mappature del progetto prima del primo comando Git di un'attività e le rimuove quando l'attività termina. Ogni connessione aperta dall'attività, dalla sua clonazione fino a un modulo `git` dentro un playbook, passa attraverso di esse.
+
+```mermaid
+flowchart LR
+  Task["Attività<br/>clonazione · submoduli · requirements.yml<br/>terraform init · host di inventario"] --> HC
+  subgraph Progetto
+    KS[Key Store]
+    HC[Host config]
+  end
+  KS -->|chiave A| HC
+  KS -->|token B| HC
+  HC -->|"Host github.com → chiave A"| GH[github.com]
+  HC -->|"URL https://gitlab.example.com/ansible/ → token B"| GL[gitlab.example.com]
+```
 
 La pagina si trova nel menu del progetto, sotto **Repositories**. Aggiungere, modificare ed eliminare le mappature richiede il permesso di gestire le risorse del progetto, lo stesso necessario per il Key Store.
 

@@ -1,11 +1,55 @@
 ---
 title: Host config
-description: Ordnen Sie einem Git-Host oder einer Repository-URL einen Zugangsschlüssel des Key Store zu, damit Submodule, Galaxy-Rollen, Terraform-Module und anderswo gehostete Inventar-Repositories mit ihrem eigenen Schlüssel erreichbar sind.
+description: Geben Sie privaten Submodulen, Galaxy-Rollen, Terraform-Modulen und Inventar-Hosts ihren eigenen Zugangsschlüssel aus dem Key Store, ohne das Repository zu ändern.
 ---
 
 # Host config
 
-Eine Aufgabe authentifiziert sich bei ihrem Repository mit dem Schlüssel, der im [Repository](/user-guide/repositories) ausgewählt ist. Alles andere, was die Aufgabe aus Git bezieht, erhält keine eigenen Zugangsdaten: ein Submodul auf einem anderen Server, eine Rolle aus `requirements.yml`, ein Terraform-Modul, ein Inventar in einem zweiten Repository. **Host config** (Host-Konfiguration) schließt diese Lücke. Eine Zuordnung bindet einen Git-Host oder eine Repository-URL an einen Zugangsschlüssel des [Key Store](/user-guide/key-store), und jede Git-Operation des Projekts verwendet ihn, sobald sie diesen Host oder diese URL erreicht.
+## Warum Sie es brauchen {#why}
+
+Ein [Repository](/user-guide/repositories) hat genau einen Schlüssel: den, mit dem Semaphore es klont. Das reicht aus, solange alles, was die Aufgabe benötigt, in diesem Repository liegt. In der Praxis greift eine Aufgabe auf weitere Orte zu, und jeder davon kann eigene Zugangsdaten verlangen:
+
+```mermaid
+flowchart LR
+  Task[Aufgabe] -->|Repository-Schlüssel| Repo[Hauptrepository]
+  Repo -.-> Sub[Submodul auf einem anderen Server]
+  Repo -.-> Req[Rollen aus requirements.yml]
+  Repo -.-> Mod[Terraform-/OpenTofu-Module]
+  Task -.-> InvRepo[Inventar in einem zweiten Repository]
+  Task -.-> Hosts[Inventar-Hosts mit eigenem SSH-Schlüssel]
+  classDef gap stroke-dasharray: 5 5,stroke:#c62828,color:#c62828
+  class Sub,Req,Mod,InvRepo,Hosts gap
+```
+
+Die gestrichelten Pfeile sind die Lücke: Der Repository-Schlüssel wird diesen Servern nicht angeboten, daher schlägt die Aufgabe mit **Permission denied** oder **Authentication failed** fehl, sobald sie einen davon berührt. Bisher gab es nur zwei Auswege: einem einzigen Schlüssel überall Zugriff zu gewähren oder Zugangsdaten in die Dateien des Repositories einzubauen.
+
+**Host config** (Host-Konfiguration) löst das, ohne das Repository anzurühren. Sie sagen Semaphore *„Immer wenn das Projekt eine Verbindung zu diesem Host oder dieser URL aufbaut, verwende diesen Zugangsschlüssel aus dem [Key Store](/user-guide/key-store)“*. Die Zuordnung gilt für jede Git- und SSH-Verbindung der Aufgabe, ganz gleich, von wo sie gestartet wird.
+
+| Sie haben | Was im Repository steht | Ohne Zuordnung | Mit Zuordnung |
+|---|---|---|---|
+| Ein **privates Submodul** auf einem anderen Git-Server | `.gitmodules` verweist auf `git@gitlab.example.com:infra/common.git` | `git submodule update` wird abgewiesen: Der Deploy-Key des Hauptrepositories ist dort nicht bekannt | Eine **Host**-Zuordnung für `gitlab.example.com` mit dem Schlüssel, der auf diesem Server zugelassen ist |
+| **Private Rollen oder Collections** in Ansible-`requirements.yml` | `src: https://gitlab.example.com/ansible/role-nginx.git` | `ansible-galaxy install` verlangt eine Anmeldung und schlägt fehl | Eine **URL**-Zuordnung für `https://gitlab.example.com/ansible/` mit einem GitLab-Access-Token |
+| **Private Terraform-/OpenTofu-Module**, die aus Git geladen werden | `source = "git::https://github.com/acme/tf-modules.git"` | `terraform init` kann das Modul nicht herunterladen | Eine **URL**-Zuordnung für `https://github.com/acme/` mit einem SSH-Schlüssel oder einem Token |
+| Ein **Inventar**, dessen Hosts einen **anderen SSH-Schlüssel** als das Repository benötigen | Ein Inventar mit `db-01.internal`, `db-02.internal` | Das Inventar kann nur einen Schlüssel benennen, und der Repository-Schlüssel ist für diese Hosts der falsche | Eine **Host**-Zuordnung je Hostname oder eine einzige Zuordnung mit dem Inventarschlüssel für den Host, den sie gemeinsam haben |
+
+Eine Zuordnung deckt all das auf einmal ab; Sie konfigurieren sie nicht pro Vorlage. Hat ein Projekt keine Zuordnungen, ändert sich nichts: Aufgaben verwenden weiterhin den Schlüssel des Repositories, genau wie zuvor.
+
+## So funktioniert es {#how-it-works}
+
+Eine Zuordnung ist eine Regel aus drei Teilen: **worauf** sie passt (ein Hostname oder ein URL-Präfix), **welchen** Zugangsschlüssel des Key Store sie verwendet, und sonst nichts. Semaphore richtet die Zuordnungen des Projekts vor dem ersten Git-Befehl einer Aufgabe ein und entfernt sie, wenn die Aufgabe endet. Jede Verbindung, die die Aufgabe öffnet, vom eigenen Klonen bis hin zu einem `git`-Modul innerhalb eines Playbooks, läuft über sie.
+
+```mermaid
+flowchart LR
+  Task["Aufgabe<br/>Klonen · Submodule · requirements.yml<br/>terraform init · Inventar-Hosts"] --> HC
+  subgraph Projekt
+    KS[Key Store]
+    HC[Host config]
+  end
+  KS -->|Schlüssel A| HC
+  KS -->|Token B| HC
+  HC -->|"Host github.com → Schlüssel A"| GH[github.com]
+  HC -->|"URL https://gitlab.example.com/ansible/ → Token B"| GL[gitlab.example.com]
+```
 
 Die Seite befindet sich im Projektmenü unterhalb von **Repositories**. Zum Hinzufügen, Bearbeiten und Löschen von Zuordnungen ist die Berechtigung zum Verwalten von Projektressourcen erforderlich, dieselbe, die auch der Key Store benötigt.
 

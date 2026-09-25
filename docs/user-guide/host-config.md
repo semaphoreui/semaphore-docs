@@ -1,11 +1,55 @@
 ---
 title: Host config
-description: Map a Git host or a repository URL to a credential of the Key Store, so submodules, Galaxy roles, Terraform modules and inventory repositories hosted elsewhere can be reached with their own key.
+description: Give private submodules, Galaxy roles, Terraform modules and inventory hosts their own credential from the Key Store, without changing the repository.
 ---
 
 # Host config
 
-A task authenticates to its repository with the key selected in the [Repository](/user-guide/repositories). Everything else the task fetches from Git gets no credential of its own: a submodule on another server, a role from `requirements.yml`, a Terraform module, an inventory kept in a second repository. **Host config** closes that gap. A mapping binds a Git host or a repository URL to a credential of the [Key Store](/user-guide/key-store), and every Git operation of the project uses it when it reaches that host or URL.
+## Why you need it {#why}
+
+A [Repository](/user-guide/repositories) has exactly one key: the one Semaphore uses to clone it. That is enough as long as everything the task needs lives in that repository. In practice a task reaches out to other places, and each of them may require a different credential:
+
+```mermaid
+flowchart LR
+  Task[Task] -->|repository key| Repo[Main repository]
+  Repo -.-> Sub[Submodule on another server]
+  Repo -.-> Req[Roles from requirements.yml]
+  Repo -.-> Mod[Terraform / OpenTofu modules]
+  Task -.-> InvRepo[Inventory in a second repository]
+  Task -.-> Hosts[Inventory hosts with their own SSH key]
+  classDef gap stroke-dasharray: 5 5,stroke:#c62828,color:#c62828
+  class Sub,Req,Mod,InvRepo,Hosts gap
+```
+
+The dashed arrows are the gap: the repository key is not offered to those servers, so the task fails with **Permission denied** or **Authentication failed** as soon as it touches them. Until now the only workarounds were to give one key access everywhere, or to bake credentials into the files of the repository.
+
+**Host config** solves this without touching the repository. You tell Semaphore *"whenever the project connects to this host or this URL, use that credential from the [Key Store](/user-guide/key-store)"*. The mapping is applied to every Git and SSH connection of the task, wherever it is started from.
+
+| You have | What is in the repository | Without a mapping | With a mapping |
+|---|---|---|---|
+| A **private submodule** on another Git server | `.gitmodules` pointing at `git@gitlab.example.com:infra/common.git` | `git submodule update` is rejected: the deploy key of the main repository is not known there | A **Host** mapping for `gitlab.example.com` with the key allowed on that server |
+| **Private roles or collections** in Ansible `requirements.yml` | `src: https://gitlab.example.com/ansible/role-nginx.git` | `ansible-galaxy install` asks for a login and fails | A **URL** mapping for `https://gitlab.example.com/ansible/` with a GitLab access token |
+| **Private Terraform / OpenTofu modules** fetched from Git | `source = "git::https://github.com/acme/tf-modules.git"` | `terraform init` can not download the module | A **URL** mapping for `https://github.com/acme/` with an SSH key or a token |
+| An **inventory** whose hosts need a **different SSH key** than the repository | An inventory with `db-01.internal`, `db-02.internal` | The inventory can name one key only, and the repository key is the wrong one for those hosts | A **Host** mapping for each host name, or one mapping with the inventory key for the host they share |
+
+One mapping serves all of these at once; you do not configure them per template. When a project has no mappings, nothing changes: tasks keep using the key of the repository, exactly as before.
+
+## How it works {#how-it-works}
+
+A mapping is a rule with three parts: **what** to match (a host name or a URL prefix), **which** credential of the Key Store to use, and nothing else. Semaphore installs the mappings of the project before the first Git command of a task and removes them when the task ends. Every connection the task opens, from its own clone down to a `git` module inside a playbook, goes through them.
+
+```mermaid
+flowchart LR
+  Task["Task<br/>clone · submodules · requirements.yml<br/>terraform init · inventory hosts"] --> HC
+  subgraph Project
+    KS[Key Store]
+    HC[Host config]
+  end
+  KS -->|key A| HC
+  KS -->|token B| HC
+  HC -->|"Host github.com → key A"| GH[github.com]
+  HC -->|"URL https://gitlab.example.com/ansible/ → token B"| GL[gitlab.example.com]
+```
 
 The page is in the project menu, below **Repositories**. Adding, editing and deleting mappings requires the permission to manage project resources, the same one the Key Store needs.
 
