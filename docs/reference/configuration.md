@@ -262,15 +262,15 @@ Where server, event, and task logs go, and the Prometheus endpoint. See [Logs](/
 | `log.tasks.logger` <Pro /><br />`SEMAPHORE_TASK_LOGGER` | object | JSON map which contains task logger configuration. |
 | `log.tasks.result_logger` <Pro /><br />`SEMAPHORE_TASK_RESULT_LOGGER` | object | JSON map which contains task result logger configuration. |
 
-## Audit export {#audit-export}
+## Audit {#audit}
 
-Reliable export of canonical audit events to a single SIEM destination.
+Local capture of canonical audit events with optional export to a SIEM destination.
 
 | Option / Environment variable | Type / Default | Description |
 |---|---|---|
-| `audit.enabled` <Pro /> | boolean | Enables reliable export of canonical audit events. |
-| `audit.instance_id` <Pro /> | string | Stable identity included in every audit event across replicas. |
-| `audit.trusted_proxy_cidrs` <Pro /> | array | Lists proxy networks allowed to provide audit client address headers. |
+| `audit.enabled` | boolean | Enables local capture of canonical audit events. |
+| `audit.instance_id` | string | Stable identity included in every audit event across replicas. |
+| `audit.trusted_proxy_cidrs` | array | Lists proxy networks allowed to provide audit client address headers. |
 | `audit.destination.id` <Pro /> | string | Stable identifier for the single audit export destination. |
 | `audit.destination.type` <Pro /> | string | Destination type; only syslog is supported in v1. |
 | `audit.destination.syslog.address` <Pro /> | string | RFC 5424 over TLS destination host and port. |
