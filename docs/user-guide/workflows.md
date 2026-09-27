@@ -34,18 +34,46 @@ downstream nodes are launched according to the edge conditions.
 
 1. Open your project and go to **Workflows**.
 2. Click **New Workflow**.
-3. In the graphical editor:
-   - Drag nodes from the palette onto the canvas.
-   - Connect nodes by dragging from one node's output handle to another.
-   - Click a node or edge to edit its properties in the side panel.
-4. Set a **name** (and optionally a **start version** for run versioning).
-5. Fix any problems listed in the **Problems** panel, then click **Save**.
+3. Add the first node: click a kind in the **Palette**, drag it onto the canvas,
+   or use the **+** button in the top-right corner of the canvas.
+4. Hover a node and click the **+** handle on its output port to add the next
+   step. The new node is placed to the right and connected with an
+   **On success** edge. You can also connect nodes by dragging from an output
+   port to an input port.
+5. Click a node to edit it in the **properties panel** on the right: node kind,
+   task template and task params, approval timeout and message, delay duration,
+   convergence.
+6. Click the **condition pill** in the middle of an edge to change its
+   condition, or hover it and click **×** to remove the edge.
+7. Set a **name** (and optionally a **start version** for run versioning).
+8. Fix the problems listed in the **problems** chip in the toolbar, then click
+   **Save**.
 
 ![Workflow editor](/assets/workflow-editor.webp)
 
-The editor validates the graph before saving. A valid workflow must have at least
-one node, exactly one starting node (no incoming edges), no cycles, and complete
-configuration on every executable node.
+The editor validates the graph as you work. Nodes with a problem show a warning
+badge, and the toolbar chip lists every problem; click one to select the node. A
+valid workflow must have at least one node, exactly one starting node (no
+incoming edges), no cycles, and complete configuration on every executable node.
+**Save** stays disabled until the graph is valid.
+
+![Quick-add menu](/assets/workflow-editor-quick-add.webp)
+
+### Editor controls {#editor-controls}
+
+| Action | How |
+|--------|-----|
+| Pan the canvas | Drag empty space, or scroll with the mouse wheel / trackpad. |
+| Zoom | Hold <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> on macOS) and scroll, pinch on a trackpad, or use the **+** / **−** buttons in the bottom-left corner. |
+| Fit the whole graph on screen | Click the **fit view** button in the bottom-left corner. The editor also fits the graph when it opens. |
+| Arrange nodes automatically | Click **tidy up** in the bottom-left corner. Nodes snap to a 20 px grid when you move them. |
+| Add a node | **+** handle on a node, palette click or drag, the **+** button, or right-click empty canvas. |
+| Delete the selected node or edge | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> on macOS), or the delete button in the properties panel. |
+| Undo / redo | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> on macOS), or the arrows in the toolbar. Up to 50 steps. |
+| Deselect | <kbd>Esc</kbd> closes the properties panel and clears the selection. |
+
+Leaving the editor with unsaved changes asks for confirmation. The dot on the
+**Save** button shows that the graph differs from the saved version.
 
 ## Node kinds {#node-kinds}
 
@@ -75,9 +103,11 @@ cancelled and the run ends in **stopped** status.
 
 ### Approval nodes {#approval-nodes}
 
-When the run reaches an approval node, status changes to **approval** until
-someone approves or rejects. Approve/Reject controls appear on the run view.
-Rejected approvals fail the run according to the connected edge conditions.
+When the run reaches an approval node, the run status changes to **approval**
+until someone approves or rejects. The approval card on the run view shows the
+approval message with **Approve** and **Reject** buttons for users who may run
+tasks in the project. A rejected approval fails the node, and the run continues
+along the **On failure** or **Always** edges.
 
 ## Edge conditions {#edge-conditions}
 
@@ -95,11 +125,19 @@ Use **On failure** branches for compensating actions or notifications. Use
 ## Running and monitoring {#running-and-monitoring}
 
 - **Run workflow** — starts a new run from the Workflows list.
-- **Run view** — full-screen graph with live status on each node (running, success,
-  failed, approval, delay countdown).
+- **Run view** — the same graph as in the editor, read-only, with live status
+  on each node. A status icon in the corner of the card shows success, failure,
+  running, waiting for approval, or a delay countdown; the subtitle shows the
+  duration. Nodes that have not started yet are dimmed, and the edge leading to
+  a running node is animated.
+- **Task log** — click a task node that has started to open its task log.
 - **Stop** — while a run is `running` or `approval`, users with
   `run_project_tasks` can stop it. All active tasks are stopped, pending
   approvals are rejected, and the run is marked **stopped**.
+
+![Workflow run view](/assets/workflow-run.webp)
+
+![Pending approval on the run view](/assets/workflow-run-approval.webp)
 
 Run statuses: `running`, `approval`, `success`, `failed`, `stopped`.
 

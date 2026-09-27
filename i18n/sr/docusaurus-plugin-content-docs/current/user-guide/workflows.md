@@ -33,18 +33,46 @@ isteknu, nizvodni čvorovi se pokreću u skladu sa uslovima ivica.
 
 1. Otvorite svoj projekat (Project) i idite na **Workflows**.
 2. Kliknite na **New Workflow**.
-3. U grafičkom uređivaču:
-   - Prevucite čvorove sa palete na platno.
-   - Povežite čvorove prevlačenjem sa izlazne tačke jednog čvora na drugi.
-   - Kliknite na čvor ili ivicu da biste uredili njihova svojstva u bočnoj tabli.
-4. Postavite **naziv** (i opciono **početnu verziju** za verzionisanje izvršavanja).
-5. Rešite sve probleme navedene u tabli **Problems**, a zatim kliknite na **Save**.
+3. Dodajte prvi čvor: kliknite na vrstu u **Palette**, prevucite je na platno ili
+   koristite dugme **+** u gornjem desnom uglu platna.
+4. Zadržite pokazivač iznad čvora i kliknite na ručicu **+** na njegovom izlaznom portu
+   da biste dodali sledeći korak. Novi čvor se postavlja desno i povezuje ivicom
+   **On success**. Čvorove možete povezati i prevlačenjem sa izlaznog porta na ulazni
+   port.
+5. Kliknite na čvor da biste ga uredili u **tabli sa svojstvima** sa desne strane: vrsta
+   čvora, šablon zadatka i parametri zadatka, vremensko ograničenje i poruka odobrenja,
+   trajanje odlaganja, konvergencija.
+6. Kliknite na **oznaku uslova** na sredini ivice da biste promenili njen uslov, ili
+   zadržite pokazivač iznad nje i kliknite na **×** da biste uklonili ivicu.
+7. Postavite **naziv** (i opciono **početnu verziju** za verzionisanje izvršavanja).
+8. Rešite probleme navedene u čipu **problems** na traci sa alatkama, a zatim kliknite na
+   **Save**.
 
 ![Uređivač tokova rada](/assets/workflow-editor.webp)
 
-Uređivač proverava ispravnost grafa pre čuvanja. Ispravan tok rada mora imati najmanje
-jedan čvor, tačno jedan početni čvor (bez dolaznih ivica), bez ciklusa, i potpunu
-konfiguraciju na svakom izvršnom čvoru.
+Uređivač proverava ispravnost grafa dok radite. Čvorovi sa problemom prikazuju značku
+upozorenja, a čip na traci sa alatkama navodi svaki problem; kliknite na neki od njih da
+biste izabrali čvor. Ispravan tok rada mora imati najmanje jedan čvor, tačno jedan početni
+čvor (bez dolaznih ivica), bez ciklusa, i potpunu konfiguraciju na svakom izvršnom čvoru.
+Dugme **Save** ostaje onemogućeno dok graf ne postane ispravan.
+
+![Meni za brzo dodavanje](/assets/workflow-editor-quick-add.webp)
+
+### Kontrole uređivača {#editor-controls}
+
+| Radnja | Kako |
+|--------|-----|
+| Pomeranje platna | Prevucite prazan prostor ili skrolujte točkićem miša / dodirnom tablom. |
+| Zumiranje | Držite <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> na macOS-u) i skrolujte, uštinite na dodirnoj tabli ili koristite dugmad **+** / **−** u donjem levom uglu. |
+| Uklapanje celog grafa na ekran | Kliknite na dugme **fit view** u donjem levom uglu. Uređivač takođe uklapa graf pri otvaranju. |
+| Automatsko raspoređivanje čvorova | Kliknite na **tidy up** u donjem levom uglu. Čvorovi se pri pomeranju poravnavaju na mrežu od 20 px. |
+| Dodavanje čvora | Ručica **+** na čvoru, klik ili prevlačenje iz palete, dugme **+** ili desni klik na prazno platno. |
+| Brisanje izabranog čvora ili ivice | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> na macOS-u) ili dugme za brisanje u tabli sa svojstvima. |
+| Opozovi / ponovi | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> na macOS-u) ili strelice na traci sa alatkama. Do 50 koraka. |
+| Poništavanje izbora | <kbd>Esc</kbd> zatvara tablu sa svojstvima i poništava izbor. |
+
+Napuštanje uređivača sa nesačuvanim izmenama traži potvrdu. Tačka na dugmetu **Save**
+pokazuje da se graf razlikuje od sačuvane verzije.
 
 ## Vrste čvorova {#node-kinds}
 
@@ -75,9 +103,11 @@ otkazuje i izvršavanje se završava u statusu **stopped**.
 
 ### Čvorovi odobrenja {#approval-nodes}
 
-Kada izvršavanje stigne do čvora odobrenja, status se menja u **approval** dok neko ne
-odobri ili odbije. Kontrole Approve/Reject pojavljuju se u prikazu izvršavanja. Odbijena
-odobrenja dovode do neuspeha izvršavanja u skladu sa uslovima povezanih ivica.
+Kada izvršavanje stigne do čvora odobrenja, status izvršavanja se menja u **approval** dok
+neko ne odobri ili odbije. Kartica odobrenja u prikazu izvršavanja prikazuje poruku
+odobrenja sa dugmadima **Approve** i **Reject** za korisnike koji mogu da pokreću zadatke
+u projektu. Odbijeno odobrenje dovodi do neuspeha čvora, a izvršavanje se nastavlja duž
+ivica **On failure** ili **Always**.
 
 ## Uslovi ivica {#edge-conditions}
 
@@ -95,11 +125,20 @@ Koristite grane **On failure** za kompenzacione radnje ili obaveštenja. Koristi
 ## Pokretanje i praćenje {#running-and-monitoring}
 
 - **Run workflow** — pokreće novo izvršavanje sa liste Workflows.
-- **Prikaz izvršavanja** — graf preko celog ekrana sa statusom uživo na svakom čvoru
-  (running, success, failed, approval, odbrojavanje odlaganja).
+- **Prikaz izvršavanja** — isti graf kao u uređivaču, samo za čitanje, sa statusom uživo
+  na svakom čvoru. Ikona statusa u uglu kartice prikazuje uspeh, neuspeh, izvršavanje,
+  čekanje na odobrenje ili odbrojavanje odlaganja; podnaslov prikazuje trajanje. Čvorovi
+  koji još nisu počeli su zatamnjeni, a ivica koja vodi do čvora koji se izvršava je
+  animirana.
+- **Dnevnik zadatka** — kliknite na čvor zadatka koji je počeo da biste otvorili njegov
+  dnevnik zadatka.
 - **Stop** — dok je izvršavanje u stanju `running` ili `approval`, korisnici sa dozvolom
   `run_project_tasks` mogu da ga zaustave. Svi aktivni zadaci se zaustavljaju, odobrenja na
   čekanju se odbijaju, a izvršavanje se označava kao **stopped**.
+
+![Prikaz izvršavanja toka rada](/assets/workflow-run.webp)
+
+![Odobrenje na čekanju u prikazu izvršavanja](/assets/workflow-run-approval.webp)
 
 Statusi izvršavanja: `running`, `approval`, `success`, `failed`, `stopped`.
 

@@ -33,18 +33,48 @@ los nodos descendentes se lanzan según las condiciones de las aristas.
 
 1. Abra su proyecto y vaya a **Flujos de trabajo**.
 2. Haga clic en **Nuevo flujo de trabajo**.
-3. En el editor gráfico:
-   - Arrastre nodos desde la paleta al lienzo.
-   - Conecte nodos arrastrando desde el conector de salida de un nodo hasta otro.
-   - Haga clic en un nodo o arista para editar sus propiedades en el panel lateral.
-4. Defina un **nombre** (y opcionalmente una **versión inicial** para el versionado de ejecuciones).
-5. Corrija los problemas listados en el panel **Problemas** y luego haga clic en **Guardar**.
+3. Añada el primer nodo: haga clic en un tipo de la **Paleta**, arrástrelo al lienzo o
+   use el botón **+** de la esquina superior derecha del lienzo.
+4. Pase el cursor sobre un nodo y haga clic en el asa **+** de su puerto de salida para
+   añadir el siguiente paso. El nuevo nodo se coloca a la derecha y se conecta con una
+   arista **On success**. También puede conectar nodos arrastrando desde un puerto de
+   salida hasta un puerto de entrada.
+5. Haga clic en un nodo para editarlo en el **panel de propiedades** de la derecha: tipo de
+   nodo, plantilla de tarea y parámetros de tarea, tiempo de espera y mensaje de aprobación,
+   duración del retardo, convergencia.
+6. Haga clic en la **píldora de condición** en el centro de una arista para cambiar su
+   condición, o pase el cursor sobre ella y haga clic en **×** para eliminar la arista.
+7. Defina un **nombre** (y opcionalmente una **versión inicial** para el versionado de
+   ejecuciones).
+8. Corrija los problemas listados en el chip **Problemas** de la barra de herramientas y
+   luego haga clic en **Guardar**.
 
 ![Editor de flujos de trabajo](/assets/workflow-editor.webp)
 
-El editor valida el grafo antes de guardar. Un flujo de trabajo válido debe tener al menos
+El editor valida el grafo mientras trabaja. Los nodos con algún problema muestran una
+insignia de advertencia, y el chip de la barra de herramientas enumera todos los problemas;
+haga clic en uno para seleccionar el nodo. Un flujo de trabajo válido debe tener al menos
 un nodo, exactamente un nodo inicial (sin aristas entrantes), ningún ciclo y una
-configuración completa en cada nodo ejecutable.
+configuración completa en cada nodo ejecutable. **Guardar** permanece deshabilitado hasta
+que el grafo sea válido.
+
+![Menú de adición rápida](/assets/workflow-editor-quick-add.webp)
+
+### Controles del editor {#editor-controls}
+
+| Acción | Cómo |
+|--------|-----|
+| Desplazar el lienzo | Arrastre un espacio vacío o desplácese con la rueda del ratón / el trackpad. |
+| Zoom | Mantenga pulsado <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> en macOS) y desplácese, pince en el trackpad o use los botones **+** / **−** de la esquina inferior izquierda. |
+| Ajustar todo el grafo a la pantalla | Haga clic en el botón **ajustar vista** de la esquina inferior izquierda. El editor también ajusta el grafo al abrirse. |
+| Organizar los nodos automáticamente | Haga clic en **ordenar** en la esquina inferior izquierda. Los nodos se alinean a una cuadrícula de 20 px al moverlos. |
+| Añadir un nodo | Asa **+** de un nodo, clic o arrastre desde la paleta, el botón **+** o clic derecho en un espacio vacío del lienzo. |
+| Eliminar el nodo o la arista seleccionados | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> en macOS) o el botón de eliminar del panel de propiedades. |
+| Deshacer / rehacer | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> en macOS) o las flechas de la barra de herramientas. Hasta 50 pasos. |
+| Deseleccionar | <kbd>Esc</kbd> cierra el panel de propiedades y borra la selección. |
+
+Al salir del editor con cambios sin guardar se pide confirmación. El punto en el botón
+**Guardar** indica que el grafo difiere de la versión guardada.
 
 ## Tipos de nodos {#node-kinds}
 
@@ -74,9 +104,11 @@ cancela y la ejecución finaliza en estado **stopped**.
 
 ### Nodos de aprobación {#approval-nodes}
 
-Cuando la ejecución llega a un nodo de aprobación, el estado cambia a **approval** hasta que
-alguien la aprueba o la rechaza. Los controles Aprobar/Rechazar aparecen en la vista de la ejecución.
-Las aprobaciones rechazadas hacen fallar la ejecución según las condiciones de las aristas conectadas.
+Cuando la ejecución llega a un nodo de aprobación, el estado de la ejecución cambia a
+**approval** hasta que alguien la aprueba o la rechaza. La tarjeta de aprobación de la vista
+de la ejecución muestra el mensaje de aprobación con los botones **Aprobar** y **Rechazar**
+para los usuarios que pueden ejecutar tareas en el proyecto. Una aprobación rechazada hace
+fallar el nodo, y la ejecución continúa por las aristas **On failure** o **Always**.
 
 ## Condiciones de las aristas {#edge-conditions}
 
@@ -94,11 +126,20 @@ Use ramas **On failure** para acciones de compensación o notificaciones. Use
 ## Ejecución y supervisión {#running-and-monitoring}
 
 - **Ejecutar flujo de trabajo**: inicia una nueva ejecución desde la lista de Flujos de trabajo.
-- **Vista de la ejecución**: grafo a pantalla completa con el estado en directo de cada nodo (running, success,
-  failed, approval, cuenta atrás del retardo).
+- **Vista de la ejecución**: el mismo grafo que en el editor, en modo de solo lectura, con el
+  estado en directo de cada nodo. Un icono de estado en la esquina de la tarjeta muestra
+  éxito, fallo, en ejecución, en espera de aprobación o la cuenta atrás de un retardo; el
+  subtítulo muestra la duración. Los nodos que aún no se han iniciado aparecen atenuados, y
+  la arista que lleva a un nodo en ejecución está animada.
+- **Registro de la tarea**: haga clic en un nodo de tarea que ya se haya iniciado para abrir
+  su registro de tarea.
 - **Detener**: mientras una ejecución está en `running` o `approval`, los usuarios con
   `run_project_tasks` pueden detenerla. Se detienen todas las tareas activas, las aprobaciones
   pendientes se rechazan y la ejecución se marca como **stopped**.
+
+![Vista de la ejecución del flujo de trabajo](/assets/workflow-run.webp)
+
+![Aprobación pendiente en la vista de la ejecución](/assets/workflow-run-approval.webp)
 
 Estados de la ejecución: `running`, `approval`, `success`, `failed`, `stopped`.
 

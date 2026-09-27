@@ -33,18 +33,49 @@ Verzögerungen ablaufen, werden die nachfolgenden Nodes entsprechend den Bedingu
 
 1. Öffnen Sie Ihr Projekt und gehen Sie zu **Workflows**.
 2. Klicken Sie auf **New Workflow**.
-3. Im grafischen Editor:
-   - Ziehen Sie Nodes aus der Palette auf die Arbeitsfläche.
-   - Verbinden Sie Nodes, indem Sie vom Ausgangspunkt eines Nodes zu einem anderen ziehen.
-   - Klicken Sie auf einen Node oder eine Edge, um die Eigenschaften im Seitenbereich zu bearbeiten.
-4. Legen Sie einen **Namen** fest (und optional eine **Startversion** für die Versionierung der Durchläufe).
-5. Beheben Sie alle im Bereich **Problems** aufgeführten Probleme und klicken Sie dann auf **Save**.
+3. Fügen Sie den ersten Node hinzu: Klicken Sie in der **Palette** auf eine Art, ziehen Sie
+   sie auf die Arbeitsfläche oder verwenden Sie die Schaltfläche **+** in der oberen rechten
+   Ecke der Arbeitsfläche.
+4. Zeigen Sie mit der Maus auf einen Node und klicken Sie auf den **+**-Griff an seinem
+   Ausgangsport, um den nächsten Schritt hinzuzufügen. Der neue Node wird rechts platziert
+   und mit einer **On success**-Edge verbunden. Sie können Nodes auch verbinden, indem Sie
+   von einem Ausgangsport zu einem Eingangsport ziehen.
+5. Klicken Sie auf einen Node, um ihn im **Eigenschaftsbereich** rechts zu bearbeiten:
+   Art des Nodes, Task Template und Task-Parameter, Timeout und Meldung der Freigabe,
+   Dauer der Verzögerung, Zusammenführung.
+6. Klicken Sie auf die **Bedingungs-Pille** in der Mitte einer Edge, um deren Bedingung zu
+   ändern, oder zeigen Sie darauf und klicken Sie auf **×**, um die Edge zu entfernen.
+7. Legen Sie einen **Namen** fest (und optional eine **Startversion** für die Versionierung
+   der Durchläufe).
+8. Beheben Sie die im Chip **Problems** in der Symbolleiste aufgeführten Probleme und
+   klicken Sie dann auf **Save**.
 
 ![Workflow-Editor](/assets/workflow-editor.webp)
 
-Der Editor validiert den Graphen vor dem Speichern. Ein gültiger Workflow muss mindestens
-einen Node haben, genau einen Start-Node (ohne eingehende Edges), keine Zyklen und eine
-vollständige Konfiguration auf jedem ausführbaren Node.
+Der Editor validiert den Graphen während der Arbeit. Nodes mit einem Problem zeigen ein
+Warnsymbol, und der Chip in der Symbolleiste listet jedes Problem auf; klicken Sie auf eines,
+um den Node auszuwählen. Ein gültiger Workflow muss mindestens einen Node haben, genau einen
+Start-Node (ohne eingehende Edges), keine Zyklen und eine vollständige Konfiguration auf jedem
+ausführbaren Node. **Save** bleibt deaktiviert, bis der Graph gültig ist.
+
+![Menü zum schnellen Hinzufügen](/assets/workflow-editor-quick-add.webp)
+
+### Editor-Steuerung {#editor-controls}
+
+| Aktion | So geht's |
+|--------|-----|
+| Arbeitsfläche verschieben | Ziehen Sie eine leere Stelle oder scrollen Sie mit dem Mausrad / Trackpad. |
+| Zoomen | Halten Sie <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> unter macOS) gedrückt und scrollen Sie, verwenden Sie die Zoom-Geste auf dem Trackpad oder die Schaltflächen **+** / **−** in der unteren linken Ecke. |
+| Gesamten Graphen auf den Bildschirm einpassen | Klicken Sie auf die Schaltfläche **fit view** in der unteren linken Ecke. Der Editor passt den Graphen auch beim Öffnen ein. |
+| Nodes automatisch anordnen | Klicken Sie auf **tidy up** in der unteren linken Ecke. Nodes rasten beim Verschieben an einem 20-px-Raster ein. |
+| Node hinzufügen | **+**-Griff an einem Node, Klick oder Ziehen in der Palette, die Schaltfläche **+** oder Rechtsklick auf eine leere Stelle der Arbeitsfläche. |
+| Ausgewählten Node oder ausgewählte Edge löschen | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> unter macOS) oder die Löschen-Schaltfläche im Eigenschaftsbereich. |
+| Rückgängig / Wiederholen | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> unter macOS) oder die Pfeile in der Symbolleiste. Bis zu 50 Schritte. |
+| Auswahl aufheben | <kbd>Esc</kbd> schließt den Eigenschaftsbereich und hebt die Auswahl auf. |
+
+Beim Verlassen des Editors mit ungespeicherten Änderungen wird eine Bestätigung abgefragt.
+Der Punkt auf der Schaltfläche **Save** zeigt an, dass der Graph von der gespeicherten
+Version abweicht.
 
 ## Arten von Nodes {#node-kinds}
 
@@ -75,10 +106,11 @@ Verzögerung abgebrochen und der Durchlauf endet im Status **stopped**.
 
 ### Approval-Nodes {#approval-nodes}
 
-Wenn der Durchlauf einen Approval-Node erreicht, wechselt der Status zu **approval**, bis
-jemand freigibt oder ablehnt. In der Durchlaufansicht erscheinen die Schaltflächen zum
-Freigeben und Ablehnen. Abgelehnte Freigaben lassen den Durchlauf entsprechend den
-Bedingungen der verbundenen Edges fehlschlagen.
+Wenn der Durchlauf einen Approval-Node erreicht, wechselt der Status des Durchlaufs zu
+**approval**, bis jemand freigibt oder ablehnt. Die Freigabekarte in der Durchlaufansicht
+zeigt die Freigabemeldung mit den Schaltflächen **Approve** und **Reject** für Benutzer, die
+Tasks im Projekt ausführen dürfen. Eine abgelehnte Freigabe lässt den Node fehlschlagen, und
+der Durchlauf wird über die **On failure**- oder **Always**-Edges fortgesetzt.
 
 ## Bedingungen von Edges {#edge-conditions}
 
@@ -96,11 +128,20 @@ Verwenden Sie **Always**, wenn der nächste Schritt unabhängig vom Ergebnis lau
 ## Ausführen und überwachen {#running-and-monitoring}
 
 - **Run workflow** — startet einen neuen Durchlauf aus der Liste der Workflows.
-- **Durchlaufansicht** — Vollbildgraph mit Live-Status auf jedem Node (running, success,
-  failed, approval, Countdown der Verzögerung).
+- **Durchlaufansicht** — derselbe Graph wie im Editor, schreibgeschützt, mit Live-Status
+  auf jedem Node. Ein Statussymbol in der Ecke der Karte zeigt Erfolg, Fehler, laufend,
+  Warten auf Freigabe oder den Countdown einer Verzögerung; der Untertitel zeigt die Dauer.
+  Noch nicht gestartete Nodes werden abgeblendet dargestellt, und die Edge, die zu einem
+  laufenden Node führt, ist animiert.
+- **Task-Protokoll** — klicken Sie auf einen bereits gestarteten Task-Node, um sein
+  Task-Protokoll zu öffnen.
 - **Stop** — solange ein Durchlauf `running` oder `approval` ist, können Benutzer mit
   `run_project_tasks` ihn stoppen. Alle aktiven Tasks werden gestoppt, ausstehende
   Freigaben werden abgelehnt und der Durchlauf wird als **stopped** markiert.
+
+![Durchlaufansicht eines Workflows](/assets/workflow-run.webp)
+
+![Ausstehende Freigabe in der Durchlaufansicht](/assets/workflow-run-approval.webp)
 
 Status von Durchläufen: `running`, `approval`, `success`, `failed`, `stopped`.
 

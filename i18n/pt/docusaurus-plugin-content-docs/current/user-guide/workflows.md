@@ -33,18 +33,46 @@ os nós seguintes são iniciados de acordo com as condições das arestas.
 
 1. Abra o seu projeto e vá para **Workflows**.
 2. Clique em **New Workflow**.
-3. No editor gráfico:
-   - Arraste nós da paleta para a área de trabalho.
-   - Conecte os nós arrastando a partir do conector de saída de um nó até outro.
-   - Clique em um nó ou aresta para editar as suas propriedades no painel lateral.
-4. Defina um **nome** (e, opcionalmente, uma **versão inicial** para o versionamento das execuções).
-5. Corrija quaisquer problemas listados no painel **Problems** e clique em **Save**.
+3. Adicione o primeiro nó: clique em um tipo na **Palette**, arraste-o para a área de trabalho
+   ou use o botão **+** no canto superior direito da área de trabalho.
+4. Passe o mouse sobre um nó e clique na alça **+** do seu conector de saída para adicionar a
+   próxima etapa. O novo nó é colocado à direita e conectado com uma aresta
+   **On success**. Você também pode conectar nós arrastando de um conector de saída
+   até um conector de entrada.
+5. Clique em um nó para editá-lo no **painel de propriedades** à direita: tipo do nó,
+   modelo de tarefa e parâmetros da tarefa, tempo limite e mensagem da aprovação, duração do atraso,
+   convergência.
+6. Clique na **pílula de condição** no meio de uma aresta para alterar a sua
+   condição, ou passe o mouse sobre ela e clique em **×** para remover a aresta.
+7. Defina um **nome** (e, opcionalmente, uma **versão inicial** para o versionamento das execuções).
+8. Corrija os problemas listados no chip **problems** da barra de ferramentas e clique em
+   **Save**.
 
 ![Editor de workflow](/assets/workflow-editor.webp)
 
-O editor valida o grafo antes de salvar. Um workflow válido deve ter pelo menos
-um nó, exatamente um nó inicial (sem arestas de entrada), nenhum ciclo e configuração
-completa em todos os nós executáveis.
+O editor valida o grafo enquanto você trabalha. Nós com problema exibem um selo de aviso,
+e o chip da barra de ferramentas lista todos os problemas; clique em um deles para selecionar o nó. Um
+workflow válido deve ter pelo menos um nó, exatamente um nó inicial (sem arestas
+de entrada), nenhum ciclo e configuração completa em todos os nós executáveis.
+**Save** permanece desabilitado até que o grafo seja válido.
+
+![Menu de adição rápida](/assets/workflow-editor-quick-add.webp)
+
+### Controles do editor {#editor-controls}
+
+| Ação | Como |
+|--------|-----|
+| Mover a área de trabalho | Arraste um espaço vazio ou role com a roda do mouse / trackpad. |
+| Zoom | Mantenha <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> no macOS) pressionado e role, faça o gesto de pinça no trackpad ou use os botões **+** / **−** no canto inferior esquerdo. |
+| Ajustar o grafo inteiro à tela | Clique no botão **fit view** no canto inferior esquerdo. O editor também ajusta o grafo ao abrir. |
+| Organizar os nós automaticamente | Clique em **tidy up** no canto inferior esquerdo. Os nós se alinham a uma grade de 20 px quando você os move. |
+| Adicionar um nó | Alça **+** em um nó, clique ou arraste na paleta, o botão **+** ou clique com o botão direito em um espaço vazio da área de trabalho. |
+| Excluir o nó ou a aresta selecionada | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> no macOS) ou o botão de exclusão no painel de propriedades. |
+| Desfazer / refazer | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> no macOS) ou as setas na barra de ferramentas. Até 50 etapas. |
+| Desmarcar | <kbd>Esc</kbd> fecha o painel de propriedades e limpa a seleção. |
+
+Sair do editor com alterações não salvas pede confirmação. O ponto no botão
+**Save** indica que o grafo difere da versão salva.
 
 ## Tipos de nó {#node-kinds}
 
@@ -74,9 +102,11 @@ cancelado e a execução termina com o status **stopped**.
 
 ### Nós de aprovação {#approval-nodes}
 
-Quando a execução chega a um nó de aprovação, o status muda para **approval** até que
-alguém aprove ou rejeite. Os controles Approve/Reject aparecem na visualização da execução.
-Aprovações rejeitadas fazem a execução falhar de acordo com as condições das arestas conectadas.
+Quando a execução chega a um nó de aprovação, o status da execução muda para **approval**
+até que alguém aprove ou rejeite. O cartão de aprovação na visualização da execução mostra a
+mensagem de aprovação com os botões **Approve** e **Reject** para os usuários que podem executar
+tarefas no projeto. Uma aprovação rejeitada faz o nó falhar, e a execução continua
+pelas arestas **On failure** ou **Always**.
 
 ## Condições das arestas {#edge-conditions}
 
@@ -94,11 +124,19 @@ Use ramificações **On failure** para ações de compensação ou notificaçõe
 ## Executando e monitorando {#running-and-monitoring}
 
 - **Run workflow** — inicia uma nova execução a partir da lista de Workflows.
-- **Visualização da execução** — grafo em tela cheia com o status ao vivo de cada nó (em execução, sucesso,
-  falha, aprovação, contagem regressiva do atraso).
+- **Visualização da execução** — o mesmo grafo do editor, somente leitura, com o status ao vivo
+  em cada nó. Um ícone de status no canto do cartão indica sucesso, falha,
+  em execução, aguardando aprovação ou a contagem regressiva do atraso; o subtítulo mostra a
+  duração. Os nós que ainda não iniciaram aparecem esmaecidos, e a aresta que leva a
+  um nó em execução é animada.
+- **Log da tarefa** — clique em um nó de tarefa que já iniciou para abrir o seu log de tarefa.
 - **Stop** — enquanto uma execução está em `running` ou `approval`, usuários com
   `run_project_tasks` podem interrompê-la. Todas as tarefas ativas são interrompidas, as aprovações
   pendentes são rejeitadas e a execução é marcada como **stopped**.
+
+![Visualização da execução do workflow](/assets/workflow-run.webp)
+
+![Aprovação pendente na visualização da execução](/assets/workflow-run-approval.webp)
 
 Status das execuções: `running`, `approval`, `success`, `failed`, `stopped`.
 

@@ -33,18 +33,46 @@ i nodi successivi vengono avviati in base alle condizioni degli archi.
 
 1. Aprire il proprio Project e andare in **Workflows**.
 2. Fare clic su **New Workflow**.
-3. Nell'editor grafico:
-   - Trascinare i nodi dalla palette sull'area di lavoro.
-   - Collegare i nodi trascinando dal punto di uscita di un nodo a un altro nodo.
-   - Fare clic su un nodo o su un arco per modificarne le proprietà nel pannello laterale.
-4. Impostare un **nome** (e facoltativamente una **versione iniziale** per la numerazione delle esecuzioni).
-5. Risolvere gli eventuali problemi elencati nel pannello **Problems**, quindi fare clic su **Save**.
+3. Aggiungere il primo nodo: fare clic su un tipo nella **Palette**, trascinarlo sull'area di lavoro
+   oppure utilizzare il pulsante **+** nell'angolo in alto a destra dell'area di lavoro.
+4. Passare il mouse su un nodo e fare clic sulla maniglia **+** della sua porta di uscita per aggiungere
+   il passaggio successivo. Il nuovo nodo viene posizionato a destra e collegato con un arco
+   **On success**. È anche possibile collegare i nodi trascinando da una porta di uscita a una
+   porta di ingresso.
+5. Fare clic su un nodo per modificarlo nel **pannello delle proprietà** a destra: tipo di nodo,
+   Task Template e task params, timeout e messaggio di approvazione, durata del ritardo,
+   convergenza.
+6. Fare clic sulla **pillola della condizione** al centro di un arco per cambiarne la
+   condizione, oppure passare il mouse sull'arco e fare clic su **×** per rimuoverlo.
+7. Impostare un **nome** (e facoltativamente una **versione iniziale** per la numerazione delle esecuzioni).
+8. Risolvere i problemi elencati nel chip **problems** della barra degli strumenti, quindi fare clic
+   su **Save**.
 
 ![Editor dei Workflow](/assets/workflow-editor.webp)
 
-L'editor convalida il grafo prima del salvataggio. Un Workflow valido deve avere almeno
-un nodo, esattamente un nodo iniziale (senza archi in entrata), nessun ciclo e una configurazione
-completa su ogni nodo eseguibile.
+L'editor convalida il grafo durante il lavoro. I nodi con un problema mostrano un badge di
+avviso e il chip nella barra degli strumenti elenca tutti i problemi; fare clic su uno di essi per
+selezionare il nodo. Un Workflow valido deve avere almeno un nodo, esattamente un nodo iniziale
+(senza archi in entrata), nessun ciclo e una configurazione completa su ogni nodo eseguibile.
+**Save** rimane disabilitato finché il grafo non è valido.
+
+![Menu di aggiunta rapida](/assets/workflow-editor-quick-add.webp)
+
+### Controlli dell'editor {#editor-controls}
+
+| Azione | Come |
+|--------|-----|
+| Spostare l'area di lavoro | Trascinare uno spazio vuoto oppure scorrere con la rotellina del mouse / il trackpad. |
+| Zoom | Tenere premuto <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> su macOS) e scorrere, usare il pinch sul trackpad oppure i pulsanti **+** / **−** nell'angolo in basso a sinistra. |
+| Adattare l'intero grafo allo schermo | Fare clic sul pulsante **fit view** nell'angolo in basso a sinistra. L'editor adatta il grafo allo schermo anche all'apertura. |
+| Disporre i nodi automaticamente | Fare clic su **tidy up** nell'angolo in basso a sinistra. Quando vengono spostati, i nodi si allineano a una griglia di 20 px. |
+| Aggiungere un nodo | Maniglia **+** su un nodo, clic o trascinamento dalla palette, pulsante **+**, oppure clic destro su uno spazio vuoto dell'area di lavoro. |
+| Eliminare il nodo o l'arco selezionato | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> su macOS), oppure il pulsante di eliminazione nel pannello delle proprietà. |
+| Annulla / ripeti | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> su macOS), oppure le frecce nella barra degli strumenti. Fino a 50 passaggi. |
+| Deselezionare | <kbd>Esc</kbd> chiude il pannello delle proprietà e annulla la selezione. |
+
+Se si lascia l'editor con modifiche non salvate viene richiesta una conferma. Il punto sul
+pulsante **Save** indica che il grafo differisce dalla versione salvata.
 
 ## Tipi di nodo {#node-kinds}
 
@@ -75,8 +103,10 @@ annullato e l'esecuzione termina nello stato **stopped**.
 ### Nodi Approval {#approval-nodes}
 
 Quando l'esecuzione raggiunge un nodo di approvazione, lo stato passa a **approval** fino a quando
-qualcuno approva o rifiuta. I controlli di approvazione e rifiuto compaiono nella vista dell'esecuzione.
-Le approvazioni rifiutate fanno fallire l'esecuzione in base alle condizioni degli archi collegati.
+qualcuno approva o rifiuta. La scheda di approvazione nella vista dell'esecuzione mostra il messaggio
+di approvazione con i pulsanti **Approve** e **Reject** per gli utenti che possono eseguire Task nel
+Project. Un'approvazione rifiutata fa fallire il nodo e l'esecuzione prosegue lungo gli archi
+**On failure** o **Always**.
 
 ## Condizioni degli archi {#edge-conditions}
 
@@ -94,11 +124,19 @@ Utilizzare le diramazioni **On failure** per azioni compensative o notifiche. Ut
 ## Esecuzione e monitoraggio {#running-and-monitoring}
 
 - **Run workflow** — avvia una nuova esecuzione dall'elenco dei Workflow.
-- **Vista dell'esecuzione** — grafo a schermo intero con lo stato in tempo reale di ogni nodo (in esecuzione, successo,
-  fallito, approvazione, conto alla rovescia del ritardo).
+- **Vista dell'esecuzione** — lo stesso grafo dell'editor, in sola lettura, con lo stato in tempo
+  reale di ogni nodo. Un'icona di stato nell'angolo della scheda indica successo, fallimento,
+  esecuzione in corso, attesa di approvazione o il conto alla rovescia del ritardo; il sottotitolo
+  mostra la durata. I nodi non ancora avviati sono attenuati e l'arco che porta a un nodo in
+  esecuzione è animato.
+- **Log del Task** — fare clic su un nodo Task già avviato per aprirne il log.
 - **Stop** — mentre un'esecuzione è in stato `running` o `approval`, gli utenti con
   `run_project_tasks` possono interromperla. Tutti i Task attivi vengono interrotti, le approvazioni
   in attesa vengono rifiutate e l'esecuzione viene contrassegnata come **stopped**.
+
+![Vista dell'esecuzione del Workflow](/assets/workflow-run.webp)
+
+![Approvazione in attesa nella vista dell'esecuzione](/assets/workflow-run-approval.webp)
 
 Stati delle esecuzioni: `running`, `approval`, `success`, `failed`, `stopped`.
 

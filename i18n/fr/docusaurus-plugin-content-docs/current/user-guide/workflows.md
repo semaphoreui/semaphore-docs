@@ -35,18 +35,48 @@ selon les conditions des arêtes.
 
 1. Ouvrez votre projet et allez dans **Workflows**.
 2. Cliquez sur **Nouveau workflow**.
-3. Dans l'éditeur graphique :
-   - Faites glisser des nœuds depuis la palette vers le canevas.
-   - Connectez les nœuds en tirant depuis la poignée de sortie d'un nœud vers un autre.
-   - Cliquez sur un nœud ou une arête pour modifier ses propriétés dans le panneau latéral.
-4. Définissez un **nom** (et éventuellement une **version de départ** pour la gestion des versions d'exécution).
-5. Corrigez les problèmes listés dans le panneau **Problèmes**, puis cliquez sur **Enregistrer**.
+3. Ajoutez le premier nœud : cliquez sur un type dans la **Palette**, faites-le glisser sur
+   le canevas, ou utilisez le bouton **+** dans le coin supérieur droit du canevas.
+4. Survolez un nœud et cliquez sur la poignée **+** de son port de sortie pour ajouter
+   l'étape suivante. Le nouveau nœud est placé à droite et relié par une arête
+   **On success**. Vous pouvez aussi connecter des nœuds en tirant d'un port de sortie vers
+   un port d'entrée.
+5. Cliquez sur un nœud pour le modifier dans le **panneau de propriétés** à droite : type de
+   nœud, modèle de tâche et paramètres de tâche, délai d'expiration et message d'approbation,
+   durée du délai, convergence.
+6. Cliquez sur la **pastille de condition** au milieu d'une arête pour changer sa condition,
+   ou survolez-la et cliquez sur **×** pour supprimer l'arête.
+7. Définissez un **nom** (et éventuellement une **version de départ** pour la gestion des
+   versions d'exécution).
+8. Corrigez les problèmes listés dans la puce **Problèmes** de la barre d'outils, puis
+   cliquez sur **Enregistrer**.
 
 ![Éditeur de workflow](/assets/workflow-editor.webp)
 
-L'éditeur valide le graphe avant l'enregistrement. Un workflow valide doit comporter au
-moins un nœud, exactement un nœud de départ (sans arête entrante), aucun cycle, et une
-configuration complète sur chaque nœud exécutable.
+L'éditeur valide le graphe au fil de votre travail. Les nœuds présentant un problème
+affichent un badge d'avertissement, et la puce de la barre d'outils liste chaque problème ;
+cliquez sur l'un d'eux pour sélectionner le nœud. Un workflow valide doit comporter au moins
+un nœud, exactement un nœud de départ (sans arête entrante), aucun cycle, et une
+configuration complète sur chaque nœud exécutable. **Enregistrer** reste désactivé tant que
+le graphe n'est pas valide.
+
+![Menu d'ajout rapide](/assets/workflow-editor-quick-add.webp)
+
+### Commandes de l'éditeur {#editor-controls}
+
+| Action | Comment |
+|--------|-----|
+| Déplacer le canevas | Faites glisser un espace vide, ou faites défiler avec la molette de la souris / le trackpad. |
+| Zoomer | Maintenez <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> sous macOS) et faites défiler, pincez sur le trackpad, ou utilisez les boutons **+** / **−** dans le coin inférieur gauche. |
+| Afficher tout le graphe à l'écran | Cliquez sur le bouton **ajuster la vue** dans le coin inférieur gauche. L'éditeur ajuste aussi le graphe à l'ouverture. |
+| Réorganiser les nœuds automatiquement | Cliquez sur **ranger** dans le coin inférieur gauche. Les nœuds s'alignent sur une grille de 20 px lorsque vous les déplacez. |
+| Ajouter un nœud | Poignée **+** sur un nœud, clic ou glisser depuis la palette, le bouton **+**, ou clic droit sur un espace vide du canevas. |
+| Supprimer le nœud ou l'arête sélectionné | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> sous macOS), ou le bouton de suppression dans le panneau de propriétés. |
+| Annuler / rétablir | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> sous macOS), ou les flèches de la barre d'outils. Jusqu'à 50 étapes. |
+| Désélectionner | <kbd>Esc</kbd> ferme le panneau de propriétés et efface la sélection. |
+
+Quitter l'éditeur avec des modifications non enregistrées demande une confirmation. Le
+point sur le bouton **Enregistrer** indique que le graphe diffère de la version enregistrée.
 
 ## Types de nœuds {#node-kinds}
 
@@ -77,10 +107,12 @@ annulé et l'exécution se termine au statut **stopped**.
 
 ### Nœuds d'approbation {#approval-nodes}
 
-Lorsque l'exécution atteint un nœud d'approbation, le statut passe à **approval**
-jusqu'à ce que quelqu'un approuve ou rejette. Les contrôles Approuver/Rejeter
-apparaissent dans la vue d'exécution. Les approbations rejetées font échouer
-l'exécution selon les conditions des arêtes connectées.
+Lorsque l'exécution atteint un nœud d'approbation, le statut de l'exécution passe à
+**approval** jusqu'à ce que quelqu'un approuve ou rejette. La carte d'approbation de la vue
+d'exécution affiche le message d'approbation avec les boutons **Approuver** et **Rejeter**
+pour les utilisateurs autorisés à exécuter des tâches dans le projet. Une approbation
+rejetée fait échouer le nœud, et l'exécution continue le long des arêtes **On failure** ou
+**Always**.
 
 ## Conditions des arêtes {#edge-conditions}
 
@@ -99,12 +131,21 @@ soit le résultat.
 ## Exécuter et surveiller {#running-and-monitoring}
 
 - **Exécuter le workflow** — démarre une nouvelle exécution depuis la liste des workflows.
-- **Vue d'exécution** — graphe en plein écran avec le statut en direct de chaque nœud
-  (en cours d'exécution, succès, échec, approbation, compte à rebours de délai).
+- **Vue d'exécution** — le même graphe que dans l'éditeur, en lecture seule, avec le statut
+  en direct de chaque nœud. Une icône de statut dans le coin de la carte indique le succès,
+  l'échec, l'exécution en cours, l'attente d'approbation ou le compte à rebours d'un délai ;
+  le sous-titre indique la durée. Les nœuds qui n'ont pas encore démarré sont estompés, et
+  l'arête menant à un nœud en cours d'exécution est animée.
+- **Journal de tâche** — cliquez sur un nœud de tâche déjà démarré pour ouvrir son journal
+  de tâche.
 - **Arrêter** — pendant qu'une exécution est au statut `running` ou `approval`, les
   utilisateurs disposant de `run_project_tasks` peuvent l'arrêter. Toutes les tâches
   actives sont arrêtées, les approbations en attente sont rejetées et l'exécution est
   marquée **stopped**.
+
+![Vue d'exécution du workflow](/assets/workflow-run.webp)
+
+![Approbation en attente dans la vue d'exécution](/assets/workflow-run-approval.webp)
 
 Statuts d'exécution : `running`, `approval`, `success`, `failed`, `stopped`.
 
