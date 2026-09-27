@@ -53,6 +53,10 @@ sidebar_custom_props:
 
 ### 编辑器操作 {#editor-controls}
 
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="工作流编辑器的键盘快捷键" />
+</div>
+
 画布可以用鼠标、触控板、左下角的按钮或键盘来移动和缩放。键盘快捷键在画布获得
 焦点时生效：先点击空白画布，或按 <kbd>Tab</kbd> 直到画布获得焦点。随后 <kbd>Tab</kbd>
 在节点之间移动；在节点上按 <kbd>Enter</kbd> 会选中该节点并打开其属性面板（在运行视图
@@ -83,21 +87,41 @@ sidebar_custom_props:
 
 ## 节点类型 {#node-kinds}
 
-| 类型 | 用途 |
-|------|---------|
-| **Task** | 运行一个任务模板。你可以通过**任务参数（task params）**为每个节点覆盖模板参数（清单、环境、Ansible limit、额外的 CLI 参数）。 |
-| **Approval** | 暂停运行，直到有权限的用户批准或拒绝。可选设置超时时间（秒）和审批消息。 |
-| **Delay** | 等待配置的秒数后再继续执行下游节点。适用于冷却期、维护窗口或拉开依赖步骤之间的间隔。 |
-| **Note** | 画布上的自由格式标注。Note 节点不会执行，也不通过边连接——仅用于文档说明。 |
+工作流由四种节点组成。每种节点都以卡片的形式绘制：左侧是图标块，然后是标题，
+以及显示关键设置的副标题。任务、审批和延迟节点在左边缘有一个输入端口、在右边缘
+有一个输出端口；备注没有端口。
 
-### 汇聚 {#convergence}
+### 任务节点 {#task-nodes}
 
-有多条入边的节点可以要求**所有**上游节点完成（默认），或**任意**一个上游节点完成。
-在节点属性面板中设置 **Convergence**。
+<div class="BlockSchema BlockSchema--xsmall">
+![任务节点卡片](/assets/workflow-node-task.webp)
+</div>
+
+任务节点运行一个任务模板。图标块显示模板所用的应用（Ansible、Terraform、OpenTofu、
+Bash、PowerShell、Python），标题是模板名称，副标题标明应用。你可以在属性面板中通过
+**task params** 为每个节点覆盖模板参数（清单、环境、Ansible limit、额外的 CLI 参数）；
+此时副标题显示为 **custom params**。没有模板的任务节点会显示警告徽标并阻止保存。
+
+### 审批节点 {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![审批节点卡片](/assets/workflow-node-approval.webp)
+</div>
+
+审批节点会暂停运行，直到有权限的用户批准或拒绝。可选设置超时时间（秒）和审批消息；
+副标题显示超时时间。当运行到达审批节点时，运行状态变为 **approval**，直到有人批准或
+拒绝。运行视图上的审批卡片会显示审批消息以及 **Approve** 和 **Reject** 按钮，供可以在
+项目中运行任务的用户使用。被拒绝的审批会使该节点失败，运行沿 **On failure** 或
+**Always** 边继续。
 
 ### 延迟节点 {#delay-nodes}
 
-延迟节点会将工作流运行暂停配置的时长（最少 1 秒）。等待期间：
+<div class="BlockSchema BlockSchema--xsmall">
+![延迟节点卡片](/assets/workflow-node-delay.webp)
+</div>
+
+延迟节点会等待配置的秒数（最少 1 秒）后再继续执行下游节点。适用于冷却期、维护窗口
+或拉开依赖步骤之间的间隔。等待期间：
 
 - 运行保持 **running** 状态。
 - 运行视图在延迟节点上显示实时倒计时。
@@ -106,11 +130,22 @@ sidebar_custom_props:
 如果在延迟进行期间工作流运行被**停止**，则延迟被取消，运行以 **stopped**
 状态结束。
 
-### 审批节点 {#approval-nodes}
+### 备注节点 {#note-nodes}
 
-当运行到达审批节点时，运行状态变为 **approval**，直到有人批准或拒绝。运行视图上的
-审批卡片会显示审批消息以及 **Approve** 和 **Reject** 按钮，供可以在项目中运行任务的
-用户使用。被拒绝的审批会使该节点失败，运行沿 **On failure** 或 **Always** 边继续。
+<div class="BlockSchema BlockSchema--xsmall">
+
+![备注节点卡片](/assets/workflow-node-note.webp)
+
+</div>
+
+备注是画布上的自由格式标注，以便签的形式绘制。备注不会执行、没有端口，也永远不会
+通过边连接；它们仅用于文档说明，验证时会被忽略。
+
+### 汇聚 {#convergence}
+
+有多条入边的节点可以要求**所有**上游节点完成（默认），或**任意**一个上游节点完成。
+在节点属性面板中设置 **Convergence**；当该值不是默认值时，卡片副标题会显示
+**Any parent**。
 
 ## 边条件 {#edge-conditions}
 

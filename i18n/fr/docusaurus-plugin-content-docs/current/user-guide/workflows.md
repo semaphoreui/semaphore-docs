@@ -64,6 +64,10 @@ le graphe n'est pas valide.
 
 ### Commandes de l'éditeur {#editor-controls}
 
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="Raccourcis clavier de l'éditeur de workflow" />
+</div>
+
 Le canevas peut être déplacé et zoomé avec la souris, un trackpad, les boutons du coin
 inférieur gauche ou le clavier. Les raccourcis clavier fonctionnent tant que le canevas a
 le focus : cliquez d'abord sur un espace vide du canevas, ou appuyez sur <kbd>Tab</kbd>
@@ -97,23 +101,50 @@ point sur le bouton **Enregistrer** indique que le graphe diffère de la version
 
 ## Types de nœuds {#node-kinds}
 
-| Type | Objectif |
-|------|---------|
-| **Task** | Exécute un modèle de tâche. Vous pouvez remplacer les paramètres du modèle (inventaire, groupe de variables, limit Ansible, arguments CLI supplémentaires) pour chaque nœud via les **paramètres de tâche**. |
-| **Approval** | Met l'exécution en pause jusqu'à ce qu'un utilisateur disposant de la permission approuve ou rejette. Vous pouvez éventuellement définir un délai d'expiration (en secondes) et un message d'approbation. |
-| **Delay** | Attend le nombre de secondes configuré avant de continuer vers les nœuds en aval. Utile pour les périodes de refroidissement, les fenêtres de maintenance, ou pour espacer des étapes dépendantes. |
-| **Note** | Annotation libre sur le canevas. Les nœuds de type note ne s'exécutent pas et ne sont pas reliés par des arêtes — ils servent uniquement à la documentation. |
+Un workflow est construit à partir de quatre types de nœuds. Chaque type est dessiné sous
+forme de carte : une tuile d'icône à gauche, le titre et un sous-titre avec les réglages
+principaux. Les nœuds de tâche, d'approbation et de délai ont un port d'entrée sur le bord
+gauche et un port de sortie sur le bord droit ; les notes n'ont pas de port.
 
-### Convergence {#convergence}
+### Nœuds de tâche {#task-nodes}
 
-Les nœuds ayant plusieurs arêtes entrantes peuvent exiger que **tous** les nœuds en
-amont se terminent (par défaut) ou **n'importe lequel** d'entre eux. Définissez
-**Convergence** dans le panneau de propriétés du nœud.
+<div class="BlockSchema BlockSchema--xsmall">
+![Carte d'un nœud de tâche](/assets/workflow-node-task.webp)
+</div>
+
+Un nœud de tâche exécute un modèle de tâche. La tuile affiche l'application du modèle
+(Ansible, Terraform, OpenTofu, Bash, PowerShell, Python), le titre est le nom du modèle et
+le sous-titre indique l'application. Vous pouvez remplacer les paramètres du modèle
+(inventaire, groupe de variables, limit Ansible, arguments CLI supplémentaires) pour chaque
+nœud via les **paramètres de tâche** du panneau de propriétés ; le sous-titre affiche alors
+**custom params**. Un nœud de tâche sans modèle affiche un badge d'avertissement et bloque
+l'enregistrement.
+
+### Nœuds d'approbation {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![Carte d'un nœud d'approbation](/assets/workflow-node-approval.webp)
+</div>
+
+Un nœud d'approbation met l'exécution en pause jusqu'à ce qu'un utilisateur disposant de la
+permission approuve ou rejette. Vous pouvez éventuellement définir un délai d'expiration
+(en secondes) et un message d'approbation ; le sous-titre affiche le délai d'expiration.
+Lorsque l'exécution atteint un nœud d'approbation, le statut de l'exécution passe à
+**approval** jusqu'à ce que quelqu'un approuve ou rejette. La carte d'approbation de la vue
+d'exécution affiche le message d'approbation avec les boutons **Approuver** et **Rejeter**
+pour les utilisateurs autorisés à exécuter des tâches dans le projet. Une approbation
+rejetée fait échouer le nœud, et l'exécution continue le long des arêtes **On failure** ou
+**Always**.
 
 ### Nœuds de délai {#delay-nodes}
 
-Un nœud de délai met l'exécution du workflow en pause pendant la durée configurée
-(1 seconde minimum). Pendant l'attente :
+<div class="BlockSchema BlockSchema--xsmall">
+![Carte d'un nœud de délai](/assets/workflow-node-delay.webp)
+</div>
+
+Un nœud de délai attend le nombre de secondes configuré (1 minimum) avant de continuer vers
+les nœuds en aval. Utile pour les périodes de refroidissement, les fenêtres de maintenance,
+ou pour espacer des étapes dépendantes. Pendant l'attente :
 
 - L'exécution reste au statut **running**.
 - La vue d'exécution affiche un compte à rebours en direct sur le nœud de délai.
@@ -122,14 +153,24 @@ Un nœud de délai met l'exécution du workflow en pause pendant la durée confi
 Si l'exécution du workflow est **stopped** pendant qu'un délai est actif, le délai est
 annulé et l'exécution se termine au statut **stopped**.
 
-### Nœuds d'approbation {#approval-nodes}
+### Nœuds de note {#note-nodes}
 
-Lorsque l'exécution atteint un nœud d'approbation, le statut de l'exécution passe à
-**approval** jusqu'à ce que quelqu'un approuve ou rejette. La carte d'approbation de la vue
-d'exécution affiche le message d'approbation avec les boutons **Approuver** et **Rejeter**
-pour les utilisateurs autorisés à exécuter des tâches dans le projet. Une approbation
-rejetée fait échouer le nœud, et l'exécution continue le long des arêtes **On failure** ou
-**Always**.
+<div class="BlockSchema BlockSchema--xsmall">
+
+![Carte d'un nœud de note](/assets/workflow-node-note.webp)
+
+</div>
+
+Une note est une annotation libre sur le canevas, dessinée comme un post-it. Les notes ne
+s'exécutent pas, n'ont pas de port et ne sont jamais reliées par des arêtes ; elles servent
+uniquement à la documentation et sont ignorées par la validation.
+
+### Convergence {#convergence}
+
+Les nœuds ayant plusieurs arêtes entrantes peuvent exiger que **tous** les nœuds en
+amont se terminent (par défaut) ou **n'importe lequel** d'entre eux. Définissez
+**Convergence** dans le panneau de propriétés du nœud ; le sous-titre de la carte affiche
+**Any parent** lorsque ce n'est pas la valeur par défaut.
 
 ## Conditions des arêtes {#edge-conditions}
 

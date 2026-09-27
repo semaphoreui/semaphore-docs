@@ -61,6 +61,10 @@ incoming edges), no cycles, and complete configuration on every executable node.
 
 ### Editor controls {#editor-controls}
 
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="Keyboard shortcuts of the workflow editor" />
+</div>
+
 The canvas can be moved and zoomed with the mouse, a trackpad, the buttons in
 the bottom-left corner, or the keyboard. Keyboard shortcuts work while the
 canvas has focus: click empty canvas first, or press <kbd>Tab</kbd> until the
@@ -93,22 +97,48 @@ Leaving the editor with unsaved changes asks for confirmation. The dot on the
 
 ## Node kinds {#node-kinds}
 
-| Kind | Purpose |
-|------|---------|
-| **Task** | Runs a task template. You can override template parameters (inventory, environment, Ansible limit, extra CLI arguments) per node via **task params**. |
-| **Approval** | Pauses the run until a user with permission approves or rejects. Optionally set a timeout (seconds) and an approval message. |
-| **Delay** | Waits for a configured number of seconds before continuing to downstream nodes. Useful for cooling-off periods, maintenance windows, or spacing out dependent steps. |
-| **Note** | Free-form annotation on the canvas. Note nodes do not execute and are not connected by edges — they are for documentation only. |
+A workflow is built from four kinds of nodes. Every kind is drawn as a card:
+an icon tile on the left, the title, and a subtitle with the key settings.
+Task, approval and delay nodes have an input port on the left edge and an
+output port on the right edge; notes have no ports.
 
-### Convergence {#convergence}
+### Task nodes {#task-nodes}
 
-Nodes with multiple incoming edges can require **all** upstream nodes to finish
-(default) or **any** one of them. Set **Convergence** in the node property panel.
+<div class="BlockSchema BlockSchema--xsmall">
+![Task node card](/assets/workflow-node-task.webp)
+</div>
+
+A task node runs a task template. The tile shows the application of the
+template (Ansible, Terraform, OpenTofu, Bash, PowerShell, Python), the title is
+the template name and the subtitle names the application. You can override
+template parameters (inventory, environment, Ansible limit, extra CLI arguments)
+per node via **task params** in the properties panel; the subtitle then reads
+**custom params**. A task node without a template shows a warning badge and
+blocks saving.
+
+### Approval nodes {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![Approval node card](/assets/workflow-node-approval.webp)
+</div>
+
+An approval node pauses the run until a user with permission approves or
+rejects. Optionally set a timeout (seconds) and an approval message; the
+subtitle shows the timeout. When the run reaches an approval node, the run
+status changes to **approval** until someone approves or rejects. The approval
+card on the run view shows the approval message with **Approve** and **Reject**
+buttons for users who may run tasks in the project. A rejected approval fails
+the node, and the run continues along the **On failure** or **Always** edges.
 
 ### Delay nodes {#delay-nodes}
 
-A delay node pauses the workflow run for the configured duration (minimum 1
-second). While waiting:
+<div class="BlockSchema BlockSchema--xsmall">
+![Delay node card](/assets/workflow-node-delay.webp)
+</div>
+
+A delay node waits for a configured number of seconds (minimum 1) before
+continuing to downstream nodes. Useful for cooling-off periods, maintenance
+windows, or spacing out dependent steps. While waiting:
 
 - The run stays in **running** status.
 - The run view shows a live countdown on the delay node.
@@ -117,13 +147,23 @@ second). While waiting:
 If the workflow run is **stopped** while a delay is active, the delay is
 cancelled and the run ends in **stopped** status.
 
-### Approval nodes {#approval-nodes}
+### Note nodes {#note-nodes}
 
-When the run reaches an approval node, the run status changes to **approval**
-until someone approves or rejects. The approval card on the run view shows the
-approval message with **Approve** and **Reject** buttons for users who may run
-tasks in the project. A rejected approval fails the node, and the run continues
-along the **On failure** or **Always** edges.
+<div class="BlockSchema BlockSchema--xsmall">
+
+![Note node card](/assets/workflow-node-note.webp)
+
+</div>
+
+A note is a free-form annotation on the canvas, drawn as a sticky. Notes do not
+execute, have no ports and are never connected by edges; they are for
+documentation only and are ignored by validation.
+
+### Convergence {#convergence}
+
+Nodes with multiple incoming edges can require **all** upstream nodes to finish
+(default) or **any** one of them. Set **Convergence** in the node property panel;
+the card subtitle shows **Any parent** when it is not the default.
 
 ## Edge conditions {#edge-conditions}
 

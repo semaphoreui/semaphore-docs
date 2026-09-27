@@ -60,6 +60,10 @@ Dugme **Save** ostaje onemogućeno dok graf ne postane ispravan.
 
 ### Kontrole uređivača {#editor-controls}
 
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="Prečice na tastaturi uređivača tokova rada" />
+</div>
+
 Platno se može pomerati i zumirati mišem, dodirnom tablom, dugmadima u donjem
 levom uglu ili tastaturom. Prečice na tastaturi rade dok platno ima fokus:
 prvo kliknite na prazno platno ili pritiskajte <kbd>Tab</kbd> dok platno ne
@@ -92,23 +96,48 @@ pokazuje da se graf razlikuje od sačuvane verzije.
 
 ## Vrste čvorova {#node-kinds}
 
-| Vrsta | Namena |
-|------|---------|
-| **Task** | Pokreće šablon zadatka. Parametre šablona (inventar, okruženje, Ansible limit, dodatne argumente komandne linije) možete zameniti po čvoru pomoću **task params**. |
-| **Approval** | Pauzira izvršavanje dok korisnik sa odgovarajućom dozvolom ne odobri ili odbije. Opciono postavite vremensko ograničenje (u sekundama) i poruku odobrenja. |
-| **Delay** | Čeka podešeni broj sekundi pre nastavka ka nizvodnim čvorovima. Korisno za periode mirovanja, prozore održavanja ili razmak između zavisnih koraka. |
-| **Note** | Slobodna napomena na platnu. Čvorovi tipa Note se ne izvršavaju i ne povezuju se ivicama — služe isključivo za dokumentovanje. |
+Tok rada se gradi od četiri vrste čvorova. Svaka vrsta se prikazuje kao kartica:
+pločica sa ikonom sa leve strane, naslov i podnaslov sa ključnim podešavanjima.
+Čvorovi tipa Task, Approval i Delay imaju ulazni port na levoj ivici i izlazni port
+na desnoj ivici; napomene nemaju portove.
 
-### Konvergencija {#convergence}
+### Čvorovi zadataka {#task-nodes}
 
-Čvorovi sa više dolaznih ivica mogu zahtevati da se završe **svi** uzvodni čvorovi
-(podrazumevano) ili **bilo koji** od njih. Podesite **Convergence** u tabli sa svojstvima
-čvora.
+<div class="BlockSchema BlockSchema--xsmall">
+![Kartica čvora zadatka](/assets/workflow-node-task.webp)
+</div>
+
+Čvor zadatka pokreće šablon zadatka. Pločica prikazuje aplikaciju šablona (Ansible,
+Terraform, OpenTofu, Bash, PowerShell, Python), naslov je naziv šablona, a podnaslov
+navodi aplikaciju. Parametre šablona (inventar, okruženje, Ansible limit, dodatne
+argumente komandne linije) možete zameniti po čvoru pomoću **task params** u tabli sa
+svojstvima; podnaslov tada glasi **custom params**. Čvor zadatka bez šablona prikazuje
+značku upozorenja i blokira čuvanje.
+
+### Čvorovi odobrenja {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![Kartica čvora odobrenja](/assets/workflow-node-approval.webp)
+</div>
+
+Čvor odobrenja pauzira izvršavanje dok korisnik sa odgovarajućom dozvolom ne odobri ili
+odbije. Opciono postavite vremensko ograničenje (u sekundama) i poruku odobrenja;
+podnaslov prikazuje vremensko ograničenje. Kada izvršavanje stigne do čvora odobrenja,
+status izvršavanja se menja u **approval** dok neko ne odobri ili odbije. Kartica
+odobrenja u prikazu izvršavanja prikazuje poruku odobrenja sa dugmadima **Approve** i
+**Reject** za korisnike koji mogu da pokreću zadatke u projektu. Odbijeno odobrenje
+dovodi do neuspeha čvora, a izvršavanje se nastavlja duž ivica **On failure** ili
+**Always**.
 
 ### Čvorovi odlaganja {#delay-nodes}
 
-Čvor odlaganja pauzira izvršavanje toka rada za podešeno trajanje (najmanje 1 sekunda).
-Tokom čekanja:
+<div class="BlockSchema BlockSchema--xsmall">
+![Kartica čvora odlaganja](/assets/workflow-node-delay.webp)
+</div>
+
+Čvor odlaganja čeka podešeni broj sekundi (najmanje 1) pre nastavka ka nizvodnim
+čvorovima. Korisno za periode mirovanja, prozore održavanja ili razmak između zavisnih
+koraka. Tokom čekanja:
 
 - Izvršavanje ostaje u statusu **running**.
 - Prikaz izvršavanja prikazuje odbrojavanje uživo na čvoru odlaganja.
@@ -117,13 +146,23 @@ Tokom čekanja:
 Ako je izvršavanje toka rada **zaustavljeno** dok je odlaganje aktivno, odlaganje se
 otkazuje i izvršavanje se završava u statusu **stopped**.
 
-### Čvorovi odobrenja {#approval-nodes}
+### Čvorovi napomena {#note-nodes}
 
-Kada izvršavanje stigne do čvora odobrenja, status izvršavanja se menja u **approval** dok
-neko ne odobri ili odbije. Kartica odobrenja u prikazu izvršavanja prikazuje poruku
-odobrenja sa dugmadima **Approve** i **Reject** za korisnike koji mogu da pokreću zadatke
-u projektu. Odbijeno odobrenje dovodi do neuspeha čvora, a izvršavanje se nastavlja duž
-ivica **On failure** ili **Always**.
+<div class="BlockSchema BlockSchema--xsmall">
+
+![Kartica čvora napomene](/assets/workflow-node-note.webp)
+
+</div>
+
+Napomena je slobodna beleška na platnu, prikazana kao lepljiva ceduljica. Napomene se
+ne izvršavaju, nemaju portove i nikada se ne povezuju ivicama; služe isključivo za
+dokumentovanje, a provera ispravnosti ih ignoriše.
+
+### Konvergencija {#convergence}
+
+Čvorovi sa više dolaznih ivica mogu zahtevati da se završe **svi** uzvodni čvorovi
+(podrazumevano) ili **bilo koji** od njih. Podesite **Convergence** u tabli sa svojstvima
+čvora; podnaslov kartice prikazuje **Any parent** kada vrednost nije podrazumevana.
 
 ## Uslovi ivica {#edge-conditions}
 

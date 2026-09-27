@@ -834,6 +834,15 @@ html[data-theme='dark'] {
   box-shadow: none !important;
 }
 
+.BlockSchema--xsmall {
+  max-width: 250px;
+}
+
+
+.BlockSchema--xsmall p {
+  margin-bottom: 0;
+}
+
 .InstallationMethod {
   --sem-installation-method-background: #e6f6e6;
   --sem-installation-method-border: #ccc;

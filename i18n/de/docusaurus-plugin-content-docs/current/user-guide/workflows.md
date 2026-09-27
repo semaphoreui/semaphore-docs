@@ -62,6 +62,10 @@ ausführbaren Node. **Save** bleibt deaktiviert, bis der Graph gültig ist.
 
 ### Editor-Steuerung {#editor-controls}
 
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="Tastenkürzel des Workflow-Editors" />
+</div>
+
 Die Arbeitsfläche lässt sich mit der Maus, einem Trackpad, den Schaltflächen in
 der unteren linken Ecke oder der Tastatur verschieben und zoomen. Tastenkürzel
 funktionieren, solange die Arbeitsfläche den Fokus hat: Klicken Sie zuerst auf eine
@@ -97,23 +101,49 @@ Version abweicht.
 
 ## Arten von Nodes {#node-kinds}
 
-| Art | Zweck |
-|------|---------|
-| **Task** | Führt ein Task Template aus. Sie können die Parameter des Task Template (Inventory, Environment, Ansible-Limit, zusätzliche CLI-Argumente) pro Node über **task params** überschreiben. |
-| **Approval** | Hält den Durchlauf an, bis ein Benutzer mit entsprechender Berechtigung freigibt oder ablehnt. Optional können Sie ein Timeout (in Sekunden) und eine Freigabemeldung festlegen. |
-| **Delay** | Wartet eine konfigurierte Anzahl von Sekunden, bevor es mit den nachfolgenden Nodes weitergeht. Nützlich für Abkühlphasen, Wartungsfenster oder um abhängige Schritte zeitlich zu entzerren. |
-| **Note** | Freie Anmerkung auf der Arbeitsfläche. Note-Nodes werden nicht ausgeführt und nicht über Edges verbunden — sie dienen ausschließlich der Dokumentation. |
+Ein Workflow besteht aus vier Arten von Nodes. Jede Art wird als Karte dargestellt:
+eine Symbolkachel links, der Titel und ein Untertitel mit den wichtigsten Einstellungen.
+Task-, Approval- und Delay-Nodes haben einen Eingangsport am linken Rand und einen
+Ausgangsport am rechten Rand; Notes haben keine Ports.
 
-### Zusammenführung {#convergence}
+### Task-Nodes {#task-nodes}
 
-Nodes mit mehreren eingehenden Edges können verlangen, dass **alle** vorgelagerten Nodes
-abgeschlossen sind (Standard) oder nur **einer** von ihnen. Legen Sie **Convergence** im
-Eigenschaftsbereich des Nodes fest.
+<div class="BlockSchema BlockSchema--xsmall">
+![Karte eines Task-Nodes](/assets/workflow-node-task.webp)
+</div>
+
+Ein Task-Node führt ein Task Template aus. Die Kachel zeigt die Anwendung des Templates
+(Ansible, Terraform, OpenTofu, Bash, PowerShell, Python), der Titel ist der Name des
+Templates und der Untertitel nennt die Anwendung. Sie können die Parameter des Task
+Template (Inventory, Environment, Ansible-Limit, zusätzliche CLI-Argumente) pro Node über
+**task params** im Eigenschaftsbereich überschreiben; der Untertitel lautet dann
+**custom params**. Ein Task-Node ohne Template zeigt ein Warnsymbol und verhindert das
+Speichern.
+
+### Approval-Nodes {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![Karte eines Approval-Nodes](/assets/workflow-node-approval.webp)
+</div>
+
+Ein Approval-Node hält den Durchlauf an, bis ein Benutzer mit entsprechender Berechtigung
+freigibt oder ablehnt. Optional können Sie ein Timeout (in Sekunden) und eine
+Freigabemeldung festlegen; der Untertitel zeigt das Timeout. Wenn der Durchlauf einen
+Approval-Node erreicht, wechselt der Status des Durchlaufs zu **approval**, bis jemand
+freigibt oder ablehnt. Die Freigabekarte in der Durchlaufansicht zeigt die Freigabemeldung
+mit den Schaltflächen **Approve** und **Reject** für Benutzer, die Tasks im Projekt
+ausführen dürfen. Eine abgelehnte Freigabe lässt den Node fehlschlagen, und der Durchlauf
+wird über die **On failure**- oder **Always**-Edges fortgesetzt.
 
 ### Delay-Nodes {#delay-nodes}
 
-Ein Delay-Node hält den Workflow-Durchlauf für die konfigurierte Dauer an (mindestens 1
-Sekunde). Während des Wartens:
+<div class="BlockSchema BlockSchema--xsmall">
+![Karte eines Delay-Nodes](/assets/workflow-node-delay.webp)
+</div>
+
+Ein Delay-Node wartet eine konfigurierte Anzahl von Sekunden (mindestens 1), bevor es mit
+den nachfolgenden Nodes weitergeht. Nützlich für Abkühlphasen, Wartungsfenster oder um
+abhängige Schritte zeitlich zu entzerren. Während des Wartens:
 
 - Der Durchlauf bleibt im Status **running**.
 - Die Durchlaufansicht zeigt einen laufenden Countdown auf dem Delay-Node.
@@ -122,13 +152,24 @@ Sekunde). Während des Wartens:
 Wird der Workflow-Durchlauf während einer aktiven Verzögerung **gestoppt**, wird die
 Verzögerung abgebrochen und der Durchlauf endet im Status **stopped**.
 
-### Approval-Nodes {#approval-nodes}
+### Note-Nodes {#note-nodes}
 
-Wenn der Durchlauf einen Approval-Node erreicht, wechselt der Status des Durchlaufs zu
-**approval**, bis jemand freigibt oder ablehnt. Die Freigabekarte in der Durchlaufansicht
-zeigt die Freigabemeldung mit den Schaltflächen **Approve** und **Reject** für Benutzer, die
-Tasks im Projekt ausführen dürfen. Eine abgelehnte Freigabe lässt den Node fehlschlagen, und
-der Durchlauf wird über die **On failure**- oder **Always**-Edges fortgesetzt.
+<div class="BlockSchema BlockSchema--xsmall">
+
+![Karte eines Note-Nodes](/assets/workflow-node-note.webp)
+
+</div>
+
+Eine Note ist eine freie Anmerkung auf der Arbeitsfläche, dargestellt als Haftnotiz.
+Notes werden nicht ausgeführt, haben keine Ports und werden nie über Edges verbunden — sie
+dienen ausschließlich der Dokumentation und werden von der Validierung ignoriert.
+
+### Zusammenführung {#convergence}
+
+Nodes mit mehreren eingehenden Edges können verlangen, dass **alle** vorgelagerten Nodes
+abgeschlossen sind (Standard) oder nur **einer** von ihnen. Legen Sie **Convergence** im
+Eigenschaftsbereich des Nodes fest; der Untertitel der Karte zeigt **Any parent**, wenn
+nicht der Standard verwendet wird.
 
 ## Bedingungen von Edges {#edge-conditions}
 

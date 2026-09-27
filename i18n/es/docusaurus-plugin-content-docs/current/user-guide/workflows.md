@@ -62,6 +62,10 @@ que el grafo sea válido.
 
 ### Controles del editor {#editor-controls}
 
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="Atajos de teclado del editor de flujos de trabajo" />
+</div>
+
 El lienzo se puede desplazar y ampliar con el ratón, un trackpad, los botones de la
 esquina inferior izquierda o el teclado. Los atajos de teclado funcionan mientras el
 lienzo tiene el foco: haga clic primero en un espacio vacío del lienzo o pulse
@@ -95,22 +99,49 @@ Al salir del editor con cambios sin guardar se pide confirmación. El punto en e
 
 ## Tipos de nodos {#node-kinds}
 
-| Tipo | Propósito |
-|------|---------|
-| **Tarea** | Ejecuta una plantilla de tarea. Puede sobrescribir los parámetros de la plantilla (inventory, entorno, limit de Ansible, argumentos CLI adicionales) por nodo mediante los **parámetros de tarea**. |
-| **Aprobación** | Pausa la ejecución hasta que un usuario con permiso la aprueba o la rechaza. Opcionalmente, defina un tiempo de espera (segundos) y un mensaje de aprobación. |
-| **Retardo** | Espera el número de segundos configurado antes de continuar con los nodos descendentes. Útil para periodos de enfriamiento, ventanas de mantenimiento o para espaciar pasos dependientes. |
-| **Nota** | Anotación de formato libre en el lienzo. Los nodos de nota no se ejecutan ni se conectan mediante aristas: sirven únicamente como documentación. |
+Un flujo de trabajo se construye con cuatro tipos de nodos. Todos los tipos se dibujan como
+una tarjeta: un mosaico con un icono a la izquierda, el título y un subtítulo con los
+ajustes principales. Los nodos de tarea, aprobación y retardo tienen un puerto de entrada
+en el borde izquierdo y un puerto de salida en el borde derecho; las notas no tienen puertos.
 
-### Convergencia {#convergence}
+### Nodos de tarea {#task-nodes}
 
-Los nodos con varias aristas entrantes pueden requerir que terminen **todos** los nodos ascendentes
-(predeterminado) o **cualquiera** de ellos. Defina **Convergencia** en el panel de propiedades del nodo.
+<div class="BlockSchema BlockSchema--xsmall">
+![Tarjeta de un nodo de tarea](/assets/workflow-node-task.webp)
+</div>
+
+Un nodo de tarea ejecuta una plantilla de tarea. El mosaico muestra la aplicación de la
+plantilla (Ansible, Terraform, OpenTofu, Bash, PowerShell, Python), el título es el nombre
+de la plantilla y el subtítulo indica la aplicación. Puede sobrescribir los parámetros de
+la plantilla (inventory, entorno, limit de Ansible, argumentos CLI adicionales) por nodo
+mediante los **parámetros de tarea** del panel de propiedades; el subtítulo pasa entonces a
+mostrar **custom params**. Un nodo de tarea sin plantilla muestra una insignia de
+advertencia e impide guardar.
+
+### Nodos de aprobación {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![Tarjeta de un nodo de aprobación](/assets/workflow-node-approval.webp)
+</div>
+
+Un nodo de aprobación pausa la ejecución hasta que un usuario con permiso la aprueba o la
+rechaza. Opcionalmente, defina un tiempo de espera (segundos) y un mensaje de aprobación;
+el subtítulo muestra el tiempo de espera. Cuando la ejecución llega a un nodo de
+aprobación, el estado de la ejecución cambia a **approval** hasta que alguien la aprueba o
+la rechaza. La tarjeta de aprobación de la vista de la ejecución muestra el mensaje de
+aprobación con los botones **Aprobar** y **Rechazar** para los usuarios que pueden ejecutar
+tareas en el proyecto. Una aprobación rechazada hace fallar el nodo, y la ejecución
+continúa por las aristas **On failure** o **Always**.
 
 ### Nodos de retardo {#delay-nodes}
 
-Un nodo de retardo pausa la ejecución del flujo de trabajo durante la duración configurada (mínimo 1
-segundo). Mientras espera:
+<div class="BlockSchema BlockSchema--xsmall">
+![Tarjeta de un nodo de retardo](/assets/workflow-node-delay.webp)
+</div>
+
+Un nodo de retardo espera el número de segundos configurado (mínimo 1) antes de continuar
+con los nodos descendentes. Útil para periodos de enfriamiento, ventanas de mantenimiento
+o para espaciar pasos dependientes. Mientras espera:
 
 - La ejecución permanece en estado **running**.
 - La vista de la ejecución muestra una cuenta atrás en directo en el nodo de retardo.
@@ -119,13 +150,23 @@ segundo). Mientras espera:
 Si la ejecución del flujo de trabajo se **detiene** mientras un retardo está activo, el retardo se
 cancela y la ejecución finaliza en estado **stopped**.
 
-### Nodos de aprobación {#approval-nodes}
+### Nodos de nota {#note-nodes}
 
-Cuando la ejecución llega a un nodo de aprobación, el estado de la ejecución cambia a
-**approval** hasta que alguien la aprueba o la rechaza. La tarjeta de aprobación de la vista
-de la ejecución muestra el mensaje de aprobación con los botones **Aprobar** y **Rechazar**
-para los usuarios que pueden ejecutar tareas en el proyecto. Una aprobación rechazada hace
-fallar el nodo, y la ejecución continúa por las aristas **On failure** o **Always**.
+<div class="BlockSchema BlockSchema--xsmall">
+
+![Tarjeta de un nodo de nota](/assets/workflow-node-note.webp)
+
+</div>
+
+Una nota es una anotación de formato libre en el lienzo, dibujada como una nota adhesiva.
+Las notas no se ejecutan, no tienen puertos y nunca se conectan mediante aristas: sirven
+únicamente como documentación y la validación las ignora.
+
+### Convergencia {#convergence}
+
+Los nodos con varias aristas entrantes pueden requerir que terminen **todos** los nodos ascendentes
+(predeterminado) o **cualquiera** de ellos. Defina **Convergencia** en el panel de propiedades del nodo;
+el subtítulo de la tarjeta muestra **Any parent** cuando no es el valor predeterminado.
 
 ## Condiciones de las aristas {#edge-conditions}
 

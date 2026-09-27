@@ -60,6 +60,10 @@ de entrada), nenhum ciclo e configuração completa em todos os nós executávei
 
 ### Controles do editor {#editor-controls}
 
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="Atalhos de teclado do editor de workflow" />
+</div>
+
 A área de trabalho pode ser movida e ampliada com o mouse, um trackpad, os botões
 no canto inferior esquerdo ou o teclado. Os atalhos de teclado funcionam enquanto a
 área de trabalho tem o foco: clique primeiro em um espaço vazio da área de trabalho
@@ -93,22 +97,48 @@ Sair do editor com alterações não salvas pede confirmação. O ponto no botã
 
 ## Tipos de nó {#node-kinds}
 
-| Tipo | Finalidade |
-|------|---------|
-| **Task** | Executa um modelo de tarefa. Você pode sobrescrever os parâmetros do modelo (inventário, ambiente, limit do Ansible, argumentos extras de CLI) por nó por meio dos **parâmetros da tarefa**. |
-| **Approval** | Pausa a execução até que um usuário com permissão aprove ou rejeite. Opcionalmente, defina um tempo limite (em segundos) e uma mensagem de aprovação. |
-| **Delay** | Aguarda um número configurado de segundos antes de continuar para os nós seguintes. Útil para períodos de espera, janelas de manutenção ou para espaçar etapas dependentes. |
-| **Note** | Anotação livre na área de trabalho. Nós de nota não são executados nem conectados por arestas — servem apenas para documentação. |
+Um workflow é construído a partir de quatro tipos de nós. Todos os tipos são desenhados como
+um cartão: um bloco com ícone à esquerda, o título e um subtítulo com as configurações
+principais. Os nós de tarefa, aprovação e atraso têm um conector de entrada na borda esquerda
+e um conector de saída na borda direita; as notas não têm conectores.
 
-### Convergência {#convergence}
+### Nós de tarefa {#task-nodes}
 
-Nós com várias arestas de entrada podem exigir que **todos** os nós anteriores terminem
-(padrão) ou **qualquer** um deles. Defina a **Convergência** no painel de propriedades do nó.
+<div class="BlockSchema BlockSchema--xsmall">
+![Cartão de nó de tarefa](/assets/workflow-node-task.webp)
+</div>
+
+Um nó de tarefa executa um modelo de tarefa. O bloco mostra a aplicação do modelo
+(Ansible, Terraform, OpenTofu, Bash, PowerShell, Python), o título é o nome do modelo
+e o subtítulo indica a aplicação. Você pode sobrescrever os parâmetros do modelo
+(inventário, ambiente, limit do Ansible, argumentos extras de CLI) por nó por meio dos
+**task params** no painel de propriedades; o subtítulo passa então a exibir
+**custom params**. Um nó de tarefa sem modelo exibe um selo de aviso e impede o
+salvamento.
+
+### Nós de aprovação {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![Cartão de nó de aprovação](/assets/workflow-node-approval.webp)
+</div>
+
+Um nó de aprovação pausa a execução até que um usuário com permissão aprove ou rejeite.
+Opcionalmente, defina um tempo limite (em segundos) e uma mensagem de aprovação; o
+subtítulo mostra o tempo limite. Quando a execução chega a um nó de aprovação, o status da
+execução muda para **approval** até que alguém aprove ou rejeite. O cartão de aprovação na
+visualização da execução mostra a mensagem de aprovação com os botões **Approve** e
+**Reject** para os usuários que podem executar tarefas no projeto. Uma aprovação rejeitada
+faz o nó falhar, e a execução continua pelas arestas **On failure** ou **Always**.
 
 ### Nós de atraso {#delay-nodes}
 
-Um nó de atraso pausa a execução do workflow pela duração configurada (mínimo de 1
-segundo). Durante a espera:
+<div class="BlockSchema BlockSchema--xsmall">
+![Cartão de nó de atraso](/assets/workflow-node-delay.webp)
+</div>
+
+Um nó de atraso aguarda um número configurado de segundos (mínimo de 1) antes de continuar
+para os nós seguintes. Útil para períodos de espera, janelas de manutenção ou para espaçar
+etapas dependentes. Durante a espera:
 
 - A execução permanece no status **running**.
 - A visualização da execução mostra uma contagem regressiva ao vivo no nó de atraso.
@@ -117,13 +147,23 @@ segundo). Durante a espera:
 Se a execução do workflow for **interrompida** enquanto um atraso estiver ativo, o atraso é
 cancelado e a execução termina com o status **stopped**.
 
-### Nós de aprovação {#approval-nodes}
+### Nós de nota {#note-nodes}
 
-Quando a execução chega a um nó de aprovação, o status da execução muda para **approval**
-até que alguém aprove ou rejeite. O cartão de aprovação na visualização da execução mostra a
-mensagem de aprovação com os botões **Approve** e **Reject** para os usuários que podem executar
-tarefas no projeto. Uma aprovação rejeitada faz o nó falhar, e a execução continua
-pelas arestas **On failure** ou **Always**.
+<div class="BlockSchema BlockSchema--xsmall">
+
+![Cartão de nó de nota](/assets/workflow-node-note.webp)
+
+</div>
+
+Uma nota é uma anotação livre na área de trabalho, desenhada como um adesivo. As notas não
+são executadas, não têm conectores e nunca são conectadas por arestas; servem apenas para
+documentação e são ignoradas pela validação.
+
+### Convergência {#convergence}
+
+Nós com várias arestas de entrada podem exigir que **todos** os nós anteriores terminem
+(padrão) ou **qualquer** um deles. Defina a **Convergência** no painel de propriedades do nó;
+o subtítulo do cartão mostra **Any parent** quando o valor não é o padrão.
 
 ## Condições das arestas {#edge-conditions}
 

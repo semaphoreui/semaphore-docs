@@ -57,6 +57,10 @@ sidebar_custom_props:
 
 ### 편집기 조작 {#editor-controls}
 
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="워크플로우 편집기의 키보드 단축키" />
+</div>
+
 캔버스는 마우스, 트랙패드, 왼쪽 아래의 버튼 또는 키보드로 이동하고 확대/축소할 수 있습니다.
 키보드 단축키는 캔버스에 포커스가 있을 때 동작합니다. 먼저 빈 캔버스를 클릭하거나, 캔버스에
 포커스가 갈 때까지 <kbd>Tab</kbd>을 누르십시오. 그다음 <kbd>Tab</kbd>으로 노드 사이를 이동하고,
@@ -88,23 +92,44 @@ sidebar_custom_props:
 
 ## 노드 종류 {#node-kinds}
 
-| 종류 | 용도 |
-|------|---------|
-| **Task** | 작업 템플릿을 실행합니다. **task params**를 통해 노드별로 템플릿 파라미터(인벤토리, 환경, Ansible limit, 추가 CLI 인수)를 재정의할 수 있습니다. |
-| **Approval** | 권한이 있는 사용자가 승인하거나 거부할 때까지 실행을 일시 중지합니다. 타임아웃(초)과 승인 메시지를 선택적으로 설정할 수 있습니다. |
-| **Delay** | 다운스트림 노드로 계속 진행하기 전에 구성된 초 동안 대기합니다. 대기 기간, 유지 관리 시간대, 또는 의존 단계 사이에 간격을 두는 데 유용합니다. |
-| **Note** | 캔버스에 자유롭게 작성하는 주석입니다. Note 노드는 실행되지 않으며 엣지로 연결되지 않습니다. 문서화 용도로만 사용됩니다. |
+워크플로우는 네 종류의 노드로 구성됩니다. 모든 종류는 카드로 표시되며, 왼쪽의 아이콘 타일,
+제목, 그리고 주요 설정을 보여 주는 부제목으로 이루어집니다. Task, Approval, Delay 노드에는
+왼쪽 가장자리에 입력 포트, 오른쪽 가장자리에 출력 포트가 있습니다. Note 노드에는 포트가
+없습니다.
 
-### 수렴 {#convergence}
+### Task 노드 {#task-nodes}
 
-들어오는 엣지가 여러 개인 노드는 모든 업스트림 노드가 완료되어야 하도록
-(기본값) 설정하거나, 그중 하나만 완료되면 진행하도록 설정할 수 있습니다. 노드 속성
-패널에서 **Convergence**를 설정하십시오.
+<div class="BlockSchema BlockSchema--xsmall">
+![Task 노드 카드](/assets/workflow-node-task.webp)
+</div>
+
+Task 노드는 작업 템플릿을 실행합니다. 타일에는 템플릿의 애플리케이션(Ansible, Terraform,
+OpenTofu, Bash, PowerShell, Python)이 표시되고, 제목은 템플릿 이름, 부제목은 애플리케이션
+이름입니다. 속성 패널의 **task params**를 통해 노드별로 템플릿 파라미터(인벤토리, 환경,
+Ansible limit, 추가 CLI 인수)를 재정의할 수 있습니다. 이 경우 부제목에는 **custom params**가
+표시됩니다. 템플릿이 없는 Task 노드에는 경고 배지가 표시되며 저장이 차단됩니다.
+
+### Approval 노드 {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![Approval 노드 카드](/assets/workflow-node-approval.webp)
+</div>
+
+Approval 노드는 권한이 있는 사용자가 승인하거나 거부할 때까지 실행을 일시 중지합니다.
+타임아웃(초)과 승인 메시지를 선택적으로 설정할 수 있으며, 부제목에는 타임아웃이 표시됩니다.
+실행이 Approval 노드에 도달하면 누군가 승인하거나 거부할 때까지 상태가 **approval**로
+변경됩니다. 실행 화면의 승인 카드에는 승인 메시지와 함께, 프로젝트에서 작업을 실행할 수 있는
+사용자를 위한 **Approve** 및 **Reject** 버튼이 표시됩니다. 거부된 승인은 해당 노드를 실패
+처리하고, 실행은 **On failure** 또는 **Always** 엣지를 따라 계속됩니다.
 
 ### Delay 노드 {#delay-nodes}
 
-Delay 노드는 구성된 기간(최소 1초) 동안 워크플로우 실행을 일시 중지합니다.
-대기하는 동안:
+<div class="BlockSchema BlockSchema--xsmall">
+![Delay 노드 카드](/assets/workflow-node-delay.webp)
+</div>
+
+Delay 노드는 다운스트림 노드로 계속 진행하기 전에 구성된 초(최소 1초) 동안 대기합니다.
+대기 기간, 유지 관리 시간대, 또는 의존 단계 사이에 간격을 두는 데 유용합니다. 대기하는 동안:
 
 - 실행은 **running** 상태를 유지합니다.
 - 실행 화면의 Delay 노드에 실시간 카운트다운이 표시됩니다.
@@ -113,13 +138,24 @@ Delay 노드는 구성된 기간(최소 1초) 동안 워크플로우 실행을 �
 지연이 진행되는 동안 워크플로우 실행이 **중지**되면 지연이 취소되고 실행은
 **stopped** 상태로 종료됩니다.
 
-### Approval 노드 {#approval-nodes}
+### Note 노드 {#note-nodes}
 
-실행이 Approval 노드에 도달하면 누군가 승인하거나 거부할 때까지 상태가
-**approval**로 변경됩니다. 실행 화면의 승인 카드에는 승인 메시지와 함께, 프로젝트에서
-작업을 실행할 수 있는 사용자를 위한 **Approve** 및 **Reject** 버튼이 표시됩니다. 거부된
-승인은 해당 노드를 실패 처리하고, 실행은 **On failure** 또는 **Always** 엣지를 따라
-계속됩니다.
+<div class="BlockSchema BlockSchema--xsmall">
+
+![Note 노드 카드](/assets/workflow-node-note.webp)
+
+</div>
+
+Note 노드는 캔버스에 자유롭게 작성하는 주석으로, 스티커 메모 형태로 표시됩니다. Note 노드는
+실행되지 않고, 포트가 없으며, 엣지로 연결되지도 않습니다. 문서화 용도로만 사용되며 검증에서
+무시됩니다.
+
+### 수렴 {#convergence}
+
+들어오는 엣지가 여러 개인 노드는 **모든** 업스트림 노드가 완료되어야 하도록(기본값)
+설정하거나, 그중 **하나**만 완료되면 진행하도록 설정할 수 있습니다. 노드 속성 패널에서
+**Convergence**를 설정하십시오. 기본값이 아닌 경우 카드의 부제목에 **Any parent**가
+표시됩니다.
 
 ## 엣지 조건 {#edge-conditions}
 

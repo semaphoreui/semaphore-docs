@@ -60,6 +60,10 @@ selezionare il nodo. Un Workflow valido deve avere almeno un nodo, esattamente u
 
 ### Controlli dell'editor {#editor-controls}
 
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="Scorciatoie da tastiera dell'editor dei Workflow" />
+</div>
+
 L'area di lavoro può essere spostata e ingrandita con il mouse, il trackpad, i pulsanti
 nell'angolo in basso a sinistra o la tastiera. Le scorciatoie da tastiera funzionano quando
 l'area di lavoro ha il focus: fare prima clic su uno spazio vuoto dell'area di lavoro, oppure
@@ -93,37 +97,74 @@ pulsante **Save** indica che il grafo differisce dalla versione salvata.
 
 ## Tipi di nodo {#node-kinds}
 
-| Tipo | Scopo |
-|------|---------|
-| **Task** | Esegue un Task Template. È possibile sovrascrivere i parametri del Task Template (Inventory, ambiente, limit di Ansible, argomenti CLI aggiuntivi) per singolo nodo tramite i **task params**. |
-| **Approval** | Mette in pausa l'esecuzione fino a quando un utente con i permessi necessari approva o rifiuta. Facoltativamente è possibile impostare un timeout (in secondi) e un messaggio di approvazione. |
-| **Delay** | Attende il numero di secondi configurato prima di proseguire verso i nodi successivi. Utile per periodi di attesa, finestre di manutenzione o per distanziare passaggi dipendenti. |
-| **Note** | Annotazione libera sull'area di lavoro. I nodi Note non vengono eseguiti e non sono collegati da archi: servono solo a scopo documentativo. |
+Un Workflow è costruito con quattro tipi di nodi. Ogni tipo è rappresentato come una scheda:
+un riquadro con l'icona a sinistra, il titolo e un sottotitolo con le impostazioni principali.
+I nodi Task, Approval e Delay hanno una porta di ingresso sul bordo sinistro e una porta di
+uscita sul bordo destro; i nodi Note non hanno porte.
 
-### Convergenza {#convergence}
+### Nodi Task {#task-nodes}
 
-I nodi con più archi in entrata possono richiedere che **tutti** i nodi precedenti siano terminati
-(impostazione predefinita) oppure che lo sia **almeno uno** di essi. Impostare **Convergence** nel pannello delle proprietà del nodo.
+<div class="BlockSchema BlockSchema--xsmall">
+![Scheda di un nodo Task](/assets/workflow-node-task.webp)
+</div>
+
+Un nodo Task esegue un Task Template. Il riquadro mostra l'applicazione del Task Template
+(Ansible, Terraform, OpenTofu, Bash, PowerShell, Python), il titolo è il nome del Task Template
+e il sottotitolo indica l'applicazione. È possibile sovrascrivere i parametri del Task Template
+(Inventory, ambiente, limit di Ansible, argomenti CLI aggiuntivi) per singolo nodo tramite i
+**task params** nel pannello delle proprietà; in tal caso il sottotitolo riporta
+**custom params**. Un nodo Task senza Task Template mostra un badge di avviso e impedisce
+il salvataggio.
+
+### Nodi Approval {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![Scheda di un nodo Approval](/assets/workflow-node-approval.webp)
+</div>
+
+Un nodo Approval mette in pausa l'esecuzione fino a quando un utente con i permessi necessari
+approva o rifiuta. Facoltativamente è possibile impostare un timeout (in secondi) e un messaggio
+di approvazione; il sottotitolo mostra il timeout. Quando l'esecuzione raggiunge un nodo di
+approvazione, lo stato passa a **approval** fino a quando qualcuno approva o rifiuta. La scheda
+di approvazione nella vista dell'esecuzione mostra il messaggio di approvazione con i pulsanti
+**Approve** e **Reject** per gli utenti che possono eseguire Task nel Project. Un'approvazione
+rifiutata fa fallire il nodo e l'esecuzione prosegue lungo gli archi **On failure** o **Always**.
 
 ### Nodi Delay {#delay-nodes}
 
-Un nodo delay mette in pausa l'esecuzione del Workflow per la durata configurata (minimo 1
-secondo). Durante l'attesa:
+<div class="BlockSchema BlockSchema--xsmall">
+![Scheda di un nodo Delay](/assets/workflow-node-delay.webp)
+</div>
+
+Un nodo Delay attende il numero di secondi configurato (minimo 1) prima di proseguire verso
+i nodi successivi. Utile per periodi di attesa, finestre di manutenzione o per distanziare
+passaggi dipendenti. Durante l'attesa:
 
 - L'esecuzione rimane nello stato **running**.
-- La vista dell'esecuzione mostra un conto alla rovescia in tempo reale sul nodo delay.
+- La vista dell'esecuzione mostra un conto alla rovescia in tempo reale sul nodo Delay.
 - I nodi successivi collegati tramite archi non vengono avviati fino al completamento del ritardo.
 
 Se l'esecuzione del Workflow viene **interrotta** mentre un ritardo è attivo, il ritardo viene
 annullato e l'esecuzione termina nello stato **stopped**.
 
-### Nodi Approval {#approval-nodes}
+### Nodi Note {#note-nodes}
 
-Quando l'esecuzione raggiunge un nodo di approvazione, lo stato passa a **approval** fino a quando
-qualcuno approva o rifiuta. La scheda di approvazione nella vista dell'esecuzione mostra il messaggio
-di approvazione con i pulsanti **Approve** e **Reject** per gli utenti che possono eseguire Task nel
-Project. Un'approvazione rifiutata fa fallire il nodo e l'esecuzione prosegue lungo gli archi
-**On failure** o **Always**.
+<div class="BlockSchema BlockSchema--xsmall">
+
+![Scheda di un nodo Note](/assets/workflow-node-note.webp)
+
+</div>
+
+Un nodo Note è un'annotazione libera sull'area di lavoro, rappresentata come un post-it. I nodi
+Note non vengono eseguiti, non hanno porte e non sono mai collegati da archi: servono solo a
+scopo documentativo e vengono ignorati dalla convalida.
+
+### Convergenza {#convergence}
+
+I nodi con più archi in entrata possono richiedere che **tutti** i nodi precedenti siano terminati
+(impostazione predefinita) oppure che lo sia **almeno uno** di essi. Impostare **Convergence** nel
+pannello delle proprietà del nodo; il sottotitolo della scheda mostra **Any parent** quando
+l'impostazione non è quella predefinita.
 
 ## Condizioni degli archi {#edge-conditions}
 
