@@ -60,14 +60,29 @@ de entrada), nenhum ciclo e configuração completa em todos os nós executávei
 
 ### Controles do editor {#editor-controls}
 
-| Ação | Como |
-|--------|-----|
-| Mover a área de trabalho | Arraste um espaço vazio ou role com a roda do mouse / trackpad. |
-| Zoom | Mantenha <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> no macOS) pressionado e role, faça o gesto de pinça no trackpad ou use os botões **+** / **−** no canto inferior esquerdo. |
-| Ajustar o grafo inteiro à tela | Clique no botão **fit view** no canto inferior esquerdo. O editor também ajusta o grafo ao abrir. |
-| Organizar os nós automaticamente | Clique em **tidy up** no canto inferior esquerdo. Os nós se alinham a uma grade de 20 px quando você os move. |
-| Adicionar um nó | Alça **+** em um nó, clique ou arraste na paleta, o botão **+** ou clique com o botão direito em um espaço vazio da área de trabalho. |
-| Excluir o nó ou a aresta selecionada | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> no macOS) ou o botão de exclusão no painel de propriedades. |
+A área de trabalho pode ser movida e ampliada com o mouse, um trackpad, os botões
+no canto inferior esquerdo ou o teclado. Os atalhos de teclado funcionam enquanto a
+área de trabalho tem o foco: clique primeiro em um espaço vazio da área de trabalho
+ou pressione <kbd>Tab</kbd> até que ela receba o foco. A mesma navegação funciona na
+visualização da execução.
+
+| Ação | Mouse | Trackpad | Botões | Teclado |
+|------|-------|----------|--------|---------|
+| Mover (deslocar a área de trabalho) | Arraste um espaço vazio da área de trabalho ou role a roda (vertical) e <kbd>Shift</kbd>+roda (horizontal) | Rolagem com dois dedos em qualquer direção | — | <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd>; mantenha <kbd>Shift</kbd> pressionado para passos maiores |
+| Ampliar / reduzir | <kbd>Ctrl</kbd>+roda (<kbd>Cmd</kbd>+roda no macOS); amplia em direção ao ponteiro | Gesto de pinça | **+** / **−** | <kbd>+</kbd> / <kbd>−</kbd> |
+| Ajustar o grafo inteiro à tela | — | — | **fit view** | <kbd>0</kbd> |
+| Redefinir o zoom para 100 % | — | — | — | <kbd>1</kbd> |
+| Organizar os nós automaticamente | — | — | **tidy up** | — |
+
+O editor ajusta o grafo à tela ao abrir. O nível de zoom atual é exibido abaixo
+dos botões. Os nós se alinham a uma grade de 20 px quando você os move.
+
+| Ação de edição | Como |
+|----------------|------|
+| Adicionar um nó | Alça **+** em um nó, clique ou arraste na paleta, o botão **+** no canto superior direito ou clique com o botão direito em um espaço vazio da área de trabalho. |
+| Conectar nós | Arraste do conector de saída de um nó (borda direita) até o conector de entrada de outro nó (borda esquerda). |
+| Alterar a condição de uma aresta | Clique na pílula de condição na aresta e escolha uma condição. |
+| Excluir o nó ou a aresta selecionada | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> no macOS), o botão de exclusão no painel de propriedades ou **×** na pílula de uma aresta sob o cursor. |
 | Desfazer / refazer | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> no macOS) ou as setas na barra de ferramentas. Até 50 etapas. |
 | Desmarcar | <kbd>Esc</kbd> fecha o painel de propriedades e limpa a seleção. |
 

@@ -64,14 +64,29 @@ le graphe n'est pas valide.
 
 ### Commandes de l'éditeur {#editor-controls}
 
-| Action | Comment |
-|--------|-----|
-| Déplacer le canevas | Faites glisser un espace vide, ou faites défiler avec la molette de la souris / le trackpad. |
-| Zoomer | Maintenez <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> sous macOS) et faites défiler, pincez sur le trackpad, ou utilisez les boutons **+** / **−** dans le coin inférieur gauche. |
-| Afficher tout le graphe à l'écran | Cliquez sur le bouton **ajuster la vue** dans le coin inférieur gauche. L'éditeur ajuste aussi le graphe à l'ouverture. |
-| Réorganiser les nœuds automatiquement | Cliquez sur **ranger** dans le coin inférieur gauche. Les nœuds s'alignent sur une grille de 20 px lorsque vous les déplacez. |
-| Ajouter un nœud | Poignée **+** sur un nœud, clic ou glisser depuis la palette, le bouton **+**, ou clic droit sur un espace vide du canevas. |
-| Supprimer le nœud ou l'arête sélectionné | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> sous macOS), ou le bouton de suppression dans le panneau de propriétés. |
+Le canevas peut être déplacé et zoomé avec la souris, un trackpad, les boutons du coin
+inférieur gauche ou le clavier. Les raccourcis clavier fonctionnent tant que le canevas a
+le focus : cliquez d'abord sur un espace vide du canevas, ou appuyez sur <kbd>Tab</kbd>
+jusqu'à ce que le canevas soit sélectionné. La même navigation fonctionne dans la vue
+d'exécution.
+
+| Action | Souris | Trackpad | Boutons | Clavier |
+|--------|--------|----------|---------|---------|
+| Déplacer (faire glisser le canevas) | Faites glisser un espace vide, ou faites défiler la molette (vertical) et <kbd>Shift</kbd>+molette (horizontal) | Défilement à deux doigts dans n'importe quelle direction | — | <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> ; maintenez <kbd>Shift</kbd> pour des pas plus grands |
+| Zoomer / dézoomer | <kbd>Ctrl</kbd>+molette (<kbd>Cmd</kbd>+molette sous macOS) ; zoome vers le pointeur | Pincer | **+** / **−** | <kbd>+</kbd> / <kbd>−</kbd> |
+| Afficher tout le graphe à l'écran | — | — | **ajuster la vue** | <kbd>0</kbd> |
+| Réinitialiser le zoom à 100 % | — | — | — | <kbd>1</kbd> |
+| Réorganiser les nœuds automatiquement | — | — | **ranger** | — |
+
+L'éditeur ajuste le graphe à l'écran à l'ouverture. Le niveau de zoom actuel est affiché
+sous les boutons. Les nœuds s'alignent sur une grille de 20 px lorsque vous les déplacez.
+
+| Action d'édition | Comment |
+|------------------|---------|
+| Ajouter un nœud | Poignée **+** sur un nœud, clic ou glisser depuis la palette, le bouton **+** dans le coin supérieur droit, ou clic droit sur un espace vide du canevas. |
+| Connecter des nœuds | Tirez du port de sortie d'un nœud (bord droit) vers le port d'entrée d'un autre nœud (bord gauche). |
+| Changer la condition d'une arête | Cliquez sur la pastille de condition de l'arête et choisissez une condition. |
+| Supprimer le nœud ou l'arête sélectionné | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> sous macOS), le bouton de suppression dans le panneau de propriétés, ou **×** sur la pastille d'une arête survolée. |
 | Annuler / rétablir | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> sous macOS), ou les flèches de la barre d'outils. Jusqu'à 50 étapes. |
 | Désélectionner | <kbd>Esc</kbd> ferme le panneau de propriétés et efface la sélection. |
 

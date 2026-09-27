@@ -60,14 +60,28 @@ Dugme **Save** ostaje onemogućeno dok graf ne postane ispravan.
 
 ### Kontrole uređivača {#editor-controls}
 
-| Radnja | Kako |
-|--------|-----|
-| Pomeranje platna | Prevucite prazan prostor ili skrolujte točkićem miša / dodirnom tablom. |
-| Zumiranje | Držite <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> na macOS-u) i skrolujte, uštinite na dodirnoj tabli ili koristite dugmad **+** / **−** u donjem levom uglu. |
-| Uklapanje celog grafa na ekran | Kliknite na dugme **fit view** u donjem levom uglu. Uređivač takođe uklapa graf pri otvaranju. |
-| Automatsko raspoređivanje čvorova | Kliknite na **tidy up** u donjem levom uglu. Čvorovi se pri pomeranju poravnavaju na mrežu od 20 px. |
-| Dodavanje čvora | Ručica **+** na čvoru, klik ili prevlačenje iz palete, dugme **+** ili desni klik na prazno platno. |
-| Brisanje izabranog čvora ili ivice | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> na macOS-u) ili dugme za brisanje u tabli sa svojstvima. |
+Platno se može pomerati i zumirati mišem, dodirnom tablom, dugmadima u donjem
+levom uglu ili tastaturom. Prečice na tastaturi rade dok platno ima fokus:
+prvo kliknite na prazno platno ili pritiskajte <kbd>Tab</kbd> dok platno ne
+dobije fokus. Ista navigacija radi i u prikazu izvršavanja.
+
+| Radnja | Miš | Dodirna tabla | Dugmad | Tastatura |
+|--------|-----|---------------|--------|-----------|
+| Pomeranje platna (pan) | Prevucite prazno platno ili skrolujte točkićem (vertikalno) i <kbd>Shift</kbd>+točkić (horizontalno) | Skrolovanje sa dva prsta u bilo kom smeru | — | <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd>; držite <kbd>Shift</kbd> za veće korake |
+| Uvećanje / umanjenje | <kbd>Ctrl</kbd>+točkić (<kbd>Cmd</kbd>+točkić na macOS-u); zumira ka pokazivaču | Uštinite | **+** / **−** | <kbd>+</kbd> / <kbd>−</kbd> |
+| Uklapanje celog grafa na ekran | — | — | **fit view** | <kbd>0</kbd> |
+| Vraćanje zuma na 100 % | — | — | — | <kbd>1</kbd> |
+| Automatsko raspoređivanje čvorova | — | — | **tidy up** | — |
+
+Uređivač uklapa graf na ekran pri otvaranju. Trenutni nivo zuma prikazan je
+ispod dugmadi. Čvorovi se pri pomeranju poravnavaju na mrežu od 20 px.
+
+| Radnja uređivanja | Kako |
+|-------------------|------|
+| Dodavanje čvora | Ručica **+** na čvoru, klik ili prevlačenje iz palete, dugme **+** u gornjem desnom uglu ili desni klik na prazno platno. |
+| Povezivanje čvorova | Prevucite sa izlaznog porta čvora (desna ivica) na ulazni port drugog čvora (leva ivica). |
+| Promena uslova ivice | Kliknite na oznaku uslova na ivici i izaberite uslov. |
+| Brisanje izabranog čvora ili ivice | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> na macOS-u), dugme za brisanje u tabli sa svojstvima ili **×** na oznaci uslova ivice iznad koje je pokazivač. |
 | Opozovi / ponovi | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> na macOS-u) ili strelice na traci sa alatkama. Do 50 koraka. |
 | Poništavanje izbora | <kbd>Esc</kbd> zatvara tablu sa svojstvima i poništava izbor. |
 

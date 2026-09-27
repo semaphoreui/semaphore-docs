@@ -61,14 +61,30 @@ incoming edges), no cycles, and complete configuration on every executable node.
 
 ### Editor controls {#editor-controls}
 
-| Action | How |
-|--------|-----|
-| Pan the canvas | Drag empty space, or scroll with the mouse wheel / trackpad. |
-| Zoom | Hold <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> on macOS) and scroll, pinch on a trackpad, or use the **+** / **−** buttons in the bottom-left corner. |
-| Fit the whole graph on screen | Click the **fit view** button in the bottom-left corner. The editor also fits the graph when it opens. |
-| Arrange nodes automatically | Click **tidy up** in the bottom-left corner. Nodes snap to a 20 px grid when you move them. |
-| Add a node | **+** handle on a node, palette click or drag, the **+** button, or right-click empty canvas. |
-| Delete the selected node or edge | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> on macOS), or the delete button in the properties panel. |
+The canvas can be moved and zoomed with the mouse, a trackpad, the buttons in
+the bottom-left corner, or the keyboard. Keyboard shortcuts work while the
+canvas has focus: click empty canvas first, or press <kbd>Tab</kbd> until the
+canvas is focused. <kbd>Tab</kbd> then moves through the nodes; <kbd>Enter</kbd>
+on a node selects it and opens its properties (on the run view it opens the
+task log). The same navigation works on the run view.
+
+| Action | Mouse | Trackpad | Buttons | Keyboard |
+|--------|-------|----------|---------|----------|
+| Pan (move the canvas) | Drag empty canvas, or scroll the wheel (vertical) and <kbd>Shift</kbd>+wheel (horizontal) | Two-finger scroll in any direction | — | <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd>; hold <kbd>Shift</kbd> for larger steps |
+| Zoom in / out | <kbd>Ctrl</kbd>+wheel (<kbd>Cmd</kbd>+wheel on macOS); zooms towards the pointer | Pinch | **+** / **−** | <kbd>+</kbd> / <kbd>−</kbd> |
+| Fit the whole graph on screen | — | — | **fit view** | <kbd>0</kbd> |
+| Reset the zoom to 100 % | — | — | — | <kbd>1</kbd> |
+| Arrange nodes automatically | — | — | **tidy up** | — |
+
+The editor fits the graph on screen when it opens. The current zoom level is
+shown under the buttons. Nodes snap to a 20 px grid when you move them.
+
+| Editing action | How |
+|----------------|-----|
+| Add a node | **+** handle on a node, palette click or drag, the **+** button in the top-right corner, or right-click empty canvas. |
+| Connect nodes | Drag from a node's output port (right edge) to another node's input port (left edge). |
+| Change an edge condition | Click the condition pill on the edge and pick a condition. |
+| Delete the selected node or edge | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> on macOS), the delete button in the properties panel, or **×** on a hovered edge pill. |
 | Undo / redo | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> on macOS), or the arrows in the toolbar. Up to 50 steps. |
 | Deselect | <kbd>Esc</kbd> closes the properties panel and clears the selection. |
 

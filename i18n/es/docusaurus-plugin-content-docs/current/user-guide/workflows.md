@@ -62,14 +62,29 @@ que el grafo sea válido.
 
 ### Controles del editor {#editor-controls}
 
-| Acción | Cómo |
-|--------|-----|
-| Desplazar el lienzo | Arrastre un espacio vacío o desplácese con la rueda del ratón / el trackpad. |
-| Zoom | Mantenga pulsado <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> en macOS) y desplácese, pince en el trackpad o use los botones **+** / **−** de la esquina inferior izquierda. |
-| Ajustar todo el grafo a la pantalla | Haga clic en el botón **ajustar vista** de la esquina inferior izquierda. El editor también ajusta el grafo al abrirse. |
-| Organizar los nodos automáticamente | Haga clic en **ordenar** en la esquina inferior izquierda. Los nodos se alinean a una cuadrícula de 20 px al moverlos. |
-| Añadir un nodo | Asa **+** de un nodo, clic o arrastre desde la paleta, el botón **+** o clic derecho en un espacio vacío del lienzo. |
-| Eliminar el nodo o la arista seleccionados | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> en macOS) o el botón de eliminar del panel de propiedades. |
+El lienzo se puede desplazar y ampliar con el ratón, un trackpad, los botones de la
+esquina inferior izquierda o el teclado. Los atajos de teclado funcionan mientras el
+lienzo tiene el foco: haga clic primero en un espacio vacío del lienzo o pulse
+<kbd>Tab</kbd> hasta que el lienzo quede enfocado. La misma navegación funciona en la
+vista de la ejecución.
+
+| Acción | Ratón | Trackpad | Botones | Teclado |
+|--------|-------|----------|---------|---------|
+| Desplazar (mover el lienzo) | Arrastre un espacio vacío, o desplácese con la rueda (vertical) y <kbd>Shift</kbd>+rueda (horizontal) | Desplazamiento con dos dedos en cualquier dirección | — | <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd>; mantenga <kbd>Shift</kbd> para pasos más grandes |
+| Acercar / alejar | <kbd>Ctrl</kbd>+rueda (<kbd>Cmd</kbd>+rueda en macOS); hace zoom hacia el puntero | Pinzar | **+** / **−** | <kbd>+</kbd> / <kbd>−</kbd> |
+| Ajustar todo el grafo a la pantalla | — | — | **ajustar vista** | <kbd>0</kbd> |
+| Restablecer el zoom al 100 % | — | — | — | <kbd>1</kbd> |
+| Organizar los nodos automáticamente | — | — | **ordenar** | — |
+
+El editor ajusta el grafo a la pantalla al abrirse. El nivel de zoom actual se muestra
+debajo de los botones. Los nodos se alinean a una cuadrícula de 20 px al moverlos.
+
+| Acción de edición | Cómo |
+|-------------------|------|
+| Añadir un nodo | Asa **+** de un nodo, clic o arrastre desde la paleta, el botón **+** de la esquina superior derecha o clic derecho en un espacio vacío del lienzo. |
+| Conectar nodos | Arrastre desde el puerto de salida de un nodo (borde derecho) hasta el puerto de entrada de otro nodo (borde izquierdo). |
+| Cambiar la condición de una arista | Haga clic en la píldora de condición de la arista y elija una condición. |
+| Eliminar el nodo o la arista seleccionados | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> en macOS), el botón de eliminar del panel de propiedades o **×** en la píldora de una arista al pasar el cursor sobre ella. |
 | Deshacer / rehacer | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> en macOS) o las flechas de la barra de herramientas. Hasta 50 pasos. |
 | Deseleccionar | <kbd>Esc</kbd> cierra el panel de propiedades y borra la selección. |
 

@@ -62,14 +62,29 @@ ausführbaren Node. **Save** bleibt deaktiviert, bis der Graph gültig ist.
 
 ### Editor-Steuerung {#editor-controls}
 
-| Aktion | So geht's |
-|--------|-----|
-| Arbeitsfläche verschieben | Ziehen Sie eine leere Stelle oder scrollen Sie mit dem Mausrad / Trackpad. |
-| Zoomen | Halten Sie <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> unter macOS) gedrückt und scrollen Sie, verwenden Sie die Zoom-Geste auf dem Trackpad oder die Schaltflächen **+** / **−** in der unteren linken Ecke. |
-| Gesamten Graphen auf den Bildschirm einpassen | Klicken Sie auf die Schaltfläche **fit view** in der unteren linken Ecke. Der Editor passt den Graphen auch beim Öffnen ein. |
-| Nodes automatisch anordnen | Klicken Sie auf **tidy up** in der unteren linken Ecke. Nodes rasten beim Verschieben an einem 20-px-Raster ein. |
-| Node hinzufügen | **+**-Griff an einem Node, Klick oder Ziehen in der Palette, die Schaltfläche **+** oder Rechtsklick auf eine leere Stelle der Arbeitsfläche. |
-| Ausgewählten Node oder ausgewählte Edge löschen | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> unter macOS) oder die Löschen-Schaltfläche im Eigenschaftsbereich. |
+Die Arbeitsfläche lässt sich mit der Maus, einem Trackpad, den Schaltflächen in
+der unteren linken Ecke oder der Tastatur verschieben und zoomen. Tastenkürzel
+funktionieren, solange die Arbeitsfläche den Fokus hat: Klicken Sie zuerst auf eine
+leere Stelle der Arbeitsfläche oder drücken Sie <kbd>Tab</kbd>, bis die Arbeitsfläche
+fokussiert ist. Dieselbe Navigation funktioniert auch in der Durchlaufansicht.
+
+| Aktion | Maus | Trackpad | Schaltflächen | Tastatur |
+|--------|------|----------|---------------|----------|
+| Verschieben (Arbeitsfläche bewegen) | Leere Stelle ziehen oder mit dem Mausrad scrollen (vertikal) bzw. <kbd>Shift</kbd>+Mausrad (horizontal) | Mit zwei Fingern in beliebige Richtung scrollen | — | <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd>; <kbd>Shift</kbd> gedrückt halten für größere Schritte |
+| Vergrößern / Verkleinern | <kbd>Ctrl</kbd>+Mausrad (<kbd>Cmd</kbd>+Mausrad unter macOS); zoomt in Richtung des Mauszeigers | Zoom-Geste (Pinch) | **+** / **−** | <kbd>+</kbd> / <kbd>−</kbd> |
+| Gesamten Graphen auf den Bildschirm einpassen | — | — | **fit view** | <kbd>0</kbd> |
+| Zoom auf 100 % zurücksetzen | — | — | — | <kbd>1</kbd> |
+| Nodes automatisch anordnen | — | — | **tidy up** | — |
+
+Der Editor passt den Graphen beim Öffnen auf den Bildschirm ein. Die aktuelle Zoomstufe
+wird unter den Schaltflächen angezeigt. Nodes rasten beim Verschieben an einem 20-px-Raster ein.
+
+| Bearbeitungsaktion | So geht's |
+|--------------------|-----------|
+| Node hinzufügen | **+**-Griff an einem Node, Klick oder Ziehen in der Palette, die Schaltfläche **+** in der oberen rechten Ecke oder Rechtsklick auf eine leere Stelle der Arbeitsfläche. |
+| Nodes verbinden | Vom Ausgangsport eines Nodes (rechter Rand) zum Eingangsport eines anderen Nodes (linker Rand) ziehen. |
+| Bedingung einer Edge ändern | Klicken Sie auf die Bedingungs-Pille auf der Edge und wählen Sie eine Bedingung. |
+| Ausgewählten Node oder ausgewählte Edge löschen | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> unter macOS), die Löschen-Schaltfläche im Eigenschaftsbereich oder **×** auf der Pille einer Edge, über der sich der Mauszeiger befindet. |
 | Rückgängig / Wiederholen | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> unter macOS) oder die Pfeile in der Symbolleiste. Bis zu 50 Schritte. |
 | Auswahl aufheben | <kbd>Esc</kbd> schließt den Eigenschaftsbereich und hebt die Auswahl auf. |
 

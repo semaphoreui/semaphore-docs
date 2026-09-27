@@ -60,14 +60,29 @@ selezionare il nodo. Un Workflow valido deve avere almeno un nodo, esattamente u
 
 ### Controlli dell'editor {#editor-controls}
 
-| Azione | Come |
-|--------|-----|
-| Spostare l'area di lavoro | Trascinare uno spazio vuoto oppure scorrere con la rotellina del mouse / il trackpad. |
-| Zoom | Tenere premuto <kbd>Ctrl</kbd> (<kbd>Cmd</kbd> su macOS) e scorrere, usare il pinch sul trackpad oppure i pulsanti **+** / **−** nell'angolo in basso a sinistra. |
-| Adattare l'intero grafo allo schermo | Fare clic sul pulsante **fit view** nell'angolo in basso a sinistra. L'editor adatta il grafo allo schermo anche all'apertura. |
-| Disporre i nodi automaticamente | Fare clic su **tidy up** nell'angolo in basso a sinistra. Quando vengono spostati, i nodi si allineano a una griglia di 20 px. |
-| Aggiungere un nodo | Maniglia **+** su un nodo, clic o trascinamento dalla palette, pulsante **+**, oppure clic destro su uno spazio vuoto dell'area di lavoro. |
-| Eliminare il nodo o l'arco selezionato | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> su macOS), oppure il pulsante di eliminazione nel pannello delle proprietà. |
+L'area di lavoro può essere spostata e ingrandita con il mouse, il trackpad, i pulsanti
+nell'angolo in basso a sinistra o la tastiera. Le scorciatoie da tastiera funzionano quando
+l'area di lavoro ha il focus: fare prima clic su uno spazio vuoto dell'area di lavoro, oppure
+premere <kbd>Tab</kbd> finché l'area di lavoro non riceve il focus. La stessa navigazione
+funziona nella vista dell'esecuzione.
+
+| Azione | Mouse | Trackpad | Pulsanti | Tastiera |
+|--------|-------|----------|----------|----------|
+| Spostare l'area di lavoro (pan) | Trascinare uno spazio vuoto, oppure scorrere con la rotellina (verticale) e <kbd>Shift</kbd>+rotellina (orizzontale) | Scorrimento con due dita in qualsiasi direzione | — | <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd>; tenere premuto <kbd>Shift</kbd> per passi più ampi |
+| Zoom avanti / indietro | <kbd>Ctrl</kbd>+rotellina (<kbd>Cmd</kbd>+rotellina su macOS); lo zoom è centrato sul puntatore | Pinch | **+** / **−** | <kbd>+</kbd> / <kbd>−</kbd> |
+| Adattare l'intero grafo allo schermo | — | — | **fit view** | <kbd>0</kbd> |
+| Riportare lo zoom al 100 % | — | — | — | <kbd>1</kbd> |
+| Disporre i nodi automaticamente | — | — | **tidy up** | — |
+
+All'apertura l'editor adatta il grafo allo schermo. Il livello di zoom corrente è mostrato
+sotto i pulsanti. Quando vengono spostati, i nodi si allineano a una griglia di 20 px.
+
+| Azione di modifica | Come |
+|--------------------|-----|
+| Aggiungere un nodo | Maniglia **+** su un nodo, clic o trascinamento dalla palette, pulsante **+** nell'angolo in alto a destra, oppure clic destro su uno spazio vuoto dell'area di lavoro. |
+| Collegare i nodi | Trascinare dalla porta di uscita di un nodo (bordo destro) alla porta di ingresso di un altro nodo (bordo sinistro). |
+| Cambiare la condizione di un arco | Fare clic sulla pillola della condizione sull'arco e scegliere una condizione. |
+| Eliminare il nodo o l'arco selezionato | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> su macOS), il pulsante di eliminazione nel pannello delle proprietà, oppure **×** sulla pillola di un arco al passaggio del mouse. |
 | Annulla / ripeti | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> su macOS), oppure le frecce nella barra degli strumenti. Fino a 50 passaggi. |
 | Deselezionare | <kbd>Esc</kbd> chiude il pannello delle proprietà e annulla la selezione. |
 
