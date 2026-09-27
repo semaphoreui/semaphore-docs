@@ -210,6 +210,18 @@ Legen Sie **Start version** für den Workflow fest (zum Beispiel `1.0.0`), um
 Versionsbezeichnungen für jeden Durchlauf zu aktivieren. Semaphore erhöht die Version bei
 jedem weiteren Durchlauf, ähnlich wie bei Build-Task-Templates.
 
+## Revisionen {#revisions}
+
+Jedes Speichern eines Workflows erzeugt eine neue **Revision** seines Graphen; der
+Editor zeigt die Nummer der aktuellen Revision neben dem Namen an. Ein Lauf hält
+die Revision fest, mit der er gestartet wurde: Wird der Workflow während eines
+Laufs bearbeitet, ändert das den laufenden Lauf nicht, und abgeschlossene Läufe
+zeigen weiterhin den Graphen, den sie ausgeführt haben, mit dem Status jedes
+Knotens. Revisionen, auf die kein Lauf verweist, werden beim Speichern einer
+neueren gelöscht. Die Laufdetails (`GET …/runs/{run_id}`) enthalten Knoten und
+Kanten der Revision des Laufs; `GET …/workflows/{workflow_id}/revisions` listet
+die verbliebenen Revisionen auf.
+
 ## Workflow-Artefakte (set_stats) {#workflow-artifacts-set_stats}
 
 Wenn ein Ansible-Task in einem Workflow `set_stats` verwendet, werden die Variablen als

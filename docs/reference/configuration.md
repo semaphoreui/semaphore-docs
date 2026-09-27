@@ -262,22 +262,6 @@ Where server, event, and task logs go, and the Prometheus endpoint. See [Logs](/
 | `log.tasks.logger` <Pro /><br />`SEMAPHORE_TASK_LOGGER` | object | JSON map which contains task logger configuration. |
 | `log.tasks.result_logger` <Pro /><br />`SEMAPHORE_TASK_RESULT_LOGGER` | object | JSON map which contains task result logger configuration. |
 
-## Audit {#audit}
-
-Local capture of canonical audit events with optional export to a SIEM destination.
-
-| Option / Environment variable | Type / Default | Description |
-|---|---|---|
-| `audit.enabled` | boolean | Enables local capture of canonical audit events. |
-| `audit.instance_id` | string | Stable identity included in every audit event across replicas. |
-| `audit.trusted_proxy_cidrs` | array | Lists proxy networks allowed to provide audit client address headers. |
-| `audit.destination.id` <Pro /> | string | Stable identifier for the single audit export destination. |
-| `audit.destination.type` <Pro /> | string | Destination type; only syslog is supported in v1. |
-| `audit.destination.syslog.address` <Pro /> | string | RFC 5424 over TLS destination host and port. |
-| `audit.destination.syslog.timeout` <Pro /> | string | Positive Go duration for syslog connection and write operations. |
-| `audit.destination.syslog.tls.ca_file` <Pro /> | string | Optional PEM file appended to system roots for the destination. |
-| `audit.destination.syslog.tls.server_name` <Pro /> | string | Optional TLS server name used for certificate verification. |
-
 ## Teams and invitations {#teams-and-invitations}
 
 How people are added to projects. See [Teams](/user-guide/team).

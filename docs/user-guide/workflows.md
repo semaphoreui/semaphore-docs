@@ -209,6 +209,17 @@ Set **Start version** on the workflow (for example `1.0.0`) to enable version
 labels on each run. Semaphore increments the version on successive runs, similar
 to build templates.
 
+## Revisions {#revisions}
+
+Every save of a workflow creates a new **revision** of its graph; the editor
+shows the current revision number next to the workflow name. A run pins the
+revision it was started from: editing the workflow while a run is in progress
+does not change that run, and finished runs keep showing the graph they
+executed, with the status of every node. Revisions that no run refers to are
+deleted when a newer one is saved. The run details (`GET …/runs/{run_id}`)
+include the nodes and edges of the run's revision, and
+`GET …/workflows/{workflow_id}/revisions` lists the surviving revisions.
+
 ## Workflow artifacts (set_stats) {#workflow-artifacts-set_stats}
 
 When an Ansible task in a workflow uses `set_stats`, the variables are stored as

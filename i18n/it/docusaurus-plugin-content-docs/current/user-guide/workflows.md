@@ -204,6 +204,18 @@ Impostare **Start version** sul Workflow (ad esempio `1.0.0`) per abilitare le e
 su ogni esecuzione. Semaphore incrementa la versione a ogni esecuzione successiva, in modo simile
 ai Task Template di build.
 
+## Revisioni {#revisions}
+
+Ogni salvataggio di un workflow crea una nuova **revisione** del suo grafo;
+l'editor mostra il numero della revisione corrente accanto al nome. Un'esecuzione
+fissa la revisione con cui è stata avviata: modificare il workflow mentre
+un'esecuzione è in corso non cambia quell'esecuzione, e le esecuzioni concluse
+continuano a mostrare il grafo che hanno eseguito, con lo stato di ogni nodo. Le
+revisioni a cui nessuna esecuzione fa riferimento vengono eliminate quando se ne
+salva una più recente. I dettagli dell'esecuzione (`GET …/runs/{run_id}`)
+includono nodi e archi della sua revisione, e
+`GET …/workflows/{workflow_id}/revisions` elenca le revisioni conservate.
+
 ## Artefatti dei Workflow (set_stats) {#workflow-artifacts-set_stats}
 
 Quando un Task Ansible di un Workflow utilizza `set_stats`, le variabili vengono memorizzate come

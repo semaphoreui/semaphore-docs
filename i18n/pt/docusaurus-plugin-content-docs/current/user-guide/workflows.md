@@ -203,6 +203,17 @@ Defina **Start version** no workflow (por exemplo, `1.0.0`) para ativar rótulos
 em cada execução. O Semaphore incrementa a versão em execuções sucessivas, de forma semelhante
 aos modelos de build.
 
+## Revisões {#revisions}
+
+Cada gravação de um workflow cria uma nova **revisão** do seu grafo; o editor
+mostra o número da revisão atual ao lado do nome. Uma execução fixa a revisão
+com que foi iniciada: editar o workflow enquanto uma execução está em andamento
+não altera essa execução, e execuções concluídas continuam mostrando o grafo que
+executaram, com o status de cada nó. Revisões às quais nenhuma execução faz
+referência são excluídas ao gravar uma mais nova. Os detalhes da execução
+(`GET …/runs/{run_id}`) incluem os nós e arestas da revisão da execução, e
+`GET …/workflows/{workflow_id}/revisions` lista as revisões preservadas.
+
 ## Artefatos do workflow (set_stats) {#workflow-artifacts-set_stats}
 
 Quando uma tarefa do Ansible em um workflow usa `set_stats`, as variáveis são armazenadas como

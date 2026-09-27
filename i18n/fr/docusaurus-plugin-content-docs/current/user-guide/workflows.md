@@ -213,6 +213,18 @@ Définissez **Version de départ** sur le workflow (par exemple `1.0.0`) pour ac
 étiquettes de version sur chaque exécution. Semaphore incrémente la version à chaque
 nouvelle exécution, comme pour les modèles de build.
 
+## Révisions {#revisions}
+
+Chaque enregistrement d'un workflow crée une nouvelle **révision** de son graphe ;
+l'éditeur affiche le numéro de la révision courante à côté du nom. Une exécution
+fige la révision avec laquelle elle a démarré : modifier le workflow pendant
+qu'une exécution est en cours ne change pas cette exécution, et les exécutions
+terminées continuent d'afficher le graphe qu'elles ont exécuté, avec l'état de
+chaque nœud. Les révisions auxquelles aucune exécution ne fait référence sont
+supprimées lors de l'enregistrement d'une révision plus récente. Les détails de
+l'exécution (`GET …/runs/{run_id}`) incluent les nœuds et arêtes de sa révision,
+et `GET …/workflows/{workflow_id}/revisions` liste les révisions conservées.
+
 ## Artefacts de workflow (set_stats) {#workflow-artifacts-set_stats}
 
 Lorsqu'une tâche Ansible d'un workflow utilise `set_stats`, les variables sont stockées

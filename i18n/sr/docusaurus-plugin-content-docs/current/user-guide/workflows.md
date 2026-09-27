@@ -203,6 +203,17 @@ Podesite **Start version** na toku rada (na primer `1.0.0`) da biste omogućili 
 verzija na svakom izvršavanju. Semaphore povećava verziju pri uzastopnim izvršavanjima,
 slično kao kod build šablona.
 
+## Revizije {#revisions}
+
+Svako čuvanje radnog toka pravi novu **reviziju** njegovog grafa; uređivač
+prikazuje broj tekuće revizije pored imena. Izvršavanje vezuje reviziju sa kojom
+je pokrenuto: izmena radnog toka dok je izvršavanje u toku ne menja to
+izvršavanje, a završena izvršavanja i dalje prikazuju graf koji su izvršila, sa
+statusom svakog čvora. Revizije na koje se ne poziva nijedno izvršavanje brišu se
+kada se sačuva novija. Detalji izvršavanja (`GET …/runs/{run_id}`) sadrže čvorove
+i ivice revizije tog izvršavanja, a `GET …/workflows/{workflow_id}/revisions`
+nabraja preostale revizije.
+
 ## Artefakti toka rada (set_stats) {#workflow-artifacts-set_stats}
 
 Kada Ansible zadatak u toku rada koristi `set_stats`, promenljive se čuvaju kao

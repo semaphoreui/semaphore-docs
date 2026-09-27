@@ -207,6 +207,18 @@ Defina la **Versión inicial** en el flujo de trabajo (por ejemplo `1.0.0`) para
 versión en cada ejecución. Semaphore incrementa la versión en las ejecuciones sucesivas, de forma similar
 a las plantillas de compilación.
 
+## Revisiones {#revisions}
+
+Cada vez que se guarda un flujo de trabajo se crea una nueva **revisión** de su
+grafo; el editor muestra el número de la revisión actual junto al nombre. Una
+ejecución fija la revisión con la que se inició: editar el flujo de trabajo
+mientras hay una ejecución en curso no cambia esa ejecución, y las ejecuciones
+terminadas siguen mostrando el grafo que ejecutaron, con el estado de cada nodo.
+Las revisiones a las que no hace referencia ninguna ejecución se eliminan al
+guardar una más nueva. Los detalles de la ejecución (`GET …/runs/{run_id}`)
+incluyen los nodos y aristas de la revisión de la ejecución, y
+`GET …/workflows/{workflow_id}/revisions` enumera las revisiones conservadas.
+
 ## Artefactos del flujo de trabajo (set_stats) {#workflow-artifacts-set_stats}
 
 Cuando una tarea de Ansible en un flujo de trabajo usa `set_stats`, las variables se almacenan como
