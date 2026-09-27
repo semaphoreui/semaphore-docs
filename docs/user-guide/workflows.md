@@ -57,6 +57,12 @@ valid workflow must have at least one node, exactly one starting node (no
 incoming edges), no cycles, and complete configuration on every executable node.
 **Save** stays disabled until the graph is valid.
 
+Need more room for the canvas? Click the chevron on the right edge of the
+palette to collapse both the palette and the main navigation to narrow icon
+strips; click it again to expand them. The choice is remembered in your browser
+and applies only to the workflow editor: other pages always show the full
+navigation.
+
 ![Quick-add menu](/assets/workflow-editor-quick-add.webp)
 
 ### Editor controls {#editor-controls}
