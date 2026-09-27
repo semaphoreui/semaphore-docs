@@ -65,7 +65,9 @@ que el grafo sea válido.
 El lienzo se puede desplazar y ampliar con el ratón, un trackpad, los botones de la
 esquina inferior izquierda o el teclado. Los atajos de teclado funcionan mientras el
 lienzo tiene el foco: haga clic primero en un espacio vacío del lienzo o pulse
-<kbd>Tab</kbd> hasta que el lienzo quede enfocado. La misma navegación funciona en la
+<kbd>Tab</kbd> hasta que el lienzo quede enfocado. A continuación, <kbd>Tab</kbd> recorre
+los nodos; <kbd>Enter</kbd> sobre un nodo lo selecciona y abre su panel de propiedades (en
+la vista de la ejecución abre el registro de la tarea). La misma navegación funciona en la
 vista de la ejecución.
 
 | Acción | Ratón | Trackpad | Botones | Teclado |

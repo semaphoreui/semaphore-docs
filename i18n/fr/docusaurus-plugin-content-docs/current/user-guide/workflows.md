@@ -67,8 +67,10 @@ le graphe n'est pas valide.
 Le canevas peut être déplacé et zoomé avec la souris, un trackpad, les boutons du coin
 inférieur gauche ou le clavier. Les raccourcis clavier fonctionnent tant que le canevas a
 le focus : cliquez d'abord sur un espace vide du canevas, ou appuyez sur <kbd>Tab</kbd>
-jusqu'à ce que le canevas soit sélectionné. La même navigation fonctionne dans la vue
-d'exécution.
+jusqu'à ce que le canevas soit sélectionné. <kbd>Tab</kbd> passe ensuite d'un nœud à
+l'autre ; <kbd>Enter</kbd> sur un nœud le sélectionne et ouvre son panneau de propriétés
+(dans la vue d'exécution, il ouvre le journal de tâche). La même navigation fonctionne dans
+la vue d'exécution.
 
 | Action | Souris | Trackpad | Boutons | Clavier |
 |--------|--------|----------|---------|---------|

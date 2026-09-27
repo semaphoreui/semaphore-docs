@@ -66,7 +66,10 @@ Die Arbeitsfläche lässt sich mit der Maus, einem Trackpad, den Schaltflächen 
 der unteren linken Ecke oder der Tastatur verschieben und zoomen. Tastenkürzel
 funktionieren, solange die Arbeitsfläche den Fokus hat: Klicken Sie zuerst auf eine
 leere Stelle der Arbeitsfläche oder drücken Sie <kbd>Tab</kbd>, bis die Arbeitsfläche
-fokussiert ist. Dieselbe Navigation funktioniert auch in der Durchlaufansicht.
+fokussiert ist. Mit <kbd>Tab</kbd> wechseln Sie anschließend zwischen den Nodes;
+<kbd>Enter</kbd> auf einem Node wählt ihn aus und öffnet seinen Eigenschaftsbereich (in der
+Durchlaufansicht wird das Task-Protokoll geöffnet). Dieselbe Navigation funktioniert auch
+in der Durchlaufansicht.
 
 | Aktion | Maus | Trackpad | Schaltflächen | Tastatur |
 |--------|------|----------|---------------|----------|

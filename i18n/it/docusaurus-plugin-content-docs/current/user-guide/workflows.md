@@ -63,7 +63,9 @@ selezionare il nodo. Un Workflow valido deve avere almeno un nodo, esattamente u
 L'area di lavoro può essere spostata e ingrandita con il mouse, il trackpad, i pulsanti
 nell'angolo in basso a sinistra o la tastiera. Le scorciatoie da tastiera funzionano quando
 l'area di lavoro ha il focus: fare prima clic su uno spazio vuoto dell'area di lavoro, oppure
-premere <kbd>Tab</kbd> finché l'area di lavoro non riceve il focus. La stessa navigazione
+premere <kbd>Tab</kbd> finché l'area di lavoro non riceve il focus. <kbd>Tab</kbd> passa
+quindi da un nodo all'altro; <kbd>Enter</kbd> su un nodo lo seleziona e ne apre il pannello
+delle proprietà (nella vista dell'esecuzione apre il log del Task). La stessa navigazione
 funziona nella vista dell'esecuzione.
 
 | Azione | Mouse | Trackpad | Pulsanti | Tastiera |

@@ -63,7 +63,9 @@ Dugme **Save** ostaje onemogućeno dok graf ne postane ispravan.
 Platno se može pomerati i zumirati mišem, dodirnom tablom, dugmadima u donjem
 levom uglu ili tastaturom. Prečice na tastaturi rade dok platno ima fokus:
 prvo kliknite na prazno platno ili pritiskajte <kbd>Tab</kbd> dok platno ne
-dobije fokus. Ista navigacija radi i u prikazu izvršavanja.
+dobije fokus. <kbd>Tab</kbd> zatim prelazi sa čvora na čvor; <kbd>Enter</kbd> na čvoru
+ga bira i otvara njegovu tablu sa svojstvima (u prikazu izvršavanja otvara dnevnik
+zadatka). Ista navigacija radi i u prikazu izvršavanja.
 
 | Radnja | Miš | Dodirna tabla | Dugmad | Tastatura |
 |--------|-----|---------------|--------|-----------|

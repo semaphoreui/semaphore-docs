@@ -63,7 +63,9 @@ de entrada), nenhum ciclo e configuração completa em todos os nós executávei
 A área de trabalho pode ser movida e ampliada com o mouse, um trackpad, os botões
 no canto inferior esquerdo ou o teclado. Os atalhos de teclado funcionam enquanto a
 área de trabalho tem o foco: clique primeiro em um espaço vazio da área de trabalho
-ou pressione <kbd>Tab</kbd> até que ela receba o foco. A mesma navegação funciona na
+ou pressione <kbd>Tab</kbd> até que ela receba o foco. Em seguida, <kbd>Tab</kbd> percorre
+os nós; <kbd>Enter</kbd> em um nó o seleciona e abre o seu painel de propriedades (na
+visualização da execução, abre o log da tarefa). A mesma navegação funciona na
 visualização da execução.
 
 | Ação | Mouse | Trackpad | Botões | Teclado |
