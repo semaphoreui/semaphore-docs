@@ -176,57 +176,11 @@ Starten Sie den Semaphore-Dienst nach dem Ändern dieser Werte neu, damit das ne
 
 ---
 
-## SIEM-Integration <Enterprise /> {#siem-integration}
+## SIEM-Integration {#siem-integration}
 
-Semaphore 2.20+ zeichnet einen Sicherheits-Audit-Trail auf, der sich zur Weiterleitung an ein SIEM (Splunk, Elastic Security, QRadar, Wazuh usw.) eignet.
-
-Jedes Audit-Ereignis enthält neben dem handelnden Benutzer und dem betroffenen Objekt die **Aktion** (`create`, `update`, `delete`, `login_success`, `login_fail`, `logout`), die **Client-IP-Adresse** und den **User-Agent**. Neben Ressourcenänderungen protokolliert Semaphore:
-
-- Erfolgreiche Anmeldungen (Passwort, LDAP und OpenID), Abmeldungen, fehlgeschlagene Anmeldeversuche und fehlgeschlagene MFA-Prüfungen.
-- Erstellung, Aktualisierung und Löschung von Benutzerkonten sowie Passwortänderungen.
-- Erstellung und Löschung von API-Tokens (nur das kurze Token-Präfix wird protokolliert, niemals das Geheimnis).
-
-Es gibt drei Möglichkeiten, Audit-Ereignisse an Ihr SIEM zu übermitteln:
-
-1. **Pull:** Lesen Sie `/api/events` aus (siehe [API-Dokumentation](/reference/api)).
-2. **Datei-Collector:** Aktivieren Sie die Aktivitätsprotokolldatei (Pro, siehe oben) und übertragen Sie `events.log` (JSON-Format empfohlen) mit Filebeat, Fluentd oder einem Splunk Universal Forwarder.
-3. **Audit-Webhook (Pro):** Senden Sie Ereignisse in Echtzeit über HTTPS – an einen generischen JSON-Endpunkt oder den Splunk HTTP Event Collector.
-
-### Audit-Webhook {#audit-webhook}
-
-```json
-{
-  "log": {
-    "audit_webhook": {
-      "enabled": true,
-      "url": "https://splunk.example.com:8088/services/collector/event",
-      "format": "splunk_hec",
-      "headers": {
-        "Authorization": "Splunk <your-hec-token>"
-      }
-    }
-  }
-}
-```
-
-Oder über Umgebungsvariablen:
-
-```bash
-SEMAPHORE_AUDIT_WEBHOOK_ENABLED=true
-SEMAPHORE_AUDIT_WEBHOOK_URL=https://splunk.example.com:8088/services/collector/event
-SEMAPHORE_AUDIT_WEBHOOK_FORMAT=splunk_hec
-```
-
-#### Audit-Webhook-Optionen {#audit-webhook-options}
-
-| Parameter             | Umgebungsvariablen | Beschreibung          |
-| --------------------- | --------------------- | --------------------- |
-| `enabled`             | `SEMAPHORE_AUDIT_WEBHOOK_ENABLED` | Schaltet die Weiterleitung von Audit-Ereignissen ein oder aus. |
-| `url`                 | `SEMAPHORE_AUDIT_WEBHOOK_URL`  | Vollständige URL des Empfänger-Endpunkts. |
-| `format`              | `SEMAPHORE_AUDIT_WEBHOOK_FORMAT`  | Payload-Format: leer für reines JSON oder `splunk_hec` für eine Splunk-HEC-Hülle. |
-| `headers`             | `SEMAPHORE_AUDIT_WEBHOOK_HEADERS`  | Zusätzliche HTTP-Header, z. B. das HEC-Token: `{"Authorization": "Splunk <token>"}`. |
-
-Die Zustellung erfolgt asynchron: Ereignisse werden im Speicher in eine Warteschlange gestellt und bis zu dreimal mit Backoff erneut gesendet, sodass ein nicht erreichbarer Empfänger Benutzeranfragen niemals verlangsamt oder scheitern lässt. Bleibt der Empfänger nicht erreichbar, werden die Ereignisse in der Warteschlange mit einer Warnung im Serverprotokoll verworfen.
+Sicherheitsrelevante Aktionen (Anmeldungen, MFA, Änderungen an Benutzern und Berechtigungen, API-Tokens, Systemeinstellungen) werden im [Audit-Log](/admin-guide/audit-log) erfasst, das Semaphore Pro über Syslog+TLS
+[an ein SIEM senden](/admin-guide/audit-log-siem) kann. Das Aktivitätsprotokoll oben ist ein Feed für Benutzer,
+kein Audit-Trail.
 
 ## Zusammenfassung {#summary}
 

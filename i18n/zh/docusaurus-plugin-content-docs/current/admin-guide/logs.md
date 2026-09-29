@@ -176,57 +176,11 @@ SEMAPHORE_SYSLOG_TAG=semaphore
 
 ---
 
-## SIEM 集成 <Enterprise /> {#siem-integration}
+## SIEM 集成 {#siem-integration}
 
-Semaphore 2.20+ 会记录适合转发到 SIEM（Splunk、Elastic Security、QRadar、Wazuh 等）的安全审计记录。
-
-每个审计事件除了包含执行操作的用户和受影响的对象外，还包含 **操作**（`create`、`update`、`delete`、`login_success`、`login_fail`、`logout`）、**客户端 IP 地址** 和 **用户代理**。除资源变更外，Semaphore 还会记录：
-
-- 成功登录（密码、LDAP 和 OpenID）、登出、失败的登录尝试以及失败的 MFA 验证。
-- 用户账户的创建、更新、删除和密码更改。
-- API 令牌的创建和删除（仅记录令牌的短前缀，绝不记录密钥本身）。
-
-有三种方式可将审计事件传送到您的 SIEM：
-
-1. **拉取：** 读取 `/api/events`（参见 [API 文档](/reference/api)）。
-2. **文件收集器：** 启用活动日志文件（Pro，见上文），并使用 Filebeat、Fluentd 或 Splunk Universal Forwarder 发送 `events.log`（推荐 JSON 格式）。
-3. **审计 Webhook（Pro）：** 通过 HTTPS 实时推送事件——可推送到通用 JSON 端点或 Splunk HTTP Event Collector。
-
-### 审计 Webhook {#audit-webhook}
-
-```json
-{
-  "log": {
-    "audit_webhook": {
-      "enabled": true,
-      "url": "https://splunk.example.com:8088/services/collector/event",
-      "format": "splunk_hec",
-      "headers": {
-        "Authorization": "Splunk <your-hec-token>"
-      }
-    }
-  }
-}
-```
-
-或者使用环境变量：
-
-```bash
-SEMAPHORE_AUDIT_WEBHOOK_ENABLED=true
-SEMAPHORE_AUDIT_WEBHOOK_URL=https://splunk.example.com:8088/services/collector/event
-SEMAPHORE_AUDIT_WEBHOOK_FORMAT=splunk_hec
-```
-
-#### 审计 Webhook 选项 {#audit-webhook-options}
-
-| 参数                  | 环境变量              | 说明                  |
-| --------------------- | --------------------- | --------------------- |
-| `enabled`             | `SEMAPHORE_AUDIT_WEBHOOK_ENABLED` | 开启或关闭审计事件转发。 |
-| `url`                 | `SEMAPHORE_AUDIT_WEBHOOK_URL`  | 接收端的完整端点 URL。 |
-| `format`              | `SEMAPHORE_AUDIT_WEBHOOK_FORMAT`  | 载荷格式：留空表示纯 JSON，或设置为 `splunk_hec` 以使用 Splunk HEC 封装格式。 |
-| `headers`             | `SEMAPHORE_AUDIT_WEBHOOK_HEADERS`  | 额外的 HTTP 头，例如 HEC 令牌：`{"Authorization": "Splunk <token>"}`。 |
-
-事件传送是异步的：事件会在内存中排队，并以退避策略最多重试三次，因此接收端不可用时绝不会拖慢用户请求或导致其失败。如果接收端持续不可用，排队的事件会被丢弃，并在服务器日志中记录一条警告。
+与安全相关的操作(登录、MFA、用户和权限变更、API 令牌、系统设置)会记录在[审计日志](/admin-guide/audit-log)中,Semaphore Pro 可以通过 Syslog+TLS
+[将其发送到 SIEM](/admin-guide/audit-log-siem)。上面的活动日志是面向用户的动态,
+不是审计追踪。
 
 ## 小结 {#summary}
 

@@ -176,57 +176,11 @@ SEMAPHORE_SYSLOG_TAG=semaphore
 
 ---
 
-## Интеграция с SIEM <Enterprise /> {#siem-integration}
+## Интеграция с SIEM {#siem-integration}
 
-Semaphore 2.20+ ведёт журнал аудита безопасности, пригодный для пересылки в SIEM (Splunk, Elastic Security, QRadar, Wazuh и т. д.).
-
-Каждое событие аудита содержит **действие** (`create`, `update`, `delete`, `login_success`, `login_fail`, `logout`), **IP-адрес клиента** и **user agent**, а также пользователя, выполнившего действие, и затронутый объект. Помимо изменений ресурсов, Semaphore логирует:
-
-- Успешные входы (по паролю, через LDAP и OpenID), выходы, неудачные попытки входа и неудачные проверки MFA.
-- Создание, изменение, удаление учётных записей пользователей и смену паролей.
-- Создание и удаление API-токенов (логируется только короткий префикс токена, никогда — сам секрет).
-
-Есть три способа доставки событий аудита в вашу SIEM:
-
-1. **Pull:** читайте `/api/events` (см. [документацию API](/reference/api)).
-2. **Файловый коллектор:** включите запись лога активности в файл (Pro, см. выше) и отправляйте `events.log` (рекомендуется формат JSON) с помощью Filebeat, Fluentd или Splunk Universal Forwarder.
-3. **Webhook аудита (Pro):** отправляйте события в реальном времени по HTTPS — на универсальный JSON-эндпоинт или в Splunk HTTP Event Collector.
-
-### Webhook аудита {#audit-webhook}
-
-```json
-{
-  "log": {
-    "audit_webhook": {
-      "enabled": true,
-      "url": "https://splunk.example.com:8088/services/collector/event",
-      "format": "splunk_hec",
-      "headers": {
-        "Authorization": "Splunk <your-hec-token>"
-      }
-    }
-  }
-}
-```
-
-Или с помощью переменных окружения:
-
-```bash
-SEMAPHORE_AUDIT_WEBHOOK_ENABLED=true
-SEMAPHORE_AUDIT_WEBHOOK_URL=https://splunk.example.com:8088/services/collector/event
-SEMAPHORE_AUDIT_WEBHOOK_FORMAT=splunk_hec
-```
-
-#### Параметры webhook аудита {#audit-webhook-options}
-
-| Параметр              | Переменные окружения  | Описание              |
-| --------------------- | --------------------- | --------------------- |
-| `enabled`             | `SEMAPHORE_AUDIT_WEBHOOK_ENABLED` | Включить или выключить пересылку событий аудита. |
-| `url`                 | `SEMAPHORE_AUDIT_WEBHOOK_URL`  | Полный URL эндпоинта-получателя. |
-| `format`              | `SEMAPHORE_AUDIT_WEBHOOK_FORMAT`  | Формат полезной нагрузки: пусто для обычного JSON или `splunk_hec` для обёртки Splunk HEC. |
-| `headers`             | `SEMAPHORE_AUDIT_WEBHOOK_HEADERS`  | Дополнительные HTTP-заголовки, например токен HEC: `{"Authorization": "Splunk <token>"}`. |
-
-Доставка асинхронная: события ставятся в очередь в памяти и повторно отправляются до трёх раз с нарастающей задержкой, поэтому недоступный получатель никогда не замедляет и не ломает пользовательские запросы. Если получатель остаётся недоступным, события из очереди отбрасываются с предупреждением в серверном логе.
+Действия, важные для безопасности (входы, MFA, изменения пользователей и прав, API-токены, системные настройки), записываются в [журнал аудита](/admin-guide/audit-log), который Semaphore Pro может
+[отправлять в SIEM](/admin-guide/audit-log-siem) по Syslog+TLS. Журнал активности выше — это лента для пользователей,
+а не журнал аудита.
 
 ## Итоги {#summary}
 

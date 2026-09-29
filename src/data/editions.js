@@ -128,6 +128,12 @@ const features = [
     edition: 'pro',
     doc: '/admin-guide/logs',
   },
+  {
+    key: 'audit-siem-export',
+    name: 'Audit log export to a SIEM',
+    edition: 'pro',
+    doc: '/admin-guide/audit-log-siem',
+  },
 
   // Terraform
   {

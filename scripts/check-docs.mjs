@@ -106,6 +106,7 @@ const KNOWN_ORPHANS = new Set([
 const ENGLISH_ONLY = new Set([
   'reference/configuration',
   'reference/cli/commands',
+  'reference/audit-events',
 ]);
 
 const referenced = new Set([
