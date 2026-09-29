@@ -179,7 +179,7 @@ Redémarrez le service Semaphore après avoir modifié ces valeurs afin que la n
 ## Intégration SIEM {#siem-integration}
 
 Les actions liées à la sécurité (connexions, MFA, modifications des utilisateurs et des permissions, jetons d'API, paramètres système) sont enregistrées dans le [journal d'audit](/admin-guide/audit-log), que Semaphore Pro peut
-[envoyer à un SIEM](/admin-guide/audit-log-siem) via Syslog+TLS. Le journal d'activité ci-dessus est un flux destiné aux utilisateurs,
+[envoyer à un SIEM](/admin-guide/audit-log#siem-export) via Syslog+TLS. Le journal d'activité ci-dessus est un flux destiné aux utilisateurs,
 pas une piste d'audit.
 
 ## Résumé {#summary}
@@ -187,5 +187,6 @@ pas une piste d'audit.
 - **Journal du serveur :** écrit sur stdout ; consultable via `journalctl` en cas d'exécution sous systemd.  
 - **Journal d'activité et des tâches :** suit toutes les actions des utilisateurs. En option, **Pro 2.10+** peut les écrire dans un fichier.  
 - **Historique des tâches :** stocke les journaux d'exécution des tâches en temps réel et historiques. La rétention est configurable par modèle.
+- **Journal d'audit :** enregistre les actions d'authentification et d'administration prises en charge à des fins d'investigation de sécurité.
 
 En suivant ces recommandations, vous disposez d'une visibilité adéquate sur le fonctionnement de Semaphore UI tout en maîtrisant l'utilisation du stockage et la rétention des journaux.

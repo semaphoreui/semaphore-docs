@@ -1,76 +1,85 @@
 ---
 title: 監査ログ
-description: Semaphore がログイン、MFA、ユーザー、権限、API トークン、設定について記録するセキュリティ監査ログと、その有効化の方法。
+description: セキュリティ監査ログを有効にし、記録される内容を理解して、Semaphore Pro から TLS 経由の Syslog で監査イベントを SIEM に送信します。
 ---
 
 # 監査ログ
 
-監査ログはセキュリティの監査証跡です。誰が、どこから、どのオブジェクトに対して、何をし、どんな結果になったかを
-記録します。セキュリティアナリストやコンプライアンス担当者が、通常は SIEM で読みます。各イベントには安定した
-文書化済みのスキーマがあるため、アナリストは Semaphore の内部を知らなくても検知ルールを書けます。
+監査ログには、セキュリティに関係するアクティビティが記録されます。誰が操作したか、何を行ったか、どのオブジェクトが
+影響を受けたか、どこからリクエストが送信されたか、操作が成功したかを確認できます。運用担当者は変更の調査に使用し、
+セキュリティチームは文書化されたイベント形式を検知ルールやコンプライアンスの証拠に使用します。
 
-監査ログは[アクティビティログ](/admin-guide/logs)とは別のものです。アクティビティログはプロジェクトのユーザー向けの
-フィードです。監査ログは、システムが正しく使われているかを確認する人のための証跡です。
+監査イベントの取得とローカル保存は Semaphore Community で利用できます。Semaphore Pro では、取得したイベントを
+セキュリティ情報イベント管理 (SIEM) システムに送信することもできます。
 
-## 仕組み {#overview}
+## 他のログとの違い {#log-types}
 
-監査ログを有効にすると、Semaphore は Web UI または API から来るセキュリティに関わるすべての操作についてイベントを
-記録します。ログインとログアウト、MFA の確認、ユーザー、プロジェクトメンバー、ロール、権限の変更、API トークン、
-システム設定です。拒否されたリクエストも記録されます。ログインの失敗、不明または期限切れの API トークン、
-拒否された権限、ブロックされたクロスサイトリクエストです。
-
-イベントは Semaphore のデータベースに保存されます。Semaphore Pro はそれを SIEM に送信できます。
-[SIEM へのエクスポート](#siem-export)を参照してください。
-
-## イベントスキーマ {#event-schema}
-
-すべてのイベントは同じフィールドを持つ JSON オブジェクトです。イベントの一覧と、その結果、理由、メタデータに
-ついては[監査イベント](/reference/audit-events)を参照してください。
-
-| フィールド | 説明 |
+| ログ | 用途 |
 | --- | --- |
-| `event_id` | イベントの一意な ID。SIEM で重複を取り除くのに使います。 |
-| `seq` | イベントごとに増える、欠番のない連番。イベントの並べ替えに使います。 |
-| `timestamp` | イベントの時刻 (UTC)。 |
-| `schema_version` | このスキーマのバージョン。フィールドの名前変更、削除、型の変更のときだけ変わります。 |
-| `category` | `auth`、`iam`、`resource`、`secret`、`task`、`runner`、`system`、`audit` のいずれか。 |
-| `event_code` | イベントの対象。例: `iam.api_token`。 |
-| `type` | 変更の種類: `creation`、`change`、`deletion`、`access`、`start`、`end`、`denied`、`info`。 |
-| `action` | 行われた操作。例: `create`。 |
-| `outcome` | `success` または `failure`。 |
-| `reason` | 操作が失敗した理由。イベントごとに決まった一覧から選ばれます。成功時は空です。 |
-| `actor` | 操作した主体: `type` (`user`、`anonymous`、`system`、`runner`、`integration`)、`id`、`name`。ユーザーの場合は `auth` (`session` または `api_token`) も、API トークンの場合は `token_fingerprint` も含みます。 |
-| `source` | Web UI と API へのリクエストの場合: クライアントの `ip` と `user_agent`。 |
-| `target` | 操作の対象オブジェクト: `type`、`id`、`name`。 |
-| `scope` | プロジェクト内のイベントの `project_id`。 |
-| `request_id` | HTTP リクエストの ID。Semaphore はレスポンスヘッダー `X-Request-ID` でも返します。 |
-| `instance_id` | この Semaphore インストールの名前。`audit.instance_id` の値です。 |
-| `node_id` | [高可用性](/admin-guide/ha)が有効なとき、イベントを記録したノード。 |
-| `metadata` | イベントによって異なる追加情報。 |
+| サーバーログ | Semaphore の起動、設定、実行時のエラーを診断します。 |
+| アクティビティログ | プロジェクトのアクティビティをプロジェクトユーザー向けのフィードとして表示します。 |
+| タスクログと履歴 | タスクの実行、ステータス、出力を確認します。 |
+| 監査ログ | インストール全体の認証操作と管理操作を調査します。 |
 
-`timestamp` はデータベースの時刻で、マイクロ秒単位です。SQLite ではミリ秒単位です。イベントは `seq` で
-並べ替えてください。2 つのイベントの時刻が同じになることはあっても、`seq` が同じになることはありません。
+監査ログは[アクティビティログ](/admin-guide/logs#activity-log)とは独立しています。一方を有効化またはエクスポートしても、
+もう一方が有効化またはエクスポートされることはありません。
 
-MySQL では、`audit_event` テーブルの `created` 列は接続オプション `loc` のタイムゾーンを使います。既定値は UTC です。
-各イベントの `timestamp` は常に UTC です。
+## 記録される内容 {#recorded-events}
 
-サーバーを起動するたびに、アクション `start` の `audit.lifecycle` が記録されます。停止イベントはありません。
-停止、クラッシュ、監査ログの無効化は、次の `start` の前の時間の空白として現れます。
+現在のリリースでは、サポート対象の認証イベントと ID 管理イベントが記録されます。これには次のものが含まれます。
 
-## 決して記録されないもの {#never-recorded}
+- 成功および失敗したサインイン、サインアウト、TOTP チェック
+- 拒否された API トークン、拒否された権限、ブロックされたクロスサイトリクエスト
+- ユーザー、パスワード、TOTP 登録、外部 ID、API トークンへの変更
+- プロジェクトメンバーシップ、ロール、テンプレート権限への変更
+- システム設定と Pro ライセンスのアクティベーションへの変更
+- サーバーとともに開始される監査イベントの取得
 
-監査ログには、パスワード、ワンタイムコード、TOTP のシークレットと QR コード、リカバリーコード、セッション
-Cookie、トークン、OAuth のコードとクレーム、秘密鍵、パスフレーズ、シークレットの値、環境変数とサーベイの値、
-Webhook の本文、タスクの出力、メールアドレス、URL は決して含まれません。API トークンはフィンガープリント、
-つまり SHA-256 ハッシュの先頭 16 桁の 16 進文字だけで識別されます。
+ログインの成功は、TOTP を含む必要な認証手順をすべてユーザーが完了した後に記録されます。利用可能なすべてのイベントと、
+今後のリリースで予定されているイベントについては、[監査イベント](/reference/audit-events)を参照してください。
 
-ユーザー ID とユーザー名で操作した主体を識別します。ログインに失敗した場合は、入力されたログイン名を 64 バイトに
-切り詰めて記録します。失敗したログインの調査に必要だからです。
+## イベントから除外される機密データ {#sensitive-data}
+
+監査イベントでは、認証情報や秘密のペイロードをコピーせずに操作を識別します。パスワード、パスコード、TOTP のシークレットと
+QR コード、リカバリーコード、セッション Cookie、生のトークン、OAuth コードとクレーム、秘密鍵、パスフレーズ、シークレット値、
+環境変数とサーベイの値、Webhook の本文、タスク出力、リポジトリ URL は除外されます。
+
+API トークンは値ではなくフィンガープリントで識別されます。サインインに失敗した場合、入力されたログイン識別子が 64 バイトに
+切り詰められて記録されます。ユーザーがメールアドレスでサインインする場合、この識別子にはメールアドレスが含まれることがあります。
 
 ## 監査ログを有効にする {#enable}
 
-`audit.enabled` を設定し、`audit.instance_id` でインストールに名前を付けます。名前は空白を含まない 1〜255 文字の
-印字可能な ASCII 文字で、すべてのイベントに含まれます。
+インストールに使用する固定の名前を決め、`config.json` で `audit.enabled` と `audit.instance_id` を設定します。
+
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu"
+  }
+}
+```
+
+インスタンス ID には、空白を含まない 1〜255 文字の印字可能な ASCII 文字を使用する必要があります。これはすべてのイベントに
+表示され、SIEM が複数の Semaphore インストールを識別するために使用されます。
+
+または、環境変数を使用します。
+
+```bash
+SEMAPHORE_AUDIT_ENABLED=true
+SEMAPHORE_AUDIT_INSTANCE_ID=prod-eu
+```
+
+変更を適用するには Semaphore を再起動します。再起動後に取得が開始され、それ以前のアクティビティは監査ログに追加されません。
+最初のイベントは、アクションが `start` の `audit.lifecycle` です。
+
+すべてのオプションと環境変数については、
+[設定オプション](/reference/configuration#audit-log)を参照してください。
+
+## プロキシ配下のクライアントアドレスを記録する {#trusted-proxies}
+
+デフォルトでは、HTTP 監査イベントには Semaphore に直接接続したアドレスが記録されます。そのアドレスがリバースプロキシの場合は、
+プロキシのネットワークだけを `audit.trusted_proxy_cidrs` に追加します。
 
 ```json
 {
@@ -82,76 +91,169 @@ Webhook の本文、タスクの出力、メールアドレス、URL は決し�
 }
 ```
 
-または環境変数を使います。
+または、次のように設定します。
 
 ```bash
-SEMAPHORE_AUDIT_ENABLED=true
-SEMAPHORE_AUDIT_INSTANCE_ID=prod-eu
 SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 ```
 
-変更を反映するには Semaphore を再起動します。すべてのオプションについては[設定](/reference/configuration)を
-参照してください。
+Semaphore が `X-Forwarded-For` と `X-Real-IP` を信頼するのは、これらのネットワークから送信された場合だけです。
+クライアントネットワークは追加しないでください。信頼されたネットワーク内のクライアントは、自身のイベントに記録される送信元アドレスを
+選択できてしまいます。複数のプロキシが `X-Forwarded-For` にアドレスを追加する場合、Semaphore は信頼されたプロキシではない
+最も右側のアドレスを記録します。
 
-## リバースプロキシ配下のクライアントアドレス {#trusted-proxies}
+## 保存と制限事項 {#storage}
 
-リバースプロキシの配下では、Semaphore の直接の接続相手はプロキシで、クライアントのアドレスは
-`X-Forwarded-For` または `X-Real-IP` ヘッダーから得られます。Semaphore がこれらのヘッダーを読むのは、直接の
-接続相手が `audit.trusted_proxy_cidrs` に含まれる場合だけです。それ以外の場合は接続相手のアドレスを記録するため、
-クライアントは自分のアドレスを偽装できません。
+Semaphore は監査イベントをデータベースに保存します。このリリースには、監査ログビューアー、監査 API、自動的な保持期間の管理、
+削除機能はありません。データベースの増加量を監視し、監査データをデータベースのバックアップポリシーに含めてください。
 
-`audit.trusted_proxy_cidrs` には自分のリバースプロキシだけを指定し、クライアントのネットワークは決して指定しないで
-ください。信頼された範囲にいるクライアントは、`X-Forwarded-For` に任意のアドレスを入れられます。
+監査の記録によって、記録対象の操作がブロックされることはありません。イベントの保存に失敗した場合、Semaphore はサーバーログに
+エラーを書き込み、元の操作を続行します。ローカルの記録は Semaphore の他のデータと同じデータベースアクセス制御で保護されますが、
+変更不能ではなく、改ざん検知機能もありません。
 
-記録されるのは、`X-Forwarded-For` の中で信頼されたプロキシではない最も右のアドレスです。
-`X-Real-IP` は `X-Forwarded-For` がないときだけ、しかも値が 1 つのときだけ使われます。
+サーバーが起動するたびに `audit.lifecycle/start` が記録されます。停止イベントはありません。シャットダウン、クラッシュ、または
+監査ログの無効化は、その後の開始イベントまでイベントが存在しない期間として現れます。
 
-## 保存 {#storage}
+## SIEM にエクスポートする <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-イベントは Semaphore のデータベースに保存され、削除されることはありません。このバージョンには保存期間の設定が
-ありません。インストールでのログインと変更の数に合わせて、データベースのサイズを計画してください。
+Semaphore Pro は、正常に取得されたイベントを rsyslog や Vector などの既存の TLS Syslog レシーバーに送信できます。
+レシーバーはイベントを保存するか、SIEM に転送できます。
 
-## コンプライアンスとの対応 {#compliance}
+開始する前に、次のものを用意します。
 
-Semaphore はこれらの管理策に必要なイベントを記録します。Semaphore だけでインストールが準拠状態になるわけでは
-ありません。
+- レシーバーのホスト名とポート
+- `security-syslog` などの固定の送信先 ID
+- レシーバー証明書に署名した CA の証明書 (Semaphore ホストですでに信頼されていない CA の場合)
 
-| 要件 | 対応するイベント | 状況 |
-| --- | --- | --- |
-| PCI DSS 10.2.1.1 機密データへのアクセス (相当: シークレット) | `iam.mfa/view_qr` | 利用可能 |
-| PCI DSS 10.2.1.1 機密データへのアクセス (相当: シークレット) | `resource.project_backup/export` | 予定 |
-| PCI DSS 10.2.1.2 管理者による操作 / ISO 27002 8.15 特権の使用 | `iam.*`, `system.*` | 利用可能 |
-| PCI DSS 10.2.1.2 管理者による操作 / ISO 27002 8.15 特権の使用 | `resource.*`, `secret.*` | 予定 |
-| PCI DSS 10.2.1.2 管理者による操作 / ISO 27002 8.15 特権の使用 | `runner.*`, `task.control`, `task.history` | 予定 |
-| PCI DSS 10.2.1.3 監査ログへのアクセス | 該当なし: Semaphore は監査証跡へのアクセスを提供しません。 | — |
-| PCI DSS 10.2.1.4 無効な論理アクセスの試み / ISO 拒否されたアクセスの試み | `auth.login` failure, `auth.mfa` failure, `auth.api_token/reject`, `auth.authorization/deny`, `auth.csrf/block` | 利用可能 |
-| PCI DSS 10.2.1.4 無効な論理アクセスの試み / ISO 拒否されたアクセスの試み | `runner.lifecycle/register` failure | 予定 |
-| PCI DSS 10.2.1.5 識別および認証の資格情報の変更 | `iam.user*`, `iam.mfa`, `iam.api_token`, `iam.external_identity`, `iam.membership`, `iam.*role*` | 利用可能 |
-| PCI DSS 10.2.1.5 識別および認証の資格情報の変更 | `runner.credential` | 予定 |
-| PCI DSS 10.2.1.6 監査ログの開始、停止、一時停止 / ISO セキュリティシステムの有効化 | `audit.lifecycle/start`。停止はその前の空白として現れます | 利用可能 |
-| PCI DSS 10.2.1.7 システムレベルのオブジェクトの作成と削除 | `resource.*` create/delete | 予定 |
-| PCI DSS 10.2.1.7 システムレベルのオブジェクトの作成と削除 | `runner.lifecycle` create/delete | 予定 |
-| PCI DSS 10.2.2 必須フィールド | `actor`、`event_code` と `action`、`timestamp`、`outcome`、`source` または `node_id`、`target` または `scope` | 利用可能 |
-| PCI DSS 10.3.3 中央ログサーバーへの迅速なバックアップ | Syslog+TLS による SIEM へのエクスポート | 利用可能 |
-| PCI DSS 10.3.3 中央ログサーバーへの迅速なバックアップ | Splunk HEC による SIEM へのエクスポート | 予定 |
+`config.json` に `audit.syslog` を追加します。
 
-予定のイベントは、このバージョンでは記録されません。
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu",
+    "syslog": {
+      "id": "security-syslog",
+      "address": "siem.example.com:6514",
+      "ca_file": "/etc/semaphore/siem-ca.pem",
+      "server_name": "siem.example.com",
+      "timeout": "10s"
+    }
+  }
+}
+```
 
-## このバージョンで記録されないもの {#not-recorded}
+または、環境変数を使用します。
 
-- サーバー上で `semaphore` コマンドを使って行った操作 (`user add`、`user token` など)。これらはデータベースを直接
-  変更し、実行できる人は監査テーブルも変更できます。
-- ライセンスの削除、アプリの実行時設定、HA のタスク状態のクリア、Terraform インベントリのエイリアス、
-  ワークフローの実行、プロジェクトへの招待。これらにはまだ監査イベントがありません。
+```bash
+SEMAPHORE_AUDIT_SYSLOG_ID=security-syslog
+SEMAPHORE_AUDIT_SYSLOG_ADDRESS=siem.example.com:6514
+SEMAPHORE_AUDIT_SYSLOG_CA_FILE=/etc/semaphore/siem-ca.pem
+SEMAPHORE_AUDIT_SYSLOG_SERVER_NAME=siem.example.com
+SEMAPHORE_AUDIT_SYSLOG_TIMEOUT=10s
+```
 
-## SIEM へのエクスポート <FeatureState feature="audit-siem-export" /> {#siem-export}
+`id` と `address` は必須です。レシーバーのアドレスや証明書を変更するときも同じ ID を維持すると、Semaphore は保存された位置から
+再開します。新しい ID は、その送信先が初期化された後に記録されたイベントから開始します。その時点ですでに保存されていたイベントは
+送信されません。
 
-Semaphore Pro は TLS 付きの Syslog で監査ログを SIEM に送信します。SIEM ごとにログ内の位置を保持するため、
-SIEM に到達できない間に記録されたイベントは、SIEM が復帰したときに送信されます。手順については
-[監査ログを SIEM に送信する](/admin-guide/audit-log-siem)を参照してください。
+`ca_file` はシステムの信頼ストアに証明書を追加します。`server_name` はレシーバー証明書で検証するホスト名を上書きします。
+Semaphore は TLS 1.2 以降を必要とし、常にサーバー証明書を検証します。この接続では、検証の無効化やクライアント証明書の使用は
+サポートされていません。
+
+Semaphore を再起動します。送信先の設定が無効な場合や CA ファイルを読み取れない場合、Semaphore は起動しません。
+
+### 配信を確認する {#verify-siem-delivery}
+
+再起動後、レシーバーで新しいイベントを見つけ、次の内容を確認します。
+
+- `event_code` が `audit.lifecycle` である
+- `action` が `start` である
+- `outcome` が `success` である
+- `instance_id` が設定したインストール名と一致する
+- `metadata.destinations` に送信先 ID が含まれる
+
+### 配信の動作 {#delivery}
+
+- レシーバーを利用できない場合、Semaphore は取得したイベントをローカルに保持し、レシーバーが復旧したときに再試行します。
+  ユーザーリクエストは通常どおり続行されます。
+- Syslog の配信はベストエフォートです。Semaphore に通知されずに切断された接続に書き込まれたイベントは失われる可能性があります。
+- ネットワークエラー、再起動、HA フェイルオーバーによって重複して配信されることがあります。`event_id` で重複を排除し、`seq` で
+  イベントを並べ替えてください。
+- [HA インストール](/admin-guide/ha)では、通常、一度に 1 つのノードが送信先へ送信します。Redis を利用できない場合、共有データベースへの
+  取得は続行されますが、エクスポートは一時停止します。
+
+Semaphore は TLS とオクテットカウント方式のフレーミングを使用して RFC 5424 メッセージを送信します。メッセージ本文には監査イベントの
+JSON が含まれます。`HOSTNAME` は HA ノード ID、単一ノードではインスタンス ID です。`MSGID` は `event_code` です。
+
+### rsyslog レシーバーの例 {#rsyslog}
+
+次の rsyslog 設定フラグメントは TLS 接続を受け入れ、1 行につき 1 つのイベント JSON オブジェクトを書き込みます。
+
+```text
+global(
+  DefaultNetstreamDriver="gtls"
+  DefaultNetstreamDriverCAFile="/etc/rsyslog.d/ca.pem"
+  DefaultNetstreamDriverCertFile="/etc/rsyslog.d/cert.pem"
+  DefaultNetstreamDriverKeyFile="/etc/rsyslog.d/key.pem"
+)
+
+module(load="imtcp" StreamDriver.Name="gtls" StreamDriver.Mode="1" StreamDriver.AuthMode="anon")
+input(type="imtcp" port="6514" ruleset="semaphore-audit")
+
+template(name="semaphore-audit-json" type="string" string="%msg%\n")
+
+ruleset(name="semaphore-audit") {
+  action(type="omfile" file="/var/log/semaphore-audit.json" template="semaphore-audit-json")
+}
+```
+
+### Vector レシーバーの例 {#vector}
+
+次の Vector 設定は TLS 接続を受け入れ、イベント JSON を解析してファイルに書き込みます。
+
+```toml
+[sources.semaphore_audit]
+type = "syslog"
+mode = "tcp"
+address = "0.0.0.0:6514"
+tls.enabled = true
+tls.crt_file = "/etc/vector/cert.pem"
+tls.key_file = "/etc/vector/key.pem"
+
+[transforms.semaphore_audit_event]
+type = "remap"
+inputs = ["semaphore_audit"]
+source = ". = parse_json!(.message)"
+
+[sinks.semaphore_audit_file]
+type = "file"
+inputs = ["semaphore_audit_event"]
+path = "/var/log/semaphore-audit.json"
+encoding.codec = "json"
+```
+
+### エクスポートのトラブルシューティング {#troubleshoot-export}
+
+- Semaphore が起動しない場合は、`audit.syslog.id` と `audit.syslog.address` の両方が設定されていること、および CA ファイルに
+  読み取り可能な PEM 証明書が含まれていることを確認します。
+- TLS が失敗する場合は、レシーバー証明書が `server_name` に対して有効であり、システムまたは設定済みの CA まで証明書チェーンを
+  検証できることを確認します。
+- イベントがまだ到着していない場合は、Semaphore のサーバーログとレシーバーの取り込みログを確認します。エクスポートは失敗後に
+  遅延を挟んで再試行します。
+- イベントが 2 回表示される場合は、`event_id` で重複を排除します。一部の再試行やフェイルオーバーの後には重複が発生します。
+
+## 監査対象外の操作 {#not-recorded}
+
+`semaphore` コマンドはデータベースを直接変更するため、`user add` や `user token` などのサーバー側の CLI 操作は記録されません。
+サーバーとデータベースへのアクセスは個別に制御する必要があります。
+
+このリリースでは、ライセンスの削除、アプリの実行時設定、HA のタスク状態のクリア、Terraform インベントリのエイリアス、
+ワークフローの実行、プロジェクトへの招待についても監査イベントがありません。
+[イベントカタログ](/reference/audit-events)には、今後のリリースで予定されているイベントが示されています。
 
 ## 次のステップ {#whats-next}
 
-- [監査ログを SIEM に送信する](/admin-guide/audit-log-siem) — Syslog+TLS でイベントをエクスポートします。
-- [監査イベント](/reference/audit-events) — 各イベントの結果、理由、メタデータ。
-- [設定](/reference/configuration) — すべての `audit.*` オプション。
+- [監査イベント](/reference/audit-events) — イベントのフィールド、利用可能なイベントと予定されているイベント、コンプライアンスの対応範囲。
+- [設定オプション](/reference/configuration#audit-log) — すべての `audit.*` オプションと環境変数。
+- [ログ](/admin-guide/logs) — サーバーログ、アクティビティログ、タスクログ。

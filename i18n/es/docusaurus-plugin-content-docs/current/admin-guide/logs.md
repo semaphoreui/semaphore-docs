@@ -179,7 +179,7 @@ Reinicie el servicio de Semaphore después de cambiar estos valores para que se 
 ## Integración con SIEM {#siem-integration}
 
 Las acciones relevantes para la seguridad (inicios de sesión, MFA, cambios de usuarios y permisos, tokens de API, ajustes del sistema) se registran en el [registro de auditoría](/admin-guide/audit-log), que Semaphore Pro puede
-[enviar a un SIEM](/admin-guide/audit-log-siem) mediante Syslog+TLS. El registro de actividad anterior es un feed para los usuarios,
+[enviar a un SIEM](/admin-guide/audit-log#siem-export) mediante Syslog+TLS. El registro de actividad anterior es un feed para los usuarios,
 no un registro de auditoría.
 
 ## Resumen {#summary}
@@ -187,5 +187,6 @@ no un registro de auditoría.
 - **Registro del servidor:** se escribe en stdout; puede verse con `journalctl` si se ejecuta bajo systemd.  
 - **Registro de actividad y tareas:** registra todas las acciones de usuario. Opcionalmente, **Pro 2.10+** puede escribirlos en un archivo.  
 - **Historial de tareas:** almacena los registros de ejecución de tareas en tiempo real e históricos. La retención se puede configurar por plantilla.
+- **Registro de auditoría:** registra las acciones de autenticación y administración admitidas para las investigaciones de seguridad.
 
 Seguir estas pautas garantiza una visibilidad adecuada de las operaciones de Semaphore UI, a la vez que se controla el uso de almacenamiento y la retención de registros.

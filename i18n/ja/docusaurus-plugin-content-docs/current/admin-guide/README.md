@@ -41,6 +41,7 @@ SQLite、MySQL、または PostgreSQL に保存し、認証情報は暗号化し
 | [API](/reference/api) | トークンによる認証と、プログラムからの Semaphore の操作です。 |
 | [CI/CD 連携](/admin-guide/cicd) | 外部のパイプラインから Semaphore のタスクを開始します。 |
 | [ログ](/admin-guide/logs) | サーバーログ、タスクログ、およびそれらの外部への転送です。 |
+| [監査ログ](/admin-guide/audit-log) | セキュリティイベント、ローカルでの監査イベントの取得、Pro での SIEM へのエクスポートです。 |
 | [メトリクス](/admin-guide/metrics) | Prometheus のエンドポイントと、そこで公開されるメトリクスです。 |
 | [通知](/admin-guide/notifications) | アラートの配信チャンネルです。メール、Telegram、Slack などがあります。 |
 | [ライセンス](/admin-guide/license) | Pro または Enterprise のサブスクリプションを有効化します。 |

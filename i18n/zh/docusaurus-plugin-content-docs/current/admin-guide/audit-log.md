@@ -1,71 +1,89 @@
 ---
 title: 审计日志
-description: Semaphore 为登录、MFA、用户、权限、API 令牌和设置记录的安全审计日志,以及如何开启它。
+description: 启用安全审计日志，了解其记录内容，并通过带 TLS 的 Syslog 将审计事件从 Semaphore Pro 发送到 SIEM。
 ---
 
 # 审计日志
 
-审计日志是一条安全审计追踪:谁在什么地方、对哪个对象做了什么、结果如何。安全分析师和合规团队会阅读它,
-通常是在 SIEM 中。每个事件都有稳定且有文档的结构,因此分析师无需了解 Semaphore 的内部实现就能编写检测规则。
+审计日志记录与安全相关的活动：谁执行了操作、执行了什么操作、影响了哪个对象、
+请求来自何处，以及操作是否成功。运维人员使用它调查变更，安全团队则利用其记录在案的事件格式
+制定检测规则并提供合规证据。
 
-审计日志与[活动日志](/admin-guide/logs)是分开的。活动日志是面向项目用户的动态。审计日志是给检查系统是否被正确
-使用的人看的追踪。
+Semaphore Community 支持审计事件的采集和本地存储。Semaphore Pro 还可以将采集到的
+事件发送到安全信息和事件管理（SIEM）系统。
 
-## 工作原理 {#overview}
+## 与其他日志的区别 {#log-types}
 
-开启审计日志后,Semaphore 会为通过 Web 界面或 API 发起的每个与安全相关的操作记录一个事件:登录和登出、MFA
-校验、用户、项目成员、角色和权限的变更、API 令牌以及系统设置。被拒绝的请求也会被记录:登录失败、未知或已过期
-的 API 令牌、被拒绝的权限、被拦截的跨站请求。
+| 日志 | 用途 |
+| --- | --- |
+| 服务器日志 | 诊断 Semaphore 的启动、配置和运行时错误。 |
+| 活动日志 | 向项目用户展示项目活动动态。 |
+| 任务日志和历史记录 | 查看任务执行情况、状态和输出。 |
+| 审计日志 | 调查整个安装中的身份验证和管理操作。 |
 
-事件保存在 Semaphore 的数据库中。Semaphore Pro 可以把它们发送到 SIEM,请参阅[导出到 SIEM](#siem-export)。
+审计日志独立于[活动日志](/admin-guide/logs#activity-log)。启用或导出其中一种日志
+不会启用或导出另一种日志。
 
-## 事件结构 {#event-schema}
+## 记录的内容 {#recorded-events}
 
-每个事件都是一个字段相同的 JSON 对象。事件列表及其结果、原因和元数据,请参阅
+当前版本会记录支持的身份验证和身份管理事件，包括：
+
+- 成功和失败的登录、退出及 TOTP 验证；
+- 被拒绝的 API 令牌、被拒绝的权限和被阻止的跨站请求；
+- 对用户、密码、TOTP 注册、外部身份和 API 令牌的更改；
+- 对项目成员、角色和模板权限的更改；
+- 对系统设置和 Pro 许可证激活的更改；
+- 随服务器启动而开始的审计采集。
+
+成功登录会在用户完成包括 TOTP 在内的所有必要身份验证步骤后记录。
+有关所有可用事件以及计划在后续版本中提供的事件，请参阅
 [审计事件](/reference/audit-events)。
 
-| 字段 | 说明 |
-| --- | --- |
-| `event_id` | 事件的唯一 ID。在 SIEM 中用它去重。 |
-| `seq` | 没有空缺、随每个事件递增的序号。用它对事件排序。 |
-| `timestamp` | 事件时间(UTC)。 |
-| `schema_version` | 本结构的版本。只有在字段被重命名、删除或改变类型时才会变化。 |
-| `category` | `auth`、`iam`、`resource`、`secret`、`task`、`runner`、`system` 或 `audit`。 |
-| `event_code` | 事件涉及的内容,例如 `iam.api_token`。 |
-| `type` | 变更类型:`creation`、`change`、`deletion`、`access`、`start`、`end`、`denied` 或 `info`。 |
-| `action` | 执行的操作,例如 `create`。 |
-| `outcome` | `success` 或 `failure`。 |
-| `reason` | 操作失败的原因,取自每个事件固定的列表。成功时为空。 |
-| `actor` | 执行者:其 `type`(`user`、`anonymous`、`system`、`runner`、`integration`)、`id` 和 `name`。对于用户,还包括 `auth`(`session` 或 `api_token`);对于 API 令牌,还包括 `token_fingerprint`。 |
-| `source` | 对于 Web 界面和 API 的请求:客户端的 `ip` 和 `user_agent`。 |
-| `target` | 操作对象:其 `type`、`id` 和 `name`。 |
-| `scope` | 项目内事件的 `project_id`。 |
-| `request_id` | HTTP 请求的 ID。Semaphore 也会在响应头 `X-Request-ID` 中返回它。 |
-| `instance_id` | 此 Semaphore 安装的名称,来自 `audit.instance_id`。 |
-| `node_id` | 开启[高可用](/admin-guide/ha)时记录该事件的节点。 |
-| `metadata` | 取决于事件的额外信息。 |
+## 事件中排除的敏感数据 {#sensitive-data}
 
-`timestamp` 是数据库时间,精确到微秒,在 SQLite 上精确到毫秒。请按 `seq` 对事件排序:两个事件的时间可能相同,
-但 `seq` 永远不会相同。
+审计事件会标识操作，但不会复制操作所用的凭据或机密载荷。事件不包含密码、
+验证码、TOTP 密钥和二维码、恢复码、会话 Cookie、原始令牌、OAuth 授权码和声明、
+私钥、密码短语、机密值、环境变量值和问卷值、Webhook 正文、任务输出及
+仓库 URL。
 
-在 MySQL 上,`audit_event` 表的 `created` 列使用连接选项 `loc` 的时区,默认为 UTC。
-每个事件的 `timestamp` 始终为 UTC。
+API 令牌通过指纹而非令牌值来标识。登录失败事件会包含提交的
+登录标识符，并截断至 64 字节。如果用户使用电子邮件地址登录，该标识符可能包含
+电子邮件地址。
 
-服务器每次启动都会记录动作为 `start` 的 `audit.lifecycle`。没有停止事件:停止、崩溃或关闭审计日志都表现为
-下一个 `start` 之前的时间空缺。
+## 启用审计日志 {#enable}
 
-## 永远不会记录的内容 {#never-recorded}
+为安装选择一个稳定的名称，然后在 `config.json` 中设置 `audit.enabled` 和
+`audit.instance_id`：
 
-审计日志永远不包含密码、一次性验证码、TOTP 密钥和二维码、恢复码、会话 Cookie、令牌、OAuth 授权码和声明、
-私钥、密码短语、密钥值、环境变量和问卷的值、Webhook 正文、任务输出、电子邮件地址或 URL。API 令牌只通过其
-指纹识别:其 SHA-256 哈希的前 16 个十六进制字符。
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu"
+  }
+}
+```
 
-用户 ID 和用户名用于识别执行者。登录失败时会记录输入的登录名,截断为 64 字节,因为调查失败的登录需要它。
+实例 ID 必须包含 1 到 255 个不带空格的可打印 ASCII 字符。它会出现在每个事件中，
+并让 SIEM 能够区分多个 Semaphore 安装。
 
-## 开启审计日志 {#enable}
+也可以使用环境变量：
 
-设置 `audit.enabled`,并在 `audit.instance_id` 中为此安装命名。名称由 1 到 255 个不含空格的可打印 ASCII
-字符组成,会出现在每个事件中。
+```bash
+SEMAPHORE_AUDIT_ENABLED=true
+SEMAPHORE_AUDIT_INSTANCE_ID=prod-eu
+```
+
+重启 Semaphore 以应用更改。重启后才会开始采集；此前的活动不会添加到
+审计日志中。第一个事件是操作为 `start` 的 `audit.lifecycle`。
+
+有关所有选项和环境变量，请参阅
+[配置选项](/reference/configuration#audit-log)。
+
+## 记录代理后的客户端地址 {#trusted-proxies}
+
+默认情况下，HTTP 审计事件会记录直接连接到 Semaphore 的地址。如果该地址
+属于反向代理，请仅将代理网络添加到 `audit.trusted_proxy_cidrs`：
 
 ```json
 {
@@ -77,73 +95,170 @@ description: Semaphore 为登录、MFA、用户、权限、API 令牌和设置�
 }
 ```
 
-或使用环境变量:
+或者设置：
 
 ```bash
-SEMAPHORE_AUDIT_ENABLED=true
-SEMAPHORE_AUDIT_INSTANCE_ID=prod-eu
 SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 ```
 
-重启 Semaphore 使更改生效。所有选项请参阅[配置](/reference/configuration)。
+Semaphore 仅信任来自这些网络的 `X-Forwarded-For` 和 `X-Real-IP`。不要添加客户端网络：
+受信任网络中的客户端可以自行指定其事件中记录的源地址。当多个代理
+追加 `X-Forwarded-For` 时，Semaphore 会记录最右侧不属于受信任代理的地址。
 
-## 反向代理后的客户端地址 {#trusted-proxies}
+## 存储和限制 {#storage}
 
-在反向代理之后,Semaphore 的直接对端是代理,客户端地址来自 `X-Forwarded-For` 或 `X-Real-IP` 请求头。只有当
-直接对端位于 `audit.trusted_proxy_cidrs` 中时,Semaphore 才会读取这些请求头。否则它记录对端的地址,因此客户端
-无法伪造自己的地址。
+Semaphore 将审计事件存储在其数据库中。当前版本没有审计查看器、审计 API、自动
+保留或清理功能。请监控数据库增长情况，并将审计数据纳入数据库备份策略。
 
-`audit.trusted_proxy_cidrs` 中只列出你的反向代理,不要列出客户端网络。位于受信任范围内的客户端可以在
-`X-Forwarded-For` 中填入任何地址。
+审计记录不会阻止正在记录的操作。如果事件存储失败，Semaphore 会向服务器日志写入
+错误并继续执行原操作。本地记录与 Semaphore 的其他数据受相同的
+数据库访问控制保护；它们并非不可变，也不具备篡改取证能力。
 
-记录的地址是 `X-Forwarded-For` 中最右边的、不属于受信任代理的地址。
-只有在没有 `X-Forwarded-For` 时才使用 `X-Real-IP`,而且它只能有一个值。
-
-## 存储 {#storage}
-
-事件保存在 Semaphore 的数据库中,永远不会被删除:此版本没有保留期限。请根据安装中的登录和变更数量规划数据库
-大小。
-
-## 合规映射 {#compliance}
-
-Semaphore 会记录这些控制项所需的事件。它本身并不能让你的安装达到合规。
-
-| 要求 | 覆盖方式 | 状态 |
-| --- | --- | --- |
-| PCI DSS 10.2.1.1 对敏感数据的访问(类比:密钥) | `iam.mfa/view_qr` | 可用 |
-| PCI DSS 10.2.1.1 对敏感数据的访问(类比:密钥) | `resource.project_backup/export` | 计划中 |
-| PCI DSS 10.2.1.2 管理员的操作 / ISO 27002 8.15 特权的使用 | `iam.*`, `system.*` | 可用 |
-| PCI DSS 10.2.1.2 管理员的操作 / ISO 27002 8.15 特权的使用 | `resource.*`, `secret.*` | 计划中 |
-| PCI DSS 10.2.1.2 管理员的操作 / ISO 27002 8.15 特权的使用 | `runner.*`, `task.control`, `task.history` | 计划中 |
-| PCI DSS 10.2.1.3 对审计日志的访问 | 不适用:Semaphore 不提供对审计追踪的访问。 | — |
-| PCI DSS 10.2.1.4 无效的逻辑访问尝试 / ISO 被拒绝的访问尝试 | `auth.login` failure, `auth.mfa` failure, `auth.api_token/reject`, `auth.authorization/deny`, `auth.csrf/block` | 可用 |
-| PCI DSS 10.2.1.4 无效的逻辑访问尝试 / ISO 被拒绝的访问尝试 | `runner.lifecycle/register` failure | 计划中 |
-| PCI DSS 10.2.1.5 身份识别和认证凭据的变更 | `iam.user*`, `iam.mfa`, `iam.api_token`, `iam.external_identity`, `iam.membership`, `iam.*role*` | 可用 |
-| PCI DSS 10.2.1.5 身份识别和认证凭据的变更 | `runner.credential` | 计划中 |
-| PCI DSS 10.2.1.6 审计日志的启动、停止和暂停 / ISO 安全系统的激活 | `audit.lifecycle/start`;停止表现为其之前的空缺 | 可用 |
-| PCI DSS 10.2.1.7 系统级对象的创建和删除 | `resource.*` create/delete | 计划中 |
-| PCI DSS 10.2.1.7 系统级对象的创建和删除 | `runner.lifecycle` create/delete | 计划中 |
-| PCI DSS 10.2.2 必需字段 | `actor`、`event_code` 和 `action`、`timestamp`、`outcome`、`source` 或 `node_id`、`target` 或 `scope` | 可用 |
-| PCI DSS 10.3.3 及时备份到中央日志服务器 | 通过 Syslog+TLS 导出到 SIEM | 可用 |
-| PCI DSS 10.3.3 及时备份到中央日志服务器 | 通过 Splunk HEC 导出到 SIEM | 计划中 |
-
-计划中的事件在此版本中不会被记录。
-
-## 此版本不记录的内容 {#not-recorded}
-
-- 在服务器上用 `semaphore` 命令执行的操作,例如 `user add` 或 `user token`。它们直接修改数据库,而能运行
-  它们的人也能修改审计表。
-- 移除许可证、应用运行时设置、清除 HA 任务状态、Terraform 清单别名、工作流运行以及项目邀请。它们目前还没有
-  审计事件。
+服务器每次启动都会记录 `audit.lifecycle/start`。没有停止事件。关闭、崩溃或禁用
+审计日志时，会表现为后续启动事件之前的一段事件空白期。
 
 ## 导出到 SIEM <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-Semaphore Pro 通过带 TLS 的 Syslog 将审计日志发送到 SIEM。它会为 SIEM 保存自己在日志中的位置,因此在 SIEM
-不可达期间记录的事件会在 SIEM 恢复后发送。具体步骤请参阅
-[将审计日志发送到 SIEM](/admin-guide/audit-log-siem)。
+Semaphore Pro 可以将成功采集的事件发送到现有的 TLS Syslog 接收端，例如 rsyslog 或
+Vector。接收端可以存储这些事件，也可以将其转发到 SIEM。
+
+开始之前，请准备：
+
+- 接收端的主机名和端口；
+- 稳定的目标 ID，例如 `security-syslog`；
+- 签署接收端证书的 CA 证书（如果 Semaphore 主机尚不信任该 CA）。
+
+在 `config.json` 中添加 `audit.syslog`：
+
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu",
+    "syslog": {
+      "id": "security-syslog",
+      "address": "siem.example.com:6514",
+      "ca_file": "/etc/semaphore/siem-ca.pem",
+      "server_name": "siem.example.com",
+      "timeout": "10s"
+    }
+  }
+}
+```
+
+也可以使用环境变量：
+
+```bash
+SEMAPHORE_AUDIT_SYSLOG_ID=security-syslog
+SEMAPHORE_AUDIT_SYSLOG_ADDRESS=siem.example.com:6514
+SEMAPHORE_AUDIT_SYSLOG_CA_FILE=/etc/semaphore/siem-ca.pem
+SEMAPHORE_AUDIT_SYSLOG_SERVER_NAME=siem.example.com
+SEMAPHORE_AUDIT_SYSLOG_TIMEOUT=10s
+```
+
+`id` 和 `address` 为必填项。更改接收端地址或证书时，请保持 ID 不变，以便
+Semaphore 从保存的位置继续发送。新 ID 会从目标初始化之后记录的事件开始；
+届时已存储的事件不会发送到该目标。
+
+`ca_file` 会将证书添加到系统信任存储区。`server_name` 会覆盖接收端证书中接受检查的
+主机名。Semaphore 要求使用 TLS 1.2 或更高版本，并始终验证服务器证书。它
+不支持禁用验证，也不支持为此连接使用客户端证书。
+
+重启 Semaphore。无效的目标设置或无法读取的 CA 文件会导致 Semaphore 无法启动。
+
+### 验证投递 {#verify-siem-delivery}
+
+重启后，在接收端找到新事件并确认：
+
+- `event_code` 为 `audit.lifecycle`；
+- `action` 为 `start`；
+- `outcome` 为 `success`；
+- `instance_id` 与配置的安装名称一致；
+- `metadata.destinations` 包含目标 ID。
+
+### 投递行为 {#delivery}
+
+- 如果接收端不可用，Semaphore 会将采集的事件保留在本地，并在接收端恢复后重试
+  发送。用户请求会继续正常处理。
+- Syslog 投递采用尽力而为方式。写入某个连接的事件，如果该连接在未通知 Semaphore 的情况下
+  失败，则该事件可能会丢失。
+- 网络错误、重启和 HA 故障转移可能造成重复投递。请按
+  `event_id` 去重，并按 `seq` 排序事件。
+- 在[高可用安装](/admin-guide/ha)中，通常同一时间只有一个节点向一个目标发送数据。如果 Redis
+  不可用，导出会暂停，但共享数据库中的采集会继续进行。
+
+Semaphore 发送采用 TLS 和八位组计数分帧的 RFC 5424 消息。消息正文包含审计
+事件 JSON。`HOSTNAME` 是 HA 节点 ID，在单节点上则是实例 ID；`MSGID` 是 `event_code`。
+
+### rsyslog 接收端示例 {#rsyslog}
+
+以下 rsyslog 配置片段接受 TLS 连接，并将每个事件 JSON 对象写入单独一行：
+
+```text
+global(
+  DefaultNetstreamDriver="gtls"
+  DefaultNetstreamDriverCAFile="/etc/rsyslog.d/ca.pem"
+  DefaultNetstreamDriverCertFile="/etc/rsyslog.d/cert.pem"
+  DefaultNetstreamDriverKeyFile="/etc/rsyslog.d/key.pem"
+)
+
+module(load="imtcp" StreamDriver.Name="gtls" StreamDriver.Mode="1" StreamDriver.AuthMode="anon")
+input(type="imtcp" port="6514" ruleset="semaphore-audit")
+
+template(name="semaphore-audit-json" type="string" string="%msg%\n")
+
+ruleset(name="semaphore-audit") {
+  action(type="omfile" file="/var/log/semaphore-audit.json" template="semaphore-audit-json")
+}
+```
+
+### Vector 接收端示例 {#vector}
+
+以下 Vector 配置接受 TLS 连接、解析事件 JSON 并将其写入文件：
+
+```toml
+[sources.semaphore_audit]
+type = "syslog"
+mode = "tcp"
+address = "0.0.0.0:6514"
+tls.enabled = true
+tls.crt_file = "/etc/vector/cert.pem"
+tls.key_file = "/etc/vector/key.pem"
+
+[transforms.semaphore_audit_event]
+type = "remap"
+inputs = ["semaphore_audit"]
+source = ". = parse_json!(.message)"
+
+[sinks.semaphore_audit_file]
+type = "file"
+inputs = ["semaphore_audit_event"]
+path = "/var/log/semaphore-audit.json"
+encoding.codec = "json"
+```
+
+### 排查导出问题 {#troubleshoot-export}
+
+- 如果 Semaphore 无法启动，请检查是否同时设置了 `audit.syslog.id` 和 `audit.syslog.address`，
+  并确认 CA 文件包含可读取的 PEM 证书。
+- 如果 TLS 失败，请检查接收端证书对 `server_name` 是否有效，以及证书链是否可追溯到系统或
+  配置的 CA。
+- 如果事件尚未到达，请检查 Semaphore 服务器日志和接收端的接收日志。导出
+  失败后会延迟一段时间再重试。
+- 如果事件出现两次，请按 `event_id` 去重；某些重试和
+  故障转移后出现重复事件是预期行为。
+
+## 未覆盖审计的操作 {#not-recorded}
+
+`semaphore` 命令会直接更改数据库，因此服务器端 CLI 操作（如 `user add` 和
+`user token`）不会被记录。必须单独控制对服务器和数据库的访问。
+
+当前版本也不会为以下操作生成审计事件：移除许可证、更改应用运行时设置、清除 HA 任务状态、
+Terraform 清单别名、工作流运行或项目邀请。
+[事件目录](/reference/audit-events)会标明计划在后续版本中提供的事件。
 
 ## 后续步骤 {#whats-next}
 
-- [将审计日志发送到 SIEM](/admin-guide/audit-log-siem) — 通过 Syslog+TLS 导出事件。
-- [审计事件](/reference/audit-events) — 每个事件及其结果、原因和元数据。
-- [配置](/reference/configuration) — 所有 `audit.*` 选项。
+- [审计事件](/reference/audit-events) — 事件字段、可用和计划中的事件，以及合规覆盖范围。
+- [配置选项](/reference/configuration#audit-log) — 所有 `audit.*` 选项和环境变量。
+- [日志](/admin-guide/logs) — 服务器日志、活动日志和任务日志。

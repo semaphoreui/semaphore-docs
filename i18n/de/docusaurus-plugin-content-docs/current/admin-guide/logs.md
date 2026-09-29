@@ -179,7 +179,7 @@ Starten Sie den Semaphore-Dienst nach dem Ändern dieser Werte neu, damit das ne
 ## SIEM-Integration {#siem-integration}
 
 Sicherheitsrelevante Aktionen (Anmeldungen, MFA, Änderungen an Benutzern und Berechtigungen, API-Tokens, Systemeinstellungen) werden im [Audit-Log](/admin-guide/audit-log) erfasst, das Semaphore Pro über Syslog+TLS
-[an ein SIEM senden](/admin-guide/audit-log-siem) kann. Das Aktivitätsprotokoll oben ist ein Feed für Benutzer,
+[an ein SIEM senden](/admin-guide/audit-log#siem-export) kann. Das Aktivitätsprotokoll oben ist ein Feed für Benutzer,
 kein Audit-Trail.
 
 ## Zusammenfassung {#summary}
@@ -187,5 +187,6 @@ kein Audit-Trail.
 - **Serverprotokoll:** Wird nach stdout geschrieben; unter systemd über `journalctl` einsehbar.  
 - **Aktivitäts- und Task-Protokoll:** Erfasst alle Benutzeraktionen. Optional kann **Pro 2.10+** diese in eine Datei schreiben.  
 - **Task-Verlauf:** Speichert Echtzeit- und historische Task-Ausführungsprotokolle. Die Aufbewahrung ist pro Vorlage konfigurierbar.
+- **Audit-Protokoll:** Zeichnet unterstützte Authentifizierungs- und Verwaltungsaktionen für Sicherheitsuntersuchungen auf.
 
 Wenn Sie diese Richtlinien befolgen, haben Sie angemessene Einsicht in den Betrieb von Semaphore UI und behalten zugleich Speicherverbrauch und Protokollaufbewahrung unter Kontrolle.

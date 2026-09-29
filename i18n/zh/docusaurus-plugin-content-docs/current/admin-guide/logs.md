@@ -179,7 +179,7 @@ SEMAPHORE_SYSLOG_TAG=semaphore
 ## SIEM 集成 {#siem-integration}
 
 与安全相关的操作(登录、MFA、用户和权限变更、API 令牌、系统设置)会记录在[审计日志](/admin-guide/audit-log)中,Semaphore Pro 可以通过 Syslog+TLS
-[将其发送到 SIEM](/admin-guide/audit-log-siem)。上面的活动日志是面向用户的动态,
+[将其发送到 SIEM](/admin-guide/audit-log#siem-export)。上面的活动日志是面向用户的动态,
 不是审计追踪。
 
 ## 小结 {#summary}
@@ -187,5 +187,6 @@ SEMAPHORE_SYSLOG_TAG=semaphore
 - **服务器日志：** 写入 stdout；在 systemd 下运行时可通过 `journalctl` 查看。  
 - **活动日志和任务日志：** 跟踪所有用户操作。**Pro 2.10+** 可选择将其写入文件。  
 - **任务历史：** 存储实时和历史的任务执行日志。可按模板配置保留策略。
+- **审计日志：** 记录支持的身份验证和管理操作，以便进行安全调查。
 
 遵循这些指南可以确保您对 Semaphore UI 的运行情况有充分的可见性，同时控制存储使用量和日志保留。

@@ -1,74 +1,88 @@
 ---
 title: 감사 로그
-description: Semaphore가 로그인, MFA, 사용자, 권한, API 토큰, 설정에 대해 기록하는 보안 감사 로그와 이를 켜는 방법.
+description: 보안 감사 로그를 활성화하고 기록되는 내용을 이해하며 Semaphore Pro의 감사 이벤트를 TLS 기반 Syslog를 통해 SIEM으로 전송합니다.
 ---
 
 # 감사 로그
 
-감사 로그는 보안 감사 추적입니다. 누가, 어디에서, 어떤 객체에 무엇을 했고, 결과가 어땠는지를 기록합니다.
-보안 분석가와 규정 준수 담당자가 주로 SIEM에서 읽습니다. 모든 이벤트는 안정적이고 문서화된 스키마를 가지므로,
-분석가는 Semaphore 내부를 몰라도 탐지 규칙을 작성할 수 있습니다.
+감사 로그는 보안과 관련된 활동, 즉 누가 작업했는지, 무엇을 했는지, 어떤 객체에 영향을 주었는지,
+요청이 어디에서 왔는지, 성공했는지를 기록합니다. 운영자는 변경 사항을 조사하는 데 이 로그를 사용하고,
+보안 팀은 문서화된 이벤트 형식을 탐지 규칙과 규정 준수 증거에 활용합니다.
 
-감사 로그는 [활동 로그](/admin-guide/logs)와 별개입니다. 활동 로그는 프로젝트 사용자를 위한 피드입니다. 감사
-로그는 시스템이 올바르게 사용되는지 확인하는 사람들을 위한 추적입니다.
+감사 이벤트 캡처와 로컬 저장은 Semaphore Community에서 사용할 수 있습니다. Semaphore Pro에서는 캡처한
+이벤트를 보안 정보 및 이벤트 관리(SIEM) 시스템으로 전송할 수도 있습니다.
 
-## 동작 방식 {#overview}
+## 다른 로그와의 차이 {#log-types}
 
-감사 로그를 켜면, Semaphore는 웹 UI나 API를 통해 들어오는 보안 관련 작업마다 이벤트를 기록합니다. 로그인과
-로그아웃, MFA 확인, 사용자, 프로젝트 멤버, 역할, 권한의 변경, API 토큰, 시스템 설정입니다. 거부된 요청도
-기록됩니다. 로그인 실패, 알 수 없거나 만료된 API 토큰, 거부된 권한, 차단된 교차 사이트 요청입니다.
+| 로그 | 용도 |
+| --- | --- |
+| 서버 로그 | Semaphore의 시작, 구성 및 런타임 오류를 진단합니다. |
+| 활동 로그 | 프로젝트 사용자에게 프로젝트 활동 피드를 제공합니다. |
+| 작업 로그 및 이력 | 작업 실행, 상태 및 출력을 검토합니다. |
+| 감사 로그 | 설치 전반의 인증 및 관리 작업을 조사합니다. |
 
-이벤트는 Semaphore 데이터베이스에 저장됩니다. Semaphore Pro는 이를 SIEM으로 보낼 수 있습니다.
-[SIEM으로 내보내기](#siem-export)를 참고하세요.
+감사 로그는 [활동 로그](/admin-guide/logs#activity-log)와 별개입니다. 어느 한 로그를 활성화하거나 내보내도
+다른 로그가 활성화되거나 내보내지지는 않습니다.
 
-## 이벤트 스키마 {#event-schema}
+## 기록되는 내용 {#recorded-events}
 
-모든 이벤트는 같은 필드를 가진 JSON 객체입니다. 이벤트 목록과 각 이벤트의 결과, 이유, 메타데이터는
+현재 릴리스에서는 다음을 포함하여 지원되는 인증 및 ID 관리 이벤트를 기록합니다.
+
+- 로그인 성공 및 실패, 로그아웃, TOTP 확인
+- 거부된 API 토큰, 거부된 권한 및 차단된 교차 사이트 요청
+- 사용자, 비밀번호, TOTP 등록, 외부 ID 및 API 토큰 변경
+- 프로젝트 멤버십, 역할 및 템플릿 권한 변경
+- 시스템 설정 및 Pro 라이선스 활성화 변경
+- 서버와 함께 시작되는 감사 이벤트 캡처
+
+로그인 성공은 사용자가 TOTP를 포함한 필수 인증 단계를 모두 완료한 후 기록됩니다.
+사용 가능한 모든 이벤트와 이후 릴리스에 예정된 이벤트는
 [감사 이벤트](/reference/audit-events)를 참고하세요.
 
-| 필드 | 설명 |
-| --- | --- |
-| `event_id` | 이벤트의 고유 ID. SIEM에서 중복을 제거할 때 사용합니다. |
-| `seq` | 이벤트마다 증가하는, 빠진 번호가 없는 순번. 이벤트 정렬에 사용합니다. |
-| `timestamp` | 이벤트 시각(UTC). |
-| `schema_version` | 이 스키마의 버전. 필드 이름이 바뀌거나, 삭제되거나, 타입이 바뀔 때만 변경됩니다. |
-| `category` | `auth`, `iam`, `resource`, `secret`, `task`, `runner`, `system`, `audit` 중 하나. |
-| `event_code` | 이벤트의 대상. 예: `iam.api_token`. |
-| `type` | 변경 종류: `creation`, `change`, `deletion`, `access`, `start`, `end`, `denied`, `info`. |
-| `action` | 수행된 작업. 예: `create`. |
-| `outcome` | `success` 또는 `failure`. |
-| `reason` | 작업이 실패한 이유. 이벤트마다 정해진 목록에서 선택됩니다. 성공 시에는 비어 있습니다. |
-| `actor` | 작업한 주체: `type`(`user`, `anonymous`, `system`, `runner`, `integration`), `id`, `name`. 사용자인 경우 `auth`(`session` 또는 `api_token`)도, API 토큰인 경우 `token_fingerprint`도 포함합니다. |
-| `source` | 웹 UI와 API 요청의 경우: 클라이언트의 `ip`와 `user_agent`. |
-| `target` | 작업 대상 객체: `type`, `id`, `name`. |
-| `scope` | 프로젝트 안의 이벤트에 대한 `project_id`. |
-| `request_id` | HTTP 요청의 ID. Semaphore는 응답 헤더 `X-Request-ID`로도 반환합니다. |
-| `instance_id` | 이 Semaphore 설치의 이름. `audit.instance_id` 값입니다. |
-| `node_id` | [고가용성](/admin-guide/ha)이 켜져 있을 때 이벤트를 기록한 노드. |
-| `metadata` | 이벤트에 따라 달라지는 추가 정보. |
+## 이벤트에서 제외되는 민감한 데이터 {#sensitive-data}
 
-`timestamp`는 데이터베이스 시각이며 마이크로초 단위이고, SQLite에서는 밀리초 단위입니다. 이벤트는 `seq`로
-정렬하세요. 두 이벤트의 시각은 같을 수 있지만 `seq`는 절대 같지 않습니다.
+감사 이벤트는 자격 증명이나 비밀 페이로드를 복사하지 않고 작업을 식별합니다. 비밀번호,
+암호 코드, TOTP 비밀 및 QR 코드, 복구 코드, 세션 쿠키, 원시 토큰, OAuth 코드 및 클레임,
+개인 키, 암호 문구, 비밀 값, 환경 및 설문 값, 웹훅 본문, 작업 출력, 저장소 URL은 제외됩니다.
 
-MySQL에서 `audit_event` 테이블의 `created` 열은 연결 옵션 `loc`의 시간대를 사용하며, 기본값은 UTC입니다.
-모든 이벤트의 `timestamp`는 항상 UTC입니다.
+API 토큰은 값이 아닌 지문으로 식별됩니다. 로그인 실패 이벤트에는 제출된 로그인 식별자가
+64바이트로 잘려서 포함됩니다. 사용자가 이메일 주소로 로그인하는 경우 이 식별자에 이메일 주소가
+포함될 수 있습니다.
 
-서버가 시작될 때마다 액션이 `start`인 `audit.lifecycle`이 기록됩니다. 중지 이벤트는 없습니다. 중지, 장애,
-감사 로그 끄기는 다음 `start` 앞의 시간 공백으로 나타납니다.
+## 감사 로그 활성화 {#enable}
 
-## 절대 기록되지 않는 정보 {#never-recorded}
+설치에 사용할 안정적인 이름을 정한 다음 `config.json`에서 `audit.enabled`와 `audit.instance_id`를
+설정합니다.
 
-감사 로그에는 비밀번호, 일회용 코드, TOTP 시크릿과 QR 코드, 복구 코드, 세션 쿠키, 토큰, OAuth 코드와 클레임,
-개인 키, 암호 문구, 시크릿 값, 환경 변수와 설문 값, 웹훅 본문, 작업 출력, 이메일 주소, URL이 절대 포함되지
-않습니다. API 토큰은 지문, 즉 SHA-256 해시의 앞 16자리 16진수 문자로만 식별됩니다.
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu"
+  }
+}
+```
 
-사용자 ID와 사용자 이름으로 작업한 주체를 식별합니다. 로그인에 실패하면 입력된 로그인 이름을 64바이트로 잘라
-기록합니다. 실패한 로그인을 조사하는 데 필요하기 때문입니다.
+인스턴스 ID는 공백 없이 인쇄 가능한 ASCII 문자 1~255자로 구성해야 합니다. 모든 이벤트에 이 ID가
+표시되므로 SIEM에서 여러 Semaphore 설치를 구분할 수 있습니다.
 
-## 감사 로그 켜기 {#enable}
+환경 변수를 사용할 수도 있습니다.
 
-`audit.enabled`를 설정하고 `audit.instance_id`에 설치 이름을 지정합니다. 이름은 공백 없는 1~255자의 인쇄 가능한
-ASCII 문자이며, 모든 이벤트에 포함됩니다.
+```bash
+SEMAPHORE_AUDIT_ENABLED=true
+SEMAPHORE_AUDIT_INSTANCE_ID=prod-eu
+```
+
+변경 사항을 적용하려면 Semaphore를 다시 시작합니다. 다시 시작한 후부터 캡처가 시작되며 이전 활동은
+감사 로그에 추가되지 않습니다. 첫 번째 이벤트는 작업이 `start`인 `audit.lifecycle`입니다.
+
+모든 옵션과 환경 변수는
+[구성 옵션](/reference/configuration#audit-log)을 참고하세요.
+
+## 프록시 뒤의 클라이언트 주소 기록 {#trusted-proxies}
+
+기본적으로 HTTP 감사 이벤트에는 Semaphore에 직접 연결한 주소가 기록됩니다. 해당 주소가
+리버스 프록시인 경우 프록시 네트워크만 `audit.trusted_proxy_cidrs`에 추가합니다.
 
 ```json
 {
@@ -80,73 +94,174 @@ ASCII 문자이며, 모든 이벤트에 포함됩니다.
 }
 ```
 
-또는 환경 변수를 사용합니다.
+또는 다음과 같이 설정합니다.
 
 ```bash
-SEMAPHORE_AUDIT_ENABLED=true
-SEMAPHORE_AUDIT_INSTANCE_ID=prod-eu
 SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 ```
 
-변경을 적용하려면 Semaphore를 다시 시작하세요. 모든 옵션은 [설정](/reference/configuration)을 참고하세요.
+Semaphore는 이 네트워크에서 들어온 `X-Forwarded-For`와 `X-Real-IP`만 신뢰합니다. 클라이언트 네트워크는
+추가하지 마세요. 신뢰할 수 있는 네트워크의 클라이언트가 이벤트에 기록될 원본 주소를 임의로 지정할 수
+있습니다. 여러 프록시가 `X-Forwarded-For`에 주소를 추가하는 경우 Semaphore는 신뢰할 수 있는 프록시가
+아닌 주소 중 가장 오른쪽 주소를 기록합니다.
 
-## 리버스 프록시 뒤의 클라이언트 주소 {#trusted-proxies}
+## 저장 및 제한 사항 {#storage}
 
-리버스 프록시 뒤에서는 Semaphore의 직접 연결 상대가 프록시이고, 클라이언트 주소는 `X-Forwarded-For` 또는
-`X-Real-IP` 헤더에서 옵니다. Semaphore는 직접 연결 상대가 `audit.trusted_proxy_cidrs`에 포함될 때만 이 헤더를
-읽습니다. 그렇지 않으면 연결 상대의 주소를 기록하므로, 클라이언트가 자신의 주소를 위조할 수 없습니다.
+Semaphore는 감사 이벤트를 데이터베이스에 저장합니다. 이 릴리스에는 감사 로그 뷰어, 감사 API, 자동
+보존 또는 정리 기능이 없습니다. 데이터베이스 증가량을 모니터링하고 데이터베이스 백업 정책에 감사 데이터를
+포함하세요.
 
-`audit.trusted_proxy_cidrs`에는 리버스 프록시만 지정하고, 클라이언트 네트워크는 절대 지정하지 마세요. 신뢰 범위
-안의 클라이언트는 `X-Forwarded-For`에 어떤 주소든 넣을 수 있습니다.
+감사 기록은 기록 대상 작업을 차단하지 않습니다. 이벤트 저장에 실패하면 Semaphore는 서버 로그에 오류를
+기록하고 원래 작업을 계속합니다. 로컬 레코드는 Semaphore의 다른 데이터와 동일한 데이터베이스 접근 제어로
+보호되며, 변경 불가능하거나 변조를 확인할 수 있는 형태는 아닙니다.
 
-기록되는 주소는 `X-Forwarded-For`에서 신뢰된 프록시가 아닌 가장 오른쪽 주소입니다.
-`X-Real-IP`는 `X-Forwarded-For`가 없을 때만, 그리고 값이 하나일 때만 사용됩니다.
-
-## 저장 {#storage}
-
-이벤트는 Semaphore 데이터베이스에 저장되며 삭제되지 않습니다. 이 버전에는 보존 기간이 없습니다. 설치의 로그인과
-변경 횟수에 맞춰 데이터베이스 크기를 계획하세요.
-
-## 규정 준수 매핑 {#compliance}
-
-Semaphore는 이러한 통제에 필요한 이벤트를 기록합니다. Semaphore만으로 설치가 규정을 준수하게 되지는 않습니다.
-
-| 요구 사항 | 해당 이벤트 | 상태 |
-| --- | --- | --- |
-| PCI DSS 10.2.1.1 민감한 데이터 접근(유사: 시크릿) | `iam.mfa/view_qr` | 사용 가능 |
-| PCI DSS 10.2.1.1 민감한 데이터 접근(유사: 시크릿) | `resource.project_backup/export` | 예정 |
-| PCI DSS 10.2.1.2 관리자 작업 / ISO 27002 8.15 특권 사용 | `iam.*`, `system.*` | 사용 가능 |
-| PCI DSS 10.2.1.2 관리자 작업 / ISO 27002 8.15 특권 사용 | `resource.*`, `secret.*` | 예정 |
-| PCI DSS 10.2.1.2 관리자 작업 / ISO 27002 8.15 특권 사용 | `runner.*`, `task.control`, `task.history` | 예정 |
-| PCI DSS 10.2.1.3 감사 로그 접근 | 해당 없음: Semaphore는 감사 추적에 대한 접근을 제공하지 않습니다. | — |
-| PCI DSS 10.2.1.4 잘못된 논리적 접근 시도 / ISO 거부된 접근 시도 | `auth.login` failure, `auth.mfa` failure, `auth.api_token/reject`, `auth.authorization/deny`, `auth.csrf/block` | 사용 가능 |
-| PCI DSS 10.2.1.4 잘못된 논리적 접근 시도 / ISO 거부된 접근 시도 | `runner.lifecycle/register` failure | 예정 |
-| PCI DSS 10.2.1.5 식별 및 인증 자격 증명 변경 | `iam.user*`, `iam.mfa`, `iam.api_token`, `iam.external_identity`, `iam.membership`, `iam.*role*` | 사용 가능 |
-| PCI DSS 10.2.1.5 식별 및 인증 자격 증명 변경 | `runner.credential` | 예정 |
-| PCI DSS 10.2.1.6 감사 로그의 시작, 중지, 일시 중지 / ISO 보안 시스템 활성화 | `audit.lifecycle/start`. 중지는 그 앞의 공백으로 나타납니다 | 사용 가능 |
-| PCI DSS 10.2.1.7 시스템 수준 객체의 생성과 삭제 | `resource.*` create/delete | 예정 |
-| PCI DSS 10.2.1.7 시스템 수준 객체의 생성과 삭제 | `runner.lifecycle` create/delete | 예정 |
-| PCI DSS 10.2.2 필수 필드 | `actor`, `event_code`와 `action`, `timestamp`, `outcome`, `source` 또는 `node_id`, `target` 또는 `scope` | 사용 가능 |
-| PCI DSS 10.3.3 중앙 로그 서버로의 신속한 백업 | Syslog+TLS를 통한 SIEM 내보내기 | 사용 가능 |
-| PCI DSS 10.3.3 중앙 로그 서버로의 신속한 백업 | Splunk HEC를 통한 SIEM 내보내기 | 예정 |
-
-예정된 이벤트는 이 버전에서 기록되지 않습니다.
-
-## 이 버전에서 기록되지 않는 작업 {#not-recorded}
-
-- 서버에서 `semaphore` 명령으로 수행한 작업(예: `user add`, `user token`). 이 작업은 데이터베이스를 직접
-  변경하며, 이를 실행할 수 있는 사람은 감사 테이블도 변경할 수 있습니다.
-- 라이선스 제거, 앱 런타임 설정, HA 작업 상태 지우기, Terraform 인벤토리 별칭, 워크플로 실행, 프로젝트 초대.
-  이들에는 아직 감사 이벤트가 없습니다.
+서버가 시작될 때마다 `audit.lifecycle/start`가 기록됩니다. 중지 이벤트는 없습니다. 종료, 충돌 또는
+비활성화된 감사 로그는 이후 시작 이벤트 전까지 이벤트가 없는 기간으로 나타납니다.
 
 ## SIEM으로 내보내기 <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-Semaphore Pro는 TLS를 사용하는 Syslog로 감사 로그를 SIEM에 보냅니다. SIEM별로 로그 내 위치를 유지하므로, SIEM에
-연결할 수 없는 동안 기록된 이벤트는 SIEM이 복구되면 전송됩니다. 절차는
-[감사 로그를 SIEM으로 보내기](/admin-guide/audit-log-siem)를 참고하세요.
+Semaphore Pro는 성공적으로 캡처한 이벤트를 rsyslog 또는 Vector와 같은 기존 TLS Syslog 수신기로
+전송할 수 있습니다. 수신기는 이벤트를 저장하거나 SIEM으로 전달할 수 있습니다.
+
+시작하기 전에 다음을 준비하세요.
+
+- 수신기의 호스트 이름과 포트
+- `security-syslog`와 같은 안정적인 대상 ID
+- 수신기 인증서에 서명한 CA 인증서. Semaphore 호스트에서 해당 CA를 아직 신뢰하지 않는 경우 필요합니다.
+
+`config.json`에 `audit.syslog`를 추가합니다.
+
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu",
+    "syslog": {
+      "id": "security-syslog",
+      "address": "siem.example.com:6514",
+      "ca_file": "/etc/semaphore/siem-ca.pem",
+      "server_name": "siem.example.com",
+      "timeout": "10s"
+    }
+  }
+}
+```
+
+또는 환경 변수를 사용합니다.
+
+```bash
+SEMAPHORE_AUDIT_SYSLOG_ID=security-syslog
+SEMAPHORE_AUDIT_SYSLOG_ADDRESS=siem.example.com:6514
+SEMAPHORE_AUDIT_SYSLOG_CA_FILE=/etc/semaphore/siem-ca.pem
+SEMAPHORE_AUDIT_SYSLOG_SERVER_NAME=siem.example.com
+SEMAPHORE_AUDIT_SYSLOG_TIMEOUT=10s
+```
+
+`id`와 `address`는 필수입니다. 수신기 주소나 인증서를 변경할 때도 동일한 ID를 유지해야 Semaphore가
+저장된 위치부터 전송을 재개합니다. 새 ID는 해당 대상이 초기화된 이후에 기록된 이벤트부터 시작하며,
+그 시점에 이미 저장된 이벤트는 전송되지 않습니다.
+
+`ca_file`은 시스템 신뢰 저장소에 인증서를 추가합니다. `server_name`은 수신기 인증서에서 확인할 호스트
+이름을 재정의합니다. Semaphore는 TLS 1.2 이상을 요구하며 항상 서버 인증서를 검증합니다. 이 연결에서는
+검증을 비활성화하거나 클라이언트 인증서를 사용할 수 없습니다.
+
+Semaphore를 다시 시작합니다. 대상 설정이 잘못되었거나 CA 파일을 읽을 수 없으면 Semaphore가 시작되지
+않습니다.
+
+### 전송 확인 {#verify-siem-delivery}
+
+다시 시작한 후 수신기에서 새 이벤트를 찾아 다음을 확인합니다.
+
+- `event_code`가 `audit.lifecycle`입니다.
+- `action`이 `start`입니다.
+- `outcome`이 `success`입니다.
+- `instance_id`가 구성한 설치 이름과 일치합니다.
+- `metadata.destinations`에 대상 ID가 포함되어 있습니다.
+
+### 전송 동작 {#delivery}
+
+- 수신기를 사용할 수 없으면 Semaphore는 캡처한 이벤트를 로컬에 보관하고 수신기가 복구되었을 때 다시
+  전송합니다. 사용자 요청은 정상적으로 계속 처리됩니다.
+- Syslog 전송은 최선 노력 방식입니다. 연결 실패가 Semaphore에 통지되지 않은 상태에서 연결에 기록된
+  이벤트는 유실될 수 있습니다.
+- 네트워크 오류, 재시작 및 HA 장애 조치로 인해 이벤트가 중복 전송될 수 있습니다. `event_id`로 중복을
+  제거하고 `seq`로 이벤트를 정렬하세요.
+- [HA 설치](/admin-guide/ha)에서는 일반적으로 한 번에 하나의 노드가 대상으로 전송합니다. Redis를 사용할 수
+  없으면 내보내기는 일시 중지되지만 공유 데이터베이스에서 캡처는 계속됩니다.
+
+Semaphore는 TLS와 옥텟 수 기반 프레이밍을 사용하여 RFC 5424 메시지를 전송합니다. 메시지 본문에는 감사
+이벤트 JSON이 포함됩니다. `HOSTNAME`은 HA 노드 ID이며 단일 노드에서는 인스턴스 ID입니다. `MSGID`는
+`event_code`입니다.
+
+### rsyslog 수신기 예시 {#rsyslog}
+
+다음 rsyslog 구성 조각은 TLS 연결을 수락하고 한 줄에 하나의 이벤트 JSON 객체를 기록합니다.
+
+```text
+global(
+  DefaultNetstreamDriver="gtls"
+  DefaultNetstreamDriverCAFile="/etc/rsyslog.d/ca.pem"
+  DefaultNetstreamDriverCertFile="/etc/rsyslog.d/cert.pem"
+  DefaultNetstreamDriverKeyFile="/etc/rsyslog.d/key.pem"
+)
+
+module(load="imtcp" StreamDriver.Name="gtls" StreamDriver.Mode="1" StreamDriver.AuthMode="anon")
+input(type="imtcp" port="6514" ruleset="semaphore-audit")
+
+template(name="semaphore-audit-json" type="string" string="%msg%\n")
+
+ruleset(name="semaphore-audit") {
+  action(type="omfile" file="/var/log/semaphore-audit.json" template="semaphore-audit-json")
+}
+```
+
+### Vector 수신기 예시 {#vector}
+
+다음 Vector 구성은 TLS 연결을 수락하고 이벤트 JSON을 파싱하여 파일에 기록합니다.
+
+```toml
+[sources.semaphore_audit]
+type = "syslog"
+mode = "tcp"
+address = "0.0.0.0:6514"
+tls.enabled = true
+tls.crt_file = "/etc/vector/cert.pem"
+tls.key_file = "/etc/vector/key.pem"
+
+[transforms.semaphore_audit_event]
+type = "remap"
+inputs = ["semaphore_audit"]
+source = ". = parse_json!(.message)"
+
+[sinks.semaphore_audit_file]
+type = "file"
+inputs = ["semaphore_audit_event"]
+path = "/var/log/semaphore-audit.json"
+encoding.codec = "json"
+```
+
+### 내보내기 문제 해결 {#troubleshoot-export}
+
+- Semaphore가 시작되지 않으면 `audit.syslog.id`와 `audit.syslog.address`가 모두 설정되어 있는지,
+  CA 파일에 읽을 수 있는 PEM 인증서가 포함되어 있는지 확인합니다.
+- TLS에 실패하면 수신기 인증서가 `server_name`에 유효하며 시스템 CA 또는 구성된 CA까지 인증서 체인이
+  이어지는지 확인합니다.
+- 이벤트가 아직 도착하지 않았다면 Semaphore 서버 로그와 수신기 수집 로그를 확인합니다. 내보내기는 실패 후
+  일정 시간 기다렸다가 다시 시도합니다.
+- 이벤트가 두 번 나타나면 `event_id`로 중복을 제거합니다. 일부 재시도와 장애 조치 후에는 중복이 발생할 수
+  있습니다.
+
+## 감사 범위에 포함되지 않는 작업 {#not-recorded}
+
+`semaphore` 명령은 데이터베이스를 직접 변경하므로 `user add`와 `user token` 같은 서버 측 CLI 작업은
+기록되지 않습니다. 서버와 데이터베이스에 대한 접근은 별도로 제어해야 합니다.
+
+이 릴리스에는 라이선스 제거, 앱 런타임 설정, HA 작업 상태 지우기, Terraform 인벤토리 별칭,
+워크플로 실행 또는 프로젝트 초대에 대한 감사 이벤트도 없습니다.
+[이벤트 카탈로그](/reference/audit-events)에는 이후 릴리스에 예정된 이벤트가 표시됩니다.
 
 ## 다음 단계 {#whats-next}
 
-- [감사 로그를 SIEM으로 보내기](/admin-guide/audit-log-siem) — Syslog+TLS로 이벤트를 내보냅니다.
-- [감사 이벤트](/reference/audit-events) — 각 이벤트의 결과, 이유, 메타데이터.
-- [설정](/reference/configuration) — 모든 `audit.*` 옵션.
+- [감사 이벤트](/reference/audit-events) — 이벤트 필드, 사용 가능한 이벤트와 예정된 이벤트 및 규정 준수 범위.
+- [구성 옵션](/reference/configuration#audit-log) — 모든 `audit.*` 옵션과 환경 변수.
+- [로그](/admin-guide/logs) — 서버, 활동 및 작업 로그.

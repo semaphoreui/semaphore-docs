@@ -179,7 +179,7 @@ Ponovo pokrenite Semaphore servis nakon izmene ovih vrednosti da bi se primenilo
 ## SIEM integracija {#siem-integration}
 
 Radnje važne za bezbednost (prijave, MFA, izmene korisnika i dozvola, API tokeni, sistemska podešavanja) beleže se u [dnevnik revizije](/admin-guide/audit-log), koji Semaphore Pro može
-[da šalje u SIEM](/admin-guide/audit-log-siem) preko Syslog+TLS. Dnevnik aktivnosti iznad je feed za korisnike,
+[da šalje u SIEM](/admin-guide/audit-log#siem-export) preko Syslog+TLS. Dnevnik aktivnosti iznad je feed za korisnike,
 a ne revizijski trag.
 
 ## Rezime {#summary}
@@ -187,5 +187,6 @@ a ne revizijski trag.
 - **Serverski log:** Upisuje se na stdout; može se pregledati pomoću `journalctl` ako radi pod systemd-om.  
 - **Log aktivnosti i zadataka:** Prati sve korisničke radnje. Opciono, **Pro 2.10+** može da ih upisuje u fajl.  
 - **Istorija zadataka:** Čuva logove izvršavanja zadataka u realnom vremenu i istorijske logove. Zadržavanje se podešava po šablonu.
+- **Dnevnik revizije:** Beleži podržane radnje autentifikacije i administrativne radnje radi bezbednosnih istraga.
 
 Pridržavanje ovih smernica obezbeđuje vam odgovarajući uvid u rad Semaphore UI uz kontrolu zauzeća prostora i zadržavanja logova.

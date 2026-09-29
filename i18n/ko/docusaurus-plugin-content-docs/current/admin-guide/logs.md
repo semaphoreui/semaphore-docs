@@ -179,7 +179,7 @@ SEMAPHORE_SYSLOG_TAG=semaphore
 ## SIEM 연동 {#siem-integration}
 
 보안 관련 작업(로그인, MFA, 사용자 및 권한 변경, API 토큰, 시스템 설정)은 [감사 로그](/admin-guide/audit-log)에 기록되며, Semaphore Pro는 이를 Syslog+TLS로
-[SIEM에 전송](/admin-guide/audit-log-siem)할 수 있습니다. 위의 활동 로그는 사용자를 위한 피드이며,
+[SIEM에 전송](/admin-guide/audit-log#siem-export)할 수 있습니다. 위의 활동 로그는 사용자를 위한 피드이며,
 감사 추적이 아닙니다.
 
 ## 요약 {#summary}
@@ -187,5 +187,6 @@ SEMAPHORE_SYSLOG_TAG=semaphore
 - **서버 로그:** stdout에 기록되며, systemd에서 실행 중이라면 `journalctl`로 확인할 수 있습니다.  
 - **활동 및 작업 로그:** 모든 사용자 작업을 추적합니다. **Pro 2.10 이상**에서는 선택적으로 파일에 기록할 수 있습니다.  
 - **작업 이력:** 실시간 및 과거 작업 실행 로그를 저장합니다. 보관 기간은 템플릿별로 설정할 수 있습니다.
+- **감사 로그:** 보안 조사를 위해 지원되는 인증 및 관리 작업을 기록합니다.
 
 이 지침을 따르면 저장 공간 사용량과 로그 보관 기간을 관리하면서 Semaphore UI 운영에 대한 적절한 가시성을 확보할 수 있습니다.

@@ -44,6 +44,7 @@ Alles, was Sie auf einem bereits laufenden Server tun.
 | [API](/reference/api) | Authentifizierung mit einem Token und programmatische Steuerung von Semaphore. |
 | [CI/CD-Integration](/admin-guide/cicd) | Semaphore-Tasks aus einer externen Pipeline starten. |
 | [Protokolle](/admin-guide/logs) | Serverprotokolle, Task-Protokolle und deren Weiterleitung an andere Systeme. |
+| [Audit-Protokoll](/admin-guide/audit-log) | Sicherheitsereignisse, lokale Audit-Erfassung und Export an ein SIEM mit Pro. |
 | [Metriken](/admin-guide/metrics) | Der Prometheus-Endpunkt und die Metriken, die er bereitstellt. |
 | [Benachrichtigungen](/admin-guide/notifications) | Zustellkanäle für Alerts: E-Mail, Telegram, Slack und andere. |
 | [Lizenz](/admin-guide/license) | Ein Pro- oder Enterprise-Abonnement aktivieren. |

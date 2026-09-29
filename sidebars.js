@@ -131,7 +131,6 @@ const sidebars = {
         'admin-guide/runners',
         'admin-guide/logs',
         'admin-guide/audit-log',
-        'admin-guide/audit-log-siem',
         'admin-guide/metrics',
         { type: 'doc', id: 'admin-guide/ha', customProps: { edition: 'enterprise' } },
         'admin-guide/license',

@@ -70,8 +70,8 @@ case, no gerunds).
 
 ### Generated pages
 
-`docs/reference/configuration.md` and `docs/reference/cli/commands.md` are generated from the
-Semaphore source by `tools/docsref` and `tools/clidocs` in the
+`docs/reference/configuration.md` and `docs/reference/cli/commands.md` are generated
+from the Semaphore source by `tools/docsref` and `tools/clidocs` in the
 [product repository](https://github.com/semaphoreui/semaphore). Editing them here is
 pointless: the next `task docs:gen` overwrites the change, and the product repo's CI
 fails if the committed page differs from what the generators produce.
@@ -85,9 +85,13 @@ To change one of them, change the thing it is generated from:
 | How options are grouped, or a Pro/Enterprise badge | `tools/docsref/groups.json` |
 | A command or flag description | The Cobra command in `cli/cmd/` |
 
-Both pages are **English only**, and `ENGLISH_ONLY` in `scripts/check-docs.mjs` exempts
+These pages are **English only**, and `ENGLISH_ONLY` in `scripts/check-docs.mjs` exempts
 them from the translation check. A translated copy would go stale the first time an
 option changed and nobody would notice.
+
+`docs/reference/audit-events.md` is written by hand but is English only for the same
+reason: its tables change with every audit event added to the product. When an event
+is added to or implemented in the product, update its row in the same change.
 
 ### Marking Pro and Enterprise features
 
