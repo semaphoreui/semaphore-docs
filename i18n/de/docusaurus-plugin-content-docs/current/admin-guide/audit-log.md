@@ -1,59 +1,39 @@
 ---
 title: Audit-Protokoll
-description: Aktivieren Sie das Sicherheits-Audit-Protokoll, erfahren Sie, was es aufzeichnet, und senden Sie Audit-Ereignisse aus Semaphore Pro über Syslog mit TLS an ein SIEM.
+description: Aktivieren Sie das Audit-Protokoll, um zu sehen, wer was in Semaphore getan hat, und senden Sie Audit-Ereignisse aus Semaphore Pro an ein SIEM.
 ---
 
 # Audit-Protokoll
 
-Das Audit-Protokoll zeichnet sicherheitsrelevante Aktivitäten auf: wer gehandelt hat, was getan wurde, welches
-Objekt betroffen war, woher die Anfrage kam und ob sie erfolgreich war. Betreiber untersuchen damit Änderungen,
-während Sicherheitsteams das dokumentierte Ereignisformat für Erkennungsregeln und Compliance-Nachweise nutzen.
+Das Audit-Protokoll zeichnet wichtige Aktionen in Semaphore auf: wer sich angemeldet hat, wer einen Benutzer
+oder eine Rolle geändert hat, wer ein API-Token erstellt hat. Jedes Ereignis zeigt, wer es war, wann, von
+welcher Adresse und ob es funktioniert hat. Damit finden Sie heraus, was in Ihrer Installation passiert ist,
+oder Sie senden die Ereignisse an Ihr SIEM, damit sie neben Ihren übrigen Logs liegen.
 
-Das Erfassen und lokale Speichern von Audit-Ereignissen ist in Semaphore Community verfügbar. Semaphore Pro kann
-erfasste Ereignisse außerdem an ein Security-Information-and-Event-Management-System (SIEM) senden.
-
-## Unterschiede zu anderen Protokollen {#log-types}
-
-| Protokoll | Verwendung |
-| --- | --- |
-| Serverprotokoll | Diagnose von Fehlern beim Start, bei der Konfiguration und während der Ausführung von Semaphore. |
-| Aktivitätsprotokoll | Anzeige eines Feeds mit Projektaktivitäten für Projektbenutzer. |
-| Task-Protokoll und -Verlauf | Überprüfung von Task-Ausführung, Status und Ausgabe. |
-| Audit-Protokoll | Untersuchung von Authentifizierungs- und Verwaltungsaktionen in der gesamten Installation. |
-
-Das Audit-Protokoll ist unabhängig vom [Aktivitätsprotokoll](/admin-guide/logs#activity-log). Das Aktivieren oder
-Exportieren des einen Protokolls aktiviert oder exportiert nicht das andere.
+Das Audit-Protokoll ist in jeder Edition verfügbar. Für das Senden an ein SIEM wird Semaphore Pro benötigt.
 
 ## Was aufgezeichnet wird {#recorded-events}
 
-Die aktuelle Version zeichnet unterstützte Authentifizierungs- und Identitätsverwaltungsereignisse auf, darunter:
+Derzeit zeichnet Semaphore Anmeldungen und Kontoaktivitäten auf:
 
-- erfolgreiche und fehlgeschlagene Anmeldungen, Abmeldungen und TOTP-Prüfungen;
-- abgelehnte API-Tokens, verweigerte Berechtigungen und blockierte Cross-Site-Anfragen;
-- Änderungen an Benutzern, Passwörtern, TOTP-Registrierungen, externen Identitäten und API-Tokens;
-- Änderungen an Projektmitgliedschaften, Rollen und Vorlagenberechtigungen;
-- Änderungen an Systemeinstellungen und der Aktivierung der Pro-Lizenz;
-- den Start der Audit-Erfassung beim Serverstart.
+- Anmeldungen, fehlgeschlagene Anmeldeversuche, Abmeldungen und Prüfungen des zweiten Faktors;
+- abgelehnte API-Tokens, verweigerte Anfragen und blockierte Cross-Site-Anfragen;
+- Änderungen an Benutzern, Passwörtern, Zwei-Faktor-Authentifizierung, externen Identitäten und API-Tokens;
+- Änderungen an Projektmitgliedern, Rollen und Vorlagenberechtigungen;
+- Änderungen an Systemeinstellungen und die Aktivierung der Pro-Lizenz;
+- jeden Serverstart.
 
-Eine erfolgreiche Anmeldung wird aufgezeichnet, nachdem der Benutzer alle erforderlichen Authentifizierungsschritte
-einschließlich TOTP abgeschlossen hat. Alle verfügbaren sowie für spätere Versionen geplanten Ereignisse finden Sie
-unter [Audit-Ereignisse](/reference/audit-events).
+In künftigen Versionen kommen weitere Ereignisse hinzu. Die vollständige Liste finden Sie unter
+[Audit-Ereignisse](/reference/audit-events).
 
-## Aus Ereignissen ausgeschlossene sensible Daten {#sensitive-data}
+Passwörter, Tokens, geheime Werte und Aufgabenausgaben erscheinen nie in Audit-Ereignissen. API-Tokens werden
+über einen Fingerabdruck statt über ihren Wert angezeigt. Eine fehlgeschlagene Anmeldung speichert den
+eingegebenen Anmeldenamen, der daher eine E-Mail-Adresse enthalten kann.
 
-Audit-Ereignisse identifizieren eine Aktion, ohne zugehörige Anmeldedaten oder geheime Nutzdaten zu kopieren. Sie
-enthalten keine Passwörter, Passcodes, TOTP-Geheimnisse und QR-Codes, Wiederherstellungscodes, Sitzungscookies,
-Token-Rohwerte, OAuth-Codes und -Claims, privaten Schlüssel, Passphrasen, Secret-Werte, Umgebungs- und
-Umfragewerte, Webhook-Inhalte, Task-Ausgaben oder Repository-URLs.
+## Das Audit-Protokoll aktivieren {#enable}
 
-API-Tokens werden durch einen Fingerabdruck und nicht durch ihren Wert identifiziert. Eine fehlgeschlagene Anmeldung
-enthält die eingegebene Anmeldekennung, gekürzt auf 64 Bytes. Wenn sich Benutzer mit einer E-Mail-Adresse anmelden,
-kann diese Kennung eine E-Mail-Adresse enthalten.
-
-## Audit-Protokoll aktivieren {#enable}
-
-Wählen Sie einen dauerhaften Namen für die Installation und legen Sie anschließend `audit.enabled` und
-`audit.instance_id` in `config.json` fest:
+Das Audit-Protokoll ist standardmäßig ausgeschaltet. Setzen Sie zum Einschalten `audit.enabled` und geben
+Sie Ihrer Installation in `audit.instance_id` einen Namen:
 
 ```json
 {
@@ -64,28 +44,24 @@ Wählen Sie einen dauerhaften Namen für die Installation und legen Sie anschlie
 }
 ```
 
-Die Instanz-ID muss aus 1 bis 255 druckbaren ASCII-Zeichen ohne Leerzeichen bestehen. Sie erscheint in jedem
-Ereignis und ermöglicht einem SIEM, mehrere Semaphore-Installationen voneinander zu unterscheiden.
-
-Alternativ können Sie Umgebungsvariablen verwenden:
+Oder über Umgebungsvariablen:
 
 ```bash
 SEMAPHORE_AUDIT_ENABLED=true
 SEMAPHORE_AUDIT_INSTANCE_ID=prod-eu
 ```
 
-Starten Sie Semaphore neu, um die Änderung anzuwenden. Die Erfassung beginnt nach dem Neustart; vorherige
-Aktivitäten werden dem Audit-Protokoll nicht hinzugefügt. Das erste Ereignis ist `audit.lifecycle` mit der Aktion
-`start`.
+Die Instanz-ID besteht aus 1 bis 255 Zeichen ohne Leerzeichen. Sie wird jedem Ereignis hinzugefügt, damit
+Sie Ihre Installationen unterscheiden können, wenn sie Ereignisse an dieselbe Stelle senden.
 
-Alle Optionen und Umgebungsvariablen finden Sie unter
-[Konfigurationsoptionen](/reference/configuration#audit-log).
+Starten Sie Semaphore neu. Die Aufzeichnung beginnt nach dem Neustart; frühere Aktionen werden nicht
+nachgetragen. Alle Optionen finden Sie unter [Konfigurationsoptionen](/reference/configuration#audit-log).
 
-## Client-Adresse hinter einem Proxy aufzeichnen {#trusted-proxies}
+## Die Client-Adresse hinter einem Proxy aufzeichnen {#trusted-proxies}
 
-Standardmäßig zeichnet ein HTTP-Audit-Ereignis die Adresse auf, die sich direkt mit Semaphore verbunden hat. Wenn
-diese Adresse zu einem Reverse Proxy gehört, fügen Sie ausschließlich die Proxy-Netzwerke zu
-`audit.trusted_proxy_cidrs` hinzu:
+Läuft Semaphore hinter einem Reverse-Proxy, zeigen Ereignisse die Adresse des Proxys statt die des
+Benutzers. Um die echte Client-Adresse aufzuzeichnen, tragen Sie Ihre Proxy-Netze in
+`audit.trusted_proxy_cidrs` ein:
 
 ```json
 {
@@ -97,42 +73,35 @@ diese Adresse zu einem Reverse Proxy gehört, fügen Sie ausschließlich die Pro
 }
 ```
 
-Oder legen Sie Folgendes fest:
+Oder über Umgebungsvariablen:
 
 ```bash
 SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 ```
 
-Semaphore vertraut `X-Forwarded-For` und `X-Real-IP` nur bei Anfragen aus diesen Netzwerken. Fügen Sie keine
-Client-Netzwerke hinzu: Ein Client in einem vertrauenswürdigen Netzwerk könnte die in seinen Ereignissen
-aufgezeichnete Quelladresse selbst bestimmen. Wenn mehrere Proxys Werte an `X-Forwarded-For` anhängen, zeichnet
-Semaphore die am weitesten rechts stehende Adresse auf, die nicht zu einem vertrauenswürdigen Proxy gehört.
+Semaphore übernimmt die Client-Adresse dann aus `X-Forwarded-For` oder `X-Real-IP`, aber nur für Anfragen
+aus diesen Netzen. Laufen Anfragen über mehrere Proxys, tragen Sie alle ein. Tragen Sie keine Netze ein,
+aus denen sich Ihre Benutzer verbinden: Jeder dort könnte diese Header auf eine beliebige Adresse setzen.
 
-## Speicherung und Einschränkungen {#storage}
+## Speicherung {#storage}
 
-Semaphore speichert Audit-Ereignisse in seiner Datenbank. Diese Version bietet weder eine Audit-Ansicht noch eine
-Audit-API, automatische Aufbewahrungsregeln oder Bereinigung. Überwachen Sie das Wachstum der Datenbank und nehmen
-Sie die Audit-Daten in Ihre Richtlinie für Datenbanksicherungen auf.
+Ereignisse werden in der Semaphore-Datenbank gespeichert, sodass Ihre üblichen Datenbank-Backups sie
+enthalten. Semaphore zeigt Audit-Ereignisse nicht in der Oberfläche an und löscht alte Ereignisse nicht,
+behalten Sie also die Größe der Datenbank im Blick.
 
-Die Audit-Aufzeichnung blockiert die aufgezeichnete Aktion nicht. Falls das Speichern eines Ereignisses fehlschlägt,
-schreibt Semaphore einen Fehler in das Serverprotokoll und setzt den ursprünglichen Vorgang fort. Lokale Datensätze
-werden durch dieselben Datenbankzugriffskontrollen geschützt wie die übrigen Semaphore-Daten; sie sind weder
-unveränderlich noch manipulationssicher.
-
-Jeder Serverstart zeichnet `audit.lifecycle/start` auf. Es gibt kein Stopp-Ereignis. Ein Herunterfahren, Absturz
-oder deaktiviertes Audit-Protokoll zeigt sich als Zeitraum ohne Ereignisse vor einem späteren Start-Ereignis.
+Das Audit-Protokoll steht Ihren Benutzern nie im Weg. Kann ein Ereignis nicht gespeichert werden, schreibt
+Semaphore einen Fehler in das Server-Log, und die Aktion läuft wie gewohnt weiter.
 
 ## Export an ein SIEM <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-Semaphore Pro kann erfolgreich erfasste Ereignisse an einen vorhandenen TLS-Syslog-Empfänger wie rsyslog oder
-Vector senden. Der Empfänger kann die Ereignisse speichern oder an Ihr SIEM weiterleiten.
+Semaphore Pro kann Audit-Ereignisse über TLS an einen Syslog-Empfänger senden, etwa rsyslog oder Vector.
+Der Empfänger kann sie speichern oder an Ihr SIEM weiterleiten.
 
-Bereiten Sie zunächst Folgendes vor:
+Sie benötigen:
 
-- Hostname und Port des Empfängers;
-- eine dauerhafte Ziel-ID, zum Beispiel `security-syslog`;
-- das CA-Zertifikat, mit dem das Empfängerzertifikat signiert wurde, sofern die CA auf dem Semaphore-Host nicht
-  bereits als vertrauenswürdig gilt.
+- den Hostnamen und Port des Empfängers;
+- einen Namen für dieses Ziel, etwa `security-syslog`;
+- das CA-Zertifikat des Empfängers, falls der Semaphore-Host ihm noch nicht vertraut.
 
 Fügen Sie `audit.syslog` zu `config.json` hinzu:
 
@@ -152,7 +121,7 @@ Fügen Sie `audit.syslog` zu `config.json` hinzu:
 }
 ```
 
-Alternativ können Sie Umgebungsvariablen verwenden:
+Oder über Umgebungsvariablen:
 
 ```bash
 SEMAPHORE_AUDIT_SYSLOG_ID=security-syslog
@@ -162,48 +131,38 @@ SEMAPHORE_AUDIT_SYSLOG_SERVER_NAME=siem.example.com
 SEMAPHORE_AUDIT_SYSLOG_TIMEOUT=10s
 ```
 
-`id` und `address` sind erforderlich. Behalten Sie dieselbe ID bei, wenn Sie die Empfängeradresse oder das
-Zertifikat ändern, damit Semaphore an der gespeicherten Position fortfährt. Eine neue ID beginnt mit Ereignissen,
-die nach der Initialisierung dieses Ziels aufgezeichnet werden; zu diesem Zeitpunkt bereits gespeicherte Ereignisse
-werden nicht an das neue Ziel gesendet.
+`id` und `address` sind Pflicht. Semaphore merkt sich, welche Ereignisse es an jedes Ziel bereits gesendet
+hat. Behalten Sie deshalb dieselbe `id`, wenn Sie die Adresse oder das Zertifikat ändern. Eine neue `id`
+beginnt mit neuen Ereignissen.
 
-`ca_file` ergänzt den Vertrauensspeicher des Systems um Zertifikate. `server_name` überschreibt den Hostnamen, der
-im Empfängerzertifikat geprüft wird. Semaphore erfordert TLS 1.2 oder höher und überprüft das Serverzertifikat
-immer. Das Deaktivieren der Überprüfung oder die Verwendung eines Client-Zertifikats für diese Verbindung wird
-nicht unterstützt.
+Semaphore prüft das Zertifikat des Empfängers immer und verwendet TLS 1.2 oder neuer. `ca_file` fügt Ihre CA
+zu den vertrauenswürdigen Zertifikaten hinzu, und `server_name` legt den im Zertifikat zu prüfenden Namen
+fest, wenn er von der Adresse abweicht.
 
-Starten Sie Semaphore neu. Ungültige Zieleinstellungen oder eine nicht lesbare CA-Datei verhindern den Start von
-Semaphore.
+Starten Sie Semaphore neu. Sind die Einstellungen ungültig oder lässt sich die CA-Datei nicht lesen, startet
+Semaphore nicht.
 
-### Zustellung überprüfen {#verify-siem-delivery}
+### Prüfen, ob Ereignisse ankommen {#verify-siem-delivery}
 
-Suchen Sie nach dem Neustart das neue Ereignis beim Empfänger und überprüfen Sie Folgendes:
+Semaphore zeichnet bei jedem Start ein Ereignis auf. Suchen Sie es nach dem Neustart beim Empfänger:
+`event_code` ist `audit.lifecycle`, `action` ist `start`, und `metadata.destinations` enthält Ihre Ziel-ID.
 
-- `event_code` ist `audit.lifecycle`;
-- `action` ist `start`;
-- `outcome` ist `success`;
-- `instance_id` entspricht dem konfigurierten Installationsnamen;
-- `metadata.destinations` enthält die Ziel-ID.
+### Wie Ereignisse zugestellt werden {#delivery}
 
-### Zustellungsverhalten {#delivery}
+- Ist der Empfänger nicht erreichbar, warten die Ereignisse in der Datenbank und werden gesendet, sobald er
+  wieder da ist. Benutzer merken davon nichts.
+- Nach Netzwerkfehlern, Neustarts oder einem HA-Failover können manche Ereignisse doppelt ankommen. Nutzen
+  Sie `event_id`, um Duplikate zu verwerfen, und `seq`, um Ereignisse zu ordnen.
+- Bricht eine Verbindung ohne Fehlermeldung ab, kann das in diesem Moment gesendete Ereignis verloren gehen.
+- In einer [HA-Installation](/admin-guide/ha) sendet jeweils ein Knoten Ereignisse. Ist Redis nicht
+  erreichbar, pausiert das Senden, und Ereignisse werden weiter aufgezeichnet.
 
-- Wenn der Empfänger nicht verfügbar ist, behält Semaphore erfasste Ereignisse lokal und versucht die Zustellung
-  erneut, sobald der Empfänger wieder verfügbar ist. Benutzeranfragen werden normal fortgesetzt.
-- Die Syslog-Zustellung erfolgt nach bestem Bemühen. Ein Ereignis, das in eine Verbindung geschrieben wurde, die
-  ausfällt, ohne Semaphore darüber zu informieren, kann verloren gehen.
-- Netzwerkfehler, Neustarts und HA-Failover können zu doppelten Zustellungen führen. Entfernen Sie Duplikate anhand
-  von `event_id` und ordnen Sie Ereignisse nach `seq`.
-- In einer [HA-Installation](/admin-guide/ha) sendet normalerweise jeweils ein Knoten an ein Ziel. Der Export wird
-  pausiert, wenn Redis nicht verfügbar ist, während die Erfassung in der gemeinsamen Datenbank fortgesetzt wird.
+Jedes Ereignis wird als Syslog-Nachricht nach RFC 5424 mit dem Ereignis-JSON als Inhalt gesendet. `HOSTNAME`
+ist die HA-Knoten-ID oder auf einem einzelnen Knoten die Instanz-ID, und `MSGID` ist der Ereigniscode.
 
-Semaphore sendet RFC-5424-Nachrichten mit TLS und längenbasierter Rahmung (Octet Counting). Der Nachrichtentext
-enthält das Audit-Ereignis als JSON. `HOSTNAME` ist die HA-Knoten-ID oder bei einem einzelnen Knoten die Instanz-ID;
-`MSGID` ist `event_code`.
+### rsyslog-Beispiel {#rsyslog}
 
-### Beispiel für einen rsyslog-Empfänger {#rsyslog}
-
-Dieses rsyslog-Konfigurationsfragment akzeptiert die TLS-Verbindung und schreibt pro Zeile ein Audit-Ereignis als
-JSON-Objekt:
+Diese rsyslog-Konfiguration nimmt die TLS-Verbindung an und schreibt ein Ereignis pro Zeile:
 
 ```text
 global(
@@ -223,9 +182,9 @@ ruleset(name="semaphore-audit") {
 }
 ```
 
-### Beispiel für einen Vector-Empfänger {#vector}
+### Vector-Beispiel {#vector}
 
-Diese Vector-Konfiguration akzeptiert die TLS-Verbindung, analysiert das Ereignis-JSON und schreibt es in eine
+Diese Vector-Konfiguration nimmt die TLS-Verbindung an, liest das Ereignis-JSON und schreibt es in eine
 Datei:
 
 ```toml
@@ -249,28 +208,29 @@ path = "/var/log/semaphore-audit.json"
 encoding.codec = "json"
 ```
 
-### Exportprobleme beheben {#troubleshoot-export}
+### Fehlerbehebung beim Export {#troubleshoot-export}
 
-- Wenn Semaphore nicht startet, überprüfen Sie, ob sowohl `audit.syslog.id` als auch `audit.syslog.address`
-  festgelegt sind und die CA-Datei lesbare PEM-Zertifikate enthält.
-- Wenn TLS fehlschlägt, überprüfen Sie, ob das Empfängerzertifikat für `server_name` gültig und mit einer
-  systemweit vertrauenswürdigen oder konfigurierten CA verkettet ist.
-- Wenn ein Ereignis noch nicht eingetroffen ist, prüfen Sie das Semaphore-Serverprotokoll und das
-  Erfassungsprotokoll des Empfängers. Nach Fehlern wartet der Export vor einem erneuten Versuch.
-- Wenn Ereignisse doppelt erscheinen, entfernen Sie Duplikate anhand von `event_id`; nach einigen erneuten
-  Versuchen und Failovers sind Duplikate zu erwarten.
+- **Semaphore startet nicht.** Prüfen Sie, dass `audit.syslog.id` und `audit.syslog.address` gesetzt sind
+  und die CA-Datei PEM-Zertifikate enthält.
+- **Die TLS-Verbindung schlägt fehl.** Prüfen Sie, dass das Zertifikat des Empfängers zu `server_name` passt
+  und von einer CA signiert ist, der Semaphore vertraut.
+- **Ereignisse kommen nicht an.** Prüfen Sie das Semaphore-Server-Log und das Log des Empfängers. Nach einem
+  Fehler wartet Semaphore kurz, bevor es es erneut versucht.
+- **Manche Ereignisse kommen doppelt an.** Das kann nach Wiederholungen und Failovers passieren. Verwerfen
+  Sie Duplikate anhand von `event_id`.
 
-## Aktionen ohne Audit-Abdeckung {#not-recorded}
+## Was nicht aufgezeichnet wird {#not-recorded}
 
-Der Befehl `semaphore` ändert die Datenbank direkt. Daher werden serverseitige CLI-Aktionen wie `user add` und
-`user token` nicht aufgezeichnet. Der Zugriff auf Server und Datenbank muss separat kontrolliert werden.
+Das Kommandozeilenwerkzeug `semaphore` arbeitet direkt mit der Datenbank, daher werden Befehle wie
+`user add` und `user token` nicht aufgezeichnet.
 
-Diese Version enthält außerdem kein Audit-Ereignis für das Entfernen der Lizenz, App-Laufzeiteinstellungen, das
-Löschen des HA-Task-Zustands, Terraform-Inventar-Aliasse, Workflow-Ausführungen oder Projekteinladungen. Der
-[Ereigniskatalog](/reference/audit-events) kennzeichnet Ereignisse, die für spätere Versionen geplant sind.
+Einige Aktionen in der Oberfläche werden noch nicht aufgezeichnet: das Entfernen einer Lizenz,
+App-Einstellungen, das Zurücksetzen des HA-Aufgabenstatus, Terraform-Inventar-Aliase, Workflow-Läufe und
+Projekteinladungen. Die für künftige Versionen geplanten Ereignisse finden Sie unter
+[Audit-Ereignisse](/reference/audit-events).
 
-## Nächste Schritte {#whats-next}
+## Wie geht es weiter {#whats-next}
 
-- [Audit-Ereignisse](/reference/audit-events) — Ereignisfelder, verfügbare und geplante Ereignisse sowie Compliance-Abdeckung.
+- [Audit-Ereignisse](/reference/audit-events) — das Ereignisformat und alle aufgezeichneten Ereignisse.
 - [Konfigurationsoptionen](/reference/configuration#audit-log) — alle `audit.*`-Optionen und Umgebungsvariablen.
-- [Protokolle](/admin-guide/logs) — Server-, Aktivitäts- und Task-Protokolle.
+- [Logs](/admin-guide/logs) — Server-, Aktivitäts- und Aufgaben-Logs.

@@ -19,7 +19,7 @@ quedaría obsoleta la primera vez que cambiara una opción, y nadie se daría cu
 | Página | Qué cubre |
 |---|---|
 | [Opciones de configuración](/reference/configuration) | Cada clave de `config.json` con su variable de entorno, su tipo y su valor por defecto. Generada. |
-| [Eventos de auditoría](/reference/audit-events) | El formato de los eventos de auditoría, los eventos disponibles y previstos, y la cobertura de cumplimiento. |
+| [Eventos de auditoría](/reference/audit-events) | El formato de los eventos de auditoría y todos los eventos disponibles y previstos. |
 | [CLI](/reference/cli) | El comando `semaphore`: qué hace cada grupo de comandos, cómo se localiza el archivo de configuración y una lista generada de todos los comandos y opciones. |
 | [API](/reference/api) | Autenticarse con un token y llamar a los endpoints REST. |
 

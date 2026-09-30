@@ -299,18 +299,18 @@ Running several nodes against one database. See [High availability](/admin-guide
 
 ## Audit log {#audit-log}
 
-Security audit trail and its export to a SIEM. See [Audit log](/admin-guide/audit-log).
+Recording who did what in Semaphore, and sending the events to a SIEM. See [Audit log](/admin-guide/audit-log).
 
 | Option / Environment variable | Type / Default | Description |
 |---|---|---|
-| `audit.enabled`<br />`SEMAPHORE_AUDIT_ENABLED` | boolean | Turns on the security audit log. |
-| `audit.instance_id`<br />`SEMAPHORE_AUDIT_INSTANCE_ID` | string | Identifies this installation in audit events. Required when enabled. |
-| `audit.trusted_proxy_cidrs`<br />`SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS` | array | Lists proxies whose X-Forwarded-For and X-Real-IP are trusted. |
-| `audit.syslog.id` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_ID` | string | Keys the export cursor. A new ID starts from now. |
-| `audit.syslog.address` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_ADDRESS` | string | Receiver host:port. |
-| `audit.syslog.timeout` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_TIMEOUT` | string<br />Default: `10s` | Bounds connecting and writing one batch. |
-| `audit.syslog.ca_file` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_CA_FILE` | string | PEM bundle added to the system roots. |
-| `audit.syslog.server_name` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_SERVER_NAME` | string | Overrides the name checked in the receiver certificate. |
+| `audit.enabled`<br />`SEMAPHORE_AUDIT_ENABLED` | boolean | Turns on the audit log. |
+| `audit.instance_id`<br />`SEMAPHORE_AUDIT_INSTANCE_ID` | string | Installation name added to every event. Required when enabled. |
+| `audit.trusted_proxy_cidrs`<br />`SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS` | array | Lists the proxy networks allowed to pass the client address. |
+| `audit.syslog.id` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_ID` | string | Names the destination. Keep it when the address changes. |
+| `audit.syslog.address` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_ADDRESS` | string | Receiver host and port. |
+| `audit.syslog.timeout` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_TIMEOUT` | string<br />Default: `10s` | Limits connecting to the receiver and sending events. |
+| `audit.syslog.ca_file` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_CA_FILE` | string | PEM file with extra CA certificates to trust. |
+| `audit.syslog.server_name` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_SERVER_NAME` | string | Name to check in the receiver certificate. |
 
 ## Debugging {#debugging}
 

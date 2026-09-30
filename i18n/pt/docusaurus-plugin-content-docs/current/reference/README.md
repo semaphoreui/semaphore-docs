@@ -18,7 +18,7 @@ ficaria desatualizada na primeira vez que uma opção mudasse, e ninguém perceb
 | Página | O que ela cobre |
 |---|---|
 | [Opções de configuração](/reference/configuration) | Cada chave do `config.json` com sua variável de ambiente, tipo e valor padrão. Gerada. |
-| [Eventos de auditoria](/reference/audit-events) | O formato dos eventos de auditoria, os eventos disponíveis e planejados e a cobertura de conformidade. |
+| [Eventos de auditoria](/reference/audit-events) | O formato dos eventos de auditoria e todos os eventos disponíveis e planejados. |
 | [CLI](/reference/cli) | O comando `semaphore`: o que cada grupo de comandos faz, como o arquivo de configuração é encontrado e uma lista gerada de todos os comandos e flags. |
 | [API](/reference/api) | Autenticar-se com um token e chamar os endpoints REST. |
 

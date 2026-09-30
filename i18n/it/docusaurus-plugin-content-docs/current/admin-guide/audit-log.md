@@ -1,60 +1,39 @@
 ---
 title: Log di audit
-description: Attiva il log di audit di sicurezza, scopri cosa registra e invia gli eventi di audit da Semaphore Pro a un SIEM tramite Syslog con TLS.
+description: Attiva il log di audit per vedere chi ha fatto cosa in Semaphore e invia gli eventi di audit da Semaphore Pro a un SIEM.
 ---
 
 # Log di audit
 
-Il log di audit registra le attività rilevanti per la sicurezza: chi ha agito, cosa ha fatto, quale oggetto ha
-interessato, da dove proveniva la richiesta e se è stata completata con successo. Gli operatori lo usano per
-indagare sulle modifiche, mentre i team di sicurezza utilizzano il formato documentato degli eventi per le
-regole di rilevamento e le prove di conformità.
+Il log di audit tiene traccia delle azioni importanti in Semaphore: chi ha effettuato l'accesso, chi ha
+modificato un utente o un ruolo, chi ha creato un token API. Ogni evento mostra chi ha agito, quando, da
+quale indirizzo e se l'azione è riuscita. Usalo per capire cosa è successo nella tua installazione, oppure
+invia gli eventi al tuo SIEM per tenerli insieme al resto dei log.
 
-L'acquisizione degli eventi di audit e la loro archiviazione locale sono disponibili in Semaphore Community.
-Semaphore Pro può anche inviare gli eventi acquisiti a un sistema SIEM (Security Information and Event Management).
-
-## Differenze rispetto agli altri log {#log-types}
-
-| Log | Utilizzo |
-| --- | --- |
-| Log del server | Diagnosticare errori di avvio, configurazione e runtime di Semaphore. |
-| Registro attività | Mostrare agli utenti del progetto un flusso delle attività del progetto. |
-| Log e cronologia delle attività | Esaminare l'esecuzione, lo stato e l'output delle attività. |
-| Log di audit | Indagare sulle azioni di autenticazione e amministrazione nell'intera installazione. |
-
-Il log di audit è indipendente dal [registro attività](/admin-guide/logs#activity-log). L'attivazione o
-l'esportazione dell'uno non attiva né esporta l'altro.
+Il log di audit è disponibile in tutte le edizioni. L'invio a un SIEM richiede Semaphore Pro.
 
 ## Cosa viene registrato {#recorded-events}
 
-La versione attuale registra gli eventi supportati di autenticazione e gestione delle identità, tra cui:
+Attualmente Semaphore registra gli accessi e l'attività degli account:
 
-- accessi riusciti e non riusciti, disconnessioni e verifiche TOTP;
-- token API rifiutati, autorizzazioni negate e richieste cross-site bloccate;
-- modifiche a utenti, password, registrazione TOTP, identità esterne e token API;
-- modifiche ad appartenenza ai progetti, ruoli e autorizzazioni dei template;
-- modifiche alle impostazioni di sistema e attivazione della licenza Pro;
-- avvio dell'acquisizione degli eventi di audit insieme al server.
+- accessi, tentativi di accesso non riusciti, disconnessioni e verifiche del secondo fattore;
+- token API rifiutati, richieste negate e richieste cross-site bloccate;
+- modifiche a utenti, password, autenticazione a due fattori, identità esterne e token API;
+- modifiche ai membri del progetto, ai ruoli e ai permessi dei template;
+- modifiche alle impostazioni di sistema e l'attivazione della licenza Pro;
+- ogni avvio del server.
 
-Un accesso riuscito viene registrato dopo che l'utente ha completato tutti i passaggi di autenticazione
-richiesti, incluso TOTP. Per tutti gli eventi disponibili e quelli previsti per le versioni future, consulta
+Altri eventi verranno aggiunti nelle prossime versioni. Per l'elenco completo, consulta
 [Eventi di audit](/reference/audit-events).
 
-## Dati sensibili esclusi dagli eventi {#sensitive-data}
-
-Gli eventi di audit identificano un'azione senza copiarne le credenziali o il payload segreto. Escludono
-password, codici di accesso, segreti e codici QR TOTP, codici di recupero, cookie di sessione, token non
-elaborati, codici e claim OAuth, chiavi private, passphrase, valori segreti, valori di ambiente e dei sondaggi,
-corpi dei webhook, output delle attività e URL dei repository.
-
-I token API vengono identificati tramite un'impronta digitale, non tramite il loro valore. Un accesso non
-riuscito include l'identificativo di login immesso, troncato a 64 byte. Se gli utenti accedono con un indirizzo
-email, tale identificativo può contenere un indirizzo email.
+Password, token, valori segreti e output dei task non compaiono mai negli eventi di audit. I token API sono
+indicati da un'impronta invece che dal loro valore. Un accesso non riuscito conserva il nome di accesso
+inserito, che quindi può contenere un indirizzo email.
 
 ## Attivare il log di audit {#enable}
 
-Scegli un nome stabile per l'installazione, quindi imposta `audit.enabled` e `audit.instance_id` in
-`config.json`:
+Il log di audit è disattivato per impostazione predefinita. Per attivarlo, imposta `audit.enabled` e dai un
+nome alla tua installazione in `audit.instance_id`:
 
 ```json
 {
@@ -65,27 +44,24 @@ Scegli un nome stabile per l'installazione, quindi imposta `audit.enabled` e `au
 }
 ```
 
-L'ID dell'istanza deve contenere da 1 a 255 caratteri ASCII stampabili senza spazi. Compare in ogni evento e
-consente a un SIEM di distinguere più installazioni di Semaphore.
-
-In alternativa, utilizza le variabili d'ambiente:
+Oppure con le variabili d'ambiente:
 
 ```bash
 SEMAPHORE_AUDIT_ENABLED=true
 SEMAPHORE_AUDIT_INSTANCE_ID=prod-eu
 ```
 
-Riavvia Semaphore per applicare la modifica. L'acquisizione inizia dopo il riavvio; le attività precedenti non
-vengono aggiunte al log di audit. Il primo evento è `audit.lifecycle` con l'azione `start`.
+L'ID dell'istanza è composto da 1 a 255 caratteri senza spazi. Viene aggiunto a ogni evento, così puoi
+distinguere le tue installazioni quando inviano eventi allo stesso punto.
 
-Per tutte le opzioni e le variabili d'ambiente, consulta
-[Opzioni di configurazione](/reference/configuration#audit-log).
+Riavvia Semaphore. La registrazione inizia dopo il riavvio; le azioni precedenti non vengono aggiunte. Per
+tutte le opzioni, consulta [Opzioni di configurazione](/reference/configuration#audit-log).
 
 ## Registrare l'indirizzo del client dietro un proxy {#trusted-proxies}
 
-Per impostazione predefinita, un evento di audit HTTP registra l'indirizzo che si è connesso direttamente a
-Semaphore. Se tale indirizzo è un reverse proxy, aggiungi a `audit.trusted_proxy_cidrs` soltanto le reti dei
-proxy:
+Se Semaphore è dietro un reverse proxy, gli eventi mostrano l'indirizzo del proxy invece di quello
+dell'utente. Per registrare l'indirizzo reale del client, elenca le reti dei tuoi proxy in
+`audit.trusted_proxy_cidrs`:
 
 ```json
 {
@@ -97,42 +73,36 @@ proxy:
 }
 ```
 
-Oppure imposta:
+Oppure con le variabili d'ambiente:
 
 ```bash
 SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 ```
 
-Semaphore considera attendibili `X-Forwarded-For` e `X-Real-IP` solo se provengono da queste reti. Non
-aggiungere reti di client: un client in una rete attendibile potrebbe scegliere l'indirizzo sorgente registrato
-nei propri eventi. Quando più proxy aggiungono valori a `X-Forwarded-For`, Semaphore registra l'indirizzo più a
-destra che non appartiene a un proxy attendibile.
+Semaphore prende allora l'indirizzo del client da `X-Forwarded-For` o `X-Real-IP`, ma solo per le richieste
+che arrivano da queste reti. Se le richieste attraversano più proxy, elencali tutti. Non inserire le reti da
+cui si collegano i tuoi utenti: chiunque in quelle reti potrebbe impostare questi header su qualsiasi
+indirizzo.
 
-## Archiviazione e limitazioni {#storage}
+## Archiviazione {#storage}
 
-Semaphore archivia gli eventi di audit nel proprio database. Questa versione non dispone di un visualizzatore
-degli audit, di un'API di audit, né di conservazione o eliminazione automatica. Monitora la crescita del database
-e includi i dati di audit nei criteri di backup del database.
+Gli eventi sono salvati nel database di Semaphore, quindi i normali backup del database li includono.
+Semaphore non mostra gli eventi di audit nell'interfaccia e non elimina gli eventi vecchi, quindi tieni
+d'occhio la dimensione del database.
 
-La registrazione di audit non blocca l'azione registrata. Se l'archiviazione di un evento non riesce, Semaphore
-scrive un errore nel log del server e continua l'operazione originale. I record locali sono protetti dagli stessi
-controlli di accesso al database usati per il resto di Semaphore; non sono immutabili né protetti da manomissioni.
-
-Ogni avvio del server registra `audit.lifecycle/start`. Non è previsto un evento di arresto. Un arresto, un
-crash o la disattivazione del log di audit appaiono come un periodo privo di eventi prima di un evento di avvio
-successivo.
+Il log di audit non intralcia mai i tuoi utenti. Se un evento non può essere salvato, Semaphore scrive un
+errore nel log del server e l'azione prosegue normalmente.
 
 ## Esportare verso un SIEM <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-Semaphore Pro può inviare gli eventi acquisiti correttamente a un ricevitore Syslog TLS esistente, come rsyslog
-o Vector. Il ricevitore può archiviare gli eventi o inoltrarli al tuo SIEM.
+Semaphore Pro può inviare gli eventi di audit a un ricevitore Syslog tramite TLS, come rsyslog o Vector. Il
+ricevitore può salvarli o inoltrarli al tuo SIEM.
 
-Prima di iniziare, prepara:
+Ti servono:
 
 - il nome host e la porta del ricevitore;
-- un ID stabile per la destinazione, ad esempio `security-syslog`;
-- il certificato della CA che ha firmato il certificato del ricevitore, se la CA non è già considerata
-  attendibile dall'host Semaphore.
+- un nome per questa destinazione, ad esempio `security-syslog`;
+- il certificato della CA del ricevitore, se l'host di Semaphore non la considera già attendibile.
 
 Aggiungi `audit.syslog` a `config.json`:
 
@@ -152,7 +122,7 @@ Aggiungi `audit.syslog` a `config.json`:
 }
 ```
 
-Oppure utilizza le variabili d'ambiente:
+Oppure con le variabili d'ambiente:
 
 ```bash
 SEMAPHORE_AUDIT_SYSLOG_ID=security-syslog
@@ -162,47 +132,38 @@ SEMAPHORE_AUDIT_SYSLOG_SERVER_NAME=siem.example.com
 SEMAPHORE_AUDIT_SYSLOG_TIMEOUT=10s
 ```
 
-`id` e `address` sono obbligatori. Mantieni lo stesso ID quando modifichi l'indirizzo o il certificato del
-ricevitore, in modo che Semaphore riprenda dalla posizione salvata. Un nuovo ID inizia dagli eventi registrati
-dopo l'inizializzazione della destinazione; gli eventi già archiviati in quel momento non vengono inviati alla
-nuova destinazione.
+`id` e `address` sono obbligatori. Semaphore ricorda quali eventi ha già inviato a ogni destinazione,
+quindi mantieni lo stesso `id` quando cambi l'indirizzo o il certificato. Un nuovo `id` parte dagli eventi
+nuovi.
 
-`ca_file` aggiunge certificati all'archivio attendibile del sistema. `server_name` sostituisce il nome host
-verificato nel certificato del ricevitore. Semaphore richiede TLS 1.2 o versioni successive e verifica sempre il
-certificato del server. Non supporta la disattivazione della verifica né l'uso di un certificato client per questa
-connessione.
+Semaphore verifica sempre il certificato del ricevitore e usa TLS 1.2 o successivo. `ca_file` aggiunge la
+tua CA ai certificati attendibili e `server_name` imposta il nome da verificare nel certificato quando è
+diverso dall'indirizzo.
 
-Riavvia Semaphore. Impostazioni della destinazione non valide o un file CA illeggibile impediscono l'avvio di
-Semaphore.
+Riavvia Semaphore. Se le impostazioni non sono valide o il file della CA non è leggibile, Semaphore non si
+avvia.
 
-### Verificare la consegna {#verify-siem-delivery}
+### Verificare che gli eventi arrivino {#verify-siem-delivery}
 
-Dopo il riavvio, individua il nuovo evento sul ricevitore e verifica che:
+Semaphore registra un evento a ogni avvio. Dopo il riavvio, cercalo sul ricevitore: `event_code` è
+`audit.lifecycle`, `action` è `start` e `metadata.destinations` include l'ID della tua destinazione.
 
-- `event_code` sia `audit.lifecycle`;
-- `action` sia `start`;
-- `outcome` sia `success`;
-- `instance_id` corrisponda al nome configurato per l'installazione;
-- `metadata.destinations` contenga l'ID della destinazione.
+### Come vengono consegnati gli eventi {#delivery}
 
-### Comportamento della consegna {#delivery}
+- Se il ricevitore non è disponibile, gli eventi attendono nel database e vengono inviati quando torna. Gli
+  utenti non si accorgono di nulla.
+- Dopo errori di rete, riavvii o un failover HA, alcuni eventi possono arrivare due volte. Usa `event_id`
+  per scartare i duplicati e `seq` per ordinare gli eventi.
+- Se una connessione si interrompe senza errori, l'evento inviato in quel momento può andare perso.
+- In un'[installazione HA](/admin-guide/ha), un solo nodo alla volta invia gli eventi. Se Redis non è
+  disponibile, l'invio si ferma e gli eventi continuano a essere registrati.
 
-- Se il ricevitore non è disponibile, Semaphore conserva localmente gli eventi acquisiti e ne ritenta l'invio
-  quando il ricevitore torna disponibile. Le richieste degli utenti continuano normalmente.
-- La consegna tramite Syslog avviene secondo il principio best effort. Un evento scritto su una connessione che
-  si interrompe senza avvisare Semaphore può andare perso.
-- Errori di rete, riavvii e failover HA possono produrre consegne duplicate. Rimuovi i duplicati tramite
-  `event_id` e ordina gli eventi in base a `seq`.
-- In un'[installazione HA](/admin-guide/ha), normalmente un solo nodo alla volta invia eventi a una destinazione.
-  L'esportazione si interrompe se Redis non è disponibile, mentre l'acquisizione continua nel database condiviso.
+Ogni evento viene inviato come messaggio Syslog RFC 5424 con il JSON dell'evento come corpo. `HOSTNAME` è
+l'ID del nodo HA, oppure l'ID dell'istanza su un singolo nodo, e `MSGID` è il codice dell'evento.
 
-Semaphore invia messaggi RFC 5424 con TLS e framing con conteggio degli ottetti. Il corpo del messaggio contiene
-il JSON dell'evento di audit. `HOSTNAME` è l'ID del nodo HA oppure l'ID dell'istanza su un singolo nodo; `MSGID` è
-`event_code`.
+### Esempio rsyslog {#rsyslog}
 
-### Esempio di ricevitore rsyslog {#rsyslog}
-
-Questo frammento di configurazione rsyslog accetta la connessione TLS e scrive un oggetto JSON di evento per riga:
+Questa configurazione di rsyslog accetta la connessione TLS e scrive un evento per riga:
 
 ```text
 global(
@@ -222,9 +183,10 @@ ruleset(name="semaphore-audit") {
 }
 ```
 
-### Esempio di ricevitore Vector {#vector}
+### Esempio Vector {#vector}
 
-Questa configurazione Vector accetta la connessione TLS, analizza il JSON dell'evento e lo scrive in un file:
+Questa configurazione di Vector accetta la connessione TLS, legge il JSON dell'evento e lo scrive in un
+file:
 
 ```toml
 [sources.semaphore_audit]
@@ -249,27 +211,27 @@ encoding.codec = "json"
 
 ### Risolvere i problemi di esportazione {#troubleshoot-export}
 
-- Se Semaphore non si avvia, verifica che siano impostati sia `audit.syslog.id` sia `audit.syslog.address` e
-  che il file CA contenga certificati PEM leggibili.
-- Se TLS non funziona, verifica che il certificato del ricevitore sia valido per `server_name` e che la relativa
-  catena porti a una CA di sistema o configurata.
-- Se un evento non è ancora arrivato, controlla il log del server Semaphore e il log di acquisizione del
-  ricevitore. Dopo un errore, i tentativi di esportazione vengono effettuati con un ritardo.
-- Se gli eventi compaiono due volte, deduplicali tramite `event_id`; dopo alcuni tentativi e failover è prevista
-  la presenza di duplicati.
+- **Semaphore non si avvia.** Verifica che siano impostati sia `audit.syslog.id` sia `audit.syslog.address`
+  e che il file della CA contenga certificati PEM.
+- **La connessione TLS non riesce.** Verifica che il certificato del ricevitore corrisponda a `server_name`
+  e sia firmato da una CA considerata attendibile da Semaphore.
+- **Gli eventi non arrivano.** Controlla il log del server di Semaphore e il log del ricevitore. Dopo un
+  errore, Semaphore attende un po' prima di riprovare.
+- **Alcuni eventi arrivano due volte.** Può succedere dopo tentativi ripetuti e failover. Scarta i duplicati
+  tramite `event_id`.
 
-## Azioni prive di copertura di audit {#not-recorded}
+## Cosa non viene registrato {#not-recorded}
 
-Il comando `semaphore` modifica direttamente il database, pertanto le azioni CLI lato server come `user add` e
-`user token` non vengono registrate. L'accesso al server e al database deve essere controllato separatamente.
+Lo strumento da riga di comando `semaphore` lavora direttamente sul database, quindi comandi come
+`user add` e `user token` non vengono registrati.
 
-Questa versione non prevede inoltre eventi di audit per la rimozione della licenza, le impostazioni di runtime
-delle app, la cancellazione dello stato delle attività HA, gli alias degli inventari Terraform, le esecuzioni dei
-workflow o gli inviti ai progetti. Il [catalogo degli eventi](/reference/audit-events) indica gli eventi previsti
-per le versioni future.
+Alcune azioni dell'interfaccia non vengono ancora registrate: la rimozione di una licenza, le impostazioni
+delle app, la pulizia dello stato dei task HA, gli alias degli inventari Terraform, le esecuzioni dei
+workflow e gli inviti ai progetti. Per gli eventi previsti nelle prossime versioni, consulta
+[Eventi di audit](/reference/audit-events).
 
-## Passaggi successivi {#whats-next}
+## Prossimi passi {#whats-next}
 
-- [Eventi di audit](/reference/audit-events) — campi degli eventi, eventi disponibili e previsti e copertura della conformità.
+- [Eventi di audit](/reference/audit-events) — il formato degli eventi e tutti gli eventi registrati.
 - [Opzioni di configurazione](/reference/configuration#audit-log) — tutte le opzioni `audit.*` e le variabili d'ambiente.
-- [Log](/admin-guide/logs) — log del server, registro attività e log delle attività.
+- [Log](/admin-guide/logs) — log del server, delle attività e dei task.

@@ -1,17 +1,17 @@
 ---
 title: Audit events
-description: The audit event format and the complete catalog of available and planned events, with outcomes, reasons, editions and availability.
+description: The audit event format and every available and planned audit event, with its outcomes, reasons and edition.
 ---
 
 # Audit events
 
-This reference lists the events you can use for investigations, SIEM rules and compliance evidence. For setup instructions, see [Audit log](/admin-guide/audit-log).
+This page lists the audit events Semaphore records and the fields you can search and filter them by. To turn on the audit log, see [Audit log](/admin-guide/audit-log).
 
-**Available** events are recorded by the current release. **Planned** events are not recorded in this release and must not be used for current SIEM rules or compliance claims. **Edition** is the minimum Semaphore edition that can produce the event. SIEM export is a separate Pro feature.
+**Available** events are recorded now. **Planned** events will be added in a future release. **Edition** is the Semaphore edition that records the event.
 
 ## Event format {#event-format}
 
-Every exported event is a JSON object. Fields marked conditional are omitted when they do not apply.
+Every event is a JSON object. Fields that do not apply to an event are left out.
 
 | Field | When present | Meaning |
 | --- | --- | --- |
@@ -21,7 +21,7 @@ Every exported event is a JSON object. Fields marked conditional are omitted whe
 | `schema_version` | Always | Version of the event envelope. |
 | `category`, `event_code`, `type`, `action` | Always | Stable values that identify what happened. |
 | `outcome` | Always | `success` or `failure`. |
-| `reason` | Always | A documented reason on supported failures; empty on success. |
+| `reason` | Always | Why the action failed, if the event lists its reasons. Empty on success. |
 | `actor` | Always | The user, anonymous client, system component, runner or integration that acted. |
 | `source` | HTTP requests | Client IP address and, when available, User-Agent. |
 | `target` | When an object is identified | The object affected by the action. |
@@ -33,7 +33,7 @@ Every exported event is a JSON object. Fields marked conditional are omitted whe
 
 ## Authentication {#authentication}
 
-A successful `auth.login` means that sign-in is complete, including any required TOTP check. A failed MFA check produces an `auth.mfa` failure, not an additional `auth.login` failure.
+`auth.login` is recorded once sign-in is complete, including the TOTP check if the user has one. A wrong TOTP code is recorded as an `auth.mfa` failure.
 
 | Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -173,29 +173,7 @@ A successful `auth.login` means that sign-in is complete, including any required
 | `system.license` | `activate` | `change` | success, failure | `activation_failed` |  | Pro | Available |
 | `audit.lifecycle` | `start` | `start` | success |  | `destinations` | Community | Available |
 
-## Compliance coverage {#compliance-coverage}
-
-Audit events can provide evidence for parts of these controls. Semaphore does not make an installation compliant by itself. Planned coverage is not available in this release.
-
-| Requirement | Covered by | Status |
-| --- | --- | --- |
-| PCI DSS 10.2.1.1 access to sensitive data | `iam.mfa/view_qr` | Available |
-| PCI DSS 10.2.1.1 access to sensitive data | `resource.project_backup/export` | Planned |
-| PCI DSS 10.2.1.2 administrator actions / ISO 27002 8.15 use of privileges | `iam.*`, `system.*` | Available |
-| PCI DSS 10.2.1.2 administrator actions / ISO 27002 8.15 use of privileges | `resource.*`, `secret.*`, `runner.*`, `task.control`, `task.history` | Planned |
-| PCI DSS 10.2.1.3 access to audit logs | No Semaphore UI or API exposes the audit trail | Not applicable |
-| PCI DSS 10.2.1.4 invalid logical access attempts | `auth.login` failure, `auth.mfa` failure, `auth.api_token/reject`, `auth.authorization/deny`, `auth.csrf/block` | Available |
-| PCI DSS 10.2.1.4 invalid logical access attempts | `runner.lifecycle/register` failure | Planned |
-| PCI DSS 10.2.1.5 credential and identity changes | `iam.user*`, `iam.mfa`, `iam.api_token`, `iam.external_identity`, `iam.membership`, `iam.*role*` | Available |
-| PCI DSS 10.2.1.5 credential and identity changes | `runner.credential` | Planned |
-| PCI DSS 10.2.1.6 audit logging lifecycle | `audit.lifecycle/start`; a stop appears as a gap before the next start | Available |
-| PCI DSS 10.2.1.7 creation and deletion of system-level objects | `resource.*` create/delete | Planned |
-| PCI DSS 10.2.1.7 creation and deletion of system-level objects | `runner.lifecycle` create/delete | Planned |
-| PCI DSS 10.2.2 required fields | Event actor, action, timestamp, outcome, source or node ID, and target or scope | Available |
-| PCI DSS 10.3.3 central log server | Syslog over TLS | Available |
-| PCI DSS 10.3.3 central log server | HEC | Planned |
-
 ## Related pages {#related-pages}
 
-- [Audit log](/admin-guide/audit-log) — enable audit capture and send events to a SIEM.
+- [Audit log](/admin-guide/audit-log) — turn on the audit log and send events to a SIEM.
 - [Configuration options](/reference/configuration#audit-log) — every `audit.*` option and environment variable.

@@ -20,7 +20,7 @@ bemerken.
 | Seite | Inhalt |
 |---|---|
 | [Konfigurationsoptionen](/reference/configuration) | Jeder Schlüssel von `config.json` mit Umgebungsvariable, Typ und Standardwert. Erzeugt. |
-| [Audit-Ereignisse](/reference/audit-events) | Das Format der Audit-Ereignisse, verfügbare und geplante Ereignisse sowie die Compliance-Abdeckung. |
+| [Audit-Ereignisse](/reference/audit-events) | Das Format der Audit-Ereignisse und alle verfügbaren und geplanten Ereignisse. |
 | [CLI](/reference/cli) | Der Befehl `semaphore`: was jede Befehlsgruppe tut, wie die Konfigurationsdatei gefunden wird und eine erzeugte Liste aller Befehle und Flags. |
 | [API](/reference/api) | Authentifizierung mit einem Token und Aufruf der REST-Endpunkte. |
 

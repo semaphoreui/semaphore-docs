@@ -18,7 +18,7 @@ description: 설명이 아니라 정확한 값 - 설정 옵션, 명령줄, REST 
 | 페이지 | 다루는 내용 |
 |---|---|
 | [설정 옵션](/reference/configuration) | `config.json`의 모든 키와 해당 환경 변수, 타입, 기본값. 자동 생성됩니다. |
-| [감사 이벤트](/reference/audit-events) | 감사 이벤트 형식, 사용 가능한 이벤트와 예정된 이벤트 및 규정 준수 범위. |
+| [감사 이벤트](/reference/audit-events) | 감사 이벤트 형식과 사용 가능한 이벤트 및 예정된 이벤트 전체. |
 | [CLI](/reference/cli) | `semaphore` 명령: 각 명령 그룹이 하는 일, 설정 파일을 찾는 방식, 그리고 자동 생성된 모든 명령과 플래그 목록. |
 | [API](/reference/api) | 토큰으로 인증하고 REST 엔드포인트를 호출하기. |
 

@@ -178,15 +178,14 @@ Riavviare il servizio Semaphore dopo aver modificato questi valori affinché la 
 
 ## Integrazione SIEM {#siem-integration}
 
-Le azioni rilevanti per la sicurezza (accessi, MFA, modifiche a utenti e permessi, token API, impostazioni di sistema) sono registrate nel [log di audit](/admin-guide/audit-log), che Semaphore Pro può
-[inviare a un SIEM](/admin-guide/audit-log#siem-export) tramite Syslog+TLS. Il log delle attività sopra è un feed per gli utenti,
-non una traccia di audit.
+Gli accessi e le modifiche agli account, come nuovi utenti, ruoli e token API, possono essere registrati
+nel [log di audit](/admin-guide/audit-log). Semaphore Pro può [inviarlo a un SIEM](/admin-guide/audit-log#siem-export).
 
 ## Riepilogo {#summary}
 
 - **Log del server:** scritto su stdout; consultabile tramite `journalctl` se in esecuzione sotto systemd.  
 - **Registro attività e log delle attività:** traccia tutte le azioni degli utenti. Facoltativamente, **Pro 2.10+** può scriverli su file.  
 - **Cronologia delle attività:** memorizza i log di esecuzione delle attività in tempo reale e storici. La conservazione è configurabile per template.
-- **Log di audit:** registra le azioni di autenticazione e amministrative supportate per le indagini di sicurezza.
+- **Log di audit:** registra gli accessi e le modifiche agli account. Disattivato per impostazione predefinita.
 
 Seguendo queste linee guida si ottiene una visibilità adeguata sulle operazioni di Semaphore UI, mantenendo sotto controllo l'utilizzo dello spazio di archiviazione e la conservazione dei log.

@@ -17,7 +17,7 @@ description: 给出精确取值而非解释——配置选项、命令行和 RES
 | 页面 | 涵盖内容 |
 |---|---|
 | [配置选项](/reference/configuration) | `config.json` 的每一个键，及其环境变量、类型和默认值。自动生成。 |
-| [审计事件](/reference/audit-events) | 审计事件格式、可用及计划中的事件，以及合规覆盖范围。 |
+| [审计事件](/reference/audit-events) | 审计事件格式，以及所有可用和计划中的事件。 |
 | [CLI](/reference/cli) | `semaphore` 命令：每个命令组的作用、配置文件的查找方式，以及自动生成的全部命令和参数列表。 |
 | [API](/reference/api) | 使用令牌认证并调用 REST 端点。 |
 

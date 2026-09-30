@@ -1,59 +1,39 @@
 ---
 title: Dnevnik revizije
-description: Uključite bezbednosni dnevnik revizije, saznajte šta beleži i šaljite događaje revizije iz Semaphore Pro u SIEM preko Syslog-a sa TLS-om.
+description: Uključite dnevnik revizije da biste videli ko je šta uradio u Semaphore-u i šaljite događaje revizije iz Semaphore Pro u SIEM.
 ---
 
 # Dnevnik revizije
 
-Dnevnik revizije beleži aktivnosti važne za bezbednost: ko je izvršio radnju, šta je uradio, na koji objekat
-je uticao, odakle je zahtev stigao i da li je uspeo. Administratori ga koriste za istraživanje izmena, dok
-bezbednosni timovi koriste njegov dokumentovani format događaja za pravila otkrivanja i dokaze o usklađenosti.
+Dnevnik revizije beleži važne radnje u Semaphore-u: ko se prijavio, ko je izmenio korisnika ili ulogu, ko je
+napravio API token. Svaki događaj pokazuje ko je to uradio, kada, sa koje adrese i da li je uspelo.
+Koristite ga da saznate šta se desilo u vašoj instalaciji ili šaljite događaje u svoj SIEM da budu uz
+ostale dnevnike.
 
-Beleženje događaja revizije i lokalno skladištenje dostupni su u izdanju Semaphore Community. Semaphore Pro
-može i da šalje zabeležene događaje u sistem za upravljanje bezbednosnim informacijama i događajima (SIEM).
-
-## Po čemu se razlikuje od drugih dnevnika {#log-types}
-
-| Dnevnik | Koristite ga za |
-| --- | --- |
-| Serverski dnevnik | Dijagnostikovanje grešaka pri pokretanju, konfiguraciji i radu Semaphore-a. |
-| Dnevnik aktivnosti | Prikaz aktivnosti projekta korisnicima projekta. |
-| Dnevnik i istorija zadataka | Pregled izvršavanja, statusa i izlaza zadataka. |
-| Dnevnik revizije | Istraživanje autentifikacije i administrativnih radnji u celoj instalaciji. |
-
-Dnevnik revizije je nezavisan od [dnevnika aktivnosti](/admin-guide/logs#activity-log). Uključivanje ili izvoz
-jednog dnevnika ne uključuje niti izvozi drugi.
+Dnevnik revizije je dostupan u svim izdanjima. Za slanje događaja u SIEM potreban je Semaphore Pro.
 
 ## Šta se beleži {#recorded-events}
 
-Trenutno izdanje beleži podržane događaje autentifikacije i upravljanja identitetima, uključujući:
+Semaphore trenutno beleži prijave i aktivnost naloga:
 
-- uspešne i neuspešne prijave, odjave i TOTP provere;
-- odbijene API tokene, uskraćene dozvole i blokirane zahteve sa drugih sajtova;
-- izmene korisnika, lozinki, TOTP registracije, spoljnih identiteta i API tokena;
-- izmene članstva u projektu, uloga i dozvola šablona;
-- izmene sistemskih podešavanja i aktiviranje Pro licence;
-- početak beleženja revizije pri pokretanju servera.
+- prijave, neuspele pokušaje prijave, odjave i provere drugog faktora;
+- odbijene API tokene, odbijene zahteve i blokirane međusajtne zahteve;
+- izmene korisnika, lozinki, dvofaktorske autentifikacije, spoljnih identiteta i API tokena;
+- izmene članova projekta, uloga i dozvola za šablone;
+- izmene sistemskih podešavanja i aktivaciju Pro licence;
+- svako pokretanje servera.
 
-Uspešna prijava beleži se nakon što korisnik završi sve potrebne korake autentifikacije, uključujući TOTP.
-Sve dostupne događaje i događaje planirane za kasnija izdanja pogledajte u odeljku
+U narednim verzijama biće dodato još događaja. Kompletna lista je na stranici
 [Događaji revizije](/reference/audit-events).
 
-## Osetljivi podaci izostavljeni iz događaja {#sensitive-data}
-
-Događaji revizije identifikuju radnju bez kopiranja njenih akreditiva ili tajnog sadržaja. Ne sadrže lozinke,
-pristupne kodove, TOTP tajne i QR kodove, kodove za oporavak, kolačiće sesije, neobrađene tokene, OAuth kodove
-i tvrdnje, privatne ključeve, pristupne fraze, tajne vrednosti, vrednosti okruženja i anketa, tela webhook
-zahteva, izlaz zadataka ni URL-ove repozitorijuma.
-
-API tokeni se identifikuju otiskom, a ne svojom vrednošću. Neuspešna prijava sadrži uneti identifikator za
-prijavu, skraćen na 64 bajta. Ako se korisnici prijavljuju adresom e-pošte, taj identifikator može da sadrži
+Lozinke, tokeni, tajne vrednosti i izlaz zadataka nikada se ne pojavljuju u događajima revizije. API tokeni
+se prikazuju otiskom umesto vrednošću. Neuspela prijava čuva uneto korisničko ime, pa ono može sadržati
 adresu e-pošte.
 
-## Uključite dnevnik revizije {#enable}
+## Uključivanje dnevnika revizije {#enable}
 
-Izaberite stabilno ime instalacije, a zatim podesite `audit.enabled` i `audit.instance_id` u datoteci
-`config.json`:
+Dnevnik revizije je podrazumevano isključen. Da biste ga uključili, podesite `audit.enabled` i dajte
+instalaciji ime u `audit.instance_id`:
 
 ```json
 {
@@ -64,26 +44,23 @@ Izaberite stabilno ime instalacije, a zatim podesite `audit.enabled` i `audit.in
 }
 ```
 
-ID instance mora da sadrži od 1 do 255 ASCII znakova za štampanje bez razmaka. Pojavljuje se u svakom
-događaju i omogućava SIEM-u da razlikuje više instalacija Semaphore-a.
-
-Možete koristiti i promenljive okruženja:
+Ili pomoću promenljivih okruženja:
 
 ```bash
 SEMAPHORE_AUDIT_ENABLED=true
 SEMAPHORE_AUDIT_INSTANCE_ID=prod-eu
 ```
 
-Ponovo pokrenite Semaphore da biste primenili izmenu. Beleženje počinje nakon ponovnog pokretanja; prethodne
-aktivnosti se ne dodaju u dnevnik revizije. Prvi događaj je `audit.lifecycle` sa radnjom `start`.
+ID instance ima od 1 do 255 znakova bez razmaka. Dodaje se svakom događaju, pa možete razlikovati svoje
+instalacije kada šalju događaje na isto mesto.
 
-Sve opcije i promenljive okruženja pogledajte u odeljku
-[Opcije konfiguracije](/reference/configuration#audit-log).
+Ponovo pokrenite Semaphore. Beleženje počinje posle ponovnog pokretanja; ranije radnje se ne dodaju. Sve
+opcije su opisane na stranici [Opcije konfiguracije](/reference/configuration#audit-log).
 
-## Beležite adresu klijenta iza proksija {#trusted-proxies}
+## Beleženje adrese klijenta iza proksija {#trusted-proxies}
 
-HTTP događaj revizije podrazumevano beleži adresu koja se direktno povezala sa Semaphore-om. Ako je ta adresa
-reverzni proksi, dodajte samo mreže proksija u `audit.trusted_proxy_cidrs`:
+Ako Semaphore radi iza reverznog proksija, događaji prikazuju adresu proksija umesto adrese korisnika. Da
+biste beležili stvarnu adresu klijenta, navedite mreže svojih proksija u `audit.trusted_proxy_cidrs`:
 
 ```json
 {
@@ -95,40 +72,34 @@ reverzni proksi, dodajte samo mreže proksija u `audit.trusted_proxy_cidrs`:
 }
 ```
 
-Ili podesite:
+Ili pomoću promenljivih okruženja:
 
 ```bash
 SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 ```
 
-Semaphore veruje zaglavljima `X-Forwarded-For` i `X-Real-IP` samo kada stižu iz ovih mreža. Nemojte dodavati
-mreže klijenata: klijent u pouzdanoj mreži mogao bi da izabere izvornu adresu koja se beleži u njegovim
-događajima. Kada više proksija dopunjava `X-Forwarded-For`, Semaphore beleži krajnju desnu adresu koja nije
-pouzdani proksi.
+Semaphore tada uzima adresu klijenta iz `X-Forwarded-For` ili `X-Real-IP`, ali samo za zahteve koji dolaze
+iz tih mreža. Ako zahtevi prolaze kroz više proksija, navedite ih sve. Ne navodite mreže iz kojih se
+povezuju vaši korisnici: bilo ko u njima mogao bi da upiše bilo koju adresu u ta zaglavlja.
 
-## Skladištenje i ograničenja {#storage}
+## Čuvanje {#storage}
 
-Semaphore čuva događaje revizije u svojoj bazi podataka. Ovo izdanje nema preglednik revizije, API za
-reviziju, automatsko zadržavanje ni čišćenje. Pratite rast baze podataka i uključite podatke revizije u pravila
-za pravljenje rezervnih kopija baze podataka.
+Događaji se čuvaju u bazi podataka Semaphore-a, pa ih vaše uobičajene rezervne kopije baze sadrže. Semaphore
+ne prikazuje događaje revizije u interfejsu i ne briše stare događaje, zato pratite veličinu baze.
 
-Beleženje revizije ne blokira radnju koja se beleži. Ako čuvanje događaja ne uspe, Semaphore upisuje grešku u
-serverski dnevnik i nastavlja prvobitnu operaciju. Lokalni zapisi zaštićeni su istim kontrolama pristupa bazi
-podataka kao i ostatak Semaphore-a; nisu nepromenljivi niti omogućavaju otkrivanje neovlašćenih izmena.
-
-Svako pokretanje servera beleži `audit.lifecycle/start`. Događaj zaustavljanja ne postoji. Gašenje, pad ili
-isključen dnevnik revizije vide se kao period bez događaja pre kasnijeg događaja pokretanja.
+Dnevnik revizije nikada ne smeta vašim korisnicima. Ako događaj ne može da se sačuva, Semaphore upisuje
+grešku u dnevnik servera, a radnja se nastavlja kao i obično.
 
 ## Izvoz u SIEM <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-Semaphore Pro može da šalje uspešno zabeležene događaje postojećem TLS Syslog prijemniku, kao što su rsyslog
-ili Vector. Prijemnik može da čuva događaje ili da ih prosleđuje vašem SIEM-u.
+Semaphore Pro može da šalje događaje revizije Syslog prijemniku preko TLS-a, na primer rsyslog-u ili
+Vector-u. Prijemnik može da ih čuva ili prosleđuje vašem SIEM-u.
 
-Pre nego što počnete, pripremite:
+Biće vam potrebni:
 
 - ime hosta i port prijemnika;
-- stabilan ID odredišta, kao što je `security-syslog`;
-- CA sertifikat kojim je potpisan sertifikat prijemnika, ako host Semaphore-a već ne veruje tom CA sertifikatu.
+- ime za ovo odredište, na primer `security-syslog`;
+- CA sertifikat prijemnika, ako mu host Semaphore-a još ne veruje.
 
 Dodajte `audit.syslog` u `config.json`:
 
@@ -148,7 +119,7 @@ Dodajte `audit.syslog` u `config.json`:
 }
 ```
 
-Ili koristite promenljive okruženja:
+Ili pomoću promenljivih okruženja:
 
 ```bash
 SEMAPHORE_AUDIT_SYSLOG_ID=security-syslog
@@ -158,45 +129,38 @@ SEMAPHORE_AUDIT_SYSLOG_SERVER_NAME=siem.example.com
 SEMAPHORE_AUDIT_SYSLOG_TIMEOUT=10s
 ```
 
-`id` i `address` su obavezni. Zadržite isti ID kada menjate adresu ili sertifikat prijemnika kako bi Semaphore
-nastavio od sačuvane pozicije. Novi ID počinje od događaja zabeleženih nakon inicijalizacije tog odredišta;
-događaji koji su tada već bili sačuvani ne šalju se na njega.
+`id` i `address` su obavezni. Semaphore pamti koje je događaje već poslao svakom odredištu, zato zadržite
+isti `id` kada menjate adresu ili sertifikat. Novi `id` počinje od novih događaja.
 
-`ca_file` dodaje sertifikate u sistemsko skladište pouzdanih sertifikata. `server_name` zamenjuje ime hosta
-koje se proverava u sertifikatu prijemnika. Semaphore zahteva TLS 1.2 ili noviji i uvek proverava sertifikat
-servera. Ne podržava isključivanje provere ni korišćenje klijentskog sertifikata za ovu vezu.
+Semaphore uvek proverava sertifikat prijemnika i koristi TLS 1.2 ili noviji. `ca_file` dodaje vaš CA među
+pouzdane sertifikate, a `server_name` zadaje ime koje se proverava u sertifikatu kada se razlikuje od
+adrese.
 
-Ponovo pokrenite Semaphore. Nevažeća podešavanja odredišta ili nečitljiva CA datoteka sprečavaju pokretanje
-Semaphore-a.
+Ponovo pokrenite Semaphore. Ako su podešavanja neispravna ili CA datoteka ne može da se pročita, Semaphore
+se neće pokrenuti.
 
-### Proverite isporuku {#verify-siem-delivery}
+### Provera da događaji stižu {#verify-siem-delivery}
 
-Nakon ponovnog pokretanja, pronađite novi događaj na prijemniku i potvrdite:
+Semaphore beleži događaj pri svakom pokretanju. Posle ponovnog pokretanja potražite ga na prijemniku:
+`event_code` je `audit.lifecycle`, `action` je `start`, a `metadata.destinations` sadrži ID vašeg
+odredišta.
 
-- da je `event_code` postavljen na `audit.lifecycle`;
-- da je `action` postavljen na `start`;
-- da je `outcome` postavljen na `success`;
-- da se `instance_id` podudara sa podešenim imenom instalacije;
-- da `metadata.destinations` sadrži ID odredišta.
+### Kako se događaji isporučuju {#delivery}
 
-### Ponašanje isporuke {#delivery}
+- Ako prijemnik nije dostupan, događaji čekaju u bazi podataka i šalju se kada se vrati. Korisnici ništa ne
+  primećuju.
+- Posle mrežnih grešaka, ponovnih pokretanja ili HA failover-a neki događaji mogu stići dvaput. Koristite
+  `event_id` da odbacite duplikate i `seq` da poređate događaje.
+- Ako se veza prekine bez greške, događaj poslat u tom trenutku može da se izgubi.
+- U [HA instalaciji](/admin-guide/ha) događaje šalje jedan po jedan čvor. Ako Redis nije dostupan, slanje se
+  pauzira, a događaji se i dalje beleže.
 
-- Ako prijemnik nije dostupan, Semaphore zadržava zabeležene događaje lokalno i pokušava ponovo kada prijemnik
-  postane dostupan. Korisnički zahtevi se normalno nastavljaju.
-- Isporuka preko Syslog-a obavlja se bez garancije. Događaj upisan u vezu koja otkaže bez obaveštavanja
-  Semaphore-a može biti izgubljen.
-- Mrežne greške, ponovna pokretanja i HA prebacivanje mogu dovesti do duplih isporuka. Uklonite duplikate po
-  vrednosti `event_id`, a događaje poređajte po vrednosti `seq`.
-- U [HA instalaciji](/admin-guide/ha) jedan čvor obično šalje na odredište u datom trenutku. Izvoz se pauzira
-  ako Redis nije dostupan, dok se beleženje nastavlja u deljenoj bazi podataka.
+Svaki događaj se šalje kao Syslog poruka po RFC 5424 sa JSON-om događaja kao telom. `HOSTNAME` je ID HA
+čvora, ili ID instance na jednom čvoru, a `MSGID` je kôd događaja.
 
-Semaphore šalje poruke po standardu RFC 5424 preko TLS-a i sa uokvirivanjem brojem okteta. Telo poruke sadrži
-JSON događaja revizije. `HOSTNAME` je ID HA čvora ili ID instance kada postoji samo jedan čvor; `MSGID` je
-`event_code`.
+### Primer za rsyslog {#rsyslog}
 
-### Primer rsyslog prijemnika {#rsyslog}
-
-Ovaj fragment konfiguracije za rsyslog prihvata TLS vezu i upisuje po jedan JSON objekat događaja u svaki red:
+Ova rsyslog konfiguracija prihvata TLS vezu i upisuje po jedan događaj u red:
 
 ```text
 global(
@@ -216,9 +180,9 @@ ruleset(name="semaphore-audit") {
 }
 ```
 
-### Primer Vector prijemnika {#vector}
+### Primer za Vector {#vector}
 
-Ova konfiguracija za Vector prihvata TLS vezu, obrađuje JSON događaja i upisuje ga u datoteku:
+Ova Vector konfiguracija prihvata TLS vezu, čita JSON događaja i upisuje ga u datoteku:
 
 ```toml
 [sources.semaphore_audit]
@@ -243,26 +207,26 @@ encoding.codec = "json"
 
 ### Rešavanje problema sa izvozom {#troubleshoot-export}
 
-- Ako se Semaphore ne pokrene, proverite da li su podešeni i `audit.syslog.id` i `audit.syslog.address` i da li
-  CA datoteka sadrži čitljive PEM sertifikate.
-- Ako TLS veza ne uspe, proverite da li sertifikat prijemnika važi za `server_name` i da li mu se lanac završava
-  sistemskim ili podešenim CA sertifikatom.
-- Ako događaj još nije stigao, proverite serverski dnevnik Semaphore-a i dnevnik prijema na prijemniku. Nakon
-  neuspeha ponovni pokušaji izvoza koriste odlaganje.
-- Ako se događaji pojavljuju dvaput, uklonite duplikate po vrednosti `event_id`; duplikati se očekuju nakon
-  nekih ponovnih pokušaja i prebacivanja.
+- **Semaphore se ne pokreće.** Proverite da su podešeni i `audit.syslog.id` i `audit.syslog.address` i da
+  CA datoteka sadrži PEM sertifikate.
+- **TLS veza ne uspeva.** Proverite da sertifikat prijemnika odgovara `server_name` i da ga je potpisao CA
+  kome Semaphore veruje.
+- **Događaji ne stižu.** Proverite dnevnik servera Semaphore-a i dnevnik prijemnika. Posle greške Semaphore
+  malo sačeka pre ponovnog pokušaja.
+- **Neki događaji stižu dvaput.** To se može desiti posle ponovljenih pokušaja i failover-a. Odbacite
+  duplikate prema `event_id`.
 
-## Radnje bez pokrivenosti revizijom {#not-recorded}
+## Šta se ne beleži {#not-recorded}
 
-Komanda `semaphore` direktno menja bazu podataka, pa se CLI radnje na serveru, kao što su `user add` i
-`user token`, ne beleže. Pristup serveru i bazi podataka mora se zasebno kontrolisati.
+Alat komandne linije `semaphore` radi direktno sa bazom podataka, pa se komande kao što su `user add` i
+`user token` ne beleže.
 
-Ovo izdanje takođe nema događaj revizije za uklanjanje licence, podešavanja aplikacije tokom rada, brisanje
-stanja HA zadataka, alijase Terraform inventara, pokretanja radnih tokova ni pozivnice u projekte.
-[Katalog događaja](/reference/audit-events) označava događaje planirane za kasnija izdanja.
+Neke radnje u interfejsu se još ne beleže: uklanjanje licence, podešavanja aplikacija, brisanje stanja HA
+zadataka, aliasi Terraform inventara, pokretanja workflow-a i pozivnice u projekat. Događaji planirani za
+naredne verzije navedeni su na stranici [Događaji revizije](/reference/audit-events).
 
 ## Šta dalje {#whats-next}
 
-- [Događaji revizije](/reference/audit-events) — polja događaja, dostupni i planirani događaji i pokrivenost usklađenosti.
-- [Opcije konfiguracije](/reference/configuration#audit-log) — sve opcije `audit.*` i promenljive okruženja.
-- [Dnevnici](/admin-guide/logs) — serverski dnevnik, dnevnik aktivnosti i dnevnici zadataka.
+- [Događaji revizije](/reference/audit-events) — format događaja i svi događaji koji se beleže.
+- [Opcije konfiguracije](/reference/configuration#audit-log) — sve `audit.*` opcije i promenljive okruženja.
+- [Dnevnici](/admin-guide/logs) — dnevnici servera, aktivnosti i zadataka.

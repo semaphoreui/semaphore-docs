@@ -183,16 +183,14 @@ Restart the Semaphore service after changing these values so that the new syslog
 
 ## SIEM integration {#siem-integration}
 
-Security-relevant actions (logins, MFA, user and permission changes, API tokens, system settings) are
-recorded in the [audit log](/admin-guide/audit-log), which Semaphore Pro can
-[send to a SIEM](/admin-guide/audit-log#siem-export) over Syslog+TLS. The Activity log above is a user-facing feed,
-not an audit trail.
+Sign-ins and account changes, such as new users, roles and API tokens, can be recorded in the
+[audit log](/admin-guide/audit-log). Semaphore Pro can [send it to a SIEM](/admin-guide/audit-log#siem-export).
 
 ## Summary {#summary}
 
 - **Server log:** Written to stdout; viewable via `journalctl` if running under systemd.  
 - **Activity and tasks log:** Tracks all user actions. Optionally, **Pro 2.10+** can write these to a file.  
 - **Task history:** Stores real-time and historical task execution logs. Retention is configurable per template.
-- **Audit log:** Records supported authentication and administrative actions for security investigations.
+- **Audit log:** Records sign-ins and account changes. Off by default.
 
 Following these guidelines ensures you have proper visibility into Semaphore UI operations while controlling storage usage and log retention.

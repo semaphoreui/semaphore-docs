@@ -18,7 +18,7 @@ put promeni, a niko to ne bi primetio.
 | Stranica | Šta obrađuje |
 |---|---|
 | [Opcije konfiguracije](/reference/configuration) | Svaki ključ datoteke `config.json` sa svojom promenljivom okruženja, tipom i podrazumevanom vrednošću. Generisano. |
-| [Događaji revizije](/reference/audit-events) | Format događaja revizije, dostupni i planirani događaji i pokrivenost usklađenosti. |
+| [Događaji revizije](/reference/audit-events) | Format događaja revizije i svi dostupni i planirani događaji. |
 | [CLI](/reference/cli) | Komanda `semaphore`: šta radi svaka grupa komandi, kako se pronalazi datoteka konfiguracije i generisani spisak svih komandi i opcija. |
 | [API](/reference/api) | Autentifikacija tokenom i pozivanje REST krajnjih tačaka. |
 

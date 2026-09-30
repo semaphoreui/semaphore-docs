@@ -18,7 +18,7 @@ go stale the first time an option changed, and nobody would notice.
 | Page | What it covers |
 |---|---|
 | [Configuration options](/reference/configuration) | Every key of `config.json` with its environment variable, type, and default. Generated. |
-| [Audit events](/reference/audit-events) | The audit event format, available and planned events, and compliance coverage. |
+| [Audit events](/reference/audit-events) | The audit event format and every available and planned audit event. |
 | [CLI](/reference/cli) | The `semaphore` command: what each command group does, how the configuration file is found, and a generated list of every command and flag. |
 | [API](/reference/api) | Authenticating with a token and calling the REST endpoints. |
 
