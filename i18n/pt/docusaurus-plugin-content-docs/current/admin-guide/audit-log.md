@@ -14,12 +14,14 @@ O log de auditoria está disponível em todas as edições. Enviar eventos para 
 
 ## O que é registrado {#recorded-events}
 
-Atualmente o Semaphore registra entradas e atividades de contas:
+Atualmente o Semaphore registra entradas e atividades de contas e projetos:
 
 - entradas, tentativas de entrada com falha, saídas e verificações do segundo fator;
 - tokens de API rejeitados, solicitações negadas e solicitações entre sites bloqueadas;
 - alterações em usuários, senhas, autenticação de dois fatores, identidades externas e tokens de API;
 - alterações em membros do projeto, funções e permissões de modelos;
+- alterações em projetos, inventários, repositórios, modelos, agendamentos, integrações, configurações de host,
+  ambientes, credenciais e armazenamentos de segredos, e exportações e restaurações de backups de projeto;
 - alterações nas configurações do sistema e a ativação da licença Pro;
 - cada início do servidor.
 
@@ -29,6 +31,10 @@ Mais eventos serão adicionados em versões futuras. Para a lista completa, cons
 Senhas, tokens, valores secretos e a saída das tarefas nunca aparecem nos eventos de auditoria. Tokens de
 API são mostrados por uma impressão digital em vez do seu valor. Uma entrada com falha guarda o nome de
 login digitado, que pode conter um endereço de e-mail.
+
+URLs de repositórios, URLs de configurações de host e aliases de integrações também não são registrados. Se um
+ambiente é salvo, mas um de seus segredos falha, a API retorna um erro, embora o ambiente exista. O evento é então
+um sucesso com `metadata.partial=true` e `reason=secret_failed`.
 
 ## Ativar o log de auditoria {#enable}
 
@@ -223,9 +229,10 @@ A ferramenta de linha de comando `semaphore` trabalha diretamente com o banco de
 `user add` e `user token` não são registrados.
 
 Algumas ações na interface ainda não são registradas: remover uma licença, configurações de apps, limpar o
-estado das tarefas de HA, aliases de inventários do Terraform, execuções de workflows e convites para
-projetos. Para os eventos previstos em versões futuras, consulte
-[Eventos de auditoria](/reference/audit-events).
+estado das tarefas de HA, aliases de inventários do Terraform, excluir um estado do Terraform, execuções de
+workflows e convites para projetos. Descrições de modelos, visualizações, a limpeza do cache do projeto e as
+sincronizações agendadas de armazenamentos de segredos também não são registradas. Para os eventos previstos em
+versões futuras, consulte [Eventos de auditoria](/reference/audit-events).
 
 ## Próximos passos {#whats-next}
 

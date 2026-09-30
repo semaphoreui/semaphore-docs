@@ -14,12 +14,14 @@ Das Audit-Protokoll ist in jeder Edition verfügbar. Für das Senden an ein SIEM
 
 ## Was aufgezeichnet wird {#recorded-events}
 
-Derzeit zeichnet Semaphore Anmeldungen und Kontoaktivitäten auf:
+Derzeit zeichnet Semaphore Anmeldungen, Konto- und Projektaktivitäten auf:
 
 - Anmeldungen, fehlgeschlagene Anmeldeversuche, Abmeldungen und Prüfungen des zweiten Faktors;
 - abgelehnte API-Tokens, verweigerte Anfragen und blockierte Cross-Site-Anfragen;
 - Änderungen an Benutzern, Passwörtern, Zwei-Faktor-Authentifizierung, externen Identitäten und API-Tokens;
 - Änderungen an Projektmitgliedern, Rollen und Vorlagenberechtigungen;
+- Änderungen an Projekten, Inventaren, Repositories, Vorlagen, Zeitplänen, Integrationen, Host-Konfigurationen,
+  Umgebungen, Zugangsdaten und Geheimnisspeichern sowie Exporte und Wiederherstellungen von Projektsicherungen;
 - Änderungen an Systemeinstellungen und die Aktivierung der Pro-Lizenz;
 - jeden Serverstart.
 
@@ -29,6 +31,10 @@ In künftigen Versionen kommen weitere Ereignisse hinzu. Die vollständige Liste
 Passwörter, Tokens, geheime Werte und Aufgabenausgaben erscheinen nie in Audit-Ereignissen. API-Tokens werden
 über einen Fingerabdruck statt über ihren Wert angezeigt. Eine fehlgeschlagene Anmeldung speichert den
 eingegebenen Anmeldenamen, der daher eine E-Mail-Adresse enthalten kann.
+
+Repository-URLs, Host-Konfigurations-URLs und Integrations-Aliase werden ebenfalls nicht aufgezeichnet. Wird eine
+Umgebung gespeichert, aber eines ihrer Geheimnisse schlägt fehl, liefert die API einen Fehler, obwohl die Umgebung
+existiert. Das Ereignis ist dann ein Erfolg mit `metadata.partial=true` und `reason=secret_failed`.
 
 ## Das Audit-Protokoll aktivieren {#enable}
 
@@ -225,9 +231,10 @@ Das Kommandozeilenwerkzeug `semaphore` arbeitet direkt mit der Datenbank, daher 
 `user add` und `user token` nicht aufgezeichnet.
 
 Einige Aktionen in der Oberfläche werden noch nicht aufgezeichnet: das Entfernen einer Lizenz,
-App-Einstellungen, das Zurücksetzen des HA-Aufgabenstatus, Terraform-Inventar-Aliase, Workflow-Läufe und
-Projekteinladungen. Die für künftige Versionen geplanten Ereignisse finden Sie unter
-[Audit-Ereignisse](/reference/audit-events).
+App-Einstellungen, das Zurücksetzen des HA-Aufgabenstatus, Terraform-Inventar-Aliase, das Löschen eines
+Terraform-Status, Workflow-Läufe und Projekteinladungen. Auch Vorlagenbeschreibungen, Ansichten, das Leeren des
+Projekt-Caches und geplante Synchronisierungen von Geheimnisspeichern werden nicht aufgezeichnet. Die für künftige
+Versionen geplanten Ereignisse finden Sie unter [Audit-Ereignisse](/reference/audit-events).
 
 ## Wie geht es weiter {#whats-next}
 

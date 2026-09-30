@@ -80,61 +80,61 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 
 | Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `resource.project` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `resource.project` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.project` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `resource.project_backup` | `export` | `access` | success |  | Defined when available | Community | Planned |
-| `resource.project_backup` | `restore` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.inventory` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `resource.inventory` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.inventory` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `resource.repository` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `resource.repository` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.repository` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `resource.template` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `resource.template` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.template` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `resource.template` | `attach_inventory` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.template` | `detach_inventory` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.template` | `set_default_inventory` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.schedule` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `resource.schedule` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.schedule` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `resource.schedule` | `activate` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.schedule` | `deactivate` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.integration` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `resource.integration` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.integration` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `resource.integration_matcher` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `resource.integration_matcher` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.integration_matcher` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `resource.integration_extractor` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `resource.integration_extractor` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.integration_extractor` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `resource.integration_alias` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `resource.integration_alias` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `resource.host_config` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `resource.host_config` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.host_config` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `resource.workflow` | `create` | `creation` | success |  | Defined when available | Pro | Planned |
-| `resource.workflow` | `update` | `change` | success |  | Defined when available | Pro | Planned |
-| `resource.workflow` | `delete` | `deletion` | success |  | Defined when available | Pro | Planned |
-| `resource.environment` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `resource.environment` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `resource.environment` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `resource.environment` | `sync` | `change` | success |  | Defined when available | Community | Planned |
+| `resource.project` | `create` | `creation` | success |  | `demo` | Community | Available |
+| `resource.project` | `update` | `change` | success |  |  | Community | Available |
+| `resource.project` | `delete` | `deletion` | success |  |  | Community | Available |
+| `resource.project_backup` | `export` | `access` | success |  |  | Community | Available |
+| `resource.project_backup` | `restore` | `creation` | success |  | `objects` | Community | Available |
+| `resource.inventory` | `create` | `creation` | success |  |  | Community | Available |
+| `resource.inventory` | `update` | `change` | success |  |  | Community | Available |
+| `resource.inventory` | `delete` | `deletion` | success |  |  | Community | Available |
+| `resource.repository` | `create` | `creation` | success |  |  | Community | Available |
+| `resource.repository` | `update` | `change` | success |  |  | Community | Available |
+| `resource.repository` | `delete` | `deletion` | success |  |  | Community | Available |
+| `resource.template` | `create` | `creation` | success |  | `app`, `created_inventory_id` | Community | Available |
+| `resource.template` | `update` | `change` | success |  | `app`, `created_inventory_id` | Community | Available |
+| `resource.template` | `delete` | `deletion` | success |  |  | Community | Available |
+| `resource.template` | `attach_inventory` | `change` | success |  | `inventory_id` | Community | Available |
+| `resource.template` | `detach_inventory` | `change` | success |  | `inventory_id` | Community | Available |
+| `resource.template` | `set_default_inventory` | `change` | success |  | `inventory_id` | Community | Available |
+| `resource.schedule` | `create` | `creation` | success |  | `template_id` | Community | Available |
+| `resource.schedule` | `update` | `change` | success |  | `template_id` | Community | Available |
+| `resource.schedule` | `delete` | `deletion` | success |  |  | Community | Available |
+| `resource.schedule` | `activate` | `change` | success |  | `template_id` | Community | Available |
+| `resource.schedule` | `deactivate` | `change` | success |  | `template_id` | Community | Available |
+| `resource.integration` | `create` | `creation` | success |  | `template_id`, `auth_method` | Community | Available |
+| `resource.integration` | `update` | `change` | success |  | `template_id`, `auth_method` | Community | Available |
+| `resource.integration` | `delete` | `deletion` | success |  |  | Community | Available |
+| `resource.integration_matcher` | `create` | `creation` | success |  | `integration_id` | Community | Available |
+| `resource.integration_matcher` | `update` | `change` | success |  | `integration_id` | Community | Available |
+| `resource.integration_matcher` | `delete` | `deletion` | success |  | `integration_id` | Community | Available |
+| `resource.integration_extractor` | `create` | `creation` | success |  | `integration_id` | Community | Available |
+| `resource.integration_extractor` | `update` | `change` | success |  | `integration_id` | Community | Available |
+| `resource.integration_extractor` | `delete` | `deletion` | success |  | `integration_id` | Community | Available |
+| `resource.integration_alias` | `create` | `creation` | success |  | `integration_id` | Community | Available |
+| `resource.integration_alias` | `delete` | `deletion` | success |  | `integration_id` | Community | Available |
+| `resource.host_config` | `create` | `creation` | success |  | `type` | Community | Available |
+| `resource.host_config` | `update` | `change` | success |  | `type` | Community | Available |
+| `resource.host_config` | `delete` | `deletion` | success |  |  | Community | Available |
+| `resource.workflow` | `create` | `creation` | success |  |  | Pro | Available |
+| `resource.workflow` | `update` | `change` | success |  |  | Pro | Available |
+| `resource.workflow` | `delete` | `deletion` | success |  |  | Pro | Available |
+| `resource.environment` | `create` | `creation` | success | `secret_failed` (partial success) | `secrets_created`, `secrets_updated`, `secrets_deleted`, `partial` | Community | Available |
+| `resource.environment` | `update` | `change` | success | `secret_failed` (partial success) | `secrets_created`, `secrets_updated`, `secrets_deleted`, `partial` | Community | Available |
+| `resource.environment` | `delete` | `deletion` | success |  |  | Community | Available |
+| `resource.environment` | `sync` | `change` | success |  |  | Community | Available |
 
 ## Secrets {#secrets}
 
 | Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `secret.credential` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `secret.credential` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `secret.credential` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `secret.storage` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `secret.storage` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `secret.storage` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `secret.storage` | `sync` | `change` | success |  | Defined when available | Community | Planned |
+| `secret.credential` | `create` | `creation` | success |  | `type` | Community | Available |
+| `secret.credential` | `update` | `change` | success |  | `type` | Community | Available |
+| `secret.credential` | `delete` | `deletion` | success |  |  | Community | Available |
+| `secret.storage` | `create` | `creation` | success |  | `type` | Community | Available |
+| `secret.storage` | `update` | `change` | success |  | `type` | Community | Available |
+| `secret.storage` | `delete` | `deletion` | success |  |  | Community | Available |
+| `secret.storage` | `sync` | `change` | success |  |  | Community | Available |
 
 ## Tasks {#tasks}
 
