@@ -80,7 +80,7 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 
 | Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `resource.project` | `create` | `creation` | success |  | `demo` | Community | Available |
+| `resource.project` | `create` | `creation` | success | `setup_failed` (partial success) | `demo`, `partial` | Community | Available |
 | `resource.project` | `update` | `change` | success |  |  | Community | Available |
 | `resource.project` | `delete` | `deletion` | success |  |  | Community | Available |
 | `resource.project_backup` | `export` | `access` | success |  |  | Community | Available |
@@ -91,8 +91,8 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `resource.repository` | `create` | `creation` | success |  |  | Community | Available |
 | `resource.repository` | `update` | `change` | success |  |  | Community | Available |
 | `resource.repository` | `delete` | `deletion` | success |  |  | Community | Available |
-| `resource.template` | `create` | `creation` | success |  | `app`, `created_inventory_id` | Community | Available |
-| `resource.template` | `update` | `change` | success |  | `app`, `created_inventory_id` | Community | Available |
+| `resource.template` | `create` | `creation` | success | `inventory_failed` (partial success) | `app`, `created_inventory_id`, `partial` | Community | Available |
+| `resource.template` | `update` | `change` | success |  | `app` | Community | Available |
 | `resource.template` | `delete` | `deletion` | success |  |  | Community | Available |
 | `resource.template` | `attach_inventory` | `change` | success |  | `inventory_id` | Community | Available |
 | `resource.template` | `detach_inventory` | `change` | success |  | `inventory_id` | Community | Available |

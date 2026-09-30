@@ -34,7 +34,7 @@ adresu e-pošte.
 
 URL-ovi repozitorijuma, URL-ovi konfiguracija hostova i aliasi integracija takođe se ne beleže. Ako se okruženje
 sačuva, ali jedna od njegovih tajni ne uspe, API vraća grešku, iako okruženje postoji. Događaj se tada beleži kao
-uspešan sa `metadata.partial=true` i `reason=secret_failed`.
+uspešan sa `metadata.partial=true` i `reason=secret_failed`. Šablon čiji korak sa inventarom nije uspeo (`reason=inventory_failed`) i projekat čije podešavanje nije uspelo (`reason=setup_failed`) beleže se na isti način.
 
 ## Uključivanje dnevnika revizije {#enable}
 

@@ -25,7 +25,7 @@ description: 감사 로그를 켜서 Semaphore에서 누가 무엇을 했는지 
 
 비밀번호, 토큰, 비밀 값, 작업 출력은 감사 이벤트에 절대 포함되지 않습니다. API 토큰은 값 대신 지문으로 표시됩니다. 로그인에 실패하면 입력한 로그인 이름이 남으므로 이메일 주소가 포함될 수 있습니다.
 
-저장소 URL, 호스트 설정 URL, 통합 별칭도 기록되지 않습니다. 환경은 저장되었지만 그 비밀 중 하나가 실패하면 API는 오류를 반환하지만 환경은 존재합니다. 이 경우 이벤트는 성공으로 기록되며 `metadata.partial=true`와 `reason=secret_failed`가 포함됩니다.
+저장소 URL, 호스트 설정 URL, 통합 별칭도 기록되지 않습니다. 환경은 저장되었지만 그 비밀 중 하나가 실패하면 API는 오류를 반환하지만 환경은 존재합니다. 이 경우 이벤트는 성공으로 기록되며 `metadata.partial=true`와 `reason=secret_failed`가 포함됩니다. 인벤토리 단계가 실패한 템플릿(`reason=inventory_failed`)과 설정이 실패한 프로젝트(`reason=setup_failed`)도 같은 방식으로 기록됩니다.
 
 ## 감사 로그 켜기 {#enable}
 

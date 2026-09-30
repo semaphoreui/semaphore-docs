@@ -37,7 +37,7 @@ connexion échouée conserve l'identifiant saisi, qui peut donc contenir une adr
 
 Les URL de dépôts, les URL de configurations d'hôtes et les alias d'intégrations ne sont pas enregistrés non plus.
 Si un environnement est enregistré mais que l'un de ses secrets échoue, l'API renvoie une erreur alors que
-l'environnement existe. L'événement est alors un succès avec `metadata.partial=true` et `reason=secret_failed`.
+l'environnement existe. L'événement est alors un succès avec `metadata.partial=true` et `reason=secret_failed`. Un modèle dont l'étape d'inventaire a échoué (`reason=inventory_failed`) et un projet dont la configuration a échoué (`reason=setup_failed`) sont enregistrés de la même façon.
 
 ## Activer le journal d'audit {#enable}
 

@@ -34,7 +34,7 @@ login digitado, que pode conter um endereço de e-mail.
 
 URLs de repositórios, URLs de configurações de host e aliases de integrações também não são registrados. Se um
 ambiente é salvo, mas um de seus segredos falha, a API retorna um erro, embora o ambiente exista. O evento é então
-um sucesso com `metadata.partial=true` e `reason=secret_failed`.
+um sucesso com `metadata.partial=true` e `reason=secret_failed`. Um modelo cuja etapa de inventário falhou (`reason=inventory_failed`) e um projeto cuja configuração falhou (`reason=setup_failed`) são registrados da mesma forma.
 
 ## Ativar o log de auditoria {#enable}
 
