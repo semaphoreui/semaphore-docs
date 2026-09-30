@@ -8,7 +8,7 @@ description: Tačne vrednosti umesto objašnjenja - opcije konfiguracije, komand
 Ovaj odeljak je za trenutak kada već znate šta vam treba i potrebno vam je tačno ime,
 tip ili podrazumevana vrednost. Objašnjava što je manje moguće; to rade vodiči.
 
-Dve stranice ovde se **generišu iz izvornog koda Semaphore-a**, pa opisuju verziju koju
+Neke stranice ovde se **generišu iz izvornog koda Semaphore-a**, pa opisuju verziju koju
 pokrećete, a ne verziju za koju je neko nekada napisao tabelu. Iz istog razloga
 objavljuju se samo na engleskom: prevedena kopija bi zastarela čim se neka opcija prvi
 put promeni, a niko to ne bi primetio.
@@ -18,6 +18,7 @@ put promeni, a niko to ne bi primetio.
 | Stranica | Šta obrađuje |
 |---|---|
 | [Opcije konfiguracije](/reference/configuration) | Svaki ključ datoteke `config.json` sa svojom promenljivom okruženja, tipom i podrazumevanom vrednošću. Generisano. |
+| [Događaji revizije](/reference/audit-events) | Format događaja revizije i svi dostupni i planirani događaji. |
 | [CLI](/reference/cli) | Komanda `semaphore`: šta radi svaka grupa komandi, kako se pronalazi datoteka konfiguracije i generisani spisak svih komandi i opcija. |
 | [API](/reference/api) | Autentifikacija tokenom i pozivanje REST krajnjih tačaka. |
 

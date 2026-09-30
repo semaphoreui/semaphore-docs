@@ -181,62 +181,16 @@ Restart the Semaphore service after changing these values so that the new syslog
 
 ---
 
-## SIEM integration <Enterprise /> {#siem-integration}
+## SIEM integration {#siem-integration}
 
-Semaphore 2.20+ records a security audit trail suitable for forwarding to a SIEM (Splunk, Elastic Security, QRadar, Wazuh, etc.).
-
-Every audit event includes the **action** (`create`, `update`, `delete`, `login_success`, `login_fail`, `logout`), the **client IP address** and the **user agent**, in addition to the acting user and the affected object. Besides resource changes, Semaphore logs:
-
-- Successful logins (password, LDAP and OpenID), logouts, failed login attempts and failed MFA verifications.
-- User account creation, update, deletion and password changes.
-- API token creation and deletion (only the short token prefix is logged, never the secret).
-
-There are three ways to deliver audit events to your SIEM:
-
-1. **Pull:** read `/api/events` (see [API docs](/reference/api)).
-2. **File collector:** enable the Activity Log file (Pro, see above) and ship `events.log` (JSON format recommended) with Filebeat, Fluentd or a Splunk Universal Forwarder.
-3. **Audit webhook (Pro):** push events in real time over HTTPS — a generic JSON endpoint or Splunk HTTP Event Collector.
-
-### Audit webhook {#audit-webhook}
-
-```json
-{
-  "log": {
-    "audit_webhook": {
-      "enabled": true,
-      "url": "https://splunk.example.com:8088/services/collector/event",
-      "format": "splunk_hec",
-      "headers": {
-        "Authorization": "Splunk <your-hec-token>"
-      }
-    }
-  }
-}
-```
-
-Or using environment variables:
-
-```bash
-SEMAPHORE_AUDIT_WEBHOOK_ENABLED=true
-SEMAPHORE_AUDIT_WEBHOOK_URL=https://splunk.example.com:8088/services/collector/event
-SEMAPHORE_AUDIT_WEBHOOK_FORMAT=splunk_hec
-```
-
-#### Audit webhook options {#audit-webhook-options}
-
-| Parameter             | Environment Variables | Description           |
-| --------------------- | --------------------- | --------------------- |
-| `enabled`             | `SEMAPHORE_AUDIT_WEBHOOK_ENABLED` | Turn audit event forwarding on or off. |
-| `url`                 | `SEMAPHORE_AUDIT_WEBHOOK_URL`  | Full receiver endpoint URL. |
-| `format`              | `SEMAPHORE_AUDIT_WEBHOOK_FORMAT`  | Payload format: empty for plain JSON or `splunk_hec` for a Splunk HEC envelope. |
-| `headers`             | `SEMAPHORE_AUDIT_WEBHOOK_HEADERS`  | Extra HTTP headers, e.g. the HEC token: `{"Authorization": "Splunk <token>"}`. |
-
-Delivery is asynchronous: events are queued in memory and retried up to three times with backoff, so an unavailable receiver never slows down or fails user requests. If the receiver stays down, queued events are dropped with a warning in the server log.
+Sign-ins and account changes, such as new users, roles and API tokens, can be recorded in the
+[audit log](/admin-guide/audit-log). Semaphore Pro can [send it to a SIEM](/admin-guide/audit-log#siem-export).
 
 ## Summary {#summary}
 
 - **Server log:** Written to stdout; viewable via `journalctl` if running under systemd.  
 - **Activity and tasks log:** Tracks all user actions. Optionally, **Pro 2.10+** can write these to a file.  
 - **Task history:** Stores real-time and historical task execution logs. Retention is configurable per template.
+- **Audit log:** Records sign-ins and account changes. Off by default.
 
 Following these guidelines ensures you have proper visibility into Semaphore UI operations while controlling storage usage and log retention.

@@ -176,62 +176,16 @@ Redémarrez le service Semaphore après avoir modifié ces valeurs afin que la n
 
 ---
 
-## Intégration SIEM <Enterprise /> {#siem-integration}
+## Intégration SIEM {#siem-integration}
 
-Semaphore 2.20+ enregistre une piste d'audit de sécurité adaptée au transfert vers un SIEM (Splunk, Elastic Security, QRadar, Wazuh, etc.).
-
-Chaque événement d'audit inclut l'**action** (`create`, `update`, `delete`, `login_success`, `login_fail`, `logout`), l'**adresse IP du client** et le **user agent**, en plus de l'utilisateur à l'origine de l'action et de l'objet concerné. Outre les modifications de ressources, Semaphore journalise :
-
-- Les connexions réussies (mot de passe, LDAP et OpenID), les déconnexions, les tentatives de connexion échouées et les vérifications MFA échouées.
-- La création, la modification et la suppression de comptes utilisateur ainsi que les changements de mot de passe.
-- La création et la suppression de tokens d'API (seul le court préfixe du token est journalisé, jamais le secret).
-
-Il existe trois façons de transmettre les événements d'audit à votre SIEM :
-
-1. **Pull :** lire `/api/events` (voir la [documentation de l'API](/reference/api)).
-2. **Collecteur de fichiers :** activer le fichier du journal d'activité (Pro, voir ci-dessus) et expédier `events.log` (format JSON recommandé) avec Filebeat, Fluentd ou un Splunk Universal Forwarder.
-3. **Webhook d'audit (Pro) :** pousser les événements en temps réel via HTTPS — vers un point de terminaison JSON générique ou un Splunk HTTP Event Collector.
-
-### Webhook d'audit {#audit-webhook}
-
-```json
-{
-  "log": {
-    "audit_webhook": {
-      "enabled": true,
-      "url": "https://splunk.example.com:8088/services/collector/event",
-      "format": "splunk_hec",
-      "headers": {
-        "Authorization": "Splunk <your-hec-token>"
-      }
-    }
-  }
-}
-```
-
-Ou à l'aide de variables d'environnement :
-
-```bash
-SEMAPHORE_AUDIT_WEBHOOK_ENABLED=true
-SEMAPHORE_AUDIT_WEBHOOK_URL=https://splunk.example.com:8088/services/collector/event
-SEMAPHORE_AUDIT_WEBHOOK_FORMAT=splunk_hec
-```
-
-#### Options du webhook d'audit {#audit-webhook-options}
-
-| Paramètre             | Variables d'environnement | Description           |
-| --------------------- | --------------------- | --------------------- |
-| `enabled`             | `SEMAPHORE_AUDIT_WEBHOOK_ENABLED` | Active ou désactive le transfert des événements d'audit. |
-| `url`                 | `SEMAPHORE_AUDIT_WEBHOOK_URL`  | URL complète du point de terminaison récepteur. |
-| `format`              | `SEMAPHORE_AUDIT_WEBHOOK_FORMAT`  | Format de la charge utile : vide pour du JSON brut ou `splunk_hec` pour une enveloppe Splunk HEC. |
-| `headers`             | `SEMAPHORE_AUDIT_WEBHOOK_HEADERS`  | En-têtes HTTP supplémentaires, par ex. le token HEC : `{"Authorization": "Splunk <token>"}`. |
-
-La livraison est asynchrone : les événements sont mis en file d'attente en mémoire et réessayés jusqu'à trois fois avec un délai croissant, de sorte qu'un récepteur indisponible ne ralentit ni ne fait jamais échouer les requêtes des utilisateurs. Si le récepteur reste indisponible, les événements en file d'attente sont abandonnés avec un avertissement dans le journal du serveur.
+Les connexions et les modifications de comptes, comme les nouveaux utilisateurs, rôles et jetons d'API,
+peuvent être enregistrées dans le [journal d'audit](/admin-guide/audit-log). Semaphore Pro peut [l'envoyer vers un SIEM](/admin-guide/audit-log#siem-export).
 
 ## Résumé {#summary}
 
 - **Journal du serveur :** écrit sur stdout ; consultable via `journalctl` en cas d'exécution sous systemd.  
 - **Journal d'activité et des tâches :** suit toutes les actions des utilisateurs. En option, **Pro 2.10+** peut les écrire dans un fichier.  
 - **Historique des tâches :** stocke les journaux d'exécution des tâches en temps réel et historiques. La rétention est configurable par modèle.
+- **Journal d'audit :** enregistre les connexions et les modifications de comptes. Désactivé par défaut.
 
 En suivant ces recommandations, vous disposez d'une visibilité adéquate sur le fonctionnement de Semaphore UI tout en maîtrisant l'utilisation du stockage et la rétention des journaux.

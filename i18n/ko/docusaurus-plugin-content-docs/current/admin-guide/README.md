@@ -41,6 +41,7 @@ MySQL 또는 PostgreSQL에 저장하고, 자격 증명은 암호화된 상태로
 | [API](/reference/api) | 토큰으로 인증하고 Semaphore를 프로그래밍 방식으로 제어합니다. |
 | [CI/CD 통합](/admin-guide/cicd) | 외부 파이프라인에서 Semaphore 작업을 시작합니다. |
 | [로그](/admin-guide/logs) | 서버 로그, 작업 로그 및 이를 다른 곳으로 전달하는 방법입니다. |
+| [감사 로그](/admin-guide/audit-log) | 보안 이벤트, 로컬 감사 이벤트 캡처 및 Pro의 SIEM 내보내기 기능입니다. |
 | [메트릭](/admin-guide/metrics) | Prometheus 엔드포인트와 여기서 노출되는 메트릭입니다. |
 | [알림](/admin-guide/notifications) | 알림 전달 채널입니다. 이메일, Telegram, Slack 등이 있습니다. |
 | [라이선스](/admin-guide/license) | Pro 또는 Enterprise 구독을 활성화합니다. |

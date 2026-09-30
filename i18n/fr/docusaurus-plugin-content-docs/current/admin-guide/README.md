@@ -44,6 +44,7 @@ Tout ce que vous faites sur un serveur déjà en fonctionnement.
 | [API](/reference/api) | S'authentifier avec un token et piloter Semaphore par programmation. |
 | [Intégration CI/CD](/admin-guide/cicd) | Démarrer des tâches Semaphore depuis un pipeline externe. |
 | [Journaux](/admin-guide/logs) | Journaux du serveur, journaux de tâches et leur transfert vers un autre système. |
+| [Journal d'audit](/admin-guide/audit-log) | Événements de sécurité, collecte locale des événements d'audit et exportation vers un SIEM avec la version Pro. |
 | [Métriques](/admin-guide/metrics) | Le point de terminaison Prometheus et les métriques qu'il expose. |
 | [Notifications](/admin-guide/notifications) | Canaux de distribution des alertes : e-mail, Telegram, Slack et autres. |
 | [Licence](/admin-guide/license) | Activer un abonnement Pro ou Enterprise. |

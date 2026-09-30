@@ -9,9 +9,9 @@ Dieser Abschnitt ist für den Moment gedacht, in dem Sie bereits wissen, was Sie
 und den exakten Namen, Typ oder Standardwert brauchen. Er erklärt so wenig wie möglich;
 das übernehmen die Anleitungen.
 
-Zwei der Seiten hier werden **aus dem Semaphore-Quellcode erzeugt** und beschreiben damit
+Einige Seiten hier werden **aus dem Semaphore-Quellcode erzeugt** und beschreiben damit
 die Version, die Sie betreiben, und nicht die Version, für die jemand einmal eine Tabelle
-geschrieben hat. Aus demselben Grund erscheinen sie nur auf Englisch: eine übersetzte
+geschrieben hat. Aus demselben Grund erscheinen sie nur auf Englisch: Eine übersetzte
 Kopie wäre veraltet, sobald sich eine Option zum ersten Mal ändert, und niemand würde es
 bemerken.
 
@@ -20,6 +20,7 @@ bemerken.
 | Seite | Inhalt |
 |---|---|
 | [Konfigurationsoptionen](/reference/configuration) | Jeder Schlüssel von `config.json` mit Umgebungsvariable, Typ und Standardwert. Erzeugt. |
+| [Audit-Ereignisse](/reference/audit-events) | Das Format der Audit-Ereignisse und alle verfügbaren und geplanten Ereignisse. |
 | [CLI](/reference/cli) | Der Befehl `semaphore`: was jede Befehlsgruppe tut, wie die Konfigurationsdatei gefunden wird und eine erzeugte Liste aller Befehle und Flags. |
 | [API](/reference/api) | Authentifizierung mit einem Token und Aufruf der REST-Endpunkte. |
 

@@ -39,6 +39,7 @@ SQLite、MySQL 或 PostgreSQL 中，对凭据加密保存，并在服务器本�
 | [API](/reference/api) | 使用令牌进行身份验证，并以编程方式驱动 Semaphore。 |
 | [CI/CD 集成](/admin-guide/cicd) | 从外部流水线启动 Semaphore 任务。 |
 | [日志](/admin-guide/logs) | 服务器日志、任务日志，以及把它们转发到别处。 |
+| [审计日志](/admin-guide/audit-log) | 安全事件、本地审计采集，以及 Pro 版向 SIEM 导出事件的功能。 |
 | [指标](/admin-guide/metrics) | Prometheus 端点及其暴露的指标。 |
 | [通知](/admin-guide/notifications) | 告警的投递渠道：电子邮件、Telegram、Slack 等。 |
 | [许可证](/admin-guide/license) | 激活 Pro 或 Enterprise 订阅。 |

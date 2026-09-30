@@ -176,62 +176,16 @@ Reinicie el servicio de Semaphore después de cambiar estos valores para que se 
 
 ---
 
-## Integración con SIEM <Enterprise /> {#siem-integration}
+## Integración con SIEM {#siem-integration}
 
-Semaphore 2.20+ registra una traza de auditoría de seguridad adecuada para reenviarla a un SIEM (Splunk, Elastic Security, QRadar, Wazuh, etc.).
-
-Cada evento de auditoría incluye la **acción** (`create`, `update`, `delete`, `login_success`, `login_fail`, `logout`), la **dirección IP del cliente** y el **user agent**, además del usuario que actúa y el objeto afectado. Además de los cambios en recursos, Semaphore registra:
-
-- Inicios de sesión correctos (contraseña, LDAP y OpenID), cierres de sesión, intentos de inicio de sesión fallidos y verificaciones MFA fallidas.
-- Creación, actualización y eliminación de cuentas de usuario, así como cambios de contraseña.
-- Creación y eliminación de tokens de API (solo se registra el prefijo corto del token, nunca el secreto).
-
-Hay tres formas de entregar los eventos de auditoría a su SIEM:
-
-1. **Pull:** lea `/api/events` (consulte la [documentación de la API](/reference/api)).
-2. **Colector de archivos:** habilite el archivo del Registro de actividad (Pro, ver arriba) y envíe `events.log` (se recomienda el formato JSON) con Filebeat, Fluentd o un Splunk Universal Forwarder.
-3. **Webhook de auditoría (Pro):** envíe eventos en tiempo real mediante HTTPS: a un endpoint JSON genérico o a Splunk HTTP Event Collector.
-
-### Webhook de auditoría {#audit-webhook}
-
-```json
-{
-  "log": {
-    "audit_webhook": {
-      "enabled": true,
-      "url": "https://splunk.example.com:8088/services/collector/event",
-      "format": "splunk_hec",
-      "headers": {
-        "Authorization": "Splunk <your-hec-token>"
-      }
-    }
-  }
-}
-```
-
-O mediante variables de entorno:
-
-```bash
-SEMAPHORE_AUDIT_WEBHOOK_ENABLED=true
-SEMAPHORE_AUDIT_WEBHOOK_URL=https://splunk.example.com:8088/services/collector/event
-SEMAPHORE_AUDIT_WEBHOOK_FORMAT=splunk_hec
-```
-
-#### Opciones del webhook de auditoría {#audit-webhook-options}
-
-| Parámetro             | Variables de entorno | Descripción           |
-| --------------------- | --------------------- | --------------------- |
-| `enabled`             | `SEMAPHORE_AUDIT_WEBHOOK_ENABLED` | Activa o desactiva el reenvío de eventos de auditoría. |
-| `url`                 | `SEMAPHORE_AUDIT_WEBHOOK_URL`  | URL completa del endpoint receptor. |
-| `format`              | `SEMAPHORE_AUDIT_WEBHOOK_FORMAT`  | Formato del payload: vacío para JSON plano o `splunk_hec` para un envoltorio Splunk HEC. |
-| `headers`             | `SEMAPHORE_AUDIT_WEBHOOK_HEADERS`  | Cabeceras HTTP adicionales, p. ej. el token HEC: `{"Authorization": "Splunk <token>"}`. |
-
-La entrega es asíncrona: los eventos se encolan en memoria y se reintentan hasta tres veces con espera progresiva, de modo que un receptor no disponible nunca ralentiza ni hace fallar las peticiones de los usuarios. Si el receptor permanece caído, los eventos encolados se descartan con una advertencia en el registro del servidor.
+Los inicios de sesión y los cambios en las cuentas, como nuevos usuarios, roles y tokens de API, pueden
+guardarse en el [registro de auditoría](/admin-guide/audit-log). Semaphore Pro puede [enviarlo a un SIEM](/admin-guide/audit-log#siem-export).
 
 ## Resumen {#summary}
 
 - **Registro del servidor:** se escribe en stdout; puede verse con `journalctl` si se ejecuta bajo systemd.  
 - **Registro de actividad y tareas:** registra todas las acciones de usuario. Opcionalmente, **Pro 2.10+** puede escribirlos en un archivo.  
 - **Historial de tareas:** almacena los registros de ejecución de tareas en tiempo real e históricos. La retención se puede configurar por plantilla.
+- **Registro de auditoría:** registra los inicios de sesión y los cambios en las cuentas. Desactivado por defecto.
 
 Seguir estas pautas garantiza una visibilidad adecuada de las operaciones de Semaphore UI, a la vez que se controla el uso de almacenamiento y la retención de registros.

@@ -130,6 +130,7 @@ const sidebars = {
         'admin-guide/cicd',
         'admin-guide/runners',
         'admin-guide/logs',
+        'admin-guide/audit-log',
         'admin-guide/metrics',
         { type: 'doc', id: 'admin-guide/ha', customProps: { edition: 'enterprise' } },
         'admin-guide/license',
@@ -253,6 +254,7 @@ const sidebars = {
       link: { type: 'doc', id: 'reference/README' },
       items: [
         'reference/configuration',
+        'reference/audit-events',
         {
           type: 'category',
           label: 'CLI',

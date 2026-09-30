@@ -41,6 +41,7 @@ const redirects = [
   {to: '/reference/cli/runners', from: ['/admin-guide/cli/runners']},
   {to: '/reference/cli/migrations', from: ['/admin-guide/cli/migrations']},
   {to: '/reference/api', from: ['/admin-guide/api']},
+  {to: '/admin-guide/audit-log', from: ['/admin-guide/audit-log-siem']},
 
   // Phase 2: LDAP and OpenID Connect were two unrelated top-level entries even
   // though they answer the same question. They are now one Authentication

@@ -42,6 +42,7 @@ Sve što radite na serveru koji je već pokrenut.
 | [API](/reference/api) | Autentifikacija tokenom i programsko upravljanje Semaphore-om. |
 | [CI/CD integracija](/admin-guide/cicd) | Pokretanje Semaphore zadataka iz spoljnog pipeline-a. |
 | [Logovi](/admin-guide/logs) | Logovi servera, logovi zadataka i njihovo prosleđivanje drugim sistemima. |
+| [Dnevnik revizije](/admin-guide/audit-log) | Bezbednosni događaji, lokalno beleženje revizije i Pro izvoz u SIEM. |
 | [Metrike](/admin-guide/metrics) | Prometheus endpoint i metrike koje izlaže. |
 | [Obaveštenja](/admin-guide/notifications) | Kanali za isporuku upozorenja: e-pošta, Telegram, Slack i drugi. |
 | [Licenca](/admin-guide/license) | Aktivacija Pro ili Enterprise pretplate. |

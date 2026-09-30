@@ -176,62 +176,16 @@ SEMAPHORE_SYSLOG_TAG=semaphore
 
 ---
 
-## SIEM 연동 <Enterprise /> {#siem-integration}
+## SIEM 연동 {#siem-integration}
 
-Semaphore 2.20 이상은 SIEM(Splunk, Elastic Security, QRadar, Wazuh 등)으로 전달하기에 적합한 보안 감사 추적을 기록합니다.
-
-모든 감사 이벤트에는 작업을 수행한 사용자와 영향을 받은 객체 외에도 **action**(`create`, `update`, `delete`, `login_success`, `login_fail`, `logout`), **클라이언트 IP 주소**, **user agent**가 포함됩니다. 리소스 변경 외에도 Semaphore는 다음을 기록합니다:
-
-- 로그인 성공(비밀번호, LDAP, OpenID), 로그아웃, 로그인 실패 시도, MFA 검증 실패.
-- 사용자 계정 생성, 수정, 삭제 및 비밀번호 변경.
-- API token 생성 및 삭제(짧은 token 접두사만 기록되며 비밀 값은 절대 기록되지 않습니다).
-
-감사 이벤트를 SIEM으로 전달하는 방법은 세 가지입니다:
-
-1. **Pull:** `/api/events`를 읽습니다([API 문서](/reference/api) 참고).
-2. **파일 수집기:** 활동 로그 파일(Pro, 위 참고)을 활성화하고 Filebeat, Fluentd 또는 Splunk Universal Forwarder로 `events.log`(JSON 형식 권장)를 전송합니다.
-3. **감사 webhook(Pro):** HTTPS를 통해 실시간으로 이벤트를 push합니다 — 일반 JSON 엔드포인트 또는 Splunk HTTP Event Collector를 사용할 수 있습니다.
-
-### 감사 webhook {#audit-webhook}
-
-```json
-{
-  "log": {
-    "audit_webhook": {
-      "enabled": true,
-      "url": "https://splunk.example.com:8088/services/collector/event",
-      "format": "splunk_hec",
-      "headers": {
-        "Authorization": "Splunk <your-hec-token>"
-      }
-    }
-  }
-}
-```
-
-또는 환경 변수를 사용합니다:
-
-```bash
-SEMAPHORE_AUDIT_WEBHOOK_ENABLED=true
-SEMAPHORE_AUDIT_WEBHOOK_URL=https://splunk.example.com:8088/services/collector/event
-SEMAPHORE_AUDIT_WEBHOOK_FORMAT=splunk_hec
-```
-
-#### 감사 webhook 옵션 {#audit-webhook-options}
-
-| 매개변수             | 환경 변수 | 설명           |
-| --------------------- | --------------------- | --------------------- |
-| `enabled`             | `SEMAPHORE_AUDIT_WEBHOOK_ENABLED` | 감사 이벤트 전달을 켜거나 끕니다. |
-| `url`                 | `SEMAPHORE_AUDIT_WEBHOOK_URL`  | 수신 엔드포인트의 전체 URL. |
-| `format`              | `SEMAPHORE_AUDIT_WEBHOOK_FORMAT`  | 페이로드 형식: 일반 JSON은 비워 두고, Splunk HEC 봉투 형식은 `splunk_hec`을 지정합니다. |
-| `headers`             | `SEMAPHORE_AUDIT_WEBHOOK_HEADERS`  | 추가 HTTP 헤더(예: HEC token): `{"Authorization": "Splunk <token>"}`. |
-
-전달은 비동기로 이루어집니다. 이벤트는 메모리 큐에 저장되고 백오프를 적용하여 최대 세 번까지 재시도되므로, 수신 서버를 사용할 수 없더라도 사용자 요청이 느려지거나 실패하지 않습니다. 수신 서버가 계속 다운되어 있으면 큐에 쌓인 이벤트는 서버 로그에 경고를 남기고 폐기됩니다.
+로그인과 새 사용자, 역할, API 토큰 같은 계정 변경은 [감사 로그](/admin-guide/audit-log)에 기록할 수 있습니다.
+Semaphore Pro는 감사 로그를 [SIEM으로 전송](/admin-guide/audit-log#siem-export)할 수 있습니다.
 
 ## 요약 {#summary}
 
 - **서버 로그:** stdout에 기록되며, systemd에서 실행 중이라면 `journalctl`로 확인할 수 있습니다.  
 - **활동 및 작업 로그:** 모든 사용자 작업을 추적합니다. **Pro 2.10 이상**에서는 선택적으로 파일에 기록할 수 있습니다.  
 - **작업 이력:** 실시간 및 과거 작업 실행 로그를 저장합니다. 보관 기간은 템플릿별로 설정할 수 있습니다.
+- **감사 로그:** 로그인과 계정 변경을 기록합니다. 기본적으로 꺼져 있습니다.
 
 이 지침을 따르면 저장 공간 사용량과 로그 보관 기간을 관리하면서 Semaphore UI 운영에 대한 적절한 가시성을 확보할 수 있습니다.

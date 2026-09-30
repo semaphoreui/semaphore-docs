@@ -262,22 +262,6 @@ Where server, event, and task logs go, and the Prometheus endpoint. See [Logs](/
 | `log.tasks.logger` <Pro /><br />`SEMAPHORE_TASK_LOGGER` | object | JSON map which contains task logger configuration. |
 | `log.tasks.result_logger` <Pro /><br />`SEMAPHORE_TASK_RESULT_LOGGER` | object | JSON map which contains task result logger configuration. |
 
-## Audit export {#audit-export}
-
-Reliable export of canonical audit events to a single SIEM destination.
-
-| Option / Environment variable | Type / Default | Description |
-|---|---|---|
-| `audit.enabled` <Pro /> | boolean | Enables reliable export of canonical audit events. |
-| `audit.instance_id` <Pro /> | string | Stable identity included in every audit event across replicas. |
-| `audit.trusted_proxy_cidrs` <Pro /> | array | Lists proxy networks allowed to provide audit client address headers. |
-| `audit.destination.id` <Pro /> | string | Stable identifier for the single audit export destination. |
-| `audit.destination.type` <Pro /> | string | Destination type; only syslog is supported in v1. |
-| `audit.destination.syslog.address` <Pro /> | string | RFC 5424 over TLS destination host and port. |
-| `audit.destination.syslog.timeout` <Pro /> | string | Positive Go duration for syslog connection and write operations. |
-| `audit.destination.syslog.tls.ca_file` <Pro /> | string | Optional PEM file appended to system roots for the destination. |
-| `audit.destination.syslog.tls.server_name` <Pro /> | string | Optional TLS server name used for certificate verification. |
-
 ## Teams and invitations {#teams-and-invitations}
 
 How people are added to projects. See [Teams](/user-guide/team).
@@ -312,6 +296,21 @@ Running several nodes against one database. See [High availability](/admin-guide
 | `ha.redis.user` <Enterprise /><br />`SEMAPHORE_HA_REDIS_USER` | string | Username for the Redis server. |
 | `ha.redis.tls` <Enterprise /><br />`SEMAPHORE_HA_REDIS_TLS` | boolean | Enable TLS for the Redis connection. |
 | `ha.redis.tls_skip_verify` <Enterprise /><br />`SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` | boolean | Skip TLS certificate verification for the Redis connection. |
+
+## Audit log {#audit-log}
+
+Recording who did what in Semaphore, and sending the events to a SIEM. See [Audit log](/admin-guide/audit-log).
+
+| Option / Environment variable | Type / Default | Description |
+|---|---|---|
+| `audit.enabled`<br />`SEMAPHORE_AUDIT_ENABLED` | boolean | Turns on the audit log. |
+| `audit.instance_id`<br />`SEMAPHORE_AUDIT_INSTANCE_ID` | string | Installation name added to every event. Required when enabled. |
+| `audit.trusted_proxy_cidrs`<br />`SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS` | array | Lists the proxy networks allowed to pass the client address. |
+| `audit.syslog.id` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_ID` | string | Names the destination. Keep it when the address changes. |
+| `audit.syslog.address` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_ADDRESS` | string | Receiver host and port. |
+| `audit.syslog.timeout` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_TIMEOUT` | string<br />Default: `10s` | Limits connecting to the receiver and sending events. |
+| `audit.syslog.ca_file` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_CA_FILE` | string | PEM file with extra CA certificates to trust. |
+| `audit.syslog.server_name` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_SERVER_NAME` | string | Name to check in the receiver certificate. |
 
 ## Debugging {#debugging}
 

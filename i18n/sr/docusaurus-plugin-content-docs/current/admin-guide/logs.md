@@ -176,62 +176,16 @@ Ponovo pokrenite Semaphore servis nakon izmene ovih vrednosti da bi se primenilo
 
 ---
 
-## SIEM integracija <Enterprise /> {#siem-integration}
+## SIEM integracija {#siem-integration}
 
-Semaphore 2.20+ beleži bezbednosni revizioni trag pogodan za prosleđivanje SIEM sistemu (Splunk, Elastic Security, QRadar, Wazuh itd.).
-
-Svaki revizioni događaj sadrži **radnju** (`create`, `update`, `delete`, `login_success`, `login_fail`, `logout`), **IP adresu klijenta** i **user agent**, pored korisnika koji je izvršio radnju i objekta na koji se odnosi. Osim izmena resursa, Semaphore loguje:
-
-- Uspešne prijave (lozinkom, LDAP i OpenID), odjave, neuspešne pokušaje prijave i neuspešne MFA verifikacije.
-- Kreiranje, izmenu i brisanje korisničkih naloga i promene lozinki.
-- Kreiranje i brisanje API tokena (loguje se samo kratki prefiks tokena, nikada tajna).
-
-Postoje tri načina da isporučite revizione događaje svom SIEM sistemu:
-
-1. **Preuzimanje (pull):** čitajte `/api/events` (pogledajte [API dokumentaciju](/reference/api)).
-2. **Kolektor fajlova:** uključite fajl loga aktivnosti (Pro, vidi iznad) i šaljite `events.log` (preporučuje se JSON format) pomoću Filebeat-a, Fluentd-a ili Splunk Universal Forwarder-a.
-3. **Revizioni webhook (Pro):** šaljite događaje u realnom vremenu preko HTTPS-a — na generičku JSON krajnju tačku ili Splunk HTTP Event Collector.
-
-### Revizioni webhook {#audit-webhook}
-
-```json
-{
-  "log": {
-    "audit_webhook": {
-      "enabled": true,
-      "url": "https://splunk.example.com:8088/services/collector/event",
-      "format": "splunk_hec",
-      "headers": {
-        "Authorization": "Splunk <your-hec-token>"
-      }
-    }
-  }
-}
-```
-
-Ili pomoću promenljivih okruženja:
-
-```bash
-SEMAPHORE_AUDIT_WEBHOOK_ENABLED=true
-SEMAPHORE_AUDIT_WEBHOOK_URL=https://splunk.example.com:8088/services/collector/event
-SEMAPHORE_AUDIT_WEBHOOK_FORMAT=splunk_hec
-```
-
-#### Opcije revizionog webhook-a {#audit-webhook-options}
-
-| Parametar             | Promenljive okruženja | Opis           |
-| --------------------- | --------------------- | --------------------- |
-| `enabled`             | `SEMAPHORE_AUDIT_WEBHOOK_ENABLED` | Uključuje ili isključuje prosleđivanje revizionih događaja. |
-| `url`                 | `SEMAPHORE_AUDIT_WEBHOOK_URL`  | Puni URL krajnje tačke primaoca. |
-| `format`              | `SEMAPHORE_AUDIT_WEBHOOK_FORMAT`  | Format sadržaja: prazno za običan JSON ili `splunk_hec` za Splunk HEC omotač. |
-| `headers`             | `SEMAPHORE_AUDIT_WEBHOOK_HEADERS`  | Dodatna HTTP zaglavlja, npr. HEC token: `{"Authorization": "Splunk <token>"}`. |
-
-Isporuka je asinhrona: događaji se stavljaju u red u memoriji i ponovo šalju do tri puta sa odlaganjem, tako da nedostupan primalac nikada ne usporava niti obara korisničke zahteve. Ako primalac ostane nedostupan, događaji iz reda se odbacuju uz upozorenje u serverskom logu.
+Prijave i izmene naloga, na primer novi korisnici, uloge i API tokeni, mogu da se beleže u
+[dnevnik revizije](/admin-guide/audit-log). Semaphore Pro može [da ga šalje u SIEM](/admin-guide/audit-log#siem-export).
 
 ## Rezime {#summary}
 
 - **Serverski log:** Upisuje se na stdout; može se pregledati pomoću `journalctl` ako radi pod systemd-om.  
 - **Log aktivnosti i zadataka:** Prati sve korisničke radnje. Opciono, **Pro 2.10+** može da ih upisuje u fajl.  
 - **Istorija zadataka:** Čuva logove izvršavanja zadataka u realnom vremenu i istorijske logove. Zadržavanje se podešava po šablonu.
+- **Dnevnik revizije:** Beleži prijave i izmene naloga. Podrazumevano je isključen.
 
 Pridržavanje ovih smernica obezbeđuje vam odgovarajući uvid u rad Semaphore UI uz kontrolu zauzeća prostora i zadržavanja logova.
