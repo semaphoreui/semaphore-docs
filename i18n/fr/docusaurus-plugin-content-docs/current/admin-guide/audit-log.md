@@ -46,6 +46,7 @@ Il arrive que Semaphore enregistre ou supprime un objet, mais qu'une partie ult�
 - `key_failed` : un stockage de secrets a été supprimé, mais certains des identifiants que Semaphore conservait
   pour lui n'ont pas été retirés ;
 - `inventory_failed` : un modèle a été créé, mais pas son inventaire de workspace Terraform ;
+- `restore_failed` : un projet a été restauré depuis une sauvegarde, mais pas tous ses objets ;
 - `setup_failed` : un projet a été créé, mais pas entièrement configuré ; par exemple, son créateur n'a pas été
   ajouté comme propriétaire.
 

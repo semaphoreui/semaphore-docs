@@ -84,7 +84,7 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `resource.project` | `update` | `change` | success |  |  | Community | Available |
 | `resource.project` | `delete` | `deletion` | success |  |  | Community | Available |
 | `resource.project_backup` | `export` | `access` | success |  |  | Community | Available |
-| `resource.project_backup` | `restore` | `creation` | success |  | `objects` | Community | Available |
+| `resource.project_backup` | `restore` | `creation` | success | `restore_failed` (partial success) | `objects`, `partial` | Community | Available |
 | `resource.inventory` | `create` | `creation` | success |  |  | Community | Available |
 | `resource.inventory` | `update` | `change` | success |  |  | Community | Available |
 | `resource.inventory` | `delete` | `deletion` | success |  |  | Community | Available |

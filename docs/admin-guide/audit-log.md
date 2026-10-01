@@ -42,6 +42,7 @@ with `metadata.partial=true`, and `reason` says what did not complete:
 - `key_failed`: a secret storage was deleted, but some of the credentials Semaphore kept for it were not
   removed;
 - `inventory_failed`: a template was created, but its Terraform workspace inventory was not;
+- `restore_failed`: a project was restored from a backup, but not all of its objects were;
 - `setup_failed`: a project was created, but not fully set up, for example its creator was not added as
   owner.
 

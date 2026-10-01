@@ -44,6 +44,7 @@ un éxito con `metadata.partial=true`, y `reason` indica qué no se completó:
 - `key_failed`: se eliminó un almacén de secretos, pero algunas de las credenciales que Semaphore guardaba para
   él no se quitaron;
 - `inventory_failed`: se creó una plantilla, pero no su inventario del workspace de Terraform;
+- `restore_failed`: se restauró un proyecto desde una copia, pero no todos sus objetos;
 - `setup_failed`: se creó un proyecto, pero no quedó configurado del todo; por ejemplo, su creador no se añadió
   como propietario.
 
