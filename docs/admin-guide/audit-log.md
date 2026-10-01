@@ -34,7 +34,7 @@ contain an email address.
 
 Repository URLs, host config URLs and integration aliases are not recorded either. If an environment is saved
 but one of its secrets fails, the API returns an error, yet the environment exists. The event is then a
-success with `metadata.partial=true` and `reason=secret_failed`. A template whose inventory step failed (`reason=inventory_failed`) and a project whose setup failed (`reason=setup_failed`) are recorded the same way.
+success with `metadata.partial=true` and `reason=secret_failed`. A template whose inventory step failed (`reason=inventory_failed`) and a project whose setup failed (`reason=setup_failed`) are recorded the same way. So is a delete of an environment (`reason=secret_failed`) or a secret storage (`reason=key_failed`) whose row is gone while some of its secrets could not be removed.
 
 ## Enable the audit log {#enable}
 

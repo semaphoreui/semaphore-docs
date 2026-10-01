@@ -34,7 +34,7 @@ inserito, che quindi può contenere un indirizzo email.
 
 Anche gli URL dei repository, gli URL delle configurazioni host e gli alias delle integrazioni non vengono registrati.
 Se un ambiente viene salvato ma uno dei suoi segreti non riesce, l'API restituisce un errore, anche se l'ambiente
-esiste. L'evento è allora un successo con `metadata.partial=true` e `reason=secret_failed`. Un template il cui passaggio di inventario è fallito (`reason=inventory_failed`) e un progetto la cui configurazione è fallita (`reason=setup_failed`) vengono registrati allo stesso modo.
+esiste. L'evento è allora un successo con `metadata.partial=true` e `reason=secret_failed`. Un template il cui passaggio di inventario è fallito (`reason=inventory_failed`) e un progetto la cui configurazione è fallita (`reason=setup_failed`) vengono registrati allo stesso modo. Lo stesso vale per l'eliminazione di un ambiente (`reason=secret_failed`) o di un archivio dei segreti (`reason=key_failed`) già eliminato, mentre alcuni dei suoi segreti non sono stati rimossi.
 
 ## Attivare il log di audit {#enable}
 

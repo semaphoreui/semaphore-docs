@@ -121,7 +121,7 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `resource.workflow` | `delete` | `deletion` | success |  |  | Pro | Available |
 | `resource.environment` | `create` | `creation` | success | `secret_failed` (partial success) | `secrets_created`, `secrets_updated`, `secrets_deleted`, `partial` | Community | Available |
 | `resource.environment` | `update` | `change` | success | `secret_failed` (partial success) | `secrets_created`, `secrets_updated`, `secrets_deleted`, `partial` | Community | Available |
-| `resource.environment` | `delete` | `deletion` | success |  |  | Community | Available |
+| `resource.environment` | `delete` | `deletion` | success | `secret_failed` (partial success) | `partial` | Community | Available |
 | `resource.environment` | `sync` | `change` | success |  |  | Pro | Available |
 
 ## Secrets {#secrets}
@@ -133,7 +133,7 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `secret.credential` | `delete` | `deletion` | success |  |  | Community | Available |
 | `secret.storage` | `create` | `creation` | success |  | `type` | Community | Available |
 | `secret.storage` | `update` | `change` | success |  | `type` | Community | Available |
-| `secret.storage` | `delete` | `deletion` | success |  |  | Community | Available |
+| `secret.storage` | `delete` | `deletion` | success | `key_failed` (partial success) | `partial` | Community | Available |
 | `secret.storage` | `sync` | `change` | success |  |  | Pro | Available |
 
 ## Tasks {#tasks}

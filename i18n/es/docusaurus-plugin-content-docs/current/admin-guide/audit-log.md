@@ -35,7 +35,7 @@ fallido conserva el nombre de usuario introducido, por lo que puede contener una
 
 Las URL de repositorios, las URL de configuraciones de host y los alias de integraciones tampoco se registran. Si un
 entorno se guarda pero uno de sus secretos falla, la API devuelve un error, aunque el entorno existe. El evento es
-entonces un éxito con `metadata.partial=true` y `reason=secret_failed`. Una plantilla cuyo paso de inventario falló (`reason=inventory_failed`) y un proyecto cuya configuración falló (`reason=setup_failed`) se registran de la misma forma.
+entonces un éxito con `metadata.partial=true` y `reason=secret_failed`. Una plantilla cuyo paso de inventario falló (`reason=inventory_failed`) y un proyecto cuya configuración falló (`reason=setup_failed`) se registran de la misma forma. También el borrado de un entorno (`reason=secret_failed`) o de un almacén de secretos (`reason=key_failed`) que ya se eliminó, aunque algunos de sus secretos no se pudieron quitar.
 
 ## Activar el registro de auditoría {#enable}
 

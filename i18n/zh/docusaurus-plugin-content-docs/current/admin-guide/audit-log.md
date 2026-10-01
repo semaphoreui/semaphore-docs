@@ -25,7 +25,7 @@ description: 启用审计日志，查看谁在 Semaphore 中做了什么，并�
 
 密码、令牌、机密值和任务输出永远不会出现在审计事件中。API 令牌以指纹而不是其值显示。登录失败时会保留输入的登录名，因此其中可能包含电子邮件地址。
 
-代码仓库 URL、主机配置 URL 和集成别名同样不会被记录。如果环境已保存但其中一个机密失败，API 会返回错误，但环境已经存在。此时该事件记为成功，并带有 `metadata.partial=true` 和 `reason=secret_failed`。清单步骤失败的模板（`reason=inventory_failed`）和设置失败的项目（`reason=setup_failed`）也以同样方式记录。
+代码仓库 URL、主机配置 URL 和集成别名同样不会被记录。如果环境已保存但其中一个机密失败，API 会返回错误，但环境已经存在。此时该事件记为成功，并带有 `metadata.partial=true` 和 `reason=secret_failed`。清单步骤失败的模板（`reason=inventory_failed`）和设置失败的项目（`reason=setup_failed`）也以同样方式记录。删除环境（`reason=secret_failed`）或机密存储（`reason=key_failed`）时，如果对象本身已删除但部分机密未能移除，也同样记录。
 
 ## 启用审计日志 {#enable}
 

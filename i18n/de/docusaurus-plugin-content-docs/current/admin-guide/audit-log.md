@@ -34,7 +34,7 @@ eingegebenen Anmeldenamen, der daher eine E-Mail-Adresse enthalten kann.
 
 Repository-URLs, Host-Konfigurations-URLs und Integrations-Aliase werden ebenfalls nicht aufgezeichnet. Wird eine
 Umgebung gespeichert, aber eines ihrer Geheimnisse schlägt fehl, liefert die API einen Fehler, obwohl die Umgebung
-existiert. Das Ereignis ist dann ein Erfolg mit `metadata.partial=true` und `reason=secret_failed`. Ein Template, dessen Inventar-Schritt fehlgeschlagen ist (`reason=inventory_failed`), und ein Projekt, dessen Einrichtung fehlgeschlagen ist (`reason=setup_failed`), werden genauso erfasst.
+existiert. Das Ereignis ist dann ein Erfolg mit `metadata.partial=true` und `reason=secret_failed`. Ein Template, dessen Inventar-Schritt fehlgeschlagen ist (`reason=inventory_failed`), und ein Projekt, dessen Einrichtung fehlgeschlagen ist (`reason=setup_failed`), werden genauso erfasst. Ebenso das Löschen einer Umgebung (`reason=secret_failed`) oder eines Geheimnisspeichers (`reason=key_failed`), die bereits gelöscht sind, während einige ihrer Geheimnisse nicht entfernt werden konnten.
 
 ## Das Audit-Protokoll aktivieren {#enable}
 
