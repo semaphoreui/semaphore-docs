@@ -32,9 +32,18 @@ Passwords, tokens, secret values and task output never appear in audit events. A
 fingerprint instead of their value. A failed sign-in keeps the login name that was entered, so it can
 contain an email address.
 
-Repository URLs, host config URLs and integration aliases are not recorded either. If an environment is saved
-but one of its secrets fails, the API returns an error, yet the environment exists. The event is then a
-success with `metadata.partial=true` and `reason=secret_failed`. A template whose inventory step failed (`reason=inventory_failed`) and a project whose setup failed (`reason=setup_failed`) are recorded the same way. So is a delete of an environment (`reason=secret_failed`) or a secret storage (`reason=key_failed`) whose row is gone while some of its secrets could not be removed.
+Repository URLs, host config URLs and integration aliases are not recorded either.
+
+Sometimes Semaphore saves or deletes an object, but a later part of the same request fails. The UI or API
+then shows an error, although the object was created or deleted. Such an event is recorded as a success
+with `metadata.partial=true`, and `reason` says what did not complete:
+
+- `secret_failed`: an environment was saved or deleted, but some of its secrets were not saved or not removed;
+- `key_failed`: a secret storage was deleted, but some of the credentials Semaphore kept for it were not
+  removed;
+- `inventory_failed`: a template was created, but its Terraform workspace inventory was not;
+- `setup_failed`: a project was created, but not fully set up, for example its creator was not added as
+  owner.
 
 ## Enable the audit log {#enable}
 

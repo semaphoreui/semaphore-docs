@@ -33,8 +33,18 @@ indicati da un'impronta invece che dal loro valore. Un accesso non riuscito cons
 inserito, che quindi può contenere un indirizzo email.
 
 Anche gli URL dei repository, gli URL delle configurazioni host e gli alias delle integrazioni non vengono registrati.
-Se un ambiente viene salvato ma uno dei suoi segreti non riesce, l'API restituisce un errore, anche se l'ambiente
-esiste. L'evento è allora un successo con `metadata.partial=true` e `reason=secret_failed`. Un template il cui passaggio di inventario è fallito (`reason=inventory_failed`) e un progetto la cui configurazione è fallita (`reason=setup_failed`) vengono registrati allo stesso modo. Lo stesso vale per l'eliminazione di un ambiente (`reason=secret_failed`) o di un archivio dei segreti (`reason=key_failed`) già eliminato, mentre alcuni dei suoi segreti non sono stati rimossi.
+
+A volte Semaphore salva o elimina un oggetto, ma una parte successiva della stessa richiesta non riesce.
+L'interfaccia o l'API mostra allora un errore, anche se l'oggetto è stato creato o eliminato. Un evento di questo
+tipo viene registrato come successo con `metadata.partial=true`, e `reason` indica cosa non è stato completato:
+
+- `secret_failed`: un ambiente è stato salvato o eliminato, ma alcuni dei suoi segreti non sono stati salvati o
+  non sono stati rimossi;
+- `key_failed`: un archivio dei segreti è stato eliminato, ma alcune delle credenziali che Semaphore conservava
+  per esso non sono state rimosse;
+- `inventory_failed`: un template è stato creato, ma non il suo inventario del workspace Terraform;
+- `setup_failed`: un progetto è stato creato, ma non configurato del tutto; ad esempio, il suo creatore non è
+  stato aggiunto come proprietario.
 
 ## Attivare il log di audit {#enable}
 

@@ -32,9 +32,19 @@ Passwörter, Tokens, geheime Werte und Aufgabenausgaben erscheinen nie in Audit-
 über einen Fingerabdruck statt über ihren Wert angezeigt. Eine fehlgeschlagene Anmeldung speichert den
 eingegebenen Anmeldenamen, der daher eine E-Mail-Adresse enthalten kann.
 
-Repository-URLs, Host-Konfigurations-URLs und Integrations-Aliase werden ebenfalls nicht aufgezeichnet. Wird eine
-Umgebung gespeichert, aber eines ihrer Geheimnisse schlägt fehl, liefert die API einen Fehler, obwohl die Umgebung
-existiert. Das Ereignis ist dann ein Erfolg mit `metadata.partial=true` und `reason=secret_failed`. Ein Template, dessen Inventar-Schritt fehlgeschlagen ist (`reason=inventory_failed`), und ein Projekt, dessen Einrichtung fehlgeschlagen ist (`reason=setup_failed`), werden genauso erfasst. Ebenso das Löschen einer Umgebung (`reason=secret_failed`) oder eines Geheimnisspeichers (`reason=key_failed`), die bereits gelöscht sind, während einige ihrer Geheimnisse nicht entfernt werden konnten.
+Repository-URLs, Host-Konfigurations-URLs und Integrations-Aliase werden ebenfalls nicht aufgezeichnet.
+
+Manchmal speichert oder löscht Semaphore ein Objekt, aber ein späterer Teil derselben Anfrage schlägt fehl.
+Die Oberfläche oder die API zeigt dann einen Fehler, obwohl das Objekt angelegt oder gelöscht wurde. Ein solches
+Ereignis wird als Erfolg mit `metadata.partial=true` erfasst, und `reason` gibt an, was nicht abgeschlossen wurde:
+
+- `secret_failed`: Eine Umgebung wurde gespeichert oder gelöscht, aber einige ihrer Geheimnisse wurden nicht
+  gespeichert oder nicht entfernt;
+- `key_failed`: Ein Geheimnisspeicher wurde gelöscht, aber einige der Zugangsdaten, die Semaphore dafür
+  aufbewahrt hat, wurden nicht entfernt;
+- `inventory_failed`: Ein Template wurde angelegt, aber sein Inventar für den Terraform-Workspace nicht;
+- `setup_failed`: Ein Projekt wurde angelegt, aber nicht vollständig eingerichtet, zum Beispiel wurde sein
+  Ersteller nicht als Besitzer hinzugefügt.
 
 ## Das Audit-Protokoll aktivieren {#enable}
 

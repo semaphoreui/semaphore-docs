@@ -33,9 +33,19 @@ Las contraseñas, los tokens, los valores secretos y la salida de las tareas nun
 auditoría. Los tokens de API se muestran mediante una huella en lugar de su valor. Un inicio de sesión
 fallido conserva el nombre de usuario introducido, por lo que puede contener una dirección de correo.
 
-Las URL de repositorios, las URL de configuraciones de host y los alias de integraciones tampoco se registran. Si un
-entorno se guarda pero uno de sus secretos falla, la API devuelve un error, aunque el entorno existe. El evento es
-entonces un éxito con `metadata.partial=true` y `reason=secret_failed`. Una plantilla cuyo paso de inventario falló (`reason=inventory_failed`) y un proyecto cuya configuración falló (`reason=setup_failed`) se registran de la misma forma. También el borrado de un entorno (`reason=secret_failed`) o de un almacén de secretos (`reason=key_failed`) que ya se eliminó, aunque algunos de sus secretos no se pudieron quitar.
+Las URL de repositorios, las URL de configuraciones de host y los alias de integraciones tampoco se registran.
+
+A veces Semaphore guarda o elimina un objeto, pero una parte posterior de la misma solicitud falla. La
+interfaz o la API muestra entonces un error, aunque el objeto se creó o se eliminó. Ese evento se registra como
+un éxito con `metadata.partial=true`, y `reason` indica qué no se completó:
+
+- `secret_failed`: se guardó o eliminó un entorno, pero algunos de sus secretos no se guardaron o no se
+  quitaron;
+- `key_failed`: se eliminó un almacén de secretos, pero algunas de las credenciales que Semaphore guardaba para
+  él no se quitaron;
+- `inventory_failed`: se creó una plantilla, pero no su inventario del workspace de Terraform;
+- `setup_failed`: se creó un proyecto, pero no quedó configurado del todo; por ejemplo, su creador no se añadió
+  como propietario.
 
 ## Activar el registro de auditoría {#enable}
 

@@ -32,9 +32,19 @@ Senhas, tokens, valores secretos e a saída das tarefas nunca aparecem nos event
 API são mostrados por uma impressão digital em vez do seu valor. Uma entrada com falha guarda o nome de
 login digitado, que pode conter um endereço de e-mail.
 
-URLs de repositórios, URLs de configurações de host e aliases de integrações também não são registrados. Se um
-ambiente é salvo, mas um de seus segredos falha, a API retorna um erro, embora o ambiente exista. O evento é então
-um sucesso com `metadata.partial=true` e `reason=secret_failed`. Um modelo cuja etapa de inventário falhou (`reason=inventory_failed`) e um projeto cuja configuração falhou (`reason=setup_failed`) são registrados da mesma forma. O mesmo vale para a exclusão de um ambiente (`reason=secret_failed`) ou de um armazenamento de segredos (`reason=key_failed`) já excluído, enquanto alguns dos seus segredos não puderam ser removidos.
+URLs de repositórios, URLs de configurações de host e aliases de integrações também não são registrados.
+
+Às vezes o Semaphore salva ou exclui um objeto, mas uma parte posterior da mesma solicitação falha. A
+interface ou a API mostra então um erro, embora o objeto tenha sido criado ou excluído. Esse evento é registrado
+como sucesso com `metadata.partial=true`, e `reason` indica o que não foi concluído:
+
+- `secret_failed`: um ambiente foi salvo ou excluído, mas alguns dos seus segredos não foram salvos ou não
+  foram removidos;
+- `key_failed`: um armazenamento de segredos foi excluído, mas algumas das credenciais que o Semaphore mantinha
+  para ele não foram removidas;
+- `inventory_failed`: um modelo foi criado, mas não o seu inventário do workspace do Terraform;
+- `setup_failed`: um projeto foi criado, mas não foi totalmente configurado; por exemplo, seu criador não foi
+  adicionado como proprietário.
 
 ## Ativar o log de auditoria {#enable}
 

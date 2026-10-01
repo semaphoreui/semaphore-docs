@@ -32,9 +32,17 @@ Lozinke, tokeni, tajne vrednosti i izlaz zadataka nikada se ne pojavljuju u doga
 se prikazuju otiskom umesto vrednošću. Neuspela prijava čuva uneto korisničko ime, pa ono može sadržati
 adresu e-pošte.
 
-URL-ovi repozitorijuma, URL-ovi konfiguracija hostova i aliasi integracija takođe se ne beleže. Ako se okruženje
-sačuva, ali jedna od njegovih tajni ne uspe, API vraća grešku, iako okruženje postoji. Događaj se tada beleži kao
-uspešan sa `metadata.partial=true` i `reason=secret_failed`. Šablon čiji korak sa inventarom nije uspeo (`reason=inventory_failed`) i projekat čije podešavanje nije uspelo (`reason=setup_failed`) beleže se na isti način. Isto važi za brisanje okruženja (`reason=secret_failed`) ili skladišta tajni (`reason=key_failed`) koje je već obrisano, iako neke njegove tajne nisu mogle biti uklonjene.
+URL-ovi repozitorijuma, URL-ovi konfiguracija hostova i aliasi integracija takođe se ne beleže.
+
+Ponekad Semaphore sačuva ili obriše objekat, ali kasniji deo istog zahteva ne uspe. Interfejs ili API tada
+prikazuje grešku, iako je objekat kreiran ili obrisan. Takav događaj se beleži kao uspešan sa
+`metadata.partial=true`, a `reason` navodi šta nije završeno:
+
+- `secret_failed`: okruženje je sačuvano ili obrisano, ali neke njegove tajne nisu sačuvane ili nisu uklonjene;
+- `key_failed`: skladište tajni je obrisano, ali neki kredencijali koje je Semaphore čuvao za njega nisu
+  uklonjeni;
+- `inventory_failed`: šablon je kreiran, ali njegov inventar za Terraform workspace nije;
+- `setup_failed`: projekat je kreiran, ali nije potpuno podešen, na primer njegov tvorac nije dodat kao vlasnik.
 
 ## Uključivanje dnevnika revizije {#enable}
 

@@ -36,8 +36,18 @@ Les mots de passe, les jetons, les valeurs secrètes et la sortie des tâches n'
 connexion échouée conserve l'identifiant saisi, qui peut donc contenir une adresse e-mail.
 
 Les URL de dépôts, les URL de configurations d'hôtes et les alias d'intégrations ne sont pas enregistrés non plus.
-Si un environnement est enregistré mais que l'un de ses secrets échoue, l'API renvoie une erreur alors que
-l'environnement existe. L'événement est alors un succès avec `metadata.partial=true` et `reason=secret_failed`. Un modèle dont l'étape d'inventaire a échoué (`reason=inventory_failed`) et un projet dont la configuration a échoué (`reason=setup_failed`) sont enregistrés de la même façon. De même pour la suppression d'un environnement (`reason=secret_failed`) ou d'un stockage de secrets (`reason=key_failed`) déjà supprimé, alors que certains de ses secrets n'ont pas pu être retirés.
+
+Il arrive que Semaphore enregistre ou supprime un objet, mais qu'une partie ultérieure de la même requête
+échoue. L'interface ou l'API affiche alors une erreur, alors que l'objet a bien été créé ou supprimé. Un tel
+événement est enregistré comme un succès avec `metadata.partial=true`, et `reason` indique ce qui n'a pas abouti :
+
+- `secret_failed` : un environnement a été enregistré ou supprimé, mais certains de ses secrets n'ont pas été
+  enregistrés ou pas retirés ;
+- `key_failed` : un stockage de secrets a été supprimé, mais certains des identifiants que Semaphore conservait
+  pour lui n'ont pas été retirés ;
+- `inventory_failed` : un modèle a été créé, mais pas son inventaire de workspace Terraform ;
+- `setup_failed` : un projet a été créé, mais pas entièrement configuré ; par exemple, son créateur n'a pas été
+  ajouté comme propriétaire.
 
 ## Activer le journal d'audit {#enable}
 

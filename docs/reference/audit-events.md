@@ -21,7 +21,7 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `schema_version` | Always | Version of the event envelope. |
 | `category`, `event_code`, `type`, `action` | Always | Stable values that identify what happened. |
 | `outcome` | Always | `success` or `failure`. |
-| `reason` | Always | Why the action failed, if the event lists its reasons. Empty on success, except a partial success, where it names the step that failed. |
+| `reason` | Always | Why the action failed, if the event lists its reasons. On a partial success, what did not complete. Empty on any other success. |
 | `actor` | Always | The user, anonymous client, system component, runner or integration that acted. |
 | `source` | HTTP requests | Client IP address and, when available, User-Agent. |
 | `target` | When an object is identified | The object affected by the action. |
