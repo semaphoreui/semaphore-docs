@@ -14,12 +14,14 @@ Il log di audit è disponibile in tutte le edizioni. L'invio a un SIEM richiede 
 
 ## Cosa viene registrato {#recorded-events}
 
-Attualmente Semaphore registra gli accessi e l'attività degli account:
+Attualmente Semaphore registra gli accessi e l'attività di account e progetti:
 
 - accessi, tentativi di accesso non riusciti, disconnessioni e verifiche del secondo fattore;
 - token API rifiutati, richieste negate e richieste cross-site bloccate;
 - modifiche a utenti, password, autenticazione a due fattori, identità esterne e token API;
 - modifiche ai membri del progetto, ai ruoli e ai permessi dei template;
+- modifiche a progetti, inventari, repository, template, pianificazioni, integrazioni, configurazioni host,
+  ambienti, credenziali e archivi dei segreti, ed esportazioni e ripristini dei backup di progetto;
 - modifiche alle impostazioni di sistema e l'attivazione della licenza Pro;
 - ogni avvio del server.
 
@@ -29,6 +31,10 @@ Altri eventi verranno aggiunti nelle prossime versioni. Per l'elenco completo, c
 Password, token, valori segreti e output dei task non compaiono mai negli eventi di audit. I token API sono
 indicati da un'impronta invece che dal loro valore. Un accesso non riuscito conserva il nome di accesso
 inserito, che quindi può contenere un indirizzo email.
+
+Anche gli URL dei repository, gli URL delle configurazioni host e gli alias delle integrazioni non vengono registrati.
+Se un ambiente viene salvato ma uno dei suoi segreti non riesce, l'API restituisce un errore, anche se l'ambiente
+esiste. L'evento è allora un successo con `metadata.partial=true` e `reason=secret_failed`. Un template il cui passaggio di inventario è fallito (`reason=inventory_failed`) e un progetto la cui configurazione è fallita (`reason=setup_failed`) vengono registrati allo stesso modo.
 
 ## Attivare il log di audit {#enable}
 
@@ -226,9 +232,10 @@ Lo strumento da riga di comando `semaphore` lavora direttamente sul database, qu
 `user add` e `user token` non vengono registrati.
 
 Alcune azioni dell'interfaccia non vengono ancora registrate: la rimozione di una licenza, le impostazioni
-delle app, la pulizia dello stato dei task HA, gli alias degli inventari Terraform, le esecuzioni dei
-workflow e gli inviti ai progetti. Per gli eventi previsti nelle prossime versioni, consulta
-[Eventi di audit](/reference/audit-events).
+delle app, la pulizia dello stato dei task HA, gli alias degli inventari Terraform, l'eliminazione di uno stato
+Terraform, le esecuzioni dei workflow e gli inviti ai progetti. Non vengono registrate neppure le descrizioni dei
+template, le viste, la pulizia della cache del progetto e le sincronizzazioni pianificate degli archivi dei segreti.
+Per gli eventi previsti nelle prossime versioni, consulta [Eventi di audit](/reference/audit-events).
 
 ## Prossimi passi {#whats-next}
 

@@ -14,12 +14,14 @@ The audit log is available in every edition. Sending events to a SIEM requires S
 
 ## What is recorded {#recorded-events}
 
-Semaphore currently records sign-in and account activity:
+Semaphore currently records sign-in, account and project activity:
 
 - sign-ins, failed sign-in attempts, sign-outs and two-factor checks;
 - rejected API tokens, denied requests and blocked cross-site requests;
 - changes to users, passwords, two-factor authentication, external identities and API tokens;
 - changes to project members, roles and template permissions;
+- changes to projects, inventories, repositories, templates, schedules, integrations, host configs,
+  environments, credentials and secret storages, and project backup exports and restores;
 - changes to system settings and Pro license activation;
 - every server start.
 
@@ -29,6 +31,10 @@ More events will be added in future releases. For the full list, see
 Passwords, tokens, secret values and task output never appear in audit events. API tokens are shown by a
 fingerprint instead of their value. A failed sign-in keeps the login name that was entered, so it can
 contain an email address.
+
+Repository URLs, host config URLs and integration aliases are not recorded either. If an environment is saved
+but one of its secrets fails, the API returns an error, yet the environment exists. The event is then a
+success with `metadata.partial=true` and `reason=secret_failed`. A template whose inventory step failed (`reason=inventory_failed`) and a project whose setup failed (`reason=setup_failed`) are recorded the same way.
 
 ## Enable the audit log {#enable}
 
@@ -220,8 +226,9 @@ The `semaphore` command-line tool works with the database directly, so commands 
 `user token` are not recorded.
 
 Some actions in the UI are not recorded yet: removing a license, app settings, clearing HA task state,
-Terraform inventory aliases, workflow runs and project invitations. For the events planned for future
-releases, see [Audit events](/reference/audit-events).
+Terraform inventory aliases, deleting a Terraform state, workflow runs and project invitations. Template
+descriptions, views, clearing the project cache and scheduled secret storage syncs are not recorded either.
+For the events planned for future releases, see [Audit events](/reference/audit-events).
 
 ## What's next {#whats-next}
 

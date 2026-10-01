@@ -14,12 +14,14 @@ Dnevnik revizije je dostupan u svim izdanjima. Za slanje događaja u SIEM potreb
 
 ## Šta se beleži {#recorded-events}
 
-Semaphore trenutno beleži prijave i aktivnost naloga:
+Semaphore trenutno beleži prijave, aktivnost naloga i projekata:
 
 - prijave, neuspele pokušaje prijave, odjave i provere drugog faktora;
 - odbijene API tokene, odbijene zahteve i blokirane međusajtne zahteve;
 - izmene korisnika, lozinki, dvofaktorske autentifikacije, spoljnih identiteta i API tokena;
 - izmene članova projekta, uloga i dozvola za šablone;
+- izmene projekata, inventara, repozitorijuma, šablona, rasporeda, integracija, konfiguracija hostova,
+  okruženja, kredencijala i skladišta tajni, kao i izvoz i vraćanje rezervnih kopija projekata;
 - izmene sistemskih podešavanja i aktivaciju Pro licence;
 - svako pokretanje servera.
 
@@ -29,6 +31,10 @@ U narednim verzijama biće dodato još događaja. Kompletna lista je na stranici
 Lozinke, tokeni, tajne vrednosti i izlaz zadataka nikada se ne pojavljuju u događajima revizije. API tokeni
 se prikazuju otiskom umesto vrednošću. Neuspela prijava čuva uneto korisničko ime, pa ono može sadržati
 adresu e-pošte.
+
+URL-ovi repozitorijuma, URL-ovi konfiguracija hostova i aliasi integracija takođe se ne beleže. Ako se okruženje
+sačuva, ali jedna od njegovih tajni ne uspe, API vraća grešku, iako okruženje postoji. Događaj se tada beleži kao
+uspešan sa `metadata.partial=true` i `reason=secret_failed`. Šablon čiji korak sa inventarom nije uspeo (`reason=inventory_failed`) i projekat čije podešavanje nije uspelo (`reason=setup_failed`) beleže se na isti način.
 
 ## Uključivanje dnevnika revizije {#enable}
 
@@ -222,8 +228,9 @@ Alat komandne linije `semaphore` radi direktno sa bazom podataka, pa se komande 
 `user token` ne beleže.
 
 Neke radnje u interfejsu se još ne beleže: uklanjanje licence, podešavanja aplikacija, brisanje stanja HA
-zadataka, aliasi Terraform inventara, pokretanja workflow-a i pozivnice u projekat. Događaji planirani za
-naredne verzije navedeni su na stranici [Događaji revizije](/reference/audit-events).
+zadataka, aliasi Terraform inventara, brisanje Terraform stanja, pokretanja workflow-a i pozivnice u projekat.
+Opisi šablona, prikazi, brisanje keša projekta i zakazane sinhronizacije skladišta tajni takođe se ne beleže.
+Događaji planirani za naredne verzije navedeni su na stranici [Događaji revizije](/reference/audit-events).
 
 ## Šta dalje {#whats-next}
 

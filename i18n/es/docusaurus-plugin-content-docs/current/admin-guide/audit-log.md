@@ -15,12 +15,14 @@ Semaphore Pro.
 
 ## Qué se registra {#recorded-events}
 
-Actualmente Semaphore registra los inicios de sesión y la actividad de las cuentas:
+Actualmente Semaphore registra los inicios de sesión y la actividad de las cuentas y de los proyectos:
 
 - inicios de sesión, intentos fallidos, cierres de sesión y comprobaciones del segundo factor;
 - tokens de API rechazados, solicitudes denegadas y solicitudes entre sitios bloqueadas;
 - cambios en usuarios, contraseñas, autenticación de dos factores, identidades externas y tokens de API;
 - cambios en los miembros del proyecto, los roles y los permisos de plantillas;
+- cambios en proyectos, inventarios, repositorios, plantillas, programaciones, integraciones, configuraciones de
+  host, entornos, credenciales y almacenes de secretos, y exportaciones y restauraciones de copias de proyectos;
 - cambios en la configuración del sistema y la activación de la licencia Pro;
 - cada arranque del servidor.
 
@@ -30,6 +32,10 @@ Se añadirán más eventos en próximas versiones. Para ver la lista completa, c
 Las contraseñas, los tokens, los valores secretos y la salida de las tareas nunca aparecen en los eventos de
 auditoría. Los tokens de API se muestran mediante una huella en lugar de su valor. Un inicio de sesión
 fallido conserva el nombre de usuario introducido, por lo que puede contener una dirección de correo.
+
+Las URL de repositorios, las URL de configuraciones de host y los alias de integraciones tampoco se registran. Si un
+entorno se guarda pero uno de sus secretos falla, la API devuelve un error, aunque el entorno existe. El evento es
+entonces un éxito con `metadata.partial=true` y `reason=secret_failed`. Una plantilla cuyo paso de inventario falló (`reason=inventory_failed`) y un proyecto cuya configuración falló (`reason=setup_failed`) se registran de la misma forma.
 
 ## Activar el registro de auditoría {#enable}
 
@@ -226,9 +232,10 @@ La herramienta de línea de comandos `semaphore` trabaja directamente con la bas
 como `user add` y `user token` no se registran.
 
 Algunas acciones de la interfaz aún no se registran: eliminar una licencia, la configuración de apps,
-limpiar el estado de tareas en HA, los alias de inventarios de Terraform, las ejecuciones de workflows y las
-invitaciones a proyectos. Para ver los eventos previstos en próximas versiones, consulte
-[Eventos de auditoría](/reference/audit-events).
+limpiar el estado de tareas en HA, los alias de inventarios de Terraform, eliminar un estado de Terraform, las
+ejecuciones de workflows y las invitaciones a proyectos. Tampoco se registran las descripciones de plantillas,
+las vistas, la limpieza de la caché del proyecto ni las sincronizaciones programadas de almacenes de secretos.
+Para ver los eventos previstos en próximas versiones, consulte [Eventos de auditoría](/reference/audit-events).
 
 ## Siguientes pasos {#whats-next}
 

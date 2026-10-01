@@ -14,7 +14,7 @@ Le journal d'audit est disponible dans toutes les éditions. L'envoi vers un SIE
 
 ## Ce qui est enregistré {#recorded-events}
 
-Semaphore enregistre actuellement les connexions et l'activité des comptes :
+Semaphore enregistre actuellement les connexions, l'activité des comptes et celle des projets :
 
 - les connexions, les tentatives de connexion échouées, les déconnexions et les vérifications du second
   facteur ;
@@ -22,6 +22,9 @@ Semaphore enregistre actuellement les connexions et l'activité des comptes :
 - les modifications des utilisateurs, des mots de passe, de l'authentification à deux facteurs, des
   identités externes et des jetons d'API ;
 - les modifications des membres de projet, des rôles et des permissions de modèles ;
+- les modifications des projets, inventaires, dépôts, modèles, planifications, intégrations, configurations
+  d'hôtes, environnements, identifiants et stockages de secrets, ainsi que les exports et restaurations de
+  sauvegardes de projet ;
 - les modifications des paramètres système et l'activation de la licence Pro ;
 - chaque démarrage du serveur.
 
@@ -31,6 +34,10 @@ D'autres événements seront ajoutés dans les prochaines versions. Pour la list
 Les mots de passe, les jetons, les valeurs secrètes et la sortie des tâches n'apparaissent jamais dans les
 événements d'audit. Les jetons d'API sont identifiés par une empreinte plutôt que par leur valeur. Une
 connexion échouée conserve l'identifiant saisi, qui peut donc contenir une adresse e-mail.
+
+Les URL de dépôts, les URL de configurations d'hôtes et les alias d'intégrations ne sont pas enregistrés non plus.
+Si un environnement est enregistré mais que l'un de ses secrets échoue, l'API renvoie une erreur alors que
+l'environnement existe. L'événement est alors un succès avec `metadata.partial=true` et `reason=secret_failed`. Un modèle dont l'étape d'inventaire a échoué (`reason=inventory_failed`) et un projet dont la configuration a échoué (`reason=setup_failed`) sont enregistrés de la même façon.
 
 ## Activer le journal d'audit {#enable}
 
@@ -229,9 +236,11 @@ L'outil en ligne de commande `semaphore` agit directement sur la base de donnée
 `user add` et `user token` ne sont donc pas enregistrées.
 
 Certaines actions de l'interface ne sont pas encore enregistrées : la suppression d'une licence, les
-paramètres des apps, la réinitialisation de l'état des tâches HA, les alias d'inventaires Terraform, les
-exécutions de workflows et les invitations aux projets. Pour les événements prévus dans les prochaines
-versions, consultez [Événements d'audit](/reference/audit-events).
+paramètres des apps, la réinitialisation de l'état des tâches HA, les alias d'inventaires Terraform, la
+suppression d'un état Terraform, les exécutions de workflows et les invitations aux projets. Les descriptions de
+modèles, les vues, le vidage du cache du projet et les synchronisations planifiées des stockages de secrets ne
+sont pas enregistrés non plus. Pour les événements prévus dans les prochaines versions, consultez
+[Événements d'audit](/reference/audit-events).
 
 ## Et ensuite {#whats-next}
 
