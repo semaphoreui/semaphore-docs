@@ -175,6 +175,10 @@ O Semaphore registra um evento sempre que inicia. Após reiniciar, procure-o no 
 Cada evento é enviado como uma mensagem Syslog RFC 5424 com o JSON do evento como corpo. `HOSTNAME` é o ID
 do nó HA, ou o ID da instância em um único nó, e `MSGID` é o código do evento.
 
+Os exemplos abaixo são mínimos e mostram apenas como receber os eventos. Eles aceitam conexões de qualquer
+cliente que alcance a porta. Em produção, proteja o receptor para que apenas os seus servidores do Semaphore
+possam enviar eventos a ele.
+
 ### Exemplo de rsyslog {#rsyslog}
 
 Esta configuração do rsyslog aceita a conexão TLS e grava um evento por linha:

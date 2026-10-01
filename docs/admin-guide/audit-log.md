@@ -172,6 +172,10 @@ destination ID.
 Each event is sent as an RFC 5424 Syslog message with the event JSON as its body. `HOSTNAME` is the HA node
 ID, or the instance ID on a single node, and `MSGID` is the event code.
 
+The examples below are minimal and only show how to receive the events. They accept a connection from any
+client that can reach the port. In production, protect the receiver so that only your Semaphore servers can
+send events to it.
+
 ### rsyslog example {#rsyslog}
 
 This rsyslog configuration accepts the TLS connection and writes one event per line:

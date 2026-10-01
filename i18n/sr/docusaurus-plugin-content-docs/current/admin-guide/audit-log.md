@@ -172,6 +172,10 @@ odredišta.
 Svaki događaj se šalje kao Syslog poruka po RFC 5424 sa JSON-om događaja kao telom. `HOSTNAME` je ID HA
 čvora, ili ID instance na jednom čvoru, a `MSGID` je kôd događaja.
 
+Primeri u nastavku su minimalni i samo pokazuju kako se primaju događaji. Prihvataju vezu od bilo kog klijenta
+koji može da dođe do porta. U produkciji zaštitite prijemnik tako da samo vaši Semaphore serveri mogu da mu šalju
+događaje.
+
 ### Primer za rsyslog {#rsyslog}
 
 Ova rsyslog konfiguracija prihvata TLS vezu i upisuje po jedan događaj u red:

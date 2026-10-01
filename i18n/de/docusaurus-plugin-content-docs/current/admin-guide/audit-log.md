@@ -176,6 +176,10 @@ Semaphore zeichnet bei jedem Start ein Ereignis auf. Suchen Sie es nach dem Neus
 Jedes Ereignis wird als Syslog-Nachricht nach RFC 5424 mit dem Ereignis-JSON als Inhalt gesendet. `HOSTNAME`
 ist die HA-Knoten-ID oder auf einem einzelnen Knoten die Instanz-ID, und `MSGID` ist der Ereigniscode.
 
+Die folgenden Beispiele sind minimal und zeigen nur, wie die Ereignisse empfangen werden. Sie nehmen
+Verbindungen von jedem Client an, der den Port erreicht. Schützen Sie den Empfänger im Produktivbetrieb so, dass
+nur Ihre Semaphore-Server Ereignisse an ihn senden können.
+
 ### rsyslog-Beispiel {#rsyslog}
 
 Diese rsyslog-Konfiguration nimmt die TLS-Verbindung an und schreibt ein Ereignis pro Zeile:

@@ -178,6 +178,10 @@ es `audit.lifecycle`, `action` es `start` y `metadata.destinations` incluye el I
 Cada evento se envía como un mensaje Syslog RFC 5424 con el JSON del evento como cuerpo. `HOSTNAME` es el ID
 del nodo HA, o el ID de instancia en un solo nodo, y `MSGID` es el código del evento.
 
+Los ejemplos siguientes son mínimos y solo muestran cómo recibir los eventos. Aceptan conexiones de cualquier
+cliente que llegue al puerto. En producción, proteja el receptor para que solo sus servidores de Semaphore
+puedan enviarle eventos.
+
 ### Ejemplo de rsyslog {#rsyslog}
 
 Esta configuración de rsyslog acepta la conexión TLS y escribe un evento por línea:
