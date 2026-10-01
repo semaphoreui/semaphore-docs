@@ -21,7 +21,7 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `schema_version` | Always | Version of the event envelope. |
 | `category`, `event_code`, `type`, `action` | Always | Stable values that identify what happened. |
 | `outcome` | Always | `success` or `failure`. |
-| `reason` | Always | Why the action failed, if the event lists its reasons. Empty on success. |
+| `reason` | Always | Why the action failed, if the event lists its reasons. Empty on success, except a partial success, where it names the step that failed. |
 | `actor` | Always | The user, anonymous client, system component, runner or integration that acted. |
 | `source` | HTTP requests | Client IP address and, when available, User-Agent. |
 | `target` | When an object is identified | The object affected by the action. |
@@ -122,7 +122,7 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `resource.environment` | `create` | `creation` | success | `secret_failed` (partial success) | `secrets_created`, `secrets_updated`, `secrets_deleted`, `partial` | Community | Available |
 | `resource.environment` | `update` | `change` | success | `secret_failed` (partial success) | `secrets_created`, `secrets_updated`, `secrets_deleted`, `partial` | Community | Available |
 | `resource.environment` | `delete` | `deletion` | success |  |  | Community | Available |
-| `resource.environment` | `sync` | `change` | success |  |  | Community | Available |
+| `resource.environment` | `sync` | `change` | success |  |  | Pro | Available |
 
 ## Secrets {#secrets}
 
@@ -134,7 +134,7 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `secret.storage` | `create` | `creation` | success |  | `type` | Community | Available |
 | `secret.storage` | `update` | `change` | success |  | `type` | Community | Available |
 | `secret.storage` | `delete` | `deletion` | success |  |  | Community | Available |
-| `secret.storage` | `sync` | `change` | success |  |  | Community | Available |
+| `secret.storage` | `sync` | `change` | success |  |  | Pro | Available |
 
 ## Tasks {#tasks}
 
