@@ -40,8 +40,6 @@ Ereignis wird als Erfolg mit `metadata.partial=true` erfasst, und `reason` gibt 
 
 - `secret_failed`: Eine Umgebung wurde gespeichert oder gelöscht, aber einige ihrer Geheimnisse wurden nicht
   gespeichert oder nicht entfernt;
-- `key_failed`: Ein Geheimnisspeicher wurde gelöscht, aber einige der Zugangsdaten, die Semaphore dafür
-  aufbewahrt hat, wurden nicht entfernt;
 - `inventory_failed`: Ein Template wurde angelegt, aber sein Inventar für den Terraform-Workspace nicht;
 - `restore_failed`: Ein Projekt wurde aus einer Sicherung wiederhergestellt, aber nicht alle seine Objekte;
 - `setup_failed`: Ein Projekt wurde angelegt, aber nicht vollständig eingerichtet, zum Beispiel wurde sein

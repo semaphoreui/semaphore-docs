@@ -40,8 +40,6 @@ tipo viene registrato come successo con `metadata.partial=true`, e `reason` indi
 
 - `secret_failed`: un ambiente è stato salvato o eliminato, ma alcuni dei suoi segreti non sono stati salvati o
   non sono stati rimossi;
-- `key_failed`: un archivio dei segreti è stato eliminato, ma alcune delle credenziali che Semaphore conservava
-  per esso non sono state rimosse;
 - `inventory_failed`: un template è stato creato, ma non il suo inventario del workspace Terraform;
 - `restore_failed`: un progetto è stato ripristinato da un backup, ma non tutti i suoi oggetti;
 - `setup_failed`: un progetto è stato creato, ma non configurato del tutto; ad esempio, il suo creatore non è

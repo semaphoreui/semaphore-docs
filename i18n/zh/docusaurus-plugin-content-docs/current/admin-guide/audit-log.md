@@ -30,7 +30,6 @@ description: 启用审计日志，查看谁在 Semaphore 中做了什么，并�
 有时 Semaphore 已保存或删除某个对象，但同一请求的后续部分失败。此时界面或 API 会显示错误，但对象实际上已创建或已删除。这类事件记为成功，并带有 `metadata.partial=true`，`reason` 说明哪部分未完成：
 
 - `secret_failed`：环境已保存或删除，但其部分机密未能保存或移除；
-- `key_failed`：机密存储已删除，但 Semaphore 为其保存的部分凭据未能移除；
 - `inventory_failed`：模板已创建，但其 Terraform 工作区清单未创建；
 - `restore_failed`：项目已从备份还原，但其部分对象未还原；
 - `setup_failed`：项目已创建，但未完全设置，例如其创建者未被添加为所有者。

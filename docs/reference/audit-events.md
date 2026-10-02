@@ -133,7 +133,7 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `secret.credential` | `delete` | `deletion` | success |  |  | Community | Available |
 | `secret.storage` | `create` | `creation` | success |  | `type` | Community | Available |
 | `secret.storage` | `update` | `change` | success |  | `type` | Community | Available |
-| `secret.storage` | `delete` | `deletion` | success | `key_failed` (partial success) | `partial` | Community | Available |
+| `secret.storage` | `delete` | `deletion` | success |  |  | Community | Available |
 | `secret.storage` | `sync` | `change` | success |  |  | Pro | Available |
 
 ## Tasks {#tasks}
