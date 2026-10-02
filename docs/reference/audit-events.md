@@ -150,6 +150,9 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `task.execution` | `complete` | `end` | success |  | `result`, `end_reason`, `template_id`, `initiator_id`, `duration_ms` | Community | Available |
 | `task.history` | `delete` | `deletion` | success |  | `template_id` | Community | Available |
 
+For `task.execution` `complete`, `metadata.result` is `success`, `error`, `stopped`, or `stopping` for a task
+stopped before it ran. `metadata.end_reason` is `timeout` or `runner_lost` when the task ended for that cause.
+
 ## Runners {#runners}
 
 | Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
@@ -168,6 +171,8 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 For `runner.lifecycle` `register`, `metadata.token` is `one_time` or `global`. On a refused registration it
 names the registration token type Semaphore checked the request against: `one_time` for a token that starts
 with `smrs_`, `global` for any other.
+
+Project runners (Pro) record the same events with `scope.project_id` set.
 
 ## System and audit {#system-and-audit}
 
