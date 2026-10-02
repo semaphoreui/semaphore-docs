@@ -29,7 +29,7 @@ Semaphore trenutno beleži prijave, aktivnost naloga, projekata i zadataka:
   sa nevažećim statusom;
 - svako pokretanje servera.
 
-U narednim verzijama biće dodato još događaja. Kompletna lista je na stranici
+Kompletna lista je na stranici
 [Događaji revizije](/reference/audit-events).
 
 Lozinke, tokeni, tajne vrednosti i izlaz zadataka nikada se ne pojavljuju u događajima revizije. API tokeni
@@ -250,10 +250,9 @@ encoding.codec = "json"
 Alat komandne linije `semaphore` radi direktno sa bazom podataka, pa se komande kao što su `user add` i
 `user token` ne beleže.
 
-Neke radnje u interfejsu se još ne beleže: uklanjanje licence, podešavanja aplikacija, brisanje stanja HA
+Neke radnje u interfejsu se ne beleže: uklanjanje licence, podešavanja aplikacija, brisanje stanja HA
 zadataka, aliasi Terraform inventara, brisanje Terraform stanja, pokretanja workflow-a i pozivnice u projekat.
 Opisi šablona, prikazi, brisanje keša projekta i zakazane sinhronizacije skladišta tajni takođe se ne beleže.
-Događaji planirani za naredne verzije navedeni su na stranici [Događaji revizije](/reference/audit-events).
 
 ## Šta dalje {#whats-next}
 

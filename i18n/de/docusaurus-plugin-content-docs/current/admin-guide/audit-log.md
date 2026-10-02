@@ -29,7 +29,7 @@ Derzeit zeichnet Semaphore Anmeldungen, Konto-, Projekt- und Task-Aktivitäten a
   mit ungültigem Status;
 - jeden Serverstart.
 
-In künftigen Versionen kommen weitere Ereignisse hinzu. Die vollständige Liste finden Sie unter
+Die vollständige Liste finden Sie unter
 [Audit-Ereignisse](/reference/audit-events).
 
 Passwörter, Tokens, geheime Werte und Aufgabenausgaben erscheinen nie in Audit-Ereignissen. API-Tokens werden
@@ -255,11 +255,10 @@ encoding.codec = "json"
 Das Kommandozeilenwerkzeug `semaphore` arbeitet direkt mit der Datenbank, daher werden Befehle wie
 `user add` und `user token` nicht aufgezeichnet.
 
-Einige Aktionen in der Oberfläche werden noch nicht aufgezeichnet: das Entfernen einer Lizenz,
+Einige Aktionen in der Oberfläche werden nicht aufgezeichnet: das Entfernen einer Lizenz,
 App-Einstellungen, das Zurücksetzen des HA-Aufgabenstatus, Terraform-Inventar-Aliase, das Löschen eines
 Terraform-Status, Workflow-Läufe und Projekteinladungen. Auch Vorlagenbeschreibungen, Ansichten, das Leeren des
-Projekt-Caches und geplante Synchronisierungen von Geheimnisspeichern werden nicht aufgezeichnet. Die für künftige
-Versionen geplanten Ereignisse finden Sie unter [Audit-Ereignisse](/reference/audit-events).
+Projekt-Caches und geplante Synchronisierungen von Geheimnisspeichern werden nicht aufgezeichnet.
 
 ## Wie geht es weiter {#whats-next}
 

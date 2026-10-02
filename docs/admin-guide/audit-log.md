@@ -29,7 +29,7 @@ Semaphore currently records sign-in, account, project and task activity:
   with an invalid status;
 - every server start.
 
-More events will be added in future releases. For the full list, see
+For the full list, see
 [Audit events](/reference/audit-events).
 
 Passwords, tokens, secret values and task output never appear in audit events. API tokens are shown by a
@@ -249,10 +249,9 @@ encoding.codec = "json"
 The `semaphore` command-line tool works with the database directly, so commands such as `user add` and
 `user token` are not recorded.
 
-Some actions in the UI are not recorded yet: removing a license, app settings, clearing HA task state,
+Some actions in the UI are not recorded: removing a license, app settings, clearing HA task state,
 Terraform inventory aliases, deleting a Terraform state, workflow runs and project invitations. Template
 descriptions, views, clearing the project cache and scheduled secret storage syncs are not recorded either.
-For the events planned for future releases, see [Audit events](/reference/audit-events).
 
 ## What's next {#whats-next}
 

@@ -32,7 +32,7 @@ Semaphore enregistre actuellement les connexions, l'activité des comptes, celle
   avec un statut invalide ;
 - chaque démarrage du serveur.
 
-D'autres événements seront ajoutés dans les prochaines versions. Pour la liste complète, consultez
+Pour la liste complète, consultez
 [Événements d'audit](/reference/audit-events).
 
 Les mots de passe, les jetons, les valeurs secrètes et la sortie des tâches n'apparaissent jamais dans les
@@ -260,12 +260,11 @@ encoding.codec = "json"
 L'outil en ligne de commande `semaphore` agit directement sur la base de données : les commandes comme
 `user add` et `user token` ne sont donc pas enregistrées.
 
-Certaines actions de l'interface ne sont pas encore enregistrées : la suppression d'une licence, les
+Certaines actions de l'interface ne sont pas enregistrées : la suppression d'une licence, les
 paramètres des apps, la réinitialisation de l'état des tâches HA, les alias d'inventaires Terraform, la
 suppression d'un état Terraform, les exécutions de workflows et les invitations aux projets. Les descriptions de
 modèles, les vues, le vidage du cache du projet et les synchronisations planifiées des stockages de secrets ne
-sont pas enregistrés non plus. Pour les événements prévus dans les prochaines versions, consultez
-[Événements d'audit](/reference/audit-events).
+sont pas enregistrés non plus.
 
 ## Et ensuite {#whats-next}
 

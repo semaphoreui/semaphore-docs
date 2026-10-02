@@ -23,25 +23,25 @@ Atualmente o Semaphore registra entradas e atividades de contas, projetos e tare
 - alterações em projetos, inventários, repositórios, modelos, agendamentos, integrações, configurações de host,
   ambientes, credenciais e armazenamentos de segredos, e exportações e restaurações de backups de projeto;
 - alterações nas configurações do sistema e a ativação da licença Pro;
-- inícios de tarefas com o seu gatilho (API, agendamento, integração, execução automática, workflow), aprovações, paragens,
-  conclusões e histórico de tarefas eliminado;
-- alterações em runners, registos (incluindo tokens de registo recusados), remoções de registo e relatórios de runners
-  com um estado inválido;
+- inícios de tarefas com o seu gatilho (API, agendamento, integração, execução automática, workflow), aprovações, interrupções,
+  conclusões e histórico de tarefas excluído;
+- alterações em runners, registros (incluindo tokens de registro recusados), cancelamentos de registro e relatórios de runners
+  com um status inválido;
 - cada início do servidor.
 
-Mais eventos serão adicionados em versões futuras. Para a lista completa, consulte
+Para a lista completa, consulte
 [Eventos de auditoria](/reference/audit-events).
 
 Senhas, tokens, valores secretos e a saída das tarefas nunca aparecem nos eventos de auditoria. Tokens de
 API são mostrados por uma impressão digital em vez do seu valor. Uma entrada com falha guarda o nome de
 login digitado, que pode conter um endereço de e-mail.
 
-Uma tarefa que termina tem um evento de conclusão, também quando falha antes de começar. `metadata.result` mostra o
-estado que o Semaphore atribuiu à tarefa, e `metadata.end_reason` indica porque o Semaphore a terminou: `timeout` quando demorou
-demasiado tempo, `runner_lost` quando o seu runner deixou de responder. Argumentos da tarefa, variáveis, etiquetas de runner e tokens
-não são registados.
+Uma tarefa que termina tem um evento de conclusão, mesmo quando falha antes de começar. `metadata.result` mostra o
+status que o Semaphore atribuiu à tarefa, e `metadata.end_reason` indica por que o Semaphore a encerrou: `timeout` quando demorou
+demais, `runner_lost` quando o runner dela parou de responder. Argumentos da tarefa, variáveis, tags de runner e tokens
+não são registrados.
 
-Durante uma atualização gradual de um cluster HA, uma tarefa iniciada num nó atualizado e terminada num nó que
+Durante uma atualização gradual de um cluster HA, uma tarefa iniciada em um nó atualizado e encerrada em um nó que
 ainda não foi atualizado não tem evento de conclusão.
 
 URLs de repositórios, URLs de configurações de host e aliases de integrações também não são registrados.
@@ -253,11 +253,10 @@ encoding.codec = "json"
 A ferramenta de linha de comando `semaphore` trabalha diretamente com o banco de dados, então comandos como
 `user add` e `user token` não são registrados.
 
-Algumas ações na interface ainda não são registradas: remover uma licença, configurações de apps, limpar o
+Algumas ações na interface não são registradas: remover uma licença, configurações de apps, limpar o
 estado das tarefas de HA, aliases de inventários do Terraform, excluir um estado do Terraform, execuções de
 workflows e convites para projetos. Descrições de modelos, visualizações, a limpeza do cache do projeto e as
-sincronizações agendadas de armazenamentos de segredos também não são registradas. Para os eventos previstos em
-versões futuras, consulte [Eventos de auditoria](/reference/audit-events).
+sincronizações agendadas de armazenamentos de segredos também não são registradas.
 
 ## Próximos passos {#whats-next}
 

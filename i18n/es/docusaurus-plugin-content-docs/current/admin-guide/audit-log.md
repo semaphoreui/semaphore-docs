@@ -30,7 +30,7 @@ Actualmente Semaphore registra los inicios de sesión y la actividad de las cuen
   con un estado no válido;
 - cada arranque del servidor.
 
-Se añadirán más eventos en próximas versiones. Para ver la lista completa, consulte
+Para ver la lista completa, consulte
 [Eventos de auditoría](/reference/audit-events).
 
 Las contraseñas, los tokens, los valores secretos y la salida de las tareas nunca aparecen en los eventos de
@@ -256,11 +256,10 @@ encoding.codec = "json"
 La herramienta de línea de comandos `semaphore` trabaja directamente con la base de datos, así que comandos
 como `user add` y `user token` no se registran.
 
-Algunas acciones de la interfaz aún no se registran: eliminar una licencia, la configuración de apps,
+Algunas acciones de la interfaz no se registran: eliminar una licencia, la configuración de apps,
 limpiar el estado de tareas en HA, los alias de inventarios de Terraform, eliminar un estado de Terraform, las
 ejecuciones de workflows y las invitaciones a proyectos. Tampoco se registran las descripciones de plantillas,
 las vistas, la limpieza de la caché del proyecto ni las sincronizaciones programadas de almacenes de secretos.
-Para ver los eventos previstos en próximas versiones, consulte [Eventos de auditoría](/reference/audit-events).
 
 ## Siguientes pasos {#whats-next}
 

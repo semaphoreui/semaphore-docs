@@ -14,7 +14,7 @@ Il log di audit è disponibile in tutte le edizioni. L'invio a un SIEM richiede 
 
 ## Cosa viene registrato {#recorded-events}
 
-Attualmente Semaphore registra gli accessi e l'attività di account, progetti e attività:
+Attualmente Semaphore registra gli accessi e l'attività di account, progetti e task:
 
 - accessi, tentativi di accesso non riusciti, disconnessioni e verifiche del secondo fattore;
 - token API rifiutati, richieste negate e richieste cross-site bloccate;
@@ -23,25 +23,25 @@ Attualmente Semaphore registra gli accessi e l'attività di account, progetti e 
 - modifiche a progetti, inventari, repository, template, pianificazioni, integrazioni, configurazioni host,
   ambienti, credenziali e archivi dei segreti, ed esportazioni e ripristini dei backup di progetto;
 - modifiche alle impostazioni di sistema e l'attivazione della licenza Pro;
-- avvii delle attività con il relativo trigger (API, pianificazione, integrazione, esecuzione automatica, workflow), approvazioni, arresti,
-  completamenti e cronologia delle attività eliminata;
+- avvii dei task con il relativo trigger (API, pianificazione, integrazione, esecuzione automatica, workflow), approvazioni, arresti,
+  completamenti e cronologia dei task eliminata;
 - modifiche ai runner, registrazioni (inclusi i token di registrazione rifiutati), annullamenti della registrazione e report dei runner
   con uno stato non valido;
 - ogni avvio del server.
 
-Altri eventi verranno aggiunti nelle prossime versioni. Per l'elenco completo, consulta
+Per l'elenco completo, consulta
 [Eventi di audit](/reference/audit-events).
 
 Password, token, valori segreti e output dei task non compaiono mai negli eventi di audit. I token API sono
 indicati da un'impronta invece che dal loro valore. Un accesso non riuscito conserva il nome di accesso
 inserito, che quindi può contenere un indirizzo email.
 
-Un'attività che termina ha un evento di completamento, anche quando fallisce prima di iniziare. `metadata.result` mostra lo
-stato che Semaphore ha assegnato all'attività, e `metadata.end_reason` indica perché Semaphore l'ha terminata: `timeout` quando è durata
-troppo a lungo, `runner_lost` quando il suo runner ha smesso di rispondere. Argomenti dell'attività, variabili, tag dei runner e token
+Un task che termina ha un evento di completamento, anche quando fallisce prima di iniziare. `metadata.result` mostra lo
+stato che Semaphore ha assegnato al task, e `metadata.end_reason` indica perché Semaphore lo ha terminato: `timeout` quando è durato
+troppo a lungo, `runner_lost` quando il suo runner ha smesso di rispondere. Argomenti del task, variabili, tag dei runner e token
 non vengono registrati.
 
-Durante un aggiornamento progressivo di un cluster HA, un'attività avviata su un nodo aggiornato e terminata su un nodo non
+Durante un aggiornamento progressivo di un cluster HA, un task avviato su un nodo aggiornato e terminato su un nodo non
 ancora aggiornato non ha evento di completamento.
 
 Anche gli URL dei repository, gli URL delle configurazioni host e gli alias delle integrazioni non vengono registrati.
@@ -256,11 +256,10 @@ encoding.codec = "json"
 Lo strumento da riga di comando `semaphore` lavora direttamente sul database, quindi comandi come
 `user add` e `user token` non vengono registrati.
 
-Alcune azioni dell'interfaccia non vengono ancora registrate: la rimozione di una licenza, le impostazioni
+Alcune azioni dell'interfaccia non vengono registrate: la rimozione di una licenza, le impostazioni
 delle app, la pulizia dello stato dei task HA, gli alias degli inventari Terraform, l'eliminazione di uno stato
 Terraform, le esecuzioni dei workflow e gli inviti ai progetti. Non vengono registrate neppure le descrizioni dei
 template, le viste, la pulizia della cache del progetto e le sincronizzazioni pianificate degli archivi dei segreti.
-Per gli eventi previsti nelle prossime versioni, consulta [Eventi di audit](/reference/audit-events).
 
 ## Prossimi passi {#whats-next}
 
