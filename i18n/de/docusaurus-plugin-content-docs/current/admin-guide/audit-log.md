@@ -36,7 +36,7 @@ Passwörter, Tokens, geheime Werte und Aufgabenausgaben erscheinen nie in Audit-
 über einen Fingerabdruck statt über ihren Wert angezeigt. Eine fehlgeschlagene Anmeldung speichert den
 eingegebenen Anmeldenamen, der daher eine E-Mail-Adresse enthalten kann.
 
-Ein Task, der endet, hat ein Abschlussereignis, auch wenn er fehlschlägt, bevor er startet. `metadata.result` zeigt den
+Im Abschlussereignis eines Tasks zeigt `metadata.result` den
 Status, den Semaphore dem Task gegeben hat, und `metadata.end_reason` nennt den Grund, warum Semaphore ihn beendet hat: `timeout`, wenn er
 zu lange lief, `runner_lost`, wenn sein Runner nicht mehr antwortete. Task-Argumente, Variablen, Runner-Tags und Tokens
 werden nicht aufgezeichnet.

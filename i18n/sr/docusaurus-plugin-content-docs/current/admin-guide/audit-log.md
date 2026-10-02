@@ -36,7 +36,7 @@ Lozinke, tokeni, tajne vrednosti i izlaz zadataka nikada se ne pojavljuju u doga
 se prikazuju otiskom umesto vrednošću. Neuspela prijava čuva uneto korisničko ime, pa ono može sadržati
 adresu e-pošte.
 
-Zadatak koji se završi ima događaj završetka, i kada ne uspe pre nego što počne. `metadata.result` prikazuje
+U događaju završetka zadatka `metadata.result` prikazuje
 status koji je Semaphore dao zadatku, a `metadata.end_reason` kaže zašto ga je Semaphore završio: `timeout` kada je trajao
 predugo, `runner_lost` kada njegov runner više nije odgovarao. Argumenti zadatka, promenljive, oznake runner-a i tokeni
 se ne beleže.

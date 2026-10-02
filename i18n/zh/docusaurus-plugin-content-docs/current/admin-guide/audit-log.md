@@ -27,7 +27,7 @@ description: 启用审计日志，查看谁在 Semaphore 中做了什么，并�
 
 密码、令牌、机密值和任务输出永远不会出现在审计事件中。API 令牌以指纹而不是其值显示。登录失败时会保留输入的登录名，因此其中可能包含电子邮件地址。
 
-结束的任务都有一个完成事件，任务在开始前失败时也一样。`metadata.result` 显示 Semaphore 给任务的状态，`metadata.end_reason` 说明 Semaphore 结束任务的原因：运行时间过长为 `timeout`，其运行器不再响应为 `runner_lost`。任务参数、变量、运行器标签和令牌不会被记录。
+在任务的完成事件中，`metadata.result` 显示 Semaphore 给任务的状态，`metadata.end_reason` 说明 Semaphore 结束任务的原因：运行时间过长为 `timeout`，其运行器不再响应为 `runner_lost`。任务参数、变量、运行器标签和令牌不会被记录。
 
 在 HA 集群滚动升级期间，在已升级的节点上启动、在尚未升级的节点上结束的任务没有完成事件。
 

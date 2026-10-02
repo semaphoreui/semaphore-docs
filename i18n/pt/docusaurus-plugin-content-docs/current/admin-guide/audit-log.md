@@ -36,7 +36,7 @@ Senhas, tokens, valores secretos e a saída das tarefas nunca aparecem nos event
 API são mostrados por uma impressão digital em vez do seu valor. Uma entrada com falha guarda o nome de
 login digitado, que pode conter um endereço de e-mail.
 
-Uma tarefa que termina tem um evento de conclusão, mesmo quando falha antes de começar. `metadata.result` mostra o
+No evento de conclusão de uma tarefa, `metadata.result` mostra o
 status que o Semaphore atribuiu à tarefa, e `metadata.end_reason` indica por que o Semaphore a encerrou: `timeout` quando demorou
 demais, `runner_lost` quando o runner dela parou de responder. Argumentos da tarefa, variáveis, tags de runner e tokens
 não são registrados.

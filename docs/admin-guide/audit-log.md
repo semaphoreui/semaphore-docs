@@ -36,7 +36,7 @@ Passwords, tokens, secret values and task output never appear in audit events. A
 fingerprint instead of their value. A failed sign-in keeps the login name that was entered, so it can
 contain an email address.
 
-A task that ends has a completion event, also when it fails before it starts. `metadata.result` shows the
+In a task completion event, `metadata.result` shows the
 status Semaphore gave the task, and `metadata.end_reason` says why Semaphore ended it: `timeout` when it ran
 too long, `runner_lost` when its runner stopped responding. Task arguments, variables, runner tags and tokens
 are not recorded.

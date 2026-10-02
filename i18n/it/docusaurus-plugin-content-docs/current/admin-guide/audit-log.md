@@ -36,7 +36,7 @@ Password, token, valori segreti e output dei task non compaiono mai negli eventi
 indicati da un'impronta invece che dal loro valore. Un accesso non riuscito conserva il nome di accesso
 inserito, che quindi può contenere un indirizzo email.
 
-Un task che termina ha un evento di completamento, anche quando fallisce prima di iniziare. `metadata.result` mostra lo
+Nell'evento di completamento di un task, `metadata.result` mostra lo
 stato che Semaphore ha assegnato al task, e `metadata.end_reason` indica perché Semaphore lo ha terminato: `timeout` quando è durato
 troppo a lungo, `runner_lost` quando il suo runner ha smesso di rispondere. Argomenti del task, variabili, tag dei runner e token
 non vengono registrati.

@@ -37,7 +37,7 @@ Las contraseñas, los tokens, los valores secretos y la salida de las tareas nun
 auditoría. Los tokens de API se muestran mediante una huella en lugar de su valor. Un inicio de sesión
 fallido conserva el nombre de usuario introducido, por lo que puede contener una dirección de correo.
 
-Una tarea que termina tiene un evento de finalización, también cuando falla antes de iniciarse. `metadata.result` muestra el
+En el evento de finalización de una tarea, `metadata.result` muestra el
 estado que Semaphore dio a la tarea, y `metadata.end_reason` indica por qué Semaphore la terminó: `timeout` cuando se ejecutó
 demasiado tiempo, `runner_lost` cuando su runner dejó de responder. Los argumentos de la tarea, las variables, las etiquetas del runner y los tokens
 no se registran.

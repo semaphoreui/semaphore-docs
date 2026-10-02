@@ -39,7 +39,7 @@ Les mots de passe, les jetons, les valeurs secrètes et la sortie des tâches n'
 événements d'audit. Les jetons d'API sont identifiés par une empreinte plutôt que par leur valeur. Une
 connexion échouée conserve l'identifiant saisi, qui peut donc contenir une adresse e-mail.
 
-Une tâche qui se termine a un événement de fin, y compris lorsqu'elle échoue avant de démarrer. `metadata.result` indique le
+Dans l'événement de fin d'une tâche, `metadata.result` indique le
 statut que Semaphore a donné à la tâche, et `metadata.end_reason` indique pourquoi Semaphore l'a terminée : `timeout` lorsqu'elle a duré
 trop longtemps, `runner_lost` lorsque son runner a cessé de répondre. Les arguments de la tâche, les variables, les étiquettes de runner et les jetons
 ne sont pas enregistrés.
