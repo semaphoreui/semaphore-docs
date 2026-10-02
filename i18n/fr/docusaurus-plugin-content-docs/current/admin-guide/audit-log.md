@@ -14,7 +14,7 @@ Le journal d'audit est disponible dans toutes les éditions. L'envoi vers un SIE
 
 ## Ce qui est enregistré {#recorded-events}
 
-Semaphore enregistre actuellement les connexions, l'activité des comptes et celle des projets :
+Semaphore enregistre actuellement les connexions, l'activité des comptes, celle des projets et celle des tâches :
 
 - les connexions, les tentatives de connexion échouées, les déconnexions et les vérifications du second
   facteur ;
@@ -26,6 +26,10 @@ Semaphore enregistre actuellement les connexions, l'activité des comptes et cel
   d'hôtes, environnements, identifiants et stockages de secrets, ainsi que les exports et restaurations de
   sauvegardes de projet ;
 - les modifications des paramètres système et l'activation de la licence Pro ;
+- démarrages de tâches avec leur déclencheur (API, planification, intégration, exécution automatique, workflow), approbations, arrêts,
+  fins et historique de tâches supprimé ;
+- modifications des runners, enregistrements (y compris les jetons d'enregistrement refusés), désenregistrements et rapports de runners
+  avec un statut invalide ;
 - chaque démarrage du serveur.
 
 D'autres événements seront ajoutés dans les prochaines versions. Pour la liste complète, consultez
@@ -34,6 +38,25 @@ D'autres événements seront ajoutés dans les prochaines versions. Pour la list
 Les mots de passe, les jetons, les valeurs secrètes et la sortie des tâches n'apparaissent jamais dans les
 événements d'audit. Les jetons d'API sont identifiés par une empreinte plutôt que par leur valeur. Une
 connexion échouée conserve l'identifiant saisi, qui peut donc contenir une adresse e-mail.
+
+Une tâche qui se termine a un événement de fin, y compris lorsqu'elle échoue avant de démarrer. `metadata.result` indique le
+statut que Semaphore a donné à la tâche, et `metadata.end_reason` indique pourquoi Semaphore l'a terminée : `timeout` lorsqu'elle a duré
+trop longtemps, `runner_lost` lorsque son runner a cessé de répondre. Les arguments de la tâche, les variables, les étiquettes de runner et les jetons
+ne sont pas enregistrés.
+
+Les événements de fin suivent ce que Semaphore affiche dans l'historique des tâches, y compris ses lacunes connues :
+
+- Une tâche arrêtée par « Tout arrêter » ou par l'arrêt d'une exécution de workflow alors qu'elle attend encore dans la file n'a pas
+  d'événement de fin. L'événement `task.control/stop_all` est enregistré pour « Tout arrêter ».
+- Une tâche arrêtée avant son démarrage, par exemple pendant qu'elle attend une confirmation, peut rester dans le statut
+  `stopping`. Son événement de fin a alors `result` `stopping`.
+- Dans un cluster HA, l'arrêt d'une tâche qu'aucun nœud n'exécute plus (par exemple après la panne d'un nœud) n'enregistre aucun
+  événement de fin.
+- Un arrêt qui survient au moment même où une tâche démarre ou se termine peut donner deux événements de fin à la tâche,
+  car l'historique des tâches affiche alors deux entrées finales.
+
+Pendant une mise à niveau progressive d'un cluster HA, une tâche démarrée sur un nœud mis à niveau et terminée sur un nœud qui
+n'est pas encore mis à niveau n'a pas d'événement de fin.
 
 Les URL de dépôts, les URL de configurations d'hôtes et les alias d'intégrations ne sont pas enregistrés non plus.
 

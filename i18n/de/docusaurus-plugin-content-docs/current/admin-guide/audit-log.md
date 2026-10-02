@@ -14,7 +14,7 @@ Das Audit-Protokoll ist in jeder Edition verfügbar. Für das Senden an ein SIEM
 
 ## Was aufgezeichnet wird {#recorded-events}
 
-Derzeit zeichnet Semaphore Anmeldungen, Konto- und Projektaktivitäten auf:
+Derzeit zeichnet Semaphore Anmeldungen, Konto-, Projekt- und Task-Aktivitäten auf:
 
 - Anmeldungen, fehlgeschlagene Anmeldeversuche, Abmeldungen und Prüfungen des zweiten Faktors;
 - abgelehnte API-Tokens, verweigerte Anfragen und blockierte Cross-Site-Anfragen;
@@ -23,6 +23,10 @@ Derzeit zeichnet Semaphore Anmeldungen, Konto- und Projektaktivitäten auf:
 - Änderungen an Projekten, Inventaren, Repositories, Vorlagen, Zeitplänen, Integrationen, Host-Konfigurationen,
   Umgebungen, Zugangsdaten und Geheimnisspeichern sowie Exporte und Wiederherstellungen von Projektsicherungen;
 - Änderungen an Systemeinstellungen und die Aktivierung der Pro-Lizenz;
+- Task-Starts mit ihrem Auslöser (API, Zeitplan, Integration, Autorun, Workflow), Freigaben, Stopps,
+  Abschlüsse und gelöschter Task-Verlauf;
+- Änderungen an Runnern, Registrierungen (auch abgelehnte Registrierungs-Tokens), Abmeldungen von Runnern und Runner-Meldungen
+  mit ungültigem Status;
 - jeden Serverstart.
 
 In künftigen Versionen kommen weitere Ereignisse hinzu. Die vollständige Liste finden Sie unter
@@ -31,6 +35,25 @@ In künftigen Versionen kommen weitere Ereignisse hinzu. Die vollständige Liste
 Passwörter, Tokens, geheime Werte und Aufgabenausgaben erscheinen nie in Audit-Ereignissen. API-Tokens werden
 über einen Fingerabdruck statt über ihren Wert angezeigt. Eine fehlgeschlagene Anmeldung speichert den
 eingegebenen Anmeldenamen, der daher eine E-Mail-Adresse enthalten kann.
+
+Ein Task, der endet, hat ein Abschlussereignis, auch wenn er fehlschlägt, bevor er startet. `metadata.result` zeigt den
+Status, den Semaphore dem Task gegeben hat, und `metadata.end_reason` nennt den Grund, warum Semaphore ihn beendet hat: `timeout`, wenn er
+zu lange lief, `runner_lost`, wenn sein Runner nicht mehr antwortete. Task-Argumente, Variablen, Runner-Tags und Tokens
+werden nicht aufgezeichnet.
+
+Die Abschlussereignisse folgen dem, was Semaphore im Task-Verlauf anzeigt, einschließlich seiner bekannten Lücken:
+
+- Ein Task, der durch „Alle stoppen“ oder durch das Stoppen eines Workflow-Laufs gestoppt wird, während er noch in der Warteschlange wartet, hat kein
+  Abschlussereignis. Für „Alle stoppen“ wird das Ereignis `task.control/stop_all` aufgezeichnet.
+- Ein Task, der vor dem Start gestoppt wird, zum Beispiel während er auf eine Bestätigung wartet, kann im Status
+  `stopping` bleiben. Sein Abschlussereignis hat dann `result` `stopping`.
+- In einem HA-Cluster wird beim Stoppen eines Tasks, den kein Knoten mehr ausführt (zum Beispiel nach einem Knotenausfall), kein
+  Abschlussereignis aufgezeichnet.
+- Ein Stopp, der genau zu dem Zeitpunkt kommt, an dem ein Task startet oder endet, kann dem Task zwei Abschlussereignisse
+  geben, da der Task-Verlauf dann zwei Endeinträge zeigt.
+
+Bei einem Rolling Upgrade eines HA-Clusters hat ein Task, der auf einem aktualisierten Knoten gestartet und auf einem noch
+nicht aktualisierten Knoten beendet wurde, kein Abschlussereignis.
 
 Repository-URLs, Host-Konfigurations-URLs und Integrations-Aliase werden ebenfalls nicht aufgezeichnet.
 

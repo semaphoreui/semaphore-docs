@@ -15,7 +15,7 @@ Semaphore Pro.
 
 ## Qué se registra {#recorded-events}
 
-Actualmente Semaphore registra los inicios de sesión y la actividad de las cuentas y de los proyectos:
+Actualmente Semaphore registra los inicios de sesión y la actividad de las cuentas, de los proyectos y de las tareas:
 
 - inicios de sesión, intentos fallidos, cierres de sesión y comprobaciones del segundo factor;
 - tokens de API rechazados, solicitudes denegadas y solicitudes entre sitios bloqueadas;
@@ -24,6 +24,10 @@ Actualmente Semaphore registra los inicios de sesión y la actividad de las cuen
 - cambios en proyectos, inventarios, repositorios, plantillas, programaciones, integraciones, configuraciones de
   host, entornos, credenciales y almacenes de secretos, y exportaciones y restauraciones de copias de proyectos;
 - cambios en la configuración del sistema y la activación de la licencia Pro;
+- inicios de tareas con su origen (API, programación, integración, ejecución automática, flujo de trabajo), aprobaciones, detenciones,
+  finalizaciones y el historial de tareas eliminado;
+- cambios en los runners, registros (incluidos los tokens de registro rechazados), bajas de registro y los informes de los runners
+  con un estado no válido;
 - cada arranque del servidor.
 
 Se añadirán más eventos en próximas versiones. Para ver la lista completa, consulte
@@ -32,6 +36,25 @@ Se añadirán más eventos en próximas versiones. Para ver la lista completa, c
 Las contraseñas, los tokens, los valores secretos y la salida de las tareas nunca aparecen en los eventos de
 auditoría. Los tokens de API se muestran mediante una huella en lugar de su valor. Un inicio de sesión
 fallido conserva el nombre de usuario introducido, por lo que puede contener una dirección de correo.
+
+Una tarea que termina tiene un evento de finalización, también cuando falla antes de iniciarse. `metadata.result` muestra el
+estado que Semaphore dio a la tarea, y `metadata.end_reason` indica por qué Semaphore la terminó: `timeout` cuando se ejecutó
+demasiado tiempo, `runner_lost` cuando su runner dejó de responder. Los argumentos de la tarea, las variables, las etiquetas del runner y los tokens
+no se registran.
+
+Los eventos de finalización siguen lo que Semaphore muestra en el historial de tareas, incluidas sus lagunas conocidas:
+
+- Una tarea detenida con «Detener todo» o al detener una ejecución de flujo de trabajo mientras aún espera en la cola no tiene
+  evento de finalización. El evento `task.control/stop_all` se registra para «Detener todo».
+- Una tarea detenida antes de iniciarse, por ejemplo mientras espera confirmación, puede quedarse en el estado
+  `stopping`. Su evento de finalización tiene entonces `result` `stopping`.
+- En un clúster HA, al detener una tarea que ya no ejecuta ningún nodo (por ejemplo, tras la caída de un nodo) no se registra ningún
+  evento de finalización.
+- Una detención que llega en el mismo momento en que una tarea se inicia o termina puede dar a la tarea dos eventos de
+  finalización, ya que el historial de tareas muestra entonces dos entradas finales.
+
+Durante una actualización progresiva de un clúster HA, una tarea iniciada en un nodo actualizado y terminada en un nodo que
+aún no está actualizado no tiene evento de finalización.
 
 Las URL de repositorios, las URL de configuraciones de host y los alias de integraciones tampoco se registran.
 

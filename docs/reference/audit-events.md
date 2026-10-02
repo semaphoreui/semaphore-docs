@@ -140,30 +140,34 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 
 | Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `task.execution` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `task.approval` | `request` | `info` | success |  | Defined when available | Community | Planned |
-| `task.approval` | `approve` | `change` | success |  | Defined when available | Community | Planned |
-| `task.approval` | `reject` | `change` | success |  | Defined when available | Community | Planned |
-| `task.control` | `stop` | `change` | success |  | Defined when available | Community | Planned |
-| `task.control` | `force_stop` | `change` | success |  | Defined when available | Community | Planned |
-| `task.control` | `stop_all` | `change` | success |  | Defined when available | Community | Planned |
-| `task.execution` | `complete` | `end` | success |  | Defined when available | Community | Planned |
-| `task.history` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
+| `task.execution` | `create` | `creation` | success |  | `trigger`, `template_id`, `schedule_id`, `integration_id`, `parent_task_id`, `workflow_run_id` | Community | Available |
+| `task.approval` | `request` | `info` | success |  | `template_id` | Community | Available |
+| `task.approval` | `approve` | `change` | success |  | `template_id` | Community | Available |
+| `task.approval` | `reject` | `change` | success |  | `template_id` | Community | Available |
+| `task.control` | `stop` | `change` | success |  | `template_id` | Community | Available |
+| `task.control` | `force_stop` | `change` | success |  | `template_id` | Community | Available |
+| `task.control` | `stop_all` | `change` | success |  |  | Community | Available |
+| `task.execution` | `complete` | `end` | success |  | `result`, `end_reason`, `template_id`, `initiator_id`, `duration_ms` | Community | Available |
+| `task.history` | `delete` | `deletion` | success |  | `template_id` | Community | Available |
 
 ## Runners {#runners}
 
 | Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `runner.lifecycle` | `create` | `creation` | success |  | Defined when available | Community | Planned |
-| `runner.lifecycle` | `update` | `change` | success |  | Defined when available | Community | Planned |
-| `runner.lifecycle` | `delete` | `deletion` | success |  | Defined when available | Community | Planned |
-| `runner.lifecycle` | `enable` | `change` | success |  | Defined when available | Community | Planned |
-| `runner.lifecycle` | `disable` | `change` | success |  | Defined when available | Community | Planned |
-| `runner.lifecycle` | `register` | `creation` | success, failure | `invalid_registration_token` | `token` | Community | Planned |
-| `runner.lifecycle` | `unregister` | `deletion` | success |  | Defined when available | Community | Planned |
-| `runner.credential` | `rotate_registration_token` | `change` | success |  | Defined when available | Community | Planned |
-| `runner.cache` | `clear` | `deletion` | success |  | Defined when available | Community | Planned |
-| `runner.progress` | `reject` | `denied` | failure | `invalid_status` |  | Community | Planned |
+| `runner.lifecycle` | `create` | `creation` | success |  |  | Community | Available |
+| `runner.lifecycle` | `update` | `change` | success |  |  | Community | Available |
+| `runner.lifecycle` | `delete` | `deletion` | success |  |  | Community | Available |
+| `runner.lifecycle` | `enable` | `change` | success |  |  | Community | Available |
+| `runner.lifecycle` | `disable` | `change` | success |  |  | Community | Available |
+| `runner.lifecycle` | `register` | `creation` | success, failure | `invalid_registration_token` | `token` | Community | Available |
+| `runner.lifecycle` | `unregister` | `deletion` | success |  |  | Community | Available |
+| `runner.credential` | `rotate_registration_token` | `change` | success |  |  | Community | Available |
+| `runner.cache` | `clear` | `deletion` | success |  |  | Community | Available |
+| `runner.progress` | `reject` | `denied` | failure | `invalid_status` |  | Community | Available |
+
+For `runner.lifecycle` `register`, `metadata.token` is `one_time` or `global`. On a refused registration it
+names the registration token type Semaphore checked the request against: `one_time` for a token that starts
+with `smrs_`, `global` for any other.
 
 ## System and audit {#system-and-audit}
 

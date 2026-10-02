@@ -14,7 +14,7 @@ Il log di audit è disponibile in tutte le edizioni. L'invio a un SIEM richiede 
 
 ## Cosa viene registrato {#recorded-events}
 
-Attualmente Semaphore registra gli accessi e l'attività di account e progetti:
+Attualmente Semaphore registra gli accessi e l'attività di account, progetti e attività:
 
 - accessi, tentativi di accesso non riusciti, disconnessioni e verifiche del secondo fattore;
 - token API rifiutati, richieste negate e richieste cross-site bloccate;
@@ -23,6 +23,10 @@ Attualmente Semaphore registra gli accessi e l'attività di account e progetti:
 - modifiche a progetti, inventari, repository, template, pianificazioni, integrazioni, configurazioni host,
   ambienti, credenziali e archivi dei segreti, ed esportazioni e ripristini dei backup di progetto;
 - modifiche alle impostazioni di sistema e l'attivazione della licenza Pro;
+- avvii delle attività con il relativo trigger (API, pianificazione, integrazione, esecuzione automatica, workflow), approvazioni, arresti,
+  completamenti e cronologia delle attività eliminata;
+- modifiche ai runner, registrazioni (inclusi i token di registrazione rifiutati), annullamenti della registrazione e report dei runner
+  con uno stato non valido;
 - ogni avvio del server.
 
 Altri eventi verranno aggiunti nelle prossime versioni. Per l'elenco completo, consulta
@@ -31,6 +35,25 @@ Altri eventi verranno aggiunti nelle prossime versioni. Per l'elenco completo, c
 Password, token, valori segreti e output dei task non compaiono mai negli eventi di audit. I token API sono
 indicati da un'impronta invece che dal loro valore. Un accesso non riuscito conserva il nome di accesso
 inserito, che quindi può contenere un indirizzo email.
+
+Un'attività che termina ha un evento di completamento, anche quando fallisce prima di iniziare. `metadata.result` mostra lo
+stato che Semaphore ha assegnato all'attività, e `metadata.end_reason` indica perché Semaphore l'ha terminata: `timeout` quando è durata
+troppo a lungo, `runner_lost` quando il suo runner ha smesso di rispondere. Argomenti dell'attività, variabili, tag dei runner e token
+non vengono registrati.
+
+Gli eventi di completamento seguono ciò che Semaphore mostra nella cronologia delle attività, comprese le sue lacune note:
+
+- Un'attività fermata con «Ferma tutto» o fermando l'esecuzione di un workflow mentre è ancora in coda non ha
+  evento di completamento. L'evento `task.control/stop_all` viene registrato per «Ferma tutto».
+- Un'attività fermata prima di iniziare, ad esempio mentre attende una conferma, può restare nello stato
+  `stopping`. Il suo evento di completamento ha allora `result` `stopping`.
+- In un cluster HA, fermare un'attività che nessun nodo esegue più (ad esempio dopo l'arresto anomalo di un nodo) non registra alcun
+  evento di completamento.
+- Un arresto che arriva nello stesso momento in cui un'attività inizia o termina può dare all'attività due eventi di
+  completamento, perché la cronologia delle attività mostra allora due voci finali.
+
+Durante un aggiornamento progressivo di un cluster HA, un'attività avviata su un nodo aggiornato e terminata su un nodo non
+ancora aggiornato non ha evento di completamento.
 
 Anche gli URL dei repository, gli URL delle configurazioni host e gli alias delle integrazioni non vengono registrati.
 

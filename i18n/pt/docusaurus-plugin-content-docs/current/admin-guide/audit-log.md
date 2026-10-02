@@ -14,7 +14,7 @@ O log de auditoria está disponível em todas as edições. Enviar eventos para 
 
 ## O que é registrado {#recorded-events}
 
-Atualmente o Semaphore registra entradas e atividades de contas e projetos:
+Atualmente o Semaphore registra entradas e atividades de contas, projetos e tarefas:
 
 - entradas, tentativas de entrada com falha, saídas e verificações do segundo fator;
 - tokens de API rejeitados, solicitações negadas e solicitações entre sites bloqueadas;
@@ -23,6 +23,10 @@ Atualmente o Semaphore registra entradas e atividades de contas e projetos:
 - alterações em projetos, inventários, repositórios, modelos, agendamentos, integrações, configurações de host,
   ambientes, credenciais e armazenamentos de segredos, e exportações e restaurações de backups de projeto;
 - alterações nas configurações do sistema e a ativação da licença Pro;
+- inícios de tarefas com o seu gatilho (API, agendamento, integração, execução automática, workflow), aprovações, paragens,
+  conclusões e histórico de tarefas eliminado;
+- alterações em runners, registos (incluindo tokens de registo recusados), remoções de registo e relatórios de runners
+  com um estado inválido;
 - cada início do servidor.
 
 Mais eventos serão adicionados em versões futuras. Para a lista completa, consulte
@@ -31,6 +35,25 @@ Mais eventos serão adicionados em versões futuras. Para a lista completa, cons
 Senhas, tokens, valores secretos e a saída das tarefas nunca aparecem nos eventos de auditoria. Tokens de
 API são mostrados por uma impressão digital em vez do seu valor. Uma entrada com falha guarda o nome de
 login digitado, que pode conter um endereço de e-mail.
+
+Uma tarefa que termina tem um evento de conclusão, também quando falha antes de começar. `metadata.result` mostra o
+estado que o Semaphore atribuiu à tarefa, e `metadata.end_reason` indica porque o Semaphore a terminou: `timeout` quando demorou
+demasiado tempo, `runner_lost` quando o seu runner deixou de responder. Argumentos da tarefa, variáveis, etiquetas de runner e tokens
+não são registados.
+
+Os eventos de conclusão seguem o que o Semaphore mostra no histórico de tarefas, incluindo as suas lacunas conhecidas:
+
+- Uma tarefa parada por «Parar tudo» ou ao parar a execução de um workflow enquanto ainda aguarda na fila não tem
+  evento de conclusão. O evento `task.control/stop_all` é registado para «Parar tudo».
+- Uma tarefa parada antes de começar, por exemplo enquanto aguarda confirmação, pode ficar no estado
+  `stopping`. O seu evento de conclusão tem então `result` `stopping`.
+- Num cluster HA, parar uma tarefa que nenhum nó executa já (por exemplo, após a falha de um nó) não regista nenhum
+  evento de conclusão.
+- Uma paragem que chega no mesmo momento em que uma tarefa começa ou termina pode dar à tarefa dois eventos de
+  conclusão, pois o histórico de tarefas mostra então duas entradas finais.
+
+Durante uma atualização gradual de um cluster HA, uma tarefa iniciada num nó atualizado e terminada num nó que
+ainda não foi atualizado não tem evento de conclusão.
 
 URLs de repositórios, URLs de configurações de host e aliases de integrações também não são registrados.
 

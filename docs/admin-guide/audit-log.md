@@ -14,7 +14,7 @@ The audit log is available in every edition. Sending events to a SIEM requires S
 
 ## What is recorded {#recorded-events}
 
-Semaphore currently records sign-in, account and project activity:
+Semaphore currently records sign-in, account, project and task activity:
 
 - sign-ins, failed sign-in attempts, sign-outs and two-factor checks;
 - rejected API tokens, denied requests and blocked cross-site requests;
@@ -23,6 +23,10 @@ Semaphore currently records sign-in, account and project activity:
 - changes to projects, inventories, repositories, templates, schedules, integrations, host configs,
   environments, credentials and secret storages, and project backup exports and restores;
 - changes to system settings and Pro license activation;
+- task starts with their trigger (API, schedule, integration, autorun, workflow), approvals, stops,
+  completions and deleted task history;
+- runner changes, registrations (including refused registration tokens), unregistrations and runner reports
+  with an invalid status;
 - every server start.
 
 More events will be added in future releases. For the full list, see
@@ -31,6 +35,25 @@ More events will be added in future releases. For the full list, see
 Passwords, tokens, secret values and task output never appear in audit events. API tokens are shown by a
 fingerprint instead of their value. A failed sign-in keeps the login name that was entered, so it can
 contain an email address.
+
+A task that ends has a completion event, also when it fails before it starts. `metadata.result` shows the
+status Semaphore gave the task, and `metadata.end_reason` says why Semaphore ended it: `timeout` when it ran
+too long, `runner_lost` when its runner stopped responding. Task arguments, variables, runner tags and tokens
+are not recorded.
+
+The completion events follow what Semaphore shows in the task history, including its known gaps:
+
+- A task stopped by "Stop all" or by stopping a workflow run while it still waits in the queue has no
+  completion event. The `task.control/stop_all` event is recorded for "Stop all".
+- A task stopped before it started, for example while it waits for confirmation, can stay in the
+  `stopping` status. Its completion event then has `result` `stopping`.
+- In an HA cluster, stopping a task that no node runs any more (for example after a node crashed) records no
+  completion event.
+- A stop that comes at the same moment as a task starts or finishes can give the task two completion
+  events, as the task history shows two final entries then.
+
+During a rolling upgrade of an HA cluster, a task started on an upgraded node and finished on a node that
+is not upgraded yet has no completion event.
 
 Repository URLs, host config URLs and integration aliases are not recorded either.
 

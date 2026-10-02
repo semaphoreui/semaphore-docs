@@ -14,7 +14,7 @@ Dnevnik revizije je dostupan u svim izdanjima. Za slanje događaja u SIEM potreb
 
 ## Šta se beleži {#recorded-events}
 
-Semaphore trenutno beleži prijave, aktivnost naloga i projekata:
+Semaphore trenutno beleži prijave, aktivnost naloga, projekata i zadataka:
 
 - prijave, neuspele pokušaje prijave, odjave i provere drugog faktora;
 - odbijene API tokene, odbijene zahteve i blokirane međusajtne zahteve;
@@ -23,6 +23,10 @@ Semaphore trenutno beleži prijave, aktivnost naloga i projekata:
 - izmene projekata, inventara, repozitorijuma, šablona, rasporeda, integracija, konfiguracija hostova,
   okruženja, kredencijala i skladišta tajni, kao i izvoz i vraćanje rezervnih kopija projekata;
 - izmene sistemskih podešavanja i aktivaciju Pro licence;
+- pokretanja zadataka sa njihovim okidačem (API, raspored, integracija, automatsko pokretanje, tok rada), odobrenja, zaustavljanja,
+  završetke i obrisanu istoriju zadataka;
+- promene runner-a, registracije (uključujući odbijene registracione tokene), odjave i izveštaje runner-a
+  sa nevažećim statusom;
 - svako pokretanje servera.
 
 U narednim verzijama biće dodato još događaja. Kompletna lista je na stranici
@@ -31,6 +35,25 @@ U narednim verzijama biće dodato još događaja. Kompletna lista je na stranici
 Lozinke, tokeni, tajne vrednosti i izlaz zadataka nikada se ne pojavljuju u događajima revizije. API tokeni
 se prikazuju otiskom umesto vrednošću. Neuspela prijava čuva uneto korisničko ime, pa ono može sadržati
 adresu e-pošte.
+
+Zadatak koji se završi ima događaj završetka, i kada ne uspe pre nego što počne. `metadata.result` prikazuje
+status koji je Semaphore dao zadatku, a `metadata.end_reason` kaže zašto ga je Semaphore završio: `timeout` kada je trajao
+predugo, `runner_lost` kada njegov runner više nije odgovarao. Argumenti zadatka, promenljive, oznake runner-a i tokeni
+se ne beleže.
+
+Događaji završetka prate ono što Semaphore prikazuje u istoriji zadataka, uključujući njene poznate propuste:
+
+- Zadatak zaustavljen opcijom „Zaustavi sve“ ili zaustavljanjem izvršavanja toka rada dok još čeka u redu nema
+  događaj završetka. Za „Zaustavi sve“ beleži se događaj `task.control/stop_all`.
+- Zadatak zaustavljen pre početka, na primer dok čeka potvrdu, može ostati u statusu
+  `stopping`. Njegov događaj završetka tada ima `result` `stopping`.
+- U HA klasteru zaustavljanje zadatka koji više nijedan čvor ne izvršava (na primer posle pada čvora) ne beleži
+  događaj završetka.
+- Zaustavljanje koje stigne u istom trenutku kada zadatak počinje ili se završava može zadatku dati dva događaja
+  završetka, jer istorija zadataka tada prikazuje dva završna unosa.
+
+Tokom postepene nadogradnje HA klastera zadatak pokrenut na nadograđenom čvoru, a završen na čvoru koji
+još nije nadograđen, nema događaj završetka.
 
 URL-ovi repozitorijuma, URL-ovi konfiguracija hostova i aliasi integracija takođe se ne beleže.
 
