@@ -44,17 +44,6 @@ statut que Semaphore a donné à la tâche, et `metadata.end_reason` indique pou
 trop longtemps, `runner_lost` lorsque son runner a cessé de répondre. Les arguments de la tâche, les variables, les étiquettes de runner et les jetons
 ne sont pas enregistrés.
 
-Les événements de fin suivent ce que Semaphore affiche dans l'historique des tâches, y compris ses lacunes connues :
-
-- Une tâche arrêtée par « Tout arrêter » ou par l'arrêt d'une exécution de workflow alors qu'elle attend encore dans la file n'a pas
-  d'événement de fin. L'événement `task.control/stop_all` est enregistré pour « Tout arrêter ».
-- Une tâche arrêtée avant son démarrage, par exemple pendant qu'elle attend une confirmation, peut rester dans le statut
-  `stopping`. Son événement de fin a alors `result` `stopping`.
-- Dans un cluster HA, l'arrêt d'une tâche qu'aucun nœud n'exécute plus (par exemple après la panne d'un nœud) n'enregistre aucun
-  événement de fin.
-- Un arrêt qui survient au moment même où une tâche démarre ou se termine peut donner deux événements de fin à la tâche,
-  car l'historique des tâches affiche alors deux entrées finales.
-
 Pendant une mise à niveau progressive d'un cluster HA, une tâche démarrée sur un nœud mis à niveau et terminée sur un nœud qui
 n'est pas encore mis à niveau n'a pas d'événement de fin.
 

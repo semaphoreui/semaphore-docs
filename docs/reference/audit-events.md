@@ -1,13 +1,13 @@
 ---
 title: Audit events
-description: The audit event format and every available and planned audit event, with its outcomes, reasons and edition.
+description: The audit event format and every audit event, with its outcomes, reasons and edition.
 ---
 
 # Audit events
 
 This page lists the audit events Semaphore records and the fields you can search and filter them by. To turn on the audit log, see [Audit log](/admin-guide/audit-log).
 
-**Available** events are recorded now. **Planned** events will be added in a future release. **Edition** is the Semaphore edition that records the event.
+**Edition** is the Semaphore edition that records the event.
 
 ## Event format {#event-format}
 
@@ -35,152 +35,143 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 
 `auth.login` is recorded once sign-in is complete, including the TOTP check if the user has one. A wrong TOTP code is recorded as an `auth.mfa` failure.
 
-| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `auth.login` | `authenticate` | `start` | success, failure | `invalid_credentials`, `user_not_found`, `method_disabled`, `invalid_state`, `provider_error`, `internal_error` | `method`, `provider` | Community | Available |
-| `auth.logout` | `terminate_session` | `end` | success |  |  | Community | Available |
-| `auth.mfa` | `verify_totp` | `info` | success, failure | `invalid_passcode` |  | Community | Available |
-| `auth.mfa` | `verify_email` | `info` | success, failure | `invalid_passcode`, `code_expired`, `too_many_attempts` |  | Pro | Planned |
-| `auth.mfa` | `recover` | `info` | success, failure | `invalid_recovery_code` |  | Community | Available |
-| `auth.api_token` | `reject` | `denied` | failure | `token_unknown`, `token_expired` |  | Community | Available |
-| `auth.authorization` | `deny` | `denied` | failure | `forbidden` | `method`, `permission` | Community | Available |
-| `auth.csrf` | `block` | `denied` | failure | `cross_origin` | `method` | Community | Available |
+| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition |
+| --- | --- | --- | --- | --- | --- | --- |
+| `auth.login` | `authenticate` | `start` | success, failure | `invalid_credentials`, `user_not_found`, `method_disabled`, `invalid_state`, `provider_error`, `internal_error` | `method`, `provider` | Community |
+| `auth.logout` | `terminate_session` | `end` | success |  |  | Community |
+| `auth.mfa` | `verify_totp` | `info` | success, failure | `invalid_passcode` |  | Community |
+| `auth.mfa` | `verify_email` | `info` | success, failure | `invalid_passcode`, `code_expired`, `too_many_attempts` |  | Pro |
+| `auth.mfa` | `recover` | `info` | success, failure | `invalid_recovery_code` |  | Community |
+| `auth.api_token` | `reject` | `denied` | failure | `token_unknown`, `token_expired` |  | Community |
+| `auth.authorization` | `deny` | `denied` | failure | `forbidden` | `method`, `permission` | Community |
+| `auth.csrf` | `block` | `denied` | failure | `cross_origin` | `method` | Community |
 
 ## Identity and access management {#identity-and-access-management}
 
-| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `iam.user` | `create` | `creation` | success |  | `admin`, `pro`, `external` | Community | Available |
-| `iam.user` | `update` | `change` | success |  | `fields`, `admin`, `pro` | Community | Available |
-| `iam.user` | `delete` | `deletion` | success |  |  | Community | Available |
-| `iam.user` | `auto_provision` | `creation` | success |  | `method`, `provider` | Community | Available |
-| `iam.user_password` | `change` | `change` | success, failure | `invalid_current_password` |  | Community | Available |
-| `iam.user_password` | `admin_reset` | `change` | success |  |  | Community | Available |
-| `iam.mfa` | `enable` | `change` | success |  |  | Community | Available |
-| `iam.mfa` | `disable` | `change` | success |  |  | Community | Available |
-| `iam.mfa` | `view_qr` | `access` | success |  |  | Community | Available |
-| `iam.external_identity` | `link` | `change` | success |  | `method`, `provider` | Community | Available |
-| `iam.external_identity` | `unlink` | `change` | success |  | `method`, `provider` | Community | Available |
-| `iam.api_token` | `create` | `creation` | success |  |  | Community | Available |
-| `iam.api_token` | `delete` | `deletion` | success |  |  | Community | Available |
-| `iam.membership` | `add` | `change` | success |  | `role`, `self_removal` | Community | Available |
-| `iam.membership` | `remove` | `change` | success, failure | `owner_self_change` | `role`, `self_removal` | Community | Available |
-| `iam.project_role` | `change` | `change` | success, failure | `owner_self_change` | `old_role`, `new_role` | Community | Available |
-| `iam.role` | `create` | `creation` | success |  | `permissions` | Pro | Available |
-| `iam.role` | `update` | `change` | success |  | `permissions` | Pro | Available |
-| `iam.role` | `delete` | `deletion` | success |  |  | Pro | Available |
-| `iam.project_role_definition` | `create` | `creation` | success |  | `permissions` | Pro | Available |
-| `iam.project_role_definition` | `update` | `change` | success |  | `permissions` | Pro | Available |
-| `iam.project_role_definition` | `delete` | `deletion` | success |  |  | Pro | Available |
-| `iam.template_permission` | `create` | `creation` | success |  | `template_id`, `role_slug`, `permissions` | Community | Available |
-| `iam.template_permission` | `update` | `change` | success |  | `template_id`, `role_slug`, `permissions` | Community | Available |
-| `iam.template_permission` | `delete` | `deletion` | success |  | `template_id` | Community | Available |
+| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iam.user` | `create` | `creation` | success |  | `admin`, `pro`, `external` | Community |
+| `iam.user` | `update` | `change` | success |  | `fields`, `admin`, `pro` | Community |
+| `iam.user` | `delete` | `deletion` | success |  |  | Community |
+| `iam.user` | `auto_provision` | `creation` | success |  | `method`, `provider` | Community |
+| `iam.user_password` | `change` | `change` | success, failure | `invalid_current_password` |  | Community |
+| `iam.user_password` | `admin_reset` | `change` | success |  |  | Community |
+| `iam.mfa` | `enable` | `change` | success |  |  | Community |
+| `iam.mfa` | `disable` | `change` | success |  |  | Community |
+| `iam.mfa` | `view_qr` | `access` | success |  |  | Community |
+| `iam.external_identity` | `link` | `change` | success |  | `method`, `provider` | Community |
+| `iam.external_identity` | `unlink` | `change` | success |  | `method`, `provider` | Community |
+| `iam.api_token` | `create` | `creation` | success |  |  | Community |
+| `iam.api_token` | `delete` | `deletion` | success |  |  | Community |
+| `iam.membership` | `add` | `change` | success |  | `role`, `self_removal` | Community |
+| `iam.membership` | `remove` | `change` | success, failure | `owner_self_change` | `role`, `self_removal` | Community |
+| `iam.project_role` | `change` | `change` | success, failure | `owner_self_change` | `old_role`, `new_role` | Community |
+| `iam.role` | `create` | `creation` | success |  | `permissions` | Pro |
+| `iam.role` | `update` | `change` | success |  | `permissions` | Pro |
+| `iam.role` | `delete` | `deletion` | success |  |  | Pro |
+| `iam.project_role_definition` | `create` | `creation` | success |  | `permissions` | Pro |
+| `iam.project_role_definition` | `update` | `change` | success |  | `permissions` | Pro |
+| `iam.project_role_definition` | `delete` | `deletion` | success |  |  | Pro |
+| `iam.template_permission` | `create` | `creation` | success |  | `template_id`, `role_slug`, `permissions` | Community |
+| `iam.template_permission` | `update` | `change` | success |  | `template_id`, `role_slug`, `permissions` | Community |
+| `iam.template_permission` | `delete` | `deletion` | success |  | `template_id` | Community |
 
 ## Resources {#resources}
 
-| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `resource.project` | `create` | `creation` | success | `setup_failed` (partial success) | `demo`, `partial` | Community | Available |
-| `resource.project` | `update` | `change` | success |  |  | Community | Available |
-| `resource.project` | `delete` | `deletion` | success |  |  | Community | Available |
-| `resource.project_backup` | `export` | `access` | success |  |  | Community | Available |
-| `resource.project_backup` | `restore` | `creation` | success | `restore_failed` (partial success) | `objects`, `partial` | Community | Available |
-| `resource.inventory` | `create` | `creation` | success |  |  | Community | Available |
-| `resource.inventory` | `update` | `change` | success |  |  | Community | Available |
-| `resource.inventory` | `delete` | `deletion` | success |  |  | Community | Available |
-| `resource.repository` | `create` | `creation` | success |  |  | Community | Available |
-| `resource.repository` | `update` | `change` | success |  |  | Community | Available |
-| `resource.repository` | `delete` | `deletion` | success |  |  | Community | Available |
-| `resource.template` | `create` | `creation` | success | `inventory_failed` (partial success) | `app`, `created_inventory_id`, `partial` | Community | Available |
-| `resource.template` | `update` | `change` | success |  | `app` | Community | Available |
-| `resource.template` | `delete` | `deletion` | success |  |  | Community | Available |
-| `resource.template` | `attach_inventory` | `change` | success |  | `inventory_id` | Community | Available |
-| `resource.template` | `detach_inventory` | `change` | success |  | `inventory_id` | Community | Available |
-| `resource.template` | `set_default_inventory` | `change` | success |  | `inventory_id` | Community | Available |
-| `resource.schedule` | `create` | `creation` | success |  | `template_id` | Community | Available |
-| `resource.schedule` | `update` | `change` | success |  | `template_id` | Community | Available |
-| `resource.schedule` | `delete` | `deletion` | success |  |  | Community | Available |
-| `resource.schedule` | `activate` | `change` | success |  | `template_id` | Community | Available |
-| `resource.schedule` | `deactivate` | `change` | success |  | `template_id` | Community | Available |
-| `resource.integration` | `create` | `creation` | success |  | `template_id`, `auth_method` | Community | Available |
-| `resource.integration` | `update` | `change` | success |  | `template_id`, `auth_method` | Community | Available |
-| `resource.integration` | `delete` | `deletion` | success |  |  | Community | Available |
-| `resource.integration_matcher` | `create` | `creation` | success |  | `integration_id` | Community | Available |
-| `resource.integration_matcher` | `update` | `change` | success |  | `integration_id` | Community | Available |
-| `resource.integration_matcher` | `delete` | `deletion` | success |  | `integration_id` | Community | Available |
-| `resource.integration_extractor` | `create` | `creation` | success |  | `integration_id` | Community | Available |
-| `resource.integration_extractor` | `update` | `change` | success |  | `integration_id` | Community | Available |
-| `resource.integration_extractor` | `delete` | `deletion` | success |  | `integration_id` | Community | Available |
-| `resource.integration_alias` | `create` | `creation` | success |  | `integration_id` | Community | Available |
-| `resource.integration_alias` | `delete` | `deletion` | success |  | `integration_id` | Community | Available |
-| `resource.host_config` | `create` | `creation` | success |  | `type` | Community | Available |
-| `resource.host_config` | `update` | `change` | success |  | `type` | Community | Available |
-| `resource.host_config` | `delete` | `deletion` | success |  |  | Community | Available |
-| `resource.workflow` | `create` | `creation` | success |  |  | Pro | Available |
-| `resource.workflow` | `update` | `change` | success |  |  | Pro | Available |
-| `resource.workflow` | `delete` | `deletion` | success |  |  | Pro | Available |
-| `resource.environment` | `create` | `creation` | success | `secret_failed` (partial success) | `secrets_created`, `secrets_updated`, `secrets_deleted`, `partial` | Community | Available |
-| `resource.environment` | `update` | `change` | success | `secret_failed` (partial success) | `secrets_created`, `secrets_updated`, `secrets_deleted`, `partial` | Community | Available |
-| `resource.environment` | `delete` | `deletion` | success | `secret_failed` (partial success) | `partial` | Community | Available |
-| `resource.environment` | `sync` | `change` | success |  |  | Pro | Available |
+| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition |
+| --- | --- | --- | --- | --- | --- | --- |
+| `resource.project` | `create` | `creation` | success | `setup_failed` (partial success) | `demo`, `partial` | Community |
+| `resource.project` | `update` | `change` | success |  |  | Community |
+| `resource.project` | `delete` | `deletion` | success |  |  | Community |
+| `resource.project_backup` | `export` | `access` | success |  |  | Community |
+| `resource.project_backup` | `restore` | `creation` | success | `restore_failed` (partial success) | `objects`, `partial` | Community |
+| `resource.inventory` | `create` | `creation` | success |  |  | Community |
+| `resource.inventory` | `update` | `change` | success |  |  | Community |
+| `resource.inventory` | `delete` | `deletion` | success |  |  | Community |
+| `resource.repository` | `create` | `creation` | success |  |  | Community |
+| `resource.repository` | `update` | `change` | success |  |  | Community |
+| `resource.repository` | `delete` | `deletion` | success |  |  | Community |
+| `resource.template` | `create` | `creation` | success | `inventory_failed` (partial success) | `app`, `created_inventory_id`, `partial` | Community |
+| `resource.template` | `update` | `change` | success |  | `app` | Community |
+| `resource.template` | `delete` | `deletion` | success |  |  | Community |
+| `resource.template` | `attach_inventory` | `change` | success |  | `inventory_id` | Community |
+| `resource.template` | `detach_inventory` | `change` | success |  | `inventory_id` | Community |
+| `resource.template` | `set_default_inventory` | `change` | success |  | `inventory_id` | Community |
+| `resource.schedule` | `create` | `creation` | success |  | `template_id` | Community |
+| `resource.schedule` | `update` | `change` | success |  | `template_id` | Community |
+| `resource.schedule` | `delete` | `deletion` | success |  |  | Community |
+| `resource.schedule` | `activate` | `change` | success |  | `template_id` | Community |
+| `resource.schedule` | `deactivate` | `change` | success |  | `template_id` | Community |
+| `resource.integration` | `create` | `creation` | success |  | `template_id`, `auth_method` | Community |
+| `resource.integration` | `update` | `change` | success |  | `template_id`, `auth_method` | Community |
+| `resource.integration` | `delete` | `deletion` | success |  |  | Community |
+| `resource.integration_matcher` | `create` | `creation` | success |  | `integration_id` | Community |
+| `resource.integration_matcher` | `update` | `change` | success |  | `integration_id` | Community |
+| `resource.integration_matcher` | `delete` | `deletion` | success |  | `integration_id` | Community |
+| `resource.integration_extractor` | `create` | `creation` | success |  | `integration_id` | Community |
+| `resource.integration_extractor` | `update` | `change` | success |  | `integration_id` | Community |
+| `resource.integration_extractor` | `delete` | `deletion` | success |  | `integration_id` | Community |
+| `resource.integration_alias` | `create` | `creation` | success |  | `integration_id` | Community |
+| `resource.integration_alias` | `delete` | `deletion` | success |  | `integration_id` | Community |
+| `resource.host_config` | `create` | `creation` | success |  | `type` | Community |
+| `resource.host_config` | `update` | `change` | success |  | `type` | Community |
+| `resource.host_config` | `delete` | `deletion` | success |  |  | Community |
+| `resource.workflow` | `create` | `creation` | success |  |  | Pro |
+| `resource.workflow` | `update` | `change` | success |  |  | Pro |
+| `resource.workflow` | `delete` | `deletion` | success |  |  | Pro |
+| `resource.environment` | `create` | `creation` | success | `secret_failed` (partial success) | `secrets_created`, `secrets_updated`, `secrets_deleted`, `partial` | Community |
+| `resource.environment` | `update` | `change` | success | `secret_failed` (partial success) | `secrets_created`, `secrets_updated`, `secrets_deleted`, `partial` | Community |
+| `resource.environment` | `delete` | `deletion` | success | `secret_failed` (partial success) | `partial` | Community |
+| `resource.environment` | `sync` | `change` | success |  |  | Pro |
 
 ## Secrets {#secrets}
 
-| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `secret.credential` | `create` | `creation` | success |  | `type` | Community | Available |
-| `secret.credential` | `update` | `change` | success |  | `type` | Community | Available |
-| `secret.credential` | `delete` | `deletion` | success |  |  | Community | Available |
-| `secret.storage` | `create` | `creation` | success |  | `type` | Community | Available |
-| `secret.storage` | `update` | `change` | success |  | `type` | Community | Available |
-| `secret.storage` | `delete` | `deletion` | success |  |  | Community | Available |
-| `secret.storage` | `sync` | `change` | success |  |  | Pro | Available |
+| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition |
+| --- | --- | --- | --- | --- | --- | --- |
+| `secret.credential` | `create` | `creation` | success |  | `type` | Community |
+| `secret.credential` | `update` | `change` | success |  | `type` | Community |
+| `secret.credential` | `delete` | `deletion` | success |  |  | Community |
+| `secret.storage` | `create` | `creation` | success |  | `type` | Community |
+| `secret.storage` | `update` | `change` | success |  | `type` | Community |
+| `secret.storage` | `delete` | `deletion` | success |  |  | Community |
+| `secret.storage` | `sync` | `change` | success |  |  | Pro |
 
 ## Tasks {#tasks}
 
-| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `task.execution` | `create` | `creation` | success |  | `trigger`, `template_id`, `schedule_id`, `integration_id`, `parent_task_id`, `workflow_run_id` | Community | Available |
-| `task.approval` | `request` | `info` | success |  | `template_id` | Community | Available |
-| `task.approval` | `approve` | `change` | success |  | `template_id` | Community | Available |
-| `task.approval` | `reject` | `change` | success |  | `template_id` | Community | Available |
-| `task.control` | `stop` | `change` | success |  | `template_id` | Community | Available |
-| `task.control` | `force_stop` | `change` | success |  | `template_id` | Community | Available |
-| `task.control` | `stop_all` | `change` | success |  |  | Community | Available |
-| `task.execution` | `complete` | `end` | success |  | `result`, `end_reason`, `template_id`, `initiator_id`, `duration_ms` | Community | Available |
-| `task.history` | `delete` | `deletion` | success |  | `template_id` | Community | Available |
-
-For `task.execution` `complete`, `metadata.result` is `success`, `error`, `stopped`, or `stopping` for a task
-stopped before it ran. `metadata.end_reason` is `timeout` or `runner_lost` when the task ended for that cause.
+| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition |
+| --- | --- | --- | --- | --- | --- | --- |
+| `task.execution` | `create` | `creation` | success |  | `trigger`, `template_id`, `schedule_id`, `integration_id`, `parent_task_id`, `workflow_run_id` | Community |
+| `task.approval` | `request` | `info` | success |  | `template_id` | Community |
+| `task.approval` | `approve` | `change` | success |  | `template_id` | Community |
+| `task.approval` | `reject` | `change` | success |  | `template_id` | Community |
+| `task.control` | `stop` | `change` | success |  | `template_id` | Community |
+| `task.control` | `force_stop` | `change` | success |  | `template_id` | Community |
+| `task.control` | `stop_all` | `change` | success |  |  | Community |
+| `task.execution` | `complete` | `end` | success |  | `result`, `end_reason`, `template_id`, `initiator_id`, `duration_ms` | Community |
+| `task.history` | `delete` | `deletion` | success |  | `template_id` | Community |
 
 ## Runners {#runners}
 
-| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `runner.lifecycle` | `create` | `creation` | success |  |  | Community | Available |
-| `runner.lifecycle` | `update` | `change` | success |  |  | Community | Available |
-| `runner.lifecycle` | `delete` | `deletion` | success |  |  | Community | Available |
-| `runner.lifecycle` | `enable` | `change` | success |  |  | Community | Available |
-| `runner.lifecycle` | `disable` | `change` | success |  |  | Community | Available |
-| `runner.lifecycle` | `register` | `creation` | success, failure | `invalid_registration_token` | `token` | Community | Available |
-| `runner.lifecycle` | `unregister` | `deletion` | success |  |  | Community | Available |
-| `runner.credential` | `rotate_registration_token` | `change` | success |  |  | Community | Available |
-| `runner.cache` | `clear` | `deletion` | success |  |  | Community | Available |
-| `runner.progress` | `reject` | `denied` | failure | `invalid_status` |  | Community | Available |
-
-For `runner.lifecycle` `register`, `metadata.token` is `one_time` or `global`. On a refused registration it
-names the registration token type Semaphore checked the request against: `one_time` for a token that starts
-with `smrs_`, `global` for any other.
-
-Project runners (Pro) record the same events with `scope.project_id` set.
+| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition |
+| --- | --- | --- | --- | --- | --- | --- |
+| `runner.lifecycle` | `create` | `creation` | success |  |  | Community |
+| `runner.lifecycle` | `update` | `change` | success |  |  | Community |
+| `runner.lifecycle` | `delete` | `deletion` | success |  |  | Community |
+| `runner.lifecycle` | `enable` | `change` | success |  |  | Community |
+| `runner.lifecycle` | `disable` | `change` | success |  |  | Community |
+| `runner.lifecycle` | `register` | `creation` | success, failure | `invalid_registration_token` | `token` | Community |
+| `runner.lifecycle` | `unregister` | `deletion` | success |  |  | Community |
+| `runner.credential` | `rotate_registration_token` | `change` | success |  |  | Community |
+| `runner.cache` | `clear` | `deletion` | success |  |  | Community |
+| `runner.progress` | `reject` | `denied` | failure | `invalid_status` |  | Community |
 
 ## System and audit {#system-and-audit}
 
-| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition | Availability |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `system.settings` | `update` | `change` | success |  | `keys` | Community | Available |
-| `system.license` | `activate` | `change` | success, failure | `activation_failed` |  | Pro | Available |
-| `audit.lifecycle` | `start` | `start` | success |  | `destinations` | Community | Available |
+| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition |
+| --- | --- | --- | --- | --- | --- | --- |
+| `system.settings` | `update` | `change` | success |  | `keys` | Community |
+| `system.license` | `activate` | `change` | success, failure | `activation_failed` |  | Pro |
+| `audit.lifecycle` | `start` | `start` | success |  | `destinations` | Community |
 
 ## Related pages {#related-pages}
 

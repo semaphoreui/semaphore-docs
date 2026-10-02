@@ -41,17 +41,6 @@ stato che Semaphore ha assegnato all'attività, e `metadata.end_reason` indica p
 troppo a lungo, `runner_lost` quando il suo runner ha smesso di rispondere. Argomenti dell'attività, variabili, tag dei runner e token
 non vengono registrati.
 
-Gli eventi di completamento seguono ciò che Semaphore mostra nella cronologia delle attività, comprese le sue lacune note:
-
-- Un'attività fermata con «Ferma tutto» o fermando l'esecuzione di un workflow mentre è ancora in coda non ha
-  evento di completamento. L'evento `task.control/stop_all` viene registrato per «Ferma tutto».
-- Un'attività fermata prima di iniziare, ad esempio mentre attende una conferma, può restare nello stato
-  `stopping`. Il suo evento di completamento ha allora `result` `stopping`.
-- In un cluster HA, fermare un'attività che nessun nodo esegue più (ad esempio dopo l'arresto anomalo di un nodo) non registra alcun
-  evento di completamento.
-- Un arresto che arriva nello stesso momento in cui un'attività inizia o termina può dare all'attività due eventi di
-  completamento, perché la cronologia delle attività mostra allora due voci finali.
-
 Durante un aggiornamento progressivo di un cluster HA, un'attività avviata su un nodo aggiornato e terminata su un nodo non
 ancora aggiornato non ha evento di completamento.
 

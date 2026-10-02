@@ -41,17 +41,6 @@ status koji je Semaphore dao zadatku, a `metadata.end_reason` kaže zašto ga je
 predugo, `runner_lost` kada njegov runner više nije odgovarao. Argumenti zadatka, promenljive, oznake runner-a i tokeni
 se ne beleže.
 
-Događaji završetka prate ono što Semaphore prikazuje u istoriji zadataka, uključujući njene poznate propuste:
-
-- Zadatak zaustavljen opcijom „Zaustavi sve“ ili zaustavljanjem izvršavanja toka rada dok još čeka u redu nema
-  događaj završetka. Za „Zaustavi sve“ beleži se događaj `task.control/stop_all`.
-- Zadatak zaustavljen pre početka, na primer dok čeka potvrdu, može ostati u statusu
-  `stopping`. Njegov događaj završetka tada ima `result` `stopping`.
-- U HA klasteru zaustavljanje zadatka koji više nijedan čvor ne izvršava (na primer posle pada čvora) ne beleži
-  događaj završetka.
-- Zaustavljanje koje stigne u istom trenutku kada zadatak počinje ili se završava može zadatku dati dva događaja
-  završetka, jer istorija zadataka tada prikazuje dva završna unosa.
-
 Tokom postepene nadogradnje HA klastera zadatak pokrenut na nadograđenom čvoru, a završen na čvoru koji
 još nije nadograđen, nema događaj završetka.
 

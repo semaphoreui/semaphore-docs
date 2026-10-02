@@ -42,17 +42,6 @@ estado que Semaphore dio a la tarea, y `metadata.end_reason` indica por qué Sem
 demasiado tiempo, `runner_lost` cuando su runner dejó de responder. Los argumentos de la tarea, las variables, las etiquetas del runner y los tokens
 no se registran.
 
-Los eventos de finalización siguen lo que Semaphore muestra en el historial de tareas, incluidas sus lagunas conocidas:
-
-- Una tarea detenida con «Detener todo» o al detener una ejecución de flujo de trabajo mientras aún espera en la cola no tiene
-  evento de finalización. El evento `task.control/stop_all` se registra para «Detener todo».
-- Una tarea detenida antes de iniciarse, por ejemplo mientras espera confirmación, puede quedarse en el estado
-  `stopping`. Su evento de finalización tiene entonces `result` `stopping`.
-- En un clúster HA, al detener una tarea que ya no ejecuta ningún nodo (por ejemplo, tras la caída de un nodo) no se registra ningún
-  evento de finalización.
-- Una detención que llega en el mismo momento en que una tarea se inicia o termina puede dar a la tarea dos eventos de
-  finalización, ya que el historial de tareas muestra entonces dos entradas finales.
-
 Durante una actualización progresiva de un clúster HA, una tarea iniciada en un nodo actualizado y terminada en un nodo que
 aún no está actualizado no tiene evento de finalización.
 

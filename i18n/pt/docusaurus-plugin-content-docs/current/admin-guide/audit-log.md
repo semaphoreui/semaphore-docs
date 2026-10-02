@@ -41,17 +41,6 @@ estado que o Semaphore atribuiu à tarefa, e `metadata.end_reason` indica porque
 demasiado tempo, `runner_lost` quando o seu runner deixou de responder. Argumentos da tarefa, variáveis, etiquetas de runner e tokens
 não são registados.
 
-Os eventos de conclusão seguem o que o Semaphore mostra no histórico de tarefas, incluindo as suas lacunas conhecidas:
-
-- Uma tarefa parada por «Parar tudo» ou ao parar a execução de um workflow enquanto ainda aguarda na fila não tem
-  evento de conclusão. O evento `task.control/stop_all` é registado para «Parar tudo».
-- Uma tarefa parada antes de começar, por exemplo enquanto aguarda confirmação, pode ficar no estado
-  `stopping`. O seu evento de conclusão tem então `result` `stopping`.
-- Num cluster HA, parar uma tarefa que nenhum nó executa já (por exemplo, após a falha de um nó) não regista nenhum
-  evento de conclusão.
-- Uma paragem que chega no mesmo momento em que uma tarefa começa ou termina pode dar à tarefa dois eventos de
-  conclusão, pois o histórico de tarefas mostra então duas entradas finais.
-
 Durante uma atualização gradual de um cluster HA, uma tarefa iniciada num nó atualizado e terminada num nó que
 ainda não foi atualizado não tem evento de conclusão.
 

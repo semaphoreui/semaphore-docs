@@ -41,17 +41,6 @@ Status, den Semaphore dem Task gegeben hat, und `metadata.end_reason` nennt den 
 zu lange lief, `runner_lost`, wenn sein Runner nicht mehr antwortete. Task-Argumente, Variablen, Runner-Tags und Tokens
 werden nicht aufgezeichnet.
 
-Die Abschlussereignisse folgen dem, was Semaphore im Task-Verlauf anzeigt, einschließlich seiner bekannten Lücken:
-
-- Ein Task, der durch „Alle stoppen“ oder durch das Stoppen eines Workflow-Laufs gestoppt wird, während er noch in der Warteschlange wartet, hat kein
-  Abschlussereignis. Für „Alle stoppen“ wird das Ereignis `task.control/stop_all` aufgezeichnet.
-- Ein Task, der vor dem Start gestoppt wird, zum Beispiel während er auf eine Bestätigung wartet, kann im Status
-  `stopping` bleiben. Sein Abschlussereignis hat dann `result` `stopping`.
-- In einem HA-Cluster wird beim Stoppen eines Tasks, den kein Knoten mehr ausführt (zum Beispiel nach einem Knotenausfall), kein
-  Abschlussereignis aufgezeichnet.
-- Ein Stopp, der genau zu dem Zeitpunkt kommt, an dem ein Task startet oder endet, kann dem Task zwei Abschlussereignisse
-  geben, da der Task-Verlauf dann zwei Endeinträge zeigt.
-
 Bei einem Rolling Upgrade eines HA-Clusters hat ein Task, der auf einem aktualisierten Knoten gestartet und auf einem noch
 nicht aktualisierten Knoten beendet wurde, kein Abschlussereignis.
 

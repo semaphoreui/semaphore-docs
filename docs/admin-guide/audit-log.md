@@ -41,17 +41,6 @@ status Semaphore gave the task, and `metadata.end_reason` says why Semaphore end
 too long, `runner_lost` when its runner stopped responding. Task arguments, variables, runner tags and tokens
 are not recorded.
 
-The completion events follow what Semaphore shows in the task history, including its known gaps:
-
-- A task stopped by "Stop all" or by stopping a workflow run while it still waits in the queue has no
-  completion event. The `task.control/stop_all` event is recorded for "Stop all".
-- A task stopped before it started, for example while it waits for confirmation, can stay in the
-  `stopping` status. Its completion event then has `result` `stopping`.
-- In an HA cluster, stopping a task that no node runs any more (for example after a node crashed) records no
-  completion event.
-- A stop that comes at the same moment as a task starts or finishes can give the task two completion
-  events, as the task history shows two final entries then.
-
 During a rolling upgrade of an HA cluster, a task started on an upgraded node and finished on a node that
 is not upgraded yet has no completion event.
 
