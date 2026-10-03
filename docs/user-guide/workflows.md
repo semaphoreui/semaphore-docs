@@ -122,6 +122,20 @@ locally on the Semaphore server. Plan artifact hand-offs accordingly or keep
 artifact-producing and -consuming steps on the same execution path.
 :::
 
+## Environment variables {#environment-variables}
+
+A task started by a workflow receives, in addition to the
+[variables every task gets](./tasks#environment-variables):
+
+| Variable | Value |
+| --- | --- |
+| `SEMAPHORE_WORKFLOW_ID` | ID of the workflow |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID of the current run |
+| `SEMAPHORE_WORKFLOW_URL` | Link to the run page, for example `https://semaphore.example.com/project/1/workflows/7/runs/42` (requires `web_host` in the server config) |
+
+They are set for every app, including Ansible and Terraform, and reach tasks that
+run on remote runners.
+
 ## Permissions {#permissions}
 
 - Managing workflows (create, edit, delete) requires project resource management

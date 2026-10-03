@@ -99,6 +99,36 @@ On the **Tasks** tab of a template every row has a **rerun** button. It opens th
 - **Template page → Tasks**: tasks of one template.
 - **Task Templates**: expand a row with the arrow on the left to see the latest tasks of the template without leaving the list.
 
+## Environment variables {#environment-variables}
+
+Every task, whatever its app (Ansible, Terraform, Bash, PowerShell, Python), receives
+variables that identify it in Semaphore:
+
+| Variable | Value |
+| --- | --- |
+| `SEMAPHORE_TASK_ID` | ID of the task |
+| `SEMAPHORE_PROJECT_ID` | ID of the project the task belongs to |
+| `SEMAPHORE_WORKFLOW_ID` | ID of the workflow, when the task is a node of a [workflow](./workflows#environment-variables) run |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID of the workflow run the task belongs to |
+| `SEMAPHORE_WORKFLOW_URL` | Link to the workflow run page (requires `web_host` in the server config) |
+
+The workflow variables are absent when the task was not started by a workflow.
+
+Other variables are set in specific cases:
+
+- `SEMAPHORE_TASK_TYPE`, `SEMAPHORE_TASK_INCOMING_VERSION`, `SEMAPHORE_TASK_TARGET_VERSION`
+  and the `SEMAPHORE_TASK_DETAILS_*` family for [Build and Deploy templates](./task-templates/build-deploy).
+- `SEMAPHORE_JWT` when the template [issues a JWT](./task-templates/jwt).
+
+Example for Bash:
+
+```bash
+echo "Task $SEMAPHORE_TASK_ID of project $SEMAPHORE_PROJECT_ID"
+if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
+  echo "Started by workflow run: $SEMAPHORE_WORKFLOW_URL"
+fi
+```
+
 ## Log retention {#log-retention}
 
 Tasks and logs are kept forever by default. Use `max_tasks_per_template` to keep only the latest tasks of each template, see [History](./projects/history#task-retention).
