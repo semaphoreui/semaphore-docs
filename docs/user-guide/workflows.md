@@ -34,37 +34,117 @@ downstream nodes are launched according to the edge conditions.
 
 1. Open your project and go to **Workflows**.
 2. Click **New Workflow**.
-3. In the graphical editor:
-   - Drag nodes from the palette onto the canvas.
-   - Connect nodes by dragging from one node's output handle to another.
-   - Click a node or edge to edit its properties in the side panel.
-4. Set a **name** (and optionally a **start version** for run versioning).
-5. Fix any problems listed in the **Problems** panel, then click **Save**.
+3. Add the first node: click a kind in the **Palette**, drag it onto the canvas,
+   or use the **+** button in the top-right corner of the canvas.
+4. Hover a node and click the **+** handle on its output port to add the next
+   step. The new node is placed to the right and connected with an
+   **On success** edge. You can also connect nodes by dragging from an output
+   port to an input port.
+5. Click a node to edit it in the **properties panel** on the right: node kind,
+   task template and task params, approval timeout and message, delay duration,
+   convergence.
+6. Click the **condition pill** in the middle of an edge to change its
+   condition, or hover it and click **×** to remove the edge.
+7. Set a **name** (and optionally a **start version** for run versioning).
+8. Fix the problems listed in the **problems** chip in the toolbar, then click
+   **Save**.
 
 ![Workflow editor](/assets/workflow-editor.webp)
 
-The editor validates the graph before saving. A valid workflow must have at least
-one node, exactly one starting node (no incoming edges), no cycles, and complete
-configuration on every executable node.
+The editor validates the graph as you work. Nodes with a problem show a warning
+badge, and the toolbar chip lists every problem; click one to select the node. A
+valid workflow must have at least one node, exactly one starting node (no
+incoming edges), no cycles, and complete configuration on every executable node.
+**Save** stays disabled until the graph is valid.
+
+Need more room for the canvas? Click the chevron on the right edge of the
+palette to collapse both the palette and the main navigation to narrow icon
+strips; click it again to expand them. The choice is remembered in your browser
+and applies only to the workflow editor: other pages always show the full
+navigation.
+
+![Quick-add menu](/assets/workflow-editor-quick-add.webp)
+
+### Editor controls {#editor-controls}
+
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="Keyboard shortcuts of the workflow editor" />
+</div>
+
+The canvas can be moved and zoomed with the mouse, a trackpad, the buttons in
+the bottom-left corner, or the keyboard. Keyboard shortcuts work while the
+canvas has focus: click empty canvas first, or press <kbd>Tab</kbd> until the
+canvas is focused. <kbd>Tab</kbd> then moves through the nodes; <kbd>Enter</kbd>
+on a node selects it and opens its properties (on the run view it opens the
+task log). The same navigation works on the run view.
+
+| Action | Mouse | Trackpad | Buttons | Keyboard |
+|--------|-------|----------|---------|----------|
+| Pan (move the canvas) | Drag empty canvas, or scroll the wheel (vertical) and <kbd>Shift</kbd>+wheel (horizontal) | Two-finger scroll in any direction | — | <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd>; hold <kbd>Shift</kbd> for larger steps |
+| Zoom in / out | <kbd>Ctrl</kbd>+wheel (<kbd>Cmd</kbd>+wheel on macOS); zooms towards the pointer | Pinch | **+** / **−** | <kbd>+</kbd> / <kbd>−</kbd> |
+| Fit the whole graph on screen | — | — | **fit view** | <kbd>0</kbd> |
+| Reset the zoom to 100 % | — | — | — | <kbd>1</kbd> |
+| Arrange nodes automatically | — | — | **tidy up** | — |
+
+The editor fits the graph on screen when it opens. The current zoom level is
+shown under the buttons. Nodes snap to a 20 px grid when you move them.
+
+| Editing action | How |
+|----------------|-----|
+| Add a node | **+** handle on a node, palette click or drag, the **+** button in the top-right corner, or right-click empty canvas. |
+| Connect nodes | Drag from a node's output port (right edge) to another node's input port (left edge). |
+| Change an edge condition | Click the condition pill on the edge and pick a condition. |
+| Delete the selected node or edge | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> on macOS), the delete button in the properties panel, or **×** on a hovered edge pill. |
+| Undo / redo | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> on macOS), or the arrows in the toolbar. Up to 50 steps. |
+| Deselect | <kbd>Esc</kbd> closes the properties panel and clears the selection. |
+
+Leaving the editor with unsaved changes asks for confirmation. The dot on the
+**Save** button shows that the graph differs from the saved version.
 
 ## Node kinds {#node-kinds}
 
-| Kind | Purpose |
-|------|---------|
-| **Task** | Runs a task template. You can override template parameters (inventory, environment, Ansible limit, extra CLI arguments) per node via **task params**. |
-| **Approval** | Pauses the run until a user with permission approves or rejects. Optionally set a timeout (seconds) and an approval message. |
-| **Delay** | Waits for a configured number of seconds before continuing to downstream nodes. Useful for cooling-off periods, maintenance windows, or spacing out dependent steps. |
-| **Note** | Free-form annotation on the canvas. Note nodes do not execute and are not connected by edges — they are for documentation only. |
+A workflow is built from four kinds of nodes. Every kind is drawn as a card:
+an icon tile on the left, the title, and a subtitle with the key settings.
+Task, approval and delay nodes have an input port on the left edge and an
+output port on the right edge; notes have no ports.
 
-### Convergence {#convergence}
+### Task nodes {#task-nodes}
 
-Nodes with multiple incoming edges can require **all** upstream nodes to finish
-(default) or **any** one of them. Set **Convergence** in the node property panel.
+<div class="BlockSchema BlockSchema--xsmall">
+![Task node card](/assets/workflow-node-task.webp)
+</div>
+
+A task node runs a task template. The tile shows the application of the
+template (Ansible, Terraform, OpenTofu, Bash, PowerShell, Python), the title is
+the template name and the subtitle names the application. You can override
+template parameters (inventory, environment, Ansible limit, extra CLI arguments)
+per node via **task params** in the properties panel; the subtitle then reads
+**custom params**. A task node without a template shows a warning badge and
+blocks saving.
+
+### Approval nodes {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![Approval node card](/assets/workflow-node-approval.webp)
+</div>
+
+An approval node pauses the run until a user with permission approves or
+rejects. Optionally set a timeout (seconds) and an approval message; the
+subtitle shows the timeout. When the run reaches an approval node, the run
+status changes to **approval** until someone approves or rejects. The approval
+card on the run view shows the approval message with **Approve** and **Reject**
+buttons for users who may run tasks in the project. A rejected approval fails
+the node, and the run continues along the **On failure** or **Always** edges.
 
 ### Delay nodes {#delay-nodes}
 
-A delay node pauses the workflow run for the configured duration (minimum 1
-second). While waiting:
+<div class="BlockSchema BlockSchema--xsmall">
+![Delay node card](/assets/workflow-node-delay.webp)
+</div>
+
+A delay node waits for a configured number of seconds (minimum 1) before
+continuing to downstream nodes. Useful for cooling-off periods, maintenance
+windows, or spacing out dependent steps. While waiting:
 
 - The run stays in **running** status.
 - The run view shows a live countdown on the delay node.
@@ -73,11 +153,23 @@ second). While waiting:
 If the workflow run is **stopped** while a delay is active, the delay is
 cancelled and the run ends in **stopped** status.
 
-### Approval nodes {#approval-nodes}
+### Note nodes {#note-nodes}
 
-When the run reaches an approval node, status changes to **approval** until
-someone approves or rejects. Approve/Reject controls appear on the run view.
-Rejected approvals fail the run according to the connected edge conditions.
+<div class="BlockSchema BlockSchema--xsmall">
+
+![Note node card](/assets/workflow-node-note.webp)
+
+</div>
+
+A note is a free-form annotation on the canvas, drawn as a sticky. Notes do not
+execute, have no ports and are never connected by edges; they are for
+documentation only and are ignored by validation.
+
+### Convergence {#convergence}
+
+Nodes with multiple incoming edges can require **all** upstream nodes to finish
+(default) or **any** one of them. Set **Convergence** in the node property panel;
+the card subtitle shows **Any parent** when it is not the default.
 
 ## Edge conditions {#edge-conditions}
 
@@ -95,11 +187,19 @@ Use **On failure** branches for compensating actions or notifications. Use
 ## Running and monitoring {#running-and-monitoring}
 
 - **Run workflow** — starts a new run from the Workflows list.
-- **Run view** — full-screen graph with live status on each node (running, success,
-  failed, approval, delay countdown).
+- **Run view** — the same graph as in the editor, read-only, with live status
+  on each node. A status icon in the corner of the card shows success, failure,
+  running, waiting for approval, or a delay countdown; the subtitle shows the
+  duration. Nodes that have not started yet are dimmed, and the edge leading to
+  a running node is animated.
+- **Task log** — click a task node that has started to open its task log.
 - **Stop** — while a run is `running` or `approval`, users with
   `run_project_tasks` can stop it. All active tasks are stopped, pending
   approvals are rejected, and the run is marked **stopped**.
+
+![Workflow run view](/assets/workflow-run.webp)
+
+![Pending approval on the run view](/assets/workflow-run-approval.webp)
 
 Run statuses: `running`, `approval`, `success`, `failed`, `stopped`.
 
@@ -108,6 +208,17 @@ Run statuses: `running`, `approval`, `success`, `failed`, `stopped`.
 Set **Start version** on the workflow (for example `1.0.0`) to enable version
 labels on each run. Semaphore increments the version on successive runs, similar
 to build templates.
+
+## Revisions {#revisions}
+
+Every save of a workflow creates a new **revision** of its graph; the editor
+shows the current revision number next to the workflow name. A run pins the
+revision it was started from: editing the workflow while a run is in progress
+does not change that run, and finished runs keep showing the graph they
+executed, with the status of every node. Revisions that no run refers to are
+deleted when a newer one is saved. The run details (`GET …/runs/{run_id}`)
+include the nodes and edges of the run's revision, and
+`GET …/workflows/{workflow_id}/revisions` lists the surviving revisions.
 
 ## Workflow artifacts (set_stats) {#workflow-artifacts-set_stats}
 
