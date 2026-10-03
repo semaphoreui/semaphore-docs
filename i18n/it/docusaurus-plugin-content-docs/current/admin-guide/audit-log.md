@@ -14,7 +14,7 @@ Il log di audit è disponibile in tutte le edizioni. L'invio a un SIEM richiede 
 
 ## Cosa viene registrato {#recorded-events}
 
-Attualmente Semaphore registra gli accessi e l'attività di account e progetti:
+Attualmente Semaphore registra gli accessi e l'attività di account, progetti e task:
 
 - accessi, tentativi di accesso non riusciti, disconnessioni e verifiche del secondo fattore;
 - token API rifiutati, richieste negate e richieste cross-site bloccate;
@@ -23,18 +23,39 @@ Attualmente Semaphore registra gli accessi e l'attività di account e progetti:
 - modifiche a progetti, inventari, repository, template, pianificazioni, integrazioni, configurazioni host,
   ambienti, credenziali e archivi dei segreti, ed esportazioni e ripristini dei backup di progetto;
 - modifiche alle impostazioni di sistema e l'attivazione della licenza Pro;
+- avvii dei task con il relativo trigger (API, pianificazione, integrazione, esecuzione automatica, workflow), approvazioni, arresti,
+  completamenti e cronologia dei task eliminata;
+- modifiche ai runner, registrazioni (inclusi i token di registrazione rifiutati), annullamenti della registrazione e report dei runner
+  con uno stato non valido;
 - ogni avvio del server.
 
-Altri eventi verranno aggiunti nelle prossime versioni. Per l'elenco completo, consulta
+Per l'elenco completo, consulta
 [Eventi di audit](/reference/audit-events).
 
 Password, token, valori segreti e output dei task non compaiono mai negli eventi di audit. I token API sono
 indicati da un'impronta invece che dal loro valore. Un accesso non riuscito conserva il nome di accesso
 inserito, che quindi può contenere un indirizzo email.
 
+Nell'evento di completamento di un task, `metadata.result` mostra lo
+stato che Semaphore ha assegnato al task, e `metadata.end_reason` indica perché Semaphore lo ha terminato: `timeout` quando è durato
+troppo a lungo, `runner_lost` quando il suo runner ha smesso di rispondere. Argomenti del task, variabili, tag dei runner e token
+non vengono registrati.
+
+Durante un aggiornamento progressivo di un cluster HA, un task avviato su un nodo aggiornato e terminato su un nodo non
+ancora aggiornato non ha evento di completamento.
+
 Anche gli URL dei repository, gli URL delle configurazioni host e gli alias delle integrazioni non vengono registrati.
-Se un ambiente viene salvato ma uno dei suoi segreti non riesce, l'API restituisce un errore, anche se l'ambiente
-esiste. L'evento è allora un successo con `metadata.partial=true` e `reason=secret_failed`. Un template il cui passaggio di inventario è fallito (`reason=inventory_failed`) e un progetto la cui configurazione è fallita (`reason=setup_failed`) vengono registrati allo stesso modo.
+
+A volte Semaphore salva o elimina un oggetto, ma una parte successiva della stessa richiesta non riesce.
+L'interfaccia o l'API mostra allora un errore, anche se l'oggetto è stato creato o eliminato. Un evento di questo
+tipo viene registrato come successo con `metadata.partial=true`, e `reason` indica cosa non è stato completato:
+
+- `secret_failed`: un ambiente è stato salvato o eliminato, ma alcuni dei suoi segreti non sono stati salvati o
+  non sono stati rimossi;
+- `inventory_failed`: un template è stato creato, ma non il suo inventario del workspace Terraform;
+- `restore_failed`: un progetto è stato ripristinato da un backup, ma non tutti i suoi oggetti;
+- `setup_failed`: un progetto è stato creato, ma non configurato del tutto; ad esempio, il suo creatore non è
+  stato aggiunto come proprietario.
 
 ## Attivare il log di audit {#enable}
 
@@ -167,6 +188,10 @@ Semaphore registra un evento a ogni avvio. Dopo il riavvio, cercalo sul ricevito
 Ogni evento viene inviato come messaggio Syslog RFC 5424 con il JSON dell'evento come corpo. `HOSTNAME` è
 l'ID del nodo HA, oppure l'ID dell'istanza su un singolo nodo, e `MSGID` è il codice dell'evento.
 
+Gli esempi seguenti sono minimi e mostrano solo come ricevere gli eventi. Accettano connessioni da qualsiasi
+client che raggiunga la porta. In produzione, proteggete il ricevitore in modo che solo i vostri server
+Semaphore possano inviargli eventi.
+
 ### Esempio rsyslog {#rsyslog}
 
 Questa configurazione di rsyslog accetta la connessione TLS e scrive un evento per riga:
@@ -231,11 +256,10 @@ encoding.codec = "json"
 Lo strumento da riga di comando `semaphore` lavora direttamente sul database, quindi comandi come
 `user add` e `user token` non vengono registrati.
 
-Alcune azioni dell'interfaccia non vengono ancora registrate: la rimozione di una licenza, le impostazioni
+Alcune azioni dell'interfaccia non vengono registrate: la rimozione di una licenza, le impostazioni
 delle app, la pulizia dello stato dei task HA, gli alias degli inventari Terraform, l'eliminazione di uno stato
 Terraform, le esecuzioni dei workflow e gli inviti ai progetti. Non vengono registrate neppure le descrizioni dei
 template, le viste, la pulizia della cache del progetto e le sincronizzazioni pianificate degli archivi dei segreti.
-Per gli eventi previsti nelle prossime versioni, consulta [Eventi di audit](/reference/audit-events).
 
 ## Prossimi passi {#whats-next}
 

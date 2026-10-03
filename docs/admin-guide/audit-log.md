@@ -14,7 +14,7 @@ The audit log is available in every edition. Sending events to a SIEM requires S
 
 ## What is recorded {#recorded-events}
 
-Semaphore currently records sign-in, account and project activity:
+Semaphore currently records sign-in, account, project and task activity:
 
 - sign-ins, failed sign-in attempts, sign-outs and two-factor checks;
 - rejected API tokens, denied requests and blocked cross-site requests;
@@ -23,18 +23,38 @@ Semaphore currently records sign-in, account and project activity:
 - changes to projects, inventories, repositories, templates, schedules, integrations, host configs,
   environments, credentials and secret storages, and project backup exports and restores;
 - changes to system settings and Pro license activation;
+- task starts with their trigger (API, schedule, integration, autorun, workflow), approvals, stops,
+  completions and deleted task history;
+- runner changes, registrations (including refused registration tokens), unregistrations and runner reports
+  with an invalid status;
 - every server start.
 
-More events will be added in future releases. For the full list, see
+For the full list, see
 [Audit events](/reference/audit-events).
 
 Passwords, tokens, secret values and task output never appear in audit events. API tokens are shown by a
 fingerprint instead of their value. A failed sign-in keeps the login name that was entered, so it can
 contain an email address.
 
-Repository URLs, host config URLs and integration aliases are not recorded either. If an environment is saved
-but one of its secrets fails, the API returns an error, yet the environment exists. The event is then a
-success with `metadata.partial=true` and `reason=secret_failed`. A template whose inventory step failed (`reason=inventory_failed`) and a project whose setup failed (`reason=setup_failed`) are recorded the same way.
+In a task completion event, `metadata.result` shows the
+status Semaphore gave the task, and `metadata.end_reason` says why Semaphore ended it: `timeout` when it ran
+too long, `runner_lost` when its runner stopped responding. Task arguments, variables, runner tags and tokens
+are not recorded.
+
+During a rolling upgrade of an HA cluster, a task started on an upgraded node and finished on a node that
+is not upgraded yet has no completion event.
+
+Repository URLs, host config URLs and integration aliases are not recorded either.
+
+Sometimes Semaphore saves or deletes an object, but a later part of the same request fails. The UI or API
+then shows an error, although the object was created or deleted. Such an event is recorded as a success
+with `metadata.partial=true`, and `reason` says what did not complete:
+
+- `secret_failed`: an environment was saved or deleted, but some of its secrets were not saved or not removed;
+- `inventory_failed`: a template was created, but its Terraform workspace inventory was not;
+- `restore_failed`: a project was restored from a backup, but not all of its objects were;
+- `setup_failed`: a project was created, but not fully set up, for example its creator was not added as
+  owner.
 
 ## Enable the audit log {#enable}
 
@@ -163,6 +183,10 @@ destination ID.
 Each event is sent as an RFC 5424 Syslog message with the event JSON as its body. `HOSTNAME` is the HA node
 ID, or the instance ID on a single node, and `MSGID` is the event code.
 
+The examples below are minimal and only show how to receive the events. They accept a connection from any
+client that can reach the port. In production, protect the receiver so that only your Semaphore servers can
+send events to it.
+
 ### rsyslog example {#rsyslog}
 
 This rsyslog configuration accepts the TLS connection and writes one event per line:
@@ -225,10 +249,9 @@ encoding.codec = "json"
 The `semaphore` command-line tool works with the database directly, so commands such as `user add` and
 `user token` are not recorded.
 
-Some actions in the UI are not recorded yet: removing a license, app settings, clearing HA task state,
+Some actions in the UI are not recorded: removing a license, app settings, clearing HA task state,
 Terraform inventory aliases, deleting a Terraform state, workflow runs and project invitations. Template
 descriptions, views, clearing the project cache and scheduled secret storage syncs are not recorded either.
-For the events planned for future releases, see [Audit events](/reference/audit-events).
 
 ## What's next {#whats-next}
 

@@ -14,7 +14,7 @@ Le journal d'audit est disponible dans toutes les éditions. L'envoi vers un SIE
 
 ## Ce qui est enregistré {#recorded-events}
 
-Semaphore enregistre actuellement les connexions, l'activité des comptes et celle des projets :
+Semaphore enregistre actuellement les connexions, l'activité des comptes, celle des projets et celle des tâches :
 
 - les connexions, les tentatives de connexion échouées, les déconnexions et les vérifications du second
   facteur ;
@@ -26,18 +26,39 @@ Semaphore enregistre actuellement les connexions, l'activité des comptes et cel
   d'hôtes, environnements, identifiants et stockages de secrets, ainsi que les exports et restaurations de
   sauvegardes de projet ;
 - les modifications des paramètres système et l'activation de la licence Pro ;
+- démarrages de tâches avec leur déclencheur (API, planification, intégration, exécution automatique, workflow), approbations, arrêts,
+  fins et historique de tâches supprimé ;
+- modifications des runners, enregistrements (y compris les jetons d'enregistrement refusés), désenregistrements et rapports de runners
+  avec un statut invalide ;
 - chaque démarrage du serveur.
 
-D'autres événements seront ajoutés dans les prochaines versions. Pour la liste complète, consultez
+Pour la liste complète, consultez
 [Événements d'audit](/reference/audit-events).
 
 Les mots de passe, les jetons, les valeurs secrètes et la sortie des tâches n'apparaissent jamais dans les
 événements d'audit. Les jetons d'API sont identifiés par une empreinte plutôt que par leur valeur. Une
 connexion échouée conserve l'identifiant saisi, qui peut donc contenir une adresse e-mail.
 
+Dans l'événement de fin d'une tâche, `metadata.result` indique le
+statut que Semaphore a donné à la tâche, et `metadata.end_reason` indique pourquoi Semaphore l'a terminée : `timeout` lorsqu'elle a duré
+trop longtemps, `runner_lost` lorsque son runner a cessé de répondre. Les arguments de la tâche, les variables, les étiquettes de runner et les jetons
+ne sont pas enregistrés.
+
+Pendant une mise à niveau progressive d'un cluster HA, une tâche démarrée sur un nœud mis à niveau et terminée sur un nœud qui
+n'est pas encore mis à niveau n'a pas d'événement de fin.
+
 Les URL de dépôts, les URL de configurations d'hôtes et les alias d'intégrations ne sont pas enregistrés non plus.
-Si un environnement est enregistré mais que l'un de ses secrets échoue, l'API renvoie une erreur alors que
-l'environnement existe. L'événement est alors un succès avec `metadata.partial=true` et `reason=secret_failed`. Un modèle dont l'étape d'inventaire a échoué (`reason=inventory_failed`) et un projet dont la configuration a échoué (`reason=setup_failed`) sont enregistrés de la même façon.
+
+Il arrive que Semaphore enregistre ou supprime un objet, mais qu'une partie ultérieure de la même requête
+échoue. L'interface ou l'API affiche alors une erreur, alors que l'objet a bien été créé ou supprimé. Un tel
+événement est enregistré comme un succès avec `metadata.partial=true`, et `reason` indique ce qui n'a pas abouti :
+
+- `secret_failed` : un environnement a été enregistré ou supprimé, mais certains de ses secrets n'ont pas été
+  enregistrés ou pas retirés ;
+- `inventory_failed` : un modèle a été créé, mais pas son inventaire de workspace Terraform ;
+- `restore_failed` : un projet a été restauré depuis une sauvegarde, mais pas tous ses objets ;
+- `setup_failed` : un projet a été créé, mais pas entièrement configuré ; par exemple, son créateur n'a pas été
+  ajouté comme propriétaire.
 
 ## Activer le journal d'audit {#enable}
 
@@ -172,6 +193,10 @@ destination.
 Chaque événement est envoyé sous forme de message Syslog RFC 5424 dont le corps est le JSON de l'événement.
 `HOSTNAME` est l'ID du nœud HA, ou l'ID d'instance sur un seul nœud, et `MSGID` est le code de l'événement.
 
+Les exemples ci-dessous sont minimaux et montrent seulement comment recevoir les événements. Ils acceptent la
+connexion de tout client qui peut atteindre le port. En production, protégez le récepteur afin que seuls vos
+serveurs Semaphore puissent lui envoyer des événements.
+
 ### Exemple rsyslog {#rsyslog}
 
 Cette configuration rsyslog accepte la connexion TLS et écrit un événement par ligne :
@@ -235,12 +260,11 @@ encoding.codec = "json"
 L'outil en ligne de commande `semaphore` agit directement sur la base de données : les commandes comme
 `user add` et `user token` ne sont donc pas enregistrées.
 
-Certaines actions de l'interface ne sont pas encore enregistrées : la suppression d'une licence, les
+Certaines actions de l'interface ne sont pas enregistrées : la suppression d'une licence, les
 paramètres des apps, la réinitialisation de l'état des tâches HA, les alias d'inventaires Terraform, la
 suppression d'un état Terraform, les exécutions de workflows et les invitations aux projets. Les descriptions de
 modèles, les vues, le vidage du cache du projet et les synchronisations planifiées des stockages de secrets ne
-sont pas enregistrés non plus. Pour les événements prévus dans les prochaines versions, consultez
-[Événements d'audit](/reference/audit-events).
+sont pas enregistrés non plus.
 
 ## Et ensuite {#whats-next}
 

@@ -14,7 +14,7 @@ Das Audit-Protokoll ist in jeder Edition verfügbar. Für das Senden an ein SIEM
 
 ## Was aufgezeichnet wird {#recorded-events}
 
-Derzeit zeichnet Semaphore Anmeldungen, Konto- und Projektaktivitäten auf:
+Derzeit zeichnet Semaphore Anmeldungen, Konto-, Projekt- und Task-Aktivitäten auf:
 
 - Anmeldungen, fehlgeschlagene Anmeldeversuche, Abmeldungen und Prüfungen des zweiten Faktors;
 - abgelehnte API-Tokens, verweigerte Anfragen und blockierte Cross-Site-Anfragen;
@@ -23,18 +23,39 @@ Derzeit zeichnet Semaphore Anmeldungen, Konto- und Projektaktivitäten auf:
 - Änderungen an Projekten, Inventaren, Repositories, Vorlagen, Zeitplänen, Integrationen, Host-Konfigurationen,
   Umgebungen, Zugangsdaten und Geheimnisspeichern sowie Exporte und Wiederherstellungen von Projektsicherungen;
 - Änderungen an Systemeinstellungen und die Aktivierung der Pro-Lizenz;
+- Task-Starts mit ihrem Auslöser (API, Zeitplan, Integration, Autorun, Workflow), Freigaben, Stopps,
+  Abschlüsse und gelöschter Task-Verlauf;
+- Änderungen an Runnern, Registrierungen (auch abgelehnte Registrierungs-Tokens), Abmeldungen von Runnern und Runner-Meldungen
+  mit ungültigem Status;
 - jeden Serverstart.
 
-In künftigen Versionen kommen weitere Ereignisse hinzu. Die vollständige Liste finden Sie unter
+Die vollständige Liste finden Sie unter
 [Audit-Ereignisse](/reference/audit-events).
 
 Passwörter, Tokens, geheime Werte und Aufgabenausgaben erscheinen nie in Audit-Ereignissen. API-Tokens werden
 über einen Fingerabdruck statt über ihren Wert angezeigt. Eine fehlgeschlagene Anmeldung speichert den
 eingegebenen Anmeldenamen, der daher eine E-Mail-Adresse enthalten kann.
 
-Repository-URLs, Host-Konfigurations-URLs und Integrations-Aliase werden ebenfalls nicht aufgezeichnet. Wird eine
-Umgebung gespeichert, aber eines ihrer Geheimnisse schlägt fehl, liefert die API einen Fehler, obwohl die Umgebung
-existiert. Das Ereignis ist dann ein Erfolg mit `metadata.partial=true` und `reason=secret_failed`. Ein Template, dessen Inventar-Schritt fehlgeschlagen ist (`reason=inventory_failed`), und ein Projekt, dessen Einrichtung fehlgeschlagen ist (`reason=setup_failed`), werden genauso erfasst.
+Im Abschlussereignis eines Tasks zeigt `metadata.result` den
+Status, den Semaphore dem Task gegeben hat, und `metadata.end_reason` nennt den Grund, warum Semaphore ihn beendet hat: `timeout`, wenn er
+zu lange lief, `runner_lost`, wenn sein Runner nicht mehr antwortete. Task-Argumente, Variablen, Runner-Tags und Tokens
+werden nicht aufgezeichnet.
+
+Bei einem Rolling Upgrade eines HA-Clusters hat ein Task, der auf einem aktualisierten Knoten gestartet und auf einem noch
+nicht aktualisierten Knoten beendet wurde, kein Abschlussereignis.
+
+Repository-URLs, Host-Konfigurations-URLs und Integrations-Aliase werden ebenfalls nicht aufgezeichnet.
+
+Manchmal speichert oder löscht Semaphore ein Objekt, aber ein späterer Teil derselben Anfrage schlägt fehl.
+Die Oberfläche oder die API zeigt dann einen Fehler, obwohl das Objekt angelegt oder gelöscht wurde. Ein solches
+Ereignis wird als Erfolg mit `metadata.partial=true` erfasst, und `reason` gibt an, was nicht abgeschlossen wurde:
+
+- `secret_failed`: Eine Umgebung wurde gespeichert oder gelöscht, aber einige ihrer Geheimnisse wurden nicht
+  gespeichert oder nicht entfernt;
+- `inventory_failed`: Ein Template wurde angelegt, aber sein Inventar für den Terraform-Workspace nicht;
+- `restore_failed`: Ein Projekt wurde aus einer Sicherung wiederhergestellt, aber nicht alle seine Objekte;
+- `setup_failed`: Ein Projekt wurde angelegt, aber nicht vollständig eingerichtet, zum Beispiel wurde sein
+  Ersteller nicht als Besitzer hinzugefügt.
 
 ## Das Audit-Protokoll aktivieren {#enable}
 
@@ -166,6 +187,10 @@ Semaphore zeichnet bei jedem Start ein Ereignis auf. Suchen Sie es nach dem Neus
 Jedes Ereignis wird als Syslog-Nachricht nach RFC 5424 mit dem Ereignis-JSON als Inhalt gesendet. `HOSTNAME`
 ist die HA-Knoten-ID oder auf einem einzelnen Knoten die Instanz-ID, und `MSGID` ist der Ereigniscode.
 
+Die folgenden Beispiele sind minimal und zeigen nur, wie die Ereignisse empfangen werden. Sie nehmen
+Verbindungen von jedem Client an, der den Port erreicht. Schützen Sie den Empfänger im Produktivbetrieb so, dass
+nur Ihre Semaphore-Server Ereignisse an ihn senden können.
+
 ### rsyslog-Beispiel {#rsyslog}
 
 Diese rsyslog-Konfiguration nimmt die TLS-Verbindung an und schreibt ein Ereignis pro Zeile:
@@ -230,11 +255,10 @@ encoding.codec = "json"
 Das Kommandozeilenwerkzeug `semaphore` arbeitet direkt mit der Datenbank, daher werden Befehle wie
 `user add` und `user token` nicht aufgezeichnet.
 
-Einige Aktionen in der Oberfläche werden noch nicht aufgezeichnet: das Entfernen einer Lizenz,
+Einige Aktionen in der Oberfläche werden nicht aufgezeichnet: das Entfernen einer Lizenz,
 App-Einstellungen, das Zurücksetzen des HA-Aufgabenstatus, Terraform-Inventar-Aliase, das Löschen eines
 Terraform-Status, Workflow-Läufe und Projekteinladungen. Auch Vorlagenbeschreibungen, Ansichten, das Leeren des
-Projekt-Caches und geplante Synchronisierungen von Geheimnisspeichern werden nicht aufgezeichnet. Die für künftige
-Versionen geplanten Ereignisse finden Sie unter [Audit-Ereignisse](/reference/audit-events).
+Projekt-Caches und geplante Synchronisierungen von Geheimnisspeichern werden nicht aufgezeichnet.
 
 ## Wie geht es weiter {#whats-next}
 

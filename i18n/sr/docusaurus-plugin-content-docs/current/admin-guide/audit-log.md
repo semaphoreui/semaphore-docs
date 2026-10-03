@@ -14,7 +14,7 @@ Dnevnik revizije je dostupan u svim izdanjima. Za slanje događaja u SIEM potreb
 
 ## Šta se beleži {#recorded-events}
 
-Semaphore trenutno beleži prijave, aktivnost naloga i projekata:
+Semaphore trenutno beleži prijave, aktivnost naloga, projekata i zadataka:
 
 - prijave, neuspele pokušaje prijave, odjave i provere drugog faktora;
 - odbijene API tokene, odbijene zahteve i blokirane međusajtne zahteve;
@@ -23,18 +23,37 @@ Semaphore trenutno beleži prijave, aktivnost naloga i projekata:
 - izmene projekata, inventara, repozitorijuma, šablona, rasporeda, integracija, konfiguracija hostova,
   okruženja, kredencijala i skladišta tajni, kao i izvoz i vraćanje rezervnih kopija projekata;
 - izmene sistemskih podešavanja i aktivaciju Pro licence;
+- pokretanja zadataka sa njihovim okidačem (API, raspored, integracija, automatsko pokretanje, tok rada), odobrenja, zaustavljanja,
+  završetke i obrisanu istoriju zadataka;
+- promene runner-a, registracije (uključujući odbijene registracione tokene), odjave i izveštaje runner-a
+  sa nevažećim statusom;
 - svako pokretanje servera.
 
-U narednim verzijama biće dodato još događaja. Kompletna lista je na stranici
+Kompletna lista je na stranici
 [Događaji revizije](/reference/audit-events).
 
 Lozinke, tokeni, tajne vrednosti i izlaz zadataka nikada se ne pojavljuju u događajima revizije. API tokeni
 se prikazuju otiskom umesto vrednošću. Neuspela prijava čuva uneto korisničko ime, pa ono može sadržati
 adresu e-pošte.
 
-URL-ovi repozitorijuma, URL-ovi konfiguracija hostova i aliasi integracija takođe se ne beleže. Ako se okruženje
-sačuva, ali jedna od njegovih tajni ne uspe, API vraća grešku, iako okruženje postoji. Događaj se tada beleži kao
-uspešan sa `metadata.partial=true` i `reason=secret_failed`. Šablon čiji korak sa inventarom nije uspeo (`reason=inventory_failed`) i projekat čije podešavanje nije uspelo (`reason=setup_failed`) beleže se na isti način.
+U događaju završetka zadatka `metadata.result` prikazuje
+status koji je Semaphore dao zadatku, a `metadata.end_reason` kaže zašto ga je Semaphore završio: `timeout` kada je trajao
+predugo, `runner_lost` kada njegov runner više nije odgovarao. Argumenti zadatka, promenljive, oznake runner-a i tokeni
+se ne beleže.
+
+Tokom postepene nadogradnje HA klastera zadatak pokrenut na nadograđenom čvoru, a završen na čvoru koji
+još nije nadograđen, nema događaj završetka.
+
+URL-ovi repozitorijuma, URL-ovi konfiguracija hostova i aliasi integracija takođe se ne beleže.
+
+Ponekad Semaphore sačuva ili obriše objekat, ali kasniji deo istog zahteva ne uspe. Interfejs ili API tada
+prikazuje grešku, iako je objekat kreiran ili obrisan. Takav događaj se beleži kao uspešan sa
+`metadata.partial=true`, a `reason` navodi šta nije završeno:
+
+- `secret_failed`: okruženje je sačuvano ili obrisano, ali neke njegove tajne nisu sačuvane ili nisu uklonjene;
+- `inventory_failed`: šablon je kreiran, ali njegov inventar za Terraform workspace nije;
+- `restore_failed`: projekat je vraćen iz rezervne kopije, ali ne i svi njegovi objekti;
+- `setup_failed`: projekat je kreiran, ali nije potpuno podešen, na primer njegov tvorac nije dodat kao vlasnik.
 
 ## Uključivanje dnevnika revizije {#enable}
 
@@ -164,6 +183,10 @@ odredišta.
 Svaki događaj se šalje kao Syslog poruka po RFC 5424 sa JSON-om događaja kao telom. `HOSTNAME` je ID HA
 čvora, ili ID instance na jednom čvoru, a `MSGID` je kôd događaja.
 
+Primeri u nastavku su minimalni i samo pokazuju kako se primaju događaji. Prihvataju vezu od bilo kog klijenta
+koji može da dođe do porta. U produkciji zaštitite prijemnik tako da samo vaši Semaphore serveri mogu da mu šalju
+događaje.
+
 ### Primer za rsyslog {#rsyslog}
 
 Ova rsyslog konfiguracija prihvata TLS vezu i upisuje po jedan događaj u red:
@@ -227,10 +250,9 @@ encoding.codec = "json"
 Alat komandne linije `semaphore` radi direktno sa bazom podataka, pa se komande kao što su `user add` i
 `user token` ne beleže.
 
-Neke radnje u interfejsu se još ne beleže: uklanjanje licence, podešavanja aplikacija, brisanje stanja HA
+Neke radnje u interfejsu se ne beleže: uklanjanje licence, podešavanja aplikacija, brisanje stanja HA
 zadataka, aliasi Terraform inventara, brisanje Terraform stanja, pokretanja workflow-a i pozivnice u projekat.
 Opisi šablona, prikazi, brisanje keša projekta i zakazane sinhronizacije skladišta tajni takođe se ne beleže.
-Događaji planirani za naredne verzije navedeni su na stranici [Događaji revizije](/reference/audit-events).
 
 ## Šta dalje {#whats-next}
 
