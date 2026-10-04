@@ -8,4 +8,6 @@ if [ -f ~/venv/bin/activate ]; then
     source ~/venv/bin/activate
 fi
 
-./run.sh aws deploy
+INVENTORY="${1:-aws}"
+
+./run.sh "$INVENTORY" deploy
