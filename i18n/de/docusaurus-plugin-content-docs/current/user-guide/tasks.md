@@ -93,6 +93,35 @@ Im Tab **Tasks** eines Task Template hat jede Zeile eine **Rerun**-Schaltfläche
 - **Seite des Task Template → Tasks**: Tasks eines einzelnen Task Template.
 - **Task Templates**: Klappen Sie eine Zeile mit dem Pfeil links auf, um die neuesten Tasks des Task Template zu sehen, ohne die Liste zu verlassen.
 
+## Umgebungsvariablen {#environment-variables}
+
+Jeder Task erhält unabhängig von der verwendeten Anwendung (Ansible, Terraform, Bash, PowerShell oder Python) Variablen, die ihn in Semaphore identifizieren:
+
+| Variable | Wert |
+| --- | --- |
+| `SEMAPHORE_TASK_ID` | ID des Tasks |
+| `SEMAPHORE_PROJECT_ID` | ID des Projekts, zu dem der Task gehört |
+| `SEMAPHORE_WORKFLOW_ID` | ID des Workflows, wenn der Task ein Knoten eines [Workflow](./workflows#environment-variables)-Laufs ist |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID des Workflow-Laufs, zu dem der Task gehört |
+| `SEMAPHORE_WORKFLOW_URL` | Link zur Seite des Workflow-Laufs (erfordert `web_host` in der Serverkonfiguration) |
+
+Die Workflow-Variablen sind nicht gesetzt, wenn der Task nicht durch einen Workflow gestartet wurde.
+
+Weitere Variablen werden in bestimmten Fällen gesetzt:
+
+- `SEMAPHORE_TASK_TYPE`, `SEMAPHORE_TASK_INCOMING_VERSION`, `SEMAPHORE_TASK_TARGET_VERSION`
+  und die Variablen der Gruppe `SEMAPHORE_TASK_DETAILS_*` für [Build- und Deploy-Task-Templates](./task-templates/build-deploy).
+- `SEMAPHORE_JWT`, wenn das Template ein [JWT ausstellt](./task-templates/jwt).
+
+Beispiel für Bash:
+
+```bash
+echo "Task $SEMAPHORE_TASK_ID of project $SEMAPHORE_PROJECT_ID"
+if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
+  echo "Started by workflow run: $SEMAPHORE_WORKFLOW_URL"
+fi
+```
+
 ## Aufbewahrung von Logs {#log-retention}
 
 Tasks und Logs werden standardmäßig dauerhaft aufbewahrt. Verwenden Sie `max_tasks_per_template`, um nur die neuesten Tasks jedes Task Template zu behalten, siehe [History](./projects/history#task-retention).

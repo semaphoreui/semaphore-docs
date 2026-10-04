@@ -93,6 +93,34 @@ UI 上のどこかでタスクをクリックすると、タスクのウィン�
 - **テンプレートのページ → タスク**: 1 つのテンプレートのタスクです。
 - **タスクテンプレート**: 行の左側にある矢印で展開すると、一覧から離れずにそのテンプレートの直近のタスクを確認できます。
 
+## 環境変数 {#environment-variables}
+
+タスクは、アプリケーション（Ansible、Terraform、Bash、PowerShell、Python）にかかわらず、Semaphore 内でタスクを識別するための変数を受け取ります。
+
+| 変数 | 値 |
+| --- | --- |
+| `SEMAPHORE_TASK_ID` | タスクの ID |
+| `SEMAPHORE_PROJECT_ID` | タスクが属するプロジェクトの ID |
+| `SEMAPHORE_WORKFLOW_ID` | タスクが[ワークフロー](./workflows#environment-variables)実行のノードである場合のワークフロー ID |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | タスクが属するワークフロー実行の ID |
+| `SEMAPHORE_WORKFLOW_URL` | ワークフロー実行ページへのリンク（サーバー設定の `web_host` が必要です） |
+
+ワークフローによって開始されていないタスクには、ワークフロー変数は設定されません。
+
+特定の場合には、以下の変数も設定されます。
+
+- [ビルドおよびデプロイテンプレート](./task-templates/build-deploy)では、`SEMAPHORE_TASK_TYPE`、`SEMAPHORE_TASK_INCOMING_VERSION`、`SEMAPHORE_TASK_TARGET_VERSION` と、`SEMAPHORE_TASK_DETAILS_*` 系の変数が設定されます。
+- テンプレートが[JWT を発行](./task-templates/jwt)する場合、`SEMAPHORE_JWT` が設定されます。
+
+Bash の例：
+
+```bash
+echo "Task $SEMAPHORE_TASK_ID of project $SEMAPHORE_PROJECT_ID"
+if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
+  echo "Started by workflow run: $SEMAPHORE_WORKFLOW_URL"
+fi
+```
+
 ## ログの保持 {#log-retention}
 
 既定では、タスクとログは無期限に保持されます。各テンプレートの直近のタスクのみを保持するには `max_tasks_per_template` を使用します。[履歴](./projects/history#task-retention)を参照してください。

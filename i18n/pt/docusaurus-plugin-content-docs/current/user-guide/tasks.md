@@ -93,6 +93,35 @@ Na aba **Tasks** de um modelo, cada linha tem um botão de **reexecução**. Ele
 - **Página do modelo → Tasks**: tarefas de um único modelo.
 - **Modelos de Tarefa**: expanda uma linha com a seta à esquerda para ver as tarefas mais recentes do modelo sem sair da lista.
 
+## Variáveis de ambiente {#environment-variables}
+
+Todas as tarefas, independentemente da aplicação (Ansible, Terraform, Bash, PowerShell ou Python), recebem variáveis que as identificam no Semaphore:
+
+| Variável | Valor |
+| --- | --- |
+| `SEMAPHORE_TASK_ID` | ID da tarefa |
+| `SEMAPHORE_PROJECT_ID` | ID do projeto ao qual a tarefa pertence |
+| `SEMAPHORE_WORKFLOW_ID` | ID do workflow, quando a tarefa é um nó de uma execução de [workflow](./workflows#environment-variables) |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID da execução do workflow à qual a tarefa pertence |
+| `SEMAPHORE_WORKFLOW_URL` | Link para a página da execução do workflow (requer `web_host` na configuração do servidor) |
+
+As variáveis de workflow não estão presentes quando a tarefa não foi iniciada por um workflow.
+
+Outras variáveis são definidas em casos específicos:
+
+- `SEMAPHORE_TASK_TYPE`, `SEMAPHORE_TASK_INCOMING_VERSION`, `SEMAPHORE_TASK_TARGET_VERSION`
+  e a família `SEMAPHORE_TASK_DETAILS_*` para [modelos de build e deploy](./task-templates/build-deploy).
+- `SEMAPHORE_JWT` quando o modelo [emite um JWT](./task-templates/jwt).
+
+Exemplo para Bash:
+
+```bash
+echo "Task $SEMAPHORE_TASK_ID of project $SEMAPHORE_PROJECT_ID"
+if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
+  echo "Started by workflow run: $SEMAPHORE_WORKFLOW_URL"
+fi
+```
+
 ## Retenção de logs {#log-retention}
 
 Por padrão, as tarefas e os logs são mantidos para sempre. Use `max_tasks_per_template` para manter apenas as tarefas mais recentes de cada modelo, consulte [Histórico](./projects/history#task-retention).

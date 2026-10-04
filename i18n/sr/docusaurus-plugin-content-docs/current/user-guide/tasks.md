@@ -93,6 +93,35 @@ Na kartici **Zadaci** (Tasks) šablona svaki red ima dugme **ponovo pokreni** (r
 - **Stranica šablona → Zadaci** (Tasks): zadaci jednog šablona.
 - **Šabloni zadataka** (Task Templates): proširite red strelicom sa leve strane da biste videli najnovije zadatke šablona bez napuštanja liste.
 
+## Promenljive okruženja {#environment-variables}
+
+Svaki zadatak, bez obzira na aplikaciju (Ansible, Terraform, Bash, PowerShell ili Python), dobija promenljive koje ga identifikuju u Semaphore-u:
+
+| Promenljiva | Vrednost |
+| --- | --- |
+| `SEMAPHORE_TASK_ID` | ID zadatka |
+| `SEMAPHORE_PROJECT_ID` | ID projekta kojem zadatak pripada |
+| `SEMAPHORE_WORKFLOW_ID` | ID workflow-a, kada je zadatak čvor pokretanja [workflow-a](./workflows#environment-variables) |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID pokretanja workflow-a kojem zadatak pripada |
+| `SEMAPHORE_WORKFLOW_URL` | Veza ka stranici pokretanja workflow-a (zahteva `web_host` u konfiguraciji servera) |
+
+Workflow promenljive nisu prisutne ako zadatak nije pokrenut iz workflow-a.
+
+Druge promenljive se postavljaju u određenim slučajevima:
+
+- `SEMAPHORE_TASK_TYPE`, `SEMAPHORE_TASK_INCOMING_VERSION`, `SEMAPHORE_TASK_TARGET_VERSION`
+  i grupa promenljivih `SEMAPHORE_TASK_DETAILS_*` za [build i deploy šablone](./task-templates/build-deploy).
+- `SEMAPHORE_JWT` kada šablon [izdaje JWT](./task-templates/jwt).
+
+Primer za Bash:
+
+```bash
+echo "Task $SEMAPHORE_TASK_ID of project $SEMAPHORE_PROJECT_ID"
+if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
+  echo "Started by workflow run: $SEMAPHORE_WORKFLOW_URL"
+fi
+```
+
 ## Čuvanje logova {#log-retention}
 
 Zadaci i logovi se podrazumevano čuvaju zauvek. Koristite `max_tasks_per_template` da biste zadržali samo najnovije zadatke svakog šablona, pogledajte [Istorija](./projects/history#task-retention).

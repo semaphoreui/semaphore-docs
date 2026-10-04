@@ -115,6 +115,18 @@ Semaphore 会在后续运行中递增版本号，与构建模板类似。
 产物的传递，或将产生和使用产物的步骤放在同一条执行路径上。
 :::
 
+## 环境变量 {#environment-variables}
+
+由工作流启动的任务除了会收到[每个任务都能收到的变量](./tasks#environment-variables)，还会收到：
+
+| 变量 | 值 |
+| --- | --- |
+| `SEMAPHORE_WORKFLOW_ID` | 工作流 ID |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | 当前运行的 ID |
+| `SEMAPHORE_WORKFLOW_URL` | 运行页面的链接，例如 `https://semaphore.example.com/project/1/workflows/7/runs/42`（要求在服务器配置中设置 `web_host`） |
+
+这些变量会为包括 Ansible 和 Terraform 在内的所有应用设置，也会传递给在远程运行器上执行的任务。
+
 ## 权限 {#permissions}
 
 - 管理工作流（创建、编辑、删除）需要项目资源管理权限。

@@ -128,6 +128,19 @@ Planifiez les transferts d'artefacts en conséquence ou gardez les étapes qui p
 et consomment des artefacts sur le même chemin d'exécution.
 :::
 
+## Variables d'environnement {#environment-variables}
+
+Une tâche démarrée par un workflow reçoit, en plus des
+[variables reçues par chaque tâche](./tasks#environment-variables) :
+
+| Variable | Valeur |
+| --- | --- |
+| `SEMAPHORE_WORKFLOW_ID` | ID du workflow |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID de l'exécution en cours |
+| `SEMAPHORE_WORKFLOW_URL` | Lien vers la page de l'exécution, par exemple `https://semaphore.example.com/project/1/workflows/7/runs/42` (nécessite `web_host` dans la configuration du serveur) |
+
+Ces variables sont définies pour toutes les applications, y compris Ansible et Terraform, et sont transmises aux tâches exécutées sur des runners distants.
+
 ## Permissions {#permissions}
 
 - La gestion des workflows (création, modification, suppression) nécessite les
