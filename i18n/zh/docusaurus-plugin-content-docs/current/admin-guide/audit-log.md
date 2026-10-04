@@ -174,15 +174,17 @@ SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE=/etc/semaphore/siem-ca.pem
 
 Semaphore 每个请求最多发送 100 个事件。每个 HEC 事件的 `event` 字段包含审计事件 JSON，`time` 是事件时间，`host` 是 HA 节点 ID（单节点时为实例 ID）。
 
+重启 Semaphore，然后按[上文](#verify-siem-delivery)所述确认事件已送达。
+
 ### 事件的投递方式 {#delivery}
 
 - 如果接收器不可用，事件会在数据库中等待，待接收器恢复后再发送。用户不会察觉到任何变化。
 - 在网络错误、重启或 HA 故障转移之后，部分事件可能会到达两次。使用 `event_id` 去除重复事件，使用 `seq` 排列事件顺序。
-- 如果连接在没有报错的情况下中断，当时发送的事件可能会丢失。
-- 在 [HA 安装](/admin-guide/ha) 中，同一时间只有一个节点发送事件。如果 Redis 不可用，发送会暂停，但事件仍会继续记录。
+- 通过 Syslog 发送时，如果连接在没有报错的情况下中断，当时发送的事件可能会丢失。
+- 在 [HA 安装](/admin-guide/ha) 中，同一时间只有一个节点向每个目标发送事件。如果 Redis 不可用，发送会暂停，但事件仍会继续记录。
 - 通过 HEC 发送时，只有接收器返回 2xx 状态后，事件才算已发送。任何其他响应（包括 4xx）都会重试。如果接收器在响应后崩溃，尚未存储的事件可能会丢失。
 
-每个事件都以 RFC 5424 Syslog 消息发送，消息正文为事件 JSON。`HOSTNAME` 是 HA 节点 ID（单节点时为实例 ID），`MSGID` 是事件代码。
+通过 Syslog 发送时，每个事件都以 RFC 5424 Syslog 消息发送，消息正文为事件 JSON。`HOSTNAME` 是 HA 节点 ID（单节点时为实例 ID），`MSGID` 是事件代码。
 
 以下示例是最简配置，仅演示如何接收事件。它们接受任何能访问该端口的客户端的连接。在生产环境中，请保护接收端，确保只有你的 Semaphore 服务器能向其发送事件。
 
@@ -255,13 +257,15 @@ encoding.codec = "json"
 
 在 Splunk 中创建 HEC 令牌（**Settings → Data inputs → HTTP Event Collector**），允许它使用 `security` 索引，并将 `url` 设置为 `https://<splunk>:8088/services/collector/event`。要查找这些事件，请搜索 `index=security sourcetype="semaphore:audit"`。
 
+请对此令牌关闭 **Enable indexer acknowledgement**：Semaphore 不使用它。
+
 ### 导出故障排除 {#troubleshoot-export}
 
 - **Semaphore 无法启动。** 检查是否同时设置了 `audit.syslog.id` 和 `audit.syslog.address`（使用 HEC 时为 `audit.splunk_hec.id`、`url` 和 `token`），以及 CA 文件是否包含 PEM 证书。
 - **TLS 连接失败。** 检查接收器证书是否与 `server_name` 匹配，并由 Semaphore 信任的 CA 签发。
 - **事件没有到达。** 检查 Semaphore 服务器日志和接收器日志。失败后，Semaphore 会稍等片刻再重试。
 - **部分事件到达两次。** 这可能在重试和故障转移后发生。按 `event_id` 去除重复事件。
-- **HEC 返回 401 或 403。** 检查令牌及其允许写入的索引。令牌不会出现在 Semaphore 日志中。
+- **HEC 返回 400、401 或 403。** 检查令牌、其允许写入的索引，以及该令牌已关闭索引器确认。令牌不会出现在 Semaphore 日志中。
 
 ## 不记录的内容 {#not-recorded}
 

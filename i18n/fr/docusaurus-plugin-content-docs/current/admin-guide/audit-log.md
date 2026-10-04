@@ -222,20 +222,22 @@ Semaphore envoie jusqu'à 100 événements par requête. Le champ `event` de cha
 de l'événement d'audit, `time` est l'heure de l'événement et `host` est l'ID du nœud HA, ou l'ID d'instance
 sur un seul nœud.
 
+Redémarrez Semaphore, puis vérifiez que les événements arrivent comme décrit [plus haut](#verify-siem-delivery).
+
 ### Comment les événements sont livrés {#delivery}
 
 - Si le récepteur est indisponible, les événements attendent dans la base de données et sont envoyés à son
   retour. Les utilisateurs ne remarquent rien.
 - Après des erreurs réseau, des redémarrages ou une bascule HA, certains événements peuvent arriver en
   double. Utilisez `event_id` pour écarter les doublons et `seq` pour remettre les événements dans l'ordre.
-- Si une connexion se coupe sans erreur, l'événement envoyé à ce moment-là peut être perdu.
-- Dans une [installation HA](/admin-guide/ha), un seul nœud envoie les événements à la fois. Si Redis est
+- Avec Syslog, si une connexion se coupe sans erreur, l'événement envoyé à ce moment-là peut être perdu.
+- Dans une [installation HA](/admin-guide/ha), un seul nœud à la fois envoie les événements à chaque destination. Si Redis est
   indisponible, l'envoi est suspendu et les événements continuent d'être enregistrés.
 - Avec HEC, un événement n'est considéré comme envoyé qu'après une réponse du récepteur avec un statut 2xx.
   Toute autre réponse, y compris 4xx, entraîne une nouvelle tentative. Si le récepteur tombe en panne après
   avoir répondu, les événements qu'il n'avait pas encore stockés peuvent être perdus.
 
-Chaque événement est envoyé sous forme de message Syslog RFC 5424 dont le corps est le JSON de l'événement.
+Avec Syslog, chaque événement est envoyé sous forme de message Syslog RFC 5424 dont le corps est le JSON de l'événement.
 `HOSTNAME` est l'ID du nœud HA, ou l'ID d'instance sur un seul nœud, et `MSGID` est le code de l'événement.
 
 Les exemples ci-dessous sont minimaux et montrent seulement comment recevoir les événements. Ils acceptent la
@@ -313,6 +315,8 @@ Créez un jeton HEC dans Splunk (**Settings → Data inputs → HTTP Event Colle
 `security` et définissez `url` sur `https://<splunk>:8088/services/collector/event`. Pour retrouver les
 événements, recherchez `index=security sourcetype="semaphore:audit"`.
 
+Laissez **Enable indexer acknowledgement** désactivé pour ce jeton : Semaphore ne l'utilise pas.
+
 ### Résoudre les problèmes d'export {#troubleshoot-export}
 
 - **Semaphore ne démarre pas.** Vérifiez que `audit.syslog.id` et `audit.syslog.address` sont définis, ou
@@ -324,8 +328,7 @@ Créez un jeton HEC dans Splunk (**Settings → Data inputs → HTTP Event Colle
   un échec, Semaphore attend un peu avant de réessayer.
 - **Certains événements arrivent en double.** Cela peut arriver après des nouvelles tentatives et des
   bascules. Écartez les doublons grâce à `event_id`.
-- **HEC répond 401 ou 403.** Vérifiez le jeton et les index dans lesquels il peut écrire. Le jeton
-  n'apparaît jamais dans le journal de Semaphore.
+- **HEC répond 400, 401 ou 403.** Vérifiez le jeton, les index dans lesquels il peut écrire, et que l'accusé de réception de l'indexeur est désactivé pour lui. Le jeton n'apparaît jamais dans le journal de Semaphore.
 
 ## Ce qui n'est pas enregistré {#not-recorded}
 

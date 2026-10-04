@@ -311,7 +311,7 @@ Recording who did what in Semaphore, and sending the events to a SIEM. See [Audi
 | `audit.syslog.timeout` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_TIMEOUT` | string<br />Default: `10s` | Limits connecting to the receiver and sending events. |
 | `audit.syslog.ca_file` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_CA_FILE` | string | PEM file with extra CA certificates to trust. |
 | `audit.syslog.server_name` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_SERVER_NAME` | string | Name to check in the receiver certificate. |
-| `audit.splunk_hec.id` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_ID` | string | Keys the export cursor. A new ID starts from now. |
+| `audit.splunk_hec.id` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_ID` | string | Names the destination. Keep it when the URL changes. A new ID starts with new events. |
 | `audit.splunk_hec.url` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_URL` | string | Full HEC endpoint, for example https://hec.example:8088/services/collector/event. |
 | `audit.splunk_hec.token` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN` | string | HEC token sent as "Authorization: Splunk \<token>". Secret: keep it out of shell history and version control. |
 | `audit.splunk_hec.index` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_INDEX` | string | Target index. Empty uses the default index of the token. |

@@ -215,20 +215,22 @@ Semaphore sendet bis zu 100 Ereignisse pro Anfrage. Das Feld `event` jedes HEC-E
 Audit-Ereignis-JSON, `time` ist der Zeitpunkt des Ereignisses, und `host` ist die HA-Knoten-ID oder auf einem
 einzelnen Knoten die Instanz-ID.
 
+Starten Sie Semaphore neu und prüfen Sie dann, ob Ereignisse wie [oben](#verify-siem-delivery) beschrieben ankommen.
+
 ### Wie Ereignisse zugestellt werden {#delivery}
 
 - Ist der Empfänger nicht erreichbar, warten die Ereignisse in der Datenbank und werden gesendet, sobald er
   wieder da ist. Benutzer merken davon nichts.
 - Nach Netzwerkfehlern, Neustarts oder einem HA-Failover können manche Ereignisse doppelt ankommen. Nutzen
   Sie `event_id`, um Duplikate zu verwerfen, und `seq`, um Ereignisse zu ordnen.
-- Bricht eine Verbindung ohne Fehlermeldung ab, kann das in diesem Moment gesendete Ereignis verloren gehen.
-- In einer [HA-Installation](/admin-guide/ha) sendet jeweils ein Knoten Ereignisse. Ist Redis nicht
+- Bricht bei Syslog eine Verbindung ohne Fehlermeldung ab, kann das in diesem Moment gesendete Ereignis verloren gehen.
+- In einer [HA-Installation](/admin-guide/ha) sendet jeweils nur ein Knoten Ereignisse an jedes Ziel. Ist Redis nicht
   erreichbar, pausiert das Senden, und Ereignisse werden weiter aufgezeichnet.
 - Bei HEC gilt ein Ereignis erst als gesendet, wenn der Empfänger mit einem 2xx-Status antwortet. Jede andere
   Antwort, auch 4xx, wird wiederholt. Stürzt der Empfänger nach der Antwort ab, können Ereignisse verloren
   gehen, die er noch nicht gespeichert hatte.
 
-Jedes Ereignis wird als Syslog-Nachricht nach RFC 5424 mit dem Ereignis-JSON als Inhalt gesendet. `HOSTNAME`
+Bei Syslog wird jedes Ereignis als Syslog-Nachricht nach RFC 5424 mit dem Ereignis-JSON als Inhalt gesendet. `HOSTNAME`
 ist die HA-Knoten-ID oder auf einem einzelnen Knoten die Instanz-ID, und `MSGID` ist der Ereigniscode.
 
 Die folgenden Beispiele sind minimal und zeigen nur, wie die Ereignisse empfangen werden. Sie nehmen
@@ -307,6 +309,8 @@ Erstellen Sie in Splunk ein HEC-Token (**Settings → Data inputs → HTTP Event
 den Index `security` und setzen Sie `url` auf `https://<splunk>:8088/services/collector/event`. Um die
 Ereignisse zu finden, suchen Sie nach `index=security sourcetype="semaphore:audit"`.
 
+Lassen Sie **Enable indexer acknowledgement** für dieses Token ausgeschaltet: Semaphore verwendet es nicht.
+
 ### Fehlerbehebung beim Export {#troubleshoot-export}
 
 - **Semaphore startet nicht.** Prüfen Sie, dass `audit.syslog.id` und `audit.syslog.address` gesetzt sind,
@@ -317,8 +321,7 @@ Ereignisse zu finden, suchen Sie nach `index=security sourcetype="semaphore:audi
   Fehler wartet Semaphore kurz, bevor es es erneut versucht.
 - **Manche Ereignisse kommen doppelt an.** Das kann nach Wiederholungen und Failovers passieren. Verwerfen
   Sie Duplikate anhand von `event_id`.
-- **HEC antwortet mit 401 oder 403.** Prüfen Sie das Token und die Indizes, in die es schreiben darf. Das Token
-  erscheint nie im Semaphore-Log.
+- **HEC antwortet mit 400, 401 oder 403.** Prüfen Sie das Token, die Indizes, in die es schreiben darf, und dass die Indexer-Bestätigung dafür ausgeschaltet ist. Das Token erscheint nie im Semaphore-Log.
 
 ## Was nicht aufgezeichnet wird {#not-recorded}
 

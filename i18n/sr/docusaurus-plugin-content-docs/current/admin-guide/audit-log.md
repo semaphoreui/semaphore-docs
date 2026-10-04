@@ -210,20 +210,22 @@ proveravaju na isti način kao za Syslog, a važe standardne promenljive `HTTPS_
 Semaphore šalje do 100 događaja po zahtevu. Polje `event` svakog HEC događaja sadrži JSON događaja revizije,
 `time` je vreme događaja, a `host` je ID HA čvora, ili ID instance na jednom čvoru.
 
+Ponovo pokrenite Semaphore, a zatim proverite da događaji stižu kako je opisano [iznad](#verify-siem-delivery).
+
 ### Kako se događaji isporučuju {#delivery}
 
 - Ako prijemnik nije dostupan, događaji čekaju u bazi podataka i šalju se kada se vrati. Korisnici ništa ne
   primećuju.
 - Posle mrežnih grešaka, ponovnih pokretanja ili HA failover-a neki događaji mogu stići dvaput. Koristite
   `event_id` da odbacite duplikate i `seq` da poređate događaje.
-- Ako se veza prekine bez greške, događaj poslat u tom trenutku može da se izgubi.
-- U [HA instalaciji](/admin-guide/ha) događaje šalje jedan po jedan čvor. Ako Redis nije dostupan, slanje se
+- Preko Syslog-a, ako se veza prekine bez greške, događaj poslat u tom trenutku može da se izgubi.
+- U [HA instalaciji](/admin-guide/ha) događaje svakom odredištu šalje jedan po jedan čvor. Ako Redis nije dostupan, slanje se
   pauzira, a događaji se i dalje beleže.
 - Preko HEC-a se događaj smatra poslatim tek kada prijemnik odgovori statusom 2xx. Svaki drugi odgovor,
   uključujući 4xx, ponavlja se. Ako prijemnik padne nakon odgovora, događaji koje još nije sačuvao mogu da se
   izgube.
 
-Svaki događaj se šalje kao Syslog poruka po RFC 5424 sa JSON-om događaja kao telom. `HOSTNAME` je ID HA
+Preko Syslog-a se svaki događaj šalje kao Syslog poruka po RFC 5424 sa JSON-om događaja kao telom. `HOSTNAME` je ID HA
 čvora, ili ID instance na jednom čvoru, a `MSGID` je kôd događaja.
 
 Primeri u nastavku su minimalni i samo pokazuju kako se primaju događaji. Prihvataju vezu od bilo kog klijenta
@@ -301,6 +303,8 @@ Napravite HEC token u Splunk-u (**Settings → Data inputs → HTTP Event Collec
 `security` i podesite `url` na `https://<splunk>:8088/services/collector/event`. Da biste pronašli događaje,
 pretražite `index=security sourcetype="semaphore:audit"`.
 
+Ostavite **Enable indexer acknowledgement** isključeno za ovaj token: Semaphore ga ne koristi.
+
 ### Rešavanje problema sa izvozom {#troubleshoot-export}
 
 - **Semaphore se ne pokreće.** Proverite da su podešeni i `audit.syslog.id` i `audit.syslog.address`, ili
@@ -311,7 +315,7 @@ pretražite `index=security sourcetype="semaphore:audit"`.
   malo sačeka pre ponovnog pokušaja.
 - **Neki događaji stižu dvaput.** To se može desiti posle ponovljenih pokušaja i failover-a. Odbacite
   duplikate prema `event_id`.
-- **HEC odgovara sa 401 ili 403.** Proverite token i indekse u koje sme da piše. Token se nikada ne pojavljuje
+- **HEC odgovara sa 400, 401 ili 403.** Proverite token, indekse u koje sme da piše i da je potvrda indeksera za njega isključena. Token se nikada ne pojavljuje
   u dnevniku Semaphore-a.
 
 ## Šta se ne beleži {#not-recorded}

@@ -212,20 +212,22 @@ verificados do mesmo modo que no Syslog, e as variáveis padrão `HTTPS_PROXY` e
 O Semaphore envia até 100 eventos por requisição. O campo `event` de cada evento HEC contém o JSON do evento
 de auditoria, `time` é a hora do evento e `host` é o ID do nó HA, ou o ID da instância em um único nó.
 
+Reinicie o Semaphore e verifique se os eventos chegam como descrito [acima](#verify-siem-delivery).
+
 ### Como os eventos são entregues {#delivery}
 
 - Se o receptor estiver fora do ar, os eventos aguardam no banco de dados e são enviados quando ele voltar.
   Os usuários não percebem nada.
 - Após erros de rede, reinicializações ou um failover de HA, alguns eventos podem chegar duas vezes. Use
   `event_id` para descartar duplicatas e `seq` para ordenar os eventos.
-- Se uma conexão cair sem erro, o evento enviado naquele momento pode ser perdido.
-- Em uma [instalação HA](/admin-guide/ha), um nó por vez envia os eventos. Se o Redis estiver indisponível,
+- Por Syslog, se uma conexão cair sem erro, o evento enviado naquele momento pode ser perdido.
+- Em uma [instalação HA](/admin-guide/ha), um nó por vez envia os eventos a cada destino. Se o Redis estiver indisponível,
   o envio pausa e os eventos continuam sendo registrados.
 - Por HEC, um evento só conta como enviado depois que o receptor responde com um status 2xx. Qualquer outra
   resposta, incluindo 4xx, é tentada de novo. Se o receptor falhar depois de responder, eventos que ele ainda
   não tinha armazenado podem ser perdidos.
 
-Cada evento é enviado como uma mensagem Syslog RFC 5424 com o JSON do evento como corpo. `HOSTNAME` é o ID
+Por Syslog, cada evento é enviado como uma mensagem Syslog RFC 5424 com o JSON do evento como corpo. `HOSTNAME` é o ID
 do nó HA, ou o ID da instância em um único nó, e `MSGID` é o código do evento.
 
 Os exemplos abaixo são mínimos e mostram apenas como receber os eventos. Eles aceitam conexões de qualquer
@@ -303,6 +305,8 @@ Crie um token HEC no Splunk (**Settings → Data inputs → HTTP Event Collector
 para ele e defina `url` como `https://<splunk>:8088/services/collector/event`. Para encontrar os eventos,
 pesquise por `index=security sourcetype="semaphore:audit"`.
 
+Deixe **Enable indexer acknowledgement** desativado para este token: o Semaphore não o usa.
+
 ### Solucionar problemas de exportação {#troubleshoot-export}
 
 - **O Semaphore não inicia.** Verifique se `audit.syslog.id` e `audit.syslog.address` estão definidos, ou
@@ -313,7 +317,7 @@ pesquise por `index=security sourcetype="semaphore:audit"`.
   Semaphore espera um pouco antes de tentar de novo.
 - **Alguns eventos chegam duas vezes.** Isso pode acontecer após novas tentativas e failovers. Descarte
   duplicatas pelo `event_id`.
-- **O HEC responde 401 ou 403.** Verifique o token e os índices nos quais ele pode gravar. O token nunca
+- **O HEC responde 400, 401 ou 403.** Verifique o token, os índices nos quais ele pode gravar e se a confirmação do indexador está desativada para ele. O token nunca
   aparece no log do Semaphore.
 
 ## O que não é registrado {#not-recorded}

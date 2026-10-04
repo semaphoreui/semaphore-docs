@@ -174,15 +174,17 @@ SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE=/etc/semaphore/siem-ca.pem
 
 Semaphore는 요청 하나에 최대 100개의 이벤트를 보냅니다. 각 HEC 이벤트의 `event` 필드에는 감사 이벤트 JSON이 들어 있고, `time`은 이벤트 시각이며, `host`는 HA 노드 ID(단일 노드에서는 인스턴스 ID)입니다.
 
+Semaphore를 다시 시작한 다음, [위](#verify-siem-delivery)에서 설명한 대로 이벤트가 도착하는지 확인하세요.
+
 ### 이벤트 전달 방식 {#delivery}
 
 - 수신기가 중단되면 이벤트는 데이터베이스에서 기다렸다가 수신기가 복구되면 전송됩니다. 사용자는 아무것도 알아차리지 못합니다.
 - 네트워크 오류, 재시작, HA 장애 조치 후에는 일부 이벤트가 두 번 도착할 수 있습니다. `event_id`로 중복을 제거하고 `seq`로 순서를 맞추세요.
-- 오류 없이 연결이 끊기면 그 순간에 보낸 이벤트가 유실될 수 있습니다.
-- [HA 설치](/admin-guide/ha)에서는 한 번에 하나의 노드가 이벤트를 보냅니다. Redis를 사용할 수 없으면 전송이 일시 중지되고 이벤트 기록은 계속됩니다.
+- Syslog에서는 오류 없이 연결이 끊기면 그 순간에 보낸 이벤트가 유실될 수 있습니다.
+- [HA 설치](/admin-guide/ha)에서는 한 번에 하나의 노드가 각 대상에 이벤트를 보냅니다. Redis를 사용할 수 없으면 전송이 일시 중지되고 이벤트 기록은 계속됩니다.
 - HEC에서는 수신기가 2xx 상태로 응답한 뒤에야 이벤트가 전송된 것으로 처리됩니다. 4xx를 포함한 다른 모든 응답은 재시도됩니다. 수신기가 응답한 뒤에 중단되면, 아직 저장하지 못한 이벤트가 유실될 수 있습니다.
 
-각 이벤트는 이벤트 JSON을 본문으로 하는 RFC 5424 Syslog 메시지로 전송됩니다. `HOSTNAME`은 HA 노드 ID(단일 노드에서는 인스턴스 ID)이고 `MSGID`는 이벤트 코드입니다.
+Syslog에서는 각 이벤트가 이벤트 JSON을 본문으로 하는 RFC 5424 Syslog 메시지로 전송됩니다. `HOSTNAME`은 HA 노드 ID(단일 노드에서는 인스턴스 ID)이고 `MSGID`는 이벤트 코드입니다.
 
 아래 예시는 최소 구성이며 이벤트를 받는 방법만 보여 줍니다. 포트에 접근할 수 있는 모든 클라이언트의 연결을 받습니다. 운영 환경에서는 Semaphore 서버만 이벤트를 보낼 수 있도록 수신기를 보호하세요.
 
@@ -255,13 +257,15 @@ encoding.codec = "json"
 
 Splunk에서 HEC 토큰을 만들고(**Settings → Data inputs → HTTP Event Collector**), 토큰에 `security` 인덱스를 허용한 다음 `url`을 `https://<splunk>:8088/services/collector/event`로 설정합니다. 이벤트를 찾으려면 `index=security sourcetype="semaphore:audit"`을 검색하세요.
 
+이 토큰에서는 **Enable indexer acknowledgement**를 꺼 두세요. Semaphore는 이 기능을 사용하지 않습니다.
+
 ### 내보내기 문제 해결 {#troubleshoot-export}
 
 - **Semaphore가 시작되지 않습니다.** `audit.syslog.id`와 `audit.syslog.address`가 모두 설정되어 있는지(HEC는 `audit.splunk_hec.id`, `url`, `token`), CA 파일에 PEM 인증서가 들어 있는지 확인하세요.
 - **TLS 연결이 실패합니다.** 수신기의 인증서가 `server_name`과 일치하고 Semaphore가 신뢰하는 CA가 서명했는지 확인하세요.
 - **이벤트가 도착하지 않습니다.** Semaphore 서버 로그와 수신기 로그를 확인하세요. 실패 후 Semaphore는 잠시 기다렸다가 다시 시도합니다.
 - **일부 이벤트가 두 번 도착합니다.** 재시도와 장애 조치 후에 생길 수 있습니다. `event_id`로 중복을 제거하세요.
-- **HEC가 401 또는 403으로 응답합니다.** 토큰과 토큰이 쓸 수 있는 인덱스를 확인하세요. 토큰은 Semaphore 로그에 나타나지 않습니다.
+- **HEC가 400, 401 또는 403으로 응답합니다.** 토큰, 토큰이 쓸 수 있는 인덱스, 그리고 토큰에서 인덱서 확인 응답이 꺼져 있는지 확인하세요. 토큰은 Semaphore 로그에 나타나지 않습니다.
 
 ## 기록되지 않는 작업 {#not-recorded}
 
