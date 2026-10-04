@@ -165,7 +165,7 @@ HEC 엔드포인트 URL, HEC 토큰, 이 대상의 이름(예: `security-hec`)�
 ```bash
 SEMAPHORE_AUDIT_SPLUNK_HEC_ID=security-hec
 SEMAPHORE_AUDIT_SPLUNK_HEC_URL=https://splunk.example.com:8088/services/collector/event
-SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN=<HEC token>
+SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN='<HEC token>'
 SEMAPHORE_AUDIT_SPLUNK_HEC_INDEX=security
 SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE=/etc/semaphore/siem-ca.pem
 ```

@@ -165,7 +165,7 @@ Semaphore 每次启动时都会记录一个事件。重启后，在接收器中�
 ```bash
 SEMAPHORE_AUDIT_SPLUNK_HEC_ID=security-hec
 SEMAPHORE_AUDIT_SPLUNK_HEC_URL=https://splunk.example.com:8088/services/collector/event
-SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN=<HEC token>
+SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN='<HEC token>'
 SEMAPHORE_AUDIT_SPLUNK_HEC_INDEX=security
 SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE=/etc/semaphore/siem-ca.pem
 ```
