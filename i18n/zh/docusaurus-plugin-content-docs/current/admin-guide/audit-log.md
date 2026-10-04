@@ -1,6 +1,6 @@
 ---
 title: 审计日志
-description: 启用审计日志，查看谁在 Semaphore 中做了什么，并将审计事件从 Semaphore Pro 发送到 SIEM。
+description: 启用审计日志，查看谁在 Semaphore 中做了什么，并将审计事件从 Semaphore Pro 通过 Syslog 或 HEC 发送到 SIEM。
 ---
 
 # 审计日志
@@ -94,7 +94,7 @@ SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 
 ## 导出到 SIEM <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-Semaphore Pro 可以通过 TLS 将审计事件发送到 Syslog 接收器，例如 rsyslog 或 Vector。接收器可以存储这些事件，也可以转发给你的 SIEM。
+Semaphore Pro 可以通过 TLS 将审计事件发送到 Syslog 接收器，例如 rsyslog 或 Vector，也可以发送到任何支持 Splunk HTTP Event Collector (HEC) 协议的接收器，例如 Splunk、Vector、Fluent Bit、OpenTelemetry Collector 或 Cribl。你可以分别设置一个 Syslog 目标和一个 HEC 目标，也可以同时设置两个。
 
 你需要准备：
 
@@ -140,12 +140,47 @@ Semaphore 始终验证接收器的证书，并使用 TLS 1.2 或更高版本。`
 
 Semaphore 每次启动时都会记录一个事件。重启后，在接收器中查找它：`event_code` 为 `audit.lifecycle`，`action` 为 `start`，`metadata.destinations` 中包含你的目标 ID。
 
+### 通过 HEC 发送事件 {#hec}
+
+你需要 HEC 端点 URL、HEC 令牌、此目标的名称（例如 `security-hec`），以及接收器的 CA 证书（如果 Semaphore 主机尚未信任它）。
+
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu",
+    "splunk_hec": {
+      "id": "security-hec",
+      "url": "https://splunk.example.com:8088/services/collector/event",
+      "token": "<HEC token>",
+      "index": "security",
+      "ca_file": "/etc/semaphore/siem-ca.pem"
+    }
+  }
+}
+```
+
+或使用环境变量：
+
+```bash
+SEMAPHORE_AUDIT_SPLUNK_HEC_ID=security-hec
+SEMAPHORE_AUDIT_SPLUNK_HEC_URL=https://splunk.example.com:8088/services/collector/event
+SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN=<HEC token>
+SEMAPHORE_AUDIT_SPLUNK_HEC_INDEX=security
+SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE=/etc/semaphore/siem-ca.pem
+```
+
+`id`、`url` 和 `token` 为必填项，URL 必须以 `https://` 开头。请使用与 Syslog 不同的 `id`。`source` 和 `sourcetype` 默认为 `semaphore` 和 `semaphore:audit`。证书的检查方式与 Syslog 相同，并且标准的 `HTTPS_PROXY` 和 `NO_PROXY` 变量同样适用。
+
+Semaphore 每个请求最多发送 100 个事件。每个 HEC 事件的 `event` 字段包含审计事件 JSON，`time` 是事件时间，`host` 是 HA 节点 ID（单节点时为实例 ID）。
+
 ### 事件的投递方式 {#delivery}
 
 - 如果接收器不可用，事件会在数据库中等待，待接收器恢复后再发送。用户不会察觉到任何变化。
 - 在网络错误、重启或 HA 故障转移之后，部分事件可能会到达两次。使用 `event_id` 去除重复事件，使用 `seq` 排列事件顺序。
 - 如果连接在没有报错的情况下中断，当时发送的事件可能会丢失。
 - 在 [HA 安装](/admin-guide/ha) 中，同一时间只有一个节点发送事件。如果 Redis 不可用，发送会暂停，但事件仍会继续记录。
+- 通过 HEC 发送时，只有接收器返回 2xx 状态后，事件才算已发送。任何其他响应（包括 4xx）都会重试。如果接收器在响应后崩溃，尚未存储的事件可能会丢失。
 
 每个事件都以 RFC 5424 Syslog 消息发送，消息正文为事件 JSON。`HOSTNAME` 是 HA 节点 ID（单节点时为实例 ID），`MSGID` 是事件代码。
 
@@ -198,12 +233,35 @@ path = "/var/log/semaphore-audit.json"
 encoding.codec = "json"
 ```
 
+### Vector HEC 示例 {#vector-hec}
+
+```toml
+[sources.semaphore_audit_hec]
+type = "splunk_hec"
+address = "0.0.0.0:8088"
+valid_tokens = ["<HEC token>"]
+tls.enabled = true
+tls.crt_file = "/etc/vector/cert.pem"
+tls.key_file = "/etc/vector/key.pem"
+
+[sinks.semaphore_audit_file]
+type = "file"
+inputs = ["semaphore_audit_hec"]
+path = "/var/log/semaphore-audit.json"
+encoding.codec = "json"
+```
+
+### Splunk 示例 {#splunk}
+
+在 Splunk 中创建 HEC 令牌（**Settings → Data inputs → HTTP Event Collector**），允许它使用 `security` 索引，并将 `url` 设置为 `https://<splunk>:8088/services/collector/event`。要查找这些事件，请搜索 `index=security sourcetype="semaphore:audit"`。
+
 ### 导出故障排除 {#troubleshoot-export}
 
-- **Semaphore 无法启动。** 检查是否同时设置了 `audit.syslog.id` 和 `audit.syslog.address`，以及 CA 文件是否包含 PEM 证书。
+- **Semaphore 无法启动。** 检查是否同时设置了 `audit.syslog.id` 和 `audit.syslog.address`（使用 HEC 时为 `audit.splunk_hec.id`、`url` 和 `token`），以及 CA 文件是否包含 PEM 证书。
 - **TLS 连接失败。** 检查接收器证书是否与 `server_name` 匹配，并由 Semaphore 信任的 CA 签发。
 - **事件没有到达。** 检查 Semaphore 服务器日志和接收器日志。失败后，Semaphore 会稍等片刻再重试。
 - **部分事件到达两次。** 这可能在重试和故障转移后发生。按 `event_id` 去除重复事件。
+- **HEC 返回 401 或 403。** 检查令牌及其允许写入的索引。令牌不会出现在 Semaphore 日志中。
 
 ## 不记录的内容 {#not-recorded}
 

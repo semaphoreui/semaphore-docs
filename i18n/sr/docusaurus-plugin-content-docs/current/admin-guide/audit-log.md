@@ -1,6 +1,6 @@
 ---
 title: Dnevnik revizije
-description: Uključite dnevnik revizije da biste videli ko je šta uradio u Semaphore-u i šaljite događaje revizije iz Semaphore Pro u SIEM.
+description: Uključite dnevnik revizije da biste videli ko je šta uradio u Semaphore-u i šaljite događaje revizije iz Semaphore Pro u SIEM preko Syslog-a ili HEC-a.
 ---
 
 # Dnevnik revizije
@@ -118,7 +118,9 @@ grešku u dnevnik servera, a radnja se nastavlja kao i obično.
 ## Izvoz u SIEM <FeatureState feature="audit-siem-export" /> {#siem-export}
 
 Semaphore Pro može da šalje događaje revizije Syslog prijemniku preko TLS-a, na primer rsyslog-u ili
-Vector-u. Prijemnik može da ih čuva ili prosleđuje vašem SIEM-u.
+Vector-u, kao i svakom prijemniku protokola Splunk HTTP Event Collector (HEC), na primer Splunk-u, Vector-u,
+Fluent Bit-u, OpenTelemetry Collector-u ili Cribl-u. Možete podesiti jedno Syslog i jedno HEC odredište, ili
+oba odjednom.
 
 Biće vam potrebni:
 
@@ -170,6 +172,44 @@ Semaphore beleži događaj pri svakom pokretanju. Posle ponovnog pokretanja potr
 `event_code` je `audit.lifecycle`, `action` je `start`, a `metadata.destinations` sadrži ID vašeg
 odredišta.
 
+### Slanje događaja preko HEC-a {#hec}
+
+Potrebni su vam URL HEC krajnje tačke, HEC token, naziv ovog odredišta, na primer `security-hec`, i
+sertifikat CA prijemnika ako mu host Semaphore-a već ne veruje.
+
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu",
+    "splunk_hec": {
+      "id": "security-hec",
+      "url": "https://splunk.example.com:8088/services/collector/event",
+      "token": "<HEC token>",
+      "index": "security",
+      "ca_file": "/etc/semaphore/siem-ca.pem"
+    }
+  }
+}
+```
+
+Ili pomoću promenljivih okruženja:
+
+```bash
+SEMAPHORE_AUDIT_SPLUNK_HEC_ID=security-hec
+SEMAPHORE_AUDIT_SPLUNK_HEC_URL=https://splunk.example.com:8088/services/collector/event
+SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN=<HEC token>
+SEMAPHORE_AUDIT_SPLUNK_HEC_INDEX=security
+SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE=/etc/semaphore/siem-ca.pem
+```
+
+`id`, `url` i `token` su obavezni, a URL mora da počinje sa `https://`. Koristite drugačiji `id` nego za
+Syslog. `source` i `sourcetype` imaju podrazumevane vrednosti `semaphore` i `semaphore:audit`. Sertifikati se
+proveravaju na isti način kao za Syslog, a važe standardne promenljive `HTTPS_PROXY` i `NO_PROXY`.
+
+Semaphore šalje do 100 događaja po zahtevu. Polje `event` svakog HEC događaja sadrži JSON događaja revizije,
+`time` je vreme događaja, a `host` je ID HA čvora, ili ID instance na jednom čvoru.
+
 ### Kako se događaji isporučuju {#delivery}
 
 - Ako prijemnik nije dostupan, događaji čekaju u bazi podataka i šalju se kada se vrati. Korisnici ništa ne
@@ -179,6 +219,9 @@ odredišta.
 - Ako se veza prekine bez greške, događaj poslat u tom trenutku može da se izgubi.
 - U [HA instalaciji](/admin-guide/ha) događaje šalje jedan po jedan čvor. Ako Redis nije dostupan, slanje se
   pauzira, a događaji se i dalje beleže.
+- Preko HEC-a se događaj smatra poslatim tek kada prijemnik odgovori statusom 2xx. Svaki drugi odgovor,
+  uključujući 4xx, ponavlja se. Ako prijemnik padne nakon odgovora, događaji koje još nije sačuvao mogu da se
+  izgube.
 
 Svaki događaj se šalje kao Syslog poruka po RFC 5424 sa JSON-om događaja kao telom. `HOSTNAME` je ID HA
 čvora, ili ID instance na jednom čvoru, a `MSGID` je kôd događaja.
@@ -234,16 +277,42 @@ path = "/var/log/semaphore-audit.json"
 encoding.codec = "json"
 ```
 
+### Primer za Vector sa HEC-om {#vector-hec}
+
+```toml
+[sources.semaphore_audit_hec]
+type = "splunk_hec"
+address = "0.0.0.0:8088"
+valid_tokens = ["<HEC token>"]
+tls.enabled = true
+tls.crt_file = "/etc/vector/cert.pem"
+tls.key_file = "/etc/vector/key.pem"
+
+[sinks.semaphore_audit_file]
+type = "file"
+inputs = ["semaphore_audit_hec"]
+path = "/var/log/semaphore-audit.json"
+encoding.codec = "json"
+```
+
+### Primer za Splunk {#splunk}
+
+Napravite HEC token u Splunk-u (**Settings → Data inputs → HTTP Event Collector**), dozvolite mu indeks
+`security` i podesite `url` na `https://<splunk>:8088/services/collector/event`. Da biste pronašli događaje,
+pretražite `index=security sourcetype="semaphore:audit"`.
+
 ### Rešavanje problema sa izvozom {#troubleshoot-export}
 
-- **Semaphore se ne pokreće.** Proverite da su podešeni i `audit.syslog.id` i `audit.syslog.address` i da
-  CA datoteka sadrži PEM sertifikate.
+- **Semaphore se ne pokreće.** Proverite da su podešeni i `audit.syslog.id` i `audit.syslog.address`, ili
+  `audit.splunk_hec.id`, `url` i `token` za HEC, i da CA datoteka sadrži PEM sertifikate.
 - **TLS veza ne uspeva.** Proverite da sertifikat prijemnika odgovara `server_name` i da ga je potpisao CA
   kome Semaphore veruje.
 - **Događaji ne stižu.** Proverite dnevnik servera Semaphore-a i dnevnik prijemnika. Posle greške Semaphore
   malo sačeka pre ponovnog pokušaja.
 - **Neki događaji stižu dvaput.** To se može desiti posle ponovljenih pokušaja i failover-a. Odbacite
   duplikate prema `event_id`.
+- **HEC odgovara sa 401 ili 403.** Proverite token i indekse u koje sme da piše. Token se nikada ne pojavljuje
+  u dnevniku Semaphore-a.
 
 ## Šta se ne beleži {#not-recorded}
 

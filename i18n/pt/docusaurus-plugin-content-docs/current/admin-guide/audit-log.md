@@ -1,6 +1,6 @@
 ---
 title: Log de auditoria
-description: Ative o log de auditoria para ver quem fez o quê no Semaphore e envie eventos de auditoria do Semaphore Pro para um SIEM.
+description: Ative o log de auditoria para ver quem fez o quê no Semaphore e envie eventos de auditoria do Semaphore Pro para um SIEM por Syslog ou HEC.
 ---
 
 # Log de auditoria
@@ -121,8 +121,9 @@ erro no log do servidor e a ação continua normalmente.
 
 ## Exportar para um SIEM <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-O Semaphore Pro pode enviar eventos de auditoria para um receptor Syslog via TLS, como rsyslog ou Vector. O
-receptor pode armazená-los ou repassá-los para o seu SIEM.
+O Semaphore Pro pode enviar eventos de auditoria para um receptor Syslog via TLS, como rsyslog ou Vector, e
+para qualquer receptor do protocolo Splunk HTTP Event Collector (HEC), como Splunk, Vector, Fluent Bit, o
+OpenTelemetry Collector ou Cribl. Você pode configurar um destino Syslog e um HEC, ou ambos ao mesmo tempo.
 
 Você vai precisar de:
 
@@ -173,6 +174,44 @@ Semaphore não inicia.
 O Semaphore registra um evento sempre que inicia. Após reiniciar, procure-o no receptor: `event_code` é
 `audit.lifecycle`, `action` é `start` e `metadata.destinations` inclui o ID do seu destino.
 
+### Enviar eventos por HEC {#hec}
+
+Você vai precisar da URL do endpoint HEC, de um token HEC, de um nome para este destino, como `security-hec`,
+e do certificado da CA do receptor, caso o host do Semaphore ainda não confie nela.
+
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu",
+    "splunk_hec": {
+      "id": "security-hec",
+      "url": "https://splunk.example.com:8088/services/collector/event",
+      "token": "<HEC token>",
+      "index": "security",
+      "ca_file": "/etc/semaphore/siem-ca.pem"
+    }
+  }
+}
+```
+
+Ou usando variáveis de ambiente:
+
+```bash
+SEMAPHORE_AUDIT_SPLUNK_HEC_ID=security-hec
+SEMAPHORE_AUDIT_SPLUNK_HEC_URL=https://splunk.example.com:8088/services/collector/event
+SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN=<HEC token>
+SEMAPHORE_AUDIT_SPLUNK_HEC_INDEX=security
+SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE=/etc/semaphore/siem-ca.pem
+```
+
+`id`, `url` e `token` são obrigatórios, e a URL deve começar com `https://`. Use um `id` diferente do usado
+no Syslog. `source` e `sourcetype` têm como padrão `semaphore` e `semaphore:audit`. Os certificados são
+verificados do mesmo modo que no Syslog, e as variáveis padrão `HTTPS_PROXY` e `NO_PROXY` se aplicam.
+
+O Semaphore envia até 100 eventos por requisição. O campo `event` de cada evento HEC contém o JSON do evento
+de auditoria, `time` é a hora do evento e `host` é o ID do nó HA, ou o ID da instância em um único nó.
+
 ### Como os eventos são entregues {#delivery}
 
 - Se o receptor estiver fora do ar, os eventos aguardam no banco de dados e são enviados quando ele voltar.
@@ -182,6 +221,9 @@ O Semaphore registra um evento sempre que inicia. Após reiniciar, procure-o no 
 - Se uma conexão cair sem erro, o evento enviado naquele momento pode ser perdido.
 - Em uma [instalação HA](/admin-guide/ha), um nó por vez envia os eventos. Se o Redis estiver indisponível,
   o envio pausa e os eventos continuam sendo registrados.
+- Por HEC, um evento só conta como enviado depois que o receptor responde com um status 2xx. Qualquer outra
+  resposta, incluindo 4xx, é tentada de novo. Se o receptor falhar depois de responder, eventos que ele ainda
+  não tinha armazenado podem ser perdidos.
 
 Cada evento é enviado como uma mensagem Syslog RFC 5424 com o JSON do evento como corpo. `HOSTNAME` é o ID
 do nó HA, ou o ID da instância em um único nó, e `MSGID` é o código do evento.
@@ -237,16 +279,42 @@ path = "/var/log/semaphore-audit.json"
 encoding.codec = "json"
 ```
 
+### Exemplo de Vector com HEC {#vector-hec}
+
+```toml
+[sources.semaphore_audit_hec]
+type = "splunk_hec"
+address = "0.0.0.0:8088"
+valid_tokens = ["<HEC token>"]
+tls.enabled = true
+tls.crt_file = "/etc/vector/cert.pem"
+tls.key_file = "/etc/vector/key.pem"
+
+[sinks.semaphore_audit_file]
+type = "file"
+inputs = ["semaphore_audit_hec"]
+path = "/var/log/semaphore-audit.json"
+encoding.codec = "json"
+```
+
+### Exemplo de Splunk {#splunk}
+
+Crie um token HEC no Splunk (**Settings → Data inputs → HTTP Event Collector**), permita o índice `security`
+para ele e defina `url` como `https://<splunk>:8088/services/collector/event`. Para encontrar os eventos,
+pesquise por `index=security sourcetype="semaphore:audit"`.
+
 ### Solucionar problemas de exportação {#troubleshoot-export}
 
-- **O Semaphore não inicia.** Verifique se `audit.syslog.id` e `audit.syslog.address` estão definidos e se
-  o arquivo da CA contém certificados PEM.
+- **O Semaphore não inicia.** Verifique se `audit.syslog.id` e `audit.syslog.address` estão definidos, ou
+  `audit.splunk_hec.id`, `url` e `token` no caso do HEC, e se o arquivo da CA contém certificados PEM.
 - **A conexão TLS falha.** Verifique se o certificado do receptor corresponde a `server_name` e se foi
   assinado por uma CA em que o Semaphore confia.
 - **Os eventos não chegam.** Verifique o log do servidor do Semaphore e o log do receptor. Após uma falha, o
   Semaphore espera um pouco antes de tentar de novo.
 - **Alguns eventos chegam duas vezes.** Isso pode acontecer após novas tentativas e failovers. Descarte
   duplicatas pelo `event_id`.
+- **O HEC responde 401 ou 403.** Verifique o token e os índices nos quais ele pode gravar. O token nunca
+  aparece no log do Semaphore.
 
 ## O que não é registrado {#not-recorded}
 
