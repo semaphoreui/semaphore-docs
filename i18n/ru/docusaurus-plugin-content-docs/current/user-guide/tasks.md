@@ -93,6 +93,36 @@
 - **Страница шаблона → Tasks**: задачи одного шаблона.
 - **Task Templates**: разверните строку стрелкой слева, чтобы увидеть последние задачи шаблона, не покидая список.
 
+## Переменные окружения {#environment-variables}
+
+Каждая задача, независимо от приложения (Ansible, Terraform, Bash, PowerShell, Python), получает
+переменные, которые идентифицируют её в Semaphore:
+
+| Переменная | Значение |
+| --- | --- |
+| `SEMAPHORE_TASK_ID` | ID задачи |
+| `SEMAPHORE_PROJECT_ID` | ID проекта, к которому относится задача |
+| `SEMAPHORE_WORKFLOW_ID` | ID рабочего процесса, когда задача является узлом [запуска рабочего процесса](./workflows#environment-variables) |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID запуска рабочего процесса, к которому относится задача |
+| `SEMAPHORE_WORKFLOW_URL` | Ссылка на страницу запуска (нужен `web_host` в конфигурации сервера) |
+
+Переменные рабочего процесса отсутствуют, если задача не была запущена рабочим процессом.
+
+Другие переменные задаются в отдельных случаях:
+
+- `SEMAPHORE_TASK_TYPE`, `SEMAPHORE_TASK_INCOMING_VERSION`, `SEMAPHORE_TASK_TARGET_VERSION`
+  и семейство `SEMAPHORE_TASK_DETAILS_*` для [шаблонов сборки и развёртывания](./task-templates/build-deploy).
+- `SEMAPHORE_JWT`, когда шаблон [выдаёт JWT](./task-templates/jwt).
+
+Пример для Bash:
+
+```bash
+echo "Task $SEMAPHORE_TASK_ID of project $SEMAPHORE_PROJECT_ID"
+if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
+  echo "Started by workflow run: $SEMAPHORE_WORKFLOW_URL"
+fi
+```
+
 ## Хранение логов {#log-retention}
 
 По умолчанию задачи и логи хранятся бессрочно. Используйте `max_tasks_per_template`, чтобы оставлять только последние задачи каждого шаблона, см. [История](./projects/history#task-retention).

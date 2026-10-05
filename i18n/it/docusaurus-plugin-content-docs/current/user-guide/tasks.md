@@ -93,6 +93,36 @@ Nella scheda **Tasks** di un Task Template ogni riga dispone di un pulsante di *
 - **Pagina del Task Template → Tasks**: i Task di un singolo Task Template.
 - **Task Templates**: espandere una riga con la freccia a sinistra per vedere gli ultimi Task del Task Template senza uscire dall'elenco.
 
+## Variabili d'ambiente {#environment-variables}
+
+Ogni task, indipendentemente dall'app (Ansible, Terraform, Bash, PowerShell, Python), riceve
+variabili che lo identificano in Semaphore:
+
+| Variabile | Valore |
+| --- | --- |
+| `SEMAPHORE_TASK_ID` | ID del task |
+| `SEMAPHORE_PROJECT_ID` | ID del progetto a cui appartiene il task |
+| `SEMAPHORE_WORKFLOW_ID` | ID del workflow quando il task è un nodo di un'esecuzione di [workflow](./workflows#environment-variables) |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID dell'esecuzione del workflow a cui appartiene il task |
+| `SEMAPHORE_WORKFLOW_URL` | Link alla pagina dell'esecuzione (richiede `web_host` nella configurazione del server) |
+
+Le variabili del workflow sono assenti quando il task non è stato avviato da un workflow.
+
+Altre variabili sono impostate in casi specifici:
+
+- `SEMAPHORE_TASK_TYPE`, `SEMAPHORE_TASK_INCOMING_VERSION`, `SEMAPHORE_TASK_TARGET_VERSION`
+  e la famiglia `SEMAPHORE_TASK_DETAILS_*` per i [modelli build e deploy](./task-templates/build-deploy).
+- `SEMAPHORE_JWT` quando il modello [emette un JWT](./task-templates/jwt).
+
+Esempio per Bash:
+
+```bash
+echo "Task $SEMAPHORE_TASK_ID of project $SEMAPHORE_PROJECT_ID"
+if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
+  echo "Started by workflow run: $SEMAPHORE_WORKFLOW_URL"
+fi
+```
+
 ## Conservazione dei log {#log-retention}
 
 Per impostazione predefinita i Task e i log vengono conservati per sempre. Utilizzare `max_tasks_per_template` per conservare solo gli ultimi Task di ciascun Task Template, vedere [Cronologia](./projects/history#task-retention).

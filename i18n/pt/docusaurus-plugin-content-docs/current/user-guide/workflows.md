@@ -121,6 +121,20 @@ localmente no servidor do Semaphore. Planeje a passagem de artefatos de acordo o
 as etapas que produzem e consomem artefatos no mesmo caminho de execução.
 :::
 
+## Variáveis de ambiente {#environment-variables}
+
+Uma tarefa iniciada por um workflow recebe, além das
+[variáveis de cada tarefa](./tasks#environment-variables):
+
+| Variável | Valor |
+| --- | --- |
+| `SEMAPHORE_WORKFLOW_ID` | ID do workflow |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID da execução atual |
+| `SEMAPHORE_WORKFLOW_URL` | Link para a página da execução, por exemplo `https://semaphore.example.com/project/1/workflows/7/runs/42` (requer `web_host` na configuração do servidor) |
+
+São definidas para cada app, incluindo Ansible e Terraform, e chegam a tarefas executadas em runners remotos.
+
+
 ## Permissões {#permissions}
 
 - Gerenciar workflows (criar, editar, excluir) requer permissões de gerenciamento de recursos

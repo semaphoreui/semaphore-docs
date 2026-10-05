@@ -93,6 +93,35 @@ UI에서 작업을 클릭하면 작업 창이 열립니다. 헤더에는 템플�
 - **Template page → Tasks**: 하나의 템플릿에 속한 작업입니다.
 - **Task Templates**: 왼쪽의 화살표로 행을 펼치면 목록을 벗어나지 않고 해당 템플릿의 최근 작업을 확인할 수 있습니다.
 
+## 환경 변수 {#environment-variables}
+
+앱(Ansible, Terraform, Bash, PowerShell, Python)에 관계없이 모든 작업은
+Semaphore에서 작업을 식별하는 변수를 받습니다.
+
+| 변수 | 값 |
+| --- | --- |
+| `SEMAPHORE_TASK_ID` | 작업 ID |
+| `SEMAPHORE_PROJECT_ID` | 작업이 속한 프로젝트 ID |
+| `SEMAPHORE_WORKFLOW_ID` | 작업이 [워크플로](./workflows#environment-variables) 실행의 노드일 때의 워크플로 ID |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | 작업이 속한 워크플로 실행 ID |
+| `SEMAPHORE_WORKFLOW_URL` | 실행 페이지 링크(서버 설정의 `web_host` 필요) |
+
+워크플로로 시작되지 않은 작업에는 워크플로 변수가 없습니다.
+
+다른 변수는 특정 경우에만 설정됩니다.
+
+- [빌드 및 배포 템플릿](./task-templates/build-deploy)용 `SEMAPHORE_TASK_TYPE`, `SEMAPHORE_TASK_INCOMING_VERSION`, `SEMAPHORE_TASK_TARGET_VERSION` 및 `SEMAPHORE_TASK_DETAILS_*` 계열.
+- 템플릿이 [JWT를 발급](./task-templates/jwt)할 때의 `SEMAPHORE_JWT`.
+
+Bash 예시:
+
+```bash
+echo "Task $SEMAPHORE_TASK_ID of project $SEMAPHORE_PROJECT_ID"
+if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
+  echo "Started by workflow run: $SEMAPHORE_WORKFLOW_URL"
+fi
+```
+
 ## 로그 보관 {#log-retention}
 
 작업과 로그는 기본적으로 영구히 보관됩니다. 각 템플릿의 최근 작업만 보관하려면 `max_tasks_per_template`를 사용하십시오. [이력](./projects/history#task-retention)을 참고하십시오.

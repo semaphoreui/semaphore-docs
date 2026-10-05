@@ -128,6 +128,20 @@ sidebar_custom_props:
 выполнения.
 :::
 
+## Переменные окружения {#environment-variables}
+
+Задача, запущенная рабочим процессом, получает в дополнение к
+[переменным каждой задачи](./tasks#environment-variables):
+
+| Переменная | Значение |
+| --- | --- |
+| `SEMAPHORE_WORKFLOW_ID` | ID рабочего процесса |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID текущего запуска |
+| `SEMAPHORE_WORKFLOW_URL` | Ссылка на страницу запуска, например `https://semaphore.example.com/project/1/workflows/7/runs/42` (нужен `web_host` в конфигурации сервера) |
+
+Они задаются для любого приложения, включая Ansible и Terraform, и доступны задачам на удалённых runner'ах.
+
+
 ## Права доступа {#permissions}
 
 - Управление рабочими процессами (создание, изменение, удаление) требует прав на

@@ -123,6 +123,20 @@ skladu s tim ili držite korake koji proizvode i koriste artefakte na istoj puta
 izvršavanja.
 :::
 
+## Promenljive okruženja {#environment-variables}
+
+Zadatak pokrenut tokom rada dobija, pored
+[promenljivih svakog zadatka](./tasks#environment-variables):
+
+| Promenljiva | Vrednost |
+| --- | --- |
+| `SEMAPHORE_WORKFLOW_ID` | ID toka rada |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID trenutnog izvršavanja |
+| `SEMAPHORE_WORKFLOW_URL` | Link ka stranici izvršavanja, na primer `https://semaphore.example.com/project/1/workflows/7/runs/42` (potreban je `web_host` u konfiguraciji servera) |
+
+Postavljaju se za svaku aplikaciju, uključujući Ansible i Terraform, i stižu do zadataka na udaljenim runnerima.
+
+
 ## Dozvole {#permissions}
 
 - Upravljanje tokovima rada (kreiranje, uređivanje, brisanje) zahteva dozvole za upravljanje

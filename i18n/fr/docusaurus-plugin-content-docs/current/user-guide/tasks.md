@@ -93,6 +93,36 @@ Dans l'onglet **Tâches** d'un modèle, chaque ligne possède un bouton de **rel
 - **Page du modèle → Tâches** : les tâches d'un seul modèle.
 - **Modèles de tâches** : dépliez une ligne avec la flèche à gauche pour voir les dernières tâches du modèle sans quitter la liste.
 
+## Variables d'environnement {#environment-variables}
+
+Chaque tâche, quelle que soit son application (Ansible, Terraform, Bash, PowerShell, Python), reçoit
+des variables qui l'identifient dans Semaphore :
+
+| Variable | Valeur |
+| --- | --- |
+| `SEMAPHORE_TASK_ID` | ID de la tâche |
+| `SEMAPHORE_PROJECT_ID` | ID du projet auquel appartient la tâche |
+| `SEMAPHORE_WORKFLOW_ID` | ID du workflow lorsque la tâche est un nœud d'une exécution de [workflow](./workflows#environment-variables) |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID de l'exécution du workflow à laquelle appartient la tâche |
+| `SEMAPHORE_WORKFLOW_URL` | Lien vers la page d'exécution (nécessite `web_host` dans la configuration du serveur) |
+
+Les variables de workflow sont absentes lorsque la tâche n'a pas été démarrée par un workflow.
+
+D'autres variables sont définies dans des cas précis :
+
+- `SEMAPHORE_TASK_TYPE`, `SEMAPHORE_TASK_INCOMING_VERSION`, `SEMAPHORE_TASK_TARGET_VERSION`
+  et la famille `SEMAPHORE_TASK_DETAILS_*` pour les [modèles de build et de déploiement](./task-templates/build-deploy).
+- `SEMAPHORE_JWT` lorsque le modèle [émet un JWT](./task-templates/jwt).
+
+Exemple pour Bash :
+
+```bash
+echo "Task $SEMAPHORE_TASK_ID of project $SEMAPHORE_PROJECT_ID"
+if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
+  echo "Started by workflow run: $SEMAPHORE_WORKFLOW_URL"
+fi
+```
+
 ## Conservation des journaux {#log-retention}
 
 Les tâches et les journaux sont conservés indéfiniment par défaut. Utilisez `max_tasks_per_template` pour ne conserver que les dernières tâches de chaque modèle, voir [Historique](./projects/history#task-retention).

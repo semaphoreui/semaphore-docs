@@ -124,6 +124,21 @@ Artefakten entsprechend oder halten Sie artefakterzeugende und artefaktverbrauch
 auf demselben Ausführungspfad.
 :::
 
+## Umgebungsvariablen {#environment-variables}
+
+Ein von einem Workflow gestarteter Task erhält zusätzlich zu den
+[Variablen, die jeder Task erhält](./tasks#environment-variables):
+
+| Variable | Wert |
+| --- | --- |
+| `SEMAPHORE_WORKFLOW_ID` | ID des Workflows |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | ID des aktuellen Durchlaufs |
+| `SEMAPHORE_WORKFLOW_URL` | Link zur Durchlaufseite, zum Beispiel `https://semaphore.example.com/project/1/workflows/7/runs/42` (erfordert `web_host` in der Server-Konfiguration) |
+
+Sie werden für jede App gesetzt, einschließlich Ansible und Terraform, und erreichen Tasks,
+die auf Remote-Runnern laufen.
+
+
 ## Berechtigungen {#permissions}
 
 - Das Verwalten von Workflows (erstellen, bearbeiten, löschen) erfordert Berechtigungen zur

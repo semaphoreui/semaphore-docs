@@ -119,6 +119,19 @@ sidebar_custom_props:
 アーティファクトを生成するステップと利用するステップを同じ実行経路に配置してください。
 :::
 
+## 環境変数 {#environment-variables}
+
+ワークフローで開始されたタスクは、[すべてのタスクが受け取る変数](./tasks#environment-variables)に加えて、次を受け取ります。
+
+| 変数 | 値 |
+| --- | --- |
+| `SEMAPHORE_WORKFLOW_ID` | ワークフローの ID |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | 現在の実行の ID |
+| `SEMAPHORE_WORKFLOW_URL` | 実行ページへのリンク。例: `https://semaphore.example.com/project/1/workflows/7/runs/42`（サーバー設定の `web_host` が必要） |
+
+Ansible や Terraform を含むすべてのアプリで設定され、リモートランナーで実行されるタスクにも届きます。
+
+
 ## 権限 {#permissions}
 
 - ワークフローの管理（作成、編集、削除）には、プロジェクトのリソース管理の権限が必要です。

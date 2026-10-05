@@ -122,6 +122,19 @@ Delay 노드는 구성된 기간(최소 1초) 동안 워크플로우 실행을 �
 아티팩트를 생성하는 단계와 사용하는 단계를 동일한 실행 경로에 두십시오.
 :::
 
+## 환경 변수 {#environment-variables}
+
+워크플로로 시작된 작업은 [모든 작업이 받는 변수](./tasks#environment-variables) 외에 다음을 받습니다.
+
+| 변수 | 값 |
+| --- | --- |
+| `SEMAPHORE_WORKFLOW_ID` | 워크플로 ID |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | 현재 실행 ID |
+| `SEMAPHORE_WORKFLOW_URL` | 실행 페이지 링크. 예: `https://semaphore.example.com/project/1/workflows/7/runs/42` (서버 설정의 `web_host` 필요) |
+
+Ansible과 Terraform을 포함한 모든 앱에 설정되며, 원격 러너에서 실행되는 작업에도 전달됩니다.
+
+
 ## 권한 {#permissions}
 
 - 워크플로우 관리(생성, 편집, 삭제)에는 프로젝트 리소스 관리 권한이

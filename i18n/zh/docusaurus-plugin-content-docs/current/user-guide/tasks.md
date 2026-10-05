@@ -93,6 +93,35 @@
 - **模板页面 → Tasks**：单个模板的任务。
 - **任务模板**：点击左侧的箭头展开某一行，无需离开列表即可查看该模板的最新任务。
 
+## 环境变量 {#environment-variables}
+
+无论使用哪种应用（Ansible、Terraform、Bash、PowerShell、Python），每个任务都会收到
+用于在 Semaphore 中标识它的变量：
+
+| 变量 | 值 |
+| --- | --- |
+| `SEMAPHORE_TASK_ID` | 任务 ID |
+| `SEMAPHORE_PROJECT_ID` | 任务所属项目的 ID |
+| `SEMAPHORE_WORKFLOW_ID` | 当任务是 [工作流](./workflows#environment-variables) 运行中的节点时，工作流的 ID |
+| `SEMAPHORE_WORKFLOW_RUN_ID` | 任务所属工作流运行的 ID |
+| `SEMAPHORE_WORKFLOW_URL` | 指向运行页面的链接（需要在服务器配置中设置 `web_host`） |
+
+若任务不是由工作流启动，则不会设置工作流相关变量。
+
+其他变量仅在特定情况下设置：
+
+- 用于 [构建与部署模板](./task-templates/build-deploy) 的 `SEMAPHORE_TASK_TYPE`、`SEMAPHORE_TASK_INCOMING_VERSION`、`SEMAPHORE_TASK_TARGET_VERSION` 以及 `SEMAPHORE_TASK_DETAILS_*` 系列。
+- 当模板 [签发 JWT](./task-templates/jwt) 时的 `SEMAPHORE_JWT`。
+
+Bash 示例：
+
+```bash
+echo "Task $SEMAPHORE_TASK_ID of project $SEMAPHORE_PROJECT_ID"
+if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
+  echo "Started by workflow run: $SEMAPHORE_WORKFLOW_URL"
+fi
+```
+
 ## 日志保留 {#log-retention}
 
 默认情况下，任务和日志会永久保留。使用 `max_tasks_per_template` 可以只保留每个模板的最新任务，请参阅[历史记录](./projects/history#task-retention)。
