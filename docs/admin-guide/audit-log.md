@@ -127,6 +127,8 @@ Semaphore deletes older events once an hour and records an `audit.retention/dele
 events. If you export events to a SIEM, choose a period longer than the longest SIEM outage you want to survive:
 events that are older than the period are deleted even if they were not sent.
 
+Retention also runs when Semaphore starts. In an HA installation, use the same `retention_days` on every node.
+
 The audit log never gets in the way of your users. If an event cannot be saved, Semaphore writes an error
 to the server log and the action continues as usual.
 
@@ -327,6 +329,8 @@ When [metrics](/admin-guide/metrics) are enabled, Semaphore Pro reports for each
 | `semaphore_audit_export_oldest_pending_seconds` | Age of the oldest event that is not sent yet, 0 when everything is sent |
 | `semaphore_audit_export_pending_events` | Number of events waiting to be sent |
 | `semaphore_audit_export_errors_total` | Failed send attempts |
+
+`semaphore_audit_export_errors_total` is counted by the node that sent, so add it up across nodes, for example `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`.
 
 Each metric has a `destination` label with the destination `id`. To get an alert when the SIEM stops receiving
 events, watch the age of the oldest pending event:

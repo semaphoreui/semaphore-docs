@@ -133,6 +133,8 @@ Semaphore elimina los eventos antiguos una vez por hora y registra un evento `au
 de eventos eliminados. Si exporta eventos a un SIEM, elija un período más largo que la caída más larga del SIEM que
 quiera cubrir: los eventos más antiguos que el período se eliminan aunque no se hayan enviado.
 
+La retención también se ejecuta al iniciar Semaphore. En una instalación HA, use el mismo `retention_days` en todos los nodos.
+
 El registro de auditoría nunca estorba a sus usuarios. Si un evento no se puede guardar, Semaphore escribe
 un error en el registro del servidor y la acción continúa con normalidad.
 
@@ -336,6 +338,8 @@ Cuando las [métricas](/admin-guide/metrics) están habilitadas, Semaphore Pro i
 | `semaphore_audit_export_oldest_pending_seconds` | Antigüedad del evento más antiguo que aún no se ha enviado, 0 cuando todo está enviado |
 | `semaphore_audit_export_pending_events` | Número de eventos pendientes de envío |
 | `semaphore_audit_export_errors_total` | Intentos de envío fallidos |
+
+`semaphore_audit_export_errors_total` lo cuenta el nodo que envió, por lo que debe sumarse entre nodos, por ejemplo `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`.
 
 Cada métrica tiene una etiqueta `destination` con el `id` del destino. Para recibir una alerta cuando el SIEM deje
 de recibir eventos, vigile la antigüedad del evento pendiente más antiguo:

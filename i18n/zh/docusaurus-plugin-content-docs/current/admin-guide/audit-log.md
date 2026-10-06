@@ -102,6 +102,8 @@ SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 
 Semaphore 每小时删除一次较旧的事件，并记录一条 `audit.retention/delete` 事件，其中包含已删除事件的数量。如果你将事件导出到 SIEM，请选择比你希望扛过的最长 SIEM 中断时间更长的期限：早于该期限的事件即使尚未发送也会被删除。
 
+保留期清理也会在 Semaphore 启动时运行。在 HA 部署中，所有节点请使用相同的 `retention_days`。
+
 审计日志从不妨碍用户的操作。如果某个事件无法保存，Semaphore 会在服务器日志中写入错误，操作照常继续。
 
 ## 导出到 SIEM <FeatureState feature="audit-siem-export" /> {#siem-export}
@@ -280,6 +282,8 @@ encoding.codec = "json"
 | `semaphore_audit_export_oldest_pending_seconds` | 尚未发送的最早事件的存在时长，全部发送完毕时为 0 |
 | `semaphore_audit_export_pending_events` | 等待发送的事件数量 |
 | `semaphore_audit_export_errors_total` | 发送失败的次数 |
+
+`semaphore_audit_export_errors_total` 由发送的节点计数，因此请跨节点求和，例如 `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`。
 
 每个指标都带有 `destination` 标签，值为目标的 `id`。若要在 SIEM 停止接收事件时收到告警，请关注最早待发送事件的存在时长：
 

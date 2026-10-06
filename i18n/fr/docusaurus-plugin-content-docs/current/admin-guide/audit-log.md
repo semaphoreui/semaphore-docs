@@ -136,6 +136,8 @@ le nombre d'événements supprimés. Si vous exportez les événements vers un S
 la plus longue panne du SIEM que vous voulez absorber : les événements plus anciens que cette durée sont supprimés
 même s'ils n'ont pas été envoyés.
 
+La rétention s'exécute aussi au démarrage de Semaphore. Dans une installation HA, utilisez le même `retention_days` sur chaque nœud.
+
 Le journal d'audit ne gêne jamais vos utilisateurs. Si un événement ne peut pas être enregistré, Semaphore
 écrit une erreur dans le journal du serveur et l'action se poursuit normalement.
 
@@ -342,6 +344,8 @@ Lorsque les [métriques](/admin-guide/metrics) sont activées, Semaphore Pro fou
 | `semaphore_audit_export_oldest_pending_seconds` | Âge du plus ancien événement pas encore envoyé, 0 lorsque tout est envoyé |
 | `semaphore_audit_export_pending_events` | Nombre d'événements en attente d'envoi |
 | `semaphore_audit_export_errors_total` | Tentatives d'envoi échouées |
+
+`semaphore_audit_export_errors_total` est comptée par le nœud qui a envoyé, additionnez-la donc entre les nœuds, par exemple `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`.
 
 Chaque métrique a un label `destination` avec l'`id` de la destination. Pour être alerté lorsque le SIEM ne reçoit
 plus d'événements, surveillez l'âge du plus ancien événement en attente :

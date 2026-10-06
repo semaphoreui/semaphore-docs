@@ -102,6 +102,8 @@ SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 
 Semaphore は古いイベントを 1 時間に 1 回削除し、削除したイベントの数を含む `audit.retention/delete` イベントを記録します。イベントを SIEM にエクスポートしている場合は、耐えたい SIEM の最長の停止時間より長い期間を選んでください。期間より古いイベントは、未送信であっても削除されます。
 
+保持期間に基づく削除は、Semaphore の起動時にも実行されます。HA 構成では、すべてのノードで同じ `retention_days` を使用してください。
+
 監査ログがユーザーの操作を妨げることはありません。イベントを保存できなかった場合、Semaphore はサーバーログにエラーを書き込み、操作は通常どおり続行されます。
 
 ## SIEM にエクスポートする <FeatureState feature="audit-siem-export" /> {#siem-export}
@@ -280,6 +282,8 @@ Splunk で HEC トークンを作成し (**Settings → Data inputs → HTTP Eve
 | `semaphore_audit_export_oldest_pending_seconds` | まだ送信されていない最も古いイベントの経過時間。すべて送信済みの場合は 0 |
 | `semaphore_audit_export_pending_events` | 送信待ちのイベント数 |
 | `semaphore_audit_export_errors_total` | 送信の失敗回数 |
+
+`semaphore_audit_export_errors_total` は送信したノードがカウントするため、ノードをまたいで合計してください。例: `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`
 
 各メトリクスには、送信先の `id` を値とする `destination` ラベルがあります。SIEM がイベントを受信しなくなったときにアラートを受け取るには、送信待ちの最も古いイベントの経過時間を監視します。
 

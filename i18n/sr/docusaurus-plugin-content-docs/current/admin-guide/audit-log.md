@@ -127,6 +127,8 @@ Semaphore briše starije događaje jednom na sat i beleži događaj `audit.reten
 događaja. Ako izvozite događaje u SIEM, izaberite period duži od najdužeg prekida SIEM-a koji želite da preživite:
 događaji stariji od tog perioda se brišu čak i ako nisu poslati.
 
+Zadržavanje se izvršava i pri pokretanju Semaphore-a. U HA instalaciji koristite isti `retention_days` na svakom čvoru.
+
 Dnevnik revizije nikada ne smeta vašim korisnicima. Ako događaj ne može da se sačuva, Semaphore upisuje
 grešku u dnevnik servera, a radnja se nastavlja kao i obično.
 
@@ -329,6 +331,8 @@ Kada su [metrike](/admin-guide/metrics) uključene, Semaphore Pro za svako odred
 | `semaphore_audit_export_oldest_pending_seconds` | Starost najstarijeg događaja koji još nije poslat, 0 kada je sve poslato |
 | `semaphore_audit_export_pending_events` | Broj događaja koji čekaju slanje |
 | `semaphore_audit_export_errors_total` | Neuspeli pokušaji slanja |
+
+`semaphore_audit_export_errors_total` broji čvor koji je slao, zato je saberite preko čvorova, na primer `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`.
 
 Svaka metrika ima labelu `destination` sa `id` odredišta. Da biste dobili upozorenje kada SIEM prestane da prima
 događaje, pratite starost najstarijeg događaja na čekanju:

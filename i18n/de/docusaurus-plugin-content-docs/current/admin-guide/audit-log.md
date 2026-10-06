@@ -132,6 +132,8 @@ der gelöschten Ereignisse. Wenn Sie Ereignisse an ein SIEM exportieren, wählen
 längste SIEM-Ausfall, den Sie überbrücken möchten: Ereignisse, die älter als die Dauer sind, werden auch dann
 gelöscht, wenn sie nicht gesendet wurden.
 
+Die Aufbewahrung läuft auch beim Start von Semaphore. Verwenden Sie in einer HA-Installation auf jedem Knoten dasselbe `retention_days`.
+
 Das Audit-Protokoll steht Ihren Benutzern nie im Weg. Kann ein Ereignis nicht gespeichert werden, schreibt
 Semaphore einen Fehler in das Server-Log, und die Aktion läuft wie gewohnt weiter.
 
@@ -336,6 +338,8 @@ Wenn [Metriken](/admin-guide/metrics) aktiviert sind, meldet Semaphore Pro für 
 | `semaphore_audit_export_oldest_pending_seconds` | Alter des ältesten Ereignisses, das noch nicht gesendet wurde, 0, wenn alles gesendet ist |
 | `semaphore_audit_export_pending_events` | Anzahl der Ereignisse, die auf das Senden warten |
 | `semaphore_audit_export_errors_total` | Fehlgeschlagene Sendeversuche |
+
+`semaphore_audit_export_errors_total` wird von dem Knoten gezählt, der gesendet hat, summieren Sie sie daher über alle Knoten, zum Beispiel `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`.
 
 Jede Metrik hat ein Label `destination` mit der `id` des Ziels. Um benachrichtigt zu werden, wenn das SIEM keine
 Ereignisse mehr empfängt, beobachten Sie das Alter des ältesten ausstehenden Ereignisses:
