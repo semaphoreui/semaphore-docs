@@ -88,7 +88,19 @@ SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 
 ## 저장 {#storage}
 
-이벤트는 Semaphore 데이터베이스에 저장되므로 평소의 데이터베이스 백업에 포함됩니다. Semaphore는 감사 이벤트를 UI에 표시하지 않고 오래된 이벤트를 삭제하지도 않으므로 데이터베이스 크기를 지켜보세요.
+이벤트는 Semaphore 데이터베이스에 저장되므로 평소의 데이터베이스 백업에 포함됩니다.Semaphore는 감사 이벤트를 UI에 표시하지 않습니다. 기본적으로 모든 이벤트를 보관합니다. 오래된 이벤트를 삭제하려면 보존 기간을 일 단위로 설정하세요.
+
+```json
+{
+  "audit": {
+    "retention_days": 365
+  }
+}
+```
+
+환경 변수로 설정할 수도 있습니다: `SEMAPHORE_AUDIT_RETENTION_DAYS=365`.
+
+Semaphore는 오래된 이벤트를 한 시간에 한 번 삭제하고, 삭제한 이벤트 수가 담긴 `audit.retention/delete` 이벤트를 기록합니다. 이벤트를 SIEM으로 내보내는 경우, 견뎌야 할 가장 긴 SIEM 중단 시간보다 긴 기간을 선택하세요. 기간보다 오래된 이벤트는 전송되지 않았더라도 삭제됩니다.
 
 감사 로그는 사용자의 작업을 방해하지 않습니다. 이벤트를 저장하지 못하면 Semaphore는 서버 로그에 오류를 기록하고 작업은 평소처럼 계속됩니다.
 
@@ -258,6 +270,24 @@ encoding.codec = "json"
 Splunk에서 HEC 토큰을 만들고(**Settings → Data inputs → HTTP Event Collector**), 토큰에 `security` 인덱스를 허용한 다음 `url`을 `https://<splunk>:8088/services/collector/event`로 설정합니다. 이벤트를 찾으려면 `index=security sourcetype="semaphore:audit"`을 검색하세요.
 
 이 토큰에서는 **Enable indexer acknowledgement**를 꺼 두세요. Semaphore는 이 기능을 사용하지 않습니다.
+
+### 내보내기 모니터링 {#monitor-export}
+
+[메트릭](/admin-guide/metrics)이 활성화되어 있으면 Semaphore Pro는 대상별로 다음을 보고합니다.
+
+| 메트릭 | 의미 |
+| --- | --- |
+| `semaphore_audit_export_oldest_pending_seconds` | 아직 전송되지 않은 가장 오래된 이벤트의 경과 시간, 모두 전송되었으면 0 |
+| `semaphore_audit_export_pending_events` | 전송을 기다리는 이벤트 수 |
+| `semaphore_audit_export_errors_total` | 실패한 전송 시도 |
+
+각 메트릭에는 대상의 `id`를 값으로 하는 `destination` 레이블이 있습니다. SIEM이 이벤트를 받지 못할 때 알림을 받으려면 대기 중인 가장 오래된 이벤트의 경과 시간을 확인하세요.
+
+```yaml
+- alert: SemaphoreAuditExportStalled
+  expr: max by (destination) (semaphore_audit_export_oldest_pending_seconds) > 900
+  for: 5m
+```
 
 ### 내보내기 문제 해결 {#troubleshoot-export}
 

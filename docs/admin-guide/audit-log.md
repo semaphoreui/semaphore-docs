@@ -110,8 +110,22 @@ networks your users connect from: anyone there could set these headers to any ad
 
 ## Storage {#storage}
 
-Events are stored in the Semaphore database, so your regular database backups include them. Semaphore does
-not show audit events in the UI and does not delete old events, so keep an eye on the database size.
+Events are stored in the Semaphore database, so your regular database backups include them. Semaphore does not show audit events in the UI. By default it keeps every event. To delete old events, set a
+retention period in days:
+
+```json
+{
+  "audit": {
+    "retention_days": 365
+  }
+}
+```
+
+Or using an environment variable: `SEMAPHORE_AUDIT_RETENTION_DAYS=365`.
+
+Semaphore deletes older events once an hour and records an `audit.retention/delete` event with the number of deleted
+events. If you export events to a SIEM, choose a period longer than the longest SIEM outage you want to survive:
+events that are older than the period are deleted even if they were not sent.
 
 The audit log never gets in the way of your users. If an event cannot be saved, Semaphore writes an error
 to the server log and the action continues as usual.
@@ -303,6 +317,25 @@ for it, and set `url` to `https://<splunk>:8088/services/collector/event`. To fi
 `index=security sourcetype="semaphore:audit"`.
 
 Leave **Enable indexer acknowledgement** off for this token: Semaphore does not use it.
+
+### Monitor export {#monitor-export}
+
+When [metrics](/admin-guide/metrics) are enabled, Semaphore Pro reports for each destination:
+
+| Metric | Meaning |
+| --- | --- |
+| `semaphore_audit_export_oldest_pending_seconds` | Age of the oldest event that is not sent yet, 0 when everything is sent |
+| `semaphore_audit_export_pending_events` | Number of events waiting to be sent |
+| `semaphore_audit_export_errors_total` | Failed send attempts |
+
+Each metric has a `destination` label with the destination `id`. To get an alert when the SIEM stops receiving
+events, watch the age of the oldest pending event:
+
+```yaml
+- alert: SemaphoreAuditExportStalled
+  expr: max by (destination) (semaphore_audit_export_oldest_pending_seconds) > 900
+  for: 5m
+```
 
 ### Troubleshoot export {#troubleshoot-export}
 

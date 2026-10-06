@@ -113,8 +113,22 @@ cabeçalhos.
 ## Armazenamento {#storage}
 
 Os eventos são armazenados no banco de dados do Semaphore, então seus backups normais do banco os incluem.
-O Semaphore não mostra eventos de auditoria na interface e não apaga eventos antigos, por isso acompanhe o
-tamanho do banco de dados.
+O Semaphore não mostra eventos de auditoria na interface. Por padrão, ele mantém todos os eventos. Para apagar
+eventos antigos, defina um período de retenção em dias:
+
+```json
+{
+  "audit": {
+    "retention_days": 365
+  }
+}
+```
+
+Ou usando uma variável de ambiente: `SEMAPHORE_AUDIT_RETENTION_DAYS=365`.
+
+O Semaphore apaga os eventos mais antigos uma vez por hora e registra um evento `audit.retention/delete` com o número
+de eventos apagados. Se você exporta eventos para um SIEM, escolha um período maior que a mais longa indisponibilidade
+do SIEM que você quer suportar: eventos mais antigos que o período são apagados mesmo que não tenham sido enviados.
 
 O log de auditoria nunca atrapalha seus usuários. Se um evento não puder ser salvo, o Semaphore grava um
 erro no log do servidor e a ação continua normalmente.
@@ -306,6 +320,25 @@ para ele e defina `url` como `https://<splunk>:8088/services/collector/event`. P
 pesquise por `index=security sourcetype="semaphore:audit"`.
 
 Deixe **Enable indexer acknowledgement** desativado para este token: o Semaphore não o usa.
+
+### Monitorar a exportação {#monitor-export}
+
+Quando as [métricas](/admin-guide/metrics) estão habilitadas, o Semaphore Pro informa para cada destino:
+
+| Métrica | Significado |
+| --- | --- |
+| `semaphore_audit_export_oldest_pending_seconds` | Idade do evento mais antigo que ainda não foi enviado, 0 quando tudo foi enviado |
+| `semaphore_audit_export_pending_events` | Número de eventos aguardando envio |
+| `semaphore_audit_export_errors_total` | Tentativas de envio com falha |
+
+Cada métrica tem um rótulo `destination` com o `id` do destino. Para receber um alerta quando o SIEM parar de
+receber eventos, acompanhe a idade do evento pendente mais antigo:
+
+```yaml
+- alert: SemaphoreAuditExportStalled
+  expr: max by (destination) (semaphore_audit_export_oldest_pending_seconds) > 900
+  for: 5m
+```
 
 ### Solucionar problemas de exportação {#troubleshoot-export}
 

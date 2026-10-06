@@ -114,8 +114,22 @@ indirizzo.
 ## Archiviazione {#storage}
 
 Gli eventi sono salvati nel database di Semaphore, quindi i normali backup del database li includono.
-Semaphore non mostra gli eventi di audit nell'interfaccia e non elimina gli eventi vecchi, quindi tieni
-d'occhio la dimensione del database.
+Semaphore non mostra gli eventi di audit nell'interfaccia. Per impostazione predefinita conserva tutti gli eventi.
+Per eliminare i vecchi eventi, imposta un periodo di conservazione in giorni:
+
+```json
+{
+  "audit": {
+    "retention_days": 365
+  }
+}
+```
+
+Oppure con una variabile d'ambiente: `SEMAPHORE_AUDIT_RETENTION_DAYS=365`.
+
+Semaphore elimina gli eventi più vecchi una volta all'ora e registra un evento `audit.retention/delete` con il numero
+di eventi eliminati. Se esporti gli eventi in un SIEM, scegli un periodo più lungo della più lunga interruzione del
+SIEM che vuoi coprire: gli eventi più vecchi del periodo vengono eliminati anche se non sono stati inviati.
 
 Il log di audit non intralcia mai i tuoi utenti. Se un evento non può essere salvato, Semaphore scrive un
 errore nel log del server e l'azione prosegue normalmente.
@@ -311,6 +325,25 @@ per il token e imposta `url` su `https://<splunk>:8088/services/collector/event`
 cerca `index=security sourcetype="semaphore:audit"`.
 
 Lascia disattivata l'opzione **Enable indexer acknowledgement** per questo token: Semaphore non la usa.
+
+### Monitorare l'esportazione {#monitor-export}
+
+Quando le [metriche](/admin-guide/metrics) sono abilitate, Semaphore Pro riporta per ogni destinazione:
+
+| Metrica | Significato |
+| --- | --- |
+| `semaphore_audit_export_oldest_pending_seconds` | Età dell'evento più vecchio non ancora inviato, 0 quando tutto è stato inviato |
+| `semaphore_audit_export_pending_events` | Numero di eventi in attesa di invio |
+| `semaphore_audit_export_errors_total` | Tentativi di invio falliti |
+
+Ogni metrica ha un'etichetta `destination` con l'`id` della destinazione. Per ricevere un avviso quando il SIEM
+smette di ricevere eventi, controlla l'età dell'evento in sospeso più vecchio:
+
+```yaml
+- alert: SemaphoreAuditExportStalled
+  expr: max by (destination) (semaphore_audit_export_oldest_pending_seconds) > 900
+  for: 5m
+```
 
 ### Risolvere i problemi di esportazione {#troubleshoot-export}
 
