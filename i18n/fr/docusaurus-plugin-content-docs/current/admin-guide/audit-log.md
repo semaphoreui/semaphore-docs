@@ -10,7 +10,7 @@ modifié un utilisateur ou un rôle, qui a créé un jeton d'API. Chaque événe
 depuis quelle adresse et si l'action a réussi. Utilisez-le pour comprendre ce qui s'est passé sur votre
 installation, ou envoyez les événements vers votre SIEM pour les conserver avec le reste de vos journaux.
 
-Le journal d'audit est disponible dans toutes les éditions. L'envoi vers un SIEM nécessite Semaphore Pro.
+Le journal d'audit est disponible dans toutes les éditions. Le filtrage, l'export du journal sous forme de fichier et l'envoi vers un SIEM nécessitent Semaphore Pro.
 
 ## Ce qui est enregistré {#recorded-events}
 
@@ -30,6 +30,7 @@ Semaphore enregistre actuellement les connexions, l'activité des comptes, celle
   fins et historique de tâches supprimé ;
 - modifications des runners, enregistrements (y compris les jetons d'enregistrement refusés), désenregistrements et rapports de runners
   avec un statut invalide ;
+- exports du journal d'audit sous forme de fichier ;
 - chaque démarrage du serveur.
 
 Pour la liste complète, consultez
@@ -114,11 +115,41 @@ requêtes provenant de ces réseaux. Si les requêtes traversent plusieurs proxy
 N'ajoutez pas les réseaux depuis lesquels vos utilisateurs se connectent : n'importe qui dans ces réseaux
 pourrait mettre n'importe quelle adresse dans ces en-têtes.
 
+## Consulter le journal d'audit {#view}
+
+Les administrateurs ouvrent **Audit log** depuis le menu utilisateur. Les événements les plus récents viennent en premier, 50 par page.
+
+![Le journal d'audit, événements les plus récents en premier](/assets/audit-log-list.png)
+
+Cliquez sur un événement pour voir tous ses champs. Le bouton de copie copie l'événement dans le format que
+Semaphore envoie à un SIEM.
+
+![Un événement avec tous ses champs](/assets/audit-log-card.png)
+
+### Filtrer et exporter <FeatureState feature="audit-log-filters" /> {#filter-export}
+
+Filtrez par période, utilisateur, type d'événement, résultat, projet ou adresse IP. Dans un événement,
+l'utilisateur, l'adresse, l'objet et le projet sont des liens qui filtrent le journal selon eux.
+
+![Le journal filtré par l'adresse d'un événement](/assets/audit-log-filters.png)
+
+Quand une combinaison de filtres trouve peu d'événements, Semaphore cherche deux secondes à la fois et indique
+jusqu'où il est remonté. Cliquez sur **Search older** pour continuer.
+
+**Export** enregistre tous les événements qui correspondent aux filtres dans un fichier CSV ou JSON Lines. Chaque
+export est enregistré comme un événement `audit.log/export`.
+
+![Export en CSV ou JSON Lines](/assets/audit-log-export.png)
+
+Sans Semaphore Pro, les filtres et l'export sont visibles mais désactivés.
+
+![Le journal d'audit dans l'édition Community](/assets/audit-log-community.png)
+
 ## Stockage {#storage}
 
 Les événements sont stockés dans la base de données de Semaphore, vos sauvegardes habituelles les incluent
 donc.
-Semaphore n'affiche pas les événements d'audit dans l'interface. Par défaut, il conserve tous les événements. Pour
+Par défaut, Semaphore conserve tous les événements. Pour
 supprimer les anciens événements, définissez une durée de conservation en jours :
 
 ```json

@@ -10,7 +10,7 @@ napravio API token. Svaki događaj pokazuje ko je to uradio, kada, sa koje adres
 Koristite ga da saznate šta se desilo u vašoj instalaciji ili šaljite događaje u svoj SIEM da budu uz
 ostale dnevnike.
 
-Dnevnik revizije je dostupan u svim izdanjima. Za slanje događaja u SIEM potreban je Semaphore Pro.
+Dnevnik revizije je dostupan u svim izdanjima. Za filtriranje, izvoz u datoteku i slanje događaja u SIEM potreban je Semaphore Pro.
 
 ## Šta se beleži {#recorded-events}
 
@@ -27,6 +27,7 @@ Semaphore trenutno beleži prijave, aktivnost naloga, projekata i zadataka:
   završetke i obrisanu istoriju zadataka;
 - promene runner-a, registracije (uključujući odbijene registracione tokene), odjave i izveštaje runner-a
   sa nevažećim statusom;
+- izvoz dnevnika revizije u datoteku;
 - svako pokretanje servera.
 
 Kompletna lista je na stranici
@@ -107,10 +108,40 @@ Semaphore tada uzima adresu klijenta iz `X-Forwarded-For` ili `X-Real-IP`, ali s
 iz tih mreža. Ako zahtevi prolaze kroz više proksija, navedite ih sve. Ne navodite mreže iz kojih se
 povezuju vaši korisnici: bilo ko u njima mogao bi da upiše bilo koju adresu u ta zaglavlja.
 
+## Pregled dnevnika revizije {#view}
+
+Administratori otvaraju **Audit log** iz korisničkog menija. Najnoviji događaji su prvi, po 50 na stranici.
+
+![Dnevnik revizije, najnoviji događaji prvi](/assets/audit-log-list.png)
+
+Kliknite na događaj da vidite sva njegova polja. Dugme za kopiranje kopira događaj u formatu u kojem ga
+Semaphore šalje u SIEM.
+
+![Događaj sa svim svojim poljima](/assets/audit-log-card.png)
+
+### Filtriranje i izvoz <FeatureState feature="audit-log-filters" /> {#filter-export}
+
+Filtrirajte po periodu, korisniku, vrsti događaja, rezultatu, projektu ili IP adresi. U događaju su korisnik,
+adresa, objekat i projekat veze koje filtriraju dnevnik po njima.
+
+![Dnevnik filtriran po adresi događaja](/assets/audit-log-filters.png)
+
+Kada kombinacija filtera nađe malo događaja, Semaphore pretražuje po dve sekunde i prikazuje dokle je stigao
+unazad. Kliknite na **Search older** da nastavite.
+
+**Export** čuva svaki događaj koji odgovara filterima kao CSV ili JSON Lines datoteku. Svaki izvoz se beleži kao
+događaj `audit.log/export`.
+
+![Izvoz kao CSV ili JSON Lines](/assets/audit-log-export.png)
+
+Bez Semaphore Pro filteri i izvoz su vidljivi, ali isključeni.
+
+![Dnevnik revizije u izdanju Community](/assets/audit-log-community.png)
+
 ## Čuvanje {#storage}
 
 Događaji se čuvaju u bazi podataka Semaphore-a, pa ih vaše uobičajene rezervne kopije baze sadrže.
-Semaphore ne prikazuje događaje revizije u interfejsu. Podrazumevano čuva sve događaje. Da biste brisali stare
+Podrazumevano Semaphore čuva sve događaje. Da biste brisali stare
 događaje, podesite period čuvanja u danima:
 
 ```json

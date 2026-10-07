@@ -10,7 +10,7 @@ função, quem criou um token de API. Cada evento mostra quem fez, quando, de qu
 Use-o para descobrir o que aconteceu na sua instalação ou envie os eventos para o seu SIEM para mantê-los
 junto com o restante dos seus logs.
 
-O log de auditoria está disponível em todas as edições. Enviar eventos para um SIEM requer o Semaphore Pro.
+O log de auditoria está disponível em todas as edições. Filtrar, exportar como arquivo e enviar eventos para um SIEM requerem o Semaphore Pro.
 
 ## O que é registrado {#recorded-events}
 
@@ -27,6 +27,7 @@ Atualmente o Semaphore registra entradas e atividades de contas, projetos e tare
   conclusões e histórico de tarefas excluído;
 - alterações em runners, registros (incluindo tokens de registro recusados), cancelamentos de registro e relatórios de runners
   com um status inválido;
+- exportações do log de auditoria como arquivo;
 - cada início do servidor.
 
 Para a lista completa, consulte
@@ -110,10 +111,40 @@ solicitações vindas dessas redes. Se as solicitações passam por vários prox
 redes de onde seus usuários se conectam: qualquer pessoa nelas poderia colocar qualquer endereço nesses
 cabeçalhos.
 
+## Ver o log de auditoria {#view}
+
+Os administradores abrem **Audit log** no menu do usuário. Os eventos mais recentes aparecem primeiro, 50 por página.
+
+![O log de auditoria, com os eventos mais recentes primeiro](/assets/audit-log-list.png)
+
+Clique em um evento para ver todos os seus campos. O botão de copiar copia o evento no formato que o Semaphore
+envia a um SIEM.
+
+![Um evento com todos os seus campos](/assets/audit-log-card.png)
+
+### Filtrar e exportar <FeatureState feature="audit-log-filters" /> {#filter-export}
+
+Filtre por período, usuário, tipo de evento, resultado, projeto ou endereço IP. Em um evento, o usuário, o
+endereço, o objeto e o projeto são links que filtram o log por eles.
+
+![O log filtrado pelo endereço de um evento](/assets/audit-log-filters.png)
+
+Quando uma combinação de filtros encontra poucos eventos, o Semaphore busca por dois segundos de cada vez e mostra
+até onde chegou no passado. Clique em **Search older** para continuar.
+
+**Export** salva todos os eventos que correspondem aos filtros como um arquivo CSV ou JSON Lines. Cada exportação
+é registrada como um evento `audit.log/export`.
+
+![Exportação como CSV ou JSON Lines](/assets/audit-log-export.png)
+
+Sem o Semaphore Pro, os filtros e a exportação ficam visíveis, mas desativados.
+
+![O log de auditoria na edição Community](/assets/audit-log-community.png)
+
 ## Armazenamento {#storage}
 
 Os eventos são armazenados no banco de dados do Semaphore, então seus backups normais do banco os incluem.
-O Semaphore não mostra eventos de auditoria na interface. Por padrão, ele mantém todos os eventos. Para apagar
+Por padrão, o Semaphore mantém todos os eventos. Para apagar
 eventos antigos, defina um período de retenção em dias:
 
 ```json

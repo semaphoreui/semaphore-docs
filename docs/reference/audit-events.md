@@ -173,6 +173,7 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `system.license` | `activate` | `change` | success, failure | `activation_failed` |  | Pro |
 | `audit.lifecycle` | `start` | `start` | success |  | `destinations` | Community |
 | `audit.retention` | `delete` | `deletion` | success |  | `deleted`, `last_seq`, `retention_days` | Community |
+| `audit.log` | `export` | `access` | success |  | `format`, `filters`, `events`, `complete` | Pro |
 
 ## Related pages {#related-pages}
 

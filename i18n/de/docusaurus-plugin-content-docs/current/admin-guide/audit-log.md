@@ -10,7 +10,7 @@ oder eine Rolle geändert hat, wer ein API-Token erstellt hat. Jedes Ereignis ze
 welcher Adresse und ob es funktioniert hat. Damit finden Sie heraus, was in Ihrer Installation passiert ist,
 oder Sie senden die Ereignisse an Ihr SIEM, damit sie neben Ihren übrigen Logs liegen.
 
-Das Audit-Protokoll ist in jeder Edition verfügbar. Für das Senden an ein SIEM wird Semaphore Pro benötigt.
+Das Audit-Protokoll ist in jeder Edition verfügbar. Für das Filtern, den Export als Datei und das Senden an ein SIEM wird Semaphore Pro benötigt.
 
 ## Was aufgezeichnet wird {#recorded-events}
 
@@ -27,6 +27,7 @@ Derzeit zeichnet Semaphore Anmeldungen, Konto-, Projekt- und Task-Aktivitäten a
   Abschlüsse und gelöschter Task-Verlauf;
 - Änderungen an Runnern, Registrierungen (auch abgelehnte Registrierungs-Tokens), Abmeldungen von Runnern und Runner-Meldungen
   mit ungültigem Status;
+- Exporte des Audit-Protokolls als Datei;
 - jeden Serverstart.
 
 Die vollständige Liste finden Sie unter
@@ -110,11 +111,41 @@ Semaphore übernimmt die Client-Adresse dann aus `X-Forwarded-For` oder `X-Real-
 aus diesen Netzen. Laufen Anfragen über mehrere Proxys, tragen Sie alle ein. Tragen Sie keine Netze ein,
 aus denen sich Ihre Benutzer verbinden: Jeder dort könnte diese Header auf eine beliebige Adresse setzen.
 
+## Audit-Protokoll ansehen {#view}
+
+Administratoren öffnen das **Audit log** im Benutzermenü. Die neuesten Ereignisse stehen oben, 50 pro Seite.
+
+![Das Audit-Protokoll, neueste Ereignisse zuerst](/assets/audit-log-list.png)
+
+Klicken Sie auf ein Ereignis, um alle seine Felder zu sehen. Die Schaltfläche zum Kopieren kopiert das Ereignis in
+dem Format, in dem Semaphore es an ein SIEM sendet.
+
+![Ein Ereignis mit allen seinen Feldern](/assets/audit-log-card.png)
+
+### Filtern und exportieren <FeatureState feature="audit-log-filters" /> {#filter-export}
+
+Filtern Sie nach Zeitraum, Benutzer, Ereignisart, Ergebnis, Projekt oder IP-Adresse. In einem Ereignis sind der
+Benutzer, die Adresse, das Objekt und das Projekt Links, die das Protokoll danach filtern.
+
+![Das nach der Adresse eines Ereignisses gefilterte Protokoll](/assets/audit-log-filters.png)
+
+Findet eine Filterkombination nur wenige Ereignisse, sucht Semaphore jeweils zwei Sekunden lang und zeigt an, wie
+weit zurück es gekommen ist. Klicken Sie auf **Search older**, um weiterzusuchen.
+
+**Export** speichert jedes Ereignis, das zu den Filtern passt, als CSV- oder JSON-Lines-Datei. Jeder Export wird
+als Ereignis `audit.log/export` aufgezeichnet.
+
+![Export als CSV oder JSON Lines](/assets/audit-log-export.png)
+
+Ohne Semaphore Pro sind die Filter und der Export sichtbar, aber ausgeschaltet.
+
+![Das Audit-Protokoll in der Community Edition](/assets/audit-log-community.png)
+
 ## Speicherung {#storage}
 
 Ereignisse werden in der Semaphore-Datenbank gespeichert, sodass Ihre üblichen Datenbank-Backups sie
 enthalten.
-Semaphore zeigt Audit-Ereignisse nicht in der Oberfläche an. Standardmäßig behält es jedes Ereignis. Um alte
+Semaphore behält standardmäßig jedes Ereignis. Um alte
 Ereignisse zu löschen, legen Sie eine Aufbewahrungsdauer in Tagen fest:
 
 ```json
