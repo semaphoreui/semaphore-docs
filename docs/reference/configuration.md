@@ -311,6 +311,15 @@ Recording who did what in Semaphore, and sending the events to a SIEM. See [Audi
 | `audit.syslog.timeout` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_TIMEOUT` | string<br />Default: `10s` | Limits connecting to the receiver and sending events. |
 | `audit.syslog.ca_file` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_CA_FILE` | string | PEM file with extra CA certificates to trust. |
 | `audit.syslog.server_name` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_SERVER_NAME` | string | Name to check in the receiver certificate. |
+| `audit.splunk_hec.id` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_ID` | string | Names the destination. Keep it when the URL changes. A new ID starts with new events. |
+| `audit.splunk_hec.url` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_URL` | string | Full HEC endpoint, for example https://hec.example:8088/services/collector/event. |
+| `audit.splunk_hec.token` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN` | string | HEC token sent as "Authorization: Splunk \<token>". Secret: keep it out of shell history and version control. |
+| `audit.splunk_hec.index` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_INDEX` | string | Target index. Empty uses the default index of the token. |
+| `audit.splunk_hec.source` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_SOURCE` | string<br />Default: `semaphore` | HEC source of every event. |
+| `audit.splunk_hec.sourcetype` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_SOURCETYPE` | string<br />Default: `semaphore:audit` | HEC sourcetype of every event. |
+| `audit.splunk_hec.timeout` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_TIMEOUT` | string<br />Default: `10s` | Bounds one HTTP request with one batch of events. |
+| `audit.splunk_hec.ca_file` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE` | string | PEM bundle added to the system roots. |
+| `audit.splunk_hec.server_name` <Pro /><br />`SEMAPHORE_AUDIT_SPLUNK_HEC_SERVER_NAME` | string | Overrides the name checked in the receiver certificate. |
 
 ## Debugging {#debugging}
 

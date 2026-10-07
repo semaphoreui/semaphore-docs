@@ -1,6 +1,6 @@
 ---
 title: 監査ログ
-description: 監査ログを有効にして Semaphore で誰が何をしたかを確認し、Semaphore Pro から監査イベントを SIEM に送信します。
+description: 監査ログを有効にして Semaphore で誰が何をしたかを確認し、Semaphore Pro から監査イベントを Syslog または HEC で SIEM に送信します。
 ---
 
 # 監査ログ
@@ -94,7 +94,7 @@ SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 
 ## SIEM にエクスポートする <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-Semaphore Pro は、rsyslog や Vector などの Syslog レシーバーに TLS で監査イベントを送信できます。レシーバーはイベントを保存したり、SIEM に転送したりできます。
+Semaphore Pro は、rsyslog や Vector などの Syslog レシーバーに TLS で監査イベントを送信できるほか、Splunk、Vector、Fluent Bit、OpenTelemetry Collector、Cribl など、Splunk HTTP Event Collector (HEC) プロトコルに対応する任意のレシーバーにも送信できます。Syslog と HEC の送信先をそれぞれ 1 つずつ、または両方を同時に設定できます。
 
 必要なもの：
 
@@ -140,14 +140,51 @@ Semaphore を再起動します。設定が無効な場合や CA ファイルを
 
 Semaphore は起動のたびにイベントを記録します。再起動後、レシーバーでそのイベントを探してください。`event_code` が `audit.lifecycle`、`action` が `start` で、`metadata.destinations` に送信先の ID が含まれています。
 
+### HEC でイベントを送信する {#hec}
+
+HEC エンドポイントの URL、HEC トークン、この送信先の名前（例: `security-hec`）、そして Semaphore ホストがまだ信頼していない場合はレシーバーの CA 証明書が必要です。
+
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu",
+    "splunk_hec": {
+      "id": "security-hec",
+      "url": "https://splunk.example.com:8088/services/collector/event",
+      "token": "<HEC token>",
+      "index": "security",
+      "ca_file": "/etc/semaphore/siem-ca.pem"
+    }
+  }
+}
+```
+
+環境変数を使う場合:
+
+```bash
+SEMAPHORE_AUDIT_SPLUNK_HEC_ID=security-hec
+SEMAPHORE_AUDIT_SPLUNK_HEC_URL=https://splunk.example.com:8088/services/collector/event
+SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN='<HEC token>'
+SEMAPHORE_AUDIT_SPLUNK_HEC_INDEX=security
+SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE=/etc/semaphore/siem-ca.pem
+```
+
+`id`、`url`、`token` は必須で、URL は `https://` で始まる必要があります。`id` は Syslog とは別の値にしてください。`source` と `sourcetype` の既定値は `semaphore` と `semaphore:audit` です。証明書は Syslog と同じ方法で検証され、標準の `HTTPS_PROXY` と `NO_PROXY` 環境変数が適用されます。
+
+Semaphore は 1 回のリクエストで最大 100 件のイベントを送信します。各 HEC イベントの `event` フィールドには監査イベントの JSON が入り、`time` はイベントの時刻、`host` は HA ノード ID（単一ノードではインスタンス ID）です。
+
+Semaphore を再起動し、[上記](#verify-siem-delivery)のとおりイベントが届くことを確認してください。
+
 ### イベントの配信方法 {#delivery}
 
 - レシーバーが停止している間、イベントはデータベースで待機し、復旧すると送信されます。ユーザーは何も気付きません。
 - ネットワークエラー、再起動、HA のフェイルオーバーの後は、一部のイベントが二重に届くことがあります。`event_id` で重複を取り除き、`seq` で順序を並べてください。
-- エラーなしで接続が切れた場合、その時点で送信したイベントが失われることがあります。
-- [HA 構成](/admin-guide/ha) では、一度に 1 つのノードがイベントを送信します。Redis が利用できない間は送信が一時停止しますが、イベントの記録は続きます。
+- Syslog では、エラーなしで接続が切れた場合、その時点で送信したイベントが失われることがあります。
+- [HA 構成](/admin-guide/ha) では、一度に 1 つのノードが、各送信先にイベントを送信します。Redis が利用できない間は送信が一時停止しますが、イベントの記録は続きます。
+- HEC では、レシーバーが 2xx ステータスで応答して初めて、イベントが送信済みとして扱われます。4xx を含むそれ以外の応答では再試行します。レシーバーが応答後にクラッシュした場合、まだ保存されていなかったイベントが失われることがあります。
 
-各イベントは、イベントの JSON を本文とする RFC 5424 の Syslog メッセージとして送信されます。`HOSTNAME` は HA ノード ID（単一ノードではインスタンス ID）、`MSGID` はイベントコードです。
+Syslog では、各イベントは、イベントの JSON を本文とする RFC 5424 の Syslog メッセージとして送信されます。`HOSTNAME` は HA ノード ID（単一ノードではインスタンス ID）、`MSGID` はイベントコードです。
 
 以下の例は最小限の構成で、イベントの受信方法を示すだけです。ポートに到達できるすべてのクライアントからの接続を受け付けます。本番環境では、Semaphore サーバーだけがイベントを送信できるようにレシーバーを保護してください。
 
@@ -198,12 +235,37 @@ path = "/var/log/semaphore-audit.json"
 encoding.codec = "json"
 ```
 
+### Vector HEC の例 {#vector-hec}
+
+```toml
+[sources.semaphore_audit_hec]
+type = "splunk_hec"
+address = "0.0.0.0:8088"
+valid_tokens = ["<HEC token>"]
+tls.enabled = true
+tls.crt_file = "/etc/vector/cert.pem"
+tls.key_file = "/etc/vector/key.pem"
+
+[sinks.semaphore_audit_file]
+type = "file"
+inputs = ["semaphore_audit_hec"]
+path = "/var/log/semaphore-audit.json"
+encoding.codec = "json"
+```
+
+### Splunk の例 {#splunk}
+
+Splunk で HEC トークンを作成し (**Settings → Data inputs → HTTP Event Collector**)、そのトークンに `security` インデックスを許可して、`url` を `https://<splunk>:8088/services/collector/event` に設定します。イベントを探すには、`index=security sourcetype="semaphore:audit"` を検索します。
+
+このトークンでは **Enable indexer acknowledgement** をオフのままにしてください。Semaphore はこの機能を使いません。
+
 ### エクスポートのトラブルシューティング {#troubleshoot-export}
 
-- **Semaphore が起動しない。** `audit.syslog.id` と `audit.syslog.address` の両方が設定されていること、CA ファイルに PEM 証明書が含まれていることを確認してください。
+- **Semaphore が起動しない。** `audit.syslog.id` と `audit.syslog.address` の両方が設定されていること（HEC の場合は `audit.splunk_hec.id`、`url`、`token`）、CA ファイルに PEM 証明書が含まれていることを確認してください。
 - **TLS 接続に失敗する。** レシーバーの証明書が `server_name` と一致し、Semaphore が信頼する CA によって署名されていることを確認してください。
 - **イベントが届かない。** Semaphore のサーバーログとレシーバーのログを確認してください。失敗した後、Semaphore は少し待ってから再試行します。
 - **一部のイベントが二重に届く。** 再試行やフェイルオーバーの後に起こることがあります。`event_id` で重複を取り除いてください。
+- **HEC が 400、401 または 403 を返す。** トークン、そのトークンが書き込みを許可されているインデックス、およびそのトークンでインデクサー確認応答がオフになっていることを確認してください。トークンが Semaphore のログに表示されることはありません。
 
 ## 記録されない操作 {#not-recorded}
 

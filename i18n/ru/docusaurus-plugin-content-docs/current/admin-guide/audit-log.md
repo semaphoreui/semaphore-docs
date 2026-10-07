@@ -1,6 +1,6 @@
 ---
 title: Журнал аудита
-description: Включите журнал аудита, чтобы видеть, кто что сделал в Semaphore, и отправляйте события аудита из Semaphore Pro в SIEM.
+description: Включите журнал аудита, чтобы видеть, кто что сделал в Semaphore, и отправляйте события аудита из Semaphore Pro в SIEM по Syslog или HEC.
 ---
 
 # Журнал аудита
@@ -117,8 +117,9 @@ SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 
 ## Экспорт в SIEM <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-Semaphore Pro может отправлять события аудита в приёмник Syslog по TLS, например rsyslog или Vector.
-Приёмник может сохранять их или передавать дальше в ваш SIEM.
+Semaphore Pro может отправлять события аудита в приёмник Syslog по TLS, например rsyslog или Vector, и в
+любой приёмник протокола Splunk HTTP Event Collector (HEC), например Splunk, Vector, Fluent Bit,
+OpenTelemetry Collector или Cribl. Можно настроить одно назначение Syslog и одно HEC или оба сразу.
 
 Вам понадобятся:
 
@@ -168,17 +169,60 @@ Semaphore всегда проверяет сертификат приёмник�
 Semaphore записывает событие при каждом запуске. После перезапуска найдите его в приёмнике: `event_code`
 равен `audit.lifecycle`, `action` — `start`, а `metadata.destinations` содержит ID вашего назначения.
 
+### Отправка событий по HEC {#hec}
+
+Понадобятся URL конечной точки HEC, токен HEC, имя для этого назначения, например `security-hec`, и
+CA-сертификат приёмника, если хост Semaphore ещё не доверяет ему.
+
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu",
+    "splunk_hec": {
+      "id": "security-hec",
+      "url": "https://splunk.example.com:8088/services/collector/event",
+      "token": "<HEC token>",
+      "index": "security",
+      "ca_file": "/etc/semaphore/siem-ca.pem"
+    }
+  }
+}
+```
+
+Или с помощью переменных окружения:
+
+```bash
+SEMAPHORE_AUDIT_SPLUNK_HEC_ID=security-hec
+SEMAPHORE_AUDIT_SPLUNK_HEC_URL=https://splunk.example.com:8088/services/collector/event
+SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN='<HEC token>'
+SEMAPHORE_AUDIT_SPLUNK_HEC_INDEX=security
+SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE=/etc/semaphore/siem-ca.pem
+```
+
+`id`, `url` и `token` обязательны, а URL должен начинаться с `https://`. Используйте `id`, отличный от
+`id` для Syslog. По умолчанию `source` равен `semaphore`, а `sourcetype` — `semaphore:audit`. Сертификаты
+проверяются так же, как для Syslog, и действуют стандартные переменные `HTTPS_PROXY` и `NO_PROXY`.
+
+Semaphore отправляет до 100 событий в одном запросе. Поле `event` каждого события HEC содержит JSON события
+аудита, `time` — время события, а `host` — ID узла HA или ID установки на одном узле.
+
+Перезапустите Semaphore и проверьте, что события приходят, как описано [выше](#verify-siem-delivery).
+
 ### Как доставляются события {#delivery}
 
 - Если приёмник недоступен, события ждут в базе данных и отправляются, когда он вернётся. Пользователи
   ничего не заметят.
 - После сетевых ошибок, перезапусков или переключения узлов HA некоторые события могут прийти дважды.
   Используйте `event_id`, чтобы отбросить дубликаты, и `seq`, чтобы восстановить порядок.
-- Если соединение оборвётся без ошибки, событие, отправленное в этот момент, может потеряться.
-- В [установке HA](/admin-guide/ha) события отправляет один узел за раз. Если Redis недоступен, отправка
+- При отправке по Syslog, если соединение оборвётся без ошибки, событие, отправленное в этот момент, может потеряться.
+- В [установке HA](/admin-guide/ha) в каждое назначение события отправляет один узел за раз. Если Redis недоступен, отправка
   приостанавливается, а события продолжают записываться.
+- По HEC событие считается отправленным, только когда приёмник ответил статусом 2xx. Любой другой ответ, в том
+  числе 4xx, приводит к повторной попытке. Если приёмник аварийно завершится после ответа, события, которые он
+  ещё не сохранил, могут потеряться.
 
-Каждое событие отправляется как сообщение Syslog RFC 5424, телом которого служит JSON события. `HOSTNAME` —
+По Syslog каждое событие отправляется как сообщение Syslog RFC 5424, телом которого служит JSON события. `HOSTNAME` —
 ID узла HA или ID установки на одном узле, а `MSGID` — код события.
 
 Примеры ниже минимальны и показывают только, как принимать события. Они принимают подключение от любого
@@ -232,16 +276,43 @@ path = "/var/log/semaphore-audit.json"
 encoding.codec = "json"
 ```
 
+### Пример Vector с HEC {#vector-hec}
+
+```toml
+[sources.semaphore_audit_hec]
+type = "splunk_hec"
+address = "0.0.0.0:8088"
+valid_tokens = ["<HEC token>"]
+tls.enabled = true
+tls.crt_file = "/etc/vector/cert.pem"
+tls.key_file = "/etc/vector/key.pem"
+
+[sinks.semaphore_audit_file]
+type = "file"
+inputs = ["semaphore_audit_hec"]
+path = "/var/log/semaphore-audit.json"
+encoding.codec = "json"
+```
+
+### Пример Splunk {#splunk}
+
+Создайте в Splunk токен HEC (**Settings → Data inputs → HTTP Event Collector**), разрешите ему индекс
+`security` и задайте `url` равным `https://<splunk>:8088/services/collector/event`. Чтобы найти события,
+выполните поиск `index=security sourcetype="semaphore:audit"`.
+
+Оставьте для этого токена выключенной опцию **Enable indexer acknowledgement**: Semaphore её не использует.
+
 ### Устранение неполадок экспорта {#troubleshoot-export}
 
-- **Semaphore не запускается.** Проверьте, что заданы и `audit.syslog.id`, и `audit.syslog.address`, а
-  файл CA содержит сертификаты PEM.
+- **Semaphore не запускается.** Проверьте, что заданы и `audit.syslog.id`, и `audit.syslog.address` (для HEC —
+  `audit.splunk_hec.id`, `url` и `token`), а файл CA содержит сертификаты PEM.
 - **TLS-соединение не устанавливается.** Проверьте, что сертификат приёмника соответствует `server_name` и
   подписан CA, которому доверяет Semaphore.
 - **События не приходят.** Проверьте серверный журнал Semaphore и журнал приёмника. После сбоя Semaphore
   немного ждёт перед следующей попыткой.
 - **Некоторые события приходят дважды.** Так бывает после повторных попыток и переключений узлов.
   Отбрасывайте дубликаты по `event_id`.
+- **HEC отвечает 400, 401 или 403.** Проверьте токен, индексы, в которые ему разрешена запись, и что подтверждение индексатора для него выключено. Токен никогда не попадает в журнал Semaphore.
 
 ## Что не записывается {#not-recorded}
 

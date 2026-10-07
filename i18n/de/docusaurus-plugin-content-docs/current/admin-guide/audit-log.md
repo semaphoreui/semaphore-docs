@@ -1,6 +1,6 @@
 ---
 title: Audit-Protokoll
-description: Aktivieren Sie das Audit-Protokoll, um zu sehen, wer was in Semaphore getan hat, und senden Sie Audit-Ereignisse aus Semaphore Pro an ein SIEM.
+description: Aktivieren Sie das Audit-Protokoll, um zu sehen, wer was in Semaphore getan hat, und senden Sie Audit-Ereignisse aus Semaphore Pro per Syslog oder HEC an ein SIEM.
 ---
 
 # Audit-Protokoll
@@ -121,8 +121,9 @@ Semaphore einen Fehler in das Server-Log, und die Aktion läuft wie gewohnt weit
 
 ## Export an ein SIEM <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-Semaphore Pro kann Audit-Ereignisse über TLS an einen Syslog-Empfänger senden, etwa rsyslog oder Vector.
-Der Empfänger kann sie speichern oder an Ihr SIEM weiterleiten.
+Semaphore Pro kann Audit-Ereignisse über TLS an einen Syslog-Empfänger senden, etwa rsyslog oder Vector,
+und an jeden Empfänger des Splunk-HTTP-Event-Collector-Protokolls (HEC), etwa Splunk, Vector, Fluent Bit, den
+OpenTelemetry Collector oder Cribl. Sie können ein Syslog- und ein HEC-Ziel einrichten, oder beide gleichzeitig.
 
 Sie benötigen:
 
@@ -174,17 +175,62 @@ Semaphore nicht.
 Semaphore zeichnet bei jedem Start ein Ereignis auf. Suchen Sie es nach dem Neustart beim Empfänger:
 `event_code` ist `audit.lifecycle`, `action` ist `start`, und `metadata.destinations` enthält Ihre Ziel-ID.
 
+### Ereignisse über HEC senden {#hec}
+
+Sie benötigen die URL des HEC-Endpunkts, ein HEC-Token, einen Namen für dieses Ziel, etwa `security-hec`, und
+das CA-Zertifikat des Empfängers, falls der Semaphore-Host ihm nicht bereits vertraut.
+
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu",
+    "splunk_hec": {
+      "id": "security-hec",
+      "url": "https://splunk.example.com:8088/services/collector/event",
+      "token": "<HEC token>",
+      "index": "security",
+      "ca_file": "/etc/semaphore/siem-ca.pem"
+    }
+  }
+}
+```
+
+Oder mit Umgebungsvariablen:
+
+```bash
+SEMAPHORE_AUDIT_SPLUNK_HEC_ID=security-hec
+SEMAPHORE_AUDIT_SPLUNK_HEC_URL=https://splunk.example.com:8088/services/collector/event
+SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN='<HEC token>'
+SEMAPHORE_AUDIT_SPLUNK_HEC_INDEX=security
+SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE=/etc/semaphore/siem-ca.pem
+```
+
+`id`, `url` und `token` sind erforderlich, und die URL muss mit `https://` beginnen. Verwenden Sie eine andere
+`id` als für Syslog. `source` und `sourcetype` haben die Standardwerte `semaphore` und `semaphore:audit`.
+Zertifikate werden wie bei Syslog geprüft, und die Standardvariablen `HTTPS_PROXY` und `NO_PROXY` werden
+beachtet.
+
+Semaphore sendet bis zu 100 Ereignisse pro Anfrage. Das Feld `event` jedes HEC-Ereignisses enthält das
+Audit-Ereignis-JSON, `time` ist der Zeitpunkt des Ereignisses, und `host` ist die HA-Knoten-ID oder auf einem
+einzelnen Knoten die Instanz-ID.
+
+Starten Sie Semaphore neu und prüfen Sie dann, ob Ereignisse wie [oben](#verify-siem-delivery) beschrieben ankommen.
+
 ### Wie Ereignisse zugestellt werden {#delivery}
 
 - Ist der Empfänger nicht erreichbar, warten die Ereignisse in der Datenbank und werden gesendet, sobald er
   wieder da ist. Benutzer merken davon nichts.
 - Nach Netzwerkfehlern, Neustarts oder einem HA-Failover können manche Ereignisse doppelt ankommen. Nutzen
   Sie `event_id`, um Duplikate zu verwerfen, und `seq`, um Ereignisse zu ordnen.
-- Bricht eine Verbindung ohne Fehlermeldung ab, kann das in diesem Moment gesendete Ereignis verloren gehen.
-- In einer [HA-Installation](/admin-guide/ha) sendet jeweils ein Knoten Ereignisse. Ist Redis nicht
+- Bricht bei Syslog eine Verbindung ohne Fehlermeldung ab, kann das in diesem Moment gesendete Ereignis verloren gehen.
+- In einer [HA-Installation](/admin-guide/ha) sendet jeweils nur ein Knoten Ereignisse an jedes Ziel. Ist Redis nicht
   erreichbar, pausiert das Senden, und Ereignisse werden weiter aufgezeichnet.
+- Bei HEC gilt ein Ereignis erst als gesendet, wenn der Empfänger mit einem 2xx-Status antwortet. Jede andere
+  Antwort, auch 4xx, wird wiederholt. Stürzt der Empfänger nach der Antwort ab, können Ereignisse verloren
+  gehen, die er noch nicht gespeichert hatte.
 
-Jedes Ereignis wird als Syslog-Nachricht nach RFC 5424 mit dem Ereignis-JSON als Inhalt gesendet. `HOSTNAME`
+Bei Syslog wird jedes Ereignis als Syslog-Nachricht nach RFC 5424 mit dem Ereignis-JSON als Inhalt gesendet. `HOSTNAME`
 ist die HA-Knoten-ID oder auf einem einzelnen Knoten die Instanz-ID, und `MSGID` ist der Ereigniscode.
 
 Die folgenden Beispiele sind minimal und zeigen nur, wie die Ereignisse empfangen werden. Sie nehmen
@@ -239,16 +285,43 @@ path = "/var/log/semaphore-audit.json"
 encoding.codec = "json"
 ```
 
+### Vector-HEC-Beispiel {#vector-hec}
+
+```toml
+[sources.semaphore_audit_hec]
+type = "splunk_hec"
+address = "0.0.0.0:8088"
+valid_tokens = ["<HEC token>"]
+tls.enabled = true
+tls.crt_file = "/etc/vector/cert.pem"
+tls.key_file = "/etc/vector/key.pem"
+
+[sinks.semaphore_audit_file]
+type = "file"
+inputs = ["semaphore_audit_hec"]
+path = "/var/log/semaphore-audit.json"
+encoding.codec = "json"
+```
+
+### Splunk-Beispiel {#splunk}
+
+Erstellen Sie in Splunk ein HEC-Token (**Settings → Data inputs → HTTP Event Collector**), erlauben Sie ihm
+den Index `security` und setzen Sie `url` auf `https://<splunk>:8088/services/collector/event`. Um die
+Ereignisse zu finden, suchen Sie nach `index=security sourcetype="semaphore:audit"`.
+
+Lassen Sie **Enable indexer acknowledgement** für dieses Token ausgeschaltet: Semaphore verwendet es nicht.
+
 ### Fehlerbehebung beim Export {#troubleshoot-export}
 
-- **Semaphore startet nicht.** Prüfen Sie, dass `audit.syslog.id` und `audit.syslog.address` gesetzt sind
-  und die CA-Datei PEM-Zertifikate enthält.
+- **Semaphore startet nicht.** Prüfen Sie, dass `audit.syslog.id` und `audit.syslog.address` gesetzt sind,
+  oder bei HEC `audit.splunk_hec.id`, `url` und `token`, und dass die CA-Datei PEM-Zertifikate enthält.
 - **Die TLS-Verbindung schlägt fehl.** Prüfen Sie, dass das Zertifikat des Empfängers zu `server_name` passt
   und von einer CA signiert ist, der Semaphore vertraut.
 - **Ereignisse kommen nicht an.** Prüfen Sie das Semaphore-Server-Log und das Log des Empfängers. Nach einem
   Fehler wartet Semaphore kurz, bevor es es erneut versucht.
 - **Manche Ereignisse kommen doppelt an.** Das kann nach Wiederholungen und Failovers passieren. Verwerfen
   Sie Duplikate anhand von `event_id`.
+- **HEC antwortet mit 400, 401 oder 403.** Prüfen Sie das Token, die Indizes, in die es schreiben darf, und dass die Indexer-Bestätigung dafür ausgeschaltet ist. Das Token erscheint nie im Semaphore-Log.
 
 ## Was nicht aufgezeichnet wird {#not-recorded}
 

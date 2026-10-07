@@ -1,6 +1,6 @@
 ---
 title: Registro de auditoría
-description: Active el registro de auditoría para ver quién hizo qué en Semaphore y envíe los eventos de auditoría de Semaphore Pro a un SIEM.
+description: Active el registro de auditoría para ver quién hizo qué en Semaphore y envíe los eventos de auditoría de Semaphore Pro a un SIEM mediante Syslog o HEC.
 ---
 
 # Registro de auditoría
@@ -123,8 +123,9 @@ un error en el registro del servidor y la acción continúa con normalidad.
 
 ## Exportar a un SIEM <FeatureState feature="audit-siem-export" /> {#siem-export}
 
-Semaphore Pro puede enviar eventos de auditoría a un receptor Syslog mediante TLS, como rsyslog o Vector. El
-receptor puede guardarlos o reenviarlos a su SIEM.
+Semaphore Pro puede enviar eventos de auditoría a un receptor Syslog mediante TLS, como rsyslog o Vector, y a
+cualquier receptor del protocolo Splunk HTTP Event Collector (HEC), como Splunk, Vector, Fluent Bit, el
+OpenTelemetry Collector o Cribl. Puede configurar un destino Syslog y uno HEC, o ambos a la vez.
 
 Necesitará:
 
@@ -176,17 +177,62 @@ arranca.
 Semaphore registra un evento cada vez que arranca. Tras el reinicio, búsquelo en el receptor: `event_code`
 es `audit.lifecycle`, `action` es `start` y `metadata.destinations` incluye el ID de su destino.
 
+### Enviar eventos por HEC {#hec}
+
+Necesitará la URL del endpoint HEC, un token HEC, un nombre para este destino, como `security-hec`, y el
+certificado de la CA del receptor si el host de Semaphore aún no confía en ella.
+
+```json
+{
+  "audit": {
+    "enabled": true,
+    "instance_id": "prod-eu",
+    "splunk_hec": {
+      "id": "security-hec",
+      "url": "https://splunk.example.com:8088/services/collector/event",
+      "token": "<HEC token>",
+      "index": "security",
+      "ca_file": "/etc/semaphore/siem-ca.pem"
+    }
+  }
+}
+```
+
+O mediante variables de entorno:
+
+```bash
+SEMAPHORE_AUDIT_SPLUNK_HEC_ID=security-hec
+SEMAPHORE_AUDIT_SPLUNK_HEC_URL=https://splunk.example.com:8088/services/collector/event
+SEMAPHORE_AUDIT_SPLUNK_HEC_TOKEN='<HEC token>'
+SEMAPHORE_AUDIT_SPLUNK_HEC_INDEX=security
+SEMAPHORE_AUDIT_SPLUNK_HEC_CA_FILE=/etc/semaphore/siem-ca.pem
+```
+
+`id`, `url` y `token` son obligatorios, y la URL debe empezar por `https://`. Use un `id` distinto del de
+Syslog. `source` y `sourcetype` toman por defecto los valores `semaphore` y `semaphore:audit`. Los
+certificados se comprueban igual que en Syslog, y se aplican las variables estándar `HTTPS_PROXY` y
+`NO_PROXY`.
+
+Semaphore envía hasta 100 eventos por solicitud. El campo `event` de cada evento HEC contiene el JSON del
+evento de auditoría, `time` es la hora del evento y `host` es el ID del nodo HA, o el ID de instancia en un
+solo nodo.
+
+Reinicie Semaphore y compruebe que los eventos llegan como se describe [arriba](#verify-siem-delivery).
+
 ### Cómo se entregan los eventos {#delivery}
 
 - Si el receptor no está disponible, los eventos esperan en la base de datos y se envían cuando vuelve. Los
   usuarios no notan nada.
 - Tras errores de red, reinicios o una conmutación por error en HA, algunos eventos pueden llegar dos veces.
   Use `event_id` para descartar duplicados y `seq` para ordenar los eventos.
-- Si una conexión se corta sin error, el evento enviado en ese momento puede perderse.
-- En una [instalación HA](/admin-guide/ha), un solo nodo envía eventos a la vez. Si Redis no está
+- Por Syslog, si una conexión se corta sin error, el evento enviado en ese momento puede perderse.
+- En una [instalación HA](/admin-guide/ha), un solo nodo a la vez envía eventos a cada destino. Si Redis no está
   disponible, el envío se pausa y los eventos se siguen registrando.
+- Por HEC, un evento se considera enviado solo cuando el receptor responde con un estado 2xx. Cualquier otra
+  respuesta, incluida 4xx, se reintenta. Si el receptor falla después de responder, pueden perderse los
+  eventos que aún no había guardado.
 
-Cada evento se envía como un mensaje Syslog RFC 5424 con el JSON del evento como cuerpo. `HOSTNAME` es el ID
+Por Syslog, cada evento se envía como un mensaje Syslog RFC 5424 con el JSON del evento como cuerpo. `HOSTNAME` es el ID
 del nodo HA, o el ID de instancia en un solo nodo, y `MSGID` es el código del evento.
 
 Los ejemplos siguientes son mínimos y solo muestran cómo recibir los eventos. Aceptan conexiones de cualquier
@@ -240,16 +286,43 @@ path = "/var/log/semaphore-audit.json"
 encoding.codec = "json"
 ```
 
+### Ejemplo de Vector con HEC {#vector-hec}
+
+```toml
+[sources.semaphore_audit_hec]
+type = "splunk_hec"
+address = "0.0.0.0:8088"
+valid_tokens = ["<HEC token>"]
+tls.enabled = true
+tls.crt_file = "/etc/vector/cert.pem"
+tls.key_file = "/etc/vector/key.pem"
+
+[sinks.semaphore_audit_file]
+type = "file"
+inputs = ["semaphore_audit_hec"]
+path = "/var/log/semaphore-audit.json"
+encoding.codec = "json"
+```
+
+### Ejemplo de Splunk {#splunk}
+
+Cree un token HEC en Splunk (**Settings → Data inputs → HTTP Event Collector**), permítale el índice
+`security` y defina `url` como `https://<splunk>:8088/services/collector/event`. Para encontrar los eventos,
+busque `index=security sourcetype="semaphore:audit"`.
+
+Deje desactivada la opción **Enable indexer acknowledgement** en este token: Semaphore no la usa.
+
 ### Solucionar problemas de exportación {#troubleshoot-export}
 
-- **Semaphore no arranca.** Compruebe que `audit.syslog.id` y `audit.syslog.address` están definidos y que
-  el archivo de la CA contiene certificados PEM.
+- **Semaphore no arranca.** Compruebe que `audit.syslog.id` y `audit.syslog.address` están definidos, o
+  `audit.splunk_hec.id`, `url` y `token` para HEC, y que el archivo de la CA contiene certificados PEM.
 - **La conexión TLS falla.** Compruebe que el certificado del receptor coincide con `server_name` y está
   firmado por una CA en la que Semaphore confía.
 - **Los eventos no llegan.** Revise el registro del servidor de Semaphore y el registro del receptor. Tras un
   fallo, Semaphore espera un poco antes de volver a intentarlo.
 - **Algunos eventos llegan dos veces.** Puede ocurrir tras reintentos y conmutaciones. Descarte los
   duplicados por `event_id`.
+- **HEC responde 400, 401 o 403.** Compruebe el token, los índices en los que tiene permiso de escritura y que la confirmación del indexador esté desactivada. El token nunca aparece en el registro de Semaphore.
 
 ## Qué no se registra {#not-recorded}
 
