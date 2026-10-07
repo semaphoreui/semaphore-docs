@@ -115,8 +115,25 @@ dirección en esas cabeceras.
 ## Almacenamiento {#storage}
 
 Los eventos se guardan en la base de datos de Semaphore, así que sus copias de seguridad habituales los
-incluyen. Semaphore no muestra los eventos de auditoría en la interfaz ni elimina los eventos antiguos, así
-que vigile el tamaño de la base de datos.
+incluyen.
+Semaphore no muestra los eventos de auditoría en la interfaz. De forma predeterminada conserva todos los eventos.
+Para eliminar los eventos antiguos, defina un período de retención en días:
+
+```json
+{
+  "audit": {
+    "retention_days": 365
+  }
+}
+```
+
+O mediante una variable de entorno: `SEMAPHORE_AUDIT_RETENTION_DAYS=365`.
+
+Semaphore elimina los eventos antiguos una vez por hora y registra un evento `audit.retention/delete` con el número
+de eventos eliminados. Si exporta eventos a un SIEM, elija un período más largo que la caída más larga del SIEM que
+quiera cubrir: los eventos más antiguos que el período se eliminan aunque no se hayan enviado.
+
+La retención también se ejecuta al iniciar Semaphore. En una instalación HA, use el mismo `retention_days` en todos los nodos.
 
 El registro de auditoría nunca estorba a sus usuarios. Si un evento no se puede guardar, Semaphore escribe
 un error en el registro del servidor y la acción continúa con normalidad.
@@ -311,6 +328,27 @@ Cree un token HEC en Splunk (**Settings → Data inputs → HTTP Event Collector
 busque `index=security sourcetype="semaphore:audit"`.
 
 Deje desactivada la opción **Enable indexer acknowledgement** en este token: Semaphore no la usa.
+
+### Supervisar la exportación {#monitor-export}
+
+Cuando las [métricas](/admin-guide/metrics) están habilitadas, Semaphore Pro informa de lo siguiente para cada destino:
+
+| Métrica | Significado |
+| --- | --- |
+| `semaphore_audit_export_oldest_pending_seconds` | Antigüedad del evento más antiguo que aún no se ha enviado, 0 cuando todo está enviado |
+| `semaphore_audit_export_pending_events` | Número de eventos pendientes de envío |
+| `semaphore_audit_export_errors_total` | Intentos de envío fallidos |
+
+`semaphore_audit_export_errors_total` lo cuenta el nodo que envió, por lo que debe sumarse entre nodos, por ejemplo `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`.
+
+Cada métrica tiene una etiqueta `destination` con el `id` del destino. Para recibir una alerta cuando el SIEM deje
+de recibir eventos, vigile la antigüedad del evento pendiente más antiguo:
+
+```yaml
+- alert: SemaphoreAuditExportStalled
+  expr: max by (destination) (semaphore_audit_export_oldest_pending_seconds) > 900
+  for: 5m
+```
 
 ### Solucionar problemas de exportación {#troubleshoot-export}
 

@@ -88,7 +88,21 @@ SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 
 ## 存储 {#storage}
 
-事件存储在 Semaphore 数据库中，因此常规的数据库备份会包含它们。Semaphore 不会在界面中显示审计事件，也不会删除旧事件，请留意数据库的大小。
+事件存储在 Semaphore 数据库中，因此常规的数据库备份会包含它们。Semaphore 不会在界面中显示审计事件。默认情况下，它会保留所有事件。若要删除旧事件，请以天为单位设置保留期限：
+
+```json
+{
+  "audit": {
+    "retention_days": 365
+  }
+}
+```
+
+也可以使用环境变量：`SEMAPHORE_AUDIT_RETENTION_DAYS=365`。
+
+Semaphore 每小时删除一次较旧的事件，并记录一条 `audit.retention/delete` 事件，其中包含已删除事件的数量。如果你将事件导出到 SIEM，请选择比你希望扛过的最长 SIEM 中断时间更长的期限：早于该期限的事件即使尚未发送也会被删除。
+
+保留期清理也会在 Semaphore 启动时运行。在 HA 部署中，所有节点请使用相同的 `retention_days`。
 
 审计日志从不妨碍用户的操作。如果某个事件无法保存，Semaphore 会在服务器日志中写入错误，操作照常继续。
 
@@ -258,6 +272,26 @@ encoding.codec = "json"
 在 Splunk 中创建 HEC 令牌（**Settings → Data inputs → HTTP Event Collector**），允许它使用 `security` 索引，并将 `url` 设置为 `https://<splunk>:8088/services/collector/event`。要查找这些事件，请搜索 `index=security sourcetype="semaphore:audit"`。
 
 请对此令牌关闭 **Enable indexer acknowledgement**：Semaphore 不使用它。
+
+### 监控导出 {#monitor-export}
+
+启用[指标](/admin-guide/metrics)后，Semaphore Pro 会为每个目标报告：
+
+| 指标 | 含义 |
+| --- | --- |
+| `semaphore_audit_export_oldest_pending_seconds` | 尚未发送的最早事件的存在时长，全部发送完毕时为 0 |
+| `semaphore_audit_export_pending_events` | 等待发送的事件数量 |
+| `semaphore_audit_export_errors_total` | 发送失败的次数 |
+
+`semaphore_audit_export_errors_total` 由发送的节点计数，因此请跨节点求和，例如 `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`。
+
+每个指标都带有 `destination` 标签，值为目标的 `id`。若要在 SIEM 停止接收事件时收到告警，请关注最早待发送事件的存在时长：
+
+```yaml
+- alert: SemaphoreAuditExportStalled
+  expr: max by (destination) (semaphore_audit_export_oldest_pending_seconds) > 900
+  for: 5m
+```
 
 ### 导出故障排除 {#troubleshoot-export}
 

@@ -109,8 +109,25 @@ povezuju vaši korisnici: bilo ko u njima mogao bi da upiše bilo koju adresu u 
 
 ## Čuvanje {#storage}
 
-Događaji se čuvaju u bazi podataka Semaphore-a, pa ih vaše uobičajene rezervne kopije baze sadrže. Semaphore
-ne prikazuje događaje revizije u interfejsu i ne briše stare događaje, zato pratite veličinu baze.
+Događaji se čuvaju u bazi podataka Semaphore-a, pa ih vaše uobičajene rezervne kopije baze sadrže.
+Semaphore ne prikazuje događaje revizije u interfejsu. Podrazumevano čuva sve događaje. Da biste brisali stare
+događaje, podesite period čuvanja u danima:
+
+```json
+{
+  "audit": {
+    "retention_days": 365
+  }
+}
+```
+
+Ili pomoću promenljive okruženja: `SEMAPHORE_AUDIT_RETENTION_DAYS=365`.
+
+Semaphore briše starije događaje jednom na sat i beleži događaj `audit.retention/delete` sa brojem obrisanih
+događaja. Ako izvozite događaje u SIEM, izaberite period duži od najdužeg prekida SIEM-a koji želite da preživite:
+događaji stariji od tog perioda se brišu čak i ako nisu poslati.
+
+Zadržavanje se izvršava i pri pokretanju Semaphore-a. U HA instalaciji koristite isti `retention_days` na svakom čvoru.
 
 Dnevnik revizije nikada ne smeta vašim korisnicima. Ako događaj ne može da se sačuva, Semaphore upisuje
 grešku u dnevnik servera, a radnja se nastavlja kao i obično.
@@ -304,6 +321,27 @@ Napravite HEC token u Splunk-u (**Settings → Data inputs → HTTP Event Collec
 pretražite `index=security sourcetype="semaphore:audit"`.
 
 Ostavite **Enable indexer acknowledgement** isključeno za ovaj token: Semaphore ga ne koristi.
+
+### Praćenje izvoza {#monitor-export}
+
+Kada su [metrike](/admin-guide/metrics) uključene, Semaphore Pro za svako odredište izveštava:
+
+| Metrika | Značenje |
+| --- | --- |
+| `semaphore_audit_export_oldest_pending_seconds` | Starost najstarijeg događaja koji još nije poslat, 0 kada je sve poslato |
+| `semaphore_audit_export_pending_events` | Broj događaja koji čekaju slanje |
+| `semaphore_audit_export_errors_total` | Neuspeli pokušaji slanja |
+
+`semaphore_audit_export_errors_total` broji čvor koji je slao, zato je saberite preko čvorova, na primer `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`.
+
+Svaka metrika ima labelu `destination` sa `id` odredišta. Da biste dobili upozorenje kada SIEM prestane da prima
+događaje, pratite starost najstarijeg događaja na čekanju:
+
+```yaml
+- alert: SemaphoreAuditExportStalled
+  expr: max by (destination) (semaphore_audit_export_oldest_pending_seconds) > 900
+  for: 5m
+```
 
 ### Rešavanje problema sa izvozom {#troubleshoot-export}
 

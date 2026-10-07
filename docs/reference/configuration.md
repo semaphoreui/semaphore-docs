@@ -306,6 +306,7 @@ Recording who did what in Semaphore, and sending the events to a SIEM. See [Audi
 | `audit.enabled`<br />`SEMAPHORE_AUDIT_ENABLED` | boolean | Turns on the audit log. |
 | `audit.instance_id`<br />`SEMAPHORE_AUDIT_INSTANCE_ID` | string | Installation name added to every event. Required when enabled. |
 | `audit.trusted_proxy_cidrs`<br />`SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS` | array | Lists the proxy networks allowed to pass the client address. |
+| `audit.retention_days`<br />`SEMAPHORE_AUDIT_RETENTION_DAYS` | integer | Deletes audit events older than this many days. 0 keeps everything. |
 | `audit.syslog.id` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_ID` | string | Names the destination. Keep it when the address changes. |
 | `audit.syslog.address` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_ADDRESS` | string | Receiver host and port. |
 | `audit.syslog.timeout` <Pro /><br />`SEMAPHORE_AUDIT_SYSLOG_TIMEOUT` | string<br />Default: `10s` | Limits connecting to the receiver and sending events. |

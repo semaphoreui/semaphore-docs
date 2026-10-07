@@ -113,8 +113,26 @@ aus denen sich Ihre Benutzer verbinden: Jeder dort könnte diese Header auf eine
 ## Speicherung {#storage}
 
 Ereignisse werden in der Semaphore-Datenbank gespeichert, sodass Ihre üblichen Datenbank-Backups sie
-enthalten. Semaphore zeigt Audit-Ereignisse nicht in der Oberfläche an und löscht alte Ereignisse nicht,
-behalten Sie also die Größe der Datenbank im Blick.
+enthalten.
+Semaphore zeigt Audit-Ereignisse nicht in der Oberfläche an. Standardmäßig behält es jedes Ereignis. Um alte
+Ereignisse zu löschen, legen Sie eine Aufbewahrungsdauer in Tagen fest:
+
+```json
+{
+  "audit": {
+    "retention_days": 365
+  }
+}
+```
+
+Oder über eine Umgebungsvariable: `SEMAPHORE_AUDIT_RETENTION_DAYS=365`.
+
+Semaphore löscht ältere Ereignisse einmal pro Stunde und erfasst ein Ereignis `audit.retention/delete` mit der Anzahl
+der gelöschten Ereignisse. Wenn Sie Ereignisse an ein SIEM exportieren, wählen Sie eine Dauer, die länger ist als der
+längste SIEM-Ausfall, den Sie überbrücken möchten: Ereignisse, die älter als die Dauer sind, werden auch dann
+gelöscht, wenn sie nicht gesendet wurden.
+
+Die Aufbewahrung läuft auch beim Start von Semaphore. Verwenden Sie in einer HA-Installation auf jedem Knoten dasselbe `retention_days`.
 
 Das Audit-Protokoll steht Ihren Benutzern nie im Weg. Kann ein Ereignis nicht gespeichert werden, schreibt
 Semaphore einen Fehler in das Server-Log, und die Aktion läuft wie gewohnt weiter.
@@ -310,6 +328,27 @@ den Index `security` und setzen Sie `url` auf `https://<splunk>:8088/services/co
 Ereignisse zu finden, suchen Sie nach `index=security sourcetype="semaphore:audit"`.
 
 Lassen Sie **Enable indexer acknowledgement** für dieses Token ausgeschaltet: Semaphore verwendet es nicht.
+
+### Export überwachen {#monitor-export}
+
+Wenn [Metriken](/admin-guide/metrics) aktiviert sind, meldet Semaphore Pro für jedes Ziel:
+
+| Metrik | Bedeutung |
+| --- | --- |
+| `semaphore_audit_export_oldest_pending_seconds` | Alter des ältesten Ereignisses, das noch nicht gesendet wurde, 0, wenn alles gesendet ist |
+| `semaphore_audit_export_pending_events` | Anzahl der Ereignisse, die auf das Senden warten |
+| `semaphore_audit_export_errors_total` | Fehlgeschlagene Sendeversuche |
+
+`semaphore_audit_export_errors_total` wird von dem Knoten gezählt, der gesendet hat, summieren Sie sie daher über alle Knoten, zum Beispiel `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`.
+
+Jede Metrik hat ein Label `destination` mit der `id` des Ziels. Um benachrichtigt zu werden, wenn das SIEM keine
+Ereignisse mehr empfängt, beobachten Sie das Alter des ältesten ausstehenden Ereignisses:
+
+```yaml
+- alert: SemaphoreAuditExportStalled
+  expr: max by (destination) (semaphore_audit_export_oldest_pending_seconds) > 900
+  for: 5m
+```
 
 ### Fehlerbehebung beim Export {#troubleshoot-export}
 

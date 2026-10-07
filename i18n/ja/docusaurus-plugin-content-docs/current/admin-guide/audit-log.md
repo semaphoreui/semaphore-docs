@@ -88,7 +88,21 @@ SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 
 ## 保存 {#storage}
 
-イベントは Semaphore のデータベースに保存されるため、通常のデータベースバックアップに含まれます。Semaphore は監査イベントを UI に表示せず、古いイベントを削除もしないため、データベースのサイズに注意してください。
+イベントは Semaphore のデータベースに保存されるため、通常のデータベースバックアップに含まれます。Semaphore は監査イベントを UI に表示しません。デフォルトではすべてのイベントを保持します。古いイベントを削除するには、保持期間を日数で設定します。
+
+```json
+{
+  "audit": {
+    "retention_days": 365
+  }
+}
+```
+
+環境変数で設定することもできます: `SEMAPHORE_AUDIT_RETENTION_DAYS=365`。
+
+Semaphore は古いイベントを 1 時間に 1 回削除し、削除したイベントの数を含む `audit.retention/delete` イベントを記録します。イベントを SIEM にエクスポートしている場合は、耐えたい SIEM の最長の停止時間より長い期間を選んでください。期間より古いイベントは、未送信であっても削除されます。
+
+保持期間に基づく削除は、Semaphore の起動時にも実行されます。HA 構成では、すべてのノードで同じ `retention_days` を使用してください。
 
 監査ログがユーザーの操作を妨げることはありません。イベントを保存できなかった場合、Semaphore はサーバーログにエラーを書き込み、操作は通常どおり続行されます。
 
@@ -258,6 +272,26 @@ encoding.codec = "json"
 Splunk で HEC トークンを作成し (**Settings → Data inputs → HTTP Event Collector**)、そのトークンに `security` インデックスを許可して、`url` を `https://<splunk>:8088/services/collector/event` に設定します。イベントを探すには、`index=security sourcetype="semaphore:audit"` を検索します。
 
 このトークンでは **Enable indexer acknowledgement** をオフのままにしてください。Semaphore はこの機能を使いません。
+
+### エクスポートを監視する {#monitor-export}
+
+[メトリクス](/admin-guide/metrics)が有効な場合、Semaphore Pro は送信先ごとに次を報告します。
+
+| メトリクス | 意味 |
+| --- | --- |
+| `semaphore_audit_export_oldest_pending_seconds` | まだ送信されていない最も古いイベントの経過時間。すべて送信済みの場合は 0 |
+| `semaphore_audit_export_pending_events` | 送信待ちのイベント数 |
+| `semaphore_audit_export_errors_total` | 送信の失敗回数 |
+
+`semaphore_audit_export_errors_total` は送信したノードがカウントするため、ノードをまたいで合計してください。例: `sum by (destination) (increase(semaphore_audit_export_errors_total[15m]))`
+
+各メトリクスには、送信先の `id` を値とする `destination` ラベルがあります。SIEM がイベントを受信しなくなったときにアラートを受け取るには、送信待ちの最も古いイベントの経過時間を監視します。
+
+```yaml
+- alert: SemaphoreAuditExportStalled
+  expr: max by (destination) (semaphore_audit_export_oldest_pending_seconds) > 900
+  for: 5m
+```
 
 ### エクスポートのトラブルシューティング {#troubleshoot-export}
 
