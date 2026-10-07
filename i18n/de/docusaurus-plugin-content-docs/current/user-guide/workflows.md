@@ -33,38 +33,117 @@ Verzögerungen ablaufen, werden die nachfolgenden Nodes entsprechend den Bedingu
 
 1. Öffnen Sie Ihr Projekt und gehen Sie zu **Workflows**.
 2. Klicken Sie auf **New Workflow**.
-3. Im grafischen Editor:
-   - Ziehen Sie Nodes aus der Palette auf die Arbeitsfläche.
-   - Verbinden Sie Nodes, indem Sie vom Ausgangspunkt eines Nodes zu einem anderen ziehen.
-   - Klicken Sie auf einen Node oder eine Edge, um die Eigenschaften im Seitenbereich zu bearbeiten.
-4. Legen Sie einen **Namen** fest (und optional eine **Startversion** für die Versionierung der Durchläufe).
-5. Beheben Sie alle im Bereich **Problems** aufgeführten Probleme und klicken Sie dann auf **Save**.
+3. Fügen Sie den ersten Node hinzu: Klicken Sie in der **Palette** auf eine Art, ziehen Sie
+   sie auf die Arbeitsfläche oder verwenden Sie die Schaltfläche **+** in der oberen rechten
+   Ecke der Arbeitsfläche.
+4. Zeigen Sie mit der Maus auf einen Node und klicken Sie auf den **+**-Griff an seinem
+   Ausgangsport, um den nächsten Schritt hinzuzufügen. Der neue Node wird rechts platziert
+   und mit einer **On success**-Edge verbunden. Sie können Nodes auch verbinden, indem Sie
+   von einem Ausgangsport zu einem Eingangsport ziehen.
+5. Klicken Sie auf einen Node, um ihn im **Eigenschaftsbereich** rechts zu bearbeiten:
+   Art des Nodes, Task Template und Task-Parameter, Timeout und Meldung der Freigabe,
+   Dauer der Verzögerung, Zusammenführung.
+6. Klicken Sie auf die **Bedingungs-Pille** in der Mitte einer Edge, um deren Bedingung zu
+   ändern, oder zeigen Sie darauf und klicken Sie auf **×**, um die Edge zu entfernen.
+7. Legen Sie einen **Namen** fest (und optional eine **Startversion** für die Versionierung
+   der Durchläufe).
+8. Beheben Sie die im Chip **Problems** in der Symbolleiste aufgeführten Probleme und
+   klicken Sie dann auf **Save**.
 
 ![Workflow-Editor](/assets/workflow-editor.webp)
 
-Der Editor validiert den Graphen vor dem Speichern. Ein gültiger Workflow muss mindestens
-einen Node haben, genau einen Start-Node (ohne eingehende Edges), keine Zyklen und eine
-vollständige Konfiguration auf jedem ausführbaren Node.
+Der Editor validiert den Graphen während der Arbeit. Nodes mit einem Problem zeigen ein
+Warnsymbol, und der Chip in der Symbolleiste listet jedes Problem auf; klicken Sie auf eines,
+um den Node auszuwählen. Ein gültiger Workflow muss mindestens einen Node haben, genau einen
+Start-Node (ohne eingehende Edges), keine Zyklen und eine vollständige Konfiguration auf jedem
+ausführbaren Node. **Save** bleibt deaktiviert, bis der Graph gültig ist.
+
+![Menü zum schnellen Hinzufügen](/assets/workflow-editor-quick-add.webp)
+
+### Editor-Steuerung {#editor-controls}
+
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="Tastenkürzel des Workflow-Editors" />
+</div>
+
+Die Arbeitsfläche lässt sich mit der Maus, einem Trackpad, den Schaltflächen in
+der unteren linken Ecke oder der Tastatur verschieben und zoomen. Tastenkürzel
+funktionieren, solange die Arbeitsfläche den Fokus hat: Klicken Sie zuerst auf eine
+leere Stelle der Arbeitsfläche oder drücken Sie <kbd>Tab</kbd>, bis die Arbeitsfläche
+fokussiert ist. Mit <kbd>Tab</kbd> wechseln Sie anschließend zwischen den Nodes;
+<kbd>Enter</kbd> auf einem Node wählt ihn aus und öffnet seinen Eigenschaftsbereich (in der
+Durchlaufansicht wird das Task-Protokoll geöffnet). Dieselbe Navigation funktioniert auch
+in der Durchlaufansicht.
+
+| Aktion | Maus | Trackpad | Schaltflächen | Tastatur |
+|--------|------|----------|---------------|----------|
+| Verschieben (Arbeitsfläche bewegen) | Leere Stelle ziehen oder mit dem Mausrad scrollen (vertikal) bzw. <kbd>Shift</kbd>+Mausrad (horizontal) | Mit zwei Fingern in beliebige Richtung scrollen | — | <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd>; <kbd>Shift</kbd> gedrückt halten für größere Schritte |
+| Vergrößern / Verkleinern | <kbd>Ctrl</kbd>+Mausrad (<kbd>Cmd</kbd>+Mausrad unter macOS); zoomt in Richtung des Mauszeigers | Zoom-Geste (Pinch) | **+** / **−** | <kbd>+</kbd> / <kbd>−</kbd> |
+| Gesamten Graphen auf den Bildschirm einpassen | — | — | **fit view** | <kbd>0</kbd> |
+| Zoom auf 100 % zurücksetzen | — | — | — | <kbd>1</kbd> |
+| Nodes automatisch anordnen | — | — | **tidy up** | — |
+
+Der Editor passt den Graphen beim Öffnen auf den Bildschirm ein. Die aktuelle Zoomstufe
+wird unter den Schaltflächen angezeigt. Nodes rasten beim Verschieben an einem 20-px-Raster ein.
+
+| Bearbeitungsaktion | So geht's |
+|--------------------|-----------|
+| Node hinzufügen | **+**-Griff an einem Node, Klick oder Ziehen in der Palette, die Schaltfläche **+** in der oberen rechten Ecke oder Rechtsklick auf eine leere Stelle der Arbeitsfläche. |
+| Nodes verbinden | Vom Ausgangsport eines Nodes (rechter Rand) zum Eingangsport eines anderen Nodes (linker Rand) ziehen. |
+| Bedingung einer Edge ändern | Klicken Sie auf die Bedingungs-Pille auf der Edge und wählen Sie eine Bedingung. |
+| Ausgewählten Node oder ausgewählte Edge löschen | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> unter macOS), die Löschen-Schaltfläche im Eigenschaftsbereich oder **×** auf der Pille einer Edge, über der sich der Mauszeiger befindet. |
+| Rückgängig / Wiederholen | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> unter macOS) oder die Pfeile in der Symbolleiste. Bis zu 50 Schritte. |
+| Auswahl aufheben | <kbd>Esc</kbd> schließt den Eigenschaftsbereich und hebt die Auswahl auf. |
+
+Beim Verlassen des Editors mit ungespeicherten Änderungen wird eine Bestätigung abgefragt.
+Der Punkt auf der Schaltfläche **Save** zeigt an, dass der Graph von der gespeicherten
+Version abweicht.
 
 ## Arten von Nodes {#node-kinds}
 
-| Art | Zweck |
-|------|---------|
-| **Task** | Führt ein Task Template aus. Sie können die Parameter des Task Template (Inventory, Environment, Ansible-Limit, zusätzliche CLI-Argumente) pro Node über **task params** überschreiben. |
-| **Approval** | Hält den Durchlauf an, bis ein Benutzer mit entsprechender Berechtigung freigibt oder ablehnt. Optional können Sie ein Timeout (in Sekunden) und eine Freigabemeldung festlegen. |
-| **Delay** | Wartet eine konfigurierte Anzahl von Sekunden, bevor es mit den nachfolgenden Nodes weitergeht. Nützlich für Abkühlphasen, Wartungsfenster oder um abhängige Schritte zeitlich zu entzerren. |
-| **Note** | Freie Anmerkung auf der Arbeitsfläche. Note-Nodes werden nicht ausgeführt und nicht über Edges verbunden — sie dienen ausschließlich der Dokumentation. |
+Ein Workflow besteht aus vier Arten von Nodes. Jede Art wird als Karte dargestellt:
+eine Symbolkachel links, der Titel und ein Untertitel mit den wichtigsten Einstellungen.
+Task-, Approval- und Delay-Nodes haben einen Eingangsport am linken Rand und einen
+Ausgangsport am rechten Rand; Notes haben keine Ports.
 
-### Zusammenführung {#convergence}
+### Task-Nodes {#task-nodes}
 
-Nodes mit mehreren eingehenden Edges können verlangen, dass **alle** vorgelagerten Nodes
-abgeschlossen sind (Standard) oder nur **einer** von ihnen. Legen Sie **Convergence** im
-Eigenschaftsbereich des Nodes fest.
+<div class="BlockSchema BlockSchema--xsmall">
+![Karte eines Task-Nodes](/assets/workflow-node-task.webp)
+</div>
+
+Ein Task-Node führt ein Task Template aus. Die Kachel zeigt die Anwendung des Templates
+(Ansible, Terraform, OpenTofu, Bash, PowerShell, Python), der Titel ist der Name des
+Templates und der Untertitel nennt die Anwendung. Sie können die Parameter des Task
+Template (Inventory, Environment, Ansible-Limit, zusätzliche CLI-Argumente) pro Node über
+**task params** im Eigenschaftsbereich überschreiben; der Untertitel lautet dann
+**custom params**. Ein Task-Node ohne Template zeigt ein Warnsymbol und verhindert das
+Speichern.
+
+### Approval-Nodes {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![Karte eines Approval-Nodes](/assets/workflow-node-approval.webp)
+</div>
+
+Ein Approval-Node hält den Durchlauf an, bis ein Benutzer mit entsprechender Berechtigung
+freigibt oder ablehnt. Optional können Sie ein Timeout (in Sekunden) und eine
+Freigabemeldung festlegen; der Untertitel zeigt das Timeout. Wenn der Durchlauf einen
+Approval-Node erreicht, wechselt der Status des Durchlaufs zu **approval**, bis jemand
+freigibt oder ablehnt. Die Freigabekarte in der Durchlaufansicht zeigt die Freigabemeldung
+mit den Schaltflächen **Approve** und **Reject** für Benutzer, die Tasks im Projekt
+ausführen dürfen. Eine abgelehnte Freigabe lässt den Node fehlschlagen, und der Durchlauf
+wird über die **On failure**- oder **Always**-Edges fortgesetzt.
 
 ### Delay-Nodes {#delay-nodes}
 
-Ein Delay-Node hält den Workflow-Durchlauf für die konfigurierte Dauer an (mindestens 1
-Sekunde). Während des Wartens:
+<div class="BlockSchema BlockSchema--xsmall">
+![Karte eines Delay-Nodes](/assets/workflow-node-delay.webp)
+</div>
+
+Ein Delay-Node wartet eine konfigurierte Anzahl von Sekunden (mindestens 1), bevor es mit
+den nachfolgenden Nodes weitergeht. Nützlich für Abkühlphasen, Wartungsfenster oder um
+abhängige Schritte zeitlich zu entzerren. Während des Wartens:
 
 - Der Durchlauf bleibt im Status **running**.
 - Die Durchlaufansicht zeigt einen laufenden Countdown auf dem Delay-Node.
@@ -73,12 +152,24 @@ Sekunde). Während des Wartens:
 Wird der Workflow-Durchlauf während einer aktiven Verzögerung **gestoppt**, wird die
 Verzögerung abgebrochen und der Durchlauf endet im Status **stopped**.
 
-### Approval-Nodes {#approval-nodes}
+### Note-Nodes {#note-nodes}
 
-Wenn der Durchlauf einen Approval-Node erreicht, wechselt der Status zu **approval**, bis
-jemand freigibt oder ablehnt. In der Durchlaufansicht erscheinen die Schaltflächen zum
-Freigeben und Ablehnen. Abgelehnte Freigaben lassen den Durchlauf entsprechend den
-Bedingungen der verbundenen Edges fehlschlagen.
+<div class="BlockSchema BlockSchema--xsmall">
+
+![Karte eines Note-Nodes](/assets/workflow-node-note.webp)
+
+</div>
+
+Eine Note ist eine freie Anmerkung auf der Arbeitsfläche, dargestellt als Haftnotiz.
+Notes werden nicht ausgeführt, haben keine Ports und werden nie über Edges verbunden — sie
+dienen ausschließlich der Dokumentation und werden von der Validierung ignoriert.
+
+### Zusammenführung {#convergence}
+
+Nodes mit mehreren eingehenden Edges können verlangen, dass **alle** vorgelagerten Nodes
+abgeschlossen sind (Standard) oder nur **einer** von ihnen. Legen Sie **Convergence** im
+Eigenschaftsbereich des Nodes fest; der Untertitel der Karte zeigt **Any parent**, wenn
+nicht der Standard verwendet wird.
 
 ## Bedingungen von Edges {#edge-conditions}
 
@@ -96,11 +187,20 @@ Verwenden Sie **Always**, wenn der nächste Schritt unabhängig vom Ergebnis lau
 ## Ausführen und überwachen {#running-and-monitoring}
 
 - **Run workflow** — startet einen neuen Durchlauf aus der Liste der Workflows.
-- **Durchlaufansicht** — Vollbildgraph mit Live-Status auf jedem Node (running, success,
-  failed, approval, Countdown der Verzögerung).
+- **Durchlaufansicht** — derselbe Graph wie im Editor, schreibgeschützt, mit Live-Status
+  auf jedem Node. Ein Statussymbol in der Ecke der Karte zeigt Erfolg, Fehler, laufend,
+  Warten auf Freigabe oder den Countdown einer Verzögerung; der Untertitel zeigt die Dauer.
+  Noch nicht gestartete Nodes werden abgeblendet dargestellt, und die Edge, die zu einem
+  laufenden Node führt, ist animiert.
+- **Task-Protokoll** — klicken Sie auf einen bereits gestarteten Task-Node, um sein
+  Task-Protokoll zu öffnen.
 - **Stop** — solange ein Durchlauf `running` oder `approval` ist, können Benutzer mit
   `run_project_tasks` ihn stoppen. Alle aktiven Tasks werden gestoppt, ausstehende
   Freigaben werden abgelehnt und der Durchlauf wird als **stopped** markiert.
+
+![Durchlaufansicht eines Workflows](/assets/workflow-run.webp)
+
+![Ausstehende Freigabe in der Durchlaufansicht](/assets/workflow-run-approval.webp)
 
 Status von Durchläufen: `running`, `approval`, `success`, `failed`, `stopped`.
 
@@ -109,6 +209,18 @@ Status von Durchläufen: `running`, `approval`, `success`, `failed`, `stopped`.
 Legen Sie **Start version** für den Workflow fest (zum Beispiel `1.0.0`), um
 Versionsbezeichnungen für jeden Durchlauf zu aktivieren. Semaphore erhöht die Version bei
 jedem weiteren Durchlauf, ähnlich wie bei Build-Task-Templates.
+
+## Revisionen {#revisions}
+
+Jedes Speichern eines Workflows erzeugt eine neue **Revision** seines Graphen; der
+Editor zeigt die Nummer der aktuellen Revision neben dem Namen an. Ein Lauf hält
+die Revision fest, mit der er gestartet wurde: Wird der Workflow während eines
+Laufs bearbeitet, ändert das den laufenden Lauf nicht, und abgeschlossene Läufe
+zeigen weiterhin den Graphen, den sie ausgeführt haben, mit dem Status jedes
+Knotens. Revisionen, auf die kein Lauf verweist, werden beim Speichern einer
+neueren gelöscht. Die Laufdetails (`GET …/runs/{run_id}`) enthalten Knoten und
+Kanten der Revision des Laufs; `GET …/workflows/{workflow_id}/revisions` listet
+die verbliebenen Revisionen auf.
 
 ## Workflow-Artefakte (set_stats) {#workflow-artifacts-set_stats}
 

@@ -33,38 +33,111 @@ isteknu, nizvodni čvorovi se pokreću u skladu sa uslovima ivica.
 
 1. Otvorite svoj projekat (Project) i idite na **Workflows**.
 2. Kliknite na **New Workflow**.
-3. U grafičkom uređivaču:
-   - Prevucite čvorove sa palete na platno.
-   - Povežite čvorove prevlačenjem sa izlazne tačke jednog čvora na drugi.
-   - Kliknite na čvor ili ivicu da biste uredili njihova svojstva u bočnoj tabli.
-4. Postavite **naziv** (i opciono **početnu verziju** za verzionisanje izvršavanja).
-5. Rešite sve probleme navedene u tabli **Problems**, a zatim kliknite na **Save**.
+3. Dodajte prvi čvor: kliknite na vrstu u **Palette**, prevucite je na platno ili
+   koristite dugme **+** u gornjem desnom uglu platna.
+4. Zadržite pokazivač iznad čvora i kliknite na ručicu **+** na njegovom izlaznom portu
+   da biste dodali sledeći korak. Novi čvor se postavlja desno i povezuje ivicom
+   **On success**. Čvorove možete povezati i prevlačenjem sa izlaznog porta na ulazni
+   port.
+5. Kliknite na čvor da biste ga uredili u **tabli sa svojstvima** sa desne strane: vrsta
+   čvora, šablon zadatka i parametri zadatka, vremensko ograničenje i poruka odobrenja,
+   trajanje odlaganja, konvergencija.
+6. Kliknite na **oznaku uslova** na sredini ivice da biste promenili njen uslov, ili
+   zadržite pokazivač iznad nje i kliknite na **×** da biste uklonili ivicu.
+7. Postavite **naziv** (i opciono **početnu verziju** za verzionisanje izvršavanja).
+8. Rešite probleme navedene u čipu **problems** na traci sa alatkama, a zatim kliknite na
+   **Save**.
 
 ![Uređivač tokova rada](/assets/workflow-editor.webp)
 
-Uređivač proverava ispravnost grafa pre čuvanja. Ispravan tok rada mora imati najmanje
-jedan čvor, tačno jedan početni čvor (bez dolaznih ivica), bez ciklusa, i potpunu
-konfiguraciju na svakom izvršnom čvoru.
+Uređivač proverava ispravnost grafa dok radite. Čvorovi sa problemom prikazuju značku
+upozorenja, a čip na traci sa alatkama navodi svaki problem; kliknite na neki od njih da
+biste izabrali čvor. Ispravan tok rada mora imati najmanje jedan čvor, tačno jedan početni
+čvor (bez dolaznih ivica), bez ciklusa, i potpunu konfiguraciju na svakom izvršnom čvoru.
+Dugme **Save** ostaje onemogućeno dok graf ne postane ispravan.
+
+![Meni za brzo dodavanje](/assets/workflow-editor-quick-add.webp)
+
+### Kontrole uređivača {#editor-controls}
+
+<div class="BlockSchema">
+    <img src="/docs/assets/workflow-hotkeys.svg" alt="Prečice na tastaturi uređivača tokova rada" />
+</div>
+
+Platno se može pomerati i zumirati mišem, dodirnom tablom, dugmadima u donjem
+levom uglu ili tastaturom. Prečice na tastaturi rade dok platno ima fokus:
+prvo kliknite na prazno platno ili pritiskajte <kbd>Tab</kbd> dok platno ne
+dobije fokus. <kbd>Tab</kbd> zatim prelazi sa čvora na čvor; <kbd>Enter</kbd> na čvoru
+ga bira i otvara njegovu tablu sa svojstvima (u prikazu izvršavanja otvara dnevnik
+zadatka). Ista navigacija radi i u prikazu izvršavanja.
+
+| Radnja | Miš | Dodirna tabla | Dugmad | Tastatura |
+|--------|-----|---------------|--------|-----------|
+| Pomeranje platna (pan) | Prevucite prazno platno ili skrolujte točkićem (vertikalno) i <kbd>Shift</kbd>+točkić (horizontalno) | Skrolovanje sa dva prsta u bilo kom smeru | — | <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd>; držite <kbd>Shift</kbd> za veće korake |
+| Uvećanje / umanjenje | <kbd>Ctrl</kbd>+točkić (<kbd>Cmd</kbd>+točkić na macOS-u); zumira ka pokazivaču | Uštinite | **+** / **−** | <kbd>+</kbd> / <kbd>−</kbd> |
+| Uklapanje celog grafa na ekran | — | — | **fit view** | <kbd>0</kbd> |
+| Vraćanje zuma na 100 % | — | — | — | <kbd>1</kbd> |
+| Automatsko raspoređivanje čvorova | — | — | **tidy up** | — |
+
+Uređivač uklapa graf na ekran pri otvaranju. Trenutni nivo zuma prikazan je
+ispod dugmadi. Čvorovi se pri pomeranju poravnavaju na mrežu od 20 px.
+
+| Radnja uređivanja | Kako |
+|-------------------|------|
+| Dodavanje čvora | Ručica **+** na čvoru, klik ili prevlačenje iz palete, dugme **+** u gornjem desnom uglu ili desni klik na prazno platno. |
+| Povezivanje čvorova | Prevucite sa izlaznog porta čvora (desna ivica) na ulazni port drugog čvora (leva ivica). |
+| Promena uslova ivice | Kliknite na oznaku uslova na ivici i izaberite uslov. |
+| Brisanje izabranog čvora ili ivice | <kbd>Delete</kbd> (<kbd>Cmd</kbd>+<kbd>Backspace</kbd> na macOS-u), dugme za brisanje u tabli sa svojstvima ili **×** na oznaci uslova ivice iznad koje je pokazivač. |
+| Opozovi / ponovi | <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> (<kbd>Cmd</kbd> na macOS-u) ili strelice na traci sa alatkama. Do 50 koraka. |
+| Poništavanje izbora | <kbd>Esc</kbd> zatvara tablu sa svojstvima i poništava izbor. |
+
+Napuštanje uređivača sa nesačuvanim izmenama traži potvrdu. Tačka na dugmetu **Save**
+pokazuje da se graf razlikuje od sačuvane verzije.
 
 ## Vrste čvorova {#node-kinds}
 
-| Vrsta | Namena |
-|------|---------|
-| **Task** | Pokreće šablon zadatka. Parametre šablona (inventar, okruženje, Ansible limit, dodatne argumente komandne linije) možete zameniti po čvoru pomoću **task params**. |
-| **Approval** | Pauzira izvršavanje dok korisnik sa odgovarajućom dozvolom ne odobri ili odbije. Opciono postavite vremensko ograničenje (u sekundama) i poruku odobrenja. |
-| **Delay** | Čeka podešeni broj sekundi pre nastavka ka nizvodnim čvorovima. Korisno za periode mirovanja, prozore održavanja ili razmak između zavisnih koraka. |
-| **Note** | Slobodna napomena na platnu. Čvorovi tipa Note se ne izvršavaju i ne povezuju se ivicama — služe isključivo za dokumentovanje. |
+Tok rada se gradi od četiri vrste čvorova. Svaka vrsta se prikazuje kao kartica:
+pločica sa ikonom sa leve strane, naslov i podnaslov sa ključnim podešavanjima.
+Čvorovi tipa Task, Approval i Delay imaju ulazni port na levoj ivici i izlazni port
+na desnoj ivici; napomene nemaju portove.
 
-### Konvergencija {#convergence}
+### Čvorovi zadataka {#task-nodes}
 
-Čvorovi sa više dolaznih ivica mogu zahtevati da se završe **svi** uzvodni čvorovi
-(podrazumevano) ili **bilo koji** od njih. Podesite **Convergence** u tabli sa svojstvima
-čvora.
+<div class="BlockSchema BlockSchema--xsmall">
+![Kartica čvora zadatka](/assets/workflow-node-task.webp)
+</div>
+
+Čvor zadatka pokreće šablon zadatka. Pločica prikazuje aplikaciju šablona (Ansible,
+Terraform, OpenTofu, Bash, PowerShell, Python), naslov je naziv šablona, a podnaslov
+navodi aplikaciju. Parametre šablona (inventar, okruženje, Ansible limit, dodatne
+argumente komandne linije) možete zameniti po čvoru pomoću **task params** u tabli sa
+svojstvima; podnaslov tada glasi **custom params**. Čvor zadatka bez šablona prikazuje
+značku upozorenja i blokira čuvanje.
+
+### Čvorovi odobrenja {#approval-nodes}
+
+<div class="BlockSchema BlockSchema--xsmall">
+![Kartica čvora odobrenja](/assets/workflow-node-approval.webp)
+</div>
+
+Čvor odobrenja pauzira izvršavanje dok korisnik sa odgovarajućom dozvolom ne odobri ili
+odbije. Opciono postavite vremensko ograničenje (u sekundama) i poruku odobrenja;
+podnaslov prikazuje vremensko ograničenje. Kada izvršavanje stigne do čvora odobrenja,
+status izvršavanja se menja u **approval** dok neko ne odobri ili odbije. Kartica
+odobrenja u prikazu izvršavanja prikazuje poruku odobrenja sa dugmadima **Approve** i
+**Reject** za korisnike koji mogu da pokreću zadatke u projektu. Odbijeno odobrenje
+dovodi do neuspeha čvora, a izvršavanje se nastavlja duž ivica **On failure** ili
+**Always**.
 
 ### Čvorovi odlaganja {#delay-nodes}
 
-Čvor odlaganja pauzira izvršavanje toka rada za podešeno trajanje (najmanje 1 sekunda).
-Tokom čekanja:
+<div class="BlockSchema BlockSchema--xsmall">
+![Kartica čvora odlaganja](/assets/workflow-node-delay.webp)
+</div>
+
+Čvor odlaganja čeka podešeni broj sekundi (najmanje 1) pre nastavka ka nizvodnim
+čvorovima. Korisno za periode mirovanja, prozore održavanja ili razmak između zavisnih
+koraka. Tokom čekanja:
 
 - Izvršavanje ostaje u statusu **running**.
 - Prikaz izvršavanja prikazuje odbrojavanje uživo na čvoru odlaganja.
@@ -73,11 +146,23 @@ Tokom čekanja:
 Ako je izvršavanje toka rada **zaustavljeno** dok je odlaganje aktivno, odlaganje se
 otkazuje i izvršavanje se završava u statusu **stopped**.
 
-### Čvorovi odobrenja {#approval-nodes}
+### Čvorovi napomena {#note-nodes}
 
-Kada izvršavanje stigne do čvora odobrenja, status se menja u **approval** dok neko ne
-odobri ili odbije. Kontrole Approve/Reject pojavljuju se u prikazu izvršavanja. Odbijena
-odobrenja dovode do neuspeha izvršavanja u skladu sa uslovima povezanih ivica.
+<div class="BlockSchema BlockSchema--xsmall">
+
+![Kartica čvora napomene](/assets/workflow-node-note.webp)
+
+</div>
+
+Napomena je slobodna beleška na platnu, prikazana kao lepljiva ceduljica. Napomene se
+ne izvršavaju, nemaju portove i nikada se ne povezuju ivicama; služe isključivo za
+dokumentovanje, a provera ispravnosti ih ignoriše.
+
+### Konvergencija {#convergence}
+
+Čvorovi sa više dolaznih ivica mogu zahtevati da se završe **svi** uzvodni čvorovi
+(podrazumevano) ili **bilo koji** od njih. Podesite **Convergence** u tabli sa svojstvima
+čvora; podnaslov kartice prikazuje **Any parent** kada vrednost nije podrazumevana.
 
 ## Uslovi ivica {#edge-conditions}
 
@@ -95,11 +180,20 @@ Koristite grane **On failure** za kompenzacione radnje ili obaveštenja. Koristi
 ## Pokretanje i praćenje {#running-and-monitoring}
 
 - **Run workflow** — pokreće novo izvršavanje sa liste Workflows.
-- **Prikaz izvršavanja** — graf preko celog ekrana sa statusom uživo na svakom čvoru
-  (running, success, failed, approval, odbrojavanje odlaganja).
+- **Prikaz izvršavanja** — isti graf kao u uređivaču, samo za čitanje, sa statusom uživo
+  na svakom čvoru. Ikona statusa u uglu kartice prikazuje uspeh, neuspeh, izvršavanje,
+  čekanje na odobrenje ili odbrojavanje odlaganja; podnaslov prikazuje trajanje. Čvorovi
+  koji još nisu počeli su zatamnjeni, a ivica koja vodi do čvora koji se izvršava je
+  animirana.
+- **Dnevnik zadatka** — kliknite na čvor zadatka koji je počeo da biste otvorili njegov
+  dnevnik zadatka.
 - **Stop** — dok je izvršavanje u stanju `running` ili `approval`, korisnici sa dozvolom
   `run_project_tasks` mogu da ga zaustave. Svi aktivni zadaci se zaustavljaju, odobrenja na
   čekanju se odbijaju, a izvršavanje se označava kao **stopped**.
+
+![Prikaz izvršavanja toka rada](/assets/workflow-run.webp)
+
+![Odobrenje na čekanju u prikazu izvršavanja](/assets/workflow-run-approval.webp)
 
 Statusi izvršavanja: `running`, `approval`, `success`, `failed`, `stopped`.
 
@@ -108,6 +202,17 @@ Statusi izvršavanja: `running`, `approval`, `success`, `failed`, `stopped`.
 Podesite **Start version** na toku rada (na primer `1.0.0`) da biste omogućili oznake
 verzija na svakom izvršavanju. Semaphore povećava verziju pri uzastopnim izvršavanjima,
 slično kao kod build šablona.
+
+## Revizije {#revisions}
+
+Svako čuvanje radnog toka pravi novu **reviziju** njegovog grafa; uređivač
+prikazuje broj tekuće revizije pored imena. Izvršavanje vezuje reviziju sa kojom
+je pokrenuto: izmena radnog toka dok je izvršavanje u toku ne menja to
+izvršavanje, a završena izvršavanja i dalje prikazuju graf koji su izvršila, sa
+statusom svakog čvora. Revizije na koje se ne poziva nijedno izvršavanje brišu se
+kada se sačuva novija. Detalji izvršavanja (`GET …/runs/{run_id}`) sadrže čvorove
+i ivice revizije tog izvršavanja, a `GET …/workflows/{workflow_id}/revisions`
+nabraja preostale revizije.
 
 ## Artefakti toka rada (set_stats) {#workflow-artifacts-set_stats}
 
