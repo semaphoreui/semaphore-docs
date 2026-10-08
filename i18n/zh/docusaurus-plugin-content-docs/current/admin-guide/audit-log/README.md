@@ -87,32 +87,6 @@ SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 
 这样 Semaphore 会从 `X-Forwarded-For` 或 `X-Real-IP` 获取客户端地址，但仅限来自这些网络的请求。如果请求经过多个代理，请把它们全部列出。不要列出用户连接所在的网络：这些网络中的任何人都可以在这些请求头中填入任意地址。
 
-## 查看审计日志 {#view}
-
-管理员从用户菜单打开 **Audit log**。最新的事件排在最前面，每页 50 条。
-
-![审计日志，最新事件在前](/assets/audit-log-list.png)
-
-点击某个事件可查看它的所有字段。复制按钮会按 Semaphore 发送到 SIEM 的格式复制该事件。
-
-![显示全部字段的事件](/assets/audit-log-card.png)
-
-### 筛选和导出 <FeatureState feature="audit-log-filters" /> {#filter-export}
-
-可以按时间段、用户、事件类型、结果、项目或 IP 地址筛选。在事件中，用户、地址、对象和项目都是链接，点击后会按它们筛选日志。
-
-![按某个事件的地址筛选的日志](/assets/audit-log-filters.png)
-
-当一组筛选条件找到的事件很少时，Semaphore 每次搜索两秒，并显示已经回溯到多久以前。点击 **Search older** 继续搜索。
-
-**Export** 会把符合筛选条件的所有事件保存为 CSV 或 JSON Lines 文件。每次导出都会记录为一个 `audit.log/export` 事件。
-
-![导出为 CSV 或 JSON Lines](/assets/audit-log-export.png)
-
-没有 Semaphore Pro 时，筛选和导出可见，但处于关闭状态。
-
-![Community 版中的审计日志](/assets/audit-log-community.png)
-
 ## 存储 {#storage}
 
 事件存储在 Semaphore 数据库中，因此常规的数据库备份会包含它们。默认情况下，Semaphore 会保留所有事件。若要删除旧事件，请以天为单位设置保留期限：
@@ -336,6 +310,7 @@ encoding.codec = "json"
 
 ## 后续步骤 {#whats-next}
 
+- [查看审计日志](/admin-guide/audit-log/view) — 在 Web 界面中查看、筛选和导出事件。
 - [审计事件](/reference/audit-events) — 事件格式以及所有记录的事件。
 - [配置选项](/reference/configuration#audit-log) — 所有 `audit.*` 选项和环境变量。
 - [日志](/admin-guide/logs) — 服务器日志、活动日志和任务日志。

@@ -112,36 +112,6 @@ solicitudes que llegan desde esas redes. Si las solicitudes pasan por varios pro
 incluya las redes desde las que se conectan sus usuarios: cualquiera en ellas podría poner cualquier
 dirección en esas cabeceras.
 
-## Ver el registro de auditoría {#view}
-
-Los administradores abren **Audit log** desde el menú de usuario. Los eventos más recientes aparecen primero, 50 por página.
-
-![El registro de auditoría, con los eventos más recientes primero](/assets/audit-log-list.png)
-
-Haga clic en un evento para ver todos sus campos. El botón de copiar copia el evento en el formato que Semaphore
-envía a un SIEM.
-
-![Un evento con todos sus campos](/assets/audit-log-card.png)
-
-### Filtrar y exportar <FeatureState feature="audit-log-filters" /> {#filter-export}
-
-Filtre por período, usuario, tipo de evento, resultado, proyecto o dirección IP. En un evento, el usuario, la
-dirección, el objeto y el proyecto son enlaces que filtran el registro por ellos.
-
-![El registro filtrado por la dirección de un evento](/assets/audit-log-filters.png)
-
-Cuando una combinación de filtros encuentra pocos eventos, Semaphore busca durante dos segundos cada vez y muestra
-hasta dónde ha llegado hacia atrás. Haga clic en **Search older** para continuar.
-
-**Export** guarda todos los eventos que cumplen los filtros como un archivo CSV o JSON Lines. Cada exportación se
-registra como un evento `audit.log/export`.
-
-![Exportación como CSV o JSON Lines](/assets/audit-log-export.png)
-
-Sin Semaphore Pro, los filtros y la exportación se ven, pero están desactivados.
-
-![El registro de auditoría en la edición Community](/assets/audit-log-community.png)
-
 ## Almacenamiento {#storage}
 
 Los eventos se guardan en la base de datos de Semaphore, así que sus copias de seguridad habituales los
@@ -404,6 +374,7 @@ las vistas, la limpieza de la caché del proyecto ni las sincronizaciones progra
 
 ## Siguientes pasos {#whats-next}
 
+- [Ver el registro de auditoría](/admin-guide/audit-log/view) — leer, filtrar y exportar eventos en la interfaz web.
 - [Eventos de auditoría](/reference/audit-events) — el formato de los eventos y todos los eventos registrados.
 - [Opciones de configuración](/reference/configuration#audit-log) — todas las opciones `audit.*` y variables de entorno.
 - [Registros](/admin-guide/logs) — registros del servidor, de actividad y de tareas.

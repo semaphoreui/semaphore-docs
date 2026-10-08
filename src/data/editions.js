@@ -138,7 +138,7 @@ const features = [
     key: 'audit-log-filters',
     name: 'Audit log filters and export',
     edition: 'pro',
-    doc: '/admin-guide/audit-log#filter-export',
+    doc: '/admin-guide/audit-log/view#filter-export',
   },
 
   // Terraform

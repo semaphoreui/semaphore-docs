@@ -108,36 +108,6 @@ Semaphore tada uzima adresu klijenta iz `X-Forwarded-For` ili `X-Real-IP`, ali s
 iz tih mreža. Ako zahtevi prolaze kroz više proksija, navedite ih sve. Ne navodite mreže iz kojih se
 povezuju vaši korisnici: bilo ko u njima mogao bi da upiše bilo koju adresu u ta zaglavlja.
 
-## Pregled dnevnika revizije {#view}
-
-Administratori otvaraju **Audit log** iz korisničkog menija. Najnoviji događaji su prvi, po 50 na stranici.
-
-![Dnevnik revizije, najnoviji događaji prvi](/assets/audit-log-list.png)
-
-Kliknite na događaj da vidite sva njegova polja. Dugme za kopiranje kopira događaj u formatu u kojem ga
-Semaphore šalje u SIEM.
-
-![Događaj sa svim svojim poljima](/assets/audit-log-card.png)
-
-### Filtriranje i izvoz <FeatureState feature="audit-log-filters" /> {#filter-export}
-
-Filtrirajte po periodu, korisniku, vrsti događaja, rezultatu, projektu ili IP adresi. U događaju su korisnik,
-adresa, objekat i projekat veze koje filtriraju dnevnik po njima.
-
-![Dnevnik filtriran po adresi događaja](/assets/audit-log-filters.png)
-
-Kada kombinacija filtera nađe malo događaja, Semaphore pretražuje po dve sekunde i prikazuje dokle je stigao
-unazad. Kliknite na **Search older** da nastavite.
-
-**Export** čuva svaki događaj koji odgovara filterima kao CSV ili JSON Lines datoteku. Svaki izvoz se beleži kao
-događaj `audit.log/export`.
-
-![Izvoz kao CSV ili JSON Lines](/assets/audit-log-export.png)
-
-Bez Semaphore Pro filteri i izvoz su vidljivi, ali isključeni.
-
-![Dnevnik revizije u izdanju Community](/assets/audit-log-community.png)
-
 ## Čuvanje {#storage}
 
 Događaji se čuvaju u bazi podataka Semaphore-a, pa ih vaše uobičajene rezervne kopije baze sadrže.
@@ -398,6 +368,7 @@ Opisi šablona, prikazi, brisanje keša projekta i zakazane sinhronizacije sklad
 
 ## Šta dalje {#whats-next}
 
+- [Pregled dnevnika revizije](/admin-guide/audit-log/view) — pregled, filtriranje i izvoz događaja u veb interfejsu.
 - [Događaji revizije](/reference/audit-events) — format događaja i svi događaji koji se beleže.
 - [Opcije konfiguracije](/reference/configuration#audit-log) — sve `audit.*` opcije i promenljive okruženja.
 - [Dnevnici](/admin-guide/logs) — dnevnici servera, aktivnosti i zadataka.

@@ -110,36 +110,6 @@ Semaphore then takes the client address from `X-Forwarded-For` or `X-Real-IP`, b
 come from these networks. If requests pass through several proxies, list all of them. Do not list the
 networks your users connect from: anyone there could set these headers to any address.
 
-## View the audit log {#view}
-
-Administrators open **Audit log** from the user menu. The newest events come first, 50 to a page.
-
-![The audit log, newest events first](/assets/audit-log-list.png)
-
-Click an event to see every field it has. The copy button copies the event in the format Semaphore sends to a
-SIEM.
-
-![An event with all of its fields](/assets/audit-log-card.png)
-
-### Filter and export <FeatureState feature="audit-log-filters" /> {#filter-export}
-
-Filter by period, user, event kind, result, project or IP address. In an event, the user, the address, the object
-and the project are links that filter the log by them.
-
-![The log filtered by the address of an event](/assets/audit-log-filters.png)
-
-When a combination of filters finds few events, Semaphore searches for two seconds at a time and shows how far back
-it got. Click **Search older** to go on.
-
-**Export** saves every event that matches the filters as a CSV or JSON Lines file. Each export is recorded as an
-`audit.log/export` event.
-
-![Export as CSV or JSON Lines](/assets/audit-log-export.png)
-
-Without Semaphore Pro the filters and the export are visible but turned off.
-
-![The audit log in the Community edition](/assets/audit-log-community.png)
-
 ## Storage {#storage}
 
 Events are stored in the Semaphore database, so your regular database backups include them. By default Semaphore keeps every event. To delete old events, set a
@@ -396,6 +366,7 @@ descriptions, views, clearing the project cache and scheduled secret storage syn
 
 ## What's next {#whats-next}
 
+- [View the audit log](/admin-guide/audit-log/view) — read, filter and export events in the web UI.
 - [Audit events](/reference/audit-events) — the event format and every recorded event.
 - [Configuration options](/reference/configuration#audit-log) — every `audit.*` option and environment variable.
 - [Logs](/admin-guide/logs) — server, activity and task logs.

@@ -87,32 +87,6 @@ SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 
 그러면 Semaphore는 이 네트워크에서 온 요청에 한해 `X-Forwarded-For` 또는 `X-Real-IP`에서 클라이언트 주소를 가져옵니다. 요청이 여러 프록시를 거친다면 모두 나열하세요. 사용자가 접속하는 네트워크는 나열하지 마세요. 그 네트워크의 누구든 이 헤더에 임의의 주소를 넣을 수 있습니다.
 
-## 감사 로그 보기 {#view}
-
-관리자는 사용자 메뉴에서 **Audit log**를 엽니다. 최신 이벤트가 먼저 나오고 한 페이지에 50개씩 표시됩니다.
-
-![최신 이벤트가 먼저 나오는 감사 로그](/assets/audit-log-list.png)
-
-이벤트를 클릭하면 이벤트의 모든 필드를 볼 수 있습니다. 복사 버튼은 Semaphore가 SIEM으로 보내는 형식으로 이벤트를 복사합니다.
-
-![모든 필드가 표시된 이벤트](/assets/audit-log-card.png)
-
-### 필터링과 내보내기 <FeatureState feature="audit-log-filters" /> {#filter-export}
-
-기간, 사용자, 이벤트 종류, 결과, 프로젝트, IP 주소로 필터링할 수 있습니다. 이벤트에서 사용자, 주소, 객체, 프로젝트는 링크이며, 클릭하면 해당 값으로 로그를 필터링합니다.
-
-![이벤트의 주소로 필터링한 로그](/assets/audit-log-filters.png)
-
-필터 조합으로 찾은 이벤트가 적으면 Semaphore는 한 번에 2초씩 검색하고 어디까지 거슬러 올라갔는지 표시합니다. 계속하려면 **Search older**를 클릭하세요.
-
-**Export**는 필터와 일치하는 모든 이벤트를 CSV 또는 JSON Lines 파일로 저장합니다. 내보내기는 매번 `audit.log/export` 이벤트로 기록됩니다.
-
-![CSV 또는 JSON Lines로 내보내기](/assets/audit-log-export.png)
-
-Semaphore Pro가 없으면 필터와 내보내기는 보이지만 비활성화되어 있습니다.
-
-![Community 에디션의 감사 로그](/assets/audit-log-community.png)
-
 ## 저장 {#storage}
 
 이벤트는 Semaphore 데이터베이스에 저장되므로 평소의 데이터베이스 백업에 포함됩니다.기본적으로 모든 이벤트를 보관합니다. 오래된 이벤트를 삭제하려면 보존 기간을 일 단위로 설정하세요.
@@ -336,6 +310,7 @@ UI의 일부 작업은 기록되지 않습니다. 라이선스 제거, 앱 설�
 
 ## 다음 단계 {#whats-next}
 
+- [감사 로그 보기](/admin-guide/audit-log/view) — 웹 UI에서 이벤트를 확인하고 필터링하고 내보냅니다.
 - [감사 이벤트](/reference/audit-events) — 이벤트 형식과 기록되는 모든 이벤트.
 - [구성 옵션](/reference/configuration#audit-log) — 모든 `audit.*` 옵션과 환경 변수.
 - [로그](/admin-guide/logs) — 서버, 활동, 작업 로그.

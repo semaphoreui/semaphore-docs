@@ -74,5 +74,9 @@
   "sidebar.tutorialSidebar.category.FAQ": {
     "message": "よくある質問",
     "description": "The label for category FAQ in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Audit log": {
+    "message": "監査ログ",
+    "description": "The label for category Audit log in sidebar tutorialSidebar"
   }
 }

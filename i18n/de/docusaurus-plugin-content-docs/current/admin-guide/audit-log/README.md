@@ -111,36 +111,6 @@ Semaphore übernimmt die Client-Adresse dann aus `X-Forwarded-For` oder `X-Real-
 aus diesen Netzen. Laufen Anfragen über mehrere Proxys, tragen Sie alle ein. Tragen Sie keine Netze ein,
 aus denen sich Ihre Benutzer verbinden: Jeder dort könnte diese Header auf eine beliebige Adresse setzen.
 
-## Audit-Protokoll ansehen {#view}
-
-Administratoren öffnen das **Audit log** im Benutzermenü. Die neuesten Ereignisse stehen oben, 50 pro Seite.
-
-![Das Audit-Protokoll, neueste Ereignisse zuerst](/assets/audit-log-list.png)
-
-Klicken Sie auf ein Ereignis, um alle seine Felder zu sehen. Die Schaltfläche zum Kopieren kopiert das Ereignis in
-dem Format, in dem Semaphore es an ein SIEM sendet.
-
-![Ein Ereignis mit allen seinen Feldern](/assets/audit-log-card.png)
-
-### Filtern und exportieren <FeatureState feature="audit-log-filters" /> {#filter-export}
-
-Filtern Sie nach Zeitraum, Benutzer, Ereignisart, Ergebnis, Projekt oder IP-Adresse. In einem Ereignis sind der
-Benutzer, die Adresse, das Objekt und das Projekt Links, die das Protokoll danach filtern.
-
-![Das nach der Adresse eines Ereignisses gefilterte Protokoll](/assets/audit-log-filters.png)
-
-Findet eine Filterkombination nur wenige Ereignisse, sucht Semaphore jeweils zwei Sekunden lang und zeigt an, wie
-weit zurück es gekommen ist. Klicken Sie auf **Search older**, um weiterzusuchen.
-
-**Export** speichert jedes Ereignis, das zu den Filtern passt, als CSV- oder JSON-Lines-Datei. Jeder Export wird
-als Ereignis `audit.log/export` aufgezeichnet.
-
-![Export als CSV oder JSON Lines](/assets/audit-log-export.png)
-
-Ohne Semaphore Pro sind die Filter und der Export sichtbar, aber ausgeschaltet.
-
-![Das Audit-Protokoll in der Community Edition](/assets/audit-log-community.png)
-
 ## Speicherung {#storage}
 
 Ereignisse werden in der Semaphore-Datenbank gespeichert, sodass Ihre üblichen Datenbank-Backups sie
@@ -405,6 +375,7 @@ Projekt-Caches und geplante Synchronisierungen von Geheimnisspeichern werden nic
 
 ## Wie geht es weiter {#whats-next}
 
+- [Audit-Protokoll ansehen](/admin-guide/audit-log/view) — Ereignisse in der Weboberfläche lesen, filtern und exportieren.
 - [Audit-Ereignisse](/reference/audit-events) — das Ereignisformat und alle aufgezeichneten Ereignisse.
 - [Konfigurationsoptionen](/reference/configuration#audit-log) — alle `audit.*`-Optionen und Umgebungsvariablen.
 - [Logs](/admin-guide/logs) — Server-, Aktivitäts- und Aufgaben-Logs.
