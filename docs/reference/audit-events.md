@@ -178,4 +178,5 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 ## Related pages {#related-pages}
 
 - [Audit log](/admin-guide/audit-log) — turn on the audit log and send events to a SIEM.
+- [View the audit log](/admin-guide/audit-log/view) — read, filter and export events in the web UI.
 - [Configuration options](/reference/configuration#audit-log) — every `audit.*` option and environment variable.
