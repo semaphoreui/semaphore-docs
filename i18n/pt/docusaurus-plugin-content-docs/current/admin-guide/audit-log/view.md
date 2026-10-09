@@ -21,8 +21,8 @@ endereço, o objeto e o projeto são links que filtram o log por eles.
 
 ![O log filtrado pelo endereço de um evento](/assets/audit-log-filters.png)
 
-Quando uma combinação de filtros encontra poucos eventos, o Semaphore busca por dois segundos de cada vez e mostra
-até onde chegou no passado. Clique em **Search older** para continuar.
+Quando uma combinação de filtros encontra poucos eventos, o Semaphore busca cerca de dois segundos por vez. **Older** e
+**Newer** continuam buscando sozinhos até encontrar eventos, mostram até onde a busca chegou e param com **Stop**.
 
 **Export** salva todos os eventos que correspondem aos filtros como um arquivo CSV ou JSON Lines. Cada exportação
 é registrada como um evento `audit.log/export`.

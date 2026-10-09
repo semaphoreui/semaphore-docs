@@ -19,7 +19,7 @@ description: "在 Web 界面中查看审计日志：最新事件、事件的全�
 
 ![按某个事件的地址筛选的日志](/assets/audit-log-filters.png)
 
-当一组筛选条件找到的事件很少时，Semaphore 每次搜索两秒，并显示已经回溯到多久以前。点击 **Search older** 继续搜索。
+当一组筛选条件找到的事件很少时，Semaphore 每次搜索大约两秒。**Older** 和 **Newer** 会自动继续搜索，直到找到事件，显示搜索进行到哪里，并可通过 **Stop** 停止。
 
 **Export** 会把符合筛选条件的所有事件保存为 CSV 或 JSON Lines 文件。每次导出都会记录为一个 `audit.log/export` 事件。
 

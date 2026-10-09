@@ -21,8 +21,8 @@ and the project are links that filter the log by them.
 
 ![The log filtered by the address of an event](/assets/audit-log-filters.png)
 
-When a combination of filters finds few events, Semaphore searches for two seconds at a time and shows how far back
-it got. Click **Search older** to go on.
+When a combination of filters finds few events, Semaphore searches about two seconds at a time. **Older** and
+**Newer** keep searching on their own until they find events, show how far the search got and stop on **Stop**.
 
 **Export** saves every event that matches the filters as a CSV or JSON Lines file. Each export is recorded as an
 `audit.log/export` event.

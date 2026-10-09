@@ -21,8 +21,9 @@ Benutzer, die Adresse, das Objekt und das Projekt Links, die das Protokoll danac
 
 ![Das nach der Adresse eines Ereignisses gefilterte Protokoll](/assets/audit-log-filters.png)
 
-Findet eine Filterkombination nur wenige Ereignisse, sucht Semaphore jeweils zwei Sekunden lang und zeigt an, wie
-weit zurück es gekommen ist. Klicken Sie auf **Search older**, um weiterzusuchen.
+Wenn eine Kombination von Filtern nur wenige Ereignisse findet, sucht Semaphore jeweils etwa zwei Sekunden lang.
+**Older** und **Newer** suchen von selbst weiter, bis sie Ereignisse finden, zeigen, wie weit die Suche gekommen ist,
+und halten mit **Stop** an.
 
 **Export** speichert jedes Ereignis, das zu den Filtern passt, als CSV- oder JSON-Lines-Datei. Jeder Export wird
 als Ereignis `audit.log/export` aufgezeichnet.

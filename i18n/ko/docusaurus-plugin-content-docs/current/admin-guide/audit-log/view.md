@@ -19,7 +19,7 @@ description: "웹 UI에서 감사 로그를 확인합니다. 최신 이벤트와
 
 ![이벤트의 주소로 필터링한 로그](/assets/audit-log-filters.png)
 
-필터 조합으로 찾은 이벤트가 적으면 Semaphore는 한 번에 2초씩 검색하고 어디까지 거슬러 올라갔는지 표시합니다. 계속하려면 **Search older**를 클릭하세요.
+필터 조합으로 찾은 이벤트가 적으면 Semaphore는 한 번에 약 2초씩 검색합니다. **Older**와 **Newer**는 이벤트를 찾을 때까지 스스로 검색을 계속하고, 검색이 어디까지 진행되었는지 보여 주며, **Stop**으로 멈춥니다.
 
 **Export**는 필터와 일치하는 모든 이벤트를 CSV 또는 JSON Lines 파일로 저장합니다. 내보내기는 매번 `audit.log/export` 이벤트로 기록됩니다.
 

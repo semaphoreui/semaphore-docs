@@ -21,8 +21,9 @@ adresa, objekat i projekat veze koje filtriraju dnevnik po njima.
 
 ![Dnevnik filtriran po adresi događaja](/assets/audit-log-filters.png)
 
-Kada kombinacija filtera nađe malo događaja, Semaphore pretražuje po dve sekunde i prikazuje dokle je stigao
-unazad. Kliknite na **Search older** da nastavite.
+Kada kombinacija filtera pronađe malo događaja, Semaphore pretražuje otprilike po dve sekunde. **Older** i **Newer**
+sami nastavljaju pretragu dok ne pronađu događaje, prikazuju dokle je pretraga stigla i zaustavljaju se dugmetom
+**Stop**.
 
 **Export** čuva svaki događaj koji odgovara filterima kao CSV ili JSON Lines datoteku. Svaki izvoz se beleži kao
 događaj `audit.log/export`.
