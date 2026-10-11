@@ -35,9 +35,30 @@ La chiave di un Repository viene usata solo per quel Repository. Per raggiungere
         * `file://` per un repository Git locale
         * `git://` per un repository Git remoto accessibile tramite protocollo Git
     * Impostare il branch del repository; in caso di dubbio, probabilmente è master o main
+    * Spuntare **Single checkout for all templates** se il repository è un monorepo che tutti i modelli di task devono condividere, vedere [Monorepo](#monorepo)
     * Selezionare la **Chiave di accesso** configurata prima di impostare questo repository.
 
 4. Fare clic su Salva una volta completata la configurazione.
+
+## Monorepo: un solo checkout per tutti i modelli {#monorepo}
+
+Per impostazione predefinita Semaphore clona un repository una volta per ogni modello, quindi ogni modello lavora in una copia propria. Per un repository di grandi dimensioni condiviso da molti modelli, le copie occupano spazio su disco e ogni task inizia con un clone o un pull della propria copia.
+
+Spuntare **Single checkout for all templates** per clonare il repository una sola volta e condividere quel checkout tra tutti i modelli del progetto. L'opzione non è disponibile per una cartella locale (`/path/to/the/repo`), che non viene mai clonata.
+
+<div style={{maxWidth: 450}}>
+
+![Modulo del repository con Single checkout for all templates abilitato](/assets/repository-monorepo.webp)
+
+</div>
+
+Come funziona il checkout condiviso:
+
+* Prima dell'avvio di un task, Semaphore acquisisce un lock sul checkout, esegue fetch e pull del branch configurato nel repository, quindi rilascia il lock. I task degli altri modelli attendono il lock mentre il checkout viene aggiornato, ma i task stessi vengono eseguiti in parallelo.
+* Ogni branch ha comunque un checkout proprio, quindi repository con branch diversi non condividono mai la stessa working tree.
+* Il checkout è condiviso, ma la home directory di Ansible (ruoli e collection installati da `requirements.yml`) resta separata per ogni modello.
+
+Poiché tutti i modelli lavorano nello stesso checkout sullo stesso branch, un modello di un monorepo non può avere un **Branch** proprio e non può abilitare il prompt **Branch** che consente a un task di scegliere un branch o un commit. Il modulo del modello disabilita entrambi e ne spiega il motivo, e l'API rifiuta un modello di questo tipo. Assicurarsi che i playbook non scrivano nel checkout: una working tree modificata interrompe il pull successivo e Semaphore rimuove quindi il checkout e lo clona di nuovo.
 
 ## Modifica di un repository esistente {#editing-an-existing-repository}
 1. Andare nella sezione Repository di Semaphore.

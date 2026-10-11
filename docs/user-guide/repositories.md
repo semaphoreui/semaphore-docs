@@ -42,9 +42,30 @@ The key of a Repository is used for that Repository only. To reach submodules, `
         * `file://` for a local Git Repository
         * `git://` for a remote Git Repository accessed over Git protocol
     * Set the branch of the Repository, if you are not sure what it should be, it is probably master or main
+    * Tick **Single checkout for all templates** if the Repository is a monorepo that every template should share, see [Monorepo](#monorepo)
     * Select the **Access Key** you configured prior to setting up this Repository.
 
 4. Click Save once everything is configured.
+
+## Monorepo: one checkout for all templates {#monorepo}
+
+By default Semaphore clones a Repository once per template, so every template works in a copy of its own. For a large repository that many templates share, the copies cost disk space and every task starts with a clone or pull of its own copy.
+
+Tick **Single checkout for all templates** to clone the Repository once and share that checkout between all templates of the project. The option is not available for a local folder (`/path/to/the/repo`), which is never cloned.
+
+<div style={{maxWidth: 450}}>
+
+![Repository form with Single checkout for all templates enabled](/assets/repository-monorepo.webp)
+
+</div>
+
+How the shared checkout works:
+
+* Before a task starts, Semaphore takes a lock on the checkout, fetches and pulls the branch configured in the Repository, then releases the lock. Tasks of other templates wait for the lock while the checkout is being updated, but the tasks themselves run in parallel.
+* Every branch still gets a checkout of its own, so Repositories with different branches never share a working tree.
+* The checkout is shared, but the Ansible home directory (roles and collections installed from `requirements.yml`) stays separate for every template.
+
+Because every template works in the same checkout on the same branch, a template of a monorepo cannot have a **Branch** of its own, and it cannot enable the **Branch** prompt that lets a task pick a branch or commit. The template form disables both and explains why, and the API rejects such a template. Make sure the playbooks do not write into the checkout: a changed working tree breaks the next pull, and Semaphore then removes the checkout and clones it again.
 
 ## Editing an Existing Repository {#editing-an-existing-repository}
 1. Go to the Repositories section of Semaphore.

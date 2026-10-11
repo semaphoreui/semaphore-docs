@@ -65,7 +65,7 @@ Korisnici sa ulogom **Menadžer** (Manager) ili višom mogu da kreiraju i uređu
 | **Opis** (Description) | Opcioni tekst prikazan ispod naziva. |
 | **Aplikacija** (App) | Aplikacija koja se pokreće. |
 | **Repozitorijum** (Repository) | Repozitorijum sa playbook-om ili skriptom, pogledajte [Repozitorijumi](../repositories). |
-| **Grana** (Branch) | Git grana koja se preuzima. Prazno znači granu podešenu u repozitorijumu. |
+| **Grana** (Branch) | Git grana koja se preuzima. Prazno znači granu podešenu u repozitorijumu. Onemogućeno za [monorepo](../repositories#monorepo) repozitorijum, koji se preuzima jednom za sve šablone. |
 | **Playbook / Naziv fajla skripte** (Playbook / Script filename) | Putanja do fajla relativna u odnosu na koren repozitorijuma. Za Terraform aplikacije: poddirektorijum sa konfiguracijom. |
 | **Drugi radni direktorijum** (Different working directory) | Pokretanje alata iz drugog direktorijuma repozitorijuma. |
 | **Inventar** (Inventory) | Ansible inventar ili radni prostor za Terraform aplikacije. |
@@ -97,6 +97,10 @@ Korisnici sa ulogom **Menadžer** (Manager) ili višom mogu da kreiraju i uređu
 ### Upiti {#prompts}
 
 Upiti (Prompts) su polja za potvrdu koja korisniku omogućavaju da promeni ugrađene opcije u dijalogu Novi zadatak (New Task): granu, inventar, CLI argumente i, za Ansible, limit, tagove, preskočene tagove, nivo otklanjanja grešaka i Galaxy instalaciju. Pogledajte [Upiti](./prompts).
+
+Za [monorepo](../repositories#monorepo) repozitorijum upit **Grana** (Branch) je onemogućen: svaki šablon takvog repozitorijuma izvršava se u jednom deljenom preuzimanju, pa ga zadatak ne može prebaciti na drugu granu ili commit. Zadržite pokazivač iznad onemogućenog polja da biste videli razlog.
+
+![Forma šablona na monorepo repozitorijumu: polje Grana i upit Grana su onemogućeni](/assets/template-monorepo.webp)
 
 ### Opcije aplikacija {#application-options}
 

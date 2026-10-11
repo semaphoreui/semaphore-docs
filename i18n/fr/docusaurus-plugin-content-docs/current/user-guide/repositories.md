@@ -35,9 +35,30 @@ La clé d'un dépôt n'est utilisée que pour ce dépôt. Pour atteindre des sou
         * `file://` pour un dépôt Git local
         * `git://` pour un dépôt Git distant accessible via le protocole Git
     * Définissez la branche du dépôt ; si vous n'êtes pas sûr, il s'agit probablement de master ou main
+    * Cochez **Extraction unique pour tous les modèles** si le dépôt est un monorepo que tous les modèles doivent partager, voir [Monorepo](#monorepo)
     * Sélectionnez la **clé d'accès** que vous avez configurée avant de créer ce dépôt.
 
 4. Cliquez sur Enregistrer une fois la configuration terminée.
+
+## Monorepo : une seule extraction pour tous les modèles {#monorepo}
+
+Par défaut, Semaphore clone un dépôt une fois par modèle, de sorte que chaque modèle travaille dans sa propre copie. Pour un grand dépôt partagé par de nombreux modèles, les copies coûtent de l'espace disque et chaque tâche commence par un clone ou un pull de sa propre copie.
+
+Cochez **Extraction unique pour tous les modèles** pour cloner le dépôt une seule fois et partager cette extraction entre tous les modèles du projet. L'option n'est pas disponible pour un dossier local (`/path/to/the/repo`), qui n'est jamais cloné.
+
+<div style={{maxWidth: 450}}>
+
+![Formulaire de dépôt avec l'option Extraction unique pour tous les modèles activée](/assets/repository-monorepo.webp)
+
+</div>
+
+Fonctionnement de l'extraction partagée :
+
+* Avant le démarrage d'une tâche, Semaphore pose un verrou sur l'extraction, effectue un fetch et un pull de la branche configurée dans le dépôt, puis libère le verrou. Les tâches des autres modèles attendent le verrou pendant la mise à jour de l'extraction, mais les tâches elles-mêmes s'exécutent en parallèle.
+* Chaque branche conserve sa propre extraction, de sorte que des dépôts avec des branches différentes ne partagent jamais le même arbre de travail.
+* L'extraction est partagée, mais le répertoire home d'Ansible (rôles et collections installés depuis `requirements.yml`) reste distinct pour chaque modèle.
+
+Comme tous les modèles travaillent dans la même extraction sur la même branche, un modèle d'un monorepo ne peut pas avoir sa propre **Branche** ni activer l'invite **Branche** qui permet à une tâche de choisir une branche ou un commit. Le formulaire du modèle désactive les deux et en explique la raison, et l'API rejette un tel modèle. Assurez-vous que les playbooks n'écrivent pas dans l'extraction : un arbre de travail modifié casse le pull suivant, et Semaphore supprime alors l'extraction et la clone à nouveau.
 
 ## Modifier un dépôt existant {#editing-an-existing-repository}
 1. Allez dans la section Dépôts de Semaphore.

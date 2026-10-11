@@ -65,7 +65,7 @@ Usuários com o papel **Manager** ou superior podem criar e editar modelos com *
 | **Description** | Texto opcional exibido abaixo do nome. |
 | **App** | Aplicação a ser executada. |
 | **Repository** | Repositório com o playbook ou o script, consulte [Repositórios](../repositories). |
-| **Branch** | Branch do Git a ser obtido. Vazio significa o branch configurado no repositório. |
+| **Branch** | Branch do Git a ser obtido. Vazio significa o branch configurado no repositório. Desativado para um repositório [monorepo](../repositories#monorepo), que é obtido uma única vez para todos os modelos. |
 | **Playbook / Script filename** | Caminho para o arquivo relativo à raiz do repositório. Para aplicações Terraform: o subdiretório com a configuração. |
 | **Different working directory** | Executa a ferramenta a partir de outro diretório do repositório. |
 | **Inventory** | Inventário do Ansible, ou um workspace para aplicações Terraform. |
@@ -97,6 +97,10 @@ Usuários com o papel **Manager** ou superior podem criar e editar modelos com *
 ### Prompts {#prompts}
 
 Os prompts são caixas de seleção que permitem ao usuário alterar opções integradas na janela New Task: branch, inventário, argumentos de CLI e, para o Ansible, limit, tags, skip tags, nível de depuração e instalação do Galaxy. Consulte [Prompts](./prompts).
+
+Para um repositório [monorepo](../repositories#monorepo), o prompt **Branch** fica desativado: todos os modelos desse repositório são executados em um único checkout compartilhado, portanto uma tarefa não pode alterná-lo para outro branch ou commit. Passe o mouse sobre o campo desativado para ver o motivo.
+
+![Formulário do modelo em um repositório monorepo: o campo Branch e o prompt Branch estão desativados](/assets/template-monorepo.webp)
 
 ### Opções da aplicação {#application-options}
 
