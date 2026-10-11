@@ -62,7 +62,7 @@ Come funziona il checkout condiviso:
 * Ogni branch ha comunque un checkout proprio, quindi repository con branch diversi non condividono mai la stessa working tree.
 * Il checkout è condiviso, ma la home directory di Ansible (ruoli e collection installati da `requirements.yml`) resta separata per ogni modello.
 
-Poiché tutti i modelli lavorano nello stesso checkout sullo stesso branch, un modello di un monorepo non può avere un **Branch** proprio e non può abilitare il prompt **Branch** che consente a un task di scegliere un branch o un commit. Il modulo del modello disabilita entrambi e ne spiega il motivo, e l'API rifiuta un modello di questo tipo. Assicurarsi che i playbook non scrivano nel checkout: una working tree modificata interrompe il pull successivo e Semaphore rimuove quindi il checkout e lo clona di nuovo.
+Poiché tutti i modelli lavorano nello stesso checkout sullo stesso branch, un modello di un monorepo non può avere un **Branch** proprio e non può abilitare il prompt **Branch** che consente a un task di scegliere un branch o un commit. Il modulo del modello disabilita entrambi e ne spiega il motivo, e l'API rifiuta un modello di questo tipo. Assicurarsi che i playbook non scrivano nel checkout: una working tree modificata interrompe il pull successivo e Semaphore rimuove quindi il checkout e lo clona di nuovo. Se un repository diventa un monorepo in seguito, il branch ancora impostato nei suoi modelli e il branch o il commit indicati da un task vengono ignorati, e ogni task viene eseguito sul branch del repository.
 
 ## Modifica di un repository esistente {#editing-an-existing-repository}
 1. Andare nella sezione Repository di Semaphore.

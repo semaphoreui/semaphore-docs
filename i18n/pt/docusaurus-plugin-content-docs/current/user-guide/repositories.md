@@ -64,7 +64,7 @@ Como funciona o checkout compartilhado:
 * Cada branch continua tendo o seu próprio checkout, portanto Repositórios com branches diferentes nunca compartilham uma árvore de trabalho.
 * O checkout é compartilhado, mas o diretório home do Ansible (roles e coleções instaladas a partir do `requirements.yml`) permanece separado para cada template.
 
-Como todos os templates trabalham no mesmo checkout e no mesmo branch, um template de um monorepo não pode ter um **Branch** próprio nem ativar o prompt **Branch**, que permite a uma tarefa escolher um branch ou commit. O formulário do template desativa ambos e explica o motivo, e a API rejeita esse template. Certifique-se de que os playbooks não gravem no checkout: uma árvore de trabalho alterada quebra o próximo pull, e o Semaphore então remove o checkout e o clona novamente.
+Como todos os templates trabalham no mesmo checkout e no mesmo branch, um template de um monorepo não pode ter um **Branch** próprio nem ativar o prompt **Branch**, que permite a uma tarefa escolher um branch ou commit. O formulário do template desativa ambos e explica o motivo, e a API rejeita esse template. Certifique-se de que os playbooks não gravem no checkout: uma árvore de trabalho alterada quebra o próximo pull, e o Semaphore então remove o checkout e o clona novamente. Se um repositório se tornar um monorepo depois, o branch que seus templates ainda tiverem e o branch ou commit informados por uma tarefa são ignorados, e todas as tarefas são executadas no branch do repositório.
 
 ## Editando um Repositório existente {#editing-an-existing-repository}
 1. Vá até a seção Repositórios do Semaphore.

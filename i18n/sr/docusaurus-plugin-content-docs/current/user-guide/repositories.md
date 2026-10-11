@@ -64,7 +64,7 @@ Kako deljeno preuzimanje radi:
 * Svaka grana i dalje dobija sopstveno preuzimanje, tako da repozitorijumi sa različitim granama nikada ne dele radno stablo.
 * Preuzimanje je deljeno, ali Ansible home direktorijum (role i kolekcije instalirane iz `requirements.yml`) ostaje odvojen za svaki šablon.
 
-Pošto svi šabloni rade u istom preuzimanju na istoj grani, šablon monorepo repozitorijuma ne može imati sopstvenu granu (**Branch**) i ne može uključiti upit **Branch** koji zadatku omogućava da izabere granu ili commit. Forma šablona onemogućava oboje i objašnjava zašto, a API odbija takav šablon. Vodite računa da playbook-ovi ne pišu u preuzimanje: izmenjeno radno stablo prekida sledeći pull, pa Semaphore tada uklanja preuzimanje i ponovo ga klonira.
+Pošto svi šabloni rade u istom preuzimanju na istoj grani, šablon monorepo repozitorijuma ne može imati sopstvenu granu (**Branch**) i ne može uključiti upit **Branch** koji zadatku omogućava da izabere granu ili commit. Forma šablona onemogućava oboje i objašnjava zašto, a API odbija takav šablon. Vodite računa da playbook-ovi ne pišu u preuzimanje: izmenjeno radno stablo prekida sledeći pull, pa Semaphore tada uklanja preuzimanje i ponovo ga klonira. Ako repozitorijum kasnije postane monorepo, grana koju njegovi šabloni još imaju, kao i grana ili commit koje zada zadatak, se ignorišu, a svaki zadatak se izvršava na grani repozitorijuma.
 
 ## Izmena postojećeg repozitorijuma {#editing-an-existing-repository}
 1. Idite u odeljak Repozitorijumi u Semaphore-u.

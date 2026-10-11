@@ -50,7 +50,7 @@ The key of a Repository is used for that Repository only. To reach submodules, `
 ## Monorepo: one checkout for all templates {#monorepo}
 
 :::info Since v2.20
-The **Single checkout for all templates** option is available since **Semaphore 2.20**. Earlier versions always clone a Repository once per template.
+The **Single checkout for all templates** option is available since **Semaphore UI v2.20**. Earlier versions always clone a Repository once per template.
 :::
 
 By default Semaphore clones a Repository once per template, so every template works in a copy of its own. For a large repository that many templates share, the copies cost disk space and every task starts with a clone or pull of its own copy.
@@ -69,7 +69,7 @@ How the shared checkout works:
 * Every branch still gets a checkout of its own, so Repositories with different branches never share a working tree.
 * The checkout is shared, but the Ansible home directory (roles and collections installed from `requirements.yml`) stays separate for every template.
 
-Because every template works in the same checkout on the same branch, a template of a monorepo cannot have a **Branch** of its own, and it cannot enable the **Branch** prompt that lets a task pick a branch or commit. The template form disables both and explains why, and the API rejects such a template. Make sure the playbooks do not write into the checkout: a changed working tree breaks the next pull, and Semaphore then removes the checkout and clones it again.
+Because every template works in the same checkout on the same branch, a template of a monorepo cannot have a **Branch** of its own, and it cannot enable the **Branch** prompt that lets a task pick a branch or commit. The template form disables both and explains why, and the API rejects such a template. Make sure the playbooks do not write into the checkout: a changed working tree breaks the next pull, and Semaphore then removes the checkout and clones it again. If a repository becomes a monorepo later, a branch its templates still have and the branch or commit a task supplies are ignored, and every task runs on the repository branch.
 
 ## Editing an Existing Repository {#editing-an-existing-repository}
 1. Go to the Repositories section of Semaphore.

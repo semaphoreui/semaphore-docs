@@ -62,7 +62,7 @@ Fonctionnement de l'extraction partagée :
 * Chaque branche conserve sa propre extraction, de sorte que des dépôts avec des branches différentes ne partagent jamais le même arbre de travail.
 * L'extraction est partagée, mais le répertoire home d'Ansible (rôles et collections installés depuis `requirements.yml`) reste distinct pour chaque modèle.
 
-Comme tous les modèles travaillent dans la même extraction sur la même branche, un modèle d'un monorepo ne peut pas avoir sa propre **Branche** ni activer l'invite **Branche** qui permet à une tâche de choisir une branche ou un commit. Le formulaire du modèle désactive les deux et en explique la raison, et l'API rejette un tel modèle. Assurez-vous que les playbooks n'écrivent pas dans l'extraction : un arbre de travail modifié casse le pull suivant, et Semaphore supprime alors l'extraction et la clone à nouveau.
+Comme tous les modèles travaillent dans la même extraction sur la même branche, un modèle d'un monorepo ne peut pas avoir sa propre **Branche** ni activer l'invite **Branche** qui permet à une tâche de choisir une branche ou un commit. Le formulaire du modèle désactive les deux et en explique la raison, et l'API rejette un tel modèle. Assurez-vous que les playbooks n'écrivent pas dans l'extraction : un arbre de travail modifié casse le pull suivant, et Semaphore supprime alors l'extraction et la clone à nouveau. Si un dépôt devient un monorepo plus tard, la branche que ses modèles ont encore ainsi que la branche ou le commit fournis par une tâche sont ignorés, et chaque tâche s'exécute sur la branche du dépôt.
 
 ## Modifier un dépôt existant {#editing-an-existing-repository}
 1. Allez dans la section Dépôts de Semaphore.

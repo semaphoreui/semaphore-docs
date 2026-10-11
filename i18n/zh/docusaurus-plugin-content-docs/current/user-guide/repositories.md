@@ -64,7 +64,7 @@ Semaphore 支持以下类型的仓库：
 * 每个分支仍然拥有自己的检出，因此分支不同的仓库永远不会共用同一个工作树。
 * 检出是共享的，但 Ansible 主目录（从 `requirements.yml` 安装的 role 和 collection）对每个模板仍然是独立的。
 
-由于所有模板都在同一分支的同一检出中工作，monorepo 的模板不能拥有自己的 **Branch**，也不能启用允许任务选择分支或提交的 **Branch** 提示。模板表单会禁用这两项并说明原因，API 也会拒绝这样的模板。请确保 playbook 不会向检出中写入内容：被修改的工作树会导致下一次 pull 失败，Semaphore 随后会删除该检出并重新克隆。
+由于所有模板都在同一分支的同一检出中工作，monorepo 的模板不能拥有自己的 **Branch**，也不能启用允许任务选择分支或提交的 **Branch** 提示。模板表单会禁用这两项并说明原因，API 也会拒绝这样的模板。请确保 playbook 不会向检出中写入内容：被修改的工作树会导致下一次 pull 失败，Semaphore 随后会删除该检出并重新克隆。如果仓库之后才变为 monorepo，其模板中仍保留的分支以及任务指定的分支或提交都会被忽略，所有任务都在仓库的分支上运行。
 
 ## 编辑现有仓库 {#editing-an-existing-repository}
 1. 进入 Semaphore 的 Repositories 分区。

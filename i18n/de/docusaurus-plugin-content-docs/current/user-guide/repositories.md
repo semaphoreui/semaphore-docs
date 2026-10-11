@@ -62,7 +62,7 @@ So funktioniert der gemeinsame Checkout:
 * Jeder Branch erhält weiterhin einen eigenen Checkout, sodass Repositories mit unterschiedlichen Branches nie denselben Arbeitsbaum teilen.
 * Der Checkout wird gemeinsam genutzt, aber das Ansible-Home-Verzeichnis (aus `requirements.yml` installierte Rollen und Collections) bleibt für jede Vorlage getrennt.
 
-Da alle Vorlagen im selben Checkout auf demselben Branch arbeiten, kann eine Vorlage eines Monorepos keinen eigenen **Branch** haben und den **Branch**-Prompt, mit dem ein Task einen Branch oder Commit wählen kann, nicht aktivieren. Das Vorlagenformular deaktiviert beides und erklärt den Grund, und die API lehnt eine solche Vorlage ab. Stellen Sie sicher, dass die Playbooks nicht in den Checkout schreiben: Ein geänderter Arbeitsbaum bricht den nächsten Pull, und Semaphore entfernt dann den Checkout und klont ihn neu.
+Da alle Vorlagen im selben Checkout auf demselben Branch arbeiten, kann eine Vorlage eines Monorepos keinen eigenen **Branch** haben und den **Branch**-Prompt, mit dem ein Task einen Branch oder Commit wählen kann, nicht aktivieren. Das Vorlagenformular deaktiviert beides und erklärt den Grund, und die API lehnt eine solche Vorlage ab. Stellen Sie sicher, dass die Playbooks nicht in den Checkout schreiben: Ein geänderter Arbeitsbaum bricht den nächsten Pull, und Semaphore entfernt dann den Checkout und klont ihn neu. Wird ein Repository später zum Monorepo, werden ein noch in seinen Vorlagen gesetzter Branch sowie ein von einem Task übergebener Branch oder Commit ignoriert, und jeder Task läuft auf dem Branch des Repositorys.
 
 ## Ein bestehendes Repository bearbeiten {#editing-an-existing-repository}
 1. Gehen Sie zum Bereich Repositories von Semaphore.

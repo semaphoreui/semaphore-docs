@@ -62,7 +62,7 @@ Cómo funciona la copia compartida:
 * Cada rama sigue teniendo su propia copia, por lo que los repositorios con ramas distintas nunca comparten un árbol de trabajo.
 * La copia se comparte, pero el directorio home de Ansible (roles y colecciones instalados desde `requirements.yml`) sigue siendo independiente para cada plantilla.
 
-Como todas las plantillas trabajan en la misma copia y en la misma rama, una plantilla de un monorepo no puede tener una **Rama** propia ni activar la solicitud **Rama**, que permite a una tarea elegir una rama o un commit. El formulario de la plantilla desactiva ambas opciones y explica el motivo, y la API rechaza una plantilla así. Asegúrese de que los playbooks no escriban en la copia: un árbol de trabajo modificado rompe el siguiente pull, y Semaphore entonces elimina la copia y la clona de nuevo.
+Como todas las plantillas trabajan en la misma copia y en la misma rama, una plantilla de un monorepo no puede tener una **Rama** propia ni activar la solicitud **Rama**, que permite a una tarea elegir una rama o un commit. El formulario de la plantilla desactiva ambas opciones y explica el motivo, y la API rechaza una plantilla así. Asegúrese de que los playbooks no escriban en la copia: un árbol de trabajo modificado rompe el siguiente pull, y Semaphore entonces elimina la copia y la clona de nuevo. Si un repositorio se convierte en monorepo más tarde, la rama que aún tengan sus plantillas y la rama o el commit que indique una tarea se ignoran, y todas las tareas se ejecutan en la rama del repositorio.
 
 ## Editar un repositorio existente {#editing-an-existing-repository}
 1. Vaya a la sección Repositorios de Semaphore.
