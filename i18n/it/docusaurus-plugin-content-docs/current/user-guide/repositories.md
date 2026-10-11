@@ -42,6 +42,10 @@ La chiave di un Repository viene usata solo per quel Repository. Per raggiungere
 
 ## Monorepo: un solo checkout per tutti i modelli {#monorepo}
 
+:::info Dalla v2.20
+L'opzione **Single checkout for all templates** è disponibile da **Semaphore 2.20**. Le versioni precedenti clonano sempre un repository una volta per ogni modello.
+:::
+
 Per impostazione predefinita Semaphore clona un repository una volta per ogni modello, quindi ogni modello lavora in una copia propria. Per un repository di grandi dimensioni condiviso da molti modelli, le copie occupano spazio su disco e ogni task inizia con un clone o un pull della propria copia.
 
 Spuntare **Single checkout for all templates** per clonare il repository una sola volta e condividere quel checkout tra tutti i modelli del progetto. L'opzione non è disponibile per una cartella locale (`/path/to/the/repo`), che non viene mai clonata.

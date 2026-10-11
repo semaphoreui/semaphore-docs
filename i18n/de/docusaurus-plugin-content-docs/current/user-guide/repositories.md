@@ -42,6 +42,10 @@ Der Schlüssel eines Repositories wird nur für dieses Repository verwendet. Um 
 
 ## Monorepo: ein Checkout für alle Vorlagen {#monorepo}
 
+:::info Seit v2.20
+Die Option **Single checkout for all templates** ist seit **Semaphore 2.20** verfügbar. Frühere Versionen klonen ein Repository immer einmal pro Vorlage.
+:::
+
 Standardmäßig klont Semaphore ein Repository einmal pro Aufgabenvorlage, sodass jede Vorlage in einer eigenen Kopie arbeitet. Bei einem großen Repository, das viele Vorlagen gemeinsam nutzen, kosten die Kopien Speicherplatz, und jeder Task beginnt mit einem Clone oder Pull seiner eigenen Kopie.
 
 Aktivieren Sie **Single checkout for all templates**, um das Repository einmal zu klonen und diesen Checkout zwischen allen Vorlagen des Projekts zu teilen. Die Option ist für einen lokalen Ordner (`/path/to/the/repo`) nicht verfügbar, da dieser nie geklont wird.

@@ -44,6 +44,10 @@ Ključ repozitorijuma koristi se samo za taj repozitorijum. Da biste dosegli sub
 
 ## Monorepo: jedno preuzimanje za sve šablone {#monorepo}
 
+:::info Od verzije 2.20
+Opcija **Single checkout for all templates** dostupna je od verzije **Semaphore 2.20**. Ranije verzije uvek kloniraju repozitorijum jednom po šablonu.
+:::
+
 Semaphore podrazumevano klonira repozitorijum jednom po šablonu, tako da svaki šablon radi u sopstvenoj kopiji. Za veliki repozitorijum koji deli mnogo šablona kopije zauzimaju prostor na disku, a svaki zadatak počinje kloniranjem ili pull-om sopstvene kopije.
 
 Označite **Single checkout for all templates** da bi se repozitorijum klonirao jednom i da bi se to preuzimanje (checkout) delilo između svih šablona projekta. Opcija nije dostupna za lokalni folder (`/path/to/the/repo`), koji se nikada ne klonira.

@@ -44,6 +44,10 @@ Semaphore 支持以下类型的仓库：
 
 ## Monorepo：所有模板共用一次检出 {#monorepo}
 
+:::info 自 v2.20 起
+**Single checkout for all templates** 选项自 **Semaphore 2.20** 起可用。更早的版本始终为每个模板单独克隆一次仓库。
+:::
+
 默认情况下，Semaphore 为每个模板单独克隆一次仓库，因此每个模板都在自己的副本中工作。对于被许多模板共用的大型仓库，这些副本会占用磁盘空间，而且每个任务都要先克隆或拉取自己的副本。
 
 勾选 **Single checkout for all templates** 可以只克隆一次仓库，并在项目的所有模板之间共享这一次检出。该选项对本地文件夹（`/path/to/the/repo`）不可用，因为本地文件夹从不会被克隆。

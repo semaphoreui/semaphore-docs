@@ -42,6 +42,10 @@ La clave de un repositorio se usa solo para ese repositorio. Para acceder a subm
 
 ## Monorepo: una sola descarga para todas las plantillas {#monorepo}
 
+:::info Desde la v2.20
+La opción **Descarga única para todas las plantillas** está disponible desde **Semaphore 2.20**. Las versiones anteriores siempre clonan un repositorio una vez por plantilla.
+:::
+
 De forma predeterminada, Semaphore clona un repositorio una vez por plantilla, de modo que cada plantilla trabaja en su propia copia. En un repositorio grande compartido por muchas plantillas, las copias consumen espacio en disco y cada tarea empieza con un clone o un pull de su propia copia.
 
 Marque **Descarga única para todas las plantillas** para clonar el repositorio una sola vez y compartir esa copia entre todas las plantillas del proyecto. La opción no está disponible para una carpeta local (`/path/to/the/repo`), que nunca se clona.

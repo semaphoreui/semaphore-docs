@@ -42,6 +42,10 @@ La clé d'un dépôt n'est utilisée que pour ce dépôt. Pour atteindre des sou
 
 ## Monorepo : une seule extraction pour tous les modèles {#monorepo}
 
+:::info Depuis la v2.20
+L'option **Extraction unique pour tous les modèles** est disponible depuis **Semaphore 2.20**. Les versions antérieures clonent toujours un dépôt une fois par modèle.
+:::
+
 Par défaut, Semaphore clone un dépôt une fois par modèle, de sorte que chaque modèle travaille dans sa propre copie. Pour un grand dépôt partagé par de nombreux modèles, les copies coûtent de l'espace disque et chaque tâche commence par un clone ou un pull de sa propre copie.
 
 Cochez **Extraction unique pour tous les modèles** pour cloner le dépôt une seule fois et partager cette extraction entre tous les modèles du projet. L'option n'est pas disponible pour un dossier local (`/path/to/the/repo`), qui n'est jamais cloné.
