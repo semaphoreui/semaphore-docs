@@ -74,5 +74,9 @@
   "sidebar.tutorialSidebar.category.FAQ": {
     "message": "자주 묻는 질문",
     "description": "The label for category FAQ in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Audit log": {
+    "message": "감사 로그",
+    "description": "The label for category Audit log in sidebar tutorialSidebar"
   }
 }

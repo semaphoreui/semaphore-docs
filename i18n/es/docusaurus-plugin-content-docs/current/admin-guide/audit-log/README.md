@@ -10,8 +10,7 @@ usuario o un rol, quién creó un token de API. Cada evento muestra quién lo hi
 y si funcionó. Úselo para averiguar qué pasó en su instalación o envíe los eventos a su SIEM para tenerlos
 junto al resto de sus registros.
 
-El registro de auditoría está disponible en todas las ediciones. Enviar eventos a un SIEM requiere
-Semaphore Pro.
+El registro de auditoría está disponible en todas las ediciones. Filtrar el registro, exportarlo como archivo y enviar eventos a un SIEM requieren Semaphore Pro.
 
 ## Qué se registra {#recorded-events}
 
@@ -28,6 +27,7 @@ Actualmente Semaphore registra los inicios de sesión y la actividad de las cuen
   finalizaciones y el historial de tareas eliminado;
 - cambios en los runners, registros (incluidos los tokens de registro rechazados), bajas de registro y los informes de los runners
   con un estado no válido;
+- exportaciones del registro de auditoría como archivo;
 - cada arranque del servidor.
 
 Para ver la lista completa, consulte
@@ -116,7 +116,7 @@ dirección en esas cabeceras.
 
 Los eventos se guardan en la base de datos de Semaphore, así que sus copias de seguridad habituales los
 incluyen.
-Semaphore no muestra los eventos de auditoría en la interfaz. De forma predeterminada conserva todos los eventos.
+De forma predeterminada, Semaphore conserva todos los eventos.
 Para eliminar los eventos antiguos, defina un período de retención en días:
 
 ```json
@@ -374,6 +374,7 @@ las vistas, la limpieza de la caché del proyecto ni las sincronizaciones progra
 
 ## Siguientes pasos {#whats-next}
 
+- [Ver el registro de auditoría](/admin-guide/audit-log/view) — leer, filtrar y exportar eventos en la interfaz web.
 - [Eventos de auditoría](/reference/audit-events) — el formato de los eventos y todos los eventos registrados.
 - [Opciones de configuración](/reference/configuration#audit-log) — todas las opciones `audit.*` y variables de entorno.
 - [Registros](/admin-guide/logs) — registros del servidor, de actividad y de tareas.

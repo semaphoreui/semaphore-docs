@@ -74,5 +74,9 @@
   "sidebar.tutorialSidebar.category.FAQ": {
     "message": "Preguntas frecuentes",
     "description": "The label for category FAQ in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Audit log": {
+    "message": "Registro de auditoría",
+    "description": "The label for category Audit log in sidebar tutorialSidebar"
   }
 }

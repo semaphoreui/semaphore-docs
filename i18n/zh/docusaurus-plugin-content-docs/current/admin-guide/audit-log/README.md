@@ -7,7 +7,7 @@ description: 启用审计日志，查看谁在 Semaphore 中做了什么，并�
 
 审计日志记录 Semaphore 中的重要操作：谁登录了，谁修改了用户或角色，谁创建了 API 令牌。每个事件都会显示操作者、时间、来源地址以及操作是否成功。你可以用它来了解安装中发生了什么，也可以把事件发送到 SIEM，与其他日志放在一起。
 
-所有版本都提供审计日志。将事件发送到 SIEM 需要 Semaphore Pro。
+所有版本都提供审计日志。筛选、导出为文件以及将事件发送到 SIEM 需要 Semaphore Pro。
 
 ## 记录的内容 {#recorded-events}
 
@@ -21,6 +21,7 @@ description: 启用审计日志，查看谁在 Semaphore 中做了什么，并�
 - 系统设置的更改和 Pro 许可证的激活；
 - 任务启动及其触发方式(API、计划任务、集成、自动运行、工作流)、审批、停止、完成以及已删除的任务历史；
 - 运行器的更改、注册(包括被拒绝的注册令牌)、取消注册，以及状态无效的运行器报告；
+- 将审计日志导出为文件；
 - 每次服务器启动。
 
 完整列表请参阅 [审计事件](/reference/audit-events)。
@@ -88,7 +89,7 @@ SEMAPHORE_AUDIT_TRUSTED_PROXY_CIDRS='["10.0.0.0/8"]'
 
 ## 存储 {#storage}
 
-事件存储在 Semaphore 数据库中，因此常规的数据库备份会包含它们。Semaphore 不会在界面中显示审计事件。默认情况下，它会保留所有事件。若要删除旧事件，请以天为单位设置保留期限：
+事件存储在 Semaphore 数据库中，因此常规的数据库备份会包含它们。默认情况下，Semaphore 会保留所有事件。若要删除旧事件，请以天为单位设置保留期限：
 
 ```json
 {
@@ -309,6 +310,7 @@ encoding.codec = "json"
 
 ## 后续步骤 {#whats-next}
 
+- [查看审计日志](/admin-guide/audit-log/view) — 在 Web 界面中查看、筛选和导出事件。
 - [审计事件](/reference/audit-events) — 事件格式以及所有记录的事件。
 - [配置选项](/reference/configuration#audit-log) — 所有 `audit.*` 选项和环境变量。
 - [日志](/admin-guide/logs) — 服务器日志、活动日志和任务日志。

@@ -10,7 +10,7 @@ modifié un utilisateur ou un rôle, qui a créé un jeton d'API. Chaque événe
 depuis quelle adresse et si l'action a réussi. Utilisez-le pour comprendre ce qui s'est passé sur votre
 installation, ou envoyez les événements vers votre SIEM pour les conserver avec le reste de vos journaux.
 
-Le journal d'audit est disponible dans toutes les éditions. L'envoi vers un SIEM nécessite Semaphore Pro.
+Le journal d'audit est disponible dans toutes les éditions. Le filtrage, l'export du journal sous forme de fichier et l'envoi vers un SIEM nécessitent Semaphore Pro.
 
 ## Ce qui est enregistré {#recorded-events}
 
@@ -30,6 +30,7 @@ Semaphore enregistre actuellement les connexions, l'activité des comptes, celle
   fins et historique de tâches supprimé ;
 - modifications des runners, enregistrements (y compris les jetons d'enregistrement refusés), désenregistrements et rapports de runners
   avec un statut invalide ;
+- exports du journal d'audit sous forme de fichier ;
 - chaque démarrage du serveur.
 
 Pour la liste complète, consultez
@@ -118,7 +119,7 @@ pourrait mettre n'importe quelle adresse dans ces en-têtes.
 
 Les événements sont stockés dans la base de données de Semaphore, vos sauvegardes habituelles les incluent
 donc.
-Semaphore n'affiche pas les événements d'audit dans l'interface. Par défaut, il conserve tous les événements. Pour
+Par défaut, Semaphore conserve tous les événements. Pour
 supprimer les anciens événements, définissez une durée de conservation en jours :
 
 ```json
@@ -382,6 +383,7 @@ sont pas enregistrés non plus.
 
 ## Et ensuite {#whats-next}
 
+- [Consulter le journal d'audit](/admin-guide/audit-log/view) — consulter, filtrer et exporter les événements dans l'interface web.
 - [Événements d'audit](/reference/audit-events) — le format des événements et tous les événements enregistrés.
 - [Options de configuration](/reference/configuration#audit-log) — toutes les options `audit.*` et variables d'environnement.
 - [Journaux](/admin-guide/logs) — journaux du serveur, d'activité et des tâches.
