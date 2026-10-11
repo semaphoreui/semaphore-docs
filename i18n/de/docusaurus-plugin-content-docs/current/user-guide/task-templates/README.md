@@ -65,7 +65,7 @@ Benutzer mit der Rolle **Manager** oder höher können Task Templates über **Ne
 | **Description** | Optionaler Text, der unter dem Namen angezeigt wird. |
 | **App** | Anwendung, die ausgeführt wird. |
 | **Repository** | Repository mit dem Playbook oder Skript, siehe [Repositories](../repositories). |
-| **Branch** | Git-Branch, der ausgecheckt wird. Leer bedeutet den im Repository konfigurierten Branch. |
+| **Branch** | Git-Branch, der ausgecheckt wird. Leer bedeutet den im Repository konfigurierten Branch. Deaktiviert für ein [Monorepo](../repositories#monorepo)-Repository, das einmal für alle Task Templates ausgecheckt wird. |
 | **Playbook / Script filename** | Pfad zur Datei relativ zum Repository-Stammverzeichnis. Bei Terraform-Apps: das Unterverzeichnis mit der Konfiguration. |
 | **Different working directory** | Das Werkzeug aus einem anderen Verzeichnis des Repositorys ausführen. |
 | **Inventory** | Ansible-Inventory oder ein Workspace bei Terraform-Apps. |
@@ -97,6 +97,10 @@ Benutzer mit der Rolle **Manager** oder höher können Task Templates über **Ne
 ### Prompts {#prompts}
 
 Prompts sind Kontrollkästchen, mit denen der Benutzer im Dialog für einen neuen Task eingebaute Optionen ändern kann: Branch, Inventory, CLI-Argumente und, bei Ansible, Limit, Tags, Skip-Tags, Debug-Level und Galaxy-Installation. Siehe [Prompts](./prompts).
+
+Bei einem [Monorepo](../repositories#monorepo)-Repository ist der **Branch**-Prompt deaktiviert: Jedes Task Template eines solchen Repositorys läuft in einem gemeinsamen Checkout, daher kann ein Task ihn nicht auf einen anderen Branch oder Commit umschalten. Fahren Sie mit der Maus über das deaktivierte Feld, um den Grund zu sehen.
+
+![Task-Template-Formular bei einem Monorepo-Repository: das Feld Branch und der Branch-Prompt sind deaktiviert](/assets/template-monorepo.webp)
 
 ### Anwendungsoptionen {#application-options}
 

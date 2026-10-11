@@ -65,7 +65,7 @@ Les utilisateurs ayant le rôle **Manager** ou supérieur peuvent créer et modi
 | **Description** | Texte facultatif affiché sous le nom. |
 | **App** | Application à exécuter. |
 | **Dépôt** | Dépôt contenant le playbook ou le script, voir [Dépôts](../repositories). |
-| **Branche** | Branche Git à extraire. Vide signifie la branche configurée dans le dépôt. |
+| **Branche** | Branche Git à extraire. Vide signifie la branche configurée dans le dépôt. Désactivé pour un dépôt [monorepo](../repositories#monorepo), qui est extrait une seule fois pour tous les modèles. |
 | **Nom du fichier Playbook / Script** | Chemin du fichier relatif à la racine du dépôt. Pour les applications Terraform : le sous-répertoire contenant la configuration. |
 | **Répertoire de travail différent** | Exécuter l'outil depuis un autre répertoire du dépôt. |
 | **Inventaire** | Inventaire Ansible, ou espace de travail pour les applications Terraform. |
@@ -97,6 +97,10 @@ Les utilisateurs ayant le rôle **Manager** ou supérieur peuvent créer et modi
 ### Invites {#prompts}
 
 Les invites sont des cases à cocher qui permettent à l'utilisateur de modifier des options intégrées dans la boîte de dialogue Nouvelle tâche : branche, inventaire, arguments CLI et, pour Ansible, limit, tags, skip tags, niveau de débogage et installation Galaxy. Voir [Invites](./prompts).
+
+Pour un dépôt [monorepo](../repositories#monorepo), l'invite **Branche** est désactivée : tous les modèles d'un tel dépôt s'exécutent dans une seule extraction partagée, une tâche ne peut donc pas la basculer vers une autre branche ou un autre commit. Survolez le champ désactivé pour en voir la raison.
+
+![Formulaire de modèle sur un dépôt monorepo : le champ Branche et l'invite Branche sont désactivés](/assets/template-monorepo.webp)
 
 ### Options des applications {#application-options}
 

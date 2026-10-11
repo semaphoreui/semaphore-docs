@@ -35,9 +35,30 @@ La clave de un repositorio se usa solo para ese repositorio. Para acceder a subm
         * `file://` para un repositorio Git local
         * `git://` para un repositorio Git remoto accedido mediante el protocolo Git
     * Establezca la rama del repositorio; si no está seguro de cuál debe ser, probablemente sea master o main
+    * Marque **Descarga única para todas las plantillas** si el repositorio es un monorepo que todas las plantillas deben compartir; consulte [Monorepo](#monorepo)
     * Seleccione la **clave de acceso** que configuró antes de añadir este repositorio.
 
 4. Haga clic en Guardar una vez que todo esté configurado.
+
+## Monorepo: una sola descarga para todas las plantillas {#monorepo}
+
+De forma predeterminada, Semaphore clona un repositorio una vez por plantilla, de modo que cada plantilla trabaja en su propia copia. En un repositorio grande compartido por muchas plantillas, las copias consumen espacio en disco y cada tarea empieza con un clone o un pull de su propia copia.
+
+Marque **Descarga única para todas las plantillas** para clonar el repositorio una sola vez y compartir esa copia entre todas las plantillas del proyecto. La opción no está disponible para una carpeta local (`/path/to/the/repo`), que nunca se clona.
+
+<div style={{maxWidth: 450}}>
+
+![Formulario de repositorio con la opción Descarga única para todas las plantillas activada](/assets/repository-monorepo.webp)
+
+</div>
+
+Cómo funciona la copia compartida:
+
+* Antes de que empiece una tarea, Semaphore bloquea la copia, hace fetch y pull de la rama configurada en el repositorio y después libera el bloqueo. Las tareas de otras plantillas esperan al bloqueo mientras se actualiza la copia, pero las tareas en sí se ejecutan en paralelo.
+* Cada rama sigue teniendo su propia copia, por lo que los repositorios con ramas distintas nunca comparten un árbol de trabajo.
+* La copia se comparte, pero el directorio home de Ansible (roles y colecciones instalados desde `requirements.yml`) sigue siendo independiente para cada plantilla.
+
+Como todas las plantillas trabajan en la misma copia y en la misma rama, una plantilla de un monorepo no puede tener una **Rama** propia ni activar la solicitud **Rama**, que permite a una tarea elegir una rama o un commit. El formulario de la plantilla desactiva ambas opciones y explica el motivo, y la API rechaza una plantilla así. Asegúrese de que los playbooks no escriban en la copia: un árbol de trabajo modificado rompe el siguiente pull, y Semaphore entonces elimina la copia y la clona de nuevo.
 
 ## Editar un repositorio existente {#editing-an-existing-repository}
 1. Vaya a la sección Repositorios de Semaphore.

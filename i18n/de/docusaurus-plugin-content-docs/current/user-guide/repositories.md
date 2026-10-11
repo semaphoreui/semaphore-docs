@@ -35,9 +35,30 @@ Der Schlüssel eines Repositories wird nur für dieses Repository verwendet. Um 
         * `file://` für ein lokales Git-Repository
         * `git://` für ein entferntes Git-Repository mit Zugriff über das Git-Protokoll
     * Legen Sie den Branch des Repositories fest; wenn Sie nicht sicher sind, ist es wahrscheinlich master oder main
+    * Aktivieren Sie **Single checkout for all templates**, wenn das Repository ein Monorepo ist, das alle Aufgabenvorlagen gemeinsam nutzen sollen, siehe [Monorepo](#monorepo)
     * Wählen Sie den **Zugangsschlüssel** aus, den Sie vor dem Einrichten dieses Repositories konfiguriert haben.
 
 4. Klicken Sie auf Speichern, sobald alles konfiguriert ist.
+
+## Monorepo: ein Checkout für alle Vorlagen {#monorepo}
+
+Standardmäßig klont Semaphore ein Repository einmal pro Aufgabenvorlage, sodass jede Vorlage in einer eigenen Kopie arbeitet. Bei einem großen Repository, das viele Vorlagen gemeinsam nutzen, kosten die Kopien Speicherplatz, und jeder Task beginnt mit einem Clone oder Pull seiner eigenen Kopie.
+
+Aktivieren Sie **Single checkout for all templates**, um das Repository einmal zu klonen und diesen Checkout zwischen allen Vorlagen des Projekts zu teilen. Die Option ist für einen lokalen Ordner (`/path/to/the/repo`) nicht verfügbar, da dieser nie geklont wird.
+
+<div style={{maxWidth: 450}}>
+
+![Repository-Formular mit aktivierter Option Single checkout for all templates](/assets/repository-monorepo.webp)
+
+</div>
+
+So funktioniert der gemeinsame Checkout:
+
+* Bevor ein Task startet, sperrt Semaphore den Checkout, holt (fetch) und zieht (pull) den im Repository konfigurierten Branch und gibt die Sperre wieder frei. Tasks anderer Vorlagen warten auf die Sperre, während der Checkout aktualisiert wird, die Tasks selbst laufen jedoch parallel.
+* Jeder Branch erhält weiterhin einen eigenen Checkout, sodass Repositories mit unterschiedlichen Branches nie denselben Arbeitsbaum teilen.
+* Der Checkout wird gemeinsam genutzt, aber das Ansible-Home-Verzeichnis (aus `requirements.yml` installierte Rollen und Collections) bleibt für jede Vorlage getrennt.
+
+Da alle Vorlagen im selben Checkout auf demselben Branch arbeiten, kann eine Vorlage eines Monorepos keinen eigenen **Branch** haben und den **Branch**-Prompt, mit dem ein Task einen Branch oder Commit wählen kann, nicht aktivieren. Das Vorlagenformular deaktiviert beides und erklärt den Grund, und die API lehnt eine solche Vorlage ab. Stellen Sie sicher, dass die Playbooks nicht in den Checkout schreiben: Ein geänderter Arbeitsbaum bricht den nächsten Pull, und Semaphore entfernt dann den Checkout und klont ihn neu.
 
 ## Ein bestehendes Repository bearbeiten {#editing-an-existing-repository}
 1. Gehen Sie zum Bereich Repositories von Semaphore.

@@ -65,7 +65,7 @@ Los usuarios con el rol **Manager** o superior pueden crear y editar plantillas 
 | **Descripción** | Texto opcional que se muestra bajo el nombre. |
 | **Aplicación** | Aplicación que se ejecutará. |
 | **Repositorio** | Repositorio con el playbook o el script; consulte [Repositorios](../repositories). |
-| **Rama** | Rama de Git que se descargará. Vacío significa la rama configurada en el repositorio. |
+| **Rama** | Rama de Git que se descargará. Vacío significa la rama configurada en el repositorio. Desactivado para un repositorio [monorepo](../repositories#monorepo), que se descarga una sola vez para todas las plantillas. |
 | **Nombre del archivo del playbook o script** | Ruta al archivo relativa a la raíz del repositorio. En las aplicaciones de Terraform: el subdirectorio con la configuración. |
 | **Directorio de trabajo distinto** | Ejecutar la herramienta desde otro directorio del repositorio. |
 | **Inventario** | Inventario de Ansible, o un espacio de trabajo en las aplicaciones de Terraform. |
@@ -97,6 +97,10 @@ Los usuarios con el rol **Manager** o superior pueden crear y editar plantillas 
 ### Solicitudes {#prompts}
 
 Las solicitudes son casillas de verificación que permiten al usuario cambiar opciones integradas en el cuadro de diálogo Nueva tarea: rama, inventario, argumentos de la CLI y, en el caso de Ansible, limit, tags, skip tags, nivel de depuración e instalación de Galaxy. Consulte [Solicitudes](./prompts).
+
+En un repositorio [monorepo](../repositories#monorepo) la solicitud **Rama** está desactivada: todas las plantillas de ese repositorio se ejecutan en una única copia compartida, por lo que una tarea no puede cambiarla a otra rama o commit. Pase el cursor sobre el campo desactivado para ver el motivo.
+
+![Formulario de plantilla en un repositorio monorepo: el campo Rama y la solicitud Rama están desactivados](/assets/template-monorepo.webp)
 
 ### Opciones de la aplicación {#application-options}
 

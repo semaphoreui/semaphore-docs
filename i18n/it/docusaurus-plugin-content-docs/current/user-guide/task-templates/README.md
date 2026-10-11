@@ -65,7 +65,7 @@ Gli utenti con il ruolo **Manager** o superiore possono creare e modificare i Ta
 | **Description** | Testo facoltativo mostrato sotto il nome. |
 | **App** | Applicazione da eseguire. |
 | **Repository** | Repository con il playbook o lo script, vedere [Repository](../repositories). |
-| **Branch** | Branch Git da estrarre. Se vuoto, viene utilizzato il branch configurato nel Repository. |
+| **Branch** | Branch Git da estrarre. Se vuoto, viene utilizzato il branch configurato nel Repository. Disabilitato per un Repository [monorepo](../repositories#monorepo), che viene estratto una sola volta per tutti i Task Template. |
 | **Playbook / Script filename** | Percorso del file relativo alla radice del Repository. Per le App Terraform: la sottodirectory che contiene la configurazione. |
 | **Different working directory** | Esegue lo strumento da un'altra directory del Repository. |
 | **Inventory** | Inventory di Ansible, oppure un workspace per le App Terraform. |
@@ -97,6 +97,10 @@ Gli utenti con il ruolo **Manager** o superiore possono creare e modificare i Ta
 ### Prompt {#prompts}
 
 I prompt sono caselle di controllo che consentono all'utente di modificare le opzioni integrate nella finestra di dialogo New Task: branch, Inventory, argomenti CLI e, per Ansible, limit, tags, skip tags, livello di debug e installazione Galaxy. Vedere [Prompt](./prompts).
+
+Per un Repository [monorepo](../repositories#monorepo) il prompt **Branch** è disabilitato: ogni Task Template di tale Repository viene eseguito in un unico checkout condiviso, quindi un Task non può passare a un altro branch o commit. Passare il mouse sul campo disabilitato per vederne il motivo.
+
+![Modulo del Task Template su un Repository monorepo: il campo Branch e il prompt Branch sono disabilitati](/assets/template-monorepo.webp)
 
 ### Opzioni delle applicazioni {#application-options}
 
