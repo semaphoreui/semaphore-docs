@@ -74,5 +74,9 @@
   "sidebar.tutorialSidebar.category.FAQ": {
     "message": "Česta pitanja",
     "description": "The label for category FAQ in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Audit log": {
+    "message": "Dnevnik revizije",
+    "description": "The label for category Audit log in sidebar tutorialSidebar"
   }
 }

@@ -173,8 +173,10 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `system.license` | `activate` | `change` | success, failure | `activation_failed` |  | Pro |
 | `audit.lifecycle` | `start` | `start` | success |  | `destinations` | Community |
 | `audit.retention` | `delete` | `deletion` | success |  | `deleted`, `last_seq`, `retention_days` | Community |
+| `audit.log` | `export` | `access` | success |  | `format`, `filters`, `events`, `complete` | Pro |
 
 ## Related pages {#related-pages}
 
 - [Audit log](/admin-guide/audit-log) — turn on the audit log and send events to a SIEM.
+- [View the audit log](/admin-guide/audit-log/view) — read, filter and export events in the web UI.
 - [Configuration options](/reference/configuration#audit-log) — every `audit.*` option and environment variable.

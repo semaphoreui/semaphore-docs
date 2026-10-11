@@ -130,7 +130,14 @@ const sidebars = {
         'admin-guide/cicd',
         'admin-guide/runners',
         'admin-guide/logs',
-        'admin-guide/audit-log',
+        {
+          type: 'category',
+          label: 'Audit log',
+          link: { type: 'doc', id: 'admin-guide/audit-log/README' },
+          items: [
+            'admin-guide/audit-log/view',
+          ],
+        },
         'admin-guide/metrics',
         { type: 'doc', id: 'admin-guide/ha', customProps: { edition: 'enterprise' } },
         'admin-guide/license',

@@ -10,7 +10,7 @@ napravio API token. Svaki događaj pokazuje ko je to uradio, kada, sa koje adres
 Koristite ga da saznate šta se desilo u vašoj instalaciji ili šaljite događaje u svoj SIEM da budu uz
 ostale dnevnike.
 
-Dnevnik revizije je dostupan u svim izdanjima. Za slanje događaja u SIEM potreban je Semaphore Pro.
+Dnevnik revizije je dostupan u svim izdanjima. Za filtriranje, izvoz u datoteku i slanje događaja u SIEM potreban je Semaphore Pro.
 
 ## Šta se beleži {#recorded-events}
 
@@ -27,6 +27,7 @@ Semaphore trenutno beleži prijave, aktivnost naloga, projekata i zadataka:
   završetke i obrisanu istoriju zadataka;
 - promene runner-a, registracije (uključujući odbijene registracione tokene), odjave i izveštaje runner-a
   sa nevažećim statusom;
+- izvoz dnevnika revizije u datoteku;
 - svako pokretanje servera.
 
 Kompletna lista je na stranici
@@ -110,7 +111,7 @@ povezuju vaši korisnici: bilo ko u njima mogao bi da upiše bilo koju adresu u 
 ## Čuvanje {#storage}
 
 Događaji se čuvaju u bazi podataka Semaphore-a, pa ih vaše uobičajene rezervne kopije baze sadrže.
-Semaphore ne prikazuje događaje revizije u interfejsu. Podrazumevano čuva sve događaje. Da biste brisali stare
+Podrazumevano Semaphore čuva sve događaje. Da biste brisali stare
 događaje, podesite period čuvanja u danima:
 
 ```json
@@ -367,6 +368,7 @@ Opisi šablona, prikazi, brisanje keša projekta i zakazane sinhronizacije sklad
 
 ## Šta dalje {#whats-next}
 
+- [Pregled dnevnika revizije](/admin-guide/audit-log/view) — pregled, filtriranje i izvoz događaja u veb interfejsu.
 - [Događaji revizije](/reference/audit-events) — format događaja i svi događaji koji se beleže.
 - [Opcije konfiguracije](/reference/configuration#audit-log) — sve `audit.*` opcije i promenljive okruženja.
 - [Dnevnici](/admin-guide/logs) — dnevnici servera, aktivnosti i zadataka.

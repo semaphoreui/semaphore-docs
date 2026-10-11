@@ -10,7 +10,8 @@ role, who created an API token. Each event shows who did it, when, from which ad
 worked. Use it to find out what happened on your installation, or send the events to your SIEM to keep them
 next to the rest of your logs.
 
-The audit log is available in every edition. Sending events to a SIEM requires Semaphore Pro.
+The audit log is available in every edition. Filtering, exporting it as a file and sending events to a SIEM
+require Semaphore Pro.
 
 ## What is recorded {#recorded-events}
 
@@ -27,6 +28,7 @@ Semaphore currently records sign-in, account, project and task activity:
   completions and deleted task history;
 - runner changes, registrations (including refused registration tokens), unregistrations and runner reports
   with an invalid status;
+- exports of the audit log as a file;
 - every server start.
 
 For the full list, see
@@ -110,7 +112,7 @@ networks your users connect from: anyone there could set these headers to any ad
 
 ## Storage {#storage}
 
-Events are stored in the Semaphore database, so your regular database backups include them. Semaphore does not show audit events in the UI. By default it keeps every event. To delete old events, set a
+Events are stored in the Semaphore database, so your regular database backups include them. By default Semaphore keeps every event. To delete old events, set a
 retention period in days:
 
 ```json
@@ -364,6 +366,7 @@ descriptions, views, clearing the project cache and scheduled secret storage syn
 
 ## What's next {#whats-next}
 
+- [View the audit log](/admin-guide/audit-log/view) — read, filter and export events in the web UI.
 - [Audit events](/reference/audit-events) — the event format and every recorded event.
 - [Configuration options](/reference/configuration#audit-log) — every `audit.*` option and environment variable.
 - [Logs](/admin-guide/logs) — server, activity and task logs.

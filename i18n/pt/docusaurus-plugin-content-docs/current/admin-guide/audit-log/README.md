@@ -10,7 +10,7 @@ função, quem criou um token de API. Cada evento mostra quem fez, quando, de qu
 Use-o para descobrir o que aconteceu na sua instalação ou envie os eventos para o seu SIEM para mantê-los
 junto com o restante dos seus logs.
 
-O log de auditoria está disponível em todas as edições. Enviar eventos para um SIEM requer o Semaphore Pro.
+O log de auditoria está disponível em todas as edições. Filtrar, exportar como arquivo e enviar eventos para um SIEM requerem o Semaphore Pro.
 
 ## O que é registrado {#recorded-events}
 
@@ -27,6 +27,7 @@ Atualmente o Semaphore registra entradas e atividades de contas, projetos e tare
   conclusões e histórico de tarefas excluído;
 - alterações em runners, registros (incluindo tokens de registro recusados), cancelamentos de registro e relatórios de runners
   com um status inválido;
+- exportações do log de auditoria como arquivo;
 - cada início do servidor.
 
 Para a lista completa, consulte
@@ -113,7 +114,7 @@ cabeçalhos.
 ## Armazenamento {#storage}
 
 Os eventos são armazenados no banco de dados do Semaphore, então seus backups normais do banco os incluem.
-O Semaphore não mostra eventos de auditoria na interface. Por padrão, ele mantém todos os eventos. Para apagar
+Por padrão, o Semaphore mantém todos os eventos. Para apagar
 eventos antigos, defina um período de retenção em dias:
 
 ```json
@@ -369,6 +370,7 @@ sincronizações agendadas de armazenamentos de segredos também não são regis
 
 ## Próximos passos {#whats-next}
 
+- [Ver o log de auditoria](/admin-guide/audit-log/view) — consultar, filtrar e exportar eventos na interface web.
 - [Eventos de auditoria](/reference/audit-events) — o formato dos eventos e todos os eventos registrados.
 - [Opções de configuração](/reference/configuration#audit-log) — todas as opções `audit.*` e variáveis de ambiente.
 - [Logs](/admin-guide/logs) — logs do servidor, de atividade e de tarefas.

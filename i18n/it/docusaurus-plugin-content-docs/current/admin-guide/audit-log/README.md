@@ -10,7 +10,7 @@ modificato un utente o un ruolo, chi ha creato un token API. Ogni evento mostra 
 quale indirizzo e se l'azione è riuscita. Usalo per capire cosa è successo nella tua installazione, oppure
 invia gli eventi al tuo SIEM per tenerli insieme al resto dei log.
 
-Il log di audit è disponibile in tutte le edizioni. L'invio a un SIEM richiede Semaphore Pro.
+Il log di audit è disponibile in tutte le edizioni. Il filtraggio, l'esportazione come file e l'invio a un SIEM richiedono Semaphore Pro.
 
 ## Cosa viene registrato {#recorded-events}
 
@@ -27,6 +27,7 @@ Attualmente Semaphore registra gli accessi e l'attività di account, progetti e 
   completamenti e cronologia dei task eliminata;
 - modifiche ai runner, registrazioni (inclusi i token di registrazione rifiutati), annullamenti della registrazione e report dei runner
   con uno stato non valido;
+- esportazioni del log di audit come file;
 - ogni avvio del server.
 
 Per l'elenco completo, consulta
@@ -114,7 +115,7 @@ indirizzo.
 ## Archiviazione {#storage}
 
 Gli eventi sono salvati nel database di Semaphore, quindi i normali backup del database li includono.
-Semaphore non mostra gli eventi di audit nell'interfaccia. Per impostazione predefinita conserva tutti gli eventi.
+Per impostazione predefinita Semaphore conserva tutti gli eventi.
 Per eliminare i vecchi eventi, imposta un periodo di conservazione in giorni:
 
 ```json
@@ -374,6 +375,7 @@ template, le viste, la pulizia della cache del progetto e le sincronizzazioni pi
 
 ## Prossimi passi {#whats-next}
 
+- [Visualizzare il log di audit](/admin-guide/audit-log/view) — consultare, filtrare ed esportare gli eventi nell'interfaccia web.
 - [Eventi di audit](/reference/audit-events) — il formato degli eventi e tutti gli eventi registrati.
 - [Opzioni di configurazione](/reference/configuration#audit-log) — tutte le opzioni `audit.*` e le variabili d'ambiente.
 - [Log](/admin-guide/logs) — log del server, delle attività e dei task.

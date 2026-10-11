@@ -10,7 +10,7 @@ oder eine Rolle geändert hat, wer ein API-Token erstellt hat. Jedes Ereignis ze
 welcher Adresse und ob es funktioniert hat. Damit finden Sie heraus, was in Ihrer Installation passiert ist,
 oder Sie senden die Ereignisse an Ihr SIEM, damit sie neben Ihren übrigen Logs liegen.
 
-Das Audit-Protokoll ist in jeder Edition verfügbar. Für das Senden an ein SIEM wird Semaphore Pro benötigt.
+Das Audit-Protokoll ist in jeder Edition verfügbar. Für das Filtern, den Export als Datei und das Senden an ein SIEM wird Semaphore Pro benötigt.
 
 ## Was aufgezeichnet wird {#recorded-events}
 
@@ -27,6 +27,7 @@ Derzeit zeichnet Semaphore Anmeldungen, Konto-, Projekt- und Task-Aktivitäten a
   Abschlüsse und gelöschter Task-Verlauf;
 - Änderungen an Runnern, Registrierungen (auch abgelehnte Registrierungs-Tokens), Abmeldungen von Runnern und Runner-Meldungen
   mit ungültigem Status;
+- Exporte des Audit-Protokolls als Datei;
 - jeden Serverstart.
 
 Die vollständige Liste finden Sie unter
@@ -114,7 +115,7 @@ aus denen sich Ihre Benutzer verbinden: Jeder dort könnte diese Header auf eine
 
 Ereignisse werden in der Semaphore-Datenbank gespeichert, sodass Ihre üblichen Datenbank-Backups sie
 enthalten.
-Semaphore zeigt Audit-Ereignisse nicht in der Oberfläche an. Standardmäßig behält es jedes Ereignis. Um alte
+Semaphore behält standardmäßig jedes Ereignis. Um alte
 Ereignisse zu löschen, legen Sie eine Aufbewahrungsdauer in Tagen fest:
 
 ```json
@@ -374,6 +375,7 @@ Projekt-Caches und geplante Synchronisierungen von Geheimnisspeichern werden nic
 
 ## Wie geht es weiter {#whats-next}
 
+- [Audit-Protokoll ansehen](/admin-guide/audit-log/view) — Ereignisse in der Weboberfläche lesen, filtern und exportieren.
 - [Audit-Ereignisse](/reference/audit-events) — das Ereignisformat und alle aufgezeichneten Ereignisse.
 - [Konfigurationsoptionen](/reference/configuration#audit-log) — alle `audit.*`-Optionen und Umgebungsvariablen.
 - [Logs](/admin-guide/logs) — Server-, Aktivitäts- und Aufgaben-Logs.
