@@ -70,7 +70,7 @@ Users with the **Manager** role or higher can create and edit templates with **N
 | **Description** | Optional text shown under the name. |
 | **App** | Application to run. |
 | **Repository** | Repository with the playbook or script, see [Repositories](../repositories). |
-| **Branch** | Git branch to check out. Empty means the branch configured in the repository. |
+| **Branch** | Git branch to check out. Empty means the branch configured in the repository. Disabled for a [monorepo](../repositories#monorepo) repository, which is checked out once for all templates. |
 | **Playbook / Script filename** | Path to the file relative to the repository root. For Terraform apps: the subdirectory with the configuration. |
 | **Different working directory** | Run the tool from another directory of the repository. |
 | **Inventory** | Ansible inventory, or a workspace for Terraform apps. |
@@ -103,6 +103,10 @@ Users with the **Manager** role or higher can create and edit templates with **N
 ### Prompts {#prompts}
 
 Prompts are checkboxes that let the user change built-in options in the New Task dialog: branch, inventory, CLI arguments, and, for Ansible, limit, tags, skip tags, debug level, and Galaxy installation. See [Prompts](./prompts).
+
+For a [monorepo](../repositories#monorepo) repository the **Branch** prompt is disabled: every template of such a repository runs in one shared checkout, so a task cannot switch it to another branch or commit. Hover the disabled field to see the reason.
+
+![Template form on a monorepo repository: the Branch field and the Branch prompt are disabled](/assets/template-monorepo.webp)
 
 ### Application options {#application-options}
 

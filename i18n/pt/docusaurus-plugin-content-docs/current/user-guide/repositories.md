@@ -37,9 +37,30 @@ A chave de um Repositório é usada apenas para esse Repositório. Para alcança
         * `file://` para um Repositório Git local
         * `git://` para um Repositório Git remoto acessado pelo protocolo Git
     * Defina o branch do Repositório; se você não tem certeza de qual deve ser, provavelmente é master ou main
+    * Marque **Checkout único para todos os templates** se o Repositório for um monorepo que todos os templates devem compartilhar, consulte [Monorepo](#monorepo)
     * Selecione a **Chave de Acesso** que você configurou antes de criar este Repositório.
 
 4. Clique em Salvar quando tudo estiver configurado.
+
+## Monorepo: um checkout para todos os templates {#monorepo}
+
+Por padrão, o Semaphore clona um Repositório uma vez por template, de modo que cada template trabalha em uma cópia própria. Para um repositório grande compartilhado por muitos templates, as cópias consomem espaço em disco e cada tarefa começa com um clone ou pull da sua própria cópia.
+
+Marque **Checkout único para todos os templates** para clonar o Repositório uma única vez e compartilhar esse checkout entre todos os templates do projeto. A opção não está disponível para uma pasta local (`/path/to/the/repo`), que nunca é clonada.
+
+<div style={{maxWidth: 450}}>
+
+![Formulário do repositório com Checkout único para todos os templates ativado](/assets/repository-monorepo.webp)
+
+</div>
+
+Como funciona o checkout compartilhado:
+
+* Antes de uma tarefa começar, o Semaphore obtém um lock no checkout, faz fetch e pull do branch configurado no Repositório e, em seguida, libera o lock. As tarefas de outros templates aguardam o lock enquanto o checkout está sendo atualizado, mas as tarefas em si são executadas em paralelo.
+* Cada branch continua tendo o seu próprio checkout, portanto Repositórios com branches diferentes nunca compartilham uma árvore de trabalho.
+* O checkout é compartilhado, mas o diretório home do Ansible (roles e coleções instaladas a partir do `requirements.yml`) permanece separado para cada template.
+
+Como todos os templates trabalham no mesmo checkout e no mesmo branch, um template de um monorepo não pode ter um **Branch** próprio nem ativar o prompt **Branch**, que permite a uma tarefa escolher um branch ou commit. O formulário do template desativa ambos e explica o motivo, e a API rejeita esse template. Certifique-se de que os playbooks não gravem no checkout: uma árvore de trabalho alterada quebra o próximo pull, e o Semaphore então remove o checkout e o clona novamente.
 
 ## Editando um Repositório existente {#editing-an-existing-repository}
 1. Vá até a seção Repositórios do Semaphore.

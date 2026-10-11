@@ -65,7 +65,7 @@
 | **Description** | 可选文本，显示在名称下方。 |
 | **App** | 要运行的应用。 |
 | **Repository** | 包含 playbook 或脚本的仓库，参见[仓库](../repositories)。 |
-| **Branch** | 要检出的 Git 分支。留空表示使用仓库中配置的分支。 |
+| **Branch** | 要检出的 Git 分支。留空表示使用仓库中配置的分支。对 [monorepo](../repositories#monorepo) 仓库禁用，该仓库只为所有模板检出一次。 |
 | **Playbook / Script filename** | 文件相对于仓库根目录的路径。对于 Terraform 应用：包含配置的子目录。 |
 | **Different working directory** | 从仓库的另一个目录运行工具。 |
 | **Inventory** | Ansible 清单，对于 Terraform 应用则为工作区。 |
@@ -97,6 +97,10 @@
 ### 提示 {#prompts}
 
 提示（Prompts）是一组复选框，允许用户在 New Task 对话框中更改内置选项：分支、清单、CLI 参数，以及对于 Ansible 的 limit、tags、skip tags、调试级别和 Galaxy 安装。参见[提示](./prompts)。
+
+对于 [monorepo](../repositories#monorepo) 仓库，**Branch** 提示被禁用：此类仓库的每个模板都在同一个共享检出中运行，因此任务无法将其切换到另一个分支或提交。将鼠标悬停在被禁用的字段上可查看原因。
+
+![monorepo 仓库上的模板表单：Branch 字段和 Branch 提示均被禁用](/assets/template-monorepo.webp)
 
 ### 应用选项 {#application-options}
 

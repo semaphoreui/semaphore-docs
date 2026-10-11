@@ -37,9 +37,30 @@ Ključ repozitorijuma koristi se samo za taj repozitorijum. Da biste dosegli sub
         * `file://` za lokalni Git repozitorijum
         * `git://` za udaljeni Git repozitorijum kome se pristupa preko Git protokola
     * Podesite granu repozitorijuma; ako niste sigurni koja bi trebalo da bude, verovatno je master ili main
+    * Označite **Single checkout for all templates** (jedno preuzimanje za sve šablone) ako je repozitorijum monorepo koji svi šabloni treba da dele, pogledajte [Monorepo](#monorepo)
     * Izaberite **Access Key** koji ste konfigurisali pre podešavanja ovog repozitorijuma.
 
 4. Kliknite Save kada je sve konfigurisano.
+
+## Monorepo: jedno preuzimanje za sve šablone {#monorepo}
+
+Semaphore podrazumevano klonira repozitorijum jednom po šablonu, tako da svaki šablon radi u sopstvenoj kopiji. Za veliki repozitorijum koji deli mnogo šablona kopije zauzimaju prostor na disku, a svaki zadatak počinje kloniranjem ili pull-om sopstvene kopije.
+
+Označite **Single checkout for all templates** da bi se repozitorijum klonirao jednom i da bi se to preuzimanje (checkout) delilo između svih šablona projekta. Opcija nije dostupna za lokalni folder (`/path/to/the/repo`), koji se nikada ne klonira.
+
+<div style={{maxWidth: 450}}>
+
+![Forma repozitorijuma sa uključenom opcijom Single checkout for all templates](/assets/repository-monorepo.webp)
+
+</div>
+
+Kako deljeno preuzimanje radi:
+
+* Pre nego što zadatak počne, Semaphore zaključava preuzimanje, radi fetch i pull grane podešene u repozitorijumu, a zatim otpušta zaključavanje. Zadaci drugih šablona čekaju na zaključavanje dok se preuzimanje ažurira, ali se sami zadaci izvršavaju paralelno.
+* Svaka grana i dalje dobija sopstveno preuzimanje, tako da repozitorijumi sa različitim granama nikada ne dele radno stablo.
+* Preuzimanje je deljeno, ali Ansible home direktorijum (role i kolekcije instalirane iz `requirements.yml`) ostaje odvojen za svaki šablon.
+
+Pošto svi šabloni rade u istom preuzimanju na istoj grani, šablon monorepo repozitorijuma ne može imati sopstvenu granu (**Branch**) i ne može uključiti upit **Branch** koji zadatku omogućava da izabere granu ili commit. Forma šablona onemogućava oboje i objašnjava zašto, a API odbija takav šablon. Vodite računa da playbook-ovi ne pišu u preuzimanje: izmenjeno radno stablo prekida sledeći pull, pa Semaphore tada uklanja preuzimanje i ponovo ga klonira.
 
 ## Izmena postojećeg repozitorijuma {#editing-an-existing-repository}
 1. Idite u odeljak Repozitorijumi u Semaphore-u.
