@@ -99,6 +99,8 @@ enum 변수를 생성할 때는 변수 편집기에서 각 옵션에 표시 레�
 
 **예시**: 보안을 위해 입력한 값이 점으로 표시되는 `api_token`이라는 변수
 
+Ansible 템플릿에서는 값이 명령줄이 아닌 Ansible Vault로 암호화된 파일을 통해 플레이북에 전달됩니다.
+
 ## 기본값 {#default-values}
 
 대부분의 변수 유형에 선택적 기본값을 설정할 수 있습니다. 사용자가 작업 실행 대화 상자를 열면 필드가 이 기본값으로 미리 채워집니다.
@@ -130,7 +132,9 @@ enum 변수를 생성할 때는 변수 편집기에서 각 옵션에 표시 레�
 
 ### Ansible 템플릿 {#ansible-templates}
 
-설문 변수는 `--extra-vars` 플래그를 사용하여 Ansible 추가 변수로 전달됩니다.
+설문 변수는 Ansible 추가 변수로 전달됩니다. Semaphore는 이를 임시 YAML 파일에 기록하고
+`--extra-vars @file`로 전달합니다. 이 파일은 작업의 사용자만 읽을 수 있으며 작업이 끝나면
+삭제됩니다.
 
 **예시**: `app_version`이라는 설문 변수를 정의한 경우:
 
@@ -144,9 +148,15 @@ enum 변수를 생성할 때는 변수 편집기에서 각 옵션에 표시 레�
 
 작업 실행 시 사용자가 설문 양식에 "2.5.0"을 입력하면 Ansible은 다음과 같이 값을 받습니다:
 
-```bash
-ansible-playbook playbook.yml --extra-vars "app_version=2.5.0"
+```yaml
+app_version: !unsafe "2.5.0"
 ```
+
+모든 값에는 `!unsafe` 태그가 붙습니다. Ansible은 값을 그대로 사용하며, 설문 필드에 입력되었거나
+변수 그룹에 저장되었거나 워크플로우에서 전달된 Jinja2 표현식을 평가하지 않습니다.
+**secret** 유형의 설문 변수는 Semaphore가 vault 프롬프트에 응답하는 일회용 비밀번호를 사용해
+Ansible Vault로 암호화된 두 번째 파일에 기록되므로, 시크릿이 명령줄에 나타나거나 평문으로
+디스크에 저장되지 않습니다.
 
 ### Terraform/OpenTofu 템플릿 {#terraformopentofu-templates}
 

@@ -104,6 +104,7 @@ UI 上のどこかでタスクをクリックすると、タスクのウィン�
 | `SEMAPHORE_WORKFLOW_ID` | タスクが[ワークフロー](./workflows#environment-variables)実行のノードである場合のワークフロー ID |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | タスクが属するワークフロー実行の ID |
 | `SEMAPHORE_WORKFLOW_URL` | ワークフロー実行ページへのリンク（サーバー設定の `web_host` が必要です） |
+| `SEMAPHORE_OUTPUTS_FILE` | ワークフローのタスクが[出力](./workflows#producing-outputs)を書き込むファイルのパス |
 
 ワークフローによって開始されていないタスクには、ワークフロー変数は設定されません。
 

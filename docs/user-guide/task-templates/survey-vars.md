@@ -104,6 +104,8 @@ Password input field where the value is hidden.
 
 **Example**: A variable named `api_token` where the entered value appears as dots for security
 
+In Ansible templates the value reaches the playbook in a file encrypted with Ansible Vault, not on the command line.
+
 ## Default values {#default-values}
 
 You can set an optional default for most variable types. When a user opens the task run dialog, fields are pre-filled with these defaults.
@@ -135,7 +137,9 @@ Survey variables are passed differently depending on the template type and the *
 
 ### Ansible templates {#ansible-templates}
 
-Survey variables are passed as Ansible extra variables using the `--extra-vars` flag.
+Survey variables are passed as Ansible extra variables. Semaphore writes them to a temporary
+YAML file and passes it with `--extra-vars @file`; the file is readable by the task's user only
+and is deleted when the task ends.
 
 **Example**: If you define a survey variable named `app_version`:
 
@@ -149,9 +153,15 @@ Survey variables are passed as Ansible extra variables using the `--extra-vars` 
 
 When running the task, the user enters "2.5.0" in the survey form, and Ansible receives it as:
 
-```bash
-ansible-playbook playbook.yml --extra-vars "app_version=2.5.0"
+```yaml
+app_version: !unsafe "2.5.0"
 ```
+
+Every value carries the `!unsafe` tag: Ansible uses it literally and never evaluates a Jinja2
+expression typed into a survey field, stored in a variable group or delivered from a workflow.
+A survey variable of type **secret** goes into a second file encrypted with Ansible Vault using
+a one-time password that Semaphore answers on the vault prompt, so secrets never appear on the
+command line or on disk in clear.
 
 ### Terraform/OpenTofu templates {#terraformopentofu-templates}
 

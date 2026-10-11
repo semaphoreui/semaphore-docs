@@ -104,6 +104,7 @@ Todas las tareas, independientemente de su aplicación (Ansible, Terraform, Bash
 | `SEMAPHORE_WORKFLOW_ID` | ID del flujo de trabajo, cuando la tarea es un nodo de una ejecución de [flujo de trabajo](./workflows#environment-variables) |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID de la ejecución del flujo de trabajo a la que pertenece la tarea |
 | `SEMAPHORE_WORKFLOW_URL` | Enlace a la página de la ejecución del flujo de trabajo (requiere `web_host` en la configuración del servidor) |
+| `SEMAPHORE_OUTPUTS_FILE` | Ruta del archivo en el que una tarea de flujo de trabajo escribe sus [salidas](./workflows#producing-outputs) |
 
 Las variables del flujo de trabajo no están presentes si la tarea no se inició mediante un flujo de trabajo.
 

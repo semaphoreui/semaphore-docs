@@ -99,6 +99,8 @@ Champ de type mot de passe dont la valeur est masquée.
 
 **Exemple** : une variable nommée `api_token` dont la valeur saisie s'affiche sous forme de points pour des raisons de sécurité
 
+Dans les modèles Ansible, la valeur parvient au playbook dans un fichier chiffré avec Ansible Vault, et non sur la ligne de commande.
+
 ## Valeurs par défaut {#default-values}
 
 Vous pouvez définir une valeur par défaut optionnelle pour la plupart des types de variables. Lorsqu'un utilisateur ouvre la boîte de dialogue d'exécution de tâche, les champs sont pré-remplis avec ces valeurs par défaut.
@@ -130,7 +132,9 @@ Les **valeurs de sélection multiple (type `select`)** sont des tableaux encodé
 
 ### Modèles Ansible {#ansible-templates}
 
-Les variables de sondage sont transmises comme variables supplémentaires Ansible via l'option `--extra-vars`.
+Les variables de sondage sont transmises comme variables supplémentaires Ansible. Semaphore les
+écrit dans un fichier YAML temporaire qu'il transmet avec `--extra-vars @file` ; le fichier n'est
+lisible que par l'utilisateur de la tâche et il est supprimé à la fin de la tâche.
 
 **Exemple** : si vous définissez une variable de sondage nommée `app_version` :
 
@@ -144,9 +148,16 @@ Les variables de sondage sont transmises comme variables supplémentaires Ansibl
 
 Lors de l'exécution de la tâche, l'utilisateur saisit « 2.5.0 » dans le formulaire de sondage, et Ansible la reçoit ainsi :
 
-```bash
-ansible-playbook playbook.yml --extra-vars "app_version=2.5.0"
+```yaml
+app_version: !unsafe "2.5.0"
 ```
+
+Chaque valeur porte le tag `!unsafe` : Ansible l'utilise telle quelle et n'évalue jamais une
+expression Jinja2 saisie dans un champ de sondage, stockée dans un groupe de variables ou
+transmise par un workflow. Une variable de sondage de type **secret** est placée dans un second
+fichier chiffré avec Ansible Vault à l'aide d'un mot de passe à usage unique que Semaphore fournit
+à l'invite du vault, de sorte que les secrets n'apparaissent jamais en clair, ni sur la ligne de
+commande ni sur le disque.
 
 ### Modèles Terraform/OpenTofu {#terraformopentofu-templates}
 

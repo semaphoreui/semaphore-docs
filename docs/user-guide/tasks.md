@@ -111,6 +111,7 @@ variables that identify it in Semaphore:
 | `SEMAPHORE_WORKFLOW_ID` | ID of the workflow, when the task is a node of a [workflow](./workflows#environment-variables) run |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID of the workflow run the task belongs to |
 | `SEMAPHORE_WORKFLOW_URL` | Link to the workflow run page (requires `web_host` in the server config) |
+| `SEMAPHORE_OUTPUTS_FILE` | Path of the file a workflow task writes its [outputs](./workflows#producing-outputs) to |
 
 The workflow variables are absent when the task was not started by a workflow.
 

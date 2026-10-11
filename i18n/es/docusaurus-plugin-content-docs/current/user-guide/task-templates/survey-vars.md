@@ -99,6 +99,8 @@ Campo de contraseña en el que el valor permanece oculto.
 
 **Ejemplo**: Una variable llamada `api_token` en la que el valor introducido se muestra como puntos por seguridad
 
+En las plantillas de Ansible, el valor llega al playbook en un archivo cifrado con Ansible Vault, no en la línea de comandos.
+
 ## Valores predeterminados {#default-values}
 
 Puede establecer un valor predeterminado opcional para la mayoría de los tipos de variables. Cuando un usuario abre el diálogo de ejecución de la tarea, los campos aparecen precargados con estos valores predeterminados.
@@ -130,7 +132,9 @@ Los **valores de selección múltiple (tipo `select`)** son arreglos codificados
 
 ### Plantillas de Ansible {#ansible-templates}
 
-Las variables de encuesta se pasan como variables extra de Ansible mediante el indicador `--extra-vars`.
+Las variables de encuesta se pasan como variables extra de Ansible. Semaphore las escribe en un
+archivo YAML temporal y lo pasa con `--extra-vars @file`; solo el usuario de la tarea puede leer
+el archivo, que se elimina cuando la tarea termina.
 
 **Ejemplo**: Si define una variable de encuesta llamada `app_version`:
 
@@ -144,9 +148,16 @@ Las variables de encuesta se pasan como variables extra de Ansible mediante el i
 
 Al ejecutar la tarea, el usuario introduce "2.5.0" en el formulario de encuesta y Ansible lo recibe como:
 
-```bash
-ansible-playbook playbook.yml --extra-vars "app_version=2.5.0"
+```yaml
+app_version: !unsafe "2.5.0"
 ```
+
+Cada valor lleva la etiqueta `!unsafe`: Ansible lo usa de forma literal y nunca evalúa una
+expresión Jinja2 escrita en un campo de encuesta, almacenada en un grupo de variables o entregada
+desde un flujo de trabajo. Una variable de encuesta de tipo **secret** va a un segundo archivo
+cifrado con Ansible Vault mediante una contraseña de un solo uso que Semaphore introduce en la
+solicitud de vault, de modo que los secretos nunca aparecen en claro ni en la línea de comandos ni
+en el disco.
 
 ### Plantillas de Terraform/OpenTofu {#terraformopentofu-templates}
 

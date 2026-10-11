@@ -99,6 +99,8 @@ Passwort-Eingabefeld, in dem der Wert verborgen wird.
 
 **Beispiel**: Eine Variable namens `api_token`, bei der der eingegebene Wert aus Sicherheitsgründen als Punkte angezeigt wird
 
+In Ansible-Templates erreicht der Wert das Playbook in einer mit Ansible Vault verschlüsselten Datei, nicht über die Kommandozeile.
+
 ## Standardwerte {#default-values}
 
 Für die meisten Variablentypen können Sie einen optionalen Standardwert festlegen. Wenn ein Benutzer den Dialog zum Ausführen eines Tasks öffnet, sind die Felder mit diesen Standardwerten vorausgefüllt.
@@ -130,7 +132,9 @@ Survey-Variablen werden je nach Template-Typ und der Einstellung **Variable übe
 
 ### Ansible-Templates {#ansible-templates}
 
-Survey-Variablen werden als Ansible-Extra-Variablen über das `--extra-vars`-Flag übergeben.
+Survey-Variablen werden als Ansible-Extra-Variablen übergeben. Semaphore schreibt sie in eine
+temporäre YAML-Datei und übergibt diese mit `--extra-vars @file`; die Datei ist nur für den
+Benutzer des Tasks lesbar und wird gelöscht, wenn der Task endet.
 
 **Beispiel**: Wenn Sie eine Survey-Variable namens `app_version` definieren:
 
@@ -144,9 +148,16 @@ Survey-Variablen werden als Ansible-Extra-Variablen über das `--extra-vars`-Fla
 
 Beim Ausführen des Tasks gibt der Benutzer „2.5.0“ im Survey-Formular ein, und Ansible erhält den Wert wie folgt:
 
-```bash
-ansible-playbook playbook.yml --extra-vars "app_version=2.5.0"
+```yaml
+app_version: !unsafe "2.5.0"
 ```
+
+Jeder Wert trägt das Tag `!unsafe`: Ansible verwendet ihn wörtlich und wertet niemals einen
+Jinja2-Ausdruck aus, der in ein Survey-Feld eingegeben, in einer Variablengruppe gespeichert
+oder von einem Workflow geliefert wurde. Eine Survey-Variable vom Typ **secret** kommt in eine
+zweite Datei, die mit Ansible Vault und einem Einmalpasswort verschlüsselt ist, das Semaphore an
+der Vault-Eingabeaufforderung eingibt; so erscheinen Secrets nie im Klartext auf der
+Kommandozeile oder auf der Festplatte.
 
 ### Terraform/OpenTofu-Templates {#terraformopentofu-templates}
 

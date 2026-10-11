@@ -104,6 +104,7 @@ Jeder Task erhält unabhängig von der verwendeten Anwendung (Ansible, Terraform
 | `SEMAPHORE_WORKFLOW_ID` | ID des Workflows, wenn der Task ein Knoten eines [Workflow](./workflows#environment-variables)-Laufs ist |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID des Workflow-Laufs, zu dem der Task gehört |
 | `SEMAPHORE_WORKFLOW_URL` | Link zur Seite des Workflow-Laufs (erfordert `web_host` in der Serverkonfiguration) |
+| `SEMAPHORE_OUTPUTS_FILE` | Pfad der Datei, in die ein Workflow-Task seine [Outputs](./workflows#producing-outputs) schreibt |
 
 Die Workflow-Variablen sind nicht gesetzt, wenn der Task nicht durch einen Workflow gestartet wurde.
 

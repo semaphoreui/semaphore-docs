@@ -104,6 +104,7 @@ UI에서 작업을 클릭하면 작업 창이 열립니다. 헤더에는 템플�
 | `SEMAPHORE_WORKFLOW_ID` | 작업이 [워크플로](./workflows#environment-variables) 실행의 노드인 경우 워크플로 ID |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | 작업이 속한 워크플로 실행 ID |
 | `SEMAPHORE_WORKFLOW_URL` | 워크플로 실행 페이지 링크 (서버 설정에 `web_host`가 필요함) |
+| `SEMAPHORE_OUTPUTS_FILE` | 워크플로 작업이 [출력](./workflows#producing-outputs)을 기록하는 파일의 경로 |
 
 워크플로에서 시작하지 않은 작업에는 워크플로 변수가 설정되지 않습니다.
 

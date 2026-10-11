@@ -104,6 +104,7 @@ Todas as tarefas, independentemente da aplicação (Ansible, Terraform, Bash, Po
 | `SEMAPHORE_WORKFLOW_ID` | ID do workflow, quando a tarefa é um nó de uma execução de [workflow](./workflows#environment-variables) |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID da execução do workflow à qual a tarefa pertence |
 | `SEMAPHORE_WORKFLOW_URL` | Link para a página da execução do workflow (requer `web_host` na configuração do servidor) |
+| `SEMAPHORE_OUTPUTS_FILE` | Caminho do arquivo no qual uma tarefa de workflow grava as suas [saídas](./workflows#producing-outputs) |
 
 As variáveis de workflow não estão presentes quando a tarefa não foi iniciada por um workflow.
 

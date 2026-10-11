@@ -6,6 +6,8 @@ Odeljak Grupe promenljivih (Variable Groups) u Semaphore-u je mesto za čuvanje 
 
 Svi šabloni zadataka (Task Templates) zahtevaju da grupa promenljivih bude definisana, čak i ako je prazna. 
 
+Ansible prima promenljive grupe kao dodatne promenljive iz privremene datoteke u kojoj je svaka vrednost označena sa `!unsafe`: Jinja2 izraz sačuvan u grupi promenljivih stiže do playbook-a doslovno i ne izračunava se. Tajne grupe koje se prosleđuju kao promenljive prenose se u zasebnoj datoteci šifrovanoj pomoću Ansible Vault-a.
+
 ## Kreiranje grupe promenljivih {#create-a-variable-group}
 1. Kliknite na karticu Grupe promenljivih (Variable Groups).
 2. Kliknite na dugme Nova grupa promenljivih (New Variable Group).
