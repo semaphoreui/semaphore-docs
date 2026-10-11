@@ -6,6 +6,8 @@ La sección Grupos de variables de Semaphore es el lugar donde se guardan variab
 
 Todas las plantillas de tareas requieren que se defina un grupo de variables, aunque esté vacío. 
 
+Ansible recibe las variables de un grupo como variables extra desde un archivo temporal en el que cada valor lleva la etiqueta `!unsafe`: una expresión Jinja2 almacenada en un grupo de variables llega al playbook de forma literal y no se evalúa. Los secretos del grupo que se pasan como variables viajan en un archivo aparte cifrado con Ansible Vault.
+
 ## Crear un grupo de variables {#create-a-variable-group}
 1. Haga clic en la pestaña Grupo de variables.
 2. Haga clic en el botón Nuevo grupo de variables.

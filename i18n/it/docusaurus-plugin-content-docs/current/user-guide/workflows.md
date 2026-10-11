@@ -108,18 +108,112 @@ Impostare **Start version** sul Workflow (ad esempio `1.0.0`) per abilitare le e
 su ogni esecuzione. Semaphore incrementa la versione a ogni esecuzione successiva, in modo simile
 ai Task Template di build.
 
-## Artefatti dei Workflow (set_stats) {#workflow-artifacts-set_stats}
+## Output e input {#outputs-and-inputs}
 
-Quando un Task Ansible di un Workflow utilizza `set_stats`, le variabili vengono memorizzate come
-**artefatti del Workflow** per quella esecuzione. I nodi Task successivi della stessa esecuzione
-le ricevono automaticamente come variabili aggiuntive.
+Un nodo Task può passare dati strutturati ai nodi successivi. Il Task **produce output**: un
+oggetto JSON di valori con nome, memorizzato insieme al Task quando termina con successo. Una
+connessione verso il nodo Task successivo **fornisce input**: compila le variabili survey del Task
+Template di quel nodo con gli output del nodo precedente. Non vengono passati file, solo valori.
 
-:::warning
-Se i passaggi del Workflow vengono eseguiti su **Runner remoti**, gli artefatti del Workflow non
-attraversano ancora i passaggi eseguiti sui Runner remoti: vengono passati solo tra i Task eseguiti
-localmente sul server Semaphore. Pianificare di conseguenza il passaggio degli artefatti oppure mantenere
-i passaggi che producono e consumano artefatti sullo stesso percorso di esecuzione.
-:::
+### Produzione degli output {#producing-outputs}
+
+Ogni Task avviato da un'esecuzione del Workflow riceve la variabile d'ambiente `SEMAPHORE_OUTPUTS_FILE`:
+il percorso di un file vuoto creato solo per quel Task. Tutto ciò che il Task vi scrive come oggetto
+JSON diventa il suo output.
+
+| Applicazione | Come vengono prodotti gli output |
+|-----|--------------------------|
+| **Ansible** | `ansible.builtin.set_stats` con `per_host: false` (impostazione predefinita). Il plugin di callback `semaphore_outputs` incluso scrive nel file le statistiche aggregate dell'esecuzione; le statistiche per host non sono output. |
+| **Terraform, OpenTofu, Terragrunt** | Acquisiti automaticamente da `output -json` dopo un'esecuzione riuscita. Un valore che il Task ha scritto da sé nel file prevale su un output acquisito con lo stesso nome. |
+| **Bash, Python, PowerShell, Pulumi** | Lo script scrive il file. |
+
+```bash
+# Bash: scrivere il file degli output
+cat > "$SEMAPHORE_OUTPUTS_FILE" <<EOF
+{"image_tag": "1.4.2", "replicas": 3, "subnet_ids": ["subnet-1", "subnet-2"]}
+EOF
+```
+
+```yaml
+# Ansible: set_stats diventa output
+- name: Publish the image tag for the next nodes
+  ansible.builtin.set_stats:
+    data:
+      image_tag: "{{ built_tag }}"
+```
+
+Regole:
+
+- Gli output vengono letti solo quando il Task **termina con successo**. Un Task fallito o interrotto
+  non ne ha, quindi una diramazione **On failure** non riceve nulla dal nodo che è fallito.
+- I nomi degli output corrispondono a `^[A-Za-z_][A-Za-z0-9_-]*$`. Un valore può essere qualsiasi
+  valore JSON: stringa, numero, booleano, lista od oggetto.
+- Limiti: il file è al massimo di 256 KB, con al massimo 100 output di al massimo 32 KB ciascuno.
+- Un file mancante o vuoto significa "nessun output". Un file che non è un oggetto JSON, usa un nome
+  non valido o supera un limite **fa fallire il Task**, con il motivo riportato nel suo log.
+- Gli output di Terraform che non possono essere memorizzati — contrassegnati come `sensitive`, troppo
+  grandi, con un nome non valido o oltre i limiti — vengono saltati ed elencati nel log del Task e nel
+  pannello **Outputs** del Task come **Not captured**. Non fanno mai fallire il Task.
+
+### Fornitura degli input {#delivering-inputs}
+
+Fare clic su una connessione che termina in un nodo Task: il suo pannello laterale contiene una sezione **Inputs**.
+
+- **Per nome** (impostazione predefinita). Ogni output del nodo di origine il cui nome coincide con una
+  variabile survey del Task Template di destinazione compila quella variabile. Gli output senza una
+  variabile corrispondente vengono ignorati; un output di Terraform contenente un trattino non è mai un
+  nome di variabile valido, quindi non viene fornito.
+- **Map inputs explicitly.** Selezionare la casella per fornire solo le coppie elencate: una variabile
+  survey del Task Template di destinazione e la chiave di output che la alimenta. Un elenco vuoto non
+  fornisce nulla. Quando il Workflow ha un'esecuzione terminata, il pannello suggerisce le chiavi prodotte
+  da quell'esecuzione e segnala le chiavi che non sono state acquisite.
+
+Una variabile che nessuna connessione compila ricade sul valore impostato sul nodo, quindi sul valore
+predefinito della variabile. Una variabile **obbligatoria** lasciata senza valore fa fallire il Task del
+nodo prima che venga avviato, con una riga di log che indica la variabile, per cui l'esecuzione segue i
+suoi archi **On failure**.
+
+I valori vengono convertiti nel tipo della variabile: una variabile `int` accetta un numero o una stringa
+di cifre, una variabile `enum` o `select` accetta solo le proprie opzioni, una variabile `string` o `text`
+accetta qualsiasi valore (un oggetto o una lista arriva come JSON compatto). Un valore non compatibile
+viene ignorato, con il motivo nel log del Task, e si applica il valore di ripiego.
+
+**I nodi Approval e Delay** lasciano passare gli output: `task → approval → task` fornisce comunque i
+dati, e si applica la modalità dell'ultima connessione.
+
+**Più connessioni verso lo stesso nodo.** Contribuisce ogni connessione la cui origine è terminata con
+successo. Quando due di esse compilano la stessa variabile, una mappatura esplicita prevale su una
+fornitura per nome; tra due dello stesso tipo prevale la connessione creata per prima, così
+un'esecuzione dà sempre lo stesso risultato. Il log del Task indica la connessione che ha prevalso.
+
+![The connection panel in by-name mode: matched survey variables are ticked](/assets/workflow-inputs-by-name.webp)
+
+![The connection panel with explicit mapping: one output key per survey variable](/assets/workflow-inputs-explicit.webp)
+
+### Dove visualizzarli {#where-to-see-outputs}
+
+- La **vista dell'esecuzione** mostra un badge *N outputs* su ogni nodo che ne ha prodotti.
+- La **finestra del Task** contiene una tabella **Outputs** con i valori e l'elenco *Not captured*.
+- Il log di un Task alimentato da una connessione inizia con una riga per ogni variabile, ad esempio
+  `Input "image_tag" <- output "image_tag" of node 3 (task #41)`, così l'origine di ogni valore si
+  trova una riga sopra il valore stesso.
+
+![Run view: nodes that produced outputs carry a badge](/assets/workflow-run-outputs.webp)
+
+<div class="DialogScreenshot" style={{maxWidth: 1000}}>
+![Task dialog, Details tab: the Outputs table](/assets/task-outputs.webp)
+</div>
+
+### Limitazioni {#outputs-limitations}
+
+- Gli output vengono memorizzati e mostrati in chiaro a chiunque possa vedere il Task. **Non passare
+  secret tramite gli output.** Una variabile survey di tipo `secret` non può essere compilata da una
+  connessione.
+- Gli output sono valori, mai codice: Ansible li riceve come stringhe letterali e un'espressione Jinja2
+  all'interno di un valore non viene valutata.
+- I Task sui Runner remoti producono e ricevono output come i Task sul server. I Task eseguiti
+  dall'executor **Docker** o **Kubernetes** di un Runner non producono ancora output; il loro log lo
+  segnala.
 
 ## Variabili d'ambiente {#environment-variables}
 
@@ -131,6 +225,7 @@ Un Task avviato da un workflow riceve, oltre alle
 | `SEMAPHORE_WORKFLOW_ID` | ID del workflow |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID dell'esecuzione corrente |
 | `SEMAPHORE_WORKFLOW_URL` | Link alla pagina dell'esecuzione, ad esempio `https://semaphore.example.com/project/1/workflows/7/runs/42` (richiede `web_host` nella configurazione del server) |
+| `SEMAPHORE_OUTPUTS_FILE` | Percorso del file in cui il Task scrive i propri [output](#producing-outputs) |
 
 Queste variabili vengono impostate per tutte le applicazioni, incluse Ansible e Terraform, e raggiungono i Task eseguiti su Runner remoti.
 
@@ -147,5 +242,6 @@ Queste variabili vengono impostate per tutte le applicazioni, incluse Ansible e 
 I template e le esecuzioni dei Workflow sono disponibili in
 `/api/project/{project_id}/workflows`. Vedere la
 [documentazione API](/reference/api) per gli schemi di richiesta e risposta, inclusi
-i campi dei nodi `delay` (`delay_seconds`) e l'endpoint di interruzione
-(`POST …/runs/{run_id}/stop`).
+i campi dei nodi `delay` (`delay_seconds`), `input_mode` e `input_mappings` sugli archi, il
+documento `artifacts` di ogni Task nei dettagli dell'esecuzione (`GET …/runs/{run_id}`) e l'endpoint
+di interruzione (`POST …/runs/{run_id}/stop`).

@@ -99,6 +99,8 @@ Campo do tipo senha, no qual o valor fica oculto.
 
 **Exemplo**: uma variável chamada `api_token` na qual o valor digitado aparece como pontos por segurança
 
+Em templates do Ansible, o valor chega ao playbook em um arquivo criptografado com o Ansible Vault, e não pela linha de comando.
+
 ## Valores padrão {#default-values}
 
 Você pode definir um valor padrão opcional para a maioria dos tipos de variável. Quando um usuário abre a caixa de diálogo de execução da tarefa, os campos são pré-preenchidos com esses padrões.
@@ -130,7 +132,9 @@ As variáveis de survey são passadas de formas diferentes dependendo do tipo do
 
 ### Templates do Ansible {#ansible-templates}
 
-As variáveis de survey são passadas como variáveis extras do Ansible usando a flag `--extra-vars`.
+As variáveis de survey são passadas como variáveis extras do Ansible. O Semaphore as grava em um
+arquivo YAML temporário e o passa com `--extra-vars @file`; o arquivo pode ser lido apenas pelo
+usuário da tarefa e é excluído quando a tarefa termina.
 
 **Exemplo**: se você definir uma variável de survey chamada `app_version`:
 
@@ -144,9 +148,15 @@ As variáveis de survey são passadas como variáveis extras do Ansible usando a
 
 Ao executar a tarefa, o usuário informa "2.5.0" no formulário de survey, e o Ansible a recebe como:
 
-```bash
-ansible-playbook playbook.yml --extra-vars "app_version=2.5.0"
+```yaml
+app_version: !unsafe "2.5.0"
 ```
+
+Todo valor recebe a tag `!unsafe`: o Ansible o usa literalmente e nunca avalia uma expressão Jinja2
+digitada em um campo de survey, armazenada em um grupo de variáveis ou entregue por um workflow.
+Uma variável de survey do tipo **secret** vai para um segundo arquivo, criptografado com o Ansible Vault
+usando uma senha de uso único que o Semaphore informa no prompt do vault, de modo que os segredos nunca
+aparecem na linha de comando nem em texto claro no disco.
 
 ### Templates do Terraform/OpenTofu {#terraformopentofu-templates}
 

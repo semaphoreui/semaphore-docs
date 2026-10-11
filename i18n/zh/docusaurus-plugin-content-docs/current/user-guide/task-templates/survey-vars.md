@@ -99,6 +99,8 @@
 
 **示例**：名为 `api_token` 的变量，出于安全考虑，输入的值显示为圆点
 
+在 Ansible 模板中，该值通过一个用 Ansible Vault 加密的文件传给 playbook，而不是通过命令行。
+
 ## 默认值 {#default-values}
 
 大多数变量类型都可以设置可选的默认值。当用户打开任务运行对话框时，字段会用这些默认值预先填充。
@@ -130,7 +132,8 @@
 
 ### Ansible 模板 {#ansible-templates}
 
-调查变量通过 `--extra-vars` 标志作为 Ansible 额外变量传递。
+调查变量作为 Ansible 额外变量传递。Semaphore 将它们写入一个临时 YAML 文件，并通过
+`--extra-vars @file` 传递该文件；该文件仅任务的用户可读，并在任务结束时删除。
 
 **示例**：如果你定义了名为 `app_version` 的调查变量：
 
@@ -144,9 +147,14 @@
 
 运行任务时，用户在调查表单中输入 “2.5.0”，Ansible 收到的形式为：
 
-```bash
-ansible-playbook playbook.yml --extra-vars "app_version=2.5.0"
+```yaml
+app_version: !unsafe "2.5.0"
 ```
+
+每个值都带有 `!unsafe` 标记：Ansible 按字面使用它，绝不会对在调查字段中输入、存储在
+变量组中或从工作流传入的 Jinja2 表达式求值。**secret** 类型的调查变量会进入第二个文件，
+该文件用 Ansible Vault 以一次性密码加密，Semaphore 会在 vault 提示输入密码时自动提供
+该密码，因此机密绝不会出现在命令行上，也不会以明文形式存放在磁盘上。
 
 ### Terraform/OpenTofu 模板 {#terraformopentofu-templates}
 

@@ -99,6 +99,8 @@ Polje za unos lozinke u kojem je vrednost sakrivena.
 
 **Primer**: Promenljiva pod nazivom `api_token` u kojoj se uneta vrednost radi bezbednosti prikazuje kao tačkice
 
+U Ansible šablonima vrednost stiže do playbook-a u datoteci šifrovanoj pomoću Ansible Vault-a, a ne preko komandne linije.
+
 ## Podrazumevane vrednosti {#default-values}
 
 Za većinu tipova promenljivih možete postaviti opcionu podrazumevanu vrednost. Kada korisnik otvori dijalog za pokretanje zadatka, polja su unapred popunjena tim vrednostima.
@@ -130,7 +132,9 @@ Anketne promenljive se prosleđuju različito u zavisnosti od tipa šablona i po
 
 ### Ansible šabloni {#ansible-templates}
 
-Anketne promenljive se prosleđuju kao Ansible dodatne promenljive pomoću zastavice `--extra-vars`.
+Anketne promenljive se prosleđuju kao Ansible dodatne promenljive. Semaphore ih upisuje u
+privremenu YAML datoteku i prosleđuje je pomoću `--extra-vars @file`; datoteku može da čita
+samo korisnik zadatka i briše se kada se zadatak završi.
 
 **Primer**: Ako definišete anketnu promenljivu pod nazivom `app_version`:
 
@@ -144,9 +148,15 @@ Anketne promenljive se prosleđuju kao Ansible dodatne promenljive pomoću zasta
 
 Pri pokretanju zadatka korisnik u anketnoj formi unosi „2.5.0“, a Ansible je prima kao:
 
-```bash
-ansible-playbook playbook.yml --extra-vars "app_version=2.5.0"
+```yaml
+app_version: !unsafe "2.5.0"
 ```
+
+Svaka vrednost nosi oznaku `!unsafe`: Ansible je koristi doslovno i nikada ne izračunava
+Jinja2 izraz unet u polje ankete, sačuvan u grupi promenljivih ili isporučen iz toka rada.
+Anketna promenljiva tipa **secret** ide u drugu datoteku, šifrovanu pomoću Ansible Vault-a
+jednokratnom lozinkom koju Semaphore sam unosi kada Vault zatraži lozinku, tako da se tajne
+nikada ne pojavljuju na komandnoj liniji niti nešifrovane na disku.
 
 ### Terraform/OpenTofu šabloni {#terraformopentofu-templates}
 
