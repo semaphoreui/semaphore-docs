@@ -49,6 +49,10 @@ The key of a Repository is used for that Repository only. To reach submodules, `
 
 ## Monorepo: one checkout for all templates {#monorepo}
 
+:::info Since v2.20
+The **Single checkout for all templates** option is available since **Semaphore 2.20**. Earlier versions always clone a Repository once per template.
+:::
+
 By default Semaphore clones a Repository once per template, so every template works in a copy of its own. For a large repository that many templates share, the copies cost disk space and every task starts with a clone or pull of its own copy.
 
 Tick **Single checkout for all templates** to clone the Repository once and share that checkout between all templates of the project. The option is not available for a local folder (`/path/to/the/repo`), which is never cloned.

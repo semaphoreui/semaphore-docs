@@ -44,6 +44,10 @@ A chave de um Repositório é usada apenas para esse Repositório. Para alcança
 
 ## Monorepo: um checkout para todos os templates {#monorepo}
 
+:::info Desde a v2.20
+A opção **Checkout único para todos os templates** está disponível desde o **Semaphore 2.20**. As versões anteriores sempre clonam um repositório uma vez por template.
+:::
+
 Por padrão, o Semaphore clona um Repositório uma vez por template, de modo que cada template trabalha em uma cópia própria. Para um repositório grande compartilhado por muitos templates, as cópias consomem espaço em disco e cada tarefa começa com um clone ou pull da sua própria cópia.
 
 Marque **Checkout único para todos os templates** para clonar o Repositório uma única vez e compartilhar esse checkout entre todos os templates do projeto. A opção não está disponível para uma pasta local (`/path/to/the/repo`), que nunca é clonada.
