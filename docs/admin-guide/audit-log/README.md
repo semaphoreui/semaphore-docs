@@ -364,6 +364,26 @@ Some actions in the UI are not recorded: removing a license, app settings, clear
 Terraform inventory aliases, deleting a Terraform state, workflow runs and project invitations. Template
 descriptions, views, clearing the project cache and scheduled secret storage syncs are not recorded either.
 
+## Read through the API {#api}
+
+Administrators can page the audit log with `GET /api/audit/events` using the same session cookie or API token as the rest of the API. Only users with the **Admin** role can read the log. Browser requests that are not same-origin are answered with `403 Forbidden` (`Sec-Fetch-Site` other than `same-origin` or `none`).
+
+**Unfiltered paging** (all editions when the audit log is enabled) accepts only `before` and `after` cursors (positive integers, the event `seq`). You cannot combine them. The response contains up to 50 events, newest first, plus optional `older` and `newer` cursors for the next pages. Any other query parameter is handled by the filtered endpoint below.
+
+```http
+GET /api/audit/events?before=1200
+```
+
+```json
+{
+  "events": [ … ],
+  "older": 1150,
+  "newer": null
+}
+```
+
+**Filtered paging and export** require Semaphore Pro. Pass any of `from`, `to` (ISO 8601 timestamps), `user`, `project`, `kind` (repeatable), `outcome` (`success` or `failure`), `ip`, `target_type` and `target_id`. Filtered responses can include `searched_to` when a deep search found no matches in a time window. Export matched events with `GET /api/audit/events/export?format=csv` or `format=jsonl` and the same filter parameters. Each export is recorded as an `audit.log/export` event, as in the [web UI](/admin-guide/audit-log/view#filter-export).
+
 ## What's next {#whats-next}
 
 - [View the audit log](/admin-guide/audit-log/view) — read, filter and export events in the web UI.

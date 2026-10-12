@@ -31,6 +31,10 @@ Enable **Autorun** in the deploy template to start a deploy automatically after 
 
 Semaphore passes the `semaphore_vars` variable to each Ansible playbook it runs. Use it to learn what type of task was run, which version should be built or deployed, who ran the task, and the task message.
 
+:::note
+Values inside `semaphore_vars` are passed as literals (`!unsafe`); Jinja2 in a task message or other field is not expanded before Ansible sees it.
+:::
+
 Example for `build` tasks:
 
 ```yaml

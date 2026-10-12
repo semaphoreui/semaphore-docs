@@ -141,13 +141,23 @@ task arguments; the last `--forks` / `-f` on the command line wins.
 If arguments are not valid JSON, the task fails with a descriptive validation
 error before execution starts.
 
+### How Semaphore passes extra variables {#how-semaphore-passes-extra-variables}
+
+Semaphore writes merged variable groups, survey answers, workflow inputs and `semaphore_vars` to a temporary YAML file and passes it to Ansible as `--extra-vars @file`. Every string carries the `!unsafe` tag so values are literals. Secrets travel in a separate vault-encrypted file; Semaphore adds another `--vault-id <uuid>@prompt` alongside any vault passwords you attach to the template.
+
+Use Ansible 2.10 or newer so `!unsafe` in an extra-vars file is honored.
+
+### Workflow outputs {#workflow-outputs}
+
+When a playbook runs as a node in a [workflow](/user-guide/workflows), Semaphore sets `SEMAPHORE_OUTPUTS_FILE`. Publish outputs with `ansible.builtin.set_stats` (`per_host: false`); the bundled `semaphore_outputs` callback writes them to that file. See [Producing outputs](/user-guide/workflows#producing-outputs) for limits and examples.
+
 ### Authentication {#authentication}
 
 Authentication for hosts in the playbook is done using the user references from the Key Store on the inventory. The user for SSH is determined by the optional user on the Key Store element.
 
 ### Multiple vault passwords {#multiple-vault-passwords}
 
-You can attach multiple Vault passwords from the Key Store to a template. During execution, Ansible will attempt to decrypt using the provided passwords.
+You can attach multiple Vault passwords from the Key Store to a template. During execution, Ansible will attempt to decrypt using the provided passwords. Semaphore's vault ID for survey and variable-group secrets is separate from these template vaults.
 
 ### Verbosity level {#verbosity-level}
 

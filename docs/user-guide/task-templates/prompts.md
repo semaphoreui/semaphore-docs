@@ -20,7 +20,7 @@ This feature allows you to:
 | **Definition** | Predefined template-specific options | Custom fields you create |
 | **Examples** | Ansible: `--limit`, `--tags`<br/>Terraform: workspaces, `-destroy` | Environment name, version number, custom parameters |
 | **Configuration** | Enable via checkboxes in template | Add in template settings with name and type |
-| **Passed as** | Built-in CLI flags | Ansible: `--extra-vars`<br/>Terraform: `-var` |
+| **Passed as** | Built-in CLI flags | Ansible: extra-vars YAML file (`@file`)<br/>Terraform: `-var` |
 
 **Prompts** are standardized options built into Semaphore for specific tools, while **Survey Variables** are flexible custom fields you define yourself.
 

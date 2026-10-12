@@ -130,6 +130,10 @@ if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
 fi
 ```
 
+## Starting tasks through the API {#api}
+
+Use `POST /api/project/{project_id}/tasks` with the same fields as the New Task dialog. Semaphore ignores fields that only the server or workflow engine may set: `workflow_run_id`, `workflow_node_id`, `workflow_template_id`, `artifacts` and `runner_id`. Workflow binding and outputs are applied when a workflow starts a node or when the task finishes.
+
 ## Log retention {#log-retention}
 
 Tasks and logs are kept forever by default. Use `max_tasks_per_template` to keep only the latest tasks of each template, see [History](./projects/history#task-retention).
