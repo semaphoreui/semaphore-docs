@@ -1,11 +1,11 @@
 ---
 title: Autentifikacija
-description: Tri načina na koja se korisnici prijavljuju na Semaphore - lokalni nalozi, LDAP i OpenID Connect - kako se kombinuju i kako se identiteti povezuju.
+description: Četiri načina na koja se korisnici prijavljuju na Semaphore - lokalni nalozi, LDAP, OpenID Connect i JWT iz reverse proxy-ja - kako se kombinuju i kako se identiteti povezuju.
 ---
 
 # Autentifikacija
 
-Semaphore ima tri načina da utvrdi ko je neko. Nezavisni su i mogu svi biti uključeni
+Semaphore ima četiri načina da utvrdi ko je neko. Nezavisni su i mogu svi biti uključeni
 istovremeno, pa ekran za prijavu može ponuditi formu za lozinku, prijavu preko direktorijuma
 i po jedno dugme za svakog provajdera identiteta.
 
@@ -14,6 +14,7 @@ i po jedno dugme za svakog provajdera identiteta.
 | [Lokalni nalozi](/admin-guide/authentication/local) | Semaphore, prema sopstvenoj bazi podataka | Nemate direktorijum ili vam je potreban administrator za slučaj nužde. |
 | [LDAP i Active Directory](/admin-guide/authentication/ldap) | Vaš server direktorijuma | Ljudi već postoje u LDAP-u ili AD-u i želite jedinstven skup akreditiva. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Vaš provajder identiteta | Imate jedinstvenu prijavu: Keycloak, Okta, Entra ID, Google, GitHub i druge. |
+| [JWT proksi](/admin-guide/authentication/jwt-proxy-auth) | Vaš reverse proxy za autentifikaciju | Proksi kao što je Pomerium već prijavljuje korisnike i prosleđuje potpisani JWT. |
 
 Autentifikacija odgovara samo na pitanje *ko* je korisnik. Šta mu je dozvoljeno da radi
 odlučuje se posebno, na osnovu njegove uloge na serveru i uloge u svakom projektu — vidite
@@ -22,8 +23,8 @@ odlučuje se posebno, na osnovu njegove uloge na serveru i uloge u svakom projek
 ## Kako nastaje zapis o korisniku {#how-a-user-record-comes-to-exist}
 
 Svaka osoba koja se prijavi ima red u bazi podataka Semaphore-a, bez obzira na to koji je
-metod koristila. Lokalni nalog kreira administrator ili komanda `semaphore user add`. LDAP
-ili OIDC nalog se kreira pri prvoj uspešnoj prijavi, a Semaphore uz njega čuva i **spoljni
+metod koristila. Lokalni nalog kreira administrator ili komanda `semaphore user add`. LDAP,
+OIDC ili JWT proksi nalog se kreira pri prvoj uspešnoj prijavi, a Semaphore uz njega čuva i **spoljni
 identitet**: ID provajdera i ID korisnika koji je taj provajder vratio.
 
 Upravo se po tom spoljnom identitetu upoređuju kasnije prijave, što znači da preimenovanje
@@ -68,6 +69,7 @@ kako je opisano i zaključava vas van sopstvenog servera.
 | [Lokalni nalozi](/admin-guide/authentication/local) | Lozinke, TOTP, jednokratni kodovi putem e-pošte, trajanje sesije i isključivanje prijave lozinkom. |
 | [LDAP i Active Directory](/admin-guide/authentication/ldap) | Povezivanje sa direktorijumom, filteri pretrage, mapiranja atributa i TLS. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Konfiguracija provajdera, claim izrazi, prijava koju pokreće IdP i dvanaest razrađenih primera provajdera. |
+| [Autentifikacija preko JWT proksija](/admin-guide/authentication/jwt-proxy-auth) | Poverenje u potpisani JWT reverse proxy-ja, JWKS i podešavanja claim-ova, i odjava preko proksija. |
 
 ## Odakle početi {#where-to-start}
 

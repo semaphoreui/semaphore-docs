@@ -1,11 +1,11 @@
 ---
 title: Autenticazione
-description: I tre modi con cui gli utenti accedono a Semaphore - account locali, LDAP e OpenID Connect -, come si combinano e come vengono collegate le identità.
+description: I quattro modi con cui gli utenti accedono a Semaphore - account locali, LDAP, OpenID Connect e un JWT proveniente da un reverse proxy -, come si combinano e come vengono collegate le identità.
 ---
 
 # Autenticazione
 
-Semaphore dispone di tre modi per stabilire l'identità di una persona. Sono indipendenti tra
+Semaphore dispone di quattro modi per stabilire l'identità di una persona. Sono indipendenti tra
 loro e possono essere attivi tutti contemporaneamente, quindi la schermata di accesso può
 proporre un modulo con password, un accesso tramite directory e un pulsante per ciascun provider
 di identità.
@@ -15,6 +15,7 @@ di identità.
 | [Account locali](/admin-guide/authentication/local) | Semaphore, sul proprio database | Non si dispone di una directory oppure serve un amministratore di emergenza. |
 | [LDAP e Active Directory](/admin-guide/authentication/ldap) | Il proprio server di directory | Le persone esistono già in LDAP o AD e si vuole un'unica coppia di credenziali. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Il proprio provider di identità | È disponibile il single sign-on: Keycloak, Okta, Entra ID, Google, GitHub e altri. |
+| [Proxy JWT](/admin-guide/authentication/jwt-proxy-auth) | Il proprio reverse proxy di autenticazione | Un proxy come Pomerium fa già accedere gli utenti e inoltra un JWT firmato. |
 
 L'autenticazione risponde soltanto alla domanda su *chi* sia l'utente. Ciò che gli è consentito
 fare viene deciso separatamente, dal suo ruolo a livello di server e dal suo ruolo in ciascun
@@ -24,7 +25,7 @@ Project: vedere [Team](/user-guide/team).
 
 Ogni persona che accede ha una riga nel database di Semaphore, qualunque metodo abbia usato. Un
 account locale viene creato da un amministratore oppure con `semaphore user add`. Un account
-LDAP o OIDC viene creato al primo accesso riuscito e Semaphore memorizza accanto ad esso
+LDAP, OIDC o proxy JWT viene creato al primo accesso riuscito e Semaphore memorizza accanto ad esso
 un'**identità esterna**: l'ID del provider più l'ID utente restituito da quel provider.
 
 È su quell'identità esterna che vengono confrontati gli accessi successivi, il che significa che
@@ -69,6 +70,7 @@ passaggio 1 funziona esattamente come dichiarato e vi esclude dal vostro stesso 
 | [Account locali](/admin-guide/authentication/local) | Password, TOTP, codici monouso via e-mail, durata della sessione e disattivazione dell'accesso con password. |
 | [LDAP e Active Directory](/admin-guide/authentication/ldap) | Bind a una directory, filtri di ricerca, mappature degli attributi e TLS. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Configurazione del provider, espressioni per i claim, accesso avviato dall'IdP e dodici esempi completi di provider. |
+| [Autenticazione tramite proxy JWT](/admin-guide/authentication/jwt-proxy-auth) | Fidarsi del JWT firmato di un reverse proxy, impostazioni JWKS e dei claim e logout tramite il proxy. |
 
 ## Da dove iniziare {#where-to-start}
 

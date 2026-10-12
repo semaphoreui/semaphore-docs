@@ -1,11 +1,11 @@
 ---
 title: 身份认证
-description: 用户登录 Semaphore 的三种方式 - 本地账户、LDAP 和 OpenID Connect - 它们如何组合，以及身份如何关联。
+description: 用户登录 Semaphore 的四种方式 - 本地账户、LDAP、OpenID Connect 和来自反向代理的 JWT - 它们如何组合，以及身份如何关联。
 ---
 
 # 身份认证
 
-Semaphore 提供三种确认用户身份的方式。它们相互独立，可以同时全部启用，因此登录界面上
+Semaphore 提供四种确认用户身份的方式。它们相互独立，可以同时全部启用，因此登录界面上
 可能同时出现密码表单、目录登录，以及每个身份提供方各一个按钮。
 
 | 方式 | 由谁校验密码 | 适用场景 |
@@ -13,6 +13,7 @@ Semaphore 提供三种确认用户身份的方式。它们相互独立，可以�
 | [本地账户](/admin-guide/authentication/local) | Semaphore，依据自身数据库校验 | 你没有目录服务，或者需要一个应急管理员账户。 |
 | [LDAP 与 Active Directory](/admin-guide/authentication/ldap) | 你的目录服务器 | 用户已存在于 LDAP 或 AD 中，并且你希望只维护一套凭据。 |
 | [OpenID Connect](/admin-guide/authentication/openid) | 你的身份提供方 | 你使用单点登录：Keycloak、Okta、Entra ID、Google、GitHub 等。 |
+| [JWT 代理](/admin-guide/authentication/jwt-proxy-auth) | 你的认证反向代理 | Pomerium 等代理已经完成用户登录，并转发一个已签名的 JWT。 |
 
 身份认证只回答用户*是谁*。用户被允许做什么则由服务器角色和他在每个项目中的角色单独决定 ——
 参见[团队](/user-guide/team)。
@@ -20,7 +21,7 @@ Semaphore 提供三种确认用户身份的方式。它们相互独立，可以�
 ## 用户记录是如何产生的 {#how-a-user-record-comes-to-exist}
 
 无论使用哪种方式，每位登录的用户在 Semaphore 数据库中都有一行记录。本地账户由管理员创建，
-或通过 `semaphore user add` 创建。LDAP 或 OIDC 账户在首次成功登录时创建，同时 Semaphore 会
+或通过 `semaphore user add` 创建。LDAP、OIDC 或 JWT 代理账户在首次成功登录时创建，同时 Semaphore 会
 在其旁边保存一个**外部身份**：提供方 ID 加上该提供方返回的用户 ID。
 
 后续登录正是依据这个外部身份进行匹配的，这意味着在目录中重命名某个人不会产生第二个账户。
@@ -63,6 +64,7 @@ Semaphore 提供三种确认用户身份的方式。它们相互独立，可以�
 | [本地账户](/admin-guide/authentication/local) | 密码、TOTP、邮件一次性验证码、会话有效期，以及关闭密码登录。 |
 | [LDAP 与 Active Directory](/admin-guide/authentication/ldap) | 绑定到目录、搜索过滤器、属性映射和 TLS。 |
 | [OpenID Connect](/admin-guide/authentication/openid) | 提供方配置、声明表达式、IdP 发起的登录，以及十二个完整的提供方示例。 |
+| [JWT 代理身份认证](/admin-guide/authentication/jwt-proxy-auth) | 信任反向代理签名的 JWT、JWKS 与声明设置，以及通过代理退出登录。 |
 
 ## 从哪里开始 {#where-to-start}
 

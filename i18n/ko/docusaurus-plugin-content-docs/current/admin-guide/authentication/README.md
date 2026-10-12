@@ -1,11 +1,11 @@
 ---
 title: 인증
-description: 사용자가 Semaphore에 로그인하는 세 가지 방식 - 로컬 계정, LDAP, OpenID Connect - 이들을 어떻게 조합하는지, 그리고 ID가 어떻게 연결되는지 설명합니다.
+description: 사용자가 Semaphore에 로그인하는 네 가지 방식 - 로컬 계정, LDAP, OpenID Connect, 리버스 프록시의 JWT - 이들을 어떻게 조합하는지, 그리고 ID가 어떻게 연결되는지 설명합니다.
 ---
 
 # 인증
 
-Semaphore는 사용자가 누구인지 확인하는 세 가지 방식을 제공합니다. 이 방식들은 서로 독립적이며
+Semaphore는 사용자가 누구인지 확인하는 네 가지 방식을 제공합니다. 이 방식들은 서로 독립적이며
 동시에 모두 활성화할 수 있습니다. 따라서 로그인 화면에 비밀번호 입력 양식, 디렉터리 로그인,
 그리고 ID 공급자별 버튼이 함께 표시될 수 있습니다.
 
@@ -14,6 +14,7 @@ Semaphore는 사용자가 누구인지 확인하는 세 가지 방식을 제공�
 | [로컬 계정](/admin-guide/authentication/local) | Semaphore가 자체 데이터베이스를 기준으로 검증 | 디렉터리가 없거나 비상용 관리자 계정이 필요한 경우. |
 | [LDAP 및 Active Directory](/admin-guide/authentication/ldap) | 디렉터리 서버 | 사용자가 이미 LDAP 또는 AD에 존재하고 자격 증명을 하나로 통일하려는 경우. |
 | [OpenID Connect](/admin-guide/authentication/openid) | ID 공급자 | Keycloak, Okta, Entra ID, Google, GitHub 등으로 싱글 사인온을 사용하는 경우. |
+| [JWT 프록시](/admin-guide/authentication/jwt-proxy-auth) | 인증 리버스 프록시 | Pomerium 같은 프록시가 이미 사용자를 로그인시키고 서명된 JWT를 전달하는 경우. |
 
 인증은 사용자가 *누구인지*만 판단합니다. 사용자가 무엇을 할 수 있는지는 서버 역할과 각
 프로젝트에서의 역할에 따라 별도로 결정됩니다 —
@@ -22,7 +23,7 @@ Semaphore는 사용자가 누구인지 확인하는 세 가지 방식을 제공�
 ## 사용자 레코드가 생성되는 방식 {#how-a-user-record-comes-to-exist}
 
 어떤 방식으로 로그인하든 로그인하는 모든 사람은 Semaphore 데이터베이스에 행을 하나씩 가집니다.
-로컬 계정은 관리자가 만들거나 `semaphore user add`로 만듭니다. LDAP 또는 OIDC 계정은 처음
+로컬 계정은 관리자가 만들거나 `semaphore user add`로 만듭니다. LDAP, OIDC 또는 JWT 프록시 계정은 처음
 로그인에 성공할 때 생성되며, Semaphore는 그 옆에 **외부 ID**를 함께 저장합니다. 외부 ID는
 공급자 ID와 해당 공급자가 반환한 사용자 ID로 구성됩니다.
 
@@ -66,6 +67,7 @@ Semaphore는 사용자가 누구인지 확인하는 세 가지 방식을 제공�
 | [로컬 계정](/admin-guide/authentication/local) | 비밀번호, TOTP, 이메일 일회용 코드, 세션 수명, 비밀번호 로그인 비활성화. |
 | [LDAP 및 Active Directory](/admin-guide/authentication/ldap) | 디렉터리 바인딩, 검색 필터, 속성 매핑, TLS. |
 | [OpenID Connect](/admin-guide/authentication/openid) | 공급자 구성, 클레임 표현식, IdP 시작 로그인, 그리고 열두 가지 공급자 예시. |
+| [JWT 프록시 인증](/admin-guide/authentication/jwt-proxy-auth) | 리버스 프록시의 서명된 JWT 신뢰, JWKS 및 클레임 설정, 프록시를 통한 로그아웃. |
 
 ## 어디서 시작할까 {#where-to-start}
 

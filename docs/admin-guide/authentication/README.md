@@ -1,11 +1,11 @@
 ---
 title: Authentication
-description: The three ways users sign in to Semaphore - local accounts, LDAP, and OpenID Connect - how they combine, and how identities are linked.
+description: The four ways users sign in to Semaphore - local accounts, LDAP, OpenID Connect, and a JWT from a reverse proxy - how they combine, and how identities are linked.
 ---
 
 # Authentication
 
-Semaphore has three ways of establishing who somebody is. They are independent and
+Semaphore has four ways of establishing who somebody is. They are independent and
 can all be enabled at once, so the sign-in screen may offer a password form, a
 directory login, and one button per identity provider.
 
@@ -14,6 +14,7 @@ directory login, and one button per identity provider.
 | [Local accounts](/admin-guide/authentication/local) | Semaphore, against its own database | You have no directory, or you need a break-glass administrator. |
 | [LDAP and Active Directory](/admin-guide/authentication/ldap) | Your directory server | People already exist in LDAP or AD and you want one set of credentials. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Your identity provider | You have single sign-on: Keycloak, Okta, Entra ID, Google, GitHub, and others. |
+| [JWT proxy](/admin-guide/authentication/jwt-proxy-auth) | Your authenticating reverse proxy | A proxy such as Pomerium already signs users in and forwards a signed JWT. |
 
 Authentication only answers *who* the user is. What they are allowed to do is decided
 separately, by their server role and by their role in each project — see
@@ -23,7 +24,7 @@ separately, by their server role and by their role in each project — see
 
 Every person who signs in has a row in the Semaphore database, whichever method they
 used. A local account is created by an administrator or by `semaphore user add`. An
-LDAP or OIDC account is created on first successful sign-in, and Semaphore stores an
+LDAP, OIDC or JWT proxy account is created on first successful sign-in, and Semaphore stores an
 **external identity** next to it: the provider ID plus the user ID that provider
 returned.
 
@@ -69,6 +70,7 @@ advertised and locks you out of your own server.
 | [Local accounts](/admin-guide/authentication/local) | Passwords, TOTP, e-mail one-time codes, session lifetime, and disabling password login. |
 | [LDAP and Active Directory](/admin-guide/authentication/ldap) | Binding to a directory, search filters, attribute mappings, and TLS. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Provider configuration, claim expressions, IdP-initiated login, and twelve worked provider examples. |
+| [JWT proxy authentication](/admin-guide/authentication/jwt-proxy-auth) | Trusting a reverse proxy's signed JWT, JWKS and claim settings, and signing out through the proxy. |
 
 ## Where to start {#where-to-start}
 
