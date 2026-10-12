@@ -15,7 +15,7 @@
 | **定义** | 预定义的、特定于模板类型的选项 | 由你创建的自定义字段 |
 | **示例** | Ansible：`--limit`、`--tags`<br/>Terraform：工作区、`-destroy` | 环境名称、版本号、自定义参数 |
 | **配置方式** | 在模板中通过复选框启用 | 在模板设置中添加，指定名称和类型 |
-| **传递方式** | 内置 CLI 标志 | Ansible：`--extra-vars`<br/>Terraform：`-var` |
+| **传递方式** | 内置 CLI 标志 | Ansible：extra-vars YAML 文件（`@file`）<br/>Terraform：`-var` |
 
 **提示**是 Semaphore 为特定工具内置的标准化选项，而**调查变量**是你自行定义的灵活自定义字段。
 

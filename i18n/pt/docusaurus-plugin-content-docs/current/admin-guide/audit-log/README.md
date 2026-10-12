@@ -368,6 +368,26 @@ estado das tarefas de HA, aliases de inventários do Terraform, excluir um estad
 workflows e convites para projetos. Descrições de modelos, visualizações, a limpeza do cache do projeto e as
 sincronizações agendadas de armazenamentos de segredos também não são registradas.
 
+## Leitura pela API {#api}
+
+Os administradores podem paginar o log de auditoria com `GET /api/audit/events`, usando o mesmo cookie de sessão ou token de API do restante da API. Somente usuários com a função **Admin** podem ler o log. Requisições do navegador que não sejam da mesma origem recebem `403 Forbidden` (`Sec-Fetch-Site` diferente de `same-origin` ou `none`).
+
+A **paginação sem filtros** (todas as edições quando o log de auditoria está ativado) aceita apenas os cursores `before` e `after` (inteiros positivos, o `seq` do evento). Eles não podem ser combinados. A resposta contém até 50 eventos, dos mais recentes para os mais antigos, além dos cursores opcionais `older` e `newer` para as próximas páginas. Qualquer outro parâmetro de consulta é tratado pelo endpoint filtrado descrito abaixo.
+
+```http
+GET /api/audit/events?before=1200
+```
+
+```json
+{
+  "events": [ … ],
+  "older": 1150,
+  "newer": null
+}
+```
+
+A **paginação filtrada e a exportação** exigem o Semaphore Pro. Passe qualquer um entre `from`, `to` (timestamps ISO 8601), `user`, `project`, `kind` (repetível), `outcome` (`success` ou `failure`), `ip`, `target_type` e `target_id`. As respostas filtradas podem incluir `searched_to` quando uma busca profunda não encontrou correspondências em uma janela de tempo. Exporte os eventos correspondentes com `GET /api/audit/events/export?format=csv` ou `format=jsonl` e os mesmos parâmetros de filtro. Cada exportação é registrada como um evento `audit.log/export`, como na [interface web](/admin-guide/audit-log/view#filter-export).
+
 ## Próximos passos {#whats-next}
 
 - [Ver o log de auditoria](/admin-guide/audit-log/view) — consultar, filtrar e exportar eventos na interface web.

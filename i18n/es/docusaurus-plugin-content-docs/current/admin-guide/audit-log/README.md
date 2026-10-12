@@ -372,6 +372,26 @@ limpiar el estado de tareas en HA, los alias de inventarios de Terraform, elimin
 ejecuciones de workflows y las invitaciones a proyectos. Tampoco se registran las descripciones de plantillas,
 las vistas, la limpieza de la caché del proyecto ni las sincronizaciones programadas de almacenes de secretos.
 
+## Lectura mediante la API {#api}
+
+Los administradores pueden paginar el registro de auditoría con `GET /api/audit/events`, usando la misma cookie de sesión o token de API que el resto de la API. Solo los usuarios con el rol **Admin** pueden leer el registro. Las solicitudes del navegador que no son del mismo origen reciben `403 Forbidden` (`Sec-Fetch-Site` distinto de `same-origin` o `none`).
+
+La **paginación sin filtros** (todas las ediciones cuando el registro de auditoría está habilitado) solo acepta los cursores `before` y `after` (enteros positivos, el `seq` del evento). No se pueden combinar. La respuesta contiene hasta 50 eventos, los más recientes primero, además de los cursores opcionales `older` y `newer` para las páginas siguientes. Cualquier otro parámetro de consulta lo gestiona el endpoint filtrado que se describe a continuación.
+
+```http
+GET /api/audit/events?before=1200
+```
+
+```json
+{
+  "events": [ … ],
+  "older": 1150,
+  "newer": null
+}
+```
+
+La **paginación filtrada y la exportación** requieren Semaphore Pro. Pase cualquiera de `from`, `to` (marcas de tiempo ISO 8601), `user`, `project`, `kind` (repetible), `outcome` (`success` o `failure`), `ip`, `target_type` y `target_id`. Las respuestas filtradas pueden incluir `searched_to` cuando una búsqueda profunda no encontró coincidencias en un intervalo de tiempo. Exporte los eventos coincidentes con `GET /api/audit/events/export?format=csv` o `format=jsonl` y los mismos parámetros de filtro. Cada exportación se registra como un evento `audit.log/export`, igual que en la [interfaz web](/admin-guide/audit-log/view#filter-export).
+
 ## Siguientes pasos {#whats-next}
 
 - [Ver el registro de auditoría](/admin-guide/audit-log/view) — leer, filtrar y exportar eventos en la interfaz web.

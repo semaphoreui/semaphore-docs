@@ -373,6 +373,26 @@ App-Einstellungen, das Zurücksetzen des HA-Aufgabenstatus, Terraform-Inventar-A
 Terraform-Status, Workflow-Läufe und Projekteinladungen. Auch Vorlagenbeschreibungen, Ansichten, das Leeren des
 Projekt-Caches und geplante Synchronisierungen von Geheimnisspeichern werden nicht aufgezeichnet.
 
+## Über die API lesen {#api}
+
+Administratoren können das Audit-Protokoll mit `GET /api/audit/events` seitenweise abrufen, mit demselben Session-Cookie oder API-Token wie für den Rest der API. Nur Benutzer mit der Rolle **Admin** dürfen das Protokoll lesen. Browser-Anfragen, die nicht vom selben Origin stammen, werden mit `403 Forbidden` beantwortet (`Sec-Fetch-Site` ungleich `same-origin` oder `none`).
+
+**Ungefiltertes Blättern** (alle Editionen, wenn das Audit-Protokoll aktiviert ist) akzeptiert nur die Cursor `before` und `after` (positive ganze Zahlen, die `seq` des Ereignisses). Sie lassen sich nicht kombinieren. Die Antwort enthält bis zu 50 Ereignisse, die neuesten zuerst, sowie optionale Cursor `older` und `newer` für die nächsten Seiten. Jeder andere Query-Parameter wird vom gefilterten Endpunkt unten verarbeitet.
+
+```http
+GET /api/audit/events?before=1200
+```
+
+```json
+{
+  "events": [ … ],
+  "older": 1150,
+  "newer": null
+}
+```
+
+**Gefiltertes Blättern und Export** erfordern Semaphore Pro. Übergeben Sie beliebige der Parameter `from`, `to` (ISO-8601-Zeitstempel), `user`, `project`, `kind` (wiederholbar), `outcome` (`success` oder `failure`), `ip`, `target_type` und `target_id`. Gefilterte Antworten können `searched_to` enthalten, wenn eine Tiefensuche in einem Zeitfenster keine Treffer fand. Exportieren Sie passende Ereignisse mit `GET /api/audit/events/export?format=csv` oder `format=jsonl` und denselben Filterparametern. Jeder Export wird als Ereignis `audit.log/export` aufgezeichnet, wie in der [Weboberfläche](/admin-guide/audit-log/view#filter-export).
+
 ## Wie geht es weiter {#whats-next}
 
 - [Audit-Protokoll ansehen](/admin-guide/audit-log/view) — Ereignisse in der Weboberfläche lesen, filtern und exportieren.

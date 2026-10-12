@@ -123,6 +123,10 @@ if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
 fi
 ```
 
+## Avviare i Task tramite API {#api}
+
+Utilizzare `POST /api/project/{project_id}/tasks` con gli stessi campi della finestra Nuovo Task. Semaphore ignora i campi che possono essere impostati solo dal server o dal motore dei workflow: `workflow_run_id`, `workflow_node_id`, `workflow_template_id`, `artifacts` e `runner_id`. Il collegamento al workflow e gli output vengono applicati quando un workflow avvia un nodo o quando il Task termina.
+
 ## Conservazione dei log {#log-retention}
 
 Per impostazione predefinita i Task e i log vengono conservati per sempre. Utilizzare `max_tasks_per_template` per conservare solo gli ultimi Task di ciascun Task Template, vedere [Cronologia](./projects/history#task-retention).

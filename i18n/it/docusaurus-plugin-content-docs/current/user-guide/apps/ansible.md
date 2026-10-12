@@ -136,13 +136,23 @@ sia del Task; prevale l'ultimo `--forks` / `-f` presente nella riga di comando.
 Se gli argomenti non sono JSON valido, il Task termina con un errore di convalida
 descrittivo prima che l'esecuzione inizi.
 
+### Come Semaphore passa le variabili extra {#how-semaphore-passes-extra-variables}
+
+Semaphore scrive i gruppi di variabili uniti, le risposte dei sondaggi, gli input dei workflow e `semaphore_vars` in un file YAML temporaneo e lo passa ad Ansible come `--extra-vars @file`. Ogni stringa riporta il tag `!unsafe`, quindi i valori sono letterali. I segreti viaggiano in un file separato cifrato con vault; Semaphore aggiunge un ulteriore `--vault-id <uuid>@prompt` insieme alle password Vault associate al Task Template.
+
+Usare Ansible 2.10 o successivo affinché `!unsafe` in un file di variabili extra venga rispettato.
+
+### Output dei workflow {#workflow-outputs}
+
+Quando un playbook viene eseguito come nodo di un [workflow](/user-guide/workflows), Semaphore imposta `SEMAPHORE_OUTPUTS_FILE`. Pubblicare gli output con `ansible.builtin.set_stats` (`per_host: false`); il callback incluso `semaphore_outputs` li scrive in quel file. Vedere [Produrre output](/user-guide/workflows#producing-outputs) per limiti ed esempi.
+
 ### Autenticazione {#authentication}
 
 L'autenticazione sugli host del playbook avviene utilizzando i riferimenti utente del Key Store presenti nell'Inventory. L'utente per SSH è determinato dall'utente facoltativo indicato nell'elemento del Key Store.
 
 ### Più password Vault {#multiple-vault-passwords}
 
-È possibile associare a un Task Template più password Vault provenienti dal Key Store. Durante l'esecuzione, Ansible tenterà la decifratura con le password fornite.
+È possibile associare a un Task Template più password Vault provenienti dal Key Store. Durante l'esecuzione, Ansible tenterà la decifratura con le password fornite. L'ID vault di Semaphore per i segreti dei sondaggi e dei gruppi di variabili è separato da questi vault del Task Template.
 
 ### Livello di verbosità {#verbosity-level}
 

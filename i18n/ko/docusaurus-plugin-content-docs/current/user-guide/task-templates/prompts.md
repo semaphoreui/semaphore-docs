@@ -15,7 +15,7 @@
 | **정의** | 미리 정의된 템플릿별 옵션 | 직접 만드는 사용자 정의 필드 |
 | **예시** | Ansible: `--limit`, `--tags`<br/>Terraform: 워크스페이스, `-destroy` | 환경 이름, 버전 번호, 사용자 정의 파라미터 |
 | **설정 방법** | 템플릿의 체크박스로 활성화 | 템플릿 설정에서 이름과 유형을 지정하여 추가 |
-| **전달 방식** | 내장 CLI 플래그 | Ansible: `--extra-vars`<br/>Terraform: `-var` |
+| **전달 방식** | 내장 CLI 플래그 | Ansible: extra-vars YAML 파일(`@file`)<br/>Terraform: `-var` |
 
 **프롬프트**는 특정 도구를 위해 Semaphore에 내장된 표준화된 옵션이며, **설문 변수**는 직접 정의하는 유연한 사용자 정의 필드입니다.
 

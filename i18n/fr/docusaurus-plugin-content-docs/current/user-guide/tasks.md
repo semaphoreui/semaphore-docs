@@ -123,6 +123,10 @@ if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
 fi
 ```
 
+## Lancer des tâches via l'API {#api}
+
+Utilisez `POST /api/project/{project_id}/tasks` avec les mêmes champs que la boîte de dialogue Nouvelle tâche. Semaphore ignore les champs que seuls le serveur ou le moteur de workflow peuvent définir : `workflow_run_id`, `workflow_node_id`, `workflow_template_id`, `artifacts` et `runner_id`. Le rattachement au workflow et les sorties sont appliqués lorsqu'un workflow démarre un nœud ou lorsque la tâche se termine.
+
 ## Conservation des journaux {#log-retention}
 
 Les tâches et les journaux sont conservés indéfiniment par défaut. Utilisez `max_tasks_per_template` pour ne conserver que les dernières tâches de chaque modèle, voir [Historique](./projects/history#task-retention).

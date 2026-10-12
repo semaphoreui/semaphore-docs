@@ -65,6 +65,14 @@ Argon2id 비밀번호 해싱은 **Semaphore 2.20**부터 사용할 수 있습니
 - **SSH 키 및 토큰**<br />유효한 SSH 키와 토큰을 업로드하는 것은 사용자의 책임입니다. 이들은 암호화되어 저장되고 작업을 실행할 때만 사용됩니다.
 - **HashiCorp Vault 연동 (Pro)**<br />시크릿을 외부 Vault 인스턴스에 저장할 수 있습니다. 시크릿을 생성하거나 편집할 때 시크릿별로 저장 위치를 선택하십시오.
 
+### Ansible 작업 변수 {#ansible-task-variables}
+
+Ansible 템플릿의 경우 Semaphore는 변수 그룹, 설문 응답, 워크플로 입력, `semaphore_vars`를 명령줄의 `key=value` 인수가 아니라 임시 YAML 파일을 통해 추가 변수로 전달합니다. 모든 문자열에 `!unsafe` 태그가 붙으므로 값 안의 표현식은 평가되지 않습니다. 이는 AWX의 `ALLOW_JINJA_IN_EXTRA_VARS=never`와 같은 개념입니다.
+
+**secret** 유형의 설문 필드와 **var** 유형의 변수 그룹 항목에 있는 시크릿은 Ansible Vault로 암호화된 두 번째 파일에 저장됩니다. Semaphore는 작업마다 임의의 vault ID와 비밀번호를 생성하고 Ansible의 vault 프롬프트에 stdin으로 응답하므로, 작업이 실행되는 동안 평문으로 디스크에 기록되는 것은 없습니다. 템플릿에 연결한 vault 비밀번호는 별도의 `--vault-id` 항목을 사용합니다.
+
+파일은 프로젝트 임시 디렉터리에 작업 사용자만 접근할 수 있는 권한으로 생성되며 작업이 끝나면 삭제됩니다. 로그 수준이 `DEBUG`일 때 `SEMAPHORE_DEBUG_FILTER=extra_vars`를 지정하면 변수가 어떻게 분리되고 어떤 파일이 기록되는지 로그로 남습니다. 변수 이름과 경로만 기록되며 값이나 vault 비밀번호는 절대 기록되지 않습니다.
+
 ## 데이터 암호화 {#data-encryption}
 
 민감한 데이터는 암호화된 형태로 데이터베이스에 저장됩니다. 액세스 키 암호화를 활성화하려면 설정 파일에서 `access_key_encryption` 설정 옵션을 지정해야 합니다. 이 값은 다음 명령으로 생성해야 합니다:

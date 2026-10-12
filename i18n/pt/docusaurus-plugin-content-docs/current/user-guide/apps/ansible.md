@@ -137,13 +137,23 @@ os da tarefa; o último `--forks` / `-f` na linha de comando prevalece.
 Se os argumentos não forem JSON válido, a tarefa falha com um erro de validação descritivo
 antes de a execução começar.
 
+### Como o Semaphore passa variáveis extras {#how-semaphore-passes-extra-variables}
+
+O Semaphore grava os grupos de variáveis mesclados, as respostas de pesquisa, as entradas de workflow e `semaphore_vars` em um arquivo YAML temporário e o passa ao Ansible como `--extra-vars @file`. Toda string recebe a marca `!unsafe`, portanto os valores são literais. Os segredos trafegam em um arquivo separado criptografado com vault; o Semaphore adiciona outro `--vault-id <uuid>@prompt` junto com as senhas de vault que você anexa ao modelo.
+
+Use o Ansible 2.10 ou mais recente para que `!unsafe` em um arquivo de variáveis extras seja respeitado.
+
+### Saídas de workflow {#workflow-outputs}
+
+Quando um playbook é executado como um nó de um [workflow](/user-guide/workflows), o Semaphore define `SEMAPHORE_OUTPUTS_FILE`. Publique as saídas com `ansible.builtin.set_stats` (`per_host: false`); o callback incluído `semaphore_outputs` as grava nesse arquivo. Consulte [Produzir saídas](/user-guide/workflows#producing-outputs) para ver limites e exemplos.
+
 ### Autenticação {#authentication}
 
 A autenticação nos hosts do playbook é feita usando as referências de usuário do Armazenamento de Chaves no inventário. O usuário para SSH é determinado pelo usuário opcional no elemento do Armazenamento de Chaves.
 
 ### Múltiplas senhas de vault {#multiple-vault-passwords}
 
-Você pode anexar várias senhas de Vault do Armazenamento de Chaves a um modelo. Durante a execução, o Ansible tentará descriptografar usando as senhas fornecidas.
+Você pode anexar várias senhas de Vault do Armazenamento de Chaves a um modelo. Durante a execução, o Ansible tentará descriptografar usando as senhas fornecidas. O ID de vault do Semaphore para segredos de pesquisa e de grupos de variáveis é independente desses vaults do modelo.
 
 ### Nível de verbosidade {#verbosity-level}
 

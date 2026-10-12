@@ -123,6 +123,10 @@ if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
 fi
 ```
 
+## Pokretanje zadataka preko API-ja {#api}
+
+Koristite `POST /api/project/{project_id}/tasks` sa istim poljima kao u dijalogu Novi zadatak. Semaphore ignoriše polja koja mogu da postave samo server ili workflow mehanizam: `workflow_run_id`, `workflow_node_id`, `workflow_template_id`, `artifacts` i `runner_id`. Vezivanje za workflow i izlazi primenjuju se kada workflow pokrene čvor ili kada se zadatak završi.
+
 ## Čuvanje logova {#log-retention}
 
 Zadaci i logovi se podrazumevano čuvaju zauvek. Koristite `max_tasks_per_template` da biste zadržali samo najnovije zadatke svakog šablona, pogledajte [Istorija](./projects/history#task-retention).

@@ -15,7 +15,7 @@ Questa funzionalità consente di:
 | **Definizione** | Opzioni predefinite specifiche del Task Template | Campi personalizzati creati dall'utente |
 | **Esempi** | Ansible: `--limit`, `--tags`<br/>Terraform: workspace, `-destroy` | Nome dell'ambiente, numero di versione, parametri personalizzati |
 | **Configurazione** | Si abilitano tramite caselle di controllo nel Task Template | Si aggiungono nelle impostazioni del Task Template con nome e tipo |
-| **Passati come** | Flag CLI integrati | Ansible: `--extra-vars`<br/>Terraform: `-var` |
+| **Passati come** | Flag CLI integrati | Ansible: file YAML di variabili extra (`@file`)<br/>Terraform: `-var` |
 
 I **prompt** sono opzioni standardizzate integrate in Semaphore per strumenti specifici, mentre le **variabili di survey** sono campi personalizzati flessibili definiti dall'utente.
 

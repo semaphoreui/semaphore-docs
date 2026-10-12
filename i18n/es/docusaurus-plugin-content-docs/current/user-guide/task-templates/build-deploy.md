@@ -26,6 +26,10 @@ Habilite **Autorun** en la plantilla de despliegue para iniciar un despliegue au
 
 Semaphore pasa la variable `semaphore_vars` a cada playbook de Ansible que ejecuta. Úsela para saber qué tipo de tarea se ejecutó, qué versión debe compilarse o desplegarse, quién ejecutó la tarea y el mensaje de la tarea.
 
+:::note
+Los valores dentro de `semaphore_vars` se pasan como literales (`!unsafe`); Jinja2 en un mensaje de tarea u otro campo no se expande antes de que Ansible lo vea.
+:::
+
 Ejemplo para las tareas `build`:
 
 ```yaml

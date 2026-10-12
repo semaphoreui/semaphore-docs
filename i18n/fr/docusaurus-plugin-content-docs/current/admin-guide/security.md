@@ -65,6 +65,14 @@ La gestion sécurisée des secrets est une fonctionnalité essentielle :
 - **Clés SSH et jetons**<br />Il revient aux utilisateurs de téléverser des clés SSH et des jetons valides. Ceux-ci sont chiffrés et utilisés uniquement lors de l'exécution des tâches.
 - **Intégration HashiCorp Vault (Pro)**<br />Les secrets peuvent être stockés dans une instance Vault externe. Choisissez le mode de stockage secret par secret lors de sa création ou de sa modification.
 
+### Variables de tâche Ansible {#ansible-task-variables}
+
+Pour les modèles Ansible, Semaphore transmet les groupes de variables, les réponses de questionnaire, les entrées de workflow et `semaphore_vars` comme variables supplémentaires via des fichiers YAML temporaires, et non comme arguments `key=value` en ligne de commande. Chaque chaîne est marquée `!unsafe` afin que les expressions contenues dans les valeurs ne soient pas évaluées — même principe que `ALLOW_JINJA_IN_EXTRA_VARS=never` dans AWX.
+
+Les secrets des champs de questionnaire de type **secret** et les entrées de groupes de variables de type **var** sont placés dans un second fichier chiffré avec Ansible Vault. Semaphore génère un ID de coffre aléatoire et un mot de passe par tâche et répond à l'invite de coffre d'Ansible via stdin ; rien n'est écrit en clair sur le disque pendant l'exécution de la tâche. Les mots de passe de coffre que vous attachez au modèle utilisent des entrées `--vault-id` distinctes.
+
+Les fichiers sont créés dans le répertoire temporaire du projet avec des permissions réservées à l'utilisateur de la tâche et sont supprimés à la fin de la tâche. Au niveau de journalisation `DEBUG`, `SEMAPHORE_DEBUG_FILTER=extra_vars` consigne la manière dont les variables sont réparties et les fichiers écrits — uniquement les noms de variables et les chemins, jamais les valeurs ni les mots de passe de coffre.
+
 ## Chiffrement des données {#data-encryption}
 
 Les données sensibles sont stockées dans la base de données sous forme chiffrée. Vous devez définir l'option de configuration `access_key_encryption` dans le fichier de configuration pour activer le chiffrement des clés d'accès. Elle doit être générée par la commande :

@@ -65,6 +65,14 @@ Gestionar los secretos de forma segura es una funcionalidad fundamental:
 - **Claves SSH y tokens**<br />Los usuarios son responsables de subir claves SSH y tokens válidos. Estos se cifran y solo se usan al ejecutar tareas.
 - **Integración con HashiCorp Vault (Pro)**<br />Los secretos pueden almacenarse en una instancia externa de Vault. Elija el almacenamiento de cada secreto al crearlo o editarlo.
 
+### Variables de tareas de Ansible {#ansible-task-variables}
+
+En las plantillas de Ansible, Semaphore pasa los grupos de variables, las respuestas de encuesta, las entradas de workflow y `semaphore_vars` como variables extra mediante archivos YAML temporales, no como argumentos `key=value` en la línea de comandos. Cada cadena se marca con `!unsafe`, de modo que las expresiones dentro de los valores no se evalúan — la misma idea que AWX `ALLOW_JINJA_IN_EXTRA_VARS=never`.
+
+Los secretos de los campos de encuesta de tipo **secret** y las entradas de grupos de variables de tipo **var** van a un segundo archivo cifrado con Ansible Vault. Semaphore genera un ID de vault aleatorio y una contraseña por tarea y responde a la solicitud de vault de Ansible por stdin; no se escribe nada en texto claro en el disco mientras se ejecuta la tarea. Las contraseñas de vault que asocie a la plantilla usan entradas `--vault-id` separadas.
+
+Los archivos se crean en el directorio temporal del proyecto con permisos solo para el usuario de la tarea y se eliminan cuando la tarea termina. Con el nivel de registro `DEBUG`, `SEMAPHORE_DEBUG_FILTER=extra_vars` registra cómo se dividen las variables y qué archivos se escriben — solo nombres de variables y rutas, nunca valores ni contraseñas de vault.
+
 ## Cifrado de datos {#data-encryption}
 
 Los datos sensibles se almacenan en la base de datos en forma cifrada. Debe establecer la opción de configuración `access_key_encryption` en el archivo de configuración para habilitar el cifrado de las claves de acceso. Debe generarse con el comando:

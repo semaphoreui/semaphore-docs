@@ -15,7 +15,7 @@ Este recurso permite que você:
 | **Definição** | Opções predefinidas específicas do template | Campos personalizados criados por você |
 | **Exemplos** | Ansible: `--limit`, `--tags`<br/>Terraform: workspaces, `-destroy` | Nome do ambiente, número da versão, parâmetros personalizados |
 | **Configuração** | Ativadas por caixas de seleção no template | Adicionadas nas configurações do template com nome e tipo |
-| **Passadas como** | Flags internas da CLI | Ansible: `--extra-vars`<br/>Terraform: `-var` |
+| **Passadas como** | Flags internas da CLI | Ansible: arquivo YAML de variáveis extras (`@file`)<br/>Terraform: `-var` |
 
 Os **Prompts** são opções padronizadas incorporadas ao Semaphore para ferramentas específicas, enquanto as **Variáveis de Survey** são campos personalizados flexíveis que você mesmo define.
 

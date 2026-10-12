@@ -77,3 +77,21 @@ import TabItem from '@theme/TabItem';
       ```
   </TabItem>
 </Tabs>
+
+## Značajne promene u ponašanju {#behavior-changes}
+
+Ove promene važe kada nadogradite na novije **2.20.x** verzije. Ne zahtevaju migraciju baze podataka, ali playbook-ovi ili API klijenti koji su se oslanjali na staro ponašanje možda će morati da se ažuriraju.
+
+### Ansible dodatne promenljive su literali {#ansible-extra-vars-literal}
+
+Semaphore više ne prosleđuje Ansible dodatne promenljive preko komandne linije. Grupe promenljivih, odgovori iz ankete, ulazi workflow-a i ugrađeni objekat `semaphore_vars` upisuju se u privremene YAML fajlove i prosleđuju kao `--extra-vars @file`. Svaka string vrednost označena je tagom `!unsafe`, pa je Ansible tretira kao podatak i ne procenjuje Jinja2 unutar vrednosti.
+
+Ako ste Jinja2 sačuvali u polju ankete, grupi promenljivih ili `--extra-vars` šablonu očekujući da će ga Semaphore ili Ansible razviti pre pokretanja playbook-a, to razvijanje se više ne dešava. Prebacite logiku u playbook (na primer, koristite `{{ my_var }}` gde je `my_var` obična vrednost iz Semaphore-a) ili izračunajte vrednost izvan Semaphore-a.
+
+Tajne iz ankete i tajne iz grupa promenljivih šifruju se u zasebnom Ansible Vault fajlu. Semaphore za svaki zadatak generiše jednokratni vault ID i lozinku i odgovara na Ansible vault upit preko stdin. Ovo je odvojeno od vault lozinki koje priložite šablonu.
+
+Pogledajte [Promenljive ankete](/user-guide/task-templates/survey-vars), [Grupe promenljivih](/user-guide/environment) i [Bezbednost — promenljive Ansible zadataka](/admin-guide/security#ansible-task-variables).
+
+### Izlazi workflow-a i polja API-ja zadataka {#workflow-outputs-and-task-api}
+
+[Izlazi workflow-a](/user-guide/workflows#producing-outputs) upisuju se tokom izvršavanja zadatka i ne mogu se postaviti kada zadatak pokrenete preko API-ja. `POST /api/project/{project_id}/tasks` ignoriše `workflow_run_id`, `workflow_node_id`, `workflow_template_id`, `artifacts` i `runner_id` ako se nalaze u telu zahteva.

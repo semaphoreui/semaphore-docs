@@ -381,6 +381,26 @@ suppression d'un état Terraform, les exécutions de workflows et les invitation
 modèles, les vues, le vidage du cache du projet et les synchronisations planifiées des stockages de secrets ne
 sont pas enregistrés non plus.
 
+## Lecture via l'API {#api}
+
+Les administrateurs peuvent parcourir le journal d'audit page par page avec `GET /api/audit/events`, en utilisant le même cookie de session ou jeton d'API que le reste de l'API. Seuls les utilisateurs ayant le rôle **Admin** peuvent lire le journal. Les requêtes de navigateur qui ne sont pas de même origine reçoivent `403 Forbidden` (`Sec-Fetch-Site` différent de `same-origin` ou `none`).
+
+La **pagination sans filtre** (toutes les éditions lorsque le journal d'audit est activé) n'accepte que les curseurs `before` et `after` (entiers positifs, le `seq` de l'événement). Ils ne peuvent pas être combinés. La réponse contient jusqu'à 50 événements, les plus récents d'abord, ainsi que des curseurs optionnels `older` et `newer` pour les pages suivantes. Tout autre paramètre de requête est pris en charge par le point de terminaison filtré ci-dessous.
+
+```http
+GET /api/audit/events?before=1200
+```
+
+```json
+{
+  "events": [ … ],
+  "older": 1150,
+  "newer": null
+}
+```
+
+La **pagination filtrée et l'export** nécessitent Semaphore Pro. Passez n'importe lequel des paramètres `from`, `to` (horodatages ISO 8601), `user`, `project`, `kind` (répétable), `outcome` (`success` ou `failure`), `ip`, `target_type` et `target_id`. Les réponses filtrées peuvent inclure `searched_to` lorsqu'une recherche approfondie n'a trouvé aucune correspondance dans une fenêtre de temps. Exportez les événements correspondants avec `GET /api/audit/events/export?format=csv` ou `format=jsonl` et les mêmes paramètres de filtre. Chaque export est enregistré comme un événement `audit.log/export`, comme dans l'[interface web](/admin-guide/audit-log/view#filter-export).
+
 ## Et ensuite {#whats-next}
 
 - [Consulter le journal d'audit](/admin-guide/audit-log/view) — consulter, filtrer et exporter les événements dans l'interface web.

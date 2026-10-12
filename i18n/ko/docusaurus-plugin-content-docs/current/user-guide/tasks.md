@@ -122,6 +122,10 @@ if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
 fi
 ```
 
+## API로 작업 시작하기 {#api}
+
+새 작업 대화 상자와 동일한 필드로 `POST /api/project/{project_id}/tasks`를 사용하십시오. Semaphore는 서버나 워크플로 엔진만 설정할 수 있는 필드인 `workflow_run_id`, `workflow_node_id`, `workflow_template_id`, `artifacts`, `runner_id`를 무시합니다. 워크플로 바인딩과 출력은 워크플로가 노드를 시작할 때 또는 작업이 끝날 때 적용됩니다.
+
 ## 로그 보관 {#log-retention}
 
 작업과 로그는 기본적으로 영구히 보관됩니다. 각 템플릿의 최근 작업만 보관하려면 `max_tasks_per_template`를 사용하십시오. [이력](./projects/history#task-retention)을 참고하십시오.

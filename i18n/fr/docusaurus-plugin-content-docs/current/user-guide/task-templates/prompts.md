@@ -15,7 +15,7 @@ Cette fonctionnalité vous permet de :
 | **Définition** | Options prédéfinies propres au modèle | Champs personnalisés que vous créez |
 | **Exemples** | Ansible : `--limit`, `--tags`<br/>Terraform : espaces de travail, `-destroy` | Nom d'environnement, numéro de version, paramètres personnalisés |
 | **Configuration** | Activer via des cases à cocher dans le modèle | Ajouter dans les paramètres du modèle avec un nom et un type |
-| **Transmis comme** | Indicateurs CLI intégrés | Ansible : `--extra-vars`<br/>Terraform : `-var` |
+| **Transmis comme** | Indicateurs CLI intégrés | Ansible : fichier YAML de variables supplémentaires (`@file`)<br/>Terraform : `-var` |
 
 Les **invites** sont des options standardisées intégrées à Semaphore pour des outils spécifiques, alors que les **variables de questionnaire** sont des champs personnalisés flexibles que vous définissez vous-même.
 

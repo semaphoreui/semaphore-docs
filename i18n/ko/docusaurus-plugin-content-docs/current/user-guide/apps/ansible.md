@@ -137,13 +137,23 @@ cron을 사용해 리포지토리의 새 커밋을 주기적으로 확인하고,
 인수가 유효한 JSON이 아니면 실행이 시작되기 전에 설명이 포함된 검증 오류와 함께
 작업이 실패합니다.
 
+### Semaphore가 추가 변수를 전달하는 방식 {#how-semaphore-passes-extra-variables}
+
+Semaphore는 병합된 변수 그룹, 설문 응답, 워크플로 입력, `semaphore_vars`를 임시 YAML 파일에 기록하고 `--extra-vars @file`로 Ansible에 전달합니다. 모든 문자열에 `!unsafe` 태그가 붙으므로 값은 리터럴입니다. 시크릿은 vault로 암호화된 별도 파일로 전달되며, Semaphore는 템플릿에 연결한 vault 비밀번호와 함께 `--vault-id <uuid>@prompt`를 하나 더 추가합니다.
+
+extra-vars 파일의 `!unsafe`가 적용되도록 Ansible 2.10 이상을 사용하십시오.
+
+### 워크플로 출력 {#workflow-outputs}
+
+playbook이 [워크플로](/user-guide/workflows)의 노드로 실행되면 Semaphore는 `SEMAPHORE_OUTPUTS_FILE`을 설정합니다. 출력은 `ansible.builtin.set_stats`(`per_host: false`)로 게시하며, 함께 제공되는 `semaphore_outputs` 콜백이 이를 해당 파일에 기록합니다. 제한 사항과 예제는 [출력 생성](/user-guide/workflows#producing-outputs)을 참조하십시오.
+
 ### 인증 {#authentication}
 
 플레이북의 호스트 인증은 인벤토리에 지정된 키 저장소의 사용자 참조를 사용해 수행됩니다. SSH에 사용되는 사용자는 키 저장소 항목의 선택적 사용자 값으로 결정됩니다.
 
 ### 여러 Vault 비밀번호 {#multiple-vault-passwords}
 
-키 저장소의 여러 Vault 비밀번호를 템플릿에 연결할 수 있습니다. 실행 중에 Ansible은 제공된 비밀번호를 사용해 복호화를 시도합니다.
+키 저장소의 여러 Vault 비밀번호를 템플릿에 연결할 수 있습니다. 실행 중에 Ansible은 제공된 비밀번호를 사용해 복호화를 시도합니다. 설문 및 변수 그룹 시크릿에 사용되는 Semaphore의 vault ID는 이러한 템플릿 vault와는 별개입니다.
 
 ### 상세 출력 수준 {#verbosity-level}
 

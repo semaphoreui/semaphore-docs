@@ -373,6 +373,26 @@ delle app, la pulizia dello stato dei task HA, gli alias degli inventari Terrafo
 Terraform, le esecuzioni dei workflow e gli inviti ai progetti. Non vengono registrate neppure le descrizioni dei
 template, le viste, la pulizia della cache del progetto e le sincronizzazioni pianificate degli archivi dei segreti.
 
+## Lettura tramite API {#api}
+
+Gli amministratori possono scorrere il registro di audit con `GET /api/audit/events`, usando lo stesso cookie di sessione o token API del resto dell'API. Solo gli utenti con il ruolo **Admin** possono leggere il registro. Le richieste del browser che non provengono dalla stessa origine ricevono `403 Forbidden` (`Sec-Fetch-Site` diverso da `same-origin` o `none`).
+
+La **paginazione senza filtri** (tutte le edizioni quando il registro di audit è abilitato) accetta solo i cursori `before` e `after` (interi positivi, il `seq` dell'evento). Non possono essere combinati. La risposta contiene fino a 50 eventi, dal più recente, più i cursori opzionali `older` e `newer` per le pagine successive. Qualsiasi altro parametro di query viene gestito dall'endpoint filtrato descritto di seguito.
+
+```http
+GET /api/audit/events?before=1200
+```
+
+```json
+{
+  "events": [ … ],
+  "older": 1150,
+  "newer": null
+}
+```
+
+La **paginazione filtrata e l'esportazione** richiedono Semaphore Pro. Passare uno qualsiasi tra `from`, `to` (timestamp ISO 8601), `user`, `project`, `kind` (ripetibile), `outcome` (`success` o `failure`), `ip`, `target_type` e `target_id`. Le risposte filtrate possono includere `searched_to` quando una ricerca approfondita non ha trovato corrispondenze in un intervallo di tempo. Esportare gli eventi corrispondenti con `GET /api/audit/events/export?format=csv` oppure `format=jsonl` e gli stessi parametri di filtro. Ogni esportazione viene registrata come evento `audit.log/export`, come nell'[interfaccia web](/admin-guide/audit-log/view#filter-export).
+
 ## Prossimi passi {#whats-next}
 
 - [Visualizzare il log di audit](/admin-guide/audit-log/view) — consultare, filtrare ed esportare gli eventi nell'interfaccia web.

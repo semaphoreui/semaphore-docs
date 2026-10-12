@@ -65,6 +65,14 @@ Die sichere Verwaltung von Geheimnissen ist eine Kernfunktion:
 - **SSH-Schlüssel und Token**<br />Benutzer sind dafür verantwortlich, gültige SSH-Schlüssel und Token hochzuladen. Diese werden verschlüsselt und nur beim Ausführen von Tasks verwendet.
 - **HashiCorp-Vault-Integration (Pro)**<br />Geheimnisse können in einer externen Vault-Instanz gespeichert werden. Wählen Sie den Speicherort pro Geheimnis beim Erstellen oder Bearbeiten eines Geheimnisses.
 
+### Ansible-Task-Variablen {#ansible-task-variables}
+
+Für Ansible-Templates übergibt Semaphore Variablengruppen, Survey-Antworten, Workflow-Eingaben und `semaphore_vars` als Extra-Variablen über temporäre YAML-Dateien, nicht als `key=value`-Argumente auf der Kommandozeile. Jeder String wird mit `!unsafe` markiert, sodass Ausdrücke in Werten nicht ausgewertet werden — dasselbe Prinzip wie bei AWX `ALLOW_JINJA_IN_EXTRA_VARS=never`.
+
+Secrets aus Survey-Feldern vom Typ **secret** und Einträge von Variablengruppen vom Typ **var** landen in einer zweiten Datei, die mit Ansible Vault verschlüsselt ist. Semaphore erzeugt pro Task eine zufällige Vault-ID und ein Passwort und beantwortet die Vault-Abfrage von Ansible über stdin; während der Task läuft, wird nichts im Klartext auf die Festplatte geschrieben. Vault-Passwörter, die Sie dem Template zuordnen, verwenden separate `--vault-id`-Einträge.
+
+Die Dateien werden im temporären Projektverzeichnis mit Berechtigungen nur für den Task-Benutzer erstellt und beim Ende des Tasks entfernt. Auf dem Log-Level `DEBUG` protokolliert `SEMAPHORE_DEBUG_FILTER=extra_vars`, wie Variablen aufgeteilt und welche Dateien geschrieben werden — nur Variablennamen und Pfade, niemals Werte oder Vault-Passwörter.
+
 ## Datenverschlüsselung {#data-encryption}
 
 Sensible Daten werden in verschlüsselter Form in der Datenbank gespeichert. Sie sollten die Konfigurationsoption `access_key_encryption` in der Konfigurationsdatei setzen, um die Verschlüsselung der Access Keys zu aktivieren. Der Schlüssel muss mit folgendem Befehl generiert werden:

@@ -137,13 +137,23 @@ tarea; prevalece el último `--forks` / `-f` de la línea de comandos.
 Si los argumentos no son JSON válido, la tarea falla con un error de validación
 descriptivo antes de que comience la ejecución.
 
+### Cómo pasa Semaphore las variables extra {#how-semaphore-passes-extra-variables}
+
+Semaphore escribe los grupos de variables combinados, las respuestas de encuesta, las entradas de workflow y `semaphore_vars` en un archivo YAML temporal y lo pasa a Ansible como `--extra-vars @file`. Cada cadena lleva la etiqueta `!unsafe`, por lo que los valores son literales. Los secretos viajan en un archivo aparte cifrado con vault; Semaphore añade otro `--vault-id <uuid>@prompt` junto a las contraseñas de vault que asocie a la plantilla.
+
+Use Ansible 2.10 o posterior para que se respete `!unsafe` en un archivo de variables extra.
+
+### Salidas de workflow {#workflow-outputs}
+
+Cuando un playbook se ejecuta como nodo de un [workflow](/user-guide/workflows), Semaphore establece `SEMAPHORE_OUTPUTS_FILE`. Publique las salidas con `ansible.builtin.set_stats` (`per_host: false`); el callback incluido `semaphore_outputs` las escribe en ese archivo. Consulte [Producir salidas](/user-guide/workflows#producing-outputs) para ver los límites y ejemplos.
+
 ### Autenticación {#authentication}
 
 La autenticación de los hosts del playbook se realiza usando las referencias de usuario del Almacén de claves indicadas en el inventario. El usuario para SSH se determina mediante el usuario opcional del elemento del Almacén de claves.
 
 ### Varias contraseñas de vault {#multiple-vault-passwords}
 
-Puede asociar a una plantilla varias contraseñas de Vault del Almacén de claves. Durante la ejecución, Ansible intentará descifrar usando las contraseñas proporcionadas.
+Puede asociar a una plantilla varias contraseñas de Vault del Almacén de claves. Durante la ejecución, Ansible intentará descifrar usando las contraseñas proporcionadas. El ID de vault de Semaphore para los secretos de encuesta y de grupos de variables es independiente de estos vaults de la plantilla.
 
 ### Nivel de verbosidad {#verbosity-level}
 

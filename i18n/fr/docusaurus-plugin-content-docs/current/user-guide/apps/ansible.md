@@ -137,13 +137,23 @@ ceux de la tâche ; le dernier `--forks` / `-f` de la ligne de commande l'emport
 Si les arguments ne sont pas du JSON valide, la tâche échoue avec une erreur de validation
 explicite avant le début de l'exécution.
 
+### Comment Semaphore transmet les variables supplémentaires {#how-semaphore-passes-extra-variables}
+
+Semaphore écrit les groupes de variables fusionnés, les réponses de questionnaire, les entrées de workflow et `semaphore_vars` dans un fichier YAML temporaire et le transmet à Ansible sous la forme `--extra-vars @file`. Chaque chaîne porte la balise `!unsafe`, de sorte que les valeurs sont des littéraux. Les secrets circulent dans un fichier distinct chiffré par coffre ; Semaphore ajoute un autre `--vault-id <uuid>@prompt` en plus des mots de passe de coffre que vous attachez au modèle.
+
+Utilisez Ansible 2.10 ou une version ultérieure afin que `!unsafe` soit pris en compte dans un fichier de variables supplémentaires.
+
+### Sorties de workflow {#workflow-outputs}
+
+Lorsqu'un playbook s'exécute comme nœud d'un [workflow](/user-guide/workflows), Semaphore définit `SEMAPHORE_OUTPUTS_FILE`. Publiez les sorties avec `ansible.builtin.set_stats` (`per_host: false`) ; le callback fourni `semaphore_outputs` les écrit dans ce fichier. Voir [Produire des sorties](/user-guide/workflows#producing-outputs) pour les limites et des exemples.
+
 ### Authentification {#authentication}
 
 L'authentification auprès des hôtes du playbook s'appuie sur les références d'utilisateur du Magasin de clés définies sur l'inventaire. L'utilisateur SSH est déterminé par l'utilisateur facultatif renseigné sur l'élément du Magasin de clés.
 
 ### Plusieurs mots de passe de coffre {#multiple-vault-passwords}
 
-Vous pouvez attacher plusieurs mots de passe Vault du Magasin de clés à un modèle. Lors de l'exécution, Ansible tentera de déchiffrer avec les mots de passe fournis.
+Vous pouvez attacher plusieurs mots de passe Vault du Magasin de clés à un modèle. Lors de l'exécution, Ansible tentera de déchiffrer avec les mots de passe fournis. L'ID de coffre de Semaphore pour les secrets de questionnaire et de groupes de variables est distinct de ces coffres du modèle.
 
 ### Niveau de verbosité {#verbosity-level}
 

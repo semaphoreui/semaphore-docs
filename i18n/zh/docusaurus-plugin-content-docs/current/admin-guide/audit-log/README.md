@@ -308,6 +308,26 @@ encoding.codec = "json"
 
 界面中的部分操作不会记录：移除许可证、应用设置、清除 HA 任务状态、Terraform 清单别名、删除 Terraform 状态、工作流运行和项目邀请。模板描述、视图、清除项目缓存和计划的机密存储同步同样不会记录。
 
+## 通过 API 读取 {#api}
+
+管理员可以使用 `GET /api/audit/events` 分页读取审计日志，使用的会话 Cookie 或 API 令牌与 API 的其他部分相同。只有具有 **Admin** 角色的用户才能读取日志。非同源的浏览器请求会收到 `403 Forbidden`（`Sec-Fetch-Site` 不是 `same-origin` 或 `none`）。
+
+**未过滤的分页**（启用审计日志时所有版本均可用）只接受 `before` 和 `after` 游标（正整数，即事件的 `seq`），且二者不能同时使用。响应最多包含 50 个事件，最新的在前，并附带用于获取后续页面的可选 `older` 和 `newer` 游标。任何其他查询参数都由下面的过滤端点处理。
+
+```http
+GET /api/audit/events?before=1200
+```
+
+```json
+{
+  "events": [ … ],
+  "older": 1150,
+  "newer": null
+}
+```
+
+**过滤分页和导出**需要 Semaphore Pro。可以传入 `from`、`to`（ISO 8601 时间戳）、`user`、`project`、`kind`（可重复）、`outcome`（`success` 或 `failure`）、`ip`、`target_type` 和 `target_id` 中的任意参数。当深度搜索在某个时间窗口内没有找到匹配项时，过滤后的响应可能包含 `searched_to`。使用 `GET /api/audit/events/export?format=csv` 或 `format=jsonl` 以及相同的过滤参数导出匹配的事件。与 [Web UI](/admin-guide/audit-log/view#filter-export) 中一样，每次导出都会记录为一个 `audit.log/export` 事件。
+
 ## 后续步骤 {#whats-next}
 
 - [查看审计日志](/admin-guide/audit-log/view) — 在 Web 界面中查看、筛选和导出事件。

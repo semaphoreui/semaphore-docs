@@ -26,6 +26,10 @@ Ative **Autorun** no modelo de deploy para iniciar um deploy automaticamente ap�
 
 O Semaphore passa a variável `semaphore_vars` para cada playbook do Ansible que executa. Use-a para saber qual tipo de tarefa foi executada, qual versão deve ser construída ou implantada, quem executou a tarefa e a mensagem da tarefa.
 
+:::note
+Os valores dentro de `semaphore_vars` são passados como literais (`!unsafe`); Jinja2 em uma mensagem de tarefa ou em outro campo não é expandido antes de o Ansible recebê-lo.
+:::
+
 Exemplo para tarefas `build`:
 
 ```yaml

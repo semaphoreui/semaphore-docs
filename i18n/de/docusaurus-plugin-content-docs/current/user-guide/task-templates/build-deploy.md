@@ -26,6 +26,10 @@ Aktivieren Sie **Autorun** im Deploy-Task-Template, um nach jedem erfolgreichen 
 
 Semaphore übergibt die Variable `semaphore_vars` an jedes Ansible-Playbook, das es ausführt. Verwenden Sie sie, um zu erfahren, welcher Task-Typ ausgeführt wurde, welche Version gebaut oder bereitgestellt werden soll, wer den Task ausgeführt hat und wie die Task-Nachricht lautet.
 
+:::note
+Werte in `semaphore_vars` werden als Literale (`!unsafe`) übergeben; Jinja2 in einer Task-Nachricht oder einem anderen Feld wird nicht aufgelöst, bevor Ansible es sieht.
+:::
+
 Beispiel für `build`-Tasks:
 
 ```yaml

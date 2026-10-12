@@ -137,13 +137,23 @@ argumente zadatka; važi poslednji `--forks` / `-f` u komandnoj liniji.
 Ako argumenti nisu važeći JSON, zadatak ne uspeva sa opisnom greškom
 validacije pre nego što izvršavanje počne.
 
+### Kako Semaphore prosleđuje dodatne promenljive {#how-semaphore-passes-extra-variables}
+
+Semaphore upisuje objedinjene grupe promenljivih, odgovore iz ankete, ulaze workflow-a i `semaphore_vars` u privremeni YAML fajl i prosleđuje ga Ansible-u kao `--extra-vars @file`. Svaki string nosi tag `!unsafe`, pa su vrednosti literali. Tajne putuju u zasebnom fajlu šifrovanom pomoću vault-a; Semaphore dodaje još jedan `--vault-id <uuid>@prompt` pored vault lozinki koje priložite šablonu.
+
+Koristite Ansible 2.10 ili noviji kako bi se `!unsafe` u fajlu dodatnih promenljivih poštovao.
+
+### Izlazi workflow-a {#workflow-outputs}
+
+Kada se playbook izvršava kao čvor u [workflow-u](/user-guide/workflows), Semaphore postavlja `SEMAPHORE_OUTPUTS_FILE`. Objavite izlaze pomoću `ansible.builtin.set_stats` (`per_host: false`); priloženi callback `semaphore_outputs` upisuje ih u taj fajl. Ograničenja i primere potražite u odeljku [Proizvodnja izlaza](/user-guide/workflows#producing-outputs).
+
 ### Autentifikacija {#authentication}
 
 Autentifikacija hostova u playbook-u obavlja se pomoću referenci na korisnike iz skladišta ključeva (Key Store) u inventaru. Korisnik za SSH određuje se opcionim korisnikom na elementu skladišta ključeva.
 
 ### Više vault lozinki {#multiple-vault-passwords}
 
-Šablonu možete priložiti više Vault lozinki iz skladišta ključeva. Tokom izvršavanja Ansible će pokušati dešifrovanje pomoću navedenih lozinki.
+Šablonu možete priložiti više Vault lozinki iz skladišta ključeva. Tokom izvršavanja Ansible će pokušati dešifrovanje pomoću navedenih lozinki. Semaphore-ov vault ID za tajne iz ankete i grupa promenljivih odvojen je od ovih vault-ova šablona.
 
 ### Nivo detaljnosti {#verbosity-level}
 

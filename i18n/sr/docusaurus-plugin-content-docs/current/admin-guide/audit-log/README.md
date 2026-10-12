@@ -366,6 +366,26 @@ Neke radnje u interfejsu se ne beleže: uklanjanje licence, podešavanja aplikac
 zadataka, aliasi Terraform inventara, brisanje Terraform stanja, pokretanja workflow-a i pozivnice u projekat.
 Opisi šablona, prikazi, brisanje keša projekta i zakazane sinhronizacije skladišta tajni takođe se ne beleže.
 
+## Čitanje preko API-ja {#api}
+
+Administratori mogu da listaju audit log pomoću `GET /api/audit/events`, uz isti kolačić sesije ili API token kao i za ostatak API-ja. Log mogu da čitaju samo korisnici sa ulogom **Admin**. Zahtevi iz pregledača koji nisu istog porekla dobijaju odgovor `403 Forbidden` (`Sec-Fetch-Site` različit od `same-origin` ili `none`).
+
+**Listanje bez filtera** (sva izdanja kada je audit log uključen) prihvata samo kursore `before` i `after` (pozitivni celi brojevi, `seq` događaja). Ne mogu se kombinovati. Odgovor sadrži do 50 događaja, najnovije prvo, kao i opcione kursore `older` i `newer` za sledeće stranice. Svaki drugi parametar upita obrađuje filtrirani endpoint opisan u nastavku.
+
+```http
+GET /api/audit/events?before=1200
+```
+
+```json
+{
+  "events": [ … ],
+  "older": 1150,
+  "newer": null
+}
+```
+
+**Filtrirano listanje i izvoz** zahtevaju Semaphore Pro. Prosledite bilo koji od parametara `from`, `to` (ISO 8601 vremenske oznake), `user`, `project`, `kind` (može se ponavljati), `outcome` (`success` ili `failure`), `ip`, `target_type` i `target_id`. Filtrirani odgovori mogu da sadrže `searched_to` kada duboka pretraga nije našla poklapanja u vremenskom opsegu. Izvezite poklopljene događaje pomoću `GET /api/audit/events/export?format=csv` ili `format=jsonl` uz iste parametre filtera. Svaki izvoz se beleži kao događaj `audit.log/export`, kao i u [veb interfejsu](/admin-guide/audit-log/view#filter-export).
+
 ## Šta dalje {#whats-next}
 
 - [Pregled dnevnika revizije](/admin-guide/audit-log/view) — pregled, filtriranje i izvoz događaja u veb interfejsu.

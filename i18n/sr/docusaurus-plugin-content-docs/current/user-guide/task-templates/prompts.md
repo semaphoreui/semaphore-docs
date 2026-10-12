@@ -15,7 +15,7 @@ Ova funkcionalnost vam omogućava da:
 | **Definicija** | Unapred definisane opcije specifične za šablon | Prilagođena polja koja sami kreirate |
 | **Primeri** | Ansible: `--limit`, `--tags`<br/>Terraform: workspace-ovi, `-destroy` | Naziv okruženja, broj verzije, prilagođeni parametri |
 | **Podešavanje** | Uključuju se poljima za potvrdu u šablonu | Dodaju se u podešavanjima šablona sa nazivom i tipom |
-| **Prosleđuju se kao** | Ugrađene CLI zastavice | Ansible: `--extra-vars`<br/>Terraform: `-var` |
+| **Prosleđuju se kao** | Ugrađene CLI zastavice | Ansible: YAML fajl dodatnih promenljivih (`@file`)<br/>Terraform: `-var` |
 
 **Upiti** su standardizovane opcije ugrađene u Semaphore za određene alate, dok su **anketne promenljive** fleksibilna prilagođena polja koja sami definišete.
 

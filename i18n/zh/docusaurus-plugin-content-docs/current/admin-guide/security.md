@@ -65,6 +65,14 @@ Argon2id 密码哈希自 **Semaphore 2.20** 起可用。更早的版本使用 bc
 - **SSH 密钥和令牌**<br />用户负责上传有效的 SSH 密钥和令牌。它们会被加密，且仅在运行任务（Task）时使用。
 - **HashiCorp Vault 集成（Pro）**<br />密钥可以存储在外部 Vault 实例中。在创建或编辑密钥时可按密钥选择存储方式。
 
+### Ansible 任务变量 {#ansible-task-variables}
+
+对于 Ansible 模板，Semaphore 通过临时 YAML 文件而不是命令行上的 `key=value` 参数，将变量组、调查问卷答案、工作流输入和 `semaphore_vars` 作为额外变量传递。每个字符串都带有 `!unsafe` 标记，因此值中的表达式不会被计算——与 AWX 的 `ALLOW_JINJA_IN_EXTRA_VARS=never` 思路相同。
+
+类型为 **secret** 的调查问卷字段和类型为 **var** 的变量组条目中的密钥会写入第二个用 Ansible Vault 加密的文件。Semaphore 为每个任务生成随机的 vault ID 和密码，并通过 stdin 响应 Ansible 的 vault 提示；任务运行期间不会有任何明文写入磁盘。您附加到模板的 vault 密码使用单独的 `--vault-id` 条目。
+
+这些文件创建在项目临时目录中，仅任务用户有权限访问，并在任务结束时删除。在 `DEBUG` 日志级别下，`SEMAPHORE_DEBUG_FILTER=extra_vars` 会记录变量如何拆分以及写入了哪些文件——只记录变量名和路径，绝不记录值或 vault 密码。
+
 ## 数据加密 {#data-encryption}
 
 敏感数据以加密形式存储在数据库中。你应在配置文件中设置配置选项 `access_key_encryption` 以启用访问密钥加密。该值必须通过以下命令生成：

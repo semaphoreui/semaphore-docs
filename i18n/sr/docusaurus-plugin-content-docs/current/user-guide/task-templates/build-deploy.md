@@ -26,6 +26,10 @@ Uključite **Automatsko pokretanje** (Autorun) u deploy šablonu da bi se deploy
 
 Semaphore prosleđuje promenljivu `semaphore_vars` svakom Ansible playbook-u koji pokreće. Koristite je da saznate koji tip zadatka je pokrenut, koju verziju treba build-ovati ili isporučiti, ko je pokrenuo zadatak i koja je poruka zadatka.
 
+:::note
+Vrednosti unutar `semaphore_vars` prosleđuju se kao literali (`!unsafe`); Jinja2 u poruci zadatka ili nekom drugom polju ne razvija se pre nego što ga Ansible primi.
+:::
+
 Primer za `build` zadatke:
 
 ```yaml

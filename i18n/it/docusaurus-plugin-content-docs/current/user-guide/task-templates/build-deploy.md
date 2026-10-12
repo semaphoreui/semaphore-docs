@@ -26,6 +26,10 @@ Abilitare **Autorun** nel Task Template di deploy per avviare automaticamente un
 
 Semaphore passa la variabile `semaphore_vars` a ogni playbook Ansible che esegue. Utilizzarla per conoscere il tipo di Task eseguito, quale versione deve essere compilata o distribuita, chi ha eseguito il Task e il messaggio del Task.
 
+:::note
+I valori all'interno di `semaphore_vars` vengono passati come letterali (`!unsafe`); il Jinja2 in un messaggio del Task o in un altro campo non viene espanso prima che Ansible lo riceva.
+:::
+
 Esempio per i Task `build`:
 
 ```yaml

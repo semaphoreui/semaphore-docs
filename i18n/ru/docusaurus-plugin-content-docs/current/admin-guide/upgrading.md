@@ -77,3 +77,21 @@ import TabItem from '@theme/TabItem';
       ```
   </TabItem>
 </Tabs>
+
+## Важные изменения поведения {#behavior-changes}
+
+Эти изменения применяются при обновлении до последних версий **2.20.x**. Миграция базы данных не требуется, но playbook и API-клиенты, которые полагались на прежнее поведение, возможно, придётся обновить.
+
+### Дополнительные переменные Ansible передаются как литералы {#ansible-extra-vars-literal}
+
+Semaphore больше не передаёт дополнительные переменные Ansible в командной строке. Группы переменных, ответы на опросы, входные данные workflow и встроенный объект `semaphore_vars` записываются во временные YAML-файлы и передаются как `--extra-vars @file`. Каждое строковое значение помечается тегом `!unsafe`, поэтому Ansible воспринимает его как данные и не вычисляет Jinja2 внутри значения.
+
+Если вы сохраняли Jinja2 в поле опроса, группе переменных или шаблоне `--extra-vars` в расчёте на то, что Semaphore или Ansible раскроет его до запуска playbook, такое раскрытие больше не выполняется. Перенесите логику в playbook (например, используйте `{{ my_var }}`, где `my_var` — простое значение из Semaphore) или вычисляйте значение вне Semaphore.
+
+Секреты опросов и групп переменных шифруются в отдельном файле Ansible Vault. Semaphore генерирует одноразовый идентификатор vault и пароль для каждой задачи и отвечает на запрос vault от Ansible через stdin. Это не связано с паролями vault, которые вы привязываете к шаблону.
+
+См. [Переменные опроса](/user-guide/task-templates/survey-vars), [Группы переменных](/user-guide/environment) и [Безопасность — переменные задач Ansible](/admin-guide/security#ansible-task-variables).
+
+### Выходные данные workflow и поля API задач {#workflow-outputs-and-task-api}
+
+[Выходные данные workflow](/user-guide/workflows#producing-outputs) записываются при выполнении задачи и не могут быть заданы при запуске задачи через API. `POST /api/project/{project_id}/tasks` игнорирует `workflow_run_id`, `workflow_node_id`, `workflow_template_id`, `artifacts` и `runner_id`, если они переданы в теле запроса.

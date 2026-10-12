@@ -137,13 +137,23 @@ Ansible が並列に接続するホスト数は、テンプレートの **追加
 引数が有効な JSON でない場合、タスクは実行開始前に、内容を説明する
 バリデーションエラーとともに失敗します。
 
+### Semaphore が追加変数を渡す方法 {#how-semaphore-passes-extra-variables}
+
+Semaphore は、マージした変数グループ、アンケートの回答、ワークフローの入力、`semaphore_vars` を一時的な YAML ファイルに書き込み、`--extra-vars @file` として Ansible に渡します。すべての文字列に `!unsafe` タグが付くため、値はリテラルになります。シークレットは vault で暗号化された別のファイルで渡され、Semaphore はテンプレートに関連付けた vault パスワードに加えて、もう 1 つ `--vault-id <uuid>@prompt` を追加します。
+
+extra-vars ファイル内の `!unsafe` が有効になるよう、Ansible 2.10 以降を使用してください。
+
+### ワークフローの出力 {#workflow-outputs}
+
+playbook が[ワークフロー](/user-guide/workflows)のノードとして実行される場合、Semaphore は `SEMAPHORE_OUTPUTS_FILE` を設定します。出力は `ansible.builtin.set_stats`(`per_host: false`)で公開します。同梱の `semaphore_outputs` コールバックがそれをこのファイルに書き込みます。制限と例については[出力の生成](/user-guide/workflows#producing-outputs)を参照してください。
+
 ### 認証 {#authentication}
 
 playbook 内のホストに対する認証は、インベントリのキーストアにあるユーザー参照を使用して行われます。SSH に使用するユーザーは、キーストア要素の任意指定のユーザーによって決まります。
 
 ### 複数の vault パスワード {#multiple-vault-passwords}
 
-キーストアから複数の Vault パスワードをテンプレートに関連付けられます。実行時に、Ansible は指定されたパスワードを使って復号を試みます。
+キーストアから複数の Vault パスワードをテンプレートに関連付けられます。実行時に、Ansible は指定されたパスワードを使って復号を試みます。Semaphore がアンケートと変数グループのシークレットに使う vault ID は、これらのテンプレートの vault とは別です。
 
 ### 詳細度レベル {#verbosity-level}
 

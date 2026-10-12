@@ -135,13 +135,23 @@ Semaphore 不原生支持制品，它只提供任务版本管理。您需要自�
 
 如果参数不是有效的 JSON，任务会在开始执行前失败，并给出描述性的验证错误。
 
+### Semaphore 如何传递额外变量 {#how-semaphore-passes-extra-variables}
+
+Semaphore 将合并后的变量组、调查问卷答案、工作流输入和 `semaphore_vars` 写入临时 YAML 文件，并以 `--extra-vars @file` 的形式传给 Ansible。每个字符串都带有 `!unsafe` 标记，因此值都是字面值。密钥通过单独的 vault 加密文件传递；除了您附加到模板的 vault 密码外，Semaphore 还会添加一个 `--vault-id <uuid>@prompt`。
+
+请使用 Ansible 2.10 或更高版本，以便 extra-vars 文件中的 `!unsafe` 生效。
+
+### 工作流输出 {#workflow-outputs}
+
+当 playbook 作为[工作流](/user-guide/workflows)中的节点运行时，Semaphore 会设置 `SEMAPHORE_OUTPUTS_FILE`。使用 `ansible.builtin.set_stats`（`per_host: false`）发布输出；随附的 `semaphore_outputs` 回调会将其写入该文件。限制和示例请参阅[生成输出](/user-guide/workflows#producing-outputs)。
+
 ### 身份验证 {#authentication}
 
 playbook 中主机的身份验证通过清单上引用的密钥库（Key Store）用户完成。SSH 使用的用户由密钥库条目上可选的用户字段决定。
 
 ### 多个 Vault 密码 {#multiple-vault-passwords}
 
-您可以将密钥库中的多个 Vault 密码附加到一个模板。执行期间，Ansible 会尝试使用提供的密码进行解密。
+您可以将密钥库中的多个 Vault 密码附加到一个模板。执行期间，Ansible 会尝试使用提供的密码进行解密。Semaphore 用于调查问卷和变量组密钥的 vault ID 与这些模板 vault 相互独立。
 
 ### 详细程度 {#verbosity-level}
 

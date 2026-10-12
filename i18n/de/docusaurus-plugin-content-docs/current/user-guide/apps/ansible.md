@@ -137,13 +137,23 @@ Task-Argumente; das letzte `--forks` / `-f` auf der Befehlszeile gewinnt.
 Wenn die Argumente kein gültiges JSON sind, schlägt der Task mit einem aussagekräftigen Validierungsfehler
 fehl, bevor die Ausführung beginnt.
 
+### Wie Semaphore Extra-Variablen übergibt {#how-semaphore-passes-extra-variables}
+
+Semaphore schreibt zusammengeführte Variablengruppen, Survey-Antworten, Workflow-Eingaben und `semaphore_vars` in eine temporäre YAML-Datei und übergibt sie als `--extra-vars @file` an Ansible. Jeder String trägt das Tag `!unsafe`, sodass Werte Literale sind. Secrets werden in einer separaten, mit Vault verschlüsselten Datei übertragen; Semaphore fügt zusätzlich zu den Vault-Passwörtern, die Sie dem Template zuordnen, ein weiteres `--vault-id <uuid>@prompt` hinzu.
+
+Verwenden Sie Ansible 2.10 oder neuer, damit `!unsafe` in einer Extra-Vars-Datei berücksichtigt wird.
+
+### Workflow-Ausgaben {#workflow-outputs}
+
+Wenn ein Playbook als Knoten in einem [Workflow](/user-guide/workflows) läuft, setzt Semaphore `SEMAPHORE_OUTPUTS_FILE`. Veröffentlichen Sie Ausgaben mit `ansible.builtin.set_stats` (`per_host: false`); der mitgelieferte Callback `semaphore_outputs` schreibt sie in diese Datei. Grenzen und Beispiele finden Sie unter [Ausgaben erzeugen](/user-guide/workflows#producing-outputs).
+
 ### Authentifizierung {#authentication}
 
 Die Authentifizierung für die Hosts im Playbook erfolgt über die Benutzerverweise aus dem Schlüsselspeicher im Inventory. Der Benutzer für SSH wird durch den optionalen Benutzer am Schlüsselspeicher-Element bestimmt.
 
 ### Mehrere Vault-Passwörter {#multiple-vault-passwords}
 
-Sie können einem Template mehrere Vault-Passwörter aus dem Schlüsselspeicher zuordnen. Während der Ausführung versucht Ansible, mit den angegebenen Passwörtern zu entschlüsseln.
+Sie können einem Template mehrere Vault-Passwörter aus dem Schlüsselspeicher zuordnen. Während der Ausführung versucht Ansible, mit den angegebenen Passwörtern zu entschlüsseln. Die Vault-ID von Semaphore für Survey- und Variablengruppen-Secrets ist von diesen Template-Vaults getrennt.
 
 ### Ausführlichkeitsstufe {#verbosity-level}
 

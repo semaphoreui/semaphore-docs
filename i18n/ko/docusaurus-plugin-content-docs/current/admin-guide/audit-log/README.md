@@ -308,6 +308,26 @@ Splunk에서 HEC 토큰을 만들고(**Settings → Data inputs → HTTP Event C
 
 UI의 일부 작업은 기록되지 않습니다. 라이선스 제거, 앱 설정, HA 작업 상태 초기화, Terraform 인벤토리 별칭, Terraform 상태 삭제, 워크플로 실행, 프로젝트 초대입니다. 템플릿 설명, 뷰, 프로젝트 캐시 삭제, 예약된 비밀 저장소 동기화도 기록되지 않습니다.
 
+## API로 읽기 {#api}
+
+관리자는 API의 나머지 부분과 동일한 세션 쿠키 또는 API 토큰을 사용하여 `GET /api/audit/events`로 감사 로그를 페이지 단위로 조회할 수 있습니다. **Admin** 역할의 사용자만 로그를 읽을 수 있습니다. 동일 출처가 아닌 브라우저 요청에는 `403 Forbidden`이 응답됩니다(`Sec-Fetch-Site`가 `same-origin` 또는 `none`이 아닌 경우).
+
+**필터 없는 페이징**(감사 로그가 활성화된 경우 모든 에디션)은 `before` 및 `after` 커서(양의 정수, 이벤트의 `seq`)만 허용합니다. 두 커서는 함께 사용할 수 없습니다. 응답에는 최신순으로 최대 50개의 이벤트가 포함되며, 다음 페이지를 위한 선택적 `older` 및 `newer` 커서가 함께 제공됩니다. 그 밖의 쿼리 매개변수는 아래의 필터 엔드포인트에서 처리됩니다.
+
+```http
+GET /api/audit/events?before=1200
+```
+
+```json
+{
+  "events": [ … ],
+  "older": 1150,
+  "newer": null
+}
+```
+
+**필터링된 페이징 및 내보내기**에는 Semaphore Pro가 필요합니다. `from`, `to`(ISO 8601 타임스탬프), `user`, `project`, `kind`(반복 가능), `outcome`(`success` 또는 `failure`), `ip`, `target_type`, `target_id` 중 원하는 것을 전달하십시오. 심층 검색에서 시간 범위 내에 일치 항목이 없으면 필터링된 응답에 `searched_to`가 포함될 수 있습니다. 일치하는 이벤트는 동일한 필터 매개변수와 함께 `GET /api/audit/events/export?format=csv` 또는 `format=jsonl`로 내보낼 수 있습니다. 각 내보내기는 [웹 UI](/admin-guide/audit-log/view#filter-export)에서와 마찬가지로 `audit.log/export` 이벤트로 기록됩니다.
+
 ## 다음 단계 {#whats-next}
 
 - [감사 로그 보기](/admin-guide/audit-log/view) — 웹 UI에서 이벤트를 확인하고 필터링하고 내보냅니다.

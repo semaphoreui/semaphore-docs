@@ -26,6 +26,10 @@ playbook에서 `semaphore_vars.task_details.target_version`을 통해 이 버전
 
 Semaphore는 실행하는 각 Ansible playbook에 `semaphore_vars` 변수를 전달합니다. 이 변수를 사용하여 어떤 유형의 작업이 실행되었는지, 어떤 버전을 빌드하거나 배포해야 하는지, 누가 작업을 실행했는지, 그리고 작업 메시지를 확인할 수 있습니다.
 
+:::note
+`semaphore_vars` 안의 값은 리터럴(`!unsafe`)로 전달됩니다. 작업 메시지나 다른 필드에 있는 Jinja2는 Ansible이 받기 전에 확장되지 않습니다.
+:::
+
 `build` 작업의 예:
 
 ```yaml

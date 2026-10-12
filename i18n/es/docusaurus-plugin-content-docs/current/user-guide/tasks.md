@@ -123,6 +123,10 @@ if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
 fi
 ```
 
+## Iniciar tareas mediante la API {#api}
+
+Use `POST /api/project/{project_id}/tasks` con los mismos campos que el cuadro de diálogo Nueva tarea. Semaphore ignora los campos que solo pueden establecer el servidor o el motor de workflows: `workflow_run_id`, `workflow_node_id`, `workflow_template_id`, `artifacts` y `runner_id`. El enlace con el workflow y las salidas se aplican cuando un workflow inicia un nodo o cuando la tarea termina.
+
 ## Retención de registros {#log-retention}
 
 De forma predeterminada, las tareas y los registros se conservan para siempre. Use `max_tasks_per_template` para conservar solo las últimas tareas de cada plantilla; consulte [Historial](./projects/history#task-retention).

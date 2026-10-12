@@ -122,6 +122,10 @@ if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
 fi
 ```
 
+## API でタスクを開始する {#api}
+
+[新規タスク] ダイアログと同じフィールドを指定して `POST /api/project/{project_id}/tasks` を使用します。サーバーまたはワークフローエンジンだけが設定できるフィールド(`workflow_run_id`、`workflow_node_id`、`workflow_template_id`、`artifacts`、`runner_id`)は、Semaphore によって無視されます。ワークフローへの紐付けと出力は、ワークフローがノードを開始したとき、またはタスクが終了したときに適用されます。
+
 ## ログの保持 {#log-retention}
 
 既定では、タスクとログは無期限に保持されます。各テンプレートの直近のタスクのみを保持するには `max_tasks_per_template` を使用します。[履歴](./projects/history#task-retention)を参照してください。

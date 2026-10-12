@@ -15,7 +15,7 @@ Esta característica le permite:
 | **Definición** | Opciones predefinidas específicas de la plantilla | Campos personalizados que usted crea |
 | **Ejemplos** | Ansible: `--limit`, `--tags`<br/>Terraform: workspaces, `-destroy` | Nombre del entorno, número de versión, parámetros personalizados |
 | **Configuración** | Se habilitan mediante casillas de verificación en la plantilla | Se agregan en la configuración de la plantilla con nombre y tipo |
-| **Se pasan como** | Indicadores integrados de la CLI | Ansible: `--extra-vars`<br/>Terraform: `-var` |
+| **Se pasan como** | Indicadores integrados de la CLI | Ansible: archivo YAML de variables extra (`@file`)<br/>Terraform: `-var` |
 
 Los **prompts** son opciones estandarizadas integradas en Semaphore para herramientas concretas, mientras que las **variables de encuesta** son campos personalizados flexibles que usted mismo define.
 

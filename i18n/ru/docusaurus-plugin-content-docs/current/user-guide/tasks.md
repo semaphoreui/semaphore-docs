@@ -123,6 +123,10 @@ if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
 fi
 ```
 
+## Запуск задач через API {#api}
+
+Используйте `POST /api/project/{project_id}/tasks` с теми же полями, что и в диалоге «Новая задача». Semaphore игнорирует поля, которые может задавать только сервер или движок workflow: `workflow_run_id`, `workflow_node_id`, `workflow_template_id`, `artifacts` и `runner_id`. Привязка к workflow и выходные данные применяются, когда workflow запускает узел или когда задача завершается.
+
 ## Хранение логов {#log-retention}
 
 По умолчанию задачи и логи хранятся бессрочно. Используйте `max_tasks_per_template`, чтобы оставлять только последние задачи каждого шаблона, см. [История](./projects/history#task-retention).

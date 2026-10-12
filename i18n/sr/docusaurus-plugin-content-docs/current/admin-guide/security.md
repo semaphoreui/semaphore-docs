@@ -65,6 +65,14 @@ Bezbedno upravljanje tajnama je jedna od osnovnih funkcija:
 - **SSH ključevi i tokeni**<br />Korisnici su odgovorni za otpremanje važećih SSH ključeva i tokena. Oni se šifruju i koriste isključivo pri izvršavanju zadataka.
 - **Integracija sa HashiCorp Vault (Pro)**<br />Tajne se mogu čuvati u eksternoj Vault instanci. Način skladištenja birate za svaku tajnu pojedinačno prilikom njenog kreiranja ili izmene.
 
+### Ansible promenljive zadatka {#ansible-task-variables}
+
+Za Ansible šablone, Semaphore prosleđuje grupe promenljivih, odgovore iz ankete, ulaze workflow-a i `semaphore_vars` kao dodatne promenljive preko privremenih YAML fajlova, a ne kao `key=value` argumente u komandnoj liniji. Svaki string je označen sa `!unsafe`, pa se izrazi unutar vrednosti ne procenjuju — ista ideja kao AWX `ALLOW_JINJA_IN_EXTRA_VARS=never`.
+
+Tajne iz polja ankete tipa **secret** i stavke grupa promenljivih tipa **var** idu u drugi fajl šifrovan pomoću Ansible Vault. Semaphore za svaki zadatak generiše nasumični vault ID i lozinku i odgovara na Ansible vault upit preko stdin; ništa se ne upisuje na disk u čistom tekstu dok se zadatak izvršava. Vault lozinke koje priložite šablonu koriste zasebne `--vault-id` stavke.
+
+Fajlovi se kreiraju u privremenom direktorijumu projekta sa dozvolama samo za korisnika zadatka i brišu se kada se zadatak završi. Na nivou logovanja `DEBUG`, `SEMAPHORE_DEBUG_FILTER=extra_vars` beleži kako se promenljive dele i koji se fajlovi upisuju — samo imena promenljivih i putanje, nikada vrednosti ni vault lozinke.
+
 ## Šifrovanje podataka {#data-encryption}
 
 Osetljivi podaci se čuvaju u bazi podataka u šifrovanom obliku. Da biste uključili šifrovanje pristupnih ključeva (Access Keys), postavite konfiguracionu opciju `access_key_encryption` u konfiguracionoj datoteci. Njena vrednost mora biti generisana komandom:

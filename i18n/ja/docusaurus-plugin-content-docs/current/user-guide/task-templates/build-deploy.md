@@ -26,6 +26,10 @@ playbook では `semaphore_vars.task_details.target_version` を使ってこの�
 
 Semaphore は、実行する各 Ansible playbook に `semaphore_vars` 変数を渡します。これを使って、実行されたタスクの種類、ビルドまたはデプロイするバージョン、タスクを実行したユーザー、タスクのメッセージを知ることができます。
 
+:::note
+`semaphore_vars` 内の値はリテラル(`!unsafe`)として渡されます。タスクメッセージやその他のフィールドにある Jinja2 は、Ansible が受け取る前に展開されません。
+:::
+
 `build` タスクの例:
 
 ```yaml

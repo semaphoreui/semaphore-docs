@@ -15,7 +15,7 @@ Diese Funktion ermöglicht Ihnen:
 | **Definition** | Vordefinierte, Template-spezifische Optionen | Eigene Felder, die Sie erstellen |
 | **Beispiele** | Ansible: `--limit`, `--tags`<br/>Terraform: Workspaces, `-destroy` | Umgebungsname, Versionsnummer, eigene Parameter |
 | **Konfiguration** | Aktivierung über Kontrollkästchen im Template | Hinzufügen in den Template-Einstellungen mit Name und Typ |
-| **Übergabe als** | Integrierte CLI-Flags | Ansible: `--extra-vars`<br/>Terraform: `-var` |
+| **Übergabe als** | Integrierte CLI-Flags | Ansible: Extra-Vars-YAML-Datei (`@file`)<br/>Terraform: `-var` |
 
 **Prompts** sind standardisierte, in Semaphore integrierte Optionen für bestimmte Tools, während **Survey-Variablen** flexible, selbst definierte Felder sind.
 

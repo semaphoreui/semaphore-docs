@@ -308,6 +308,26 @@ Splunk で HEC トークンを作成し (**Settings → Data inputs → HTTP Eve
 
 UI の一部の操作は記録されません。ライセンスの削除、アプリの設定、HA のタスク状態のクリア、Terraform インベントリのエイリアス、Terraform ステートの削除、ワークフローの実行、プロジェクトへの招待です。テンプレートの説明、ビュー、プロジェクトキャッシュのクリア、スケジュールされたシークレットストレージの同期も記録されません。
 
+## API での読み取り {#api}
+
+管理者は、API の他の部分と同じセッション Cookie または API トークンを使って、`GET /api/audit/events` で監査ログをページ単位で取得できます。ログを読み取れるのは **Admin** ロールのユーザーのみです。同一オリジンではないブラウザーからのリクエストには `403 Forbidden` が返されます(`Sec-Fetch-Site` が `same-origin` または `none` 以外の場合)。
+
+**フィルターなしのページング**(監査ログが有効な場合、すべてのエディションで利用可能)で使えるのは、`before` と `after` のカーソル(正の整数で、イベントの `seq`)のみです。両者を組み合わせることはできません。レスポンスには最大 50 件のイベントが新しい順に含まれ、次のページ用に任意の `older` と `newer` カーソルが付きます。それ以外のクエリパラメーターは、以下のフィルター付きエンドポイントで処理されます。
+
+```http
+GET /api/audit/events?before=1200
+```
+
+```json
+{
+  "events": [ … ],
+  "older": 1150,
+  "newer": null
+}
+```
+
+**フィルター付きのページングとエクスポート**には Semaphore Pro が必要です。`from`、`to`(ISO 8601 タイムスタンプ)、`user`、`project`、`kind`(複数指定可)、`outcome`(`success` または `failure`)、`ip`、`target_type`、`target_id` のいずれかを指定できます。ディープ検索で時間範囲内に一致するものが見つからなかった場合、フィルター付きのレスポンスに `searched_to` が含まれることがあります。一致したイベントは、同じフィルターパラメーターを使って `GET /api/audit/events/export?format=csv` または `format=jsonl` でエクスポートできます。各エクスポートは、[Web UI](/admin-guide/audit-log/view#filter-export) の場合と同様に `audit.log/export` イベントとして記録されます。
+
 ## 次のステップ {#whats-next}
 
 - [監査ログを表示する](/admin-guide/audit-log/view) — Web UI でイベントを確認、フィルター、エクスポートします。

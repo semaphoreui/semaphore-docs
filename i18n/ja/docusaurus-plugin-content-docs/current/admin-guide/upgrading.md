@@ -77,3 +77,21 @@ import TabItem from '@theme/TabItem';
       ```
   </TabItem>
 </Tabs>
+
+## 主な動作の変更 {#behavior-changes}
+
+これらの変更は、最近の **2.20.x** リリースにアップグレードすると適用されます。データベースのマイグレーションは不要ですが、以前の動作に依存していた playbook や API クライアントは更新が必要になる場合があります。
+
+### Ansible の追加変数はリテラルとして扱われます {#ansible-extra-vars-literal}
+
+Semaphore は Ansible の追加変数をコマンドラインで渡さなくなりました。変数グループ、アンケートの回答、ワークフローの入力、組み込みの `semaphore_vars` オブジェクトは一時的な YAML ファイルに書き込まれ、`--extra-vars @file` として渡されます。すべての文字列値には `!unsafe` タグが付けられるため、Ansible は値をデータとして扱い、値の中の Jinja2 を評価しません。
+
+アンケートのフィールド、変数グループ、`--extra-vars` テンプレートに Jinja2 を保存し、playbook の実行前に Semaphore や Ansible が展開することを期待していた場合、その展開は行われなくなります。ロジックを playbook に移す(たとえば、`my_var` が Semaphore から渡される単純な値であるときに `{{ my_var }}` を使う)か、Semaphore の外で値を計算してください。
+
+アンケートのシークレットと変数グループのシークレットは、別の Ansible Vault ファイルで暗号化されます。Semaphore はタスクごとに一度限りの vault ID とパスワードを生成し、Ansible の vault プロンプトに stdin で応答します。これはテンプレートに関連付ける vault パスワードとは別のものです。
+
+[アンケート変数](/user-guide/task-templates/survey-vars)、[変数グループ](/user-guide/environment)、[セキュリティ — Ansible タスク変数](/admin-guide/security#ansible-task-variables)を参照してください。
+
+### ワークフローの出力とタスク API のフィールド {#workflow-outputs-and-task-api}
+
+[ワークフローの出力](/user-guide/workflows#producing-outputs)はタスクの実行によって書き込まれ、API でタスクを開始するときに設定することはできません。`POST /api/project/{project_id}/tasks` は、ボディに `workflow_run_id`、`workflow_node_id`、`workflow_template_id`、`artifacts`、`runner_id` が含まれていても無視します。

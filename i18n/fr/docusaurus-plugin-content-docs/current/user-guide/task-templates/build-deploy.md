@@ -26,6 +26,10 @@ Activez l'**Exécution automatique** dans le modèle de déploiement pour démar
 
 Semaphore transmet la variable `semaphore_vars` à chaque playbook Ansible qu'il exécute. Utilisez-la pour savoir quel type de tâche a été exécuté, quelle version doit être construite ou déployée, qui a lancé la tâche, et quel est le message de la tâche.
 
+:::note
+Les valeurs de `semaphore_vars` sont transmises comme littéraux (`!unsafe`) ; le Jinja2 contenu dans un message de tâche ou un autre champ n'est pas évalué avant qu'Ansible ne le reçoive.
+:::
+
 Exemple pour les tâches `build` :
 
 ```yaml

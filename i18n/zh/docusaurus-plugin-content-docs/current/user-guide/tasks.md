@@ -122,6 +122,10 @@ if [ -n "$SEMAPHORE_WORKFLOW_RUN_ID" ]; then
 fi
 ```
 
+## 通过 API 启动任务 {#api}
+
+使用 `POST /api/project/{project_id}/tasks`，字段与“新建任务”对话框相同。Semaphore 会忽略只能由服务器或工作流引擎设置的字段：`workflow_run_id`、`workflow_node_id`、`workflow_template_id`、`artifacts` 和 `runner_id`。工作流绑定和输出会在工作流启动节点或任务结束时应用。
+
 ## 日志保留 {#log-retention}
 
 默认情况下，任务和日志会永久保留。使用 `max_tasks_per_template` 可以只保留每个模板的最新任务，请参阅[历史记录](./projects/history#task-retention)。

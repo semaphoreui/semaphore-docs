@@ -26,6 +26,10 @@
 
 Semaphore 会将 `semaphore_vars` 变量传递给它运行的每个 Ansible playbook。使用它可以获知运行的任务类型、应构建或部署的版本、任务的运行者以及任务消息。
 
+:::note
+`semaphore_vars` 中的值按字面值（`!unsafe`）传递；任务消息或其他字段中的 Jinja2 在 Ansible 收到之前不会被展开。
+:::
+
 `build` 任务的示例：
 
 ```yaml
