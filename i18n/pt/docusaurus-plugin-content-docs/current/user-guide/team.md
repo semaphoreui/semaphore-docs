@@ -125,7 +125,7 @@ Ambos os caminhos abrem o mesmo formulário de papel. Configure o papel de acord
 | Campo | Descrição |
 | --- | --- |
 | **Name** | Um rótulo legível para o papel. |
-| **Slug** | Um identificador técnico único usado para referenciar o papel. Use letras minúsculas, números, sublinhados ou hifens, por exemplo `release_operator`. |
+| **Slug** | Um identificador técnico único usado para referenciar o papel. Pode conter letras, números, `_` e `-`, até 100 caracteres, por exemplo `release_operator`. Maiúsculas e minúsculas não importam: `Ops` e `ops` são o mesmo slug. Não é possível alterar o slug depois de criar o papel. |
 | **Permissions** | As permissões em todo o projeto concedidas pelo papel. |
 
 #### Permissões em todo o projeto {#project-wide-permissions}

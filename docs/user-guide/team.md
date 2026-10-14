@@ -130,7 +130,7 @@ Both paths open the same role form. Configure the role to match the access your 
 | Field | Description |
 | --- | --- |
 | **Name** | A human-readable label for the role. |
-| **Slug** | A unique technical identifier used to reference the role. Use lowercase letters, numbers, underscores, or hyphens, for example `release_operator`. |
+| **Slug** | A unique technical identifier used to reference the role. It can contain letters, numbers, `_` and `-`, up to 100 characters, for example `release_operator`. Letter case does not matter: `Ops` and `ops` are the same slug. You cannot change the slug after you create the role. |
 | **Permissions** | The project-wide permissions granted by the role. |
 
 #### Project-wide permissions {#project-wide-permissions}

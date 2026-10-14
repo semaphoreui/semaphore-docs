@@ -125,7 +125,7 @@ Beide Wege öffnen dasselbe Rollenformular. Konfigurieren Sie die Rolle so, dass
 | Feld | Beschreibung |
 | --- | --- |
 | **Name** | Eine für Menschen lesbare Bezeichnung der Rolle. |
-| **Slug** | Ein eindeutiger technischer Identifikator, über den die Rolle referenziert wird. Verwenden Sie Kleinbuchstaben, Zahlen, Unterstriche oder Bindestriche, zum Beispiel `release_operator`. |
+| **Slug** | Ein eindeutiger technischer Identifikator, über den die Rolle referenziert wird. Er darf Buchstaben, Zahlen, `_` und `-` enthalten, bis zu 100 Zeichen, zum Beispiel `release_operator`. Groß- und Kleinschreibung spielt keine Rolle: `Ops` und `ops` sind derselbe Slug. Nach dem Erstellen der Rolle können Sie den Slug nicht mehr ändern. |
 | **Permissions** | Die projektweiten Berechtigungen, die die Rolle gewährt. |
 
 #### Projektweite Berechtigungen {#project-wide-permissions}

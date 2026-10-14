@@ -125,7 +125,7 @@ Les deux chemins ouvrent le même formulaire de rôle. Configurez le rôle pour 
 | Champ | Description |
 | --- | --- |
 | **Nom** | Un libellé lisible pour le rôle. |
-| **Slug** | Un identifiant technique unique utilisé pour référencer le rôle. Utilisez des lettres minuscules, des chiffres, des tirets bas ou des tirets, par exemple `release_operator`. |
+| **Slug** | Un identifiant technique unique utilisé pour référencer le rôle. Il peut contenir des lettres, des chiffres, `_` et `-`, jusqu'à 100 caractères, par exemple `release_operator`. La casse ne compte pas : `Ops` et `ops` sont le même slug. Vous ne pouvez pas modifier le slug après avoir créé le rôle. |
 | **Permissions** | Les permissions à l'échelle du projet accordées par le rôle. |
 
 #### Permissions à l'échelle du projet {#project-wide-permissions}

@@ -125,7 +125,7 @@ Oba puta otvaraju isti obrazac uloge. Podesite ulogu tako da odgovara pristupu k
 | Polje | Opis |
 | --- | --- |
 | **Name** | Čitljiv naziv uloge. |
-| **Slug** | Jedinstveni tehnički identifikator koji se koristi za referenciranje uloge. Koristite mala slova, brojeve, donje crte ili crtice, na primer `release_operator`. |
+| **Slug** | Jedinstveni tehnički identifikator koji se koristi za referenciranje uloge. Može da sadrži slova, brojeve, `_` i `-`, do 100 znakova, na primer `release_operator`. Velika i mala slova nisu bitna: `Ops` i `ops` su isti slug. Slug ne možete promeniti nakon što kreirate ulogu. |
 | **Permissions** | Dozvole na nivou projekta koje uloga dodeljuje. |
 
 #### Dozvole na nivou projekta {#project-wide-permissions}

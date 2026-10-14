@@ -125,7 +125,7 @@ Ambas vías abren el mismo formulario de rol. Configure el rol para que se ajust
 | Campo | Descripción |
 | --- | --- |
 | **Nombre** | Una etiqueta legible para el rol. |
-| **Slug** | Un identificador técnico único que se usa para hacer referencia al rol. Utilice letras minúsculas, números, guiones bajos o guiones, por ejemplo `release_operator`. |
+| **Slug** | Un identificador técnico único que se usa para hacer referencia al rol. Puede contener letras, números, `_` y `-`, hasta 100 caracteres, por ejemplo `release_operator`. Las mayúsculas y minúsculas no importan: `Ops` y `ops` son el mismo slug. No puede cambiar el slug después de crear el rol. |
 | **Permisos** | Los permisos a nivel de proyecto que concede el rol. |
 
 #### Permisos a nivel de proyecto {#project-wide-permissions}
