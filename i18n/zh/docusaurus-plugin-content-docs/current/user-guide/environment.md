@@ -6,7 +6,7 @@ Semaphore 的变量组（Variable Groups）部分用于为清单（Inventory）�
 
 所有任务模板（Task Templates）都要求定义一个变量组，即使它是空的。
 
-Ansible 从一个临时文件中以额外变量的形式接收变量组中的变量，该文件中的每个值都带有 `!unsafe` 标记：存储在变量组中的 Jinja2 表达式会按字面原样到达 playbook，不会被求值。作为变量传递的变量组机密（secrets）放在另一个用 Ansible Vault 加密的文件中传递。
+Ansible 从一个临时文件中以额外变量的形式接收变量组中的变量，该文件中每个包含 Jinja2 分隔符（`{{ … }}`、`{% … %}` 或 `{# … #}`）的值都带有 `!unsafe` 标记：存储在变量组中的 Jinja2 表达式会按字面原样到达 playbook，不会被求值。值会保留其 JSON 类型：字符串 `"2026.08"` 到达 playbook 时仍是字符串，数字 `3` 仍是数字。作为变量传递的变量组机密（secrets）放在另一个用 Ansible Vault 加密的文件中传递。
 
 ## 创建变量组 {#create-a-variable-group}
 1. 点击 Variable Group 选项卡。

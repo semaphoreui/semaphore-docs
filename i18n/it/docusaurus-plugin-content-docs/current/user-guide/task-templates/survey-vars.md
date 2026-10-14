@@ -149,11 +149,14 @@ e viene eliminato al termine del Task.
 Durante l'esecuzione del task, l'utente inserisce "2.5.0" nel modulo survey e Ansible la riceve come:
 
 ```yaml
-app_version: !unsafe "2.5.0"
+app_version: "2.5.0"
 ```
 
-Ogni valore porta il tag `!unsafe`: Ansible lo usa in forma letterale e non valuta mai un'espressione
-Jinja2 digitata in un campo survey, memorizzata in un gruppo di variabili o fornita da un Workflow.
+Ogni valore viene scritto come stringa tra virgolette, così una risposta che sembra un numero, un
+booleano o una data, come `2026.08` o `00123`, resta una stringa nel playbook. Un valore che
+contiene un delimitatore Jinja2 (`{{ … }}`, `{% … %}` o `{# … #}`) porta inoltre il tag `!unsafe`: Ansible lo usa
+in forma letterale e non valuta mai un'espressione Jinja2 digitata in un campo survey, memorizzata
+in un gruppo di variabili o fornita da un Workflow.
 Una variabile survey di tipo **secret** finisce in un secondo file cifrato con Ansible Vault tramite
 una password monouso che Semaphore fornisce al prompt del vault, così i secret non compaiono mai
 sulla riga di comando né su disco in chiaro.

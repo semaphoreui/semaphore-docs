@@ -11,7 +11,7 @@ The Variable Groups section of Semaphore is a place to store additional variable
 
 All task templates require a variable group to be defined even if it is empty. 
 
-Ansible receives the variables of a group as extra variables from a temporary file in which every value is tagged `!unsafe`: a Jinja2 expression stored in a variable group reaches the playbook literally and is not evaluated. Secrets of the group that are passed as variables travel in a separate file encrypted with Ansible Vault.
+Ansible receives the variables of a group as extra variables from a temporary file in which every value that contains a Jinja2 delimiter (`{{ … }}`, `{% … %}` or `{# … #}`) is tagged `!unsafe`: a Jinja2 expression stored in a variable group reaches the playbook literally and is not evaluated. Values keep their JSON type: the string `"2026.08"` reaches the playbook as a string, the number `3` as a number. Secrets of the group that are passed as variables travel in a separate file encrypted with Ansible Vault.
 
 ## Create a variable group {#create-a-variable-group}
 1. Click on the Variable Group tab.

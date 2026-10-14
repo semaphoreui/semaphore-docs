@@ -149,12 +149,16 @@ Benutzer des Tasks lesbar und wird gelöscht, wenn der Task endet.
 Beim Ausführen des Tasks gibt der Benutzer „2.5.0“ im Survey-Formular ein, und Ansible erhält den Wert wie folgt:
 
 ```yaml
-app_version: !unsafe "2.5.0"
+app_version: "2.5.0"
 ```
 
-Jeder Wert trägt das Tag `!unsafe`: Ansible verwendet ihn wörtlich und wertet niemals einen
+Jeder Wert wird als Zeichenkette in Anführungszeichen geschrieben, sodass eine Antwort, die wie
+eine Zahl, ein Boolescher Wert oder ein Datum aussieht – etwa `2026.08` oder `00123` –, im Playbook
+eine Zeichenkette bleibt. Ein Wert, der ein Jinja2-Trennzeichen (`{{ … }}`, `{% … %}` oder `{# … #}`) enthält,
+trägt zusätzlich das Tag `!unsafe`: Ansible verwendet ihn wörtlich und wertet niemals einen
 Jinja2-Ausdruck aus, der in ein Survey-Feld eingegeben, in einer Variablengruppe gespeichert
-oder von einem Workflow geliefert wurde. Eine Survey-Variable vom Typ **secret** kommt in eine
+oder von einem Workflow geliefert wurde.
+Eine Survey-Variable vom Typ **secret** kommt in eine
 zweite Datei, die mit Ansible Vault und einem Einmalpasswort verschlüsselt ist, das Semaphore an
 der Vault-Eingabeaufforderung eingibt; so erscheinen Secrets nie im Klartext auf der
 Kommandozeile oder auf der Festplatte.

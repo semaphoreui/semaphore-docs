@@ -149,11 +149,14 @@ samo korisnik zadatka i briše se kada se zadatak završi.
 Pri pokretanju zadatka korisnik u anketnoj formi unosi „2.5.0“, a Ansible je prima kao:
 
 ```yaml
-app_version: !unsafe "2.5.0"
+app_version: "2.5.0"
 ```
 
-Svaka vrednost nosi oznaku `!unsafe`: Ansible je koristi doslovno i nikada ne izračunava
-Jinja2 izraz unet u polje ankete, sačuvan u grupi promenljivih ili isporučen iz toka rada.
+Svaka vrednost se upisuje kao string pod navodnicima, pa odgovor koji izgleda kao broj, logička
+vrednost ili datum, na primer `2026.08` ili `00123`, u playbook-u ostaje string. Vrednost koja
+sadrži Jinja2 razdvajač (`{{ … }}`, `{% … %}` ili `{# … #}`) nosi i oznaku `!unsafe`: Ansible je koristi doslovno
+i nikada ne izračunava Jinja2 izraz unet u polje ankete, sačuvan u grupi promenljivih ili
+isporučen iz toka rada.
 Anketna promenljiva tipa **secret** ide u drugu datoteku, šifrovanu pomoću Ansible Vault-a
 jednokratnom lozinkom koju Semaphore sam unosi kada Vault zatraži lozinku, tako da se tajne
 nikada ne pojavljuju na komandnoj liniji niti nešifrovane na disku.

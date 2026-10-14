@@ -6,7 +6,7 @@ La sezione Variable Groups di Semaphore è il luogo in cui memorizzare variabili
 
 Tutti i Task Template richiedono che sia definito un Variable Group, anche se vuoto. 
 
-Ansible riceve le variabili di un Variable Group come variabili extra da un file temporaneo in cui ogni valore è contrassegnato con `!unsafe`: un'espressione Jinja2 memorizzata in un Variable Group arriva al playbook in forma letterale e non viene valutata. I secret del gruppo passati come variabili viaggiano in un file separato cifrato con Ansible Vault.
+Ansible riceve le variabili di un Variable Group come variabili extra da un file temporaneo in cui ogni valore che contiene un delimitatore Jinja2 (`{{ … }}`, `{% … %}` o `{# … #}`) è contrassegnato con `!unsafe`: un'espressione Jinja2 memorizzata in un Variable Group arriva al playbook in forma letterale e non viene valutata. I valori mantengono il loro tipo JSON: la stringa `"2026.08"` arriva al playbook come stringa, il numero `3` come numero. I secret del gruppo passati come variabili viaggiano in un file separato cifrato con Ansible Vault.
 
 ## Creazione di un Variable Group {#create-a-variable-group}
 1. Fare clic sulla scheda Variable Group.

@@ -149,12 +149,15 @@ lisible que par l'utilisateur de la tâche et il est supprimé à la fin de la t
 Lors de l'exécution de la tâche, l'utilisateur saisit « 2.5.0 » dans le formulaire de sondage, et Ansible la reçoit ainsi :
 
 ```yaml
-app_version: !unsafe "2.5.0"
+app_version: "2.5.0"
 ```
 
-Chaque valeur porte le tag `!unsafe` : Ansible l'utilise telle quelle et n'évalue jamais une
-expression Jinja2 saisie dans un champ de sondage, stockée dans un groupe de variables ou
-transmise par un workflow. Une variable de sondage de type **secret** est placée dans un second
+Chaque valeur est écrite comme une chaîne entre guillemets : une réponse qui ressemble à un nombre,
+à un booléen ou à une date, comme `2026.08` ou `00123`, reste une chaîne dans le playbook. Une
+valeur qui contient un délimiteur Jinja2 (`{{ … }}`, `{% … %}` ou `{# … #}`) porte en plus le tag `!unsafe` :
+Ansible l'utilise telle quelle et n'évalue jamais une expression Jinja2 saisie dans un champ de
+sondage, stockée dans un groupe de variables ou transmise par un workflow.
+Une variable de sondage de type **secret** est placée dans un second
 fichier chiffré avec Ansible Vault à l'aide d'un mot de passe à usage unique que Semaphore fournit
 à l'invite du vault, de sorte que les secrets n'apparaissent jamais en clair, ni sur la ligne de
 commande ni sur le disque.

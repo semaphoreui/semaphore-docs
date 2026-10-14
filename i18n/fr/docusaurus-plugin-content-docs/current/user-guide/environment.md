@@ -6,7 +6,7 @@ La section Groupes de variables de Semaphore est l'endroit où stocker des varia
 
 Tous les modèles de tâches nécessitent un groupe de variables, même s'il est vide. 
 
-Ansible reçoit les variables d'un groupe comme variables supplémentaires depuis un fichier temporaire dans lequel chaque valeur est marquée `!unsafe` : une expression Jinja2 stockée dans un groupe de variables parvient au playbook telle quelle et n'est pas évaluée. Les secrets du groupe transmis comme variables voyagent dans un fichier distinct chiffré avec Ansible Vault.
+Ansible reçoit les variables d'un groupe comme variables supplémentaires depuis un fichier temporaire dans lequel chaque valeur contenant un délimiteur Jinja2 (`{{ … }}`, `{% … %}` ou `{# … #}`) est marquée `!unsafe` : une expression Jinja2 stockée dans un groupe de variables parvient au playbook telle quelle et n'est pas évaluée. Les valeurs conservent leur type JSON : la chaîne `"2026.08"` parvient au playbook comme une chaîne, le nombre `3` comme un nombre. Les secrets du groupe transmis comme variables voyagent dans un fichier distinct chiffré avec Ansible Vault.
 
 ## Créer un groupe de variables {#create-a-variable-group}
 1. Cliquez sur l'onglet Groupes de variables.

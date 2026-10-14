@@ -149,12 +149,15 @@ el archivo, que se elimina cuando la tarea termina.
 Al ejecutar la tarea, el usuario introduce "2.5.0" en el formulario de encuesta y Ansible lo recibe como:
 
 ```yaml
-app_version: !unsafe "2.5.0"
+app_version: "2.5.0"
 ```
 
-Cada valor lleva la etiqueta `!unsafe`: Ansible lo usa de forma literal y nunca evalúa una
-expresión Jinja2 escrita en un campo de encuesta, almacenada en un grupo de variables o entregada
-desde un flujo de trabajo. Una variable de encuesta de tipo **secret** va a un segundo archivo
+Cada valor se escribe como una cadena entre comillas, por lo que una respuesta que parece un
+número, un booleano o una fecha, como `2026.08` o `00123`, sigue siendo una cadena en el playbook.
+Un valor que contiene un delimitador de Jinja2 (`{{ … }}`, `{% … %}` o `{# … #}`) lleva además la etiqueta
+`!unsafe`: Ansible lo usa de forma literal y nunca evalúa una expresión Jinja2 escrita en un campo
+de encuesta, almacenada en un grupo de variables o entregada desde un flujo de trabajo.
+Una variable de encuesta de tipo **secret** va a un segundo archivo
 cifrado con Ansible Vault mediante una contraseña de un solo uso que Semaphore introduce en la
 solicitud de vault, de modo que los secretos nunca aparecen en claro ni en la línea de comandos ni
 en el disco.

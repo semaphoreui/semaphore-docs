@@ -6,7 +6,7 @@ Der Bereich Variablengruppen in Semaphore dient zum Speichern zusätzlicher Vari
 
 Alle Aufgabenvorlagen erfordern eine definierte Variablengruppe, auch wenn diese leer ist. 
 
-Ansible erhält die Variablen einer Gruppe als Extra-Variablen aus einer temporären Datei, in der jeder Wert mit `!unsafe` markiert ist: Ein in einer Variablengruppe gespeicherter Jinja2-Ausdruck erreicht das Playbook wörtlich und wird nicht ausgewertet. Secrets der Gruppe, die als Variablen übergeben werden, werden in einer separaten, mit Ansible Vault verschlüsselten Datei übertragen.
+Ansible erhält die Variablen einer Gruppe als Extra-Variablen aus einer temporären Datei, in der jeder Wert, der ein Jinja2-Trennzeichen (`{{ … }}`, `{% … %}` oder `{# … #}`) enthält, mit `!unsafe` markiert ist: Ein in einer Variablengruppe gespeicherter Jinja2-Ausdruck erreicht das Playbook wörtlich und wird nicht ausgewertet. Die Werte behalten ihren JSON-Typ: Die Zeichenkette `"2026.08"` erreicht das Playbook als Zeichenkette, die Zahl `3` als Zahl. Secrets der Gruppe, die als Variablen übergeben werden, werden in einer separaten, mit Ansible Vault verschlüsselten Datei übertragen.
 
 ## Eine Variablengruppe erstellen {#create-a-variable-group}
 1. Klicken Sie auf den Tab Variablengruppe.
