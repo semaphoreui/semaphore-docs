@@ -125,7 +125,7 @@ Entrambi i percorsi aprono lo stesso modulo del ruolo. Configurare il ruolo in b
 | Campo | Descrizione |
 | --- | --- |
 | **Name** | Un'etichetta leggibile per il ruolo. |
-| **Slug** | Un identificatore tecnico univoco utilizzato per fare riferimento al ruolo. Utilizzare lettere minuscole, numeri, underscore o trattini, ad esempio `release_operator`. |
+| **Slug** | Un identificatore tecnico univoco utilizzato per fare riferimento al ruolo. Può contenere lettere, numeri, `_` e `-`, fino a 100 caratteri, ad esempio `release_operator`. Maiuscole e minuscole non contano: `Ops` e `ops` sono lo stesso slug. Non è possibile modificare lo slug dopo aver creato il ruolo. |
 | **Permissions** | I permessi a livello di Project concessi dal ruolo. |
 
 #### Permessi a livello di Project {#project-wide-permissions}
