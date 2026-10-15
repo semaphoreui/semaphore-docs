@@ -1,6 +1,6 @@
 # Team
 
-In Semaphore UI ogni Project è associato a un **Team**. Solo i membri del Team e gli amministratori possono accedere al Project. A ciascun membro del Team viene assegnato uno dei quattro ruoli integrati, che determinano il livello di accesso e le azioni che può eseguire.
+In Semaphore UI ogni Project è associato a un **Team**. Solo i membri del Team e gli amministratori possono accedere al Project. Ogni membro del Team ha uno o più ruoli, che determinano il livello di accesso e le azioni che può eseguire. Un membro può fare tutto ciò che permette uno qualsiasi dei suoi ruoli.
 
 Nell'edizione **Enterprise** i ruoli integrati possono essere estesi con [ruoli personalizzati](#extended-rbac-enterprise) che concedono permessi aggiuntivi e granulari su Task Template specifici.
 
@@ -14,7 +14,7 @@ La sezione **Team** di un Project dispone di due schede: **Members**, con gli ut
 
 ## Ruoli integrati {#built-in-roles}
 
-Ogni membro del Team ha esattamente uno di questi quattro ruoli:
+I quattro ruoli integrati sono:
 
 - **Owner**
 - **Manager**
@@ -31,8 +31,8 @@ Di seguito sono riportate le descrizioni dettagliate di ciascun ruolo e dei rela
 - **Più Owner**<br />
   Un Project può avere più Owner, garantendo così la presenza di più di una persona con privilegi completi.
 
-- **Limitazioni all'auto-rimozione**<br />
-  Un Owner non può rimuovere se stesso se è l'unico Owner del Project. Questo impedisce che il Project rimanga senza Owner.
+- **Ultimo Owner**<br />
+  Un Project non deve restare senza Owner. Per questo nessuno, tranne un amministratore, può rimuovere l'ultimo Owner dal Project o togliergli il ruolo Owner. Anche l'ultimo Owner non può lasciare il Project.
 
 - **Gestione degli altri Owner**<br />
   Gli Owner possono gestire (anche rimuovere o modificare i ruoli di) tutti i membri del Team, inclusi gli altri Owner.
@@ -77,7 +77,7 @@ Con la RBAC estesa i ruoli personalizzati possono concedere singoli permessi a l
 
 ### Ruoli personalizzati {#custom-roles}
 
-Un ruolo personalizzato è un insieme di permessi con un nome, che integra il ruolo integrato di un membro nel Project. Ogni membro del Team mantiene il proprio ruolo integrato. I ruoli personalizzati aggiungono permessi ad esso.
+Un ruolo personalizzato è un ruolo che si crea da soli, con i permessi scelti. Si assegna a un membro come un ruolo integrato. Un membro può avere un ruolo personalizzato da solo o insieme a un ruolo integrato.
 
 I ruoli personalizzati sono disponibili su due livelli:
 
@@ -114,7 +114,7 @@ I ruoli di Project sono disponibili solo nel Project in cui vengono creati. Poss
 
 La scheda **Roles** è vuota fino alla creazione del primo ruolo di Project. Elenca tutti i ruoli del Project e contiene il pulsante **New Role**.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles1.webp)
+![](/assets/custom-roles-project-roles-tab.webp)
 
 ### Configurazione di un ruolo personalizzato {#configure-a-custom-role}
 
@@ -158,7 +158,7 @@ I permessi a livello di Task Template aggiungono l'accesso a Task Template selez
 
 La scheda **Permissions** elenca i ruoli già aggiunti al Task Template.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles2.webp)
+![](/assets/custom-roles-template-permissions-tab.webp)
 
 **Aggiungere il ruolo e concedere i permessi sul Task Template**
 
@@ -180,8 +180,12 @@ I permessi a livello di Task Template sono additivi. Aggiungono accesso senza so
 Dopo aver creato e configurato un ruolo globale o di Project, assegnarlo al membro del Team desiderato:
 
 1. Aprire il Project e andare in **Team**.
-2. Espandere **Roles** accanto all'utente desiderato.
-3. Selezionare il ruolo personalizzato.
+2. Selezionare il campo dei ruoli accanto al membro desiderato.
+3. Selezionare il ruolo personalizzato. Un membro può avere più ruoli.
+
+### Eliminare un ruolo in uso {#delete-a-role-that-is-in-use}
+
+Se un ruolo è ancora assegnato a dei membri o usato nei permessi dei Task Template, Semaphore chiede conferma prima di eliminarlo e mostra quanti membri, Project e permessi dei Task Template coinvolge. Selezionare **Delete with assignments** per eliminare il ruolo e toglierlo a tutti. I membri che non hanno altri ruoli vengono rimossi dai loro Project.
 
 ### Attualmente non supportato {#not-currently-supported}
 
@@ -192,12 +196,12 @@ Dopo aver creato e configurato un ruolo globale o di Project, assegnarlo al memb
 
 ## Gestione dei membri del Team {#managing-team-members}
 
-- **Invito di nuovi membri:** gli **Owner** e i **Manager** possono invitare nuovi utenti a entrare nel Team e assegnare loro un ruolo iniziale.
+- **Invito di nuovi membri:** gli **Owner** e i **Manager** possono invitare nuovi utenti a entrare nel Team e assegnare loro un ruolo integrato iniziale.
 
 - **Modifica dei ruoli:** gli Owner possono sempre modificare i ruoli di qualsiasi membro del Team. I Manager possono modificare i ruoli dei **Task Runner** e dei **Guest**, ma **non** quelli degli altri Manager o degli Owner.
 
 - **Rimozione dei membri:** gli Owner e i Manager possono rimuovere i membri del Team con ruoli inferiori.
-  - Un Owner può rimuovere chiunque (inclusi gli altri Owner), ma non può rimuovere se stesso se è l'unico Owner.
+  - Un Owner può rimuovere chiunque (inclusi gli altri Owner), tranne l'ultimo Owner.
   - Un Manager può rimuovere i **Task Runner** e i **Guest**, ma **non** gli altri Manager o gli Owner.
 
 ---
@@ -221,7 +225,7 @@ Dopo aver creato e configurato un ruolo globale o di Project, assegnarlo al memb
 ## Domande frequenti {#frequently-asked-questions}
 
 ### 1. Un Owner può rimuovere un altro Owner? {#1-can-an-owner-remove-another-owner}
-Sì, un Owner può rimuovere o modificare il ruolo di qualsiasi altro Owner, a meno che non sia l'unico Owner rimasto nel Project.
+Sì, un Owner può rimuovere o modificare il ruolo di qualsiasi altro Owner, a meno che sia l'ultimo Owner del Project.
 
 ### 2. Chi può eliminare il Project? {#2-who-can-delete-the-project}
 Solo gli **Owner** possono eliminare un Project.
@@ -230,13 +234,13 @@ Solo gli **Owner** possono eliminare un Project.
 No. I Manager possono aggiungere o rimuovere solo utenti con ruolo **Task Runner** o **Guest**. Per gestire gli Owner o gli altri Manager è necessario essere Owner.
 
 ### 4. Cosa succede se rimuovo accidentalmente tutti gli Owner? {#4-what-happens-if-i-remove-all-owners-by-accident}
-Semaphore UI impedisce la rimozione di un Owner se ciò lascerebbe il Project completamente senza Owner. Deve esserci sempre almeno un Owner.
+Un Project non deve restare senza Owner. Per questo nessuno, tranne un amministratore, può rimuovere l'ultimo Owner dal Project o togliergli il ruolo Owner. Anche l'ultimo Owner non può lasciare il Project. Se un amministratore rimuove l'ultimo Owner, il Project continua a funzionare e un amministratore può aggiungere un nuovo Owner nella pagina **Team**.
 
 ### 5. I Guest possono eseguire Task? {#5-can-guests-run-tasks}
 No. I Guest hanno accesso in sola lettura e non possono avviare né gestire i Task. Nell'edizione Enterprise è possibile concedere a un Guest il permesso di eseguire singoli Task Template tramite un [ruolo personalizzato](#extended-rbac-enterprise).
 
 ### 6. I ruoli personalizzati sostituiscono i ruoli integrati? {#6-do-custom-roles-replace-the-built-in-roles}
-No. I ruoli personalizzati estendono i ruoli integrati con permessi aggiuntivi a livello di Project e di Task Template. Ogni membro del Team continua ad avere esattamente un ruolo integrato.
+No. I ruoli personalizzati si aggiungono ai ruoli integrati. Un membro può avere un ruolo integrato, ruoli personalizzati o entrambi.
 
 ### 7. La RBAC estesa è disponibile nell'edizione community? {#7-is-extended-rbac-available-in-the-community-edition}
 No. La RBAC estesa richiede un abbonamento **Semaphore Enterprise**.

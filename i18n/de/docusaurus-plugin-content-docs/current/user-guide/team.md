@@ -1,6 +1,6 @@
 # Teams
 
-In Semaphore UI ist jedes Projekt mit einem **Team** verknüpft. Nur Teammitglieder und Administratoren können auf das Projekt zugreifen. Jedem Mitglied des Teams wird eine von vier integrierten Rollen zugewiesen, die seine Zugriffsebene und die Aktionen bestimmt, die es ausführen darf.
+In Semaphore UI ist jedes Projekt mit einem **Team** verknüpft. Nur Teammitglieder und Administratoren können auf das Projekt zugreifen. Jedes Mitglied des Teams hat eine oder mehrere Rollen, die seine Zugriffsebene und die Aktionen bestimmen, die es ausführen darf. Ein Mitglied darf alles tun, was eine seiner Rollen erlaubt.
 
 In der **Enterprise**-Edition können die integrierten Rollen um [benutzerdefinierte Rollen](#extended-rbac-enterprise) erweitert werden, die zusätzliche, fein abgestufte Berechtigungen für bestimmte Task Templates gewähren.
 
@@ -14,7 +14,7 @@ Der Bereich **Team** eines Projekts hat zwei Tabs: **Members** mit den Benutzern
 
 ## Integrierte Rollen {#built-in-roles}
 
-Jedes Teammitglied hat genau eine dieser vier Rollen:
+Die vier integrierten Rollen sind:
 
 - **Owner**
 - **Manager**
@@ -31,8 +31,8 @@ Nachfolgend finden Sie detaillierte Beschreibungen jeder Rolle und ihrer Berecht
 - **Mehrere Owner**<br />
   Ein Projekt kann mehrere Owner haben, sodass mehr als eine Person über alle Rechte verfügt.
 
-- **Einschränkungen beim Selbstentfernen**<br />
-  Ein Owner kann sich nicht selbst entfernen, wenn er der einzige Owner des Projekts ist. Das verhindert, dass das Projekt ohne Owner zurückbleibt.
+- **Letzter Owner**<br />
+  Ein Projekt darf nicht ohne Owner bleiben. Deshalb kann niemand außer einem Administrator den letzten Owner aus dem Projekt entfernen oder ihm die Rolle Owner entziehen. Der letzte Owner kann das Projekt auch nicht selbst verlassen.
 
 - **Andere Owner verwalten**<br />
   Owner können alle Teammitglieder verwalten (einschließlich Entfernen oder Ändern ihrer Rollen), auch andere Owner.
@@ -77,7 +77,7 @@ Mit erweitertem RBAC können benutzerdefinierte Rollen einzelne projektweite Ber
 
 ### Benutzerdefinierte Rollen {#custom-roles}
 
-Eine benutzerdefinierte Rolle ist ein benannter Satz von Berechtigungen, der die integrierte Projektrolle eines Mitglieds ergänzt. Jedes Teammitglied behält seine integrierte Rolle. Benutzerdefinierte Rollen fügen ihr Berechtigungen hinzu.
+Eine benutzerdefinierte Rolle ist eine Rolle, die Sie selbst erstellen, mit den Berechtigungen, die Sie auswählen. Sie weisen sie einem Mitglied genauso zu wie eine integrierte Rolle. Ein Mitglied kann eine benutzerdefinierte Rolle allein oder zusammen mit einer integrierten Rolle haben.
 
 Benutzerdefinierte Rollen sind in zwei Gültigkeitsbereichen verfügbar:
 
@@ -114,7 +114,7 @@ Projektrollen sind nur in dem Projekt verfügbar, in dem sie erstellt wurden. Ow
 
 Der Tab **Roles** ist leer, bis die erste Projektrolle erstellt wurde. Er listet alle Projektrollen auf und enthält die Schaltfläche **New Role**.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles1.webp)
+![](/assets/custom-roles-project-roles-tab.webp)
 
 ### Eine benutzerdefinierte Rolle konfigurieren {#configure-a-custom-role}
 
@@ -158,7 +158,7 @@ Task-Template-Berechtigungen fügen Zugriff auf ausgewählte Task Templates hinz
 
 Der Tab **Permissions** listet die Rollen auf, die dem Task Template bereits hinzugefügt wurden.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles2.webp)
+![](/assets/custom-roles-template-permissions-tab.webp)
 
 **Die Rolle hinzufügen und Task-Template-Berechtigungen gewähren**
 
@@ -180,8 +180,12 @@ Task-Template-Berechtigungen sind additiv. Sie fügen Zugriff hinzu, ohne den Zu
 Nachdem Sie eine globale oder eine Projektrolle erstellt und konfiguriert haben, weisen Sie sie dem gewünschten Teammitglied zu:
 
 1. Öffnen Sie das Projekt und gehen Sie zu **Team**.
-2. Klappen Sie **Roles** neben dem gewünschten Benutzer auf.
-3. Wählen Sie die benutzerdefinierte Rolle aus.
+2. Wählen Sie das Rollenfeld neben dem gewünschten Mitglied aus.
+3. Wählen Sie die benutzerdefinierte Rolle aus. Ein Mitglied kann mehrere Rollen haben.
+
+### Eine verwendete Rolle löschen {#delete-a-role-that-is-in-use}
+
+Wenn eine Rolle noch Mitgliedern zugewiesen ist oder in Task-Template-Berechtigungen verwendet wird, fragt Semaphore vor dem Löschen nach und zeigt an, wie viele Mitglieder, Projekte und Task-Template-Berechtigungen betroffen sind. Wählen Sie **Delete with assignments**, um die Rolle zu löschen und sie allen wieder wegzunehmen. Mitglieder ohne weitere Rolle werden aus ihren Projekten entfernt.
 
 ### Derzeit nicht unterstützt {#not-currently-supported}
 
@@ -192,12 +196,12 @@ Nachdem Sie eine globale oder eine Projektrolle erstellt und konfiguriert haben,
 
 ## Teammitglieder verwalten {#managing-team-members}
 
-- **Neue Mitglieder einladen:** **Owner** und **Manager** können neue Benutzer in das Team einladen und ihnen eine erste Rolle zuweisen.
+- **Neue Mitglieder einladen:** **Owner** und **Manager** können neue Benutzer in das Team einladen und ihnen eine erste integrierte Rolle zuweisen.
 
 - **Rollen ändern:** Owner können die Rollen jedes Teammitglieds jederzeit ändern. Manager können die Rollen von **Task Runners** und **Guests** ändern, aber **nicht** die von anderen Managern oder Ownern.
 
 - **Mitglieder entfernen:** Owner und Manager können Teammitglieder mit niedrigeren Rollen entfernen.
-  - Ein Owner kann jeden entfernen (auch andere Owner), sich selbst jedoch nicht, wenn er der einzige Owner ist.
+  - Ein Owner kann jeden entfernen (auch andere Owner), außer den letzten Owner.
   - Ein Manager kann **Task Runners** und **Guests** entfernen, aber **nicht** andere Manager oder Owner.
 
 ---
@@ -221,7 +225,7 @@ Nachdem Sie eine globale oder eine Projektrolle erstellt und konfiguriert haben,
 ## Häufig gestellte Fragen {#frequently-asked-questions}
 
 ### 1. Kann ein Owner einen anderen Owner entfernen? {#1-can-an-owner-remove-another-owner}
-Ja, ein Owner kann die Rolle jedes anderen Owners entfernen oder ändern, es sei denn, er ist der einzige verbleibende Owner im Projekt.
+Ja, ein Owner kann die Rolle jedes anderen Owners entfernen oder ändern, es sei denn, dieser ist der letzte Owner im Projekt.
 
 ### 2. Wer kann das Projekt löschen? {#2-who-can-delete-the-project}
 Nur **Owner** können ein Projekt löschen.
@@ -230,13 +234,13 @@ Nur **Owner** können ein Projekt löschen.
 Nein. Manager können nur Benutzer mit den Rollen **Task Runner** oder **Guest** hinzufügen oder entfernen. Um Owner oder andere Manager zu verwalten, müssen Sie Owner sein.
 
 ### 4. Was passiert, wenn ich versehentlich alle Owner entferne? {#4-what-happens-if-i-remove-all-owners-by-accident}
-Semaphore UI verhindert das Entfernen eines Owners, wenn das Projekt dadurch ganz ohne Owner zurückbliebe. Es muss jederzeit mindestens einen Owner geben.
+Ein Projekt darf nicht ohne Owner bleiben. Deshalb kann niemand außer einem Administrator den letzten Owner aus dem Projekt entfernen oder ihm die Rolle Owner entziehen. Der letzte Owner kann das Projekt auch nicht selbst verlassen. Wenn ein Administrator den letzten Owner entfernt, funktioniert das Projekt weiter, und ein Administrator kann auf der Seite **Team** einen neuen Owner hinzufügen.
 
 ### 5. Können Guests Tasks ausführen? {#5-can-guests-run-tasks}
 Nein. Guests haben nur Lesezugriff und können Tasks weder auslösen noch verwalten. In der Enterprise-Edition können Sie einem Guest über eine [benutzerdefinierte Rolle](#extended-rbac-enterprise) die Berechtigung geben, einzelne Task Templates auszuführen.
 
 ### 6. Ersetzen benutzerdefinierte Rollen die integrierten Rollen? {#6-do-custom-roles-replace-the-built-in-roles}
-Nein. Benutzerdefinierte Rollen erweitern die integrierten Rollen um zusätzliche Berechtigungen auf Projekt- und Task-Template-Ebene. Jedes Teammitglied hat weiterhin genau eine integrierte Rolle.
+Nein. Benutzerdefinierte Rollen kommen zu den integrierten Rollen hinzu. Ein Mitglied kann eine integrierte Rolle, benutzerdefinierte Rollen oder beides haben.
 
 ### 7. Ist erweitertes RBAC in der Community-Edition verfügbar? {#7-is-extended-rbac-available-in-the-community-edition}
 Nein. Erweitertes RBAC erfordert ein Abonnement für **Semaphore Enterprise**.

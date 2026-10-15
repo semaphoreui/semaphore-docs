@@ -1,6 +1,6 @@
 # Equipes
 
-No Semaphore UI, cada projeto está associado a uma **Equipe**. Apenas os membros da equipe e os administradores podem acessar o projeto. Cada membro da equipe recebe um dos quatro papéis integrados, que determinam o seu nível de acesso e as ações que pode executar.
+No Semaphore UI, cada projeto está associado a uma **Equipe**. Apenas os membros da equipe e os administradores podem acessar o projeto. Cada membro da equipe tem um ou mais papéis, que determinam o seu nível de acesso e as ações que pode executar. Um membro pode fazer tudo o que qualquer um dos seus papéis permite.
 
 Na edição **Enterprise**, os papéis integrados podem ser estendidos com [papéis personalizados](#extended-rbac-enterprise), que concedem permissões adicionais e granulares em modelos específicos.
 
@@ -14,7 +14,7 @@ A seção **Team** de um projeto tem duas abas: **Members**, com os usuários e 
 
 ## Papéis integrados {#built-in-roles}
 
-Cada membro da equipe tem exatamente um destes quatro papéis:
+Os quatro papéis integrados são:
 
 - **Owner**
 - **Manager**
@@ -31,8 +31,8 @@ Abaixo estão as descrições detalhadas de cada papel e das suas permissões.
 - **Vários owners**<br />
   Um projeto pode ter vários Owners, garantindo que haja mais de uma pessoa com privilégios completos.
 
-- **Restrições à autorremoção**<br />
-  Um Owner não pode se remover se for o único Owner do projeto. Isso evita que o projeto fique sem Owner.
+- **Último Owner**<br />
+  Um projeto não pode ficar sem Owner. Por isso, ninguém além de um administrador pode remover o último Owner do projeto nem tirar o papel de Owner dele. O último Owner também não pode sair do projeto.
 
 - **Gerenciamento de outros owners**<br />
   Os Owners podem gerenciar (incluindo remover ou alterar os papéis de) todos os membros da equipe, incluindo outros Owners.
@@ -77,7 +77,7 @@ Com o RBAC estendido, os papéis personalizados podem conceder permissões indiv
 
 ### Papéis personalizados {#custom-roles}
 
-Um papel personalizado é um conjunto nomeado de permissões que complementa o papel integrado de um membro no projeto. Cada membro da equipe mantém o seu papel integrado. Os papéis personalizados adicionam permissões a ele.
+Um papel personalizado é um papel que você mesmo cria, com as permissões que escolher. Você o atribui a um membro como um papel integrado. Um membro pode ter um papel personalizado sozinho ou junto com um papel integrado.
 
 Os papéis personalizados estão disponíveis em dois escopos:
 
@@ -114,7 +114,7 @@ Os papéis de projeto estão disponíveis apenas no projeto em que foram criados
 
 A aba **Roles** fica vazia até que o primeiro papel de projeto seja criado. Ela lista todos os papéis do projeto e contém o botão **New Role**.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles1.webp)
+![](/assets/custom-roles-project-roles-tab.webp)
 
 ### Configurar um papel personalizado {#configure-a-custom-role}
 
@@ -158,7 +158,7 @@ As permissões de modelo adicionam acesso a modelos de tarefa selecionados. O ex
 
 A aba **Permissions** lista os papéis já adicionados ao modelo.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles2.webp)
+![](/assets/custom-roles-template-permissions-tab.webp)
 
 **Adicione o papel e conceda as permissões de modelo**
 
@@ -180,8 +180,12 @@ As permissões de modelo são aditivas. Elas adicionam acesso sem substituir ou 
 Após criar e configurar um papel global ou de projeto, atribua-o ao membro da equipe desejado:
 
 1. Abra o projeto e vá em **Team**.
-2. Expanda **Roles** ao lado do usuário desejado.
-3. Selecione o papel personalizado.
+2. Selecione o campo de papéis ao lado do membro desejado.
+3. Selecione o papel personalizado. Um membro pode ter vários papéis.
+
+### Excluir um papel em uso {#delete-a-role-that-is-in-use}
+
+Se um papel ainda está atribuído a membros ou é usado em permissões de modelo, o Semaphore pergunta antes de excluí-lo e mostra quantos membros, projetos e permissões de modelo ele afeta. Selecione **Delete with assignments** para excluir o papel e retirá-lo de todos eles. Os membros que não têm outro papel são removidos dos seus projetos.
 
 ### Não suportado no momento {#not-currently-supported}
 
@@ -192,12 +196,12 @@ Após criar e configurar um papel global ou de projeto, atribua-o ao membro da e
 
 ## Gerenciando os membros da equipe {#managing-team-members}
 
-- **Convidar novos membros:** **Owners** e **Managers** podem convidar novos usuários para a equipe e atribuir a eles um papel inicial.
+- **Convidar novos membros:** **Owners** e **Managers** podem convidar novos usuários para a equipe e atribuir a eles um papel integrado inicial.
 
 - **Alterar papéis:** os Owners sempre podem alterar os papéis de qualquer membro da equipe. Os Managers podem alterar os papéis de **Task Runners** e **Guests**, mas **não** de outros Managers ou Owners.
 
 - **Remover membros:** os Owners e Managers podem remover membros da equipe com papéis inferiores.
-  - Um Owner pode remover qualquer pessoa (incluindo outros Owners), mas não pode se remover se for o único Owner.
+  - Um Owner pode remover qualquer pessoa (incluindo outros Owners), exceto o último Owner.
   - Um Manager pode remover **Task Runners** e **Guests**, mas **não** outros Managers ou Owners.
 
 ---
@@ -221,7 +225,7 @@ Após criar e configurar um papel global ou de projeto, atribua-o ao membro da e
 ## Perguntas frequentes {#frequently-asked-questions}
 
 ### 1. Um Owner pode remover outro Owner? {#1-can-an-owner-remove-another-owner}
-Sim, um Owner pode remover ou alterar o papel de qualquer outro Owner, a menos que seja o único Owner restante no projeto.
+Sim, um Owner pode remover ou alterar o papel de qualquer outro Owner, a menos que ele seja o último Owner do projeto.
 
 ### 2. Quem pode excluir o projeto? {#2-who-can-delete-the-project}
 Apenas os **Owners** podem excluir um projeto.
@@ -230,13 +234,13 @@ Apenas os **Owners** podem excluir um projeto.
 Não. Os Managers só podem adicionar ou remover usuários com os papéis **Task Runner** ou **Guest**. Para gerenciar Owners ou outros Managers, você precisa ser um Owner.
 
 ### 4. O que acontece se eu remover todos os Owners por acidente? {#4-what-happens-if-i-remove-all-owners-by-accident}
-O Semaphore UI impede a remoção de um Owner se isso deixar o projeto sem nenhum Owner. Deve haver pelo menos um Owner o tempo todo.
+Um projeto não pode ficar sem Owner. Por isso, ninguém além de um administrador pode remover o último Owner do projeto nem tirar o papel de Owner dele. O último Owner também não pode sair do projeto. Se um administrador remover o último Owner, o projeto continua funcionando, e um administrador pode adicionar um novo Owner na página **Team**.
 
 ### 5. Os Guests podem executar tarefas? {#5-can-guests-run-tasks}
 Não. Os Guests têm acesso somente leitura e não podem acionar nem gerenciar tarefas. Na edição Enterprise, você pode conceder a um Guest permissão para executar modelos individuais por meio de um [papel personalizado](#extended-rbac-enterprise).
 
 ### 6. Os papéis personalizados substituem os papéis integrados? {#6-do-custom-roles-replace-the-built-in-roles}
-Não. Os papéis personalizados estendem os papéis integrados com permissões adicionais no nível do projeto e dos modelos. Cada membro da equipe continua tendo exatamente um papel integrado.
+Não. Os papéis personalizados se somam aos papéis integrados. Um membro pode ter um papel integrado, papéis personalizados ou ambos.
 
 ### 7. O RBAC estendido está disponível na edição community? {#7-is-extended-rbac-available-in-the-community-edition}
 Não. O RBAC estendido requer uma assinatura do **Semaphore Enterprise**.

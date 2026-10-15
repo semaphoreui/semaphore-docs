@@ -53,7 +53,7 @@ Esistono due livelli, indipendenti tra loro.
 **Livello server.** Un amministratore gestisce utenti, runner globali e impostazioni del
 server. Essere amministratore del server non comporta di per sé l'appartenenza a un progetto.
 
-**Livello progetto.** Ogni membro ha un ruolo in ciascun progetto:
+**Livello progetto.** Ogni membro ha uno o più ruoli in ciascun progetto e può fare tutto ciò che permette uno qualsiasi di questi ruoli:
 
 | Ruolo | Può |
 |---|---|

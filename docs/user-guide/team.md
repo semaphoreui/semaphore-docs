@@ -5,7 +5,7 @@ description: The four built-in project roles and what they can do, Enterprise cu
 
 # Teams
 
-In Semaphore UI, every project is associated with a **Team**. Only team members and admins can access the project. Each member of the team is assigned one of four built-in roles, which govern their level of access and the actions they can perform.
+In Semaphore UI, every project is associated with a **Team**. Only team members and admins can access the project. Each member of the team has one or more roles, which govern their level of access and the actions they can perform. A member can do everything that any of their roles allows.
 
 In the **Enterprise** edition, built-in roles can be extended with [custom roles](#extended-rbac-enterprise) that grant additional, fine-grained permissions on specific templates.
 
@@ -19,7 +19,7 @@ The **Team** section of a project has two tabs: **Members** with users and their
 
 ## Built-in roles {#built-in-roles}
 
-Every team member has exactly one of these four roles:
+The four built-in roles are:
 
 - **Owner**
 - **Manager**
@@ -36,8 +36,8 @@ Below are detailed descriptions of each role and its permissions.
 - **Multiple owners**<br />
   A project can have multiple Owners, ensuring there is more than one person with full privileges.
 
-- **Restrictions on self-removal**<br />
-  An Owner cannot remove themselves if they are the only Owner of the project. This prevents the project from being left without an Owner.
+- **Last Owner**<br />
+  A project must not be left without an Owner. So no one except an admin can remove the last Owner from the project or take away their Owner role. The last Owner also cannot leave the project.
 
 - **Managing other owners**<br />
   Owners can manage (including remove or change roles of) all team members, including other Owners.
@@ -82,7 +82,7 @@ With Extended RBAC, custom roles can grant individual project-wide permissions. 
 
 ### Custom roles {#custom-roles}
 
-A custom role is a named set of permissions that supplements a member's built-in project role. Every team member keeps their built-in role. Custom roles add permissions to it.
+A custom role is a role you create yourself, with the permissions you choose. You give it to a member just like a built-in role. A member can have a custom role on its own or together with a built-in role.
 
 Custom roles are available at two scopes:
 
@@ -119,7 +119,7 @@ Project roles are available only in the project where they are created. Project 
 
 The **Roles** tab is empty until the first project role is created. It lists all project roles and contains the **New Role** button.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles1.webp)
+![](/assets/custom-roles-project-roles-tab.webp)
 
 ### Configure a custom role {#configure-a-custom-role}
 
@@ -163,7 +163,7 @@ Template permissions add access on selected task templates. The example below us
 
 The **Permissions** tab lists the roles already added to the template.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles2.webp)
+![](/assets/custom-roles-template-permissions-tab.webp)
 
 **Add the role and grant template permissions**
 
@@ -185,8 +185,12 @@ Template permissions are additive. They add access without replacing or reducing
 After creating and configuring a global or project role, assign it to the required team member:
 
 1. Open the project and go to **Team**.
-2. Expand **Roles** next to the required user.
-3. Select the custom role.
+2. Select the role field next to the required member.
+3. Select the custom role. A member can have several roles.
+
+### Delete a role that is in use {#delete-a-role-that-is-in-use}
+
+If a role is still given to members or used in template permissions, Semaphore asks before deleting it and shows how many members, projects and template permissions it affects. Select **Delete with assignments** to delete the role and take it away from all of them. Members who have no other role are removed from their projects.
 
 ### Not currently supported {#not-currently-supported}
 
@@ -197,12 +201,12 @@ After creating and configuring a global or project role, assign it to the requir
 
 ## Managing team members {#managing-team-members}
 
-- **Inviting new members:** **Owners** and **Managers** can invite new users to join the team and assign them an initial role.
+- **Inviting new members:** **Owners** and **Managers** can invite new users to join the team and assign them an initial built-in role.
 
 - **Changing roles:** Owners can always change the roles of any team member. Managers can change the roles of **Task Runners** and **Guests**, but **not** other Managers or Owners.
 
 - **Removing members:** Owners and Managers can remove team members with lower roles.
-  - An Owner can remove anyone (including other Owners), but cannot remove themselves if they are the sole Owner.
+  - An Owner can remove anyone (including other Owners), except the last Owner.
   - A Manager can remove **Task Runners** and **Guests**, but **not** other Managers or Owners.
 
 ---
@@ -226,7 +230,7 @@ After creating and configuring a global or project role, assign it to the requir
 ## Frequently asked questions {#frequently-asked-questions}
 
 ### 1. Can an Owner remove another Owner? {#1-can-an-owner-remove-another-owner}
-Yes, an Owner can remove or change the role of any other Owner, unless they are the only remaining Owner in the project.
+Yes, an Owner can remove or change the role of any other Owner, unless that Owner is the last one in the project.
 
 ### 2. Who can delete the project? {#2-who-can-delete-the-project}
 Only **Owners** can delete a project.
@@ -235,13 +239,13 @@ Only **Owners** can delete a project.
 No. Managers can only add or remove users with **Task Runner** or **Guest** roles. To manage Owners or other Managers, you must be an Owner.
 
 ### 4. What happens if I remove all Owners by accident? {#4-what-happens-if-i-remove-all-owners-by-accident}
-Semaphore UI prevents the removal of an Owner if it would leave the project with no Owners at all. There must be at least one Owner at all times.
+A project must not be left without an Owner. So no one except an admin can remove the last Owner from the project or take away their Owner role. The last Owner also cannot leave the project. If an admin removes the last Owner, the project keeps working, and an admin can add a new Owner on the **Team** page.
 
 ### 5. Can Guests run tasks? {#5-can-guests-run-tasks}
 No. Guests have read‐only access and cannot trigger or manage tasks. In the Enterprise edition you can grant a Guest permission to run individual templates through a [custom role](#extended-rbac-enterprise).
 
 ### 6. Do custom roles replace the built-in roles? {#6-do-custom-roles-replace-the-built-in-roles}
-No. Custom roles extend the built-in roles with additional project and template-level permissions. Every team member still has exactly one built-in role.
+No. Custom roles add to the built-in roles. A member can have a built-in role, custom roles, or both.
 
 ### 7. Is Extended RBAC available in the community edition? {#7-is-extended-rbac-available-in-the-community-edition}
 No. Extended RBAC requires a **Semaphore Enterprise** subscription.

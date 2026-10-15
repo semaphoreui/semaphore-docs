@@ -1,6 +1,6 @@
 # Timovi
 
-U Semaphore UI, svaki projekat (Project) je povezan sa **timom** (Team). Samo članovi tima i administratori mogu pristupiti projektu. Svakom članu tima dodeljuje se jedna od četiri ugrađene uloge, koje određuju nivo pristupa i radnje koje može da izvodi.
+U Semaphore UI, svaki projekat (Project) je povezan sa **timom** (Team). Samo članovi tima i administratori mogu pristupiti projektu. Svaki član tima ima jednu ili više uloga, koje određuju nivo pristupa i radnje koje može da izvodi. Član može da radi sve što dozvoljava bilo koja od njegovih uloga.
 
 U izdanju **Enterprise**, ugrađene uloge mogu se proširiti [prilagođenim ulogama](#extended-rbac-enterprise) koje daju dodatne, precizno određene dozvole nad određenim šablonima zadataka (Task Template).
 
@@ -14,7 +14,7 @@ Odeljak **Team** projekta ima dve kartice: **Members** sa korisnicima i njihovim
 
 ## Ugrađene uloge {#built-in-roles}
 
-Svaki član tima ima tačno jednu od ove četiri uloge:
+Četiri ugrađene uloge su:
 
 - **Owner**
 - **Manager**
@@ -31,8 +31,8 @@ Ispod slede detaljni opisi svake uloge i njenih dozvola.
 - **Više vlasnika**<br />
   Projekat može imati više vlasnika, čime se obezbeđuje da postoji više od jedne osobe sa punim ovlašćenjima.
 
-- **Ograničenja za samouklanjanje**<br />
-  Vlasnik ne može da ukloni samog sebe ako je jedini vlasnik projekta. Time se sprečava da projekat ostane bez vlasnika.
+- **Poslednji vlasnik**<br />
+  Projekat ne sme da ostane bez vlasnika. Zato niko osim administratora ne može da ukloni poslednjeg vlasnika iz projekta niti da mu oduzme ulogu vlasnika. Poslednji vlasnik takođe ne može da napusti projekat.
 
 - **Upravljanje drugim vlasnicima**<br />
   Vlasnici mogu da upravljaju svim članovima tima (uključujući uklanjanje ili promenu uloga), pa i drugim vlasnicima.
@@ -77,7 +77,7 @@ Uz prošireni RBAC, prilagođene uloge mogu dodeliti pojedinačne dozvole na niv
 
 ### Prilagođene uloge {#custom-roles}
 
-Prilagođena uloga je imenovani skup dozvola koji dopunjuje ugrađenu ulogu člana u projektu. Svaki član tima zadržava svoju ugrađenu ulogu. Prilagođene uloge joj dodaju dozvole.
+Prilagođena uloga je uloga koju sami pravite, sa dozvolama koje izaberete. Dodeljujete je članu kao i ugrađenu ulogu. Član može imati prilagođenu ulogu samu ili zajedno sa ugrađenom ulogom.
 
 Prilagođene uloge dostupne su na dva nivoa:
 
@@ -114,7 +114,7 @@ Uloge projekta dostupne su samo u projektu u kojem su kreirane. Mogu ih kreirati
 
 Kartica **Roles** je prazna dok se ne kreira prva uloga projekta. Na njoj se prikazuju sve uloge projekta i nalazi se dugme **New Role**.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles1.webp)
+![](/assets/custom-roles-project-roles-tab.webp)
 
 ### Podešavanje prilagođene uloge {#configure-a-custom-role}
 
@@ -158,7 +158,7 @@ Dozvole nad šablonom dodaju pristup izabranim šablonima zadataka. Primer ispod
 
 Kartica **Permissions** prikazuje uloge koje su već dodate šablonu.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles2.webp)
+![](/assets/custom-roles-template-permissions-tab.webp)
 
 **Dodajte ulogu i dodelite dozvole nad šablonom**
 
@@ -180,8 +180,12 @@ Dozvole nad šablonom su aditivne. One dodaju pristup, ne zamenjujući niti uman
 Nakon kreiranja i podešavanja globalne uloge ili uloge projekta, dodelite je potrebnom članu tima:
 
 1. Otvorite projekat i idite na **Team**.
-2. Proširite **Roles** pored potrebnog korisnika.
-3. Izaberite prilagođenu ulogu.
+2. Izaberite polje za uloge pored potrebnog člana.
+3. Izaberite prilagođenu ulogu. Član može imati više uloga.
+
+### Brisanje uloge koja je u upotrebi {#delete-a-role-that-is-in-use}
+
+Ako je uloga još uvek dodeljena članovima ili se koristi u dozvolama šablona, Semaphore pita pre brisanja i prikazuje koliko članova, projekata i dozvola šablona to pogađa. Izaberite **Delete with assignments** da biste obrisali ulogu i oduzeli je svima njima. Članovi koji nemaju drugu ulogu uklanjaju se iz svojih projekata.
 
 ### Trenutno nije podržano {#not-currently-supported}
 
@@ -192,12 +196,12 @@ Nakon kreiranja i podešavanja globalne uloge ili uloge projekta, dodelite je po
 
 ## Upravljanje članovima tima {#managing-team-members}
 
-- **Pozivanje novih članova:** **Vlasnici** i **menadžeri** mogu pozvati nove korisnike da se pridruže timu i dodeliti im početnu ulogu.
+- **Pozivanje novih članova:** **Vlasnici** i **menadžeri** mogu pozvati nove korisnike da se pridruže timu i dodeliti im početnu ugrađenu ulogu.
 
 - **Promena uloga:** Vlasnici uvek mogu da promene ulogu bilo kom članu tima. Menadžeri mogu da menjaju uloge korisnicima **Task Runner** i **Guest**, ali **ne** i drugim menadžerima ili vlasnicima.
 
 - **Uklanjanje članova:** Vlasnici i menadžeri mogu da uklone članove tima sa nižim ulogama.
-  - Vlasnik može da ukloni bilo koga (uključujući druge vlasnike), ali ne može da ukloni samog sebe ako je jedini vlasnik.
+  - Vlasnik može da ukloni bilo koga (uključujući druge vlasnike), osim poslednjeg vlasnika.
   - Menadžer može da ukloni korisnike **Task Runner** i **Guest**, ali **ne** i druge menadžere ili vlasnike.
 
 ---
@@ -221,7 +225,7 @@ Nakon kreiranja i podešavanja globalne uloge ili uloge projekta, dodelite je po
 ## Često postavljana pitanja {#frequently-asked-questions}
 
 ### 1. Može li vlasnik da ukloni drugog vlasnika? {#1-can-an-owner-remove-another-owner}
-Da, vlasnik može da ukloni ili promeni ulogu bilo kom drugom vlasniku, osim ako je taj poslednji preostali vlasnik u projektu.
+Da, vlasnik može da ukloni ili promeni ulogu bilo kom drugom vlasniku, osim ako je taj poslednji vlasnik u projektu.
 
 ### 2. Ko može da obriše projekat? {#2-who-can-delete-the-project}
 Projekat mogu da obrišu samo **vlasnici**.
@@ -230,13 +234,13 @@ Projekat mogu da obrišu samo **vlasnici**.
 Ne. Menadžeri mogu da dodaju ili uklanjaju samo korisnike sa ulogama **Task Runner** ili **Guest**. Za upravljanje vlasnicima ili drugim menadžerima morate biti vlasnik.
 
 ### 4. Šta se dešava ako slučajno uklonim sve vlasnike? {#4-what-happens-if-i-remove-all-owners-by-accident}
-Semaphore UI sprečava uklanjanje vlasnika ako bi projekat time ostao potpuno bez vlasnika. U svakom trenutku mora postojati najmanje jedan vlasnik.
+Projekat ne sme da ostane bez vlasnika. Zato niko osim administratora ne može da ukloni poslednjeg vlasnika iz projekta niti da mu oduzme ulogu vlasnika. Poslednji vlasnik takođe ne može da napusti projekat. Ako administrator ukloni poslednjeg vlasnika, projekat nastavlja da radi, a administrator može da doda novog vlasnika na stranici **Team**.
 
 ### 5. Mogu li gosti da pokreću zadatke? {#5-can-guests-run-tasks}
 Ne. Gosti imaju pristup samo za čitanje i ne mogu pokretati niti upravljati zadacima. U izdanju Enterprise možete gostu dodeliti dozvolu da pokreće pojedinačne šablone putem [prilagođene uloge](#extended-rbac-enterprise).
 
 ### 6. Da li prilagođene uloge zamenjuju ugrađene uloge? {#6-do-custom-roles-replace-the-built-in-roles}
-Ne. Prilagođene uloge proširuju ugrađene uloge dodatnim dozvolama na nivou projekta i šablona. Svaki član tima i dalje ima tačno jednu ugrađenu ulogu.
+Ne. Prilagođene uloge se dodaju na ugrađene uloge. Član može imati ugrađenu ulogu, prilagođene uloge ili oba.
 
 ### 7. Da li je prošireni RBAC dostupan u community izdanju? {#7-is-extended-rbac-available-in-the-community-edition}
 Ne. Prošireni RBAC zahteva pretplatu na **Semaphore Enterprise**.

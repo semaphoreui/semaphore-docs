@@ -1,6 +1,6 @@
 # Équipes
 
-Dans Semaphore UI, chaque projet est associé à une **Équipe**. Seuls les membres de l'équipe et les administrateurs peuvent accéder au projet. Chaque membre de l'équipe se voit attribuer l'un des quatre rôles intégrés, qui déterminent son niveau d'accès et les actions qu'il peut effectuer.
+Dans Semaphore UI, chaque projet est associé à une **Équipe**. Seuls les membres de l'équipe et les administrateurs peuvent accéder au projet. Chaque membre de l'équipe possède un ou plusieurs rôles, qui déterminent son niveau d'accès et les actions qu'il peut effectuer. Un membre peut faire tout ce que permet l'un quelconque de ses rôles.
 
 Dans l'édition **Enterprise**, les rôles intégrés peuvent être étendus avec des [rôles personnalisés](#extended-rbac-enterprise) qui accordent des permissions supplémentaires et fines sur des modèles spécifiques.
 
@@ -14,7 +14,7 @@ La section **Équipe** d'un projet comporte deux onglets : **Membres** avec les 
 
 ## Rôles intégrés {#built-in-roles}
 
-Chaque membre de l'équipe possède exactement l'un de ces quatre rôles :
+Les quatre rôles intégrés sont :
 
 - **Owner**
 - **Manager**
@@ -31,8 +31,8 @@ Vous trouverez ci-dessous une description détaillée de chaque rôle et de ses 
 - **Plusieurs owners**<br />
   Un projet peut avoir plusieurs Owners, garantissant qu'il y a plus d'une personne disposant de tous les privilèges.
 
-- **Restrictions sur l'auto-suppression**<br />
-  Un Owner ne peut pas se retirer lui-même s'il est le seul Owner du projet. Cela empêche le projet de se retrouver sans Owner.
+- **Dernier Owner**<br />
+  Un projet ne doit pas rester sans Owner. Ainsi, seul un administrateur peut retirer le dernier Owner du projet ou lui enlever le rôle Owner. Le dernier Owner ne peut pas non plus quitter le projet.
 
 - **Gestion des autres owners**<br />
   Les Owners peuvent gérer (y compris retirer ou changer les rôles de) tous les membres de l'équipe, y compris les autres Owners.
@@ -77,7 +77,7 @@ Avec le RBAC étendu, les rôles personnalisés peuvent accorder des permissions
 
 ### Rôles personnalisés {#custom-roles}
 
-Un rôle personnalisé est un ensemble nommé de permissions qui complète le rôle de projet intégré d'un membre. Chaque membre de l'équipe conserve son rôle intégré. Les rôles personnalisés y ajoutent des permissions.
+Un rôle personnalisé est un rôle que vous créez vous-même, avec les permissions que vous choisissez. Vous l'attribuez à un membre comme un rôle intégré. Un membre peut avoir un rôle personnalisé seul ou avec un rôle intégré.
 
 Les rôles personnalisés sont disponibles à deux portées :
 
@@ -114,7 +114,7 @@ Les rôles de projet ne sont disponibles que dans le projet où ils sont créés
 
 L'onglet **Rôles** est vide jusqu'à la création du premier rôle de projet. Il liste tous les rôles de projet et contient le bouton **Nouveau rôle**.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles1.webp)
+![](/assets/custom-roles-project-roles-tab.webp)
 
 ### Configurer un rôle personnalisé {#configure-a-custom-role}
 
@@ -158,7 +158,7 @@ Les permissions de modèle ajoutent un accès sur des modèles de tâches sélec
 
 L'onglet **Permissions** liste les rôles déjà ajoutés au modèle.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles2.webp)
+![](/assets/custom-roles-template-permissions-tab.webp)
 
 **Ajoutez le rôle et accordez les permissions de modèle**
 
@@ -180,8 +180,12 @@ Les permissions de modèle sont additives. Elles ajoutent un accès sans remplac
 Après avoir créé et configuré un rôle global ou de projet, attribuez-le au membre de l'équipe concerné :
 
 1. Ouvrez le projet et allez dans **Équipe**.
-2. Dépliez **Rôles** à côté de l'utilisateur concerné.
-3. Sélectionnez le rôle personnalisé.
+2. Sélectionnez le champ de rôles à côté du membre concerné.
+3. Sélectionnez le rôle personnalisé. Un membre peut avoir plusieurs rôles.
+
+### Supprimer un rôle utilisé {#delete-a-role-that-is-in-use}
+
+Si un rôle est encore attribué à des membres ou utilisé dans des permissions de modèle, Semaphore demande confirmation avant de le supprimer et indique combien de membres, de projets et de permissions de modèle sont concernés. Sélectionnez **Delete with assignments** pour supprimer le rôle et le retirer à tous. Les membres qui n'ont pas d'autre rôle sont retirés de leurs projets.
 
 ### Non pris en charge actuellement {#not-currently-supported}
 
@@ -192,12 +196,12 @@ Après avoir créé et configuré un rôle global ou de projet, attribuez-le au 
 
 ## Gérer les membres de l'équipe {#managing-team-members}
 
-- **Inviter de nouveaux membres :** les **Owners** et les **Managers** peuvent inviter de nouveaux utilisateurs à rejoindre l'équipe et leur attribuer un rôle initial.
+- **Inviter de nouveaux membres :** les **Owners** et les **Managers** peuvent inviter de nouveaux utilisateurs à rejoindre l'équipe et leur attribuer un rôle intégré initial.
 
 - **Changer les rôles :** les Owners peuvent toujours changer les rôles de n'importe quel membre de l'équipe. Les Managers peuvent changer les rôles des **Task Runners** et des **Guests**, mais **pas** ceux des autres Managers ou des Owners.
 
 - **Retirer des membres :** les Owners et les Managers peuvent retirer des membres de l'équipe ayant des rôles inférieurs.
-  - Un Owner peut retirer n'importe qui (y compris d'autres Owners), mais ne peut pas se retirer lui-même s'il est le seul Owner.
+  - Un Owner peut retirer n'importe qui (y compris d'autres Owners), sauf le dernier Owner.
   - Un Manager peut retirer les **Task Runners** et les **Guests**, mais **pas** les autres Managers ou les Owners.
 
 ---
@@ -221,7 +225,7 @@ Après avoir créé et configuré un rôle global ou de projet, attribuez-le au 
 ## Questions fréquentes {#frequently-asked-questions}
 
 ### 1. Un Owner peut-il retirer un autre Owner ? {#1-can-an-owner-remove-another-owner}
-Oui, un Owner peut retirer un autre Owner ou changer son rôle, sauf s'il est le dernier Owner restant dans le projet.
+Oui, un Owner peut retirer un autre Owner ou changer son rôle, sauf s'il est le dernier Owner du projet.
 
 ### 2. Qui peut supprimer le projet ? {#2-who-can-delete-the-project}
 Seuls les **Owners** peuvent supprimer un projet.
@@ -230,13 +234,13 @@ Seuls les **Owners** peuvent supprimer un projet.
 Non. Les Managers ne peuvent ajouter ou retirer que des utilisateurs ayant les rôles **Task Runner** ou **Guest**. Pour gérer les Owners ou d'autres Managers, vous devez être Owner.
 
 ### 4. Que se passe-t-il si je retire tous les Owners par accident ? {#4-what-happens-if-i-remove-all-owners-by-accident}
-Semaphore UI empêche le retrait d'un Owner si cela laisserait le projet sans aucun Owner. Il doit toujours y avoir au moins un Owner.
+Un projet ne doit pas rester sans Owner. Ainsi, seul un administrateur peut retirer le dernier Owner du projet ou lui enlever le rôle Owner. Le dernier Owner ne peut pas non plus quitter le projet. Si un administrateur retire le dernier Owner, le projet continue de fonctionner et un administrateur peut ajouter un nouvel Owner sur la page **Équipe**.
 
 ### 5. Les Guests peuvent-ils exécuter des tâches ? {#5-can-guests-run-tasks}
 Non. Les Guests ont un accès en lecture seule et ne peuvent ni déclencher ni gérer de tâches. Dans l'édition Enterprise, vous pouvez accorder à un Guest la permission d'exécuter des modèles individuels via un [rôle personnalisé](#extended-rbac-enterprise).
 
 ### 6. Les rôles personnalisés remplacent-ils les rôles intégrés ? {#6-do-custom-roles-replace-the-built-in-roles}
-Non. Les rôles personnalisés étendent les rôles intégrés avec des permissions supplémentaires au niveau du projet et des modèles. Chaque membre de l'équipe possède toujours exactement un rôle intégré.
+Non. Les rôles personnalisés s'ajoutent aux rôles intégrés. Un membre peut avoir un rôle intégré, des rôles personnalisés, ou les deux.
 
 ### 7. Le RBAC étendu est-il disponible dans l'édition communautaire ? {#7-is-extended-rbac-available-in-the-community-edition}
 Non. Le RBAC étendu nécessite un abonnement **Semaphore Enterprise**.
