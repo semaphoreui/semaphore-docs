@@ -66,6 +66,7 @@ Tutte le opzioni del provider SSO:
 | `username_claim`      | Espressione del claim per il nome utente[\*](#claim-expression).                |
 | `email_claim`         | Espressione del claim per l'email[\*](#claim-expression).                       |
 | `name_claim`          | Espressione del claim per il nome del profilo[\*](#claim-expression).           |
+| `groups_claim`        | Nome del claim del token che contiene i gruppi dell'utente. Usato dalle [mappature di gruppo](#project-roles-from-groups). |
 | `order`               | Posizione del pulsante del provider nella schermata di accesso.                                             |
 | `allow_idp_initiated` | Abilita l'[accesso avviato dall'IdP](#idp-initiated-login) per questo provider. Valore predefinito `false`. |
 | `return_via_state`    | Passa il percorso di ritorno post-accesso tramite il parametro OAuth `state` invece che tramite l'URL di redirect. Valore predefinito `true`. |
@@ -89,6 +90,47 @@ Semaphore tenta prima di ottenere il campo email. Se questo è vuoto, viene valu
 <div class="warning">
   L'espressione <code>"username_claim": "|"</code> genera uno <code>username</code> casuale per ogni utente che accede tramite il provider.
 </div>
+
+## Ruoli di Project dai gruppi <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Le mappature di gruppo sono disponibili nell'edizione **Semaphore Enterprise**.
+:::
+
+Una mappatura di gruppo dà un ruolo di Project a ogni utente di un gruppo dell'identity provider. Ad esempio, una mappatura può dare ai membri del gruppo `devops` il ruolo **Manager** nel Project `Infrastructure`.
+
+### Inviare i gruppi nel token {#send-groups-in-the-token}
+
+Impostare `groups_claim` sul nome del claim che contiene i gruppi dell'utente. Senza questa impostazione, gli accessi tramite il provider non cambiano i ruoli dalle mappature di gruppo.
+
+I gruppi devono essere nell'ID token. Molti identity provider, ad esempio Dex, inviano i gruppi solo quando Semaphore richiede lo scope `groups`:
+
+```json
+{
+  "oidc_providers": {
+    "dex": {
+      "display_name": "Sign in with Dex",
+      "provider_url": "https://dex.your-domain.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/dex/redirect",
+      "scopes": ["openid", "email", "profile", "groups"],
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+### Creare una mappatura di gruppo {#create-a-group-mapping}
+
+1. Aprire il menu di amministrazione in basso a sinistra e selezionare **Group mappings**.
+2. Selezionare **New mapping**.
+3. Scegliere il provider, inserire il nome del gruppo e scegliere il Project e il ruolo.
+4. Selezionare **Save**.
+
+Il nome del gruppo deve corrispondere esattamente al nome nel token, comprese le maiuscole e le minuscole. Per cambiare una mappatura di gruppo, eliminarla e crearne una nuova.
+
+Semaphore aggiorna i ruoli dalle mappature di gruppo ogni volta che l'utente accede tramite il provider. Un utente che lascia un gruppo mantiene il ruolo fino al suo prossimo accesso. Per rendere effettive prima queste modifiche, limitare la durata della sessione con [`auth.max_session_life_hours`](/reference/configuration#authentication).
 
 ## Accesso avviato dall'IdP {#idp-initiated-login}
 

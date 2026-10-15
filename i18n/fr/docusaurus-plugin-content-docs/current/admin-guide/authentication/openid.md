@@ -66,6 +66,7 @@ Toutes les options d'un fournisseur SSO :
 | `username_claim`      | Expression de claim du nom d'utilisateur[\*](#claim-expression).                |
 | `email_claim`         | Expression de claim de l'e-mail[\*](#claim-expression).                         |
 | `name_claim`          | Expression de claim du nom de profil[\*](#claim-expression).                    |
+| `groups_claim`        | Nom du claim du jeton qui contient les groupes de l'utilisateur. Utilisé par les [mappages de groupe](#project-roles-from-groups). |
 | `order`               | Position du bouton du fournisseur sur l'écran de connexion.                                                 |
 | `allow_idp_initiated` | Active la [connexion initiée par l'IdP](#idp-initiated-login) pour ce fournisseur. Par défaut `false`.     |
 | `return_via_state`    | Transmet le chemin de retour post-connexion via le paramètre OAuth `state` plutôt que via l'URL de redirection. Par défaut `true`. |
@@ -89,6 +90,47 @@ Semaphore tente d'abord de récupérer le champ email. S'il est vide, l'expressi
 <div class="warning">
   L'expression <code>"username_claim": "|"</code> génère un <code>username</code> aléatoire pour chaque utilisateur qui se connecte via le fournisseur.
 </div>
+
+## Rôles de projet à partir des groupes <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Les mappages de groupe sont disponibles dans l'édition **Semaphore Enterprise**.
+:::
+
+Un mappage de groupe donne un rôle de projet à chaque utilisateur d'un groupe du fournisseur d'identité. Par exemple, un mappage peut donner aux membres du groupe `devops` le rôle **Manager** dans le projet `Infrastructure`.
+
+### Envoyer les groupes dans le jeton {#send-groups-in-the-token}
+
+Donnez à `groups_claim` le nom du claim qui contient les groupes de l'utilisateur. Sans ce paramètre, les connexions via le fournisseur ne modifient pas les rôles issus des mappages de groupe.
+
+Les groupes doivent figurer dans le jeton d'identité (ID token). Beaucoup de fournisseurs d'identité, par exemple Dex, n'envoient les groupes que si Semaphore demande le scope `groups` :
+
+```json
+{
+  "oidc_providers": {
+    "dex": {
+      "display_name": "Sign in with Dex",
+      "provider_url": "https://dex.your-domain.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/dex/redirect",
+      "scopes": ["openid", "email", "profile", "groups"],
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+### Créer un mappage de groupe {#create-a-group-mapping}
+
+1. Ouvrez le menu d'administration en bas à gauche et sélectionnez **Group mappings**.
+2. Sélectionnez **New mapping**.
+3. Choisissez le fournisseur, saisissez le nom du groupe, puis choisissez le projet et le rôle.
+4. Sélectionnez **Enregistrer**.
+
+Le nom du groupe doit correspondre exactement au nom présent dans le jeton, y compris les majuscules et les minuscules. Pour changer un mappage de groupe, supprimez ce mappage et créez-en un nouveau.
+
+Semaphore met à jour les rôles issus des mappages de groupe à chaque connexion de l'utilisateur via le fournisseur. Un utilisateur qui quitte un groupe garde le rôle jusqu'à sa prochaine connexion. Pour que ces changements prennent effet plus tôt, limitez la durée des sessions avec [`auth.max_session_life_hours`](/reference/configuration#authentication).
 
 ## Connexion initiée par l'IdP {#idp-initiated-login}
 

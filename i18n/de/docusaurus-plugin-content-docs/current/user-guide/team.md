@@ -187,10 +187,26 @@ Nachdem Sie eine globale oder eine Projektrolle erstellt und konfiguriert haben,
 
 Wenn eine Rolle noch Mitgliedern zugewiesen ist oder in Task-Template-Berechtigungen verwendet wird, fragt Semaphore vor dem Löschen nach und zeigt an, wie viele Mitglieder, Projekte und Task-Template-Berechtigungen betroffen sind. Wählen Sie **Delete with assignments**, um die Rolle zu löschen und sie allen wieder wegzunehmen. Mitglieder ohne weitere Rolle werden aus ihren Projekten entfernt.
 
+Wenn [Gruppenzuordnungen](#roles-from-group-mappings) die Rolle verwenden, zeigt der Dialog auch, wie viele es sind. Nur ein Administrator kann eine solche Rolle löschen, und ihre Gruppenzuordnungen werden mit ihr gelöscht.
+
 ### Derzeit nicht unterstützt {#not-currently-supported}
 
-- **Gruppenzuordnung über LDAP / OIDC.** Benutzerdefinierte Rollen werden pro Benutzer zugewiesen. Das Zuordnen von Gruppen aus externen Verzeichnissen zu benutzerdefinierten Rollen wird nicht unterstützt.
 - **Granulare Berechtigungen für Ressourcen außerhalb von Task Templates.** Derzeit können nur Task Templates durch benutzerdefinierte Rollen auf der Ebene einzelner Ressourcen gesteuert werden.
+
+---
+
+## Rollen aus Gruppenzuordnungen <Enterprise /> {#roles-from-group-mappings}
+
+:::info
+Gruppenzuordnungen sind in der Edition **Semaphore Enterprise** verfügbar.
+:::
+
+Ein Administrator kann auf der Seite **Group mappings** allen Mitgliedern einer Gruppe in Ihrem Identitätsanbieter eine Projektrolle geben. Semaphore aktualisiert diese Rollen bei jeder Anmeldung des Benutzers über den Identitätsanbieter. Siehe [Projektrollen aus Gruppen](/admin-guide/authentication/openid#project-roles-from-groups).
+
+Auf der Seite **Team** hat eine solche Rolle ein Schlosssymbol. Fahren Sie mit der Maus über die Rolle, um den Anbieter und die Gruppe zu sehen, zum Beispiel `keycloak: devops`.
+
+- Eine Rolle aus einer Gruppenzuordnung können Sie auf der Seite **Team** nicht entfernen. Nur ein Administrator kann Gruppenzuordnungen ändern.
+- Wenn Sie ein Mitglied entfernen oder ihm alle von Hand vergebenen Rollen wegnehmen, bleiben die Rollen aus Gruppenzuordnungen, und das Mitglied bleibt im Projekt.
 
 ---
 

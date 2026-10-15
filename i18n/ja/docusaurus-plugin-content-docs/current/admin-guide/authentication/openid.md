@@ -66,6 +66,7 @@ SSO プロバイダーのすべてのオプション:
 | `username_claim`      | ユーザー名クレーム式[\*](#claim-expression)。                               |
 | `email_claim`         | メールクレーム式[\*](#claim-expression)。                                  |
 | `name_claim`          | プロフィール名クレーム式[\*](#claim-expression)。                           |
+| `groups_claim`        | ユーザーのグループが入ったトークンのクレーム名。[グループマッピング](#project-roles-from-groups)で使用します。 |
 | `order`               | サインイン画面でのプロバイダーボタンの位置。                                                      |
 | `allow_idp_initiated` | このプロバイダーで [IdP 起点のログイン](#idp-initiated-login)を有効にします。デフォルトは `false`。                       |
 | `return_via_state`    | ログイン後の戻り先パスを、リダイレクト URL ではなく OAuth の `state` パラメータで渡します。デフォルトは `true`。 |
@@ -89,6 +90,47 @@ Semaphore はまず email フィールドの取得を試みます。それが空
 <div class="warning">
   式 <code>"username_claim": "|"</code> は、このプロバイダーでログインする各ユーザーに対してランダムな <code>username</code> を生成します。
 </div>
+
+## グループによるプロジェクトのロール <Enterprise /> {#project-roles-from-groups}
+
+:::info
+グループマッピングは **Semaphore Enterprise** エディションで利用できます。
+:::
+
+グループマッピングは、アイデンティティプロバイダーのグループに属するすべてのユーザーにプロジェクトのロールを付与します。たとえば、`devops` グループのメンバーに `Infrastructure` プロジェクトの **マネージャー** ロールを付与できます。
+
+### トークンでグループを送る {#send-groups-in-the-token}
+
+`groups_claim` に、ユーザーのグループが入ったクレームの名前を設定します。設定しない場合、そのプロバイダーでのログインはグループマッピングによるロールを変更しません。
+
+グループは ID トークンに含まれている必要があります。多くのアイデンティティプロバイダー(Dex など)は、Semaphore が `groups` スコープを要求した場合にのみグループを送ります。
+
+```json
+{
+  "oidc_providers": {
+    "dex": {
+      "display_name": "Sign in with Dex",
+      "provider_url": "https://dex.your-domain.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/dex/redirect",
+      "scopes": ["openid", "email", "profile", "groups"],
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+### グループマッピングを作成する {#create-a-group-mapping}
+
+1. 左下の管理者メニューを開き、**Group mappings** を選択します。
+2. **New mapping** を選択します。
+3. プロバイダーを選び、グループ名を入力し、プロジェクトとロールを選びます。
+4. **保存** を選択します。
+
+グループ名は、大文字と小文字を含めてトークン内の名前と完全に一致する必要があります。グループマッピングを変更するには、そのマッピングを削除して新しく作成します。
+
+ユーザーがプロバイダー経由でログインするたびに、Semaphore はグループマッピングによるロールを更新します。グループから外れたユーザーは、次にログインするまでロールを持ち続けます。このような変更を早く反映させるには、[`auth.max_session_life_hours`](/reference/configuration#authentication) でセッションの有効期間を制限してください。
 
 ## IdP 起点のログイン {#idp-initiated-login}
 

@@ -187,10 +187,26 @@ Dopo aver creato e configurato un ruolo globale o di Project, assegnarlo al memb
 
 Se un ruolo è ancora assegnato a dei membri o usato nei permessi dei Task Template, Semaphore chiede conferma prima di eliminarlo e mostra quanti membri, Project e permessi dei Task Template coinvolge. Selezionare **Delete with assignments** per eliminare il ruolo e toglierlo a tutti. I membri che non hanno altri ruoli vengono rimossi dai loro Project.
 
+Se delle [mappature di gruppo](#roles-from-group-mappings) usano il ruolo, la finestra di dialogo mostra anche quante sono. Solo un amministratore può eliminare un ruolo di questo tipo, e le sue mappature di gruppo vengono eliminate insieme al ruolo.
+
 ### Attualmente non supportato {#not-currently-supported}
 
-- **Mappatura dei gruppi LDAP / OIDC.** I ruoli personalizzati vengono assegnati per singolo utente. La mappatura dei gruppi di directory esterne sui ruoli personalizzati non è supportata.
 - **Permessi granulari per le risorse diverse dai Task Template.** Attualmente solo i Task Template possono essere governati dai ruoli personalizzati a livello di singola risorsa.
+
+---
+
+## Ruoli dalle mappature di gruppo <Enterprise /> {#roles-from-group-mappings}
+
+:::info
+Le mappature di gruppo sono disponibili nell'edizione **Semaphore Enterprise**.
+:::
+
+Un amministratore può dare un ruolo di Project a tutti i membri di un gruppo del vostro identity provider nella pagina **Group mappings**. Semaphore aggiorna questi ruoli ogni volta che l'utente accede tramite l'identity provider. Vedere [Ruoli di Project dai gruppi](/admin-guide/authentication/openid#project-roles-from-groups).
+
+Nella pagina **Team**, un ruolo di questo tipo ha l'icona di un lucchetto. Passare il mouse sul ruolo per vedere il provider e il gruppo, ad esempio `keycloak: devops`.
+
+- Non è possibile rimuovere un ruolo che viene da una mappatura di gruppo nella pagina **Team**. Solo un amministratore può modificare le mappature di gruppo.
+- Se si rimuove un membro o gli si tolgono tutti i ruoli assegnati a mano, i ruoli dalle mappature di gruppo restano e il membro resta nel Project.
 
 ---
 

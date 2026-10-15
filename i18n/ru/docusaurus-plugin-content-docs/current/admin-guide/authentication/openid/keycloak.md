@@ -15,6 +15,30 @@
 }
 ```
 
+## Роли в проектах по группам <Enterprise /> {#project-roles-from-groups}
+
+Чтобы работали [сопоставления групп](/admin-guide/authentication/openid#project-roles-from-groups), добавьте mapper, который кладёт группы пользователя в ID-токен:
+
+1. В Keycloak Admin Console откройте свой клиент, перейдите в **Client scopes** и откройте scope `<client-id>-dedicated`.
+2. Добавьте mapper **By configuration** и выберите **Group Membership**.
+3. Укажите в **Token Claim Name** значение `groups` и включите **Add to ID token**.
+4. Выберите, как передавать группы, в настройке **Full group path**. Если она включена, Keycloak передаёт путь каждой группы, например `/devops` или `/platform/sre`, и в сопоставлении группы нужно указать этот путь. Если выключена, Keycloak передаёт только имя группы, например `sre`.
+
+Затем задайте `groups_claim` для провайдера:
+
+```json title="config.json"
+{
+  "oidc_providers": {
+    "keycloak": {
+      "...": "...",
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+Не добавляйте `groups` в `scopes`. Keycloak отклоняет неизвестный ему scope, а для mapper дополнительный scope не нужен.
+
 ## Вход, инициированный IdP {#idp-initiated-login}
 
 Чтобы пользователи могли запускать Semaphore из лаунчера приложений **Account Console** в Keycloak, включите

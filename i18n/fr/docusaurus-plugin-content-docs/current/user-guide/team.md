@@ -187,10 +187,26 @@ Après avoir créé et configuré un rôle global ou de projet, attribuez-le au 
 
 Si un rôle est encore attribué à des membres ou utilisé dans des permissions de modèle, Semaphore demande confirmation avant de le supprimer et indique combien de membres, de projets et de permissions de modèle sont concernés. Sélectionnez **Delete with assignments** pour supprimer le rôle et le retirer à tous. Les membres qui n'ont pas d'autre rôle sont retirés de leurs projets.
 
+Si des [mappages de groupe](#roles-from-group-mappings) utilisent le rôle, la boîte de dialogue indique aussi leur nombre. Seul un administrateur peut supprimer un tel rôle, et ses mappages de groupe sont supprimés avec le rôle.
+
 ### Non pris en charge actuellement {#not-currently-supported}
 
-- **Mappage de groupes LDAP / OIDC.** Les rôles personnalisés sont attribués par utilisateur. Le mappage de groupes d'annuaires externes vers des rôles personnalisés n'est pas pris en charge.
 - **Permissions granulaires pour les ressources autres que les modèles.** Seuls les modèles peuvent aujourd'hui être régis par des rôles personnalisés au niveau de la ressource individuelle.
+
+---
+
+## Rôles issus des mappages de groupe <Enterprise /> {#roles-from-group-mappings}
+
+:::info
+Les mappages de groupe sont disponibles dans l'édition **Semaphore Enterprise**.
+:::
+
+Un administrateur peut donner un rôle de projet à tous les membres d'un groupe de votre fournisseur d'identité sur la page **Group mappings**. Semaphore met à jour ces rôles à chaque connexion de l'utilisateur via le fournisseur d'identité. Voir [Rôles de projet à partir des groupes](/admin-guide/authentication/openid#project-roles-from-groups).
+
+Sur la page **Équipe**, un tel rôle porte une icône de cadenas. Survolez le rôle pour voir le fournisseur et le groupe, par exemple `keycloak: devops`.
+
+- Vous ne pouvez pas retirer un rôle issu d'un mappage de groupe sur la page **Équipe**. Seul un administrateur peut modifier les mappages de groupe.
+- Si vous retirez un membre ou si vous lui retirez tous ses rôles attribués à la main, les rôles issus des mappages de groupe restent et le membre reste dans le projet.
 
 ---
 
