@@ -71,6 +71,7 @@ All SSO provider options:
 | `username_claim`      | Username claim expression[\*](#claim-expression).                               |
 | `email_claim`         | Email claim expression[\*](#claim-expression).                                  |
 | `name_claim`          | Profile Name claim expression[\*](#claim-expression).                           |
+| `groups_claim`        | Name of the token claim with the user's groups. Used by [group mappings](#project-roles-from-groups).        |
 | `order`               | Position of the provider button on the Sign in screen.                                                      |
 | `allow_idp_initiated` | Enable [IdP-initiated login](#idp-initiated-login) for this provider. Default `false`.                       |
 | `return_via_state`    | Pass the post-login return path via the OAuth `state` parameter instead of the redirect URL. Default `true`. |
@@ -94,6 +95,47 @@ Semaphore is attempting to claim the email field first. If it is empty, the expr
 <div class="warning">
   The expression <code>"username_claim": "|"</code> generates a random <code>username</code> for each user who logs in through the provider.
 </div>
+
+## Project roles from groups <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Group mappings are available in the **Semaphore Enterprise** edition.
+:::
+
+A group mapping gives a project role to every user in a group of the identity provider. For example, a mapping can give the members of the `devops` group the **Manager** role in the `Infrastructure` project.
+
+### Send groups in the token {#send-groups-in-the-token}
+
+Set `groups_claim` to the name of the claim with the user's groups. Without it, sign-ins through the provider do not change roles from group mappings.
+
+The groups must be in the ID token. Many identity providers, for example Dex, send them only when Semaphore asks for the `groups` scope:
+
+```json
+{
+  "oidc_providers": {
+    "dex": {
+      "display_name": "Sign in with Dex",
+      "provider_url": "https://dex.your-domain.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/dex/redirect",
+      "scopes": ["openid", "email", "profile", "groups"],
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+### Create a group mapping {#create-a-group-mapping}
+
+1. Open the bottom-left admin menu and select **Group mappings**.
+2. Select **New mapping**.
+3. Choose the provider, enter the group name, and choose the project and the role.
+4. Select **Save**.
+
+The group name must match the name in the token exactly, including upper and lower case. To change a group mapping, delete it and create a new one.
+
+Semaphore updates roles from group mappings each time a user signs in through the provider. A user who leaves a group keeps the role until the next sign-in. To make such changes take effect sooner, limit the session life with [`auth.max_session_life_hours`](/reference/configuration#authentication).
 
 ## IdP-initiated login {#idp-initiated-login}
 

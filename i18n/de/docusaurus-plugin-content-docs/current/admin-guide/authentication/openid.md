@@ -66,6 +66,7 @@ Alle Optionen für SSO-Anbieter:
 | `username_claim`      | Claim-Ausdruck für den Benutzernamen[\*](#claim-expression).                    |
 | `email_claim`         | Claim-Ausdruck für die E-Mail-Adresse[\*](#claim-expression).                   |
 | `name_claim`          | Claim-Ausdruck für den Profilnamen[\*](#claim-expression).                      |
+| `groups_claim`        | Name des Claims im Token, der die Gruppen des Benutzers enthält. Wird von [Gruppenzuordnungen](#project-roles-from-groups) verwendet. |
 | `order`               | Position der Anbieterschaltfläche auf der Anmeldeseite.                                                     |
 | `allow_idp_initiated` | Aktiviert die [IdP-initiierte Anmeldung](#idp-initiated-login) für diesen Anbieter. Standard `false`.       |
 | `return_via_state`    | Übergibt den Rückkehrpfad nach der Anmeldung über den OAuth-Parameter `state` statt über die Redirect-URL. Standard `true`. |
@@ -89,6 +90,47 @@ Semaphore versucht zunächst, das E-Mail-Feld auszulesen. Ist es leer, wird der 
 <div class="warning">
   Der Ausdruck <code>"username_claim": "|"</code> erzeugt für jeden Benutzer, der sich über den Anbieter anmeldet, einen zufälligen <code>username</code>.
 </div>
+
+## Projektrollen aus Gruppen <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Gruppenzuordnungen sind in der Edition **Semaphore Enterprise** verfügbar.
+:::
+
+Eine Gruppenzuordnung gibt jedem Benutzer einer Gruppe im Identitätsanbieter eine Projektrolle. Zum Beispiel kann eine Zuordnung den Mitgliedern der Gruppe `devops` die Rolle **Manager** im Projekt `Infrastructure` geben.
+
+### Gruppen im Token senden {#send-groups-in-the-token}
+
+Setzen Sie `groups_claim` auf den Namen des Claims mit den Gruppen des Benutzers. Ohne diese Einstellung ändern Anmeldungen über den Anbieter die Rollen aus Gruppenzuordnungen nicht.
+
+Die Gruppen müssen im ID-Token stehen. Viele Identitätsanbieter, zum Beispiel Dex, senden die Gruppen nur, wenn Semaphore den Scope `groups` anfordert:
+
+```json
+{
+  "oidc_providers": {
+    "dex": {
+      "display_name": "Sign in with Dex",
+      "provider_url": "https://dex.your-domain.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/dex/redirect",
+      "scopes": ["openid", "email", "profile", "groups"],
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+### Eine Gruppenzuordnung erstellen {#create-a-group-mapping}
+
+1. Öffnen Sie das Administratormenü unten links und wählen Sie **Group mappings**.
+2. Wählen Sie **New mapping**.
+3. Wählen Sie den Anbieter, geben Sie den Gruppennamen ein und wählen Sie das Projekt und die Rolle.
+4. Wählen Sie **Save**.
+
+Der Gruppenname muss genau mit dem Namen im Token übereinstimmen, auch in der Groß- und Kleinschreibung. Um eine Gruppenzuordnung zu ändern, löschen Sie die Zuordnung und erstellen Sie eine neue.
+
+Semaphore aktualisiert die Rollen aus Gruppenzuordnungen bei jeder Anmeldung des Benutzers über den Anbieter. Ein Benutzer, der eine Gruppe verlässt, behält die Rolle bis zur nächsten Anmeldung. Damit solche Änderungen schneller wirken, begrenzen Sie die Sitzungsdauer mit [`auth.max_session_life_hours`](/reference/configuration#authentication).
 
 ## IdP-initiierte Anmeldung {#idp-initiated-login}
 

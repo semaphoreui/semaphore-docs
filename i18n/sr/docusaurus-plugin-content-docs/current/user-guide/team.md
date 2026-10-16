@@ -187,10 +187,26 @@ Nakon kreiranja i podešavanja globalne uloge ili uloge projekta, dodelite je po
 
 Ako je uloga još uvek dodeljena članovima ili se koristi u dozvolama šablona, Semaphore pita pre brisanja i prikazuje koliko članova, projekata i dozvola šablona to pogađa. Izaberite **Delete with assignments** da biste obrisali ulogu i oduzeli je svima njima. Članovi koji nemaju drugu ulogu uklanjaju se iz svojih projekata.
 
+Ako [mapiranja grupa](#roles-from-group-mappings) koriste ulogu, dijalog prikazuje i broj tih mapiranja. Samo administrator može obrisati takvu ulogu, a njena mapiranja grupa brišu se zajedno sa ulogom.
+
 ### Trenutno nije podržano {#not-currently-supported}
 
-- **Mapiranje LDAP / OIDC grupa.** Prilagođene uloge dodeljuju se po korisniku. Mapiranje grupa iz spoljnog direktorijuma na prilagođene uloge nije podržano.
 - **Precizne dozvole za resurse koji nisu šabloni.** Danas se prilagođenim ulogama na nivou pojedinačnog resursa mogu kontrolisati samo šabloni.
+
+---
+
+## Uloge iz mapiranja grupa <Enterprise /> {#roles-from-group-mappings}
+
+:::info
+Mapiranja grupa dostupna su u izdanju **Semaphore Enterprise**.
+:::
+
+Administrator može na stranici **Group mappings** dati ulogu u projektu svim članovima jedne grupe u vašem provajderu identiteta. Semaphore ažurira te uloge pri svakoj prijavi korisnika preko provajdera identiteta. Pogledajte [Uloge u projektu na osnovu grupa](/admin-guide/authentication/openid#project-roles-from-groups).
+
+Na stranici **Team** takva uloga ima ikonu katanca. Zadržite pokazivač iznad uloge da biste videli provajdera i grupu, na primer `keycloak: devops`.
+
+- Ulogu iz mapiranja grupe ne možete ukloniti na stranici **Team**. Samo administrator može da menja mapiranja grupa.
+- Ako uklonite člana ili mu oduzmete sve ručno dodeljene uloge, uloge iz mapiranja grupa ostaju i član ostaje u projektu.
 
 ---
 

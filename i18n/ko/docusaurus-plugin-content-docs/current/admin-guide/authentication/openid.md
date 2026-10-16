@@ -66,6 +66,7 @@ SEMAPHORE_OIDC_PROVIDERS='{
 | `username_claim`      | 사용자 이름 claim 표현식[\*](#claim-expression).                               |
 | `email_claim`         | 이메일 claim 표현식[\*](#claim-expression).                                  |
 | `name_claim`          | 프로필 이름 claim 표현식[\*](#claim-expression).                           |
+| `groups_claim`        | 사용자의 그룹이 담긴 토큰 claim의 이름입니다. [그룹 매핑](#project-roles-from-groups)에서 사용합니다. |
 | `order`               | 로그인 화면에서 제공자 버튼의 위치.                                                      |
 | `allow_idp_initiated` | 이 제공자에 대해 [IdP 시작 로그인](#idp-initiated-login)을 활성화합니다. 기본값 `false`.                       |
 | `return_via_state`    | 로그인 후 돌아갈 경로를 redirect URL 대신 OAuth `state` 매개변수로 전달합니다. 기본값 `true`. |
@@ -89,6 +90,47 @@ Semaphore는 먼저 email 필드를 가져오려고 시도합니다. 이 값이 
 <div class="warning">
   <code>"username_claim": "|"</code> 표현식은 해당 제공자를 통해 로그인하는 각 사용자에게 무작위 <code>username</code>을 생성합니다.
 </div>
+
+## 그룹에 따른 프로젝트 역할 <Enterprise /> {#project-roles-from-groups}
+
+:::info
+그룹 매핑은 **Semaphore Enterprise** 에디션에서 사용할 수 있습니다.
+:::
+
+그룹 매핑은 ID 제공자의 그룹에 속한 모든 사용자에게 프로젝트 역할을 부여합니다. 예를 들어 그룹 매핑으로 `devops` 그룹 구성원에게 `Infrastructure` 프로젝트의 **Manager** 역할을 부여할 수 있습니다.
+
+### 토큰으로 그룹 보내기 {#send-groups-in-the-token}
+
+`groups_claim`에 사용자의 그룹이 담긴 claim의 이름을 설정합니다. 이 값을 설정하지 않으면 해당 제공자를 통한 로그인은 그룹 매핑으로 받은 역할을 바꾸지 않습니다.
+
+그룹은 ID 토큰에 있어야 합니다. Dex 같은 많은 ID 제공자는 Semaphore가 `groups` 스코프를 요청할 때만 그룹을 보냅니다:
+
+```json
+{
+  "oidc_providers": {
+    "dex": {
+      "display_name": "Sign in with Dex",
+      "provider_url": "https://dex.your-domain.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/dex/redirect",
+      "scopes": ["openid", "email", "profile", "groups"],
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+### 그룹 매핑 만들기 {#create-a-group-mapping}
+
+1. 왼쪽 하단의 관리자 메뉴를 열고 **Group mappings**를 선택합니다.
+2. **New mapping**을 선택합니다.
+3. 제공자를 선택하고 그룹 이름을 입력한 다음 프로젝트와 역할을 선택합니다.
+4. **Save**를 선택합니다.
+
+그룹 이름은 대소문자까지 토큰의 이름과 정확히 같아야 합니다. 그룹 매핑을 바꾸려면 기존 매핑을 삭제하고 새로 만드십시오.
+
+Semaphore는 사용자가 제공자를 통해 로그인할 때마다 그룹 매핑으로 받은 역할을 업데이트합니다. 그룹에서 빠진 사용자는 다시 로그인할 때까지 역할을 유지합니다. 이런 변경이 더 빨리 반영되도록 하려면 [`auth.max_session_life_hours`](/reference/configuration#authentication)로 세션 수명을 제한하십시오.
 
 ## IdP 시작 로그인 {#idp-initiated-login}
 

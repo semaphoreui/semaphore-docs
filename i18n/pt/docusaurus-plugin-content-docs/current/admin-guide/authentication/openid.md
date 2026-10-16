@@ -66,6 +66,7 @@ Todas as opções de provedor SSO:
 | `username_claim`      | Expressão de claim do nome de usuário[\*](#claim-expression).                   |
 | `email_claim`         | Expressão de claim do e-mail[\*](#claim-expression).                            |
 | `name_claim`          | Expressão de claim do nome do perfil[\*](#claim-expression).                    |
+| `groups_claim`        | Nome do claim do token com os grupos do usuário. Usado pelos [mapeamentos de grupo](#project-roles-from-groups). |
 | `order`               | Posição do botão do provedor na tela de login.                                                              |
 | `allow_idp_initiated` | Habilita o [login iniciado pelo IdP](#idp-initiated-login) para este provedor. Padrão: `false`.             |
 | `return_via_state`    | Passa o caminho de retorno pós-login pelo parâmetro OAuth `state` em vez da URL de redirecionamento. Padrão: `true`. |
@@ -89,6 +90,47 @@ O Semaphore tenta primeiro obter o campo email. Se ele estiver vazio, a express�
 <div class="warning">
   A expressão <code>"username_claim": "|"</code> gera um <code>username</code> aleatório para cada usuário que faz login por meio do provedor.
 </div>
+
+## Papéis de projeto a partir de grupos <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Os mapeamentos de grupo estão disponíveis na edição **Semaphore Enterprise**.
+:::
+
+Um mapeamento de grupo dá um papel de projeto a cada usuário de um grupo do provedor de identidade. Por exemplo, um mapeamento pode dar aos membros do grupo `devops` o papel **Manager** no projeto `Infrastructure`.
+
+### Enviar os grupos no token {#send-groups-in-the-token}
+
+Defina `groups_claim` com o nome do claim que contém os grupos do usuário. Sem essa configuração, os logins pelo provedor não alteram os papéis de mapeamentos de grupo.
+
+Os grupos precisam estar no token de ID. Muitos provedores de identidade, por exemplo o Dex, enviam os grupos apenas quando o Semaphore pede o scope `groups`:
+
+```json
+{
+  "oidc_providers": {
+    "dex": {
+      "display_name": "Sign in with Dex",
+      "provider_url": "https://dex.your-domain.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/dex/redirect",
+      "scopes": ["openid", "email", "profile", "groups"],
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+### Criar um mapeamento de grupo {#create-a-group-mapping}
+
+1. Abra o menu de administração no canto inferior esquerdo e selecione **Group mappings**.
+2. Selecione **New mapping**.
+3. Escolha o provedor, digite o nome do grupo e escolha o projeto e o papel.
+4. Selecione **Save**.
+
+O nome do grupo deve ser exatamente igual ao nome no token, incluindo maiúsculas e minúsculas. Para alterar um mapeamento de grupo, exclua esse mapeamento e crie um novo.
+
+O Semaphore atualiza os papéis de mapeamentos de grupo cada vez que o usuário faz login pelo provedor. Um usuário que sai de um grupo mantém o papel até o próximo login. Para que essas mudanças tenham efeito antes, limite a duração da sessão com [`auth.max_session_life_hours`](/reference/configuration#authentication).
 
 ## Login iniciado pelo IdP {#idp-initiated-login}
 

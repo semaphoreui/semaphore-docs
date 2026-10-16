@@ -187,10 +187,26 @@ Después de crear y configurar un rol global o de proyecto, asígnelo al miembro
 
 Si un rol todavía está asignado a miembros o se usa en permisos de plantilla, Semaphore pregunta antes de eliminarlo y muestra cuántos miembros, proyectos y permisos de plantilla afecta. Seleccione **Delete with assignments** para eliminar el rol y quitárselo a todos ellos. Los miembros que no tienen otro rol son eliminados de sus proyectos.
 
+Si [asignaciones de grupo](#roles-from-group-mappings) usan el rol, el diálogo también muestra cuántas son. Solo un administrador puede eliminar un rol así, y sus asignaciones de grupo se eliminan con el rol.
+
 ### No admitido actualmente {#not-currently-supported}
 
-- **Asignación de grupos LDAP / OIDC.** Los roles personalizados se asignan por usuario. No se admite la asignación de grupos de directorios externos a roles personalizados.
 - **Permisos granulares para recursos que no son plantillas.** Actualmente, solo las plantillas pueden regirse por roles personalizados a nivel de recurso individual.
+
+---
+
+## Roles de asignaciones de grupo <Enterprise /> {#roles-from-group-mappings}
+
+:::info
+Las asignaciones de grupo están disponibles en la edición **Semaphore Enterprise**.
+:::
+
+Un administrador puede dar un rol de proyecto a todos los miembros de un grupo de su proveedor de identidad en la página **Group mappings**. Semaphore actualiza estos roles cada vez que el usuario inicia sesión a través del proveedor de identidad. Consulte [Roles de proyecto a partir de grupos](/admin-guide/authentication/openid#project-roles-from-groups).
+
+En la página **Equipo**, un rol así tiene un icono de candado. Pase el cursor sobre el rol para ver el proveedor y el grupo, por ejemplo `keycloak: devops`.
+
+- No puede quitar un rol de una asignación de grupo en la página **Equipo**. Solo un administrador puede cambiar las asignaciones de grupo.
+- Si elimina un miembro o le quita todos los roles asignados a mano, los roles de asignaciones de grupo se mantienen y el miembro sigue en el proyecto.
 
 ---
 

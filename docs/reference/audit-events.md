@@ -72,6 +72,10 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `iam.project_role_definition` | `create` | `creation` | success |  | `slug`, `permissions` | Pro |
 | `iam.project_role_definition` | `update` | `change` | success |  | `slug`, `permissions` | Pro |
 | `iam.project_role_definition` | `delete` | `deletion` | success |  | `slug`, `impact` | Pro |
+| `iam.mapped_role` | `add` | `change` | success |  | `role`, `provider`, `group`, `mapping_id`, `cause` | Pro |
+| `iam.mapped_role` | `remove` | `change` | success |  | `role`, `provider`, `group`, `mapping_id`, `cause` | Pro |
+| `iam.role_mapping` | `create` | `creation` | success |  | `provider`, `group`, `role` | Pro |
+| `iam.role_mapping` | `delete` | `deletion` | success |  | `provider`, `group`, `role` | Pro |
 | `iam.template_permission` | `create` | `creation` | success |  | `template_id`, `role`, `permissions` | Community |
 | `iam.template_permission` | `update` | `change` | success |  | `template_id`, `role`, `permissions` | Community |
 | `iam.template_permission` | `delete` | `deletion` | success |  | `template_id`, `role` | Community |

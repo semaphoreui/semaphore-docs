@@ -192,10 +192,26 @@ After creating and configuring a global or project role, assign it to the requir
 
 If a role is still given to members or used in template permissions, Semaphore asks before deleting it and shows how many members, projects and template permissions it affects. Select **Delete with assignments** to delete the role and take it away from all of them. Members who have no other role are removed from their projects.
 
+If [group mappings](#roles-from-group-mappings) use the role, the dialog also shows how many. Only an admin can delete such a role, and its group mappings are deleted with it.
+
 ### Not currently supported {#not-currently-supported}
 
-- **LDAP / OIDC group mapping.** Custom roles are assigned per user. Mapping external directory groups to custom roles is not supported.
 - **Granular permissions for non-template resources.** Only templates can be governed by custom roles at the individual-resource level today.
+
+---
+
+## Roles from group mappings <Enterprise /> {#roles-from-group-mappings}
+
+:::info
+Group mappings are available in the **Semaphore Enterprise** edition.
+:::
+
+An admin can give a project role to everyone in a group of your identity provider on the **Group mappings** page. Semaphore updates these roles each time the user signs in through the identity provider. See [Project roles from groups](/admin-guide/authentication/openid#project-roles-from-groups).
+
+On the **Team** page, such a role has a lock icon. Hover over the role to see the provider and the group, for example `keycloak: devops`.
+
+- You cannot remove a role from a group mapping on the **Team** page. Only an admin can change group mappings.
+- If you remove a member or take away all their roles given by hand, the roles from group mappings stay and the member stays in the project.
 
 ---
 
