@@ -52,7 +52,7 @@ Two levels exist and they are independent.
 **Server level.** An administrator manages users, global runners, and server settings.
 Being a server administrator does not by itself grant membership in a project.
 
-**Project level.** Each member holds one role in each project:
+**Project level.** Each member has one or more roles in each project and can do everything that any of these roles allows:
 
 | Role | May |
 |---|---|

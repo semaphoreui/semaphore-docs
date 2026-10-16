@@ -55,7 +55,7 @@ Es gibt zwei Ebenen, und sie sind voneinander unabhängig.
 Servereinstellungen. Serveradministrator zu sein bedeutet für sich genommen keine
 Mitgliedschaft in einem Projekt.
 
-**Projektebene.** Jedes Mitglied hat in jedem Projekt genau eine Rolle:
+**Projektebene.** Jedes Mitglied hat in jedem Projekt eine oder mehrere Rollen und darf alles tun, was eine dieser Rollen erlaubt:
 
 | Rolle | Darf |
 |---|---|

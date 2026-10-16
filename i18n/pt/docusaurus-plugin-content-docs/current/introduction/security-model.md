@@ -52,7 +52,7 @@ Existem dois níveis, e eles são independentes.
 **Nível de servidor.** Um administrador gerencia usuários, runners globais e as configurações do servidor.
 Ser administrador do servidor não concede, por si só, participação em um projeto.
 
-**Nível de projeto.** Cada membro tem um papel em cada projeto:
+**Nível de projeto.** Cada membro tem um ou mais papéis em cada projeto e pode fazer tudo o que qualquer um desses papéis permite:
 
 | Papel | Pode |
 |---|---|

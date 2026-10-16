@@ -1,6 +1,6 @@
 # Equipos
 
-En Semaphore UI, cada proyecto está asociado a un **Equipo**. Solo los miembros del equipo y los administradores pueden acceder al proyecto. A cada miembro del equipo se le asigna uno de los cuatro roles integrados, que determinan su nivel de acceso y las acciones que puede realizar.
+En Semaphore UI, cada proyecto está asociado a un **Equipo**. Solo los miembros del equipo y los administradores pueden acceder al proyecto. Cada miembro del equipo tiene uno o más roles, que determinan su nivel de acceso y las acciones que puede realizar. Un miembro puede hacer todo lo que permita cualquiera de sus roles.
 
 En la edición **Enterprise**, los roles integrados pueden ampliarse con [roles personalizados](#extended-rbac-enterprise) que conceden permisos adicionales y detallados sobre plantillas específicas.
 
@@ -14,7 +14,7 @@ La sección **Equipo** de un proyecto tiene dos pestañas: **Miembros**, con los
 
 ## Roles integrados {#built-in-roles}
 
-Cada miembro del equipo tiene exactamente uno de estos cuatro roles:
+Los cuatro roles integrados son:
 
 - **Propietario**
 - **Gestor**
@@ -31,8 +31,8 @@ A continuación se describen en detalle cada rol y sus permisos.
 - **Varios propietarios**<br />
   Un proyecto puede tener varios Propietarios, lo que garantiza que haya más de una persona con privilegios completos.
 
-- **Restricciones para eliminarse a sí mismo**<br />
-  Un Propietario no puede eliminarse a sí mismo si es el único Propietario del proyecto. Esto evita que el proyecto se quede sin Propietario.
+- **Último Propietario**<br />
+  Un proyecto no puede quedarse sin Propietario. Por eso, nadie excepto un administrador puede eliminar al último Propietario del proyecto ni quitarle el rol de Propietario. El último Propietario tampoco puede abandonar el proyecto.
 
 - **Gestión de otros propietarios**<br />
   Los Propietarios pueden gestionar (incluido eliminar o cambiar los roles de) a todos los miembros del equipo, incluidos otros Propietarios.
@@ -77,7 +77,7 @@ Con el RBAC extendido, los roles personalizados pueden conceder permisos individ
 
 ### Roles personalizados {#custom-roles}
 
-Un rol personalizado es un conjunto de permisos con nombre que complementa el rol de proyecto integrado de un miembro. Cada miembro del equipo conserva su rol integrado. Los roles personalizados le añaden permisos.
+Un rol personalizado es un rol que usted crea, con los permisos que elija. Se lo asigna a un miembro igual que un rol integrado. Un miembro puede tener un rol personalizado solo o junto con un rol integrado.
 
 Los roles personalizados están disponibles en dos ámbitos:
 
@@ -114,7 +114,7 @@ Los roles de proyecto solo están disponibles en el proyecto en el que se crean.
 
 La pestaña **Roles** está vacía hasta que se crea el primer rol de proyecto. Muestra todos los roles del proyecto y contiene el botón **Nuevo rol**.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles1.webp)
+![](/assets/custom-roles-project-roles-tab.webp)
 
 ### Configurar un rol personalizado {#configure-a-custom-role}
 
@@ -158,7 +158,7 @@ Los permisos de plantilla añaden acceso sobre plantillas de tareas seleccionada
 
 La pestaña **Permisos** muestra los roles ya agregados a la plantilla.
 
-![](https://www.semaphoreui.com/uploads/v2.17/roles2.webp)
+![](/assets/custom-roles-template-permissions-tab.webp)
 
 **Agregue el rol y conceda permisos de plantilla**
 
@@ -180,8 +180,12 @@ Los permisos de plantilla son aditivos. Añaden acceso sin reemplazar ni reducir
 Después de crear y configurar un rol global o de proyecto, asígnelo al miembro del equipo correspondiente:
 
 1. Abra el proyecto y vaya a **Equipo**.
-2. Despliegue **Roles** junto al usuario correspondiente.
-3. Seleccione el rol personalizado.
+2. Seleccione el campo de roles junto al miembro correspondiente.
+3. Seleccione el rol personalizado. Un miembro puede tener varios roles.
+
+### Eliminar un rol en uso {#delete-a-role-that-is-in-use}
+
+Si un rol todavía está asignado a miembros o se usa en permisos de plantilla, Semaphore pregunta antes de eliminarlo y muestra cuántos miembros, proyectos y permisos de plantilla afecta. Seleccione **Delete with assignments** para eliminar el rol y quitárselo a todos ellos. Los miembros que no tienen otro rol son eliminados de sus proyectos.
 
 ### No admitido actualmente {#not-currently-supported}
 
@@ -192,12 +196,12 @@ Después de crear y configurar un rol global o de proyecto, asígnelo al miembro
 
 ## Gestión de los miembros del equipo {#managing-team-members}
 
-- **Invitar a nuevos miembros:** Los **Propietarios** y **Gestores** pueden invitar a nuevos usuarios a unirse al equipo y asignarles un rol inicial.
+- **Invitar a nuevos miembros:** Los **Propietarios** y **Gestores** pueden invitar a nuevos usuarios a unirse al equipo y asignarles un rol integrado inicial.
 
 - **Cambiar roles:** Los Propietarios siempre pueden cambiar los roles de cualquier miembro del equipo. Los Gestores pueden cambiar los roles de los **Ejecutores de tareas** y los **Invitados**, pero **no** los de otros Gestores o Propietarios.
 
 - **Eliminar miembros:** Los Propietarios y Gestores pueden eliminar a los miembros del equipo con roles inferiores.
-  - Un Propietario puede eliminar a cualquiera (incluidos otros Propietarios), pero no puede eliminarse a sí mismo si es el único Propietario.
+  - Un Propietario puede eliminar a cualquiera (incluidos otros Propietarios), salvo al último Propietario.
   - Un Gestor puede eliminar a **Ejecutores de tareas** e **Invitados**, pero **no** a otros Gestores o Propietarios.
 
 ---
@@ -221,7 +225,7 @@ Después de crear y configurar un rol global o de proyecto, asígnelo al miembro
 ## Preguntas frecuentes {#frequently-asked-questions}
 
 ### 1. ¿Puede un Propietario eliminar a otro Propietario? {#1-can-an-owner-remove-another-owner}
-Sí, un Propietario puede eliminar o cambiar el rol de cualquier otro Propietario, a menos que sea el único Propietario que queda en el proyecto.
+Sí, un Propietario puede eliminar o cambiar el rol de cualquier otro Propietario, a menos que sea el último Propietario del proyecto.
 
 ### 2. ¿Quién puede eliminar el proyecto? {#2-who-can-delete-the-project}
 Solo los **Propietarios** pueden eliminar un proyecto.
@@ -230,13 +234,13 @@ Solo los **Propietarios** pueden eliminar un proyecto.
 No. Los Gestores solo pueden agregar o eliminar usuarios con los roles **Ejecutor de tareas** o **Invitado**. Para gestionar Propietarios u otros Gestores, debe ser Propietario.
 
 ### 4. ¿Qué ocurre si elimino a todos los Propietarios por accidente? {#4-what-happens-if-i-remove-all-owners-by-accident}
-Semaphore UI impide la eliminación de un Propietario si ello dejara al proyecto sin ningún Propietario. Debe haber al menos un Propietario en todo momento.
+Un proyecto no puede quedarse sin Propietario. Por eso, nadie excepto un administrador puede eliminar al último Propietario del proyecto ni quitarle el rol de Propietario. El último Propietario tampoco puede abandonar el proyecto. Si un administrador elimina al último Propietario, el proyecto sigue funcionando y un administrador puede añadir un nuevo Propietario en la página **Equipo**.
 
 ### 5. ¿Pueden los Invitados ejecutar tareas? {#5-can-guests-run-tasks}
 No. Los Invitados tienen acceso de solo lectura y no pueden lanzar ni gestionar tareas. En la edición Enterprise puede conceder a un Invitado permiso para ejecutar plantillas individuales mediante un [rol personalizado](#extended-rbac-enterprise).
 
 ### 6. ¿Los roles personalizados reemplazan a los roles integrados? {#6-do-custom-roles-replace-the-built-in-roles}
-No. Los roles personalizados amplían los roles integrados con permisos adicionales a nivel de proyecto y de plantilla. Cada miembro del equipo sigue teniendo exactamente un rol integrado.
+No. Los roles personalizados se suman a los roles integrados. Un miembro puede tener un rol integrado, roles personalizados o ambos.
 
 ### 7. ¿Está disponible el RBAC extendido en la edición comunitaria? {#7-is-extended-rbac-available-in-the-community-edition}
 No. El RBAC extendido requiere una suscripción a **Semaphore Enterprise**.

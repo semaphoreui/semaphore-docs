@@ -52,7 +52,7 @@ Postoje dva nivoa i oni su nezavisni.
 **Nivo servera.** Administrator upravlja korisnicima, globalnim runner-ima i podešavanjima servera.
 Biti administrator servera samo po sebi ne daje članstvo u projektu.
 
-**Nivo projekta.** Svaki član ima jednu ulogu u svakom projektu:
+**Nivo projekta.** Svaki član ima jednu ili više uloga u svakom projektu i može da radi sve što dozvoljava bilo koja od tih uloga:
 
 | Uloga | Sme |
 |---|---|

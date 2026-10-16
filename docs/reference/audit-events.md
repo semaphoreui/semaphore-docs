@@ -64,17 +64,17 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `iam.api_token` | `create` | `creation` | success |  |  | Community |
 | `iam.api_token` | `delete` | `deletion` | success |  |  | Community |
 | `iam.membership` | `add` | `change` | success |  | `roles`, `self_removal` | Community |
-| `iam.membership` | `remove` | `change` | success, failure | `owner_self_change` | `roles`, `self_removal` | Community |
-| `iam.project_role` | `change` | `change` | success, failure | `owner_self_change` | `old_roles`, `new_roles` | Community |
+| `iam.membership` | `remove` | `change` | success, failure | `last_owner` | `roles`, `self_removal`, `deleted_role` | Community |
+| `iam.project_role` | `change` | `change` | success, failure | `last_owner` | `old_roles`, `new_roles`, `deleted_role` | Community |
 | `iam.role` | `create` | `creation` | success |  | `slug`, `permissions` | Pro |
 | `iam.role` | `update` | `change` | success |  | `slug`, `permissions` | Pro |
-| `iam.role` | `delete` | `deletion` | success |  | `slug` | Pro |
+| `iam.role` | `delete` | `deletion` | success |  | `slug`, `impact` | Pro |
 | `iam.project_role_definition` | `create` | `creation` | success |  | `slug`, `permissions` | Pro |
 | `iam.project_role_definition` | `update` | `change` | success |  | `slug`, `permissions` | Pro |
-| `iam.project_role_definition` | `delete` | `deletion` | success |  | `slug` | Pro |
+| `iam.project_role_definition` | `delete` | `deletion` | success |  | `slug`, `impact` | Pro |
 | `iam.template_permission` | `create` | `creation` | success |  | `template_id`, `role`, `permissions` | Community |
 | `iam.template_permission` | `update` | `change` | success |  | `template_id`, `role`, `permissions` | Community |
-| `iam.template_permission` | `delete` | `deletion` | success |  | `template_id` | Community |
+| `iam.template_permission` | `delete` | `deletion` | success |  | `template_id`, `role` | Community |
 
 ## Resources {#resources}
 
