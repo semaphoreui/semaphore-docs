@@ -89,9 +89,9 @@ semaphore runner setup --config /path/to/your/config/file.json
     // or
     "token_file": "path/to/the/file/where/runner/saves/token",
 
-    // How often (in seconds) the runner polls the server for jobs and reports
-    // progress. Default: 1. Raise this when many runners share one server.
-    "check_interval_seconds": 1
+    // How often (in seconds) the runner polls the server for jobs.
+    // Default: 5. Raise this when many runners share one server.
+    "check_interval_seconds": 5
 
     // Other runner-specific options: max_parallel_tasks, webhook, one_off, etc.
   }
@@ -137,8 +137,8 @@ docker run -d \
 
 ### 轮询间隔（`check_interval_seconds`） {#poll-interval-check_interval_seconds}
 
-每个运行器都会按固定间隔轮询 Semaphore 服务器，以获取新任务并
-上报任务进度。可在运行器配置文件中进行配置：
+每个运行器都会按固定间隔轮询 Semaphore 服务器以获取新任务。
+可在运行器配置文件中进行配置：
 
 ```json
 {
@@ -156,13 +156,47 @@ SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS=5
 
 | 值 | 效果 |
 |-------|--------|
-| **1**（默认） | 任务在大约一秒内被领取；最适合低延迟的运行。 |
-| **更大的值**（例如 5–30） | 在一台服务器上运行大量运行器时可减少 HTTP 流量。任务可能会稍晚一些开始。 |
+| **1** | 任务在大约一秒内被领取；最适合低延迟的运行。 |
+| **5**（默认） | 在领取延迟与请求量之间取得平衡。 |
+| **更大的值**（例如 10–30） | 在一台服务器上运行大量运行器时可减少 HTTP 流量。任务可能会稍晚一些开始。 |
 
 Semaphore UI 的运行器页面在生成设置代码片段（配置文件、Docker 以及
 环境变量示例）时，会在**高级选项**下提供此设置。
 
-无效值或零值将回退到默认的 1 秒。
+无效值或零值将回退到默认的 5 秒。
+
+任务进度的上报有自己固定的一秒节奏，与此设置无关：进度请求同时充当运行器的
+心跳。
+
+### 请求超时（`connection.timeout_seconds`） {#request-timeout-connection-timeout_seconds}
+
+运行器发往服务器的每个请求都有时间上限：TCP 连接、TLS 握手以及等待响应头各自
+拥有这么多秒的预算。如果没有它，一个接受了连接随后却不再响应的服务器会让运行器
+一直挂住，直到操作系统放弃；而且卡住的请求会让运行器跳过后续的轮询周期，于是心跳
+停止，服务器便会将该运行器判定为离线。
+
+```json
+{
+  "runner": {
+    "connection": {
+      "timeout_seconds": 3
+    }
+  }
+}
+```
+
+或者使用环境变量：
+
+```bash
+SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS=3
+```
+
+默认值为 3 秒。请将它保持在 `check_interval_seconds` 之下，这样卡住的请求就不会
+比启动它的轮询周期活得更久。当运行器通过缓慢或拥塞的链路连接服务器，并且运行器
+日志中出现 `timeout awaiting response headers` 时，可以增大该值；超时的进度上报
+会保留其日志记录并在下一个周期重试，因此不会丢失任务输出。
+
+请求体的上传有意不设上限，因此大批量的任务日志绝不会在传输中途被截断。
 
 ### 运行器标签（Pro） {#runner-tags-pro}
 

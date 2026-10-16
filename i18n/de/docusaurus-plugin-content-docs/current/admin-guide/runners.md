@@ -89,9 +89,9 @@ Durch Ausführen des Befehls `semaphore runner setup` wird eine Konfigurationsda
     // or
     "token_file": "path/to/the/file/where/runner/saves/token",
 
-    // How often (in seconds) the runner polls the server for jobs and reports
-    // progress. Default: 1. Raise this when many runners share one server.
-    "check_interval_seconds": 1
+    // How often (in seconds) the runner polls the server for jobs.
+    // Default: 5. Raise this when many runners share one server.
+    "check_interval_seconds": 5
 
     // Other runner-specific options: max_parallel_tasks, webhook, one_off, etc.
   }
@@ -137,8 +137,8 @@ Einzelheiten dazu, wo Pakete installiert werden und wie Fehler behandelt werden,
 
 ### Abfrageintervall (`check_interval_seconds`) {#poll-interval-check_interval_seconds}
 
-Jeder Runner fragt den Semaphore-Server in einem festen Intervall nach neuen Jobs ab und
-meldet den Task-Fortschritt. Konfigurieren Sie es in der Konfigurationsdatei des Runners:
+Jeder Runner fragt den Semaphore-Server in einem festen Intervall nach neuen Jobs ab.
+Konfigurieren Sie es in der Konfigurationsdatei des Runners:
 
 ```json
 {
@@ -156,13 +156,55 @@ SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS=5
 
 | Wert | Auswirkung |
 |-------|--------|
-| **1** (Standard) | Jobs werden innerhalb von etwa einer Sekunde aufgenommen; am besten für Läufe mit geringer Latenz. |
-| **Höher** (z. B. 5–30) | Reduziert den HTTP-Verkehr, wenn Sie viele Runner gegen einen Server betreiben. Jobs starten möglicherweise etwas später. |
+| **1** | Jobs werden innerhalb von etwa einer Sekunde aufgenommen; am besten für Läufe mit geringer Latenz. |
+| **5** (Standard) | Wägt Aufnahmeverzögerung und Anfragevolumen gegeneinander ab. |
+| **Höher** (z. B. 10–30) | Reduziert den HTTP-Verkehr, wenn Sie viele Runner gegen einen Server betreiben. Jobs starten möglicherweise etwas später. |
 
 Die Runner-Seite in Semaphore UI zeigt diese Einstellung unter **Erweiterte Optionen** an, wenn
 Setup-Snippets (Konfigurationsdatei, Docker und Beispiele für Umgebungsvariablen) generiert werden.
 
-Ungültige Werte oder der Wert Null fallen auf den Standardwert von 1 Sekunde zurück.
+Ungültige Werte oder der Wert Null fallen auf den Standardwert von 5 Sekunden zurück.
+
+Der Task-Fortschritt wird unabhängig von dieser Einstellung in einem festen
+Ein-Sekunden-Takt gemeldet: Die Fortschrittsanfrage dient gleichzeitig als
+Heartbeat des Runners.
+
+### Anfrage-Timeout (`connection.timeout_seconds`) {#request-timeout-connection-timeout_seconds}
+
+Jede Anfrage, die der Runner an den Server sendet, ist zeitlich begrenzt: Der
+TCP-Verbindungsaufbau, der TLS-Handshake und das Warten auf die Antwort-Header
+erhalten jeweils dieses Budget in Sekunden. Ohne diese Begrenzung würde ein
+Server, der die Verbindung annimmt und dann verstummt, den Runner blockieren,
+bis das Betriebssystem aufgibt — und da eine hängende Anfrage den Runner die
+folgenden Zyklen überspringen lässt, würde der Heartbeat ausfallen und der
+Server den Runner als offline melden.
+
+```json
+{
+  "runner": {
+    "connection": {
+      "timeout_seconds": 3
+    }
+  }
+}
+```
+
+Oder über eine Umgebungsvariable:
+
+```bash
+SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS=3
+```
+
+Der Standardwert beträgt 3 Sekunden. Halten Sie ihn unter
+`check_interval_seconds`, damit eine hängende Anfrage den Abfragezyklus, der sie
+gestartet hat, nicht überdauert. Erhöhen Sie ihn, wenn der Runner den Server
+über eine langsame oder überlastete Verbindung erreicht und Sie
+`timeout awaiting response headers` im Runner-Log sehen; ein Fortschrittsbericht
+mit Timeout behält seine Log-Einträge und wird im nächsten Zyklus erneut
+gesendet, sodass keine Task-Ausgabe verloren geht.
+
+Das Hochladen des Anfrage-Bodys ist absichtlich nicht begrenzt, damit ein großer
+Stapel von Task-Logs nie mitten in der Übertragung abgeschnitten wird.
 
 ### Runner-Tags (Pro) {#runner-tags-pro}
 

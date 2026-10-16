@@ -89,9 +89,9 @@ Semaphore 서버에 runner를 등록하는 방법은 두 가지입니다:
     // or
     "token_file": "path/to/the/file/where/runner/saves/token",
 
-    // How often (in seconds) the runner polls the server for jobs and reports
-    // progress. Default: 1. Raise this when many runners share one server.
-    "check_interval_seconds": 1
+    // How often (in seconds) the runner polls the server for jobs.
+    // Default: 5. Raise this when many runners share one server.
+    "check_interval_seconds": 5
 
     // Other runner-specific options: max_parallel_tasks, webhook, one_off, etc.
   }
@@ -137,8 +137,8 @@ docker run -d \
 
 ### 폴링 간격(`check_interval_seconds`) {#poll-interval-check_interval_seconds}
 
-각 runner는 새 작업을 확인하고 작업 진행 상황을 보고하기 위해 일정한 간격으로 Semaphore 서버를
-폴링합니다. Runner 설정 파일에서 이를 구성합니다:
+각 runner는 새 작업을 확인하기 위해 일정한 간격으로 Semaphore 서버를 폴링합니다.
+Runner 설정 파일에서 이를 구성합니다:
 
 ```json
 {
@@ -156,13 +156,48 @@ SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS=5
 
 | 값 | 효과 |
 |-------|--------|
-| **1** (기본값) | 작업이 약 1초 이내에 시작됩니다. 지연 시간이 짧아야 하는 실행에 가장 적합합니다. |
-| **더 큰 값** (예: 5–30) | 하나의 서버에 많은 runner를 운영할 때 HTTP 트래픽을 줄입니다. 작업 시작이 약간 늦어질 수 있습니다. |
+| **1** | 작업이 약 1초 이내에 시작됩니다. 지연 시간이 짧아야 하는 실행에 가장 적합합니다. |
+| **5** (기본값) | 작업 시작 지연과 요청량의 균형을 맞춥니다. |
+| **더 큰 값** (예: 10–30) | 하나의 서버에 많은 runner를 운영할 때 HTTP 트래픽을 줄입니다. 작업 시작이 약간 늦어질 수 있습니다. |
 
 Semaphore UI의 Runner 페이지에서 설정 스니펫(설정 파일, Docker, 환경 변수 예시)을 생성할 때
 **고급 옵션**에서 이 값을 지정할 수 있습니다.
 
-잘못된 값이나 0을 지정하면 기본값인 1초로 대체됩니다.
+잘못된 값이나 0을 지정하면 기본값인 5초로 대체됩니다.
+
+작업 진행 상황 보고는 이 설정과 무관하게 고정된 1초 주기로 전송됩니다. 진행 상황 요청이
+runner의 하트비트 역할도 하기 때문입니다.
+
+### 요청 타임아웃(`connection.timeout_seconds`) {#request-timeout-connection-timeout_seconds}
+
+Runner가 서버로 보내는 모든 요청에는 시간 제한이 있습니다. TCP 연결, TLS 핸드셰이크, 응답 헤더
+대기에 각각 이 초 수가 주어집니다. 이 제한이 없으면 연결은 수락했지만 이후 응답하지 않는 서버
+때문에 운영체제가 포기할 때까지 runner가 멈춥니다. 또한 요청이 멈추면 runner가 다음 주기들을
+건너뛰므로 하트비트가 중단되고 서버는 runner를 오프라인으로 판정합니다.
+
+```json
+{
+  "runner": {
+    "connection": {
+      "timeout_seconds": 3
+    }
+  }
+}
+```
+
+또는 환경 변수를 사용합니다:
+
+```bash
+SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS=3
+```
+
+기본값은 3초입니다. 멈춘 요청이 그것을 시작한 폴링 주기보다 오래 남지 않도록
+`check_interval_seconds`보다 작은 값으로 유지하세요. runner가 느리거나 혼잡한 회선으로 서버에
+연결하고 runner 로그에 `timeout awaiting response headers`가 보이면 값을 늘리세요. 타임아웃된
+진행 상황 보고는 로그 레코드를 유지하고 다음 주기에 다시 전송되므로 작업 출력이 사라지지 않습니다.
+
+요청 본문 업로드는 의도적으로 제한하지 않으므로, 많은 양의 작업 로그가 전송 중에 잘리는 일은
+없습니다.
 
 ### Runner 태그(Pro) {#runner-tags-pro}
 

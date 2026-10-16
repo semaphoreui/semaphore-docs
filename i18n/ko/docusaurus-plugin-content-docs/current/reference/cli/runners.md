@@ -66,7 +66,8 @@ nohup ./semaphore runner start --config /path/to/config.runner.json &
 | `webhook` | `SEMAPHORE_RUNNER_WEBHOOK` | 이 runner에 작업이 대기열에 추가될 때 서버가 호출하는 URL. |
 | `enabled` | `SEMAPHORE_RUNNER_ENABLED` | runner가 작업을 수락할지 여부. |
 | `project_id` | `SEMAPHORE_RUNNER_PROJECT_ID` | 프로젝트 수준 runner의 프로젝트 ID. 전역 runner의 경우 생략합니다. |
-| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | 폴링 간격(초). 기본값: 1. |
+| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | 폴링 간격(초). 기본값: 5. |
+| `connection.timeout_seconds` | `SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS` | 서버 연결 및 응답 헤더 대기 타임아웃(초). 기본값: 3. |
 | `max_parallel_tasks` | `SEMAPHORE_RUNNER_MAX_PARALLEL_TASKS` | 최대 동시 작업 수. 기본값: 9999. |
 | `one_off` | `SEMAPHORE_RUNNER_ONE_OFF` | 작업 하나를 처리한 후 종료합니다. webhook으로 필요할 때 시작되는 runner에 유용합니다. |
 

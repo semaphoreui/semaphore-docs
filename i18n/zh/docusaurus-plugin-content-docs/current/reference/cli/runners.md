@@ -67,7 +67,8 @@ nohup ./semaphore runner start --config /path/to/config.runner.json &
 | `webhook` | `SEMAPHORE_RUNNER_WEBHOOK` | 当有任务排队等待此运行器时，服务器调用的 URL。 |
 | `enabled` | `SEMAPHORE_RUNNER_ENABLED` | 运行器是否接受任务。 |
 | `project_id` | `SEMAPHORE_RUNNER_PROJECT_ID` | 项目级运行器所属的项目（Project）ID。全局运行器请省略。 |
-| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | 轮询间隔（秒）。默认：1。 |
+| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | 轮询间隔（秒）。默认：5。 |
+| `connection.timeout_seconds` | `SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS` | 连接服务器以及等待其响应头的超时时间（秒）。默认：3。 |
 | `max_parallel_tasks` | `SEMAPHORE_RUNNER_MAX_PARALLEL_TASKS` | 最大并发任务数。默认：9999。 |
 | `one_off` | `SEMAPHORE_RUNNER_ONE_OFF` | 处理完一个作业后退出。适用于由 webhook 按需启动的运行器。 |
 

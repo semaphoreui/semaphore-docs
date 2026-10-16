@@ -73,7 +73,8 @@ Fields in the `runner` block of the configuration file:
 | `webhook` | `SEMAPHORE_RUNNER_WEBHOOK` | URL the server calls when a task is queued for this runner. |
 | `enabled` | `SEMAPHORE_RUNNER_ENABLED` | Whether the runner accepts tasks. |
 | `project_id` | `SEMAPHORE_RUNNER_PROJECT_ID` | Project ID for a project-level runner. Omit for a global runner. |
-| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | Poll interval in seconds. Default: 1. |
+| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | Poll interval in seconds. Default: 5. |
+| `connection.timeout_seconds` | `SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS` | Timeout in seconds for connecting to the server and waiting for its response headers. Default: 3. |
 | `max_parallel_tasks` | `SEMAPHORE_RUNNER_MAX_PARALLEL_TASKS` | Maximum concurrent tasks. Default: 9999. |
 | `one_off` | `SEMAPHORE_RUNNER_ONE_OFF` | Exit after processing one job. Useful for runners started on demand by a webhook. |
 

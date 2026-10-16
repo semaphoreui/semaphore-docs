@@ -89,9 +89,9 @@ Como resultado da execução do comando `semaphore runner setup`, será criado u
     // or
     "token_file": "path/to/the/file/where/runner/saves/token",
 
-    // How often (in seconds) the runner polls the server for jobs and reports
-    // progress. Default: 1. Raise this when many runners share one server.
-    "check_interval_seconds": 1
+    // How often (in seconds) the runner polls the server for jobs.
+    // Default: 5. Raise this when many runners share one server.
+    "check_interval_seconds": 5
 
     // Other runner-specific options: max_parallel_tasks, webhook, one_off, etc.
   }
@@ -137,8 +137,8 @@ Consulte [Instalando dependências Python adicionais](/admin-guide/installation/
 
 ### Intervalo de consulta (`check_interval_seconds`) {#poll-interval-check_interval_seconds}
 
-Cada runner consulta o servidor Semaphore em um intervalo fixo em busca de novos jobs e para
-relatar o progresso das tarefas. Configure-o no arquivo de configuração do runner:
+Cada runner consulta o servidor Semaphore em um intervalo fixo em busca de novos jobs.
+Configure-o no arquivo de configuração do runner:
 
 ```json
 {
@@ -156,13 +156,53 @@ SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS=5
 
 | Valor | Efeito |
 |-------|--------|
-| **1** (padrão) | Os jobs são capturados em cerca de um segundo; ideal para execuções de baixa latência. |
-| **Maior** (por exemplo, 5–30) | Reduz o tráfego HTTP quando você opera muitos runners contra um único servidor. Os jobs podem começar um pouco mais tarde. |
+| **1** | Os jobs são capturados em cerca de um segundo; ideal para execuções de baixa latência. |
+| **5** (padrão) | Equilibra a latência de captura com o volume de requisições. |
+| **Maior** (por exemplo, 10–30) | Reduz o tráfego HTTP quando você opera muitos runners contra um único servidor. Os jobs podem começar um pouco mais tarde. |
 
 A página Runners no Semaphore UI expõe essa opção em **Opções avançadas** ao
 gerar os trechos de configuração (exemplos de arquivo de configuração, Docker e variáveis de ambiente).
 
-Valores inválidos ou zero recorrem ao padrão de 1 segundo.
+Valores inválidos ou zero recorrem ao padrão de 5 segundos.
+
+O progresso das tarefas é relatado em sua própria cadência fixa de um segundo,
+independente desta configuração: a requisição de progresso também serve como
+heartbeat do runner.
+
+### Tempo limite das requisições (`connection.timeout_seconds`) {#request-timeout-connection-timeout_seconds}
+
+Toda requisição que o runner envia ao servidor é limitada: a conexão TCP, o
+handshake TLS e a espera pelos cabeçalhos de resposta recebem cada um esse
+número de segundos. Sem isso, um servidor que aceita a conexão e depois fica
+silencioso travaria o runner até o sistema operacional desistir — e, como uma
+requisição travada faz o runner pular os ciclos seguintes, o heartbeat pararia e
+o servidor declararia o runner offline.
+
+```json
+{
+  "runner": {
+    "connection": {
+      "timeout_seconds": 3
+    }
+  }
+}
+```
+
+Ou com uma variável de ambiente:
+
+```bash
+SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS=3
+```
+
+O padrão é 3 segundos. Mantenha-o abaixo de `check_interval_seconds` para que
+uma requisição travada não sobreviva ao ciclo de consulta que a iniciou. Aumente
+quando o runner alcançar o servidor por um enlace lento ou congestionado e você
+vir `timeout awaiting response headers` no log do runner; um relatório de
+progresso expirado mantém seus registros de log e é reenviado no ciclo seguinte,
+portanto nenhuma saída de tarefa é perdida.
+
+O envio do corpo da requisição não é limitado de propósito, de modo que um lote
+grande de logs de tarefas nunca é cortado no meio da transferência.
 
 ### Tags de runner (Pro) {#runner-tags-pro}
 
