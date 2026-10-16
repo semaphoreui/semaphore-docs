@@ -1,11 +1,11 @@
 ---
 title: 認証
-description: ユーザーが Semaphore にサインインする 3 つの方法（ローカルアカウント、LDAP、OpenID Connect）と、それらの組み合わせ方、アイデンティティの紐付け方について説明します。
+description: ユーザーが Semaphore にサインインする 4 つの方法（ローカルアカウント、LDAP、OpenID Connect、リバースプロキシからの JWT）と、それらの組み合わせ方、アイデンティティの紐付け方について説明します。
 ---
 
 # 認証
 
-Semaphore には、相手が誰であるかを確認する方法が 3 つあります。それぞれは独立しており、
+Semaphore には、相手が誰であるかを確認する方法が 4 つあります。それぞれは独立しており、
 すべてを同時に有効にできます。そのため、サインイン画面にはパスワード入力フォーム、
 ディレクトリログイン、そして ID プロバイダーごとのボタンが並ぶことがあります。
 
@@ -14,6 +14,7 @@ Semaphore には、相手が誰であるかを確認する方法が 3 つあり�
 | [ローカルアカウント](/admin-guide/authentication/local) | Semaphore が自身のデータベースを使って検証します | ディレクトリがない場合や、緊急用の管理者が必要な場合。 |
 | [LDAP と Active Directory](/admin-guide/authentication/ldap) | ディレクトリサーバー | ユーザーがすでに LDAP や AD に存在し、資格情報を 1 つにまとめたい場合。 |
 | [OpenID Connect](/admin-guide/authentication/openid) | ID プロバイダー | シングルサインオンを利用している場合: Keycloak、Okta、Entra ID、Google、GitHub など。 |
+| [JWT プロキシ](/admin-guide/authentication/jwt-proxy-auth) | 認証リバースプロキシ | Pomerium などのプロキシがすでにユーザーをサインインさせ、署名付き JWT を転送している場合。 |
 
 認証が答えるのは、そのユーザーが*誰か*ということだけです。何を行えるかは、サーバーロールと
 各プロジェクトでのロールによって別途決まります。[チーム](/user-guide/team)を参照してください。
@@ -22,7 +23,7 @@ Semaphore には、相手が誰であるかを確認する方法が 3 つあり�
 
 サインインするすべてのユーザーは、どの方法を使った場合でも Semaphore のデータベースに行を
 持ちます。ローカルアカウントは管理者が作成するか、`semaphore user add` で作成されます。
-LDAP または OIDC のアカウントは最初のサインイン成功時に作成され、Semaphore はそれと合わせて
+LDAP、OIDC、または JWT プロキシのアカウントは最初のサインイン成功時に作成され、Semaphore はそれと合わせて
 **外部アイデンティティ**（プロバイダー ID と、そのプロバイダーが返したユーザー ID）を保存します。
 
 以降のログインで照合されるのはこの外部アイデンティティです。そのため、ディレクトリ上で
@@ -68,6 +69,7 @@ LDAP または OIDC のアカウントは最初のサインイン成功時に作
 | [ローカルアカウント](/admin-guide/authentication/local) | パスワード、TOTP、メールのワンタイムコード、セッションの有効期間、パスワードログインの無効化。 |
 | [LDAP と Active Directory](/admin-guide/authentication/ldap) | ディレクトリへのバインド、検索フィルター、属性マッピング、TLS。 |
 | [OpenID Connect](/admin-guide/authentication/openid) | プロバイダーの設定、クレーム式、IdP 起点のログイン、12 種類のプロバイダー設定例。 |
+| [JWT プロキシ認証](/admin-guide/authentication/jwt-proxy-auth) | リバースプロキシの署名付き JWT の信頼、JWKS とクレームの設定、プロキシ経由のサインアウト。 |
 
 ## どこから始めるか {#where-to-start}
 
