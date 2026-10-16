@@ -68,7 +68,8 @@ Campos do bloco `runner` do arquivo de configuração:
 | `webhook` | `SEMAPHORE_RUNNER_WEBHOOK` | URL que o servidor chama quando uma tarefa é enfileirada para este runner. |
 | `enabled` | `SEMAPHORE_RUNNER_ENABLED` | Se o runner aceita tarefas. |
 | `project_id` | `SEMAPHORE_RUNNER_PROJECT_ID` | ID do projeto para um runner de nível de projeto. Omita para um runner global. |
-| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | Intervalo de consulta em segundos. Padrão: 1. |
+| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | Intervalo de consulta em segundos. Padrão: 5. |
+| `connection.timeout_seconds` | `SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS` | Tempo limite em segundos para conectar ao servidor e aguardar seus cabeçalhos de resposta. Padrão: 3. |
 | `max_parallel_tasks` | `SEMAPHORE_RUNNER_MAX_PARALLEL_TASKS` | Número máximo de tarefas simultâneas. Padrão: 9999. |
 | `one_off` | `SEMAPHORE_RUNNER_ONE_OFF` | Encerra após processar um job. Útil para runners iniciados sob demanda por um webhook. |
 

@@ -89,9 +89,9 @@ Semaphore サーバーにランナーを登録する方法は 2 つあります�
     // or
     "token_file": "path/to/the/file/where/runner/saves/token",
 
-    // How often (in seconds) the runner polls the server for jobs and reports
-    // progress. Default: 1. Raise this when many runners share one server.
-    "check_interval_seconds": 1
+    // How often (in seconds) the runner polls the server for jobs.
+    // Default: 5. Raise this when many runners share one server.
+    "check_interval_seconds": 5
 
     // Other runner-specific options: max_parallel_tasks, webhook, one_off, etc.
   }
@@ -137,7 +137,7 @@ docker run -d \
 
 ### ポーリング間隔(`check_interval_seconds`) {#poll-interval-check_interval_seconds}
 
-各ランナーは、新しいジョブの取得とタスクの進捗報告のために、一定の間隔で Semaphore サーバーをポーリングします。
+各ランナーは、新しいジョブを取得するために一定の間隔で Semaphore サーバーをポーリングします。
 ランナーの設定ファイルで設定します。
 
 ```json
@@ -156,13 +156,49 @@ SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS=5
 
 | 値 | 効果 |
 |-------|--------|
-| **1**(デフォルト) | ジョブは約 1 秒以内に取得されます。低レイテンシーの実行に最適です。 |
-| **より大きい値**(例: 5〜30) | 1 台のサーバーに対して多数のランナーを運用する場合に HTTP トラフィックを削減します。ジョブの開始がやや遅れる場合があります。 |
+| **1** | ジョブは約 1 秒以内に取得されます。低レイテンシーの実行に最適です。 |
+| **5**(デフォルト) | 取得の遅延とリクエスト量のバランスを取ります。 |
+| **より大きい値**(例: 10〜30) | 1 台のサーバーに対して多数のランナーを運用する場合に HTTP トラフィックを削減します。ジョブの開始がやや遅れる場合があります。 |
 
 Semaphore UI のランナーページでは、セットアップ用スニペット(設定ファイル、Docker、環境変数の例)を生成する際に、
 この設定を**詳細オプション**として表示します。
 
-無効な値または 0 を指定した場合は、デフォルトの 1 秒にフォールバックします。
+無効な値または 0 を指定した場合は、デフォルトの 5 秒にフォールバックします。
+
+タスクの進捗報告は、この設定とは独立して固定の 1 秒間隔で行われます。進捗リクエストはランナーの
+ハートビートも兼ねているためです。
+
+### リクエストのタイムアウト(`connection.timeout_seconds`) {#request-timeout-connection-timeout_seconds}
+
+ランナーがサーバーへ送信するすべてのリクエストには上限が設けられています。TCP 接続、TLS
+ハンドシェイク、レスポンスヘッダーの待機のそれぞれに、この秒数が割り当てられます。これがないと、
+接続を受け付けたあとに応答しなくなったサーバーによって、オペレーティングシステムが諦めるまで
+ランナーが停止します。さらに、リクエストが詰まるとランナーは以降のサイクルをスキップするため、
+ハートビートが止まり、サーバーはランナーをオフラインと判定します。
+
+```json
+{
+  "runner": {
+    "connection": {
+      "timeout_seconds": 3
+    }
+  }
+}
+```
+
+または、環境変数を使用します。
+
+```bash
+SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS=3
+```
+
+デフォルトは 3 秒です。詰まったリクエストが、それを開始したポーリングサイクルより長く残らないように、
+`check_interval_seconds` より小さい値にしてください。低速または輻輳した回線でサーバーに接続しており、
+ランナーのログに `timeout awaiting response headers` が出る場合は値を大きくします。タイムアウトした
+進捗報告はログレコードを保持し、次のサイクルで再送されるため、タスクの出力が失われることはありません。
+
+リクエストボディのアップロードは意図的に制限していません。大量のタスクログが転送中に
+切り捨てられることはありません。
 
 ### ランナータグ(Pro) {#runner-tags-pro}
 

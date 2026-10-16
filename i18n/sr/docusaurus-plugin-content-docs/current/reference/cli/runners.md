@@ -67,7 +67,8 @@ Polja u bloku `runner` konfiguracione datoteke:
 | `webhook` | `SEMAPHORE_RUNNER_WEBHOOK` | URL koji server poziva kada se zadatak stavi u red za ovaj runner. |
 | `enabled` | `SEMAPHORE_RUNNER_ENABLED` | Da li runner prihvata zadatke. |
 | `project_id` | `SEMAPHORE_RUNNER_PROJECT_ID` | ID projekta (Project) za runner na nivou projekta. Izostavite za globalni runner. |
-| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | Interval provere u sekundama. Podrazumevano: 1. |
+| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | Interval provere u sekundama. Podrazumevano: 5. |
+| `connection.timeout_seconds` | `SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS` | Vreme čekanja u sekundama na povezivanje sa serverom i na njegova zaglavlja odgovora. Podrazumevano: 3. |
 | `max_parallel_tasks` | `SEMAPHORE_RUNNER_MAX_PARALLEL_TASKS` | Maksimalan broj istovremenih zadataka. Podrazumevano: 9999. |
 | `one_off` | `SEMAPHORE_RUNNER_ONE_OFF` | Izlazi nakon obrade jednog posla. Korisno za runnere koji se pokreću na zahtev preko webhook-a. |
 

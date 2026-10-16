@@ -89,9 +89,9 @@ Kao rezultat izvršavanja komande `semaphore runner setup` biće kreirana konfig
     // or
     "token_file": "path/to/the/file/where/runner/saves/token",
 
-    // How often (in seconds) the runner polls the server for jobs and reports
-    // progress. Default: 1. Raise this when many runners share one server.
-    "check_interval_seconds": 1
+    // How often (in seconds) the runner polls the server for jobs.
+    // Default: 5. Raise this when many runners share one server.
+    "check_interval_seconds": 5
 
     // Other runner-specific options: max_parallel_tasks, webhook, one_off, etc.
   }
@@ -137,8 +137,8 @@ Pogledajte [Instaliranje dodatnih Python zavisnosti](/admin-guide/installation/d
 
 ### Interval provere (`check_interval_seconds`) {#poll-interval-check_interval_seconds}
 
-Svaki runner u fiksnom intervalu proverava Semaphore server radi novih poslova i
-prijavljuje napredak zadataka. Podesite ga u konfiguracionoj datoteci runnera:
+Svaki runner u fiksnom intervalu proverava Semaphore server radi novih poslova.
+Podesite ga u konfiguracionoj datoteci runnera:
 
 ```json
 {
@@ -156,13 +156,53 @@ SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS=5
 
 | Vrednost | Efekat |
 |-------|--------|
-| **1** (podrazumevano) | Poslovi se preuzimaju u roku od otprilike jedne sekunde; najbolje za pokretanja sa malim kašnjenjem. |
-| **Veća** (npr. 5–30) | Smanjuje HTTP saobraćaj kada imate mnogo runnera prema jednom serveru. Poslovi mogu početi nešto kasnije. |
+| **1** | Poslovi se preuzimaju u roku od otprilike jedne sekunde; najbolje za pokretanja sa malim kašnjenjem. |
+| **5** (podrazumevano) | Balansira kašnjenje preuzimanja i broj zahteva. |
+| **Veća** (npr. 10–30) | Smanjuje HTTP saobraćaj kada imate mnogo runnera prema jednom serveru. Poslovi mogu početi nešto kasnije. |
 
 Stranica Runneri (Runners) u Semaphore UI prikazuje ovu opciju pod **Napredne opcije** (Advanced options) prilikom
 generisanja isečaka za podešavanje (primeri za konfiguracionu datoteku, Docker i promenljive okruženja).
 
-Nevažeće ili nulte vrednosti vraćaju se na podrazumevanu vrednost od 1 sekunde.
+Nevažeće ili nulte vrednosti vraćaju se na podrazumevanu vrednost od 5 sekundi.
+
+Napredak zadataka se prijavljuje u sopstvenom fiksnom ritmu od jedne sekunde,
+nezavisno od ove postavke: zahtev sa napretkom istovremeno služi i kao otkucaj
+srca (heartbeat) runnera.
+
+### Vreme čekanja zahteva (`connection.timeout_seconds`) {#request-timeout-connection-timeout_seconds}
+
+Svaki zahtev koji runner pošalje serveru je vremenski ograničen: TCP povezivanje,
+TLS rukovanje i čekanje na zaglavlja odgovora dobijaju po toliko sekundi. Bez
+toga bi server koji prihvati vezu a zatim zanemi blokirao runner dok operativni
+sistem ne odustane — a pošto zbog zaglavljenog zahteva runner preskače sledeće
+cikluse, otkucaji srca bi se zaustavili i server bi runner prijavio kao
+nedostupan.
+
+```json
+{
+  "runner": {
+    "connection": {
+      "timeout_seconds": 3
+    }
+  }
+}
+```
+
+Ili pomoću promenljive okruženja:
+
+```bash
+SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS=3
+```
+
+Podrazumevana vrednost je 3 sekunde. Držite je ispod `check_interval_seconds`
+kako zaglavljeni zahtev ne bi nadživeo ciklus provere koji ga je započeo.
+Povećajte je kada runner dolazi do servera preko sporog ili zagušenog linka i u
+dnevniku runnera vidite `timeout awaiting response headers`; prijava napretka
+koja je istekla zadržava svoje zapise dnevnika i ponavlja se u sledećem ciklusu,
+pa nijedan izlaz zadatka nije izgubljen.
+
+Otpremanje tela zahteva namerno nije ograničeno, tako da velika serija dnevnika
+zadataka nikada ne bude presečena tokom prenosa.
 
 ### Oznake runnera (Pro) {#runner-tags-pro}
 

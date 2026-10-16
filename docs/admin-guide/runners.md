@@ -94,9 +94,9 @@ As a result of running the `semaphore runner setup` command, a configuration fil
     // or
     "token_file": "path/to/the/file/where/runner/saves/token",
 
-    // How often (in seconds) the runner polls the server for jobs and reports
-    // progress. Default: 1. Raise this when many runners share one server.
-    "check_interval_seconds": 1
+    // How often (in seconds) the runner polls the server for jobs.
+    // Default: 5. Raise this when many runners share one server.
+    "check_interval_seconds": 5
 
     // Other runner-specific options: max_parallel_tasks, webhook, one_off, etc.
   }
@@ -142,8 +142,8 @@ See [Installing Additional Python Dependencies](/admin-guide/installation/docker
 
 ### Poll interval (`check_interval_seconds`) {#poll-interval-check_interval_seconds}
 
-Each runner polls the Semaphore server on a fixed interval for new jobs and to
-report task progress. Configure it in the runner configuration file:
+Each runner polls the Semaphore server on a fixed interval for new jobs.
+Configure it in the runner configuration file:
 
 ```json
 {
@@ -161,13 +161,52 @@ SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS=5
 
 | Value | Effect |
 |-------|--------|
-| **1** (default) | Jobs are picked up within about one second; best for low-latency runs. |
-| **Higher** (e.g. 5–30) | Reduces HTTP traffic when you operate many runners against one server. Jobs may start slightly later. |
+| **1** | Jobs are picked up within about one second; best for low-latency runs. |
+| **5** (default) | Balances pickup latency against request volume. |
+| **Higher** (e.g. 10–30) | Reduces HTTP traffic when you operate many runners against one server. Jobs may start slightly later. |
 
 The Runners page in the Semaphore UI exposes this under **Advanced options** when
 generating setup snippets (config file, Docker, and environment-variable examples).
 
-Invalid or zero values fall back to the default of 1 second.
+Invalid or zero values fall back to the default of 5 seconds.
+
+Task progress is reported on its own fixed one-second cadence, independent of
+this setting: the progress request doubles as the runner heartbeat.
+
+### Request timeout (`connection.timeout_seconds`) {#request-timeout-connection-timeout_seconds}
+
+Every request the runner sends to the server is bounded: the TCP connect, the
+TLS handshake and the wait for the response headers each get this many seconds.
+Without it, a server that accepts the connection and then goes silent would hang
+the runner until the operating system gave up — and because a stuck request
+makes the runner skip its next cycles, the heartbeat would stop and the server
+would declare the runner offline.
+
+```json
+{
+  "runner": {
+    "connection": {
+      "timeout_seconds": 3
+    }
+  }
+}
+```
+
+Or with an environment variable:
+
+```bash
+SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS=3
+```
+
+The default is 3 seconds. Keep it below `check_interval_seconds` so a stuck
+request cannot outlive the poll cycle that started it. Raise it when the runner
+reaches the server over a slow or congested link and you see
+`timeout awaiting response headers` in the runner log; a timed-out progress
+report keeps its log records and is retried on the next cycle, so no task output
+is lost.
+
+Uploading the request body is deliberately not bounded, so a large batch of task
+logs is never cut off mid-transfer.
 
 ### Runner tags (Pro) {#runner-tags-pro}
 

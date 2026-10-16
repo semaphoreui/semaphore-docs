@@ -68,7 +68,8 @@ nohup ./semaphore runner start --config /path/to/config.runner.json &
 | `webhook` | `SEMAPHORE_RUNNER_WEBHOOK` | URL, который сервер вызывает, когда задача поставлена в очередь для этого runner'а. |
 | `enabled` | `SEMAPHORE_RUNNER_ENABLED` | Принимает ли runner задачи. |
 | `project_id` | `SEMAPHORE_RUNNER_PROJECT_ID` | ID проекта для runner'а уровня проекта. Не указывайте для глобального runner'а. |
-| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | Интервал опроса в секундах. По умолчанию: 1. |
+| `check_interval_seconds` | `SEMAPHORE_RUNNER_CHECK_INTERVAL_SECONDS` | Интервал опроса в секундах. По умолчанию: 5. |
+| `connection.timeout_seconds` | `SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS` | Таймаут в секундах на подключение к серверу и ожидание заголовков его ответа. По умолчанию: 3. |
 | `max_parallel_tasks` | `SEMAPHORE_RUNNER_MAX_PARALLEL_TASKS` | Максимальное число одновременных задач. По умолчанию: 9999. |
 | `one_off` | `SEMAPHORE_RUNNER_ONE_OFF` | Завершиться после обработки одного задания. Полезно для runner'ов, запускаемых по запросу через webhook. |
 
