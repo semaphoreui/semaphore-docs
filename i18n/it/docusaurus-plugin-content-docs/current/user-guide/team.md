@@ -97,7 +97,9 @@ Scegliere il livello prima di aprire il modulo del ruolo.
 
 #### Ruolo globale {#global-role}
 
-I ruoli globali vengono creati una sola volta e possono essere assegnati agli utenti in qualsiasi Project. Solo un amministratore dell'istanza può creare un ruolo globale.
+I ruoli globali vengono creati una sola volta e possono essere assegnati agli utenti in qualsiasi Project. Un ruolo globale può inoltre includere [permessi globali](#global-permissions): diritti a livello di istanza che un utente riceve quando il ruolo gli viene [assegnato globalmente](#assign-a-global-role-to-a-user), al di fuori di qualsiasi Project.
+
+Un amministratore dell'istanza, o un utente il cui ruolo globale concede **Can manage global roles**, può creare un ruolo globale.
 
 Aprire il menu di amministrazione in basso a sinistra e selezionare **Roles**.
 
@@ -127,6 +129,7 @@ Entrambi i percorsi aprono lo stesso modulo del ruolo. Configurare il ruolo in b
 | **Name** | Un'etichetta leggibile per il ruolo. |
 | **Slug** | Un identificatore tecnico univoco utilizzato per fare riferimento al ruolo. Può contenere lettere, numeri, `_` e `-`, fino a 100 caratteri, ad esempio `release_operator`. Maiuscole e minuscole non contano: `Ops` e `ops` sono lo stesso slug. Non è possibile modificare lo slug dopo aver creato il ruolo. |
 | **Permissions** | I permessi a livello di Project concessi dal ruolo. |
+| **Global permissions** | Solo per i ruoli globali. I permessi a livello di istanza che un utente riceve quando il ruolo gli viene assegnato globalmente. |
 
 #### Permessi a livello di Project {#project-wide-permissions}
 
@@ -145,7 +148,32 @@ I permessi a livello di Project non possono essere limitati a un singolo Invento
 Per creare un ruolo granulare che aggiunga l'accesso solo a determinati Task Template, lasciare deselezionati tutti i permessi a livello di Project. In questo modo il ruolo non aggiunge permessi propri a livello di Project. Aggiungerlo ai Task Template richiesti e scegliere solo le azioni necessarie a quel ruolo.
 :::
 
+#### Permessi globali {#global-permissions}
+
+Un ruolo globale può concedere permessi a livello di istanza. Si applicano solo quando il ruolo viene assegnato globalmente a un utente, nella scheda **Global roles** dell'utente. Lo stesso ruolo aggiunto a un membro del Project concede solo i suoi permessi a livello di Project.
+
+| Permesso | Descrizione |
+| --- | --- |
+| **Can manage users** | Creare, modificare ed eliminare utenti. I flag **Admin** e **Pro user** restano riservati agli amministratori, e un gestore degli utenti non può modificare né eliminare un amministratore o un utente che possiede un permesso globale che il gestore non ha. |
+| **Can manage global roles** | Creare, modificare ed eliminare ruoli globali e assegnarli agli utenti. |
+| **Can manage system settings** | Aprire **Settings**, **Apps**, **Runners**, **Cluster** e **Active tasks** e svuotare la cache. |
+| **Can read the audit log** | Aprire il log di audit. |
+
+Un amministratore (il flag **Admin** sull'utente) possiede tutti i permessi globali. I permessi globali non concedono mai l'accesso a un Project: l'accesso al Project deriva sempre dall'appartenenza al Project.
+
+Semaphore mantiene almeno un utente in grado di gestire i ruoli globali: un amministratore o un titolare di **Can manage global roles**. L'ultimo di questi non può essere eliminato, non può perdere il flag **Admin** né il ruolo, e il ruolo non può perdere quel permesso.
+
 Selezionare **Save** quando la configurazione del ruolo è pronta.
+
+### Assegnare un ruolo globale a un utente {#assign-a-global-role-to-a-user}
+
+1. Aprire il menu di amministrazione in basso a sinistra e selezionare **Users**.
+2. Aprire l'utente e passare alla scheda **Global roles**.
+3. Scegliere un ruolo globale e selezionare **Assign**.
+
+La scheda elenca i ruoli posseduti dall'utente e i **permessi globali effettivi** risultanti, con il ruolo che concede ciascuno di essi. Rimuovere un ruolo con il pulsante di eliminazione accanto.
+
+Vengono proposti solo i ruoli con almeno un permesso globale. I ruoli integrati non possono essere assegnati globalmente: non concedono nulla al di fuori di un Project.
 
 ### Configurazione dell'accesso a Task Template specifici {#configure-access-to-specific-task-templates}
 

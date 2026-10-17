@@ -102,7 +102,9 @@ Choose the scope before opening the role form.
 
 #### Global role {#global-role}
 
-Global roles are created once and can be assigned to users in any project. Only an instance administrator can create a global role.
+Global roles are created once and can be assigned to users in any project. A global role can also carry [global permissions](#global-permissions): instance-wide rights that a user receives when the role is [assigned to them globally](#assign-a-global-role-to-a-user), outside of any project.
+
+An instance administrator, or a user whose global role grants **Can manage global roles**, can create a global role.
 
 Open the bottom-left admin menu and select **Roles**.
 
@@ -132,6 +134,7 @@ Both paths open the same role form. Configure the role to match the access your 
 | **Name** | A human-readable label for the role. |
 | **Slug** | A unique technical identifier used to reference the role. It can contain letters, numbers, `_` and `-`, up to 100 characters, for example `release_operator`. Letter case does not matter: `Ops` and `ops` are the same slug. You cannot change the slug after you create the role. |
 | **Permissions** | The project-wide permissions granted by the role. |
+| **Global permissions** | Global roles only. The instance-wide permissions a user receives when the role is assigned to them globally. |
 
 #### Project-wide permissions {#project-wide-permissions}
 
@@ -150,7 +153,32 @@ Project-wide permissions cannot be limited to a single inventory, repository, en
 To create a granular role that adds access only to selected task templates, leave every project-wide permission unchecked. The role then adds no project-wide permissions of its own. Add it to the required templates and choose only the actions that role needs there.
 :::
 
+#### Global permissions {#global-permissions}
+
+A global role can grant instance-wide permissions. They apply only when the role is assigned to a user globally, on the user's **Global roles** tab. The same role added to a project member grants only its project-wide permissions.
+
+| Permission | Description |
+| --- | --- |
+| **Can manage users** | Create, edit and delete users. The **Admin** and **Pro user** flags stay with administrators, and a user manager cannot change or delete an administrator or a user who holds a global permission the manager does not hold. |
+| **Can manage global roles** | Create, edit and delete global roles, and assign them to users. |
+| **Can manage system settings** | Open **Settings**, **Apps**, **Runners**, **Cluster** and **Active tasks**, and clear the cache. |
+| **Can read the audit log** | Open the audit log. |
+
+An administrator (the **Admin** flag on the user) holds every global permission. Global permissions never grant access to a project: project access still comes from project membership.
+
+Semaphore keeps at least one user who can manage global roles: an administrator or a holder of **Can manage global roles**. The last such user cannot be deleted, cannot lose the **Admin** flag and cannot lose the role, and the role cannot lose that permission.
+
 Select **Save** when the role configuration is ready.
+
+### Assign a global role to a user {#assign-a-global-role-to-a-user}
+
+1. Open the bottom-left admin menu and select **Users**.
+2. Open the user and go to the **Global roles** tab.
+3. Choose a global role and select **Assign**.
+
+The tab lists the roles the user holds and the resulting **effective global permissions**, with the role that grants each of them. Remove a role with the delete button next to it.
+
+Only roles with at least one global permission are offered. Built-in roles cannot be assigned globally: they grant nothing outside a project.
 
 ### Configure access to specific task templates {#configure-access-to-specific-task-templates}
 

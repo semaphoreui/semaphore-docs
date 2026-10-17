@@ -97,7 +97,9 @@ Choisissez la portée avant d'ouvrir le formulaire de rôle.
 
 #### Rôle global {#global-role}
 
-Les rôles globaux sont créés une seule fois et peuvent être attribués à des utilisateurs dans n'importe quel projet. Seul un administrateur d'instance peut créer un rôle global.
+Les rôles globaux sont créés une seule fois et peuvent être attribués à des utilisateurs dans n'importe quel projet. Un rôle global peut aussi porter des [permissions globales](#global-permissions) : des droits à l'échelle de l'instance qu'un utilisateur reçoit lorsque le rôle lui est [attribué globalement](#assign-a-global-role-to-a-user), en dehors de tout projet.
+
+Un administrateur d'instance, ou un utilisateur dont le rôle global accorde **Can manage global roles**, peut créer un rôle global.
 
 Ouvrez le menu d'administration en bas à gauche et sélectionnez **Rôles**.
 
@@ -127,6 +129,7 @@ Les deux chemins ouvrent le même formulaire de rôle. Configurez le rôle pour 
 | **Nom** | Un libellé lisible pour le rôle. |
 | **Slug** | Un identifiant technique unique utilisé pour référencer le rôle. Il peut contenir des lettres, des chiffres, `_` et `-`, jusqu'à 100 caractères, par exemple `release_operator`. La casse ne compte pas : `Ops` et `ops` sont le même slug. Vous ne pouvez pas modifier le slug après avoir créé le rôle. |
 | **Permissions** | Les permissions à l'échelle du projet accordées par le rôle. |
+| **Global permissions** | Rôles globaux uniquement. Les permissions à l'échelle de l'instance qu'un utilisateur reçoit lorsque le rôle lui est attribué globalement. |
 
 #### Permissions à l'échelle du projet {#project-wide-permissions}
 
@@ -145,7 +148,32 @@ Les permissions à l'échelle du projet ne peuvent pas être limitées à un seu
 Pour créer un rôle granulaire qui ajoute uniquement l'accès à des modèles de tâches sélectionnés, laissez toutes les permissions à l'échelle du projet décochées. Le rôle n'ajoute alors aucune permission propre à l'échelle du projet. Ajoutez-le aux modèles requis et choisissez uniquement les actions dont ce rôle a besoin à cet endroit.
 :::
 
+#### Permissions globales {#global-permissions}
+
+Un rôle global peut accorder des permissions à l'échelle de l'instance. Elles ne s'appliquent que lorsque le rôle est attribué globalement à un utilisateur, dans l'onglet **Global roles** de l'utilisateur. Le même rôle ajouté à un membre du projet n'accorde que ses permissions à l'échelle du projet.
+
+| Permission | Description |
+| --- | --- |
+| **Can manage users** | Créer, modifier et supprimer des utilisateurs. Les indicateurs **Admin** et **Pro user** restent réservés aux administrateurs, et un gestionnaire d'utilisateurs ne peut ni modifier ni supprimer un administrateur ou un utilisateur détenant une permission globale que le gestionnaire n'a pas. |
+| **Can manage global roles** | Créer, modifier et supprimer des rôles globaux, et les attribuer aux utilisateurs. |
+| **Can manage system settings** | Ouvrir **Settings**, **Apps**, **Runners**, **Cluster** et **Active tasks**, et vider le cache. |
+| **Can read the audit log** | Ouvrir le journal d'audit. |
+
+Un administrateur (l'indicateur **Admin** sur l'utilisateur) détient toutes les permissions globales. Les permissions globales n'accordent jamais l'accès à un projet : l'accès à un projet découle toujours de l'appartenance au projet.
+
+Semaphore conserve au moins un utilisateur capable de gérer les rôles globaux : un administrateur ou un détenteur de **Can manage global roles**. Le dernier d'entre eux ne peut pas être supprimé, ne peut perdre ni l'indicateur **Admin** ni le rôle, et le rôle ne peut pas perdre cette permission.
+
 Sélectionnez **Enregistrer** lorsque la configuration du rôle est prête.
+
+### Attribuer un rôle global à un utilisateur {#assign-a-global-role-to-a-user}
+
+1. Ouvrez le menu d'administration en bas à gauche et sélectionnez **Users**.
+2. Ouvrez l'utilisateur et allez dans l'onglet **Global roles**.
+3. Choisissez un rôle global et sélectionnez **Assign**.
+
+L'onglet liste les rôles détenus par l'utilisateur et les **permissions globales effectives** qui en résultent, avec le rôle qui accorde chacune d'elles. Retirez un rôle avec le bouton de suppression situé à côté.
+
+Seuls les rôles ayant au moins une permission globale sont proposés. Les rôles intégrés ne peuvent pas être attribués globalement : ils n'accordent rien en dehors d'un projet.
 
 ### Configurer l'accès à des modèles de tâches spécifiques {#configure-access-to-specific-task-templates}
 

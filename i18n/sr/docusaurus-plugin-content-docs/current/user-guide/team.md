@@ -97,7 +97,9 @@ Izaberite nivo pre otvaranja obrasca uloge.
 
 #### Globalna uloga {#global-role}
 
-Globalne uloge kreiraju se jednom i mogu se dodeliti korisnicima u bilo kom projektu. Samo administrator instance može kreirati globalnu ulogu.
+Globalne uloge kreiraju se jednom i mogu se dodeliti korisnicima u bilo kom projektu. Globalna uloga može da nosi i [globalne dozvole](#global-permissions): prava na nivou cele instance koja korisnik dobija kada mu se uloga [dodeli globalno](#assign-a-global-role-to-a-user), van bilo kog projekta.
+
+Globalnu ulogu može kreirati administrator instance ili korisnik čija globalna uloga dodeljuje **Can manage global roles**.
 
 Otvorite administratorski meni u donjem levom uglu i izaberite **Roles**.
 
@@ -127,6 +129,7 @@ Oba puta otvaraju isti obrazac uloge. Podesite ulogu tako da odgovara pristupu k
 | **Name** | Čitljiv naziv uloge. |
 | **Slug** | Jedinstveni tehnički identifikator koji se koristi za referenciranje uloge. Može da sadrži slova, brojeve, `_` i `-`, do 100 znakova, na primer `release_operator`. Velika i mala slova nisu bitna: `Ops` i `ops` su isti slug. Slug ne možete promeniti nakon što kreirate ulogu. |
 | **Permissions** | Dozvole na nivou projekta koje uloga dodeljuje. |
+| **Global permissions** | Samo za globalne uloge. Dozvole na nivou instance koje korisnik dobija kada mu se uloga dodeli globalno. |
 
 #### Dozvole na nivou projekta {#project-wide-permissions}
 
@@ -145,7 +148,32 @@ Dozvole na nivou projekta ne mogu se ograničiti na jedan inventar, repozitoriju
 Da biste kreirali preciznu ulogu koja dodaje pristup samo izabranim šablonima zadataka, ostavite sve dozvole na nivou projekta neoznačene. Uloga tada ne dodaje nikakve sopstvene dozvole na nivou projekta. Dodajte je potrebnim šablonima i tamo izaberite samo radnje koje su toj ulozi potrebne.
 :::
 
+#### Globalne dozvole {#global-permissions}
+
+Globalna uloga može da dodeli dozvole na nivou cele instance. One važe samo kada se uloga dodeli korisniku globalno, na kartici **Global roles** korisnika. Ista uloga dodata članu projekta dodeljuje samo svoje dozvole na nivou projekta.
+
+| Dozvola | Opis |
+| --- | --- |
+| **Can manage users** | Kreiranje, izmena i brisanje korisnika. Oznake **Admin** i **Pro user** ostaju administratorima, a upravljač korisnicima ne može da izmeni ni obriše administratora niti korisnika koji ima globalnu dozvolu koju upravljač nema. |
+| **Can manage global roles** | Kreiranje, izmena i brisanje globalnih uloga i njihovo dodeljivanje korisnicima. |
+| **Can manage system settings** | Otvaranje **Settings**, **Apps**, **Runners**, **Cluster** i **Active tasks** i brisanje keša. |
+| **Can read the audit log** | Otvaranje dnevnika revizije. |
+
+Administrator (oznaka **Admin** na korisniku) ima sve globalne dozvole. Globalne dozvole nikada ne daju pristup projektu: pristup projektu i dalje proizlazi iz članstva u projektu.
+
+Semaphore uvek zadržava bar jednog korisnika koji može da upravlja globalnim ulogama: administratora ili nosioca dozvole **Can manage global roles**. Poslednji takav korisnik ne može biti obrisan, ne može izgubiti oznaku **Admin** ni ulogu, a uloga ne može izgubiti tu dozvolu.
+
 Kada je konfiguracija uloge spremna, izaberite **Save**.
+
+### Dodeljivanje globalne uloge korisniku {#assign-a-global-role-to-a-user}
+
+1. Otvorite administratorski meni dole levo i izaberite **Users**.
+2. Otvorite korisnika i pređite na karticu **Global roles**.
+3. Izaberite globalnu ulogu i kliknite na **Assign**.
+
+Kartica prikazuje uloge koje korisnik ima i rezultujuće **efektivne globalne dozvole**, uz ulogu koja dodeljuje svaku od njih. Uklonite ulogu dugmetom za brisanje pored nje.
+
+Nude se samo uloge sa bar jednom globalnom dozvolom. Ugrađene uloge ne mogu se dodeliti globalno: van projekta ne dodeljuju ništa.
 
 ### Podešavanje pristupa određenim šablonima zadataka {#configure-access-to-specific-task-templates}
 

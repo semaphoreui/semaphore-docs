@@ -97,7 +97,9 @@ Escolha o escopo antes de abrir o formulário do papel.
 
 #### Papel global {#global-role}
 
-Os papéis globais são criados uma única vez e podem ser atribuídos a usuários em qualquer projeto. Apenas um administrador da instância pode criar um papel global.
+Os papéis globais são criados uma única vez e podem ser atribuídos a usuários em qualquer projeto. Um papel global também pode carregar [permissões globais](#global-permissions): direitos em toda a instância que um usuário recebe quando o papel lhe é [atribuído globalmente](#assign-a-global-role-to-a-user), fora de qualquer projeto.
+
+Um administrador da instância, ou um usuário cujo papel global concede **Can manage global roles**, pode criar um papel global.
 
 Abra o menu de administração no canto inferior esquerdo e selecione **Roles**.
 
@@ -127,6 +129,7 @@ Ambos os caminhos abrem o mesmo formulário de papel. Configure o papel de acord
 | **Name** | Um rótulo legível para o papel. |
 | **Slug** | Um identificador técnico único usado para referenciar o papel. Pode conter letras, números, `_` e `-`, até 100 caracteres, por exemplo `release_operator`. Maiúsculas e minúsculas não importam: `Ops` e `ops` são o mesmo slug. Não é possível alterar o slug depois de criar o papel. |
 | **Permissions** | As permissões em todo o projeto concedidas pelo papel. |
+| **Global permissions** | Apenas papéis globais. As permissões em toda a instância que um usuário recebe quando o papel lhe é atribuído globalmente. |
 
 #### Permissões em todo o projeto {#project-wide-permissions}
 
@@ -145,7 +148,32 @@ As permissões em todo o projeto não podem ser limitadas a um único inventári
 Para criar um papel granular que adicione acesso apenas a modelos de tarefa selecionados, deixe todas as permissões em todo o projeto desmarcadas. O papel então não adiciona nenhuma permissão em todo o projeto por conta própria. Adicione-o aos modelos necessários e escolha apenas as ações de que esse papel precisa neles.
 :::
 
+#### Permissões globais {#global-permissions}
+
+Um papel global pode conceder permissões em toda a instância. Elas se aplicam apenas quando o papel é atribuído globalmente a um usuário, na aba **Global roles** do usuário. O mesmo papel adicionado a um membro do projeto concede apenas suas permissões em todo o projeto.
+
+| Permissão | Descrição |
+| --- | --- |
+| **Can manage users** | Criar, editar e excluir usuários. Os sinalizadores **Admin** e **Pro user** ficam com os administradores, e um gerente de usuários não pode alterar nem excluir um administrador ou um usuário que possua uma permissão global que o gerente não tem. |
+| **Can manage global roles** | Criar, editar e excluir papéis globais e atribuí-los a usuários. |
+| **Can manage system settings** | Abrir **Settings**, **Apps**, **Runners**, **Cluster** e **Active tasks**, e limpar o cache. |
+| **Can read the audit log** | Abrir o log de auditoria. |
+
+Um administrador (o sinalizador **Admin** no usuário) possui todas as permissões globais. As permissões globais nunca concedem acesso a um projeto: o acesso ao projeto continua vindo da participação no projeto.
+
+O Semaphore mantém pelo menos um usuário capaz de gerenciar papéis globais: um administrador ou um detentor de **Can manage global roles**. O último deles não pode ser excluído, não pode perder o sinalizador **Admin** nem o papel, e o papel não pode perder essa permissão.
+
 Selecione **Save** quando a configuração do papel estiver pronta.
+
+### Atribuir um papel global a um usuário {#assign-a-global-role-to-a-user}
+
+1. Abra o menu de administração no canto inferior esquerdo e selecione **Users**.
+2. Abra o usuário e vá para a aba **Global roles**.
+3. Escolha um papel global e selecione **Assign**.
+
+A aba lista os papéis que o usuário possui e as **permissões globais efetivas** resultantes, com o papel que concede cada uma delas. Remova um papel com o botão de exclusão ao lado dele.
+
+Apenas papéis com pelo menos uma permissão global são oferecidos. Papéis integrados não podem ser atribuídos globalmente: eles não concedem nada fora de um projeto.
 
 ### Configurar o acesso a modelos de tarefa específicos {#configure-access-to-specific-task-templates}
 

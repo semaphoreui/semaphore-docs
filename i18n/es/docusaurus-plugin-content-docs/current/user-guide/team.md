@@ -97,7 +97,9 @@ Elija el ámbito antes de abrir el formulario del rol.
 
 #### Rol global {#global-role}
 
-Los roles globales se crean una sola vez y pueden asignarse a usuarios en cualquier proyecto. Solo un administrador de la instancia puede crear un rol global.
+Los roles globales se crean una sola vez y pueden asignarse a usuarios en cualquier proyecto. Un rol global también puede incluir [permisos globales](#global-permissions): derechos a nivel de instancia que un usuario recibe cuando el rol se le [asigna globalmente](#assign-a-global-role-to-a-user), fuera de cualquier proyecto.
+
+Un administrador de la instancia, o un usuario cuyo rol global concede **Can manage global roles**, puede crear un rol global.
 
 Abra el menú de administración de la parte inferior izquierda y seleccione **Roles**.
 
@@ -127,6 +129,7 @@ Ambas vías abren el mismo formulario de rol. Configure el rol para que se ajust
 | **Nombre** | Una etiqueta legible para el rol. |
 | **Slug** | Un identificador técnico único que se usa para hacer referencia al rol. Puede contener letras, números, `_` y `-`, hasta 100 caracteres, por ejemplo `release_operator`. Las mayúsculas y minúsculas no importan: `Ops` y `ops` son el mismo slug. No puede cambiar el slug después de crear el rol. |
 | **Permisos** | Los permisos a nivel de proyecto que concede el rol. |
+| **Global permissions** | Solo en roles globales. Los permisos a nivel de instancia que un usuario recibe cuando el rol se le asigna globalmente. |
 
 #### Permisos a nivel de proyecto {#project-wide-permissions}
 
@@ -145,7 +148,32 @@ Los permisos a nivel de proyecto no pueden limitarse a un único inventory, repo
 Para crear un rol granular que añada acceso únicamente a plantillas de tareas seleccionadas, deje sin marcar todos los permisos a nivel de proyecto. El rol entonces no añade permisos a nivel de proyecto por sí mismo. Agréguelo a las plantillas necesarias y elija solo las acciones que ese rol necesita en ellas.
 :::
 
+#### Permisos globales {#global-permissions}
+
+Un rol global puede conceder permisos a nivel de instancia. Solo se aplican cuando el rol se asigna a un usuario globalmente, en la pestaña **Global roles** del usuario. El mismo rol añadido a un miembro del proyecto concede solo sus permisos a nivel de proyecto.
+
+| Permiso | Descripción |
+| --- | --- |
+| **Can manage users** | Crear, editar y eliminar usuarios. Las marcas **Admin** y **Pro user** quedan reservadas a los administradores, y un gestor de usuarios no puede modificar ni eliminar a un administrador ni a un usuario que tenga un permiso global que el gestor no tiene. |
+| **Can manage global roles** | Crear, editar y eliminar roles globales, y asignarlos a usuarios. |
+| **Can manage system settings** | Abrir **Settings**, **Apps**, **Runners**, **Cluster** y **Active tasks**, y vaciar la caché. |
+| **Can read the audit log** | Abrir el registro de auditoría. |
+
+Un administrador (la marca **Admin** del usuario) tiene todos los permisos globales. Los permisos globales nunca conceden acceso a un proyecto: el acceso al proyecto sigue viniendo de la pertenencia al proyecto.
+
+Semaphore conserva al menos un usuario que puede gestionar roles globales: un administrador o un titular de **Can manage global roles**. El último de ellos no puede eliminarse, no puede perder la marca **Admin** ni el rol, y el rol no puede perder ese permiso.
+
 Seleccione **Guardar** cuando la configuración del rol esté lista.
+
+### Asignar un rol global a un usuario {#assign-a-global-role-to-a-user}
+
+1. Abra el menú de administración inferior izquierdo y seleccione **Users**.
+2. Abra el usuario y vaya a la pestaña **Global roles**.
+3. Elija un rol global y seleccione **Assign**.
+
+La pestaña muestra los roles que tiene el usuario y los **permisos globales efectivos** resultantes, con el rol que concede cada uno. Quite un rol con el botón de eliminar que hay junto a él.
+
+Solo se ofrecen los roles con al menos un permiso global. Los roles integrados no pueden asignarse globalmente: no conceden nada fuera de un proyecto.
 
 ### Configurar el acceso a plantillas de tareas específicas {#configure-access-to-specific-task-templates}
 

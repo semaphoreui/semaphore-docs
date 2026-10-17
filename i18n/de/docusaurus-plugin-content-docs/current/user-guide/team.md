@@ -97,7 +97,9 @@ Wählen Sie den Gültigkeitsbereich, bevor Sie das Rollenformular öffnen.
 
 #### Globale Rolle {#global-role}
 
-Globale Rollen werden einmal erstellt und können Benutzern in jedem Projekt zugewiesen werden. Nur ein Instanzadministrator kann eine globale Rolle erstellen.
+Globale Rollen werden einmal erstellt und können Benutzern in jedem Projekt zugewiesen werden. Eine globale Rolle kann außerdem [globale Berechtigungen](#global-permissions) tragen: instanzweite Rechte, die ein Benutzer erhält, wenn ihm die Rolle [global zugewiesen](#assign-a-global-role-to-a-user) wird, außerhalb jedes Projekts.
+
+Ein Instanzadministrator oder ein Benutzer, dessen globale Rolle **Can manage global roles** gewährt, kann eine globale Rolle erstellen.
 
 Öffnen Sie das Administratormenü unten links und wählen Sie **Roles**.
 
@@ -127,6 +129,7 @@ Beide Wege öffnen dasselbe Rollenformular. Konfigurieren Sie die Rolle so, dass
 | **Name** | Eine für Menschen lesbare Bezeichnung der Rolle. |
 | **Slug** | Ein eindeutiger technischer Identifikator, über den die Rolle referenziert wird. Er darf Buchstaben, Zahlen, `_` und `-` enthalten, bis zu 100 Zeichen, zum Beispiel `release_operator`. Groß- und Kleinschreibung spielt keine Rolle: `Ops` und `ops` sind derselbe Slug. Nach dem Erstellen der Rolle können Sie den Slug nicht mehr ändern. |
 | **Permissions** | Die projektweiten Berechtigungen, die die Rolle gewährt. |
+| **Global permissions** | Nur bei globalen Rollen. Die instanzweiten Berechtigungen, die ein Benutzer erhält, wenn ihm die Rolle global zugewiesen wird. |
 
 #### Projektweite Berechtigungen {#project-wide-permissions}
 
@@ -145,7 +148,32 @@ Projektweite Berechtigungen können nicht auf ein einzelnes Inventory, Repositor
 Um eine granulare Rolle zu erstellen, die nur Zugriff auf ausgewählte Task Templates hinzufügt, lassen Sie alle projektweiten Berechtigungen deaktiviert. Die Rolle fügt dann selbst keine projektweiten Berechtigungen hinzu. Fügen Sie sie den benötigten Task Templates hinzu und wählen Sie dort nur die Aktionen aus, die diese Rolle benötigt.
 :::
 
+#### Globale Berechtigungen {#global-permissions}
+
+Eine globale Rolle kann instanzweite Berechtigungen gewähren. Sie gelten nur, wenn die Rolle einem Benutzer global zugewiesen wird, auf dem Tab **Global roles** des Benutzers. Dieselbe Rolle, einem Projektmitglied hinzugefügt, gewährt nur ihre projektweiten Berechtigungen.
+
+| Berechtigung | Beschreibung |
+| --- | --- |
+| **Can manage users** | Benutzer erstellen, bearbeiten und löschen. Die Flags **Admin** und **Pro user** bleiben Administratoren vorbehalten, und ein Benutzerverwalter kann weder einen Administrator noch einen Benutzer ändern oder löschen, der eine globale Berechtigung hält, die der Verwalter selbst nicht hat. |
+| **Can manage global roles** | Globale Rollen erstellen, bearbeiten und löschen und sie Benutzern zuweisen. |
+| **Can manage system settings** | **Settings**, **Apps**, **Runners**, **Cluster** und **Active tasks** öffnen und den Cache leeren. |
+| **Can read the audit log** | Das Audit-Log öffnen. |
+
+Ein Administrator (Flag **Admin** am Benutzer) hält jede globale Berechtigung. Globale Berechtigungen gewähren nie Zugriff auf ein Projekt: Projektzugriff ergibt sich weiterhin aus der Projektmitgliedschaft.
+
+Semaphore behält immer mindestens einen Benutzer, der globale Rollen verwalten kann: einen Administrator oder einen Inhaber von **Can manage global roles**. Der letzte solche Benutzer kann nicht gelöscht werden, kann das Flag **Admin** nicht verlieren und kann die Rolle nicht verlieren, und die Rolle kann diese Berechtigung nicht verlieren.
+
 Wählen Sie **Save**, wenn die Rollenkonfiguration fertig ist.
+
+### Einem Benutzer eine globale Rolle zuweisen {#assign-a-global-role-to-a-user}
+
+1. Öffnen Sie das Admin-Menü unten links und wählen Sie **Users**.
+2. Öffnen Sie den Benutzer und wechseln Sie zum Tab **Global roles**.
+3. Wählen Sie eine globale Rolle und dann **Assign**.
+
+Der Tab listet die Rollen des Benutzers und die daraus resultierenden **effektiven globalen Berechtigungen**, jeweils mit der Rolle, die sie gewährt. Entfernen Sie eine Rolle über die Löschen-Schaltfläche daneben.
+
+Angeboten werden nur Rollen mit mindestens einer globalen Berechtigung. Integrierte Rollen können nicht global zugewiesen werden: Sie gewähren außerhalb eines Projekts nichts.
 
 ### Zugriff auf bestimmte Task Templates konfigurieren {#configure-access-to-specific-task-templates}
 
