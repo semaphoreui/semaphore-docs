@@ -107,6 +107,8 @@
 
 ![Откройте Roles из меню администратора и выберите New Role](/assets/custom-roles-navigation-to-new-role-annotated-v4.png)
 
+![Global roles tab on the Users page](/assets/custom-roles-global-roles-tab.webp)
+
 #### Роль проекта {#project-role}
 
 Роли проекта доступны только в том проекте, где они созданы. Создавать их могут владельцы и менеджеры проекта.
@@ -130,6 +132,8 @@
 | **Slug** | Уникальный технический идентификатор, по которому на роль ссылаются. Может содержать латинские буквы, цифры, `_` и `-`, не более 100 символов, например `release_operator`. Регистр букв не важен: `Ops` и `ops` — один и тот же slug. После создания роли slug изменить нельзя. |
 | **Permissions** | Права на уровне проекта, которые даёт роль. |
 | **Global permissions** | Только для глобальных ролей. Права на уровне экземпляра, которые пользователь получает, когда роль назначена ему глобально. |
+
+![New Global Role dialog with the global permission checkboxes](/assets/custom-roles-new-global-role.webp)
 
 #### Права на уровне проекта {#project-wide-permissions}
 
@@ -174,6 +178,8 @@ Semaphore сохраняет хотя бы одного пользователя
 На вкладке перечислены роли пользователя и итоговые **эффективные глобальные права** с указанием роли, которая даёт каждое из них. Чтобы снять роль, нажмите кнопку удаления рядом с ней.
 
 Предлагаются только роли хотя бы с одним глобальным правом. Встроенные роли нельзя назначить глобально: вне проекта они ничего не дают.
+
+![Roles tab of a user with an assigned global role and the effective global permissions](/assets/custom-roles-assign-global-role.webp)
 
 ### Настройка доступа к конкретным шаблонам задач {#configure-access-to-specific-task-templates}
 

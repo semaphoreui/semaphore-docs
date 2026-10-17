@@ -107,6 +107,8 @@ Nell'elenco dei ruoli a livello di istanza, selezionare **New Role**.
 
 ![Aprire Roles dal menu dell'amministratore, quindi selezionare New Role](/assets/custom-roles-navigation-to-new-role-annotated-v4.png)
 
+![Global roles tab on the Users page](/assets/custom-roles-global-roles-tab.webp)
+
 #### Ruolo di Project {#project-role}
 
 I ruoli di Project sono disponibili solo nel Project in cui vengono creati. Possono crearli gli Owner e i Manager del Project.
@@ -130,6 +132,8 @@ Entrambi i percorsi aprono lo stesso modulo del ruolo. Configurare il ruolo in b
 | **Slug** | Un identificatore tecnico univoco utilizzato per fare riferimento al ruolo. Può contenere lettere, numeri, `_` e `-`, fino a 100 caratteri, ad esempio `release_operator`. Maiuscole e minuscole non contano: `Ops` e `ops` sono lo stesso slug. Non è possibile modificare lo slug dopo aver creato il ruolo. |
 | **Permissions** | I permessi a livello di Project concessi dal ruolo. |
 | **Global permissions** | Solo per i ruoli globali. I permessi a livello di istanza che un utente riceve quando il ruolo gli viene assegnato globalmente. |
+
+![New Global Role dialog with the global permission checkboxes](/assets/custom-roles-new-global-role.webp)
 
 #### Permessi a livello di Project {#project-wide-permissions}
 
@@ -174,6 +178,8 @@ Selezionare **Save** quando la configurazione del ruolo è pronta.
 La scheda elenca i ruoli posseduti dall'utente e i **permessi globali effettivi** risultanti, con il ruolo che concede ciascuno di essi. Rimuovere un ruolo con il pulsante di eliminazione accanto.
 
 Vengono proposti solo i ruoli con almeno un permesso globale. I ruoli integrati non possono essere assegnati globalmente: non concedono nulla al di fuori di un Project.
+
+![Roles tab of a user with an assigned global role and the effective global permissions](/assets/custom-roles-assign-global-role.webp)
 
 ### Configurazione dell'accesso a Task Template specifici {#configure-access-to-specific-task-templates}
 

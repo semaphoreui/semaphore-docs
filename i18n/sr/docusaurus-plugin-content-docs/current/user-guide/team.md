@@ -107,6 +107,8 @@ Na listi uloga na nivou instance izaberite **New Role**.
 
 ![Otvorite Roles iz administratorskog menija, zatim izaberite New Role](/assets/custom-roles-navigation-to-new-role-annotated-v4.png)
 
+![Global roles tab on the Users page](/assets/custom-roles-global-roles-tab.webp)
+
 #### Uloga projekta {#project-role}
 
 Uloge projekta dostupne su samo u projektu u kojem su kreirane. Mogu ih kreirati vlasnici i menadžeri projekta.
@@ -130,6 +132,8 @@ Oba puta otvaraju isti obrazac uloge. Podesite ulogu tako da odgovara pristupu k
 | **Slug** | Jedinstveni tehnički identifikator koji se koristi za referenciranje uloge. Može da sadrži slova, brojeve, `_` i `-`, do 100 znakova, na primer `release_operator`. Velika i mala slova nisu bitna: `Ops` i `ops` su isti slug. Slug ne možete promeniti nakon što kreirate ulogu. |
 | **Permissions** | Dozvole na nivou projekta koje uloga dodeljuje. |
 | **Global permissions** | Samo za globalne uloge. Dozvole na nivou instance koje korisnik dobija kada mu se uloga dodeli globalno. |
+
+![New Global Role dialog with the global permission checkboxes](/assets/custom-roles-new-global-role.webp)
 
 #### Dozvole na nivou projekta {#project-wide-permissions}
 
@@ -174,6 +178,8 @@ Kada je konfiguracija uloge spremna, izaberite **Save**.
 Kartica prikazuje uloge koje korisnik ima i rezultujuće **efektivne globalne dozvole**, uz ulogu koja dodeljuje svaku od njih. Uklonite ulogu dugmetom za brisanje pored nje.
 
 Nude se samo uloge sa bar jednom globalnom dozvolom. Ugrađene uloge ne mogu se dodeliti globalno: van projekta ne dodeljuju ništa.
+
+![Roles tab of a user with an assigned global role and the effective global permissions](/assets/custom-roles-assign-global-role.webp)
 
 ### Podešavanje pristupa određenim šablonima zadataka {#configure-access-to-specific-task-templates}
 

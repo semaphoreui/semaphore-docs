@@ -107,6 +107,8 @@ En la lista de roles de toda la instancia, seleccione **Nuevo rol**.
 
 ![Abra Roles desde el menú de administrador y luego seleccione Nuevo rol](/assets/custom-roles-navigation-to-new-role-annotated-v4.png)
 
+![Global roles tab on the Users page](/assets/custom-roles-global-roles-tab.webp)
+
 #### Rol de proyecto {#project-role}
 
 Los roles de proyecto solo están disponibles en el proyecto en el que se crean. Los Propietarios y Gestores del proyecto pueden crearlos.
@@ -130,6 +132,8 @@ Ambas vías abren el mismo formulario de rol. Configure el rol para que se ajust
 | **Slug** | Un identificador técnico único que se usa para hacer referencia al rol. Puede contener letras, números, `_` y `-`, hasta 100 caracteres, por ejemplo `release_operator`. Las mayúsculas y minúsculas no importan: `Ops` y `ops` son el mismo slug. No puede cambiar el slug después de crear el rol. |
 | **Permisos** | Los permisos a nivel de proyecto que concede el rol. |
 | **Global permissions** | Solo en roles globales. Los permisos a nivel de instancia que un usuario recibe cuando el rol se le asigna globalmente. |
+
+![New Global Role dialog with the global permission checkboxes](/assets/custom-roles-new-global-role.webp)
 
 #### Permisos a nivel de proyecto {#project-wide-permissions}
 
@@ -174,6 +178,8 @@ Seleccione **Guardar** cuando la configuración del rol esté lista.
 La pestaña muestra los roles que tiene el usuario y los **permisos globales efectivos** resultantes, con el rol que concede cada uno. Quite un rol con el botón de eliminar que hay junto a él.
 
 Solo se ofrecen los roles con al menos un permiso global. Los roles integrados no pueden asignarse globalmente: no conceden nada fuera de un proyecto.
+
+![Roles tab of a user with an assigned global role and the effective global permissions](/assets/custom-roles-assign-global-role.webp)
 
 ### Configurar el acceso a plantillas de tareas específicas {#configure-access-to-specific-task-templates}
 

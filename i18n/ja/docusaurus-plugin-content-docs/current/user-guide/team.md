@@ -107,6 +107,8 @@ Semaphore UI では、すべてのプロジェクトが **チーム** に関連�
 
 ![管理者メニューからロールを開き、新しいロールを選択する](/assets/custom-roles-navigation-to-new-role-annotated-v4.png)
 
+![Global roles tab on the Users page](/assets/custom-roles-global-roles-tab.webp)
+
 #### プロジェクトロール {#project-role}
 
 プロジェクトロールは、作成したプロジェクト内でのみ利用できます。プロジェクトのオーナーとマネージャーが作成できます。
@@ -130,6 +132,8 @@ Semaphore UI では、すべてのプロジェクトが **チーム** に関連�
 | **スラッグ** | ロールを参照するために使用する一意の技術的な識別子です。英字、数字、`_`、`-` を 100 文字以内で使用できます。例: `release_operator`。大文字と小文字は区別されません。`Ops` と `ops` は同じスラッグです。ロールの作成後にスラッグを変更することはできません。 |
 | **権限** | このロールが付与するプロジェクト全体の権限です。 |
 | **Global permissions** | グローバルロールのみ。ロールをユーザーにグローバルに割り当てたときに付与される、インスタンス全体の権限です。 |
+
+![New Global Role dialog with the global permission checkboxes](/assets/custom-roles-new-global-role.webp)
 
 #### プロジェクト全体の権限 {#project-wide-permissions}
 
@@ -174,6 +178,8 @@ Semaphore は、グローバルロールを管理できるユーザー（管理�
 このタブには、ユーザーが持つロールと、その結果として得られる**有効なグローバル権限**が、それぞれを付与しているロールとともに表示されます。ロールを外すには、その横の削除ボタンを使用します。
 
 提示されるのは、グローバル権限を 1 つ以上持つロールだけです。組み込みロールはグローバルに割り当てられません。プロジェクトの外では何も付与しないためです。
+
+![Roles tab of a user with an assigned global role and the effective global permissions](/assets/custom-roles-assign-global-role.webp)
 
 ### 特定のタスクテンプレートへのアクセスを構成する {#configure-access-to-specific-task-templates}
 

@@ -86,8 +86,10 @@ A custom role is a role you create yourself, with the permissions you choose. Yo
 
 Custom roles are available at two scopes:
 
-- **Global roles** are defined at the instance level and can be used in any project.
+- **Shared roles** are project-level roles defined at the instance level, on the **Roles** page. They can be used in any project.
 - **Project roles** are defined inside a single project and are available only within that project.
+
+Both grant permissions inside a project. Instance-wide rights, such as managing users or reading the audit log, come from **global roles**, a separate kind of role that is never added to a project member.
 
 ### Permission levels {#permission-levels}
 
@@ -100,17 +102,22 @@ Custom roles grant permissions at two levels:
 
 Choose the scope before opening the role form.
 
-#### Global role {#global-role}
+#### Instance-level roles {#global-role}
 
-Global roles are created once and can be assigned to users in any project. A global role can also carry [global permissions](#global-permissions): instance-wide rights that a user receives when the role is [assigned to them globally](#assign-a-global-role-to-a-user), outside of any project.
+Two kinds of roles are managed at the instance level:
 
-An instance administrator, or a user whose global role grants **Can manage global roles**, can create a global role.
+- **Shared roles** on the **Roles** page. A shared role is created once and can be added to a member of any project, like a built-in role.
+- **Global roles** on the **Global roles** tab of the **Users** page. They grant [global permissions](#global-permissions): instance-wide rights a user receives when the role is [assigned to them](#assign-a-global-role-to-a-user), outside of any project. A global role has no project permissions and cannot be added to a project member.
 
-Open the bottom-left admin menu and select **Roles**.
+An instance administrator, or a user whose global role grants **Can manage global roles**, can create both.
 
-On the instance-wide list of roles, select **New Role**.
+Open the bottom-left admin menu and select **Roles** for a shared role, or **Users** and the **Global roles** tab for a global role.
+
+Select **New Role** (or **New Global Role**).
 
 ![Open Roles from the administrator menu, then select New Role](/assets/custom-roles-navigation-to-new-role-annotated-v4.png)
+
+![Global roles tab on the Users page](/assets/custom-roles-global-roles-tab.webp)
 
 #### Project role {#project-role}
 
@@ -125,7 +132,7 @@ The **Roles** tab is empty until the first project role is created. It lists all
 
 ### Configure a custom role {#configure-a-custom-role}
 
-Both paths open the same role form. Configure the role to match the access your team member needs.
+Shared roles and project roles open the same role form. Configure the role to match the access your team member needs.
 
 ![New Role dialog with fields and permission checkboxes](/assets/custom-roles-global-role-form.jpg)
 
@@ -134,7 +141,10 @@ Both paths open the same role form. Configure the role to match the access your 
 | **Name** | A human-readable label for the role. |
 | **Slug** | A unique technical identifier used to reference the role. It can contain letters, numbers, `_` and `-`, up to 100 characters, for example `release_operator`. Letter case does not matter: `Ops` and `ops` are the same slug. You cannot change the slug after you create the role. |
 | **Permissions** | The project-wide permissions granted by the role. |
-| **Global permissions** | Global roles only. The instance-wide permissions a user receives when the role is assigned to them globally. |
+
+The form of a global role has the same **Name** and **Slug** fields and, instead of project permissions, the **global permissions** the role grants.
+
+![New Global Role dialog with the global permission checkboxes](/assets/custom-roles-new-global-role.webp)
 
 #### Project-wide permissions {#project-wide-permissions}
 
@@ -155,12 +165,12 @@ To create a granular role that adds access only to selected task templates, leav
 
 #### Global permissions {#global-permissions}
 
-A global role can grant instance-wide permissions. They apply only when the role is assigned to a user globally, on the user's **Global roles** tab. The same role added to a project member grants only its project-wide permissions.
+A global role grants instance-wide permissions. They apply when the role is assigned to a user on the user's **Roles** tab. A global role never grants anything inside a project, and a shared or project role never grants anything instance-wide: the two kinds of permissions are kept apart.
 
 | Permission | Description |
 | --- | --- |
 | **Can manage users** | Create, edit and delete users. The **Admin** and **Pro user** flags stay with administrators, and a user manager cannot change or delete an administrator or a user who holds a global permission the manager does not hold. |
-| **Can manage global roles** | Create, edit and delete global roles, and assign them to users. |
+| **Can manage global roles** | Create, edit and delete shared and global roles, and assign global roles to users. |
 | **Can manage system settings** | Open **Settings**, **Apps**, **Runners**, **Cluster** and **Active tasks**, and clear the cache. |
 | **Can read the audit log** | Open the audit log. |
 
@@ -173,12 +183,16 @@ Select **Save** when the role configuration is ready.
 ### Assign a global role to a user {#assign-a-global-role-to-a-user}
 
 1. Open the bottom-left admin menu and select **Users**.
-2. Open the user and go to the **Global roles** tab.
+2. Open the user and go to the **Roles** tab.
 3. Choose a global role and select **Assign**.
 
-The tab lists the roles the user holds and the resulting **effective global permissions**, with the role that grants each of them. Remove a role with the delete button next to it.
+The tab lists the global roles the user holds and the resulting **effective global permissions**, with the role that grants each of them. Remove a role with the delete button next to it.
 
-Only roles with at least one global permission are offered. Built-in roles cannot be assigned globally: they grant nothing outside a project.
+Only global roles are offered. Shared, project and built-in roles belong to project membership and cannot be assigned here.
+
+Deleting a global role that users hold asks for confirmation and removes it from every user. The last user who can manage global roles keeps the role.
+
+![Roles tab of a user with an assigned global role and the effective global permissions](/assets/custom-roles-assign-global-role.webp)
 
 ### Configure access to specific task templates {#configure-access-to-specific-task-templates}
 
@@ -210,7 +224,7 @@ Template permissions are additive. They add access without replacing or reducing
 
 ### Assign a custom role in a project {#assign-a-custom-role-in-a-project}
 
-After creating and configuring a global or project role, assign it to the required team member:
+After creating and configuring a shared or project role, assign it to the required team member:
 
 1. Open the project and go to **Team**.
 2. Select the role field next to the required member.

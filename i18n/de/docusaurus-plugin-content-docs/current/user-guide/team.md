@@ -107,6 +107,8 @@ Wählen Sie in der instanzweiten Liste der Rollen **New Role**.
 
 ![Öffnen Sie Roles über das Administratormenü und wählen Sie dann New Role](/assets/custom-roles-navigation-to-new-role-annotated-v4.png)
 
+![Global roles tab on the Users page](/assets/custom-roles-global-roles-tab.webp)
+
 #### Projektrolle {#project-role}
 
 Projektrollen sind nur in dem Projekt verfügbar, in dem sie erstellt wurden. Owner und Manager des Projekts können sie erstellen.
@@ -130,6 +132,8 @@ Beide Wege öffnen dasselbe Rollenformular. Konfigurieren Sie die Rolle so, dass
 | **Slug** | Ein eindeutiger technischer Identifikator, über den die Rolle referenziert wird. Er darf Buchstaben, Zahlen, `_` und `-` enthalten, bis zu 100 Zeichen, zum Beispiel `release_operator`. Groß- und Kleinschreibung spielt keine Rolle: `Ops` und `ops` sind derselbe Slug. Nach dem Erstellen der Rolle können Sie den Slug nicht mehr ändern. |
 | **Permissions** | Die projektweiten Berechtigungen, die die Rolle gewährt. |
 | **Global permissions** | Nur bei globalen Rollen. Die instanzweiten Berechtigungen, die ein Benutzer erhält, wenn ihm die Rolle global zugewiesen wird. |
+
+![New Global Role dialog with the global permission checkboxes](/assets/custom-roles-new-global-role.webp)
 
 #### Projektweite Berechtigungen {#project-wide-permissions}
 
@@ -174,6 +178,8 @@ Wählen Sie **Save**, wenn die Rollenkonfiguration fertig ist.
 Der Tab listet die Rollen des Benutzers und die daraus resultierenden **effektiven globalen Berechtigungen**, jeweils mit der Rolle, die sie gewährt. Entfernen Sie eine Rolle über die Löschen-Schaltfläche daneben.
 
 Angeboten werden nur Rollen mit mindestens einer globalen Berechtigung. Integrierte Rollen können nicht global zugewiesen werden: Sie gewähren außerhalb eines Projekts nichts.
+
+![Roles tab of a user with an assigned global role and the effective global permissions](/assets/custom-roles-assign-global-role.webp)
 
 ### Zugriff auf bestimmte Task Templates konfigurieren {#configure-access-to-specific-task-templates}
 

@@ -107,6 +107,8 @@ Semaphore UI에서 모든 프로젝트는 **팀**과 연결됩니다. 팀 구성
 
 ![관리자 메뉴에서 Roles를 열고 New Role을 선택합니다](/assets/custom-roles-navigation-to-new-role-annotated-v4.png)
 
+![Global roles tab on the Users page](/assets/custom-roles-global-roles-tab.webp)
+
 #### 프로젝트 역할 {#project-role}
 
 프로젝트 역할은 생성된 프로젝트에서만 사용할 수 있습니다. 프로젝트 Owner와 Manager가 생성할 수 있습니다.
@@ -130,6 +132,8 @@ Semaphore UI에서 모든 프로젝트는 **팀**과 연결됩니다. 팀 구성
 | **Slug** | 역할을 참조하는 데 사용되는 고유한 기술 식별자입니다. 영문자, 숫자, `_`, `-`를 최대 100자까지 사용할 수 있습니다. 예: `release_operator`. 대소문자는 구분하지 않습니다. `Ops`와 `ops`는 같은 슬러그입니다. 역할을 만든 후에는 슬러그를 변경할 수 없습니다. |
 | **Permissions** | 역할이 부여하는 프로젝트 전체 권한입니다. |
 | **Global permissions** | 글로벌 역할에만 해당합니다. 역할을 사용자에게 글로벌로 할당했을 때 부여되는 인스턴스 전체 권한입니다. |
+
+![New Global Role dialog with the global permission checkboxes](/assets/custom-roles-new-global-role.webp)
 
 #### 프로젝트 전체 권한 {#project-wide-permissions}
 
@@ -174,6 +178,8 @@ Semaphore는 글로벌 역할을 관리할 수 있는 사용자, 즉 관리자 �
 이 탭에는 사용자가 가진 역할과 그 결과인 **유효 글로벌 권한**이 각 권한을 부여하는 역할과 함께 표시됩니다. 역할 옆의 삭제 버튼으로 역할을 제거합니다.
 
 글로벌 권한이 하나 이상 있는 역할만 제안됩니다. 내장 역할은 프로젝트 밖에서는 아무것도 부여하지 않으므로 글로벌로 할당할 수 없습니다.
+
+![Roles tab of a user with an assigned global role and the effective global permissions](/assets/custom-roles-assign-global-role.webp)
 
 ### 특정 작업 템플릿에 대한 접근 권한 구성 {#configure-access-to-specific-task-templates}
 

@@ -107,6 +107,8 @@ Na lista de papéis de toda a instância, selecione **New Role**.
 
 ![Abra Roles no menu do administrador e, em seguida, selecione New Role](/assets/custom-roles-navigation-to-new-role-annotated-v4.png)
 
+![Global roles tab on the Users page](/assets/custom-roles-global-roles-tab.webp)
+
 #### Papel de projeto {#project-role}
 
 Os papéis de projeto estão disponíveis apenas no projeto em que foram criados. Os Owners e Managers do projeto podem criá-los.
@@ -130,6 +132,8 @@ Ambos os caminhos abrem o mesmo formulário de papel. Configure o papel de acord
 | **Slug** | Um identificador técnico único usado para referenciar o papel. Pode conter letras, números, `_` e `-`, até 100 caracteres, por exemplo `release_operator`. Maiúsculas e minúsculas não importam: `Ops` e `ops` são o mesmo slug. Não é possível alterar o slug depois de criar o papel. |
 | **Permissions** | As permissões em todo o projeto concedidas pelo papel. |
 | **Global permissions** | Apenas papéis globais. As permissões em toda a instância que um usuário recebe quando o papel lhe é atribuído globalmente. |
+
+![New Global Role dialog with the global permission checkboxes](/assets/custom-roles-new-global-role.webp)
 
 #### Permissões em todo o projeto {#project-wide-permissions}
 
@@ -174,6 +178,8 @@ Selecione **Save** quando a configuração do papel estiver pronta.
 A aba lista os papéis que o usuário possui e as **permissões globais efetivas** resultantes, com o papel que concede cada uma delas. Remova um papel com o botão de exclusão ao lado dele.
 
 Apenas papéis com pelo menos uma permissão global são oferecidos. Papéis integrados não podem ser atribuídos globalmente: eles não concedem nada fora de um projeto.
+
+![Roles tab of a user with an assigned global role and the effective global permissions](/assets/custom-roles-assign-global-role.webp)
 
 ### Configurar o acesso a modelos de tarefa específicos {#configure-access-to-specific-task-templates}
 

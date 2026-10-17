@@ -107,6 +107,8 @@ Dans la liste des rôles à l'échelle de l'instance, sélectionnez **Nouveau r�
 
 ![Ouvrez Rôles depuis le menu administrateur, puis sélectionnez Nouveau rôle](/assets/custom-roles-navigation-to-new-role-annotated-v4.png)
 
+![Global roles tab on the Users page](/assets/custom-roles-global-roles-tab.webp)
+
 #### Rôle de projet {#project-role}
 
 Les rôles de projet ne sont disponibles que dans le projet où ils sont créés. Les Owners et les Managers du projet peuvent les créer.
@@ -130,6 +132,8 @@ Les deux chemins ouvrent le même formulaire de rôle. Configurez le rôle pour 
 | **Slug** | Un identifiant technique unique utilisé pour référencer le rôle. Il peut contenir des lettres, des chiffres, `_` et `-`, jusqu'à 100 caractères, par exemple `release_operator`. La casse ne compte pas : `Ops` et `ops` sont le même slug. Vous ne pouvez pas modifier le slug après avoir créé le rôle. |
 | **Permissions** | Les permissions à l'échelle du projet accordées par le rôle. |
 | **Global permissions** | Rôles globaux uniquement. Les permissions à l'échelle de l'instance qu'un utilisateur reçoit lorsque le rôle lui est attribué globalement. |
+
+![New Global Role dialog with the global permission checkboxes](/assets/custom-roles-new-global-role.webp)
 
 #### Permissions à l'échelle du projet {#project-wide-permissions}
 
@@ -174,6 +178,8 @@ Sélectionnez **Enregistrer** lorsque la configuration du rôle est prête.
 L'onglet liste les rôles détenus par l'utilisateur et les **permissions globales effectives** qui en résultent, avec le rôle qui accorde chacune d'elles. Retirez un rôle avec le bouton de suppression situé à côté.
 
 Seuls les rôles ayant au moins une permission globale sont proposés. Les rôles intégrés ne peuvent pas être attribués globalement : ils n'accordent rien en dehors d'un projet.
+
+![Roles tab of a user with an assigned global role and the effective global permissions](/assets/custom-roles-assign-global-role.webp)
 
 ### Configurer l'accès à des modèles de tâches spécifiques {#configure-access-to-specific-task-templates}
 

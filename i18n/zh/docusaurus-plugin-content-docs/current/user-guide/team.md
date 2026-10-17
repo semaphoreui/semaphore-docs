@@ -107,6 +107,8 @@
 
 ![从管理员菜单打开 Roles，然后选择 New Role](/assets/custom-roles-navigation-to-new-role-annotated-v4.png)
 
+![Global roles tab on the Users page](/assets/custom-roles-global-roles-tab.webp)
+
 #### 项目角色 {#project-role}
 
 项目角色仅在创建它的项目中可用。项目所有者和管理者可以创建项目角色。
@@ -130,6 +132,8 @@
 | **Slug** | 用于引用该角色的唯一技术标识符。可以包含字母、数字、`_` 和 `-`，最多 100 个字符，例如 `release_operator`。不区分大小写：`Ops` 和 `ops` 是同一个 slug。角色创建后无法更改 slug。 |
 | **Permissions** | 该角色授予的项目级权限。 |
 | **Global permissions** | 仅限全局角色。把角色全局分配给用户时用户获得的实例级权限。 |
+
+![New Global Role dialog with the global permission checkboxes](/assets/custom-roles-new-global-role.webp)
 
 #### 项目级权限 {#project-wide-permissions}
 
@@ -174,6 +178,8 @@ Semaphore 始终保留至少一个能够管理全局角色的用户：管理员�
 该选项卡列出用户拥有的角色以及由此产生的**有效全局权限**，并标明授予每项权限的角色。使用角色旁边的删除按钮可移除角色。
 
 只会提供至少拥有一项全局权限的角色。内置角色无法全局分配：它们在项目之外不授予任何权限。
+
+![Roles tab of a user with an assigned global role and the effective global permissions](/assets/custom-roles-assign-global-role.webp)
 
 ### 配置对特定任务模板的访问权限 {#configure-access-to-specific-task-templates}
 
