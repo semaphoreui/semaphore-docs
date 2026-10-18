@@ -66,6 +66,7 @@ SSO 提供方的全部选项：
 | `username_claim`      | 用户名声明表达式[\*](#claim-expression)。                                       |
 | `email_claim`         | 邮箱声明表达式[\*](#claim-expression)。                                         |
 | `name_claim`          | 个人资料名称声明表达式[\*](#claim-expression)。                                 |
+| `groups_claim`        | 包含用户所属组的令牌声明名称。供[组映射](#project-roles-from-groups)使用。 |
 | `order`               | 提供方按钮在登录页面上的位置。                                                                              |
 | `allow_idp_initiated` | 为该提供方启用 [IdP 发起的登录](#idp-initiated-login)。默认为 `false`。                                    |
 | `return_via_state`    | 通过 OAuth 的 `state` 参数（而不是重定向 URL）传递登录后的返回路径。默认为 `true`。                        |
@@ -89,6 +90,47 @@ Semaphore 会首先尝试读取 email 字段。如果该字段为空，则执行
 <div class="warning">
   表达式 <code>"username_claim": "|"</code> 会为每个通过该提供方登录的用户生成一个随机的 <code>username</code>。
 </div>
+
+## 根据组授予项目角色 <Enterprise /> {#project-roles-from-groups}
+
+:::info
+组映射在 **Semaphore Enterprise** 版中可用。
+:::
+
+组映射会为身份提供方中某个组的每个用户授予一个项目角色。例如，一个组映射可以为 `devops` 组的成员授予 `Infrastructure` 项目中的 **Manager** 角色。
+
+### 在令牌中发送组 {#send-groups-in-the-token}
+
+将 `groups_claim` 设置为包含用户所属组的声明名称。如果不设置，通过该提供方登录不会更改来自组映射的角色。
+
+组必须包含在 ID 令牌中。许多身份提供方（例如 Dex）只有在 Semaphore 请求 `groups` scope 时才会发送组：
+
+```json
+{
+  "oidc_providers": {
+    "dex": {
+      "display_name": "Sign in with Dex",
+      "provider_url": "https://dex.your-domain.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/dex/redirect",
+      "scopes": ["openid", "email", "profile", "groups"],
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+### 创建组映射 {#create-a-group-mapping}
+
+1. 打开左下角的管理员菜单，选择 **Group mappings**。
+2. 选择 **New mapping**。
+3. 选择提供方，输入组名，然后选择项目和角色。
+4. 选择 **Save**。
+
+组名必须与令牌中的名称完全一致，包括大小写。要更改组映射，请删除该映射并新建一个。
+
+用户每次通过提供方登录时，Semaphore 都会更新来自组映射的角色。离开某个组的用户会保留该角色，直到下次登录。要让这类变更更快生效，请使用 [`auth.max_session_life_hours`](/reference/configuration#authentication) 限制会话时长。
 
 ## IdP 发起的登录 {#idp-initiated-login}
 

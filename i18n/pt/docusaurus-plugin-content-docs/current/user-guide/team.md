@@ -187,10 +187,26 @@ Após criar e configurar um papel global ou de projeto, atribua-o ao membro da e
 
 Se um papel ainda está atribuído a membros ou é usado em permissões de modelo, o Semaphore pergunta antes de excluí-lo e mostra quantos membros, projetos e permissões de modelo ele afeta. Selecione **Delete with assignments** para excluir o papel e retirá-lo de todos eles. Os membros que não têm outro papel são removidos dos seus projetos.
 
+Se [mapeamentos de grupo](#roles-from-group-mappings) usam o papel, a caixa de diálogo também mostra quantos são. Apenas um administrador pode excluir um papel assim, e os mapeamentos de grupo dele são excluídos junto com o papel.
+
 ### Não suportado no momento {#not-currently-supported}
 
-- **Mapeamento de grupos LDAP / OIDC.** Os papéis personalizados são atribuídos por usuário. O mapeamento de grupos de diretórios externos para papéis personalizados não é suportado.
 - **Permissões granulares para recursos que não são modelos.** Atualmente, apenas os modelos podem ser controlados por papéis personalizados no nível de recurso individual.
+
+---
+
+## Papéis de mapeamentos de grupo <Enterprise /> {#roles-from-group-mappings}
+
+:::info
+Os mapeamentos de grupo estão disponíveis na edição **Semaphore Enterprise**.
+:::
+
+Um administrador pode dar um papel de projeto a todos os membros de um grupo do seu provedor de identidade na página **Group mappings**. O Semaphore atualiza esses papéis cada vez que o usuário faz login pelo provedor de identidade. Veja [Papéis de projeto a partir de grupos](/admin-guide/authentication/openid#project-roles-from-groups).
+
+Na página **Team**, um papel assim tem um ícone de cadeado. Passe o mouse sobre o papel para ver o provedor e o grupo, por exemplo `keycloak: devops`.
+
+- Você não pode remover um papel de um mapeamento de grupo na página **Team**. Apenas um administrador pode alterar os mapeamentos de grupo.
+- Se você remover um membro ou retirar todos os papéis atribuídos manualmente a ele, os papéis de mapeamentos de grupo continuam e o membro continua no projeto.
 
 ---
 

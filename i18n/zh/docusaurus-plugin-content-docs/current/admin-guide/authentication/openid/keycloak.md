@@ -15,6 +15,30 @@
 }
 ```
 
+## 根据组授予项目角色 <Enterprise /> {#project-roles-from-groups}
+
+要使用[组映射](/admin-guide/authentication/openid#project-roles-from-groups)，请添加一个将用户所属组写入 ID 令牌的 mapper：
+
+1. 在 Keycloak Admin Console 中打开你的客户端，进入 **Client scopes**，打开 `<client-id>-dedicated` scope。
+2. 通过 **By configuration** 添加 mapper，并选择 **Group Membership**。
+3. 将 **Token Claim Name** 设置为 `groups`，并开启 **Add to ID token**。
+4. 通过 **Full group path** 选择组的发送方式。开启时，Keycloak 发送每个组的路径，例如 `/devops` 或 `/platform/sre`，组映射中也必须使用该路径。关闭时，Keycloak 只发送组名，例如 `sre`。
+
+然后为该提供方设置 `groups_claim`：
+
+```json title="config.json"
+{
+  "oidc_providers": {
+    "keycloak": {
+      "...": "...",
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+不要将 `groups` 添加到 `scopes`。Keycloak 会拒绝它不认识的 scope，而该 mapper 不需要额外的 scope。
+
 ## IdP 发起的登录 {#idp-initiated-login}
 
 若要让用户从 Keycloak **Account Console** 的应用启动器打开 Semaphore，请为该提供方启用

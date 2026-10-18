@@ -114,6 +114,12 @@ const features = [
     since: '2.17',
     doc: '/user-guide/team#extended-rbac-enterprise',
   },
+  {
+    key: 'group-role-mappings',
+    name: 'Project roles from identity provider groups',
+    edition: 'enterprise',
+    doc: '/admin-guide/authentication/openid#project-roles-from-groups',
+  },
 
   // Infrastructure
   {

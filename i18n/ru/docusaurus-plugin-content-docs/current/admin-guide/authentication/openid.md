@@ -66,6 +66,7 @@ SEMAPHORE_OIDC_PROVIDERS='{
 | `username_claim`      | Выражение claim для имени пользователя[\*](#claim-expression).                 |
 | `email_claim`         | Выражение claim для email[\*](#claim-expression).                               |
 | `name_claim`          | Выражение claim для имени профиля[\*](#claim-expression).                       |
+| `groups_claim`        | Имя claim в токене, где перечислены группы пользователя. Используется [сопоставлениями групп](#project-roles-from-groups). |
 | `order`               | Позиция кнопки провайдера на экране входа.                                                                  |
 | `allow_idp_initiated` | Включить [вход, инициированный IdP](#idp-initiated-login), для этого провайдера. По умолчанию `false`.       |
 | `return_via_state`    | Передавать путь возврата после входа через параметр OAuth `state` вместо redirect URL. По умолчанию `true`. |
@@ -89,6 +90,47 @@ Semaphore сначала пытается получить поле email. Ес�
 <div class="warning">
   Выражение <code>"username_claim": "|"</code> генерирует случайное <code>username</code> для каждого пользователя, входящего через этого провайдера.
 </div>
+
+## Роли в проекте по группам <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Сопоставления групп доступны в редакции **Semaphore Enterprise**.
+:::
+
+Сопоставление группы даёт роль в проекте каждому пользователю из группы в провайдере идентификации. Например, сопоставление может дать участникам группы `devops` роль **Manager** в проекте `Infrastructure`.
+
+### Передача групп в токене {#send-groups-in-the-token}
+
+Укажите в `groups_claim` имя claim, где перечислены группы пользователя. Без этого параметра вход через провайдера не меняет роли из сопоставлений групп.
+
+Группы должны быть в ID-токене. Многие провайдеры идентификации, например Dex, передают группы, только если Semaphore запрашивает scope `groups`:
+
+```json
+{
+  "oidc_providers": {
+    "dex": {
+      "display_name": "Sign in with Dex",
+      "provider_url": "https://dex.your-domain.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/dex/redirect",
+      "scopes": ["openid", "email", "profile", "groups"],
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+### Создание сопоставления группы {#create-a-group-mapping}
+
+1. Откройте меню администратора в левом нижнем углу и выберите **Group mappings**.
+2. Нажмите **New mapping**.
+3. Выберите провайдера, введите имя группы, затем выберите проект и роль.
+4. Нажмите **Save**.
+
+Имя группы должно точно совпадать с именем в токене, включая регистр букв. Чтобы изменить сопоставление группы, удалите его и создайте новое.
+
+Semaphore обновляет роли из сопоставлений групп при каждом входе пользователя через провайдера. Пользователь, которого убрали из группы, сохраняет роль до следующего входа. Чтобы такие изменения вступали в силу быстрее, ограничьте срок жизни сессии параметром [`auth.max_session_life_hours`](/reference/configuration#authentication).
 
 ## Вход, инициированный IdP {#idp-initiated-login}
 

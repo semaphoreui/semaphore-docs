@@ -15,6 +15,30 @@
 }
 ```
 
+## Uloge u projektu na osnovu grupa <Enterprise /> {#project-roles-from-groups}
+
+Da biste koristili [mapiranja grupa](/admin-guide/authentication/openid#project-roles-from-groups), dodajte mapper koji upisuje grupe korisnika u ID token:
+
+1. U Keycloak Admin Console otvorite svoj klijent, idite na **Client scopes** i otvorite scope `<client-id>-dedicated`.
+2. Dodajte mapper **By configuration** i izaberite **Group Membership**.
+3. Postavite **Token Claim Name** na `groups` i uključite **Add to ID token**.
+4. Izaberite kako se šalju grupe pomoću **Full group path**. Kada je uključeno, Keycloak šalje putanju svake grupe, na primer `/devops` ili `/platform/sre`, i mapiranje grupe mora da koristi tu putanju. Kada je isključeno, Keycloak šalje samo naziv grupe, na primer `sre`.
+
+Zatim postavite `groups_claim` za provajdera:
+
+```json title="config.json"
+{
+  "oidc_providers": {
+    "keycloak": {
+      "...": "...",
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+Ne dodajte `groups` u `scopes`. Keycloak odbija scope koji ne poznaje, a mapperu nije potreban dodatni scope.
+
 ## Prijava koju pokreće IdP {#idp-initiated-login}
 
 Da biste korisnicima omogućili da pokrenu Semaphore iz pokretača aplikacija u Keycloak **Account Console**, uključite

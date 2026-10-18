@@ -66,6 +66,7 @@ Sve opcije SSO provajdera:
 | `username_claim`      | Claim izraz za korisničko ime[\*](#claim-expression).                           |
 | `email_claim`         | Claim izraz za e-adresu[\*](#claim-expression).                                 |
 | `name_claim`          | Claim izraz za ime profila[\*](#claim-expression).                              |
+| `groups_claim`        | Naziv claim-a u tokenu koji sadrži grupe korisnika. Koriste ga [mapiranja grupa](#project-roles-from-groups). |
 | `order`               | Pozicija dugmeta provajdera na ekranu za prijavu.                                                           |
 | `allow_idp_initiated` | Uključuje [prijavu koju pokreće IdP](#idp-initiated-login) za ovog provajdera. Podrazumevano `false`.       |
 | `return_via_state`    | Prosleđuje putanju za povratak nakon prijave kroz OAuth parametar `state` umesto kroz URL za preusmeravanje. Podrazumevano `true`. |
@@ -89,6 +90,47 @@ Semaphore prvo pokušava da preuzme polje email. Ako je prazno, izvršava se izr
 <div class="warning">
   Izraz <code>"username_claim": "|"</code> generiše nasumičan <code>username</code> za svakog korisnika koji se prijavi preko provajdera.
 </div>
+
+## Uloge u projektu na osnovu grupa <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Mapiranja grupa dostupna su u izdanju **Semaphore Enterprise**.
+:::
+
+Mapiranje grupe daje ulogu u projektu svakom korisniku iz jedne grupe u provajderu identiteta. Na primer, mapiranje može da da članovima grupe `devops` ulogu **Manager** u projektu `Infrastructure`.
+
+### Slanje grupa u tokenu {#send-groups-in-the-token}
+
+Postavite `groups_claim` na naziv claim-a koji sadrži grupe korisnika. Bez ovog podešavanja prijave preko provajdera ne menjaju uloge iz mapiranja grupa.
+
+Grupe moraju biti u ID tokenu. Mnogi provajderi identiteta, na primer Dex, šalju grupe samo kada Semaphore zatraži scope `groups`:
+
+```json
+{
+  "oidc_providers": {
+    "dex": {
+      "display_name": "Sign in with Dex",
+      "provider_url": "https://dex.your-domain.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/dex/redirect",
+      "scopes": ["openid", "email", "profile", "groups"],
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+### Kreiranje mapiranja grupe {#create-a-group-mapping}
+
+1. Otvorite administratorski meni u donjem levom uglu i izaberite **Group mappings**.
+2. Izaberite **New mapping**.
+3. Izaberite provajdera, unesite naziv grupe, pa izaberite projekat i ulogu.
+4. Izaberite **Save**.
+
+Naziv grupe mora tačno da se poklapa sa nazivom u tokenu, uključujući velika i mala slova. Da biste promenili mapiranje grupe, obrišite to mapiranje i kreirajte novo.
+
+Semaphore ažurira uloge iz mapiranja grupa pri svakoj prijavi korisnika preko provajdera. Korisnik koji napusti grupu zadržava ulogu do sledeće prijave. Da bi takve promene stupale na snagu ranije, ograničite trajanje sesije opcijom [`auth.max_session_life_hours`](/reference/configuration#authentication).
 
 ## Prijava koju pokreće IdP {#idp-initiated-login}
 

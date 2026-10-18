@@ -15,6 +15,30 @@
 }
 ```
 
+## Projektrollen aus Gruppen <Enterprise /> {#project-roles-from-groups}
+
+Für [Gruppenzuordnungen](/admin-guide/authentication/openid#project-roles-from-groups) fügen Sie einen Mapper hinzu, der die Gruppen des Benutzers in das ID-Token schreibt:
+
+1. Öffnen Sie in der Keycloak Admin Console Ihren Client, wechseln Sie zu **Client scopes** und öffnen Sie den Scope `<client-id>-dedicated`.
+2. Fügen Sie einen Mapper **By configuration** hinzu und wählen Sie **Group Membership**.
+3. Setzen Sie **Token Claim Name** auf `groups` und schalten Sie **Add to ID token** ein.
+4. Legen Sie mit **Full group path** fest, wie die Gruppen gesendet werden. Ist die Option eingeschaltet, sendet Keycloak den Pfad jeder Gruppe, zum Beispiel `/devops` oder `/platform/sre`, und die Gruppenzuordnung muss diesen Pfad verwenden. Ist sie ausgeschaltet, sendet Keycloak nur den Namen der Gruppe, zum Beispiel `sre`.
+
+Setzen Sie dann `groups_claim` für den Anbieter:
+
+```json title="config.json"
+{
+  "oidc_providers": {
+    "keycloak": {
+      "...": "...",
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+Fügen Sie `groups` nicht zu `scopes` hinzu. Keycloak lehnt einen unbekannten Scope ab, und der Mapper braucht keinen zusätzlichen Scope.
+
 ## IdP-initiierte Anmeldung {#idp-initiated-login}
 
 Damit Benutzer Semaphore über den Anwendungs-Launcher der Keycloak **Account Console** starten können, aktivieren Sie

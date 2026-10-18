@@ -66,6 +66,7 @@ Todas las opciones de un proveedor SSO:
 | `username_claim`      | Expresión de claim para el nombre de usuario[\*](#claim-expression).                               |
 | `email_claim`         | Expresión de claim para el correo electrónico[\*](#claim-expression).                                  |
 | `name_claim`          | Expresión de claim para el nombre del perfil[\*](#claim-expression).                           |
+| `groups_claim`        | Nombre del claim del token con los grupos del usuario. Lo usan las [asignaciones de grupo](#project-roles-from-groups). |
 | `order`               | Posición del botón del proveedor en la pantalla de inicio de sesión.                                        |
 | `allow_idp_initiated` | Habilita el [inicio de sesión iniciado por el IdP](#idp-initiated-login) para este proveedor. Predeterminado: `false`. |
 | `return_via_state`    | Pasa la ruta de retorno posterior al inicio de sesión mediante el parámetro `state` de OAuth en lugar de la URL de redirección. Predeterminado: `true`. |
@@ -89,6 +90,47 @@ Semaphore intenta obtener primero el campo email. Si está vacío, se ejecuta la
 <div class="warning">
   La expresión <code>"username_claim": "|"</code> genera un <code>username</code> aleatorio para cada usuario que inicia sesión a través del proveedor.
 </div>
+
+## Roles de proyecto a partir de grupos <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Las asignaciones de grupo están disponibles en la edición **Semaphore Enterprise**.
+:::
+
+Una asignación de grupo da un rol de proyecto a cada usuario de un grupo del proveedor de identidad. Por ejemplo, una asignación puede dar a los miembros del grupo `devops` el rol **Gestor** en el proyecto `Infrastructure`.
+
+### Enviar los grupos en el token {#send-groups-in-the-token}
+
+Establezca `groups_claim` con el nombre del claim que contiene los grupos del usuario. Sin este ajuste, los inicios de sesión a través del proveedor no cambian los roles de asignaciones de grupo.
+
+Los grupos deben estar en el token de ID. Muchos proveedores de identidad, por ejemplo Dex, envían los grupos solo cuando Semaphore pide el scope `groups`:
+
+```json
+{
+  "oidc_providers": {
+    "dex": {
+      "display_name": "Sign in with Dex",
+      "provider_url": "https://dex.your-domain.com",
+      "client_id": "***",
+      "client_secret": "***",
+      "redirect_url": "https://your-domain.com/api/auth/oidc/dex/redirect",
+      "scopes": ["openid", "email", "profile", "groups"],
+      "groups_claim": "groups"
+    }
+  }
+}
+```
+
+### Crear una asignación de grupo {#create-a-group-mapping}
+
+1. Abra el menú de administración de la parte inferior izquierda y seleccione **Group mappings**.
+2. Seleccione **New mapping**.
+3. Elija el proveedor, escriba el nombre del grupo y elija el proyecto y el rol.
+4. Seleccione **Guardar**.
+
+El nombre del grupo debe coincidir exactamente con el nombre del token, incluidas las mayúsculas y minúsculas. Para cambiar una asignación de grupo, elimínela y cree una nueva.
+
+Semaphore actualiza los roles de asignaciones de grupo cada vez que el usuario inicia sesión a través del proveedor. Un usuario que sale de un grupo conserva el rol hasta su próximo inicio de sesión. Para que estos cambios tengan efecto antes, limite la duración de la sesión con [`auth.max_session_life_hours`](/reference/configuration#authentication).
 
 ## Inicio de sesión iniciado por el IdP {#idp-initiated-login}
 
