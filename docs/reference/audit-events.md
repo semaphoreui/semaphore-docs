@@ -84,11 +84,11 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 
 | Event code | Action | Type | Outcomes | Reasons | Metadata | Edition |
 | --- | --- | --- | --- | --- | --- | --- |
-| `resource.project` | `create` | `creation` | success | `setup_failed` (partial success) | `demo`, `partial` | Community |
+| `resource.project` | `create` | `creation` | success |  | `demo` | Community |
 | `resource.project` | `update` | `change` | success |  |  | Community |
 | `resource.project` | `delete` | `deletion` | success |  |  | Community |
 | `resource.project_backup` | `export` | `access` | success |  |  | Community |
-| `resource.project_backup` | `restore` | `creation` | success | `restore_failed` (partial success) | `objects`, `partial` | Community |
+| `resource.project_backup` | `restore` | `creation` | success |  | `objects` | Community |
 | `resource.inventory` | `create` | `creation` | success |  |  | Community |
 | `resource.inventory` | `update` | `change` | success |  |  | Community |
 | `resource.inventory` | `delete` | `deletion` | success |  |  | Community |
