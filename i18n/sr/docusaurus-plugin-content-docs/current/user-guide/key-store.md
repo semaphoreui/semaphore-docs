@@ -1,91 +1,152 @@
-# Skladište ključeva
+---
+title: Key Store
+description: Sveobuhvatan vodič za akreditive u Semaphore Key Store-u, generisanje SSH parova ključeva, lozinke za prijavu, tajne tokene i spoljna skladišta.
+---
 
-Skladište ključeva (Key Store) u Semaphore-u koristi se za čuvanje pristupnih podataka za pristup udaljenim repozitorijumima (Repositories), pristup udaljenim hostovima, sudo pristupnih podataka i lozinki za Ansible vault.
+# Key Store
 
-![Skladište ključeva](/assets/key-store-keys.webp)
+**Key Store** služi kao centralizovano skladište akreditiva u Semaphore-u. On upravlja autentifikacionim materijalima neophodnim za kloniranje udaljenih Git repozitorijuma, povezivanje sa ciljnim čvorovima infrastrukture, podizanje privilegija (`sudo`/`become`) i dešifrovanje Ansible Vault tajni.
 
-Kartica **Ključevi** (Keys) prikazuje pristupne podatke projekta (Project) sa njihovim tipom. Kartica **Skladišta** (Storages) (Pro) prikazuje spoljna skladišta tajni podešena za projekat, pogledajte [Skladišta tajni](#secret-storages).
+![Key Store](/assets/key-store-keys.webp)
 
-## Tipovi {#types}
+Key Store je podeljen na dva glavna prikaza:
+* **Kartica Keys**: Prikazuje sve akreditive konfigurisane za trenutni projekat sa imenom, tipom skladišta, vrstom i statusom sinhronizacije.
+* **Kartica Storages (Pro)**: Konfiguriše eksterna skladišta tajni (kao što su HashiCorp Vault, OpenBao, AWS Secrets Manager ili CyberArk) radi dinamičkog razrešavanja i automatizovane sinhronizacije.
 
-### 1. SSH {#1-ssh}
-SSH ključevi se koriste za pristup udaljenim serverima, kao i udaljenim repozitorijumima.
+---
 
-Ako vam je potrebna pomoć da brzo generišete ključ i postavite ga na svoj host, [ovde je kratak vodič.](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
+## Tipovi akreditiva {#types}
 
-Za Git repozitorijume koji koriste SSH autentifikaciju, Git repozitorijum koji pokušavate da klonirate mora imati vaš javni ključ pridružen privatnom ključu.
+Semaphore klasifikuje sačuvane akreditive u tri osnovna tipa:
 
-Ispod su linkovi ka dokumentaciji nekih uobičajenih Git repozitorijuma:
-* [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
-* [GitLab](https://docs.gitlab.com/ee/user/ssh.html)
-* [Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
+### 1. SSH ključevi {#1-ssh}
+SSH ključevi pružaju asimetričnu kriptografsku autentifikaciju za povezivanje sa Linux/UNIX čvorovima i kloniranje Git repozitorijuma preko SSH-a (`git@github.com:...`).
+
+Prilikom konfigurisanja SSH ključa možete navesti:
+* **Naziv ključa**: Opisnu oznaku za akreditiv u inventarima i šablonima projekta.
+* **Korisničko ime (Opciono)**: Podrazumevani udaljeni korisnički nalog za uspostavljanje SSH veze (na primer `ansible` ili `ubuntu`).
+* **Lozinka ključa (Opciono)**: Lozinka neophodna za dešifrovanje zaštićenih privatnih ključeva. Polja za lozinku sadrže ikonu za prikaz (`oko`) i podrazumevano su maskirana.
+* **Privatni ključ**: Izvorni tekst PEM/OpenSSH privatnog ključa.
+
+#### Ugrađeni generator SSH ključeva {#built-in-ssh-key-generator}
+
+Umesto ručnog pokretanja komande `ssh-keygen` na eksternim mašinama, Semaphore sadrži **ugrađeni generator SSH parova ključeva na jedan klik** direktno u modalnom prozoru:
+
+![Generate SSH Key Modal](/assets/key-store-generate-ssh.webp)
+
+1. Izaberite **SSH Key** iz padajućeg menija **Type**.
+2. Označite polje **Generate SSH Key**.
+3. Tekstualno polje za ručni unos **privatnog ključa** automatski se onemogućava i zaključava.
+4. Kliknite na **Create**. Semaphore automatski generiše kriptografski bezbedan par ključeva (ED25519/RSA), šifruje privatni ključ u bazi i prikazuje javni ključ u namenskom dijalogu:
+
+![Generated SSH Public Key](/assets/key-store-generated-public-key.webp)
+
+Iskoristite dugme **Copy to Clipboard** da kopirate javni ključ i unesite ga u deploy keys vašeg Git provajdera ili u fajl `~/.ssh/authorized_keys` na vašim ciljnim serverima.
+
+#### Naknadno preuzimanje javnih ključeva (Fioka javnog ključa) {#extracting-public-keys-later}
+
+Ako zatvorite prozor ili vam javni ključ zatreba kasnije, ne morate ponovo generisati par ključeva. Prilikom izmene bilo kog ključa kreiranog generatorom, Semaphore nudi fioku **Public key**:
+
+![Public Key Drawer](/assets/key-store-public-key-drawer.webp)
+
+* Kliknite na **Show** / **Hide** da pregledate javni ključ.
+* Kliknite na ikonu spajalice da trenutno kopirate javni ključ.
+
+#### Povezivanje deploy ključeva na popularnim Git servisima
+
+Za Git repozitorijume koji zahtevaju SSH autentifikaciju dodajte generisani javni ključ kao read-only deploy key:
+* [GitHub Deploy Keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+* [GitLab Deploy Keys](https://docs.gitlab.com/ee/user/project/deploy_keys/)
+* [Bitbucket Access Keys](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
+
+---
 
 ### 2. Prijava lozinkom {#2-login-with-password}
-Prijava lozinkom (Login With Password) je kombinacija korisničkog imena i lozinke/pristupnog tokena koja se može koristiti za sledeće:
-* Autentifikaciju na udaljenim hostovima (mada je ovo manje bezbedno od korišćenja SSH ključeva)
-* Sudo pristupne podatke na udaljenim hostovima
-* Autentifikaciju na udaljenim Git repozitorijumima preko HTTPS-a (mada je SSH bezbedniji)
-* Otključavanje Ansible vault-ova
 
-:::tip
-    Ovaj tip tajne može se koristiti kao lični pristupni token (Personal Access Token, PAT) ili tajni string. Jednostavno ostavite polje Prijava (Login) prazno.
+Tip akreditiva **Prijava lozinkom** podržava i tradicionalnu autentifikaciju korisničkim imenom i lozinkom, kao i izolovane tajne tekstualne nizove:
+
+* **Autentifikacija servera i sudo**: Pruža SSH pristup zasnovan na lozinci i podizanje `sudo` privilegija na ciljnim hostovima.
+* **HTTPS Git autentifikacija**: Autentifikuje na udaljenim repozitorijumima preko HTTPS-a pomoću korisničkog imena i ličnih pristupnih tokena (PAT).
+* **Lozinke za Ansible Vault**: Otključava šifrovane Ansible Vault fajlove i promenljive prilikom izvršavanja.
+
+:::tip Tajni stringovi i lični pristupni tokeni (PAT)
+Za skladištenje čistog tajnog stringa (poput API tokena, Vault lozinke ili PAT-a), **ostavite polje za korisničko ime prazno**. Semaphore će unos tretirati isključivo kao izolovanu tajnu bez dodeljivanja korisnika.
 :::
 
-### 3. Bez ključa {#3-none}
-Ovo se koristi kao zamena za repozitorijume koji ne zahtevaju autentifikaciju, kao što je repozitorijum otvorenog koda na GitLab-u.
+#### Maskiranje tajni i zaštita od prepisivanja {#secret-masking-and-override-protection}
 
+Za zaštitu akreditiva od neovlašćenog pristupa i slučajnih izmena:
+* Polja za unos lozinki i pristupnih fraza maskirana su u interfejsu uz mogućnost privremenog prikaza.
+* Prilikom izmene postojećeg akreditiva, osetljiva polja su podrazumevano onemogućena.
+* Da biste ažurirali postojeću tajnu, morate eksplicitno označiti polje **Override** na dnu forme. Ovaj zaštitni mehanizam sprečava slučajno prepisivanje tajni tokom rutinskih izmena.
+
+---
+
+### 3. Nema {#3-none}
+
+Akreditiv **Nema** služi kao prazan autentifikacioni čuvar mesta. Koristi se za javne open-source Git repozitorijume (na GitHub-u ili GitLab-u) i lokalna izvršavanja plejbook-a koja ne zahtevaju SSH ključeve niti lozinke.
+
+---
 
 ## Skladišta tajni {#secret-storages}
 
-Semaphore UI podržava različita skladišta za tajne. Skladište možete izabrati za svaku tajnu pojedinačno pri kreiranju ili izmeni tajne.
+Semaphore podržava razdvojene arhitekture skladištenja tajni. Prilikom kreiranja ili izmene možete izabrati gde se nalazi tajni materijal putem kartica:
 
-Spoljna skladišta kreiraju se na kartici **Skladišta** (Storages) u skladištu ključeva (Pro). Svako skladište ima naziv i tip; ključevi se zatim pozivaju na skladište i putanju tajne unutar njega.
+| Kartica skladišta | Dostupnost | Opis |
+| :--- | :--- | :--- |
+| **Local** | Open Source & Pro | Tajna se čuva direktno u bazi podataka Semaphore-a uz zaštitu envelope enkripcijom. |
+| **Storage** | Pro | Tajna referencira spoljni endžin tajni (npr. HashiCorp Vault, AWS Secrets Manager). |
+| **Env** | Open Source & Pro | Tajna se dinamički očitava u trenutku izvršavanja iz promenljive okruženja servera. |
+| **File** | Open Source & Pro | Tajna se čita iz zaštićenog fajla u konfigurisanom direktorijumu tajni na serveru. |
 
 ![Skladišta tajni](/assets/key-store-storages.webp)
 
-### Baza podataka {#database}
+### Skladište u bazi podataka (Local) {#database}
 
-Tajne se podrazumevano čuvaju u bazi podataka u šifrovanom obliku. Ključ za šifrovanje podešava se konfiguracionom opcijom
-`access_key_encryption` ili `SEMAPHORE_ACCESS_KEY_ENCRYPTION` (mora biti generisan pomoću `head -c32 /dev/urandom | base64`).
+Podrazumevano se tajne čuvaju u bazi podataka u šifrovanom formatu korišćenjem simetrične AES enkripcije. Glavni ključ se podešava u konfiguraciji servera:
+* Konfiguracioni ključ: `access_key_encryption`
+* Promenljiva okruženja: `SEMAPHORE_ACCESS_KEY_ENCRYPTION`
 
-### Promenljiva okruženja ili fajl {#environment-variable-or-file}
+:::warning Generisanje glavnog ključa za enkripciju
+Generišite kriptografski bezbedan 32-bajtni base64 ključ pre pokretanja produkcionih instanci:
+```bash
+head -c32 /dev/urandom | base64
+```
+Obavezno bezbedno sačuvajte kopiju ovog ključa. Ukoliko se ključ izgubi, postojeće tajne iz baze podataka se ne mogu povratiti.
+:::
 
-Ključ može čitati svoju vrednost iz promenljive okruženja Semaphore servera ili iz fajla na serveru
-(na primer SSH ključ montiran u kontejner). Kartice **Env** i **File** u formularu ključa biraju ovaj režim.
+### Promenljive okruženja i fajl izvori (Samo za čitanje) {#environment-variable-or-file}
 
-Fajlovi moraju biti unutar podešenog direktorijuma za tajne (`dirs.secrets` / `SEMAPHORE_SECRETS_PATH`, podrazumevano `/tmp/semaphore`),
-a SSH ključevi i ključevi tipa Prijava lozinkom moraju biti umotani u mali JSON dokument.
+Kada izaberete karticu **Env** ili **File**, Semaphore tretira skladište kao eksterni izvor samo za čitanje. U interfejsu se prikazuje obaveštenje:
 
-[Pročitajte više...](/user-guide/key-store/env-and-file-sources)
+> **Read-only secret storage chosen.**
 
-### HashiCorp Vault {#hashicorp-vault}
+![Skladište samo za čitanje](/assets/key-store-env-readonly-storage.webp)
 
-Tajne se mogu čuvati u spoljnoj HashiCorp Vault instanci umesto u bazi podataka.
+* **Env izvor**: Navedite tačan naziv promenljive okruženja izvezene na serveru (na primer `SEMAPHORE_EXTERNAL_VAULT_TOKEN`).
+* **File izvor**: Navedite relativnu putanju do konfigurisanog direktorijuma tajni (`dirs.secrets` / `SEMAPHORE_SECRETS_PATH`, podrazumevano `/tmp/semaphore`).
 
-[Pročitajte više...](/user-guide/key-store/hashicorp-vault)
+Za struktuirane ključeve, sadržaj fajlova i promenljivih mora biti formatiran kao validan JSON objekat. Za detalje pogledajte [Izvori iz okruženja i fajlova](/user-guide/key-store/env-and-file-sources).
 
-### OpenBao {#openbao}
+### Eksterni enterprise endžini za tajne (Pro & Enterprise) {#external-secret-engines}
 
-Tajne se mogu čuvati u spoljnoj [OpenBao](https://openbao.org) instanci (API-kompatibilan fork HashiCorp Vault-a otvorenog koda).
+Semaphore Pro i Enterprise proširuju Key Store izvornim konektorima za vodeće sisteme upravljanja tajnama:
 
-[Pročitajte više...](/user-guide/key-store/openbao)
+* **[HashiCorp Vault](/user-guide/key-store/hashicorp-vault)**: Povezivanje putem AppRole ili Token autentifikacije za čitanje i pisanje KV v1/v2 tajni.
+* **[OpenBao](/user-guide/key-store/openbao)**: Open-source fork kompatibilan sa API-jem HashiCorp Vault-a.
+* **[AWS Secrets Manager](/user-guide/key-store/aws-secrets-manager)** <Enterprise />: Integracija sa AWS IAM ulogama ili statičkim pristupnim ključevima.
+* **[Devolutions Server](/user-guide/key-store/devolutions-server)**: Integracija sa centralizovanim upravljanjem privilegovanim pristupom.
+* **[CyberArk PAM](/user-guide/key-store/cyberark)** <Enterprise />: Čitanje i pisanje tajni putem CyberArk PVWA REST API-ja.
 
-### AWS Secrets Manager {#aws-secrets-manager}
+---
 
-<Enterprise />
+## Sinhronizacija tajni sa udaljenih skladišta {#syncing-secrets-from-remote-storages}
 
-Tajne se mogu čuvati u AWS Secrets Manager-u. Autentifikujte se pomoću IAM uloge/profila instance ili statičkih pristupnih ključeva.
+Umesto ručnog unosa akreditiva jednog po jednog, Semaphore podržava automatizovanu sinhronizaciju iz eksternih skladišta tajni.
 
-[Pročitajte više...](/user-guide/key-store/aws-secrets-manager)
+Kada se tajna održava putem sinhronizacije:
+* Označena je aktivnom **synchronized** oznakom u tabeli Key Store-a.
+* Ručna izmena tajne u interfejsu je onemogućena kako bi spoljni trezor ostao jedini izvor istine.
+* Bilo kakve izmene ili rotacije tajni automatski se prenose u Semaphore na osnovu podešenog intervala.
 
-### Devolutions Server {#devolutions-server}
-
-Tajne se mogu čuvati u spoljnoj Devolutions Server instanci umesto u bazi podataka.
-
-[Pročitajte više...](/user-guide/key-store/devolutions-server)
-
-## Sinhronizacija tajni iz udaljenih skladišta {#syncing-secrets-from-remote-storages}
-
-Semaphore može automatski uvoziti tajne iz spoljnog menadžera tajni (HashiCorp Vault, OpenBao, AWS Secrets Manager, Azure Key Vault ili Devolutions Server) i održavati ih sinhronizovanim. Putanje za sinhronizaciju omogućavaju vam da izaberete koje tajne se uvoze i kako se imenuju.
-
-[Pročitajte više...](/user-guide/key-store/secret-sync)
+Za kompletne korake konfiguracije pogledajte [Sinhronizacija tajni](/user-guide/key-store/secret-sync).
