@@ -36,11 +36,11 @@ HA를 설정하기 전에 다음이 필요합니다.
 
 * **Semaphore Enterprise** 구독 키.
 * 모든 노드에서 접근 가능한 공유 **PostgreSQL** 또는 **MySQL** 데이터베이스.
-* 모든 노드에서 접근 가능한 **Redis** 인스턴스(또는 Redis 클러스터).
+* 모든 노드에서 접근 가능한 **Redis** 서버 또는 **Redis Sentinel** 배포. Redis Cluster는 지원되지 않습니다.
 * HTTP 및 WebSocket 트래픽을 지원하는 **로드 밸런서**.
 * Semaphore 인스턴스를 실행할 두 대 이상의 서버.
 
-모든 Semaphore 노드는 동일한 데이터베이스, Redis 인스턴스, 구성을 사용해야 합니다(노드마다 고유해야 하는 `ha.node_id` 제외).
+모든 Semaphore 노드는 동일한 데이터베이스, Redis 백엔드, 구성을 사용해야 합니다(노드마다 고유해야 하는 `ha.node_id` 제외).
 
 ## 구성 {#configuration}
 
@@ -86,6 +86,45 @@ SEMAPHORE_HA_REDIS_DB=0
 SEMAPHORE_HA_REDIS_PASS=***
 ```
 
+### Redis Sentinel {#redis-sentinel}
+
+Redis 서버 자체의 장애를 견디려면 단일 주소 대신 [Redis Sentinel](https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/) 배포를 클러스터의 연결 대상으로 지정하십시오. `ha.engine`을 `redis_sentinel`로 설정하고 Sentinel 구성을 `ha.redis_sentinel`에 기술합니다.
+
+```json
+{
+  "ha": {
+    "enabled": true,
+    "node_id": "node-1",
+    "engine": "redis_sentinel",
+    "redis_sentinel": {
+      "master_name": "mymaster",
+      "addrs": ["sentinel-1.example.com:26379", "sentinel-2.example.com:26379", "sentinel-3.example.com:26379"],
+      "pass": "***"
+    }
+  }
+}
+```
+
+각 노드는 sentinel에 현재 마스터를 조회하며 재시작 없이 페일오버를 따라갑니다. 마스터가 변경되는 동안 실행 중이던 태스크는 그대로 계속 실행되고, 새 태스크, 스케줄, 실시간 업데이트는 승격된 레플리카에서 이어집니다.
+
+환경 변수를 사용한 동일한 구성(sentinel 목록은 JSON 배열입니다).
+
+```bash
+SEMAPHORE_HA_ENABLED=true
+SEMAPHORE_HA_NODE_ID=node-1
+SEMAPHORE_HA_ENGINE=redis_sentinel
+SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME=mymaster
+SEMAPHORE_HA_REDIS_SENTINEL_ADDRS='["sentinel-1.example.com:26379","sentinel-2.example.com:26379","sentinel-3.example.com:26379"]'
+SEMAPHORE_HA_REDIS_SENTINEL_PASS=***
+```
+
+참고 사항:
+
+* `ha.engine`이 어떤 블록을 읽을지 결정합니다. `redis`(기본값)는 `ha.redis`를, `redis_sentinel`은 `ha.redis_sentinel`을 읽습니다. 다른 블록이 있어도 무시되며 시작 시 경고가 로그에 기록됩니다.
+* `redis_sentinel`을 사용할 때는 `master_name`과 `addrs`의 주소가 최소 하나 필요하며, 이들이 없으면 노드가 시작되지 않습니다.
+* `user`와 `pass`는 Redis 데이터 노드에 대한 인증에 사용됩니다. sentinel 자체에 인증이 필요한 경우(`sentinel.conf`의 `requirepass`) `sentinel_user`와 `sentinel_pass`도 설정하십시오.
+* `tls`와 `tls_skip_verify`는 Sentinel 연결과 Redis 데이터 노드 연결에 모두 적용됩니다.
+
 ### 구성 참조 {#configuration-reference}
 
 | 구성 파일 옵션 | 환경 변수 | 설명 |
@@ -98,6 +137,16 @@ SEMAPHORE_HA_REDIS_PASS=***
 | `ha.redis.user` | `SEMAPHORE_HA_REDIS_USER` | Redis 서버 사용자 이름입니다. |
 | `ha.redis.tls` | `SEMAPHORE_HA_REDIS_TLS` | Redis 연결에 TLS를 활성화합니다. |
 | `ha.redis.tls_skip_verify` | `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` | Redis의 TLS 인증서 검증을 건너뜁니다. |
+| `ha.engine` | `SEMAPHORE_HA_ENGINE` | Redis 백엔드: `redis`(단일 서버, 기본값) 또는 `redis_sentinel`입니다. |
+| `ha.redis_sentinel.master_name` | `SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME` | Sentinel에 구성된 모니터링 대상 마스터의 이름입니다. |
+| `ha.redis_sentinel.addrs` | `SEMAPHORE_HA_REDIS_SENTINEL_ADDRS` | Sentinel 주소(`host:port`)입니다. 환경 변수에서는 JSON 배열입니다. |
+| `ha.redis_sentinel.sentinel_user` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_USER` | Sentinel 노드 자체의 사용자 이름입니다. |
+| `ha.redis_sentinel.sentinel_pass` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_PASS` | Sentinel 노드 자체의 비밀번호입니다. |
+| `ha.redis_sentinel.db` | `SEMAPHORE_HA_REDIS_SENTINEL_DB` | 데이터 노드의 Redis 데이터베이스 번호입니다. |
+| `ha.redis_sentinel.user` | `SEMAPHORE_HA_REDIS_SENTINEL_USER` | Redis 데이터 노드의 사용자 이름입니다. |
+| `ha.redis_sentinel.pass` | `SEMAPHORE_HA_REDIS_SENTINEL_PASS` | Redis 데이터 노드의 비밀번호입니다. |
+| `ha.redis_sentinel.tls` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS` | Sentinel 및 Redis 연결에 TLS를 활성화합니다. |
+| `ha.redis_sentinel.tls_skip_verify` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS_SKIP_VERIFY` | Sentinel 및 Redis 연결의 TLS 인증서 검증을 건너뜁니다. |
 
 사용 가능한 전체 옵션 목록은 [구성](/admin-guide/configuration)을 참조하십시오.
 
@@ -202,6 +251,10 @@ Redis는 인스턴스 간의 조정 계층 역할을 합니다. 분산 잠금, �
 ### HA 배포에는 어떤 데이터베이스를 사용해야 합니까? {#what-database-should-i-use-for-ha-deployments}
 
 Semaphore는 공유 데이터베이스로 PostgreSQL과 MySQL을 지원합니다. SQLite와 BoltDB는 여러 프로세스의 동시 접근을 지원하지 않기 때문에 HA 모드에서 사용할 수 없습니다.
+
+### Redis에 장애가 발생하면 어떻게 됩니까? {#what-happens-if-redis-fails}
+
+단일 Redis 서버(`ha.engine: redis`)를 사용하는 경우 Redis가 복구될 때까지 노드들은 서로 조정할 수 없습니다. [Redis Sentinel](#redis-sentinel)을 사용하면 sentinel이 레플리카를 승격시키고 모든 Semaphore 노드가 재시작 없이, 보통 몇 초 내에 자동으로 전환됩니다.
 
 ### Semaphore 노드 하나에 장애가 발생하면 어떻게 됩니까? {#what-happens-if-one-semaphore-node-fails}
 

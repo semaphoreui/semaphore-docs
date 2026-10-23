@@ -36,11 +36,11 @@ Bevor Sie HA einrichten, benötigen Sie:
 
 * Einen Abonnementschlüssel für **Semaphore Enterprise**.
 * Eine gemeinsame **PostgreSQL**- oder **MySQL**-Datenbank, die von allen Knoten erreichbar ist.
-* Eine **Redis**-Instanz (oder einen Redis-Cluster), die von allen Knoten erreichbar ist.
+* Einen **Redis**-Server oder ein **Redis Sentinel**-Deployment, erreichbar von allen Knoten. Redis Cluster wird nicht unterstützt.
 * Einen **Load Balancer**, der HTTP- und WebSocket-Verkehr unterstützt.
 * Zwei oder mehr Server, auf denen die Semaphore-Instanzen laufen.
 
-Alle Semaphore-Knoten müssen dieselbe Datenbank, dieselbe Redis-Instanz und dieselbe Konfiguration verwenden (mit Ausnahme von `ha.node_id`, das pro Knoten eindeutig sein muss).
+Alle Semaphore-Knoten müssen dieselbe Datenbank, dasselbe Redis-Backend und dieselbe Konfiguration verwenden (mit Ausnahme von `ha.node_id`, das pro Knoten eindeutig sein muss).
 
 ## Konfiguration {#configuration}
 
@@ -86,6 +86,45 @@ SEMAPHORE_HA_REDIS_DB=0
 SEMAPHORE_HA_REDIS_PASS=***
 ```
 
+### Redis Sentinel {#redis-sentinel}
+
+Um auch den Ausfall des Redis-Servers selbst zu überstehen, richten Sie den Cluster auf ein [Redis Sentinel](https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/)-Deployment statt auf eine einzelne Adresse aus. Setzen Sie `ha.engine` auf `redis_sentinel` und beschreiben Sie das Sentinel-Setup in `ha.redis_sentinel`:
+
+```json
+{
+  "ha": {
+    "enabled": true,
+    "node_id": "node-1",
+    "engine": "redis_sentinel",
+    "redis_sentinel": {
+      "master_name": "mymaster",
+      "addrs": ["sentinel-1.example.com:26379", "sentinel-2.example.com:26379", "sentinel-3.example.com:26379"],
+      "pass": "***"
+    }
+  }
+}
+```
+
+Jeder Knoten fragt die Sentinels nach dem aktuellen Master und folgt einem Failover ohne Neustart: Ein Task, der während des Master-Wechsels läuft, läuft weiter, und neue Tasks, Zeitpläne und Echtzeit-Updates werden auf dem beförderten Replica fortgesetzt.
+
+Dasselbe Setup mit Umgebungsvariablen (die Sentinel-Liste ist ein JSON-Array):
+
+```bash
+SEMAPHORE_HA_ENABLED=true
+SEMAPHORE_HA_NODE_ID=node-1
+SEMAPHORE_HA_ENGINE=redis_sentinel
+SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME=mymaster
+SEMAPHORE_HA_REDIS_SENTINEL_ADDRS='["sentinel-1.example.com:26379","sentinel-2.example.com:26379","sentinel-3.example.com:26379"]'
+SEMAPHORE_HA_REDIS_SENTINEL_PASS=***
+```
+
+Hinweise:
+
+* `ha.engine` entscheidet, welcher Block gelesen wird. `redis` (der Standard) liest `ha.redis`, `redis_sentinel` liest `ha.redis_sentinel`. Der jeweils andere Block wird, falls vorhanden, ignoriert, und beim Start wird eine Warnung protokolliert.
+* Mit `redis_sentinel` sind `master_name` und mindestens eine Adresse in `addrs` erforderlich; ohne sie startet der Knoten nicht.
+* `user` und `pass` authentifizieren gegenüber den Redis-Datenknoten. Wenn die Sentinels selbst eine Authentifizierung erfordern (`requirepass` in `sentinel.conf`), setzen Sie zusätzlich `sentinel_user` und `sentinel_pass`.
+* `tls` und `tls_skip_verify` gelten sowohl für die Verbindungen zu Sentinel als auch für die Verbindungen zu den Redis-Datenknoten.
+
 ### Konfigurationsreferenz {#configuration-reference}
 
 | Option in der Konfigurationsdatei | Umgebungsvariable | Beschreibung |
@@ -98,6 +137,16 @@ SEMAPHORE_HA_REDIS_PASS=***
 | `ha.redis.user` | `SEMAPHORE_HA_REDIS_USER` | Benutzername des Redis-Servers. |
 | `ha.redis.tls` | `SEMAPHORE_HA_REDIS_TLS` | Aktiviert TLS für die Redis-Verbindung. |
 | `ha.redis.tls_skip_verify` | `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` | Überspringt die Prüfung des TLS-Zertifikats für Redis. |
+| `ha.engine` | `SEMAPHORE_HA_ENGINE` | Redis-Backend: `redis` (einzelner Server, Standard) oder `redis_sentinel`. |
+| `ha.redis_sentinel.master_name` | `SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME` | Name des überwachten Masters, wie in Sentinel konfiguriert. |
+| `ha.redis_sentinel.addrs` | `SEMAPHORE_HA_REDIS_SENTINEL_ADDRS` | Sentinel-Adressen, `host:port`. In der Umgebungsvariablen ein JSON-Array. |
+| `ha.redis_sentinel.sentinel_user` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_USER` | Benutzername für die Sentinel-Knoten selbst. |
+| `ha.redis_sentinel.sentinel_pass` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_PASS` | Passwort für die Sentinel-Knoten selbst. |
+| `ha.redis_sentinel.db` | `SEMAPHORE_HA_REDIS_SENTINEL_DB` | Nummer der Redis-Datenbank auf den Datenknoten. |
+| `ha.redis_sentinel.user` | `SEMAPHORE_HA_REDIS_SENTINEL_USER` | Benutzername für die Redis-Datenknoten. |
+| `ha.redis_sentinel.pass` | `SEMAPHORE_HA_REDIS_SENTINEL_PASS` | Passwort für die Redis-Datenknoten. |
+| `ha.redis_sentinel.tls` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS` | Aktiviert TLS für die Sentinel- und Redis-Verbindungen. |
+| `ha.redis_sentinel.tls_skip_verify` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS_SKIP_VERIFY` | Überspringt die Prüfung des TLS-Zertifikats für die Sentinel- und Redis-Verbindungen. |
 
 Die vollständige Liste der verfügbaren Optionen finden Sie unter [Konfiguration](/admin-guide/configuration).
 
@@ -202,6 +251,10 @@ Redis dient als Koordinationsschicht zwischen den Instanzen. Es stellt verteilte
 ### Welche Datenbank sollte ich für HA-Deployments verwenden? {#what-database-should-i-use-for-ha-deployments}
 
 Semaphore unterstützt PostgreSQL und MySQL als gemeinsame Datenbank. SQLite und BoltDB können im HA-Modus nicht verwendet werden, da sie keinen gleichzeitigen Zugriff aus mehreren Prozessen unterstützen.
+
+### Was passiert, wenn Redis ausfällt? {#what-happens-if-redis-fails}
+
+Mit einem einzelnen Redis-Server (`ha.engine: redis`) können sich die Knoten nicht koordinieren, bis Redis wieder verfügbar ist. Mit [Redis Sentinel](#redis-sentinel) befördern die Sentinels ein Replica, und jeder Semaphore-Knoten wechselt automatisch zu diesem — in der Regel innerhalb weniger Sekunden und ohne Neustart.
 
 ### Was passiert, wenn ein Semaphore-Knoten ausfällt? {#what-happens-if-one-semaphore-node-fails}
 

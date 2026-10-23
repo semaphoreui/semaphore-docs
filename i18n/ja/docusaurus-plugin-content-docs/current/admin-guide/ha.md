@@ -36,11 +36,11 @@ HA を設定する前に、次のものが必要です。
 
 * **Semaphore Enterprise** のサブスクリプションキー。
 * すべてのノードからアクセスできる共有の **PostgreSQL** または **MySQL** データベース。
-* すべてのノードからアクセスできる **Redis** インスタンス (または Redis クラスター)。
+* すべてのノードからアクセスできる **Redis** サーバー、または **Redis Sentinel** 構成。Redis Cluster はサポートされていません。
 * HTTP および WebSocket トラフィックをサポートする **ロードバランサー**。
 * Semaphore インスタンスを実行する 2 台以上のサーバー。
 
-すべての Semaphore ノードは、同じデータベース、同じ Redis インスタンス、同じ設定を使用する必要があります (ノードごとに一意でなければならない `ha.node_id` を除く)。
+すべての Semaphore ノードは、同じデータベース、同じ Redis バックエンド、同じ設定を使用する必要があります (ノードごとに一意でなければならない `ha.node_id` を除く)。
 
 ## 設定 {#configuration}
 
@@ -86,6 +86,45 @@ SEMAPHORE_HA_REDIS_DB=0
 SEMAPHORE_HA_REDIS_PASS=***
 ```
 
+### Redis Sentinel {#redis-sentinel}
+
+Redis サーバー自体の障害に耐えるには、単一のアドレスではなく [Redis Sentinel](https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/) 構成をクラスターの接続先として指定します。`ha.engine` を `redis_sentinel` に設定し、Sentinel の構成を `ha.redis_sentinel` に記述します。
+
+```json
+{
+  "ha": {
+    "enabled": true,
+    "node_id": "node-1",
+    "engine": "redis_sentinel",
+    "redis_sentinel": {
+      "master_name": "mymaster",
+      "addrs": ["sentinel-1.example.com:26379", "sentinel-2.example.com:26379", "sentinel-3.example.com:26379"],
+      "pass": "***"
+    }
+  }
+}
+```
+
+各ノードは現在のマスターを Sentinel に問い合わせ、再起動なしでフェイルオーバーに追従します。マスターが切り替わる間に実行中だったタスクはそのまま実行を継続し、新しいタスク、スケジュール、リアルタイム更新は昇格したレプリカ上で継続されます。
+
+環境変数を使用した同じ構成 (Sentinel の一覧は JSON 配列です)。
+
+```bash
+SEMAPHORE_HA_ENABLED=true
+SEMAPHORE_HA_NODE_ID=node-1
+SEMAPHORE_HA_ENGINE=redis_sentinel
+SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME=mymaster
+SEMAPHORE_HA_REDIS_SENTINEL_ADDRS='["sentinel-1.example.com:26379","sentinel-2.example.com:26379","sentinel-3.example.com:26379"]'
+SEMAPHORE_HA_REDIS_SENTINEL_PASS=***
+```
+
+注意事項:
+
+* `ha.engine` によって、どちらのブロックが読み込まれるかが決まります。`redis` (デフォルト) では `ha.redis`、`redis_sentinel` では `ha.redis_sentinel` が読み込まれます。もう一方のブロックが存在していても無視され、起動時に警告がログに記録されます。
+* `redis_sentinel` を使用する場合は、`master_name` と `addrs` 内の少なくとも 1 つのアドレスが必須です。これらがないとノードは起動しません。
+* `user` と `pass` は Redis データノードに対する認証に使用されます。Sentinel 自体が認証を必要とする場合 (`sentinel.conf` の `requirepass`) は、`sentinel_user` と `sentinel_pass` も設定してください。
+* `tls` と `tls_skip_verify` は、Sentinel と Redis データノードの両方の接続に適用されます。
+
 ### 設定リファレンス {#configuration-reference}
 
 | 設定ファイルのオプション | 環境変数 | 説明 |
@@ -98,6 +137,16 @@ SEMAPHORE_HA_REDIS_PASS=***
 | `ha.redis.user` | `SEMAPHORE_HA_REDIS_USER` | Redis サーバーのユーザー名。 |
 | `ha.redis.tls` | `SEMAPHORE_HA_REDIS_TLS` | Redis 接続で TLS を有効にします。 |
 | `ha.redis.tls_skip_verify` | `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` | Redis の TLS 証明書検証をスキップします。 |
+| `ha.engine` | `SEMAPHORE_HA_ENGINE` | Redis バックエンド: `redis` (単一サーバー、デフォルト) または `redis_sentinel`。 |
+| `ha.redis_sentinel.master_name` | `SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME` | Sentinel で設定された、監視対象マスターの名前。 |
+| `ha.redis_sentinel.addrs` | `SEMAPHORE_HA_REDIS_SENTINEL_ADDRS` | Sentinel のアドレス (`host:port`)。環境変数では JSON 配列。 |
+| `ha.redis_sentinel.sentinel_user` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_USER` | Sentinel ノード自体のユーザー名。 |
+| `ha.redis_sentinel.sentinel_pass` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_PASS` | Sentinel ノード自体のパスワード。 |
+| `ha.redis_sentinel.db` | `SEMAPHORE_HA_REDIS_SENTINEL_DB` | データノード上の Redis データベース番号。 |
+| `ha.redis_sentinel.user` | `SEMAPHORE_HA_REDIS_SENTINEL_USER` | Redis データノードのユーザー名。 |
+| `ha.redis_sentinel.pass` | `SEMAPHORE_HA_REDIS_SENTINEL_PASS` | Redis データノードのパスワード。 |
+| `ha.redis_sentinel.tls` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS` | Sentinel と Redis の接続で TLS を有効にします。 |
+| `ha.redis_sentinel.tls_skip_verify` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS_SKIP_VERIFY` | Sentinel と Redis の接続の TLS 証明書検証をスキップします。 |
 
 利用可能なオプションの完全な一覧については、[設定](/admin-guide/configuration)を参照してください。
 
@@ -202,6 +251,10 @@ Redis はインスタンス間の調整レイヤーとして機能します。�
 ### HA デプロイメントにはどのデータベースを使用すべきですか? {#what-database-should-i-use-for-ha-deployments}
 
 Semaphore は共有データベースとして PostgreSQL と MySQL をサポートしています。SQLite と BoltDB は複数プロセスからの同時アクセスをサポートしていないため、HA モードでは使用できません。
+
+### Redis に障害が発生するとどうなりますか? {#what-happens-if-redis-fails}
+
+単一の Redis サーバー (`ha.engine: redis`) を使用している場合、Redis が復旧するまでノードは相互に調整できません。[Redis Sentinel](#redis-sentinel) を使用している場合は、Sentinel がレプリカを昇格させ、すべての Semaphore ノードが再起動なしで、通常は数秒以内に自動的に切り替わります。
 
 ### Semaphore ノードの 1 つに障害が発生するとどうなりますか? {#what-happens-if-one-semaphore-node-fails}
 

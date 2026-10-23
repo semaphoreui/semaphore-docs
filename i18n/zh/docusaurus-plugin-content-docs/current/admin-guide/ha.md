@@ -36,11 +36,11 @@ HA 部署不支持 SQLite 和 BoltDB。请使用 PostgreSQL 或 MySQL。
 
 * **Semaphore Enterprise** 订阅密钥。
 * 一个所有节点都能访问的共享 **PostgreSQL** 或 **MySQL** 数据库。
-* 一个所有节点都能访问的 **Redis** 实例（或 Redis 集群）。
+* 一个所有节点都能访问的 **Redis** 服务器，或 **Redis Sentinel** 部署。不支持 Redis Cluster。
 * 一个支持 HTTP 和 WebSocket 流量的**负载均衡器**。
 * 两台或更多用于运行 Semaphore 实例的服务器。
 
-所有 Semaphore 节点必须使用相同的数据库、Redis 实例和配置（`ha.node_id` 除外，它在每个节点上必须唯一）。
+所有 Semaphore 节点必须使用相同的数据库、Redis 后端和配置（`ha.node_id` 除外，它在每个节点上必须唯一）。
 
 ## 配置 {#configuration}
 
@@ -86,6 +86,45 @@ SEMAPHORE_HA_REDIS_DB=0
 SEMAPHORE_HA_REDIS_PASS=***
 ```
 
+### Redis Sentinel {#redis-sentinel}
+
+为了能够承受 Redis 服务器自身发生故障的情况，可以让集群指向一个 [Redis Sentinel](https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/) 部署，而不是单个地址。将 `ha.engine` 设置为 `redis_sentinel`，并在 `ha.redis_sentinel` 中描述 Sentinel 的部署信息：
+
+```json
+{
+  "ha": {
+    "enabled": true,
+    "node_id": "node-1",
+    "engine": "redis_sentinel",
+    "redis_sentinel": {
+      "master_name": "mymaster",
+      "addrs": ["sentinel-1.example.com:26379", "sentinel-2.example.com:26379", "sentinel-3.example.com:26379"],
+      "pass": "***"
+    }
+  }
+}
+```
+
+每个节点都会向 sentinel 查询当前的主节点，并且无需重启即可跟随故障转移：在主节点切换期间正在运行的任务会继续运行，新的任务、计划任务和实时更新会在被提升的副本上继续进行。
+
+使用环境变量实现相同的配置（sentinel 列表为 JSON 数组）：
+
+```bash
+SEMAPHORE_HA_ENABLED=true
+SEMAPHORE_HA_NODE_ID=node-1
+SEMAPHORE_HA_ENGINE=redis_sentinel
+SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME=mymaster
+SEMAPHORE_HA_REDIS_SENTINEL_ADDRS='["sentinel-1.example.com:26379","sentinel-2.example.com:26379","sentinel-3.example.com:26379"]'
+SEMAPHORE_HA_REDIS_SENTINEL_PASS=***
+```
+
+注意事项：
+
+* `ha.engine` 决定读取哪个块。`redis`（默认值）读取 `ha.redis`；`redis_sentinel` 读取 `ha.redis_sentinel`。另一个块即使存在也会被忽略，并在启动时记录一条警告。
+* 使用 `redis_sentinel` 时，`master_name` 和 `addrs` 中至少一个地址是必填项；缺少它们时节点将拒绝启动。
+* `user` 和 `pass` 用于在 Redis 数据节点上进行身份验证。如果 sentinel 自身需要身份验证（`sentinel.conf` 中的 `requirepass`），还需要设置 `sentinel_user` 和 `sentinel_pass`。
+* `tls` 和 `tls_skip_verify` 同时适用于 Sentinel 连接和 Redis 数据节点连接。
+
 ### 配置参考 {#configuration-reference}
 
 | 配置文件选项 | 环境变量 | 说明 |
@@ -98,6 +137,16 @@ SEMAPHORE_HA_REDIS_PASS=***
 | `ha.redis.user` | `SEMAPHORE_HA_REDIS_USER` | Redis 服务器用户名。 |
 | `ha.redis.tls` | `SEMAPHORE_HA_REDIS_TLS` | 为 Redis 连接启用 TLS。 |
 | `ha.redis.tls_skip_verify` | `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` | 跳过 Redis 的 TLS 证书验证。 |
+| `ha.engine` | `SEMAPHORE_HA_ENGINE` | Redis 后端：`redis`（单个服务器，默认值）或 `redis_sentinel`。 |
+| `ha.redis_sentinel.master_name` | `SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME` | Sentinel 中配置的被监控主节点的名称。 |
+| `ha.redis_sentinel.addrs` | `SEMAPHORE_HA_REDIS_SENTINEL_ADDRS` | Sentinel 地址，格式为 `host:port`。在环境变量中为 JSON 数组。 |
+| `ha.redis_sentinel.sentinel_user` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_USER` | Sentinel 节点自身的用户名。 |
+| `ha.redis_sentinel.sentinel_pass` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_PASS` | Sentinel 节点自身的密码。 |
+| `ha.redis_sentinel.db` | `SEMAPHORE_HA_REDIS_SENTINEL_DB` | 数据节点上的 Redis 数据库编号。 |
+| `ha.redis_sentinel.user` | `SEMAPHORE_HA_REDIS_SENTINEL_USER` | Redis 数据节点的用户名。 |
+| `ha.redis_sentinel.pass` | `SEMAPHORE_HA_REDIS_SENTINEL_PASS` | Redis 数据节点的密码。 |
+| `ha.redis_sentinel.tls` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS` | 为 Sentinel 和 Redis 连接启用 TLS。 |
+| `ha.redis_sentinel.tls_skip_verify` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS_SKIP_VERIFY` | 跳过 Sentinel 和 Redis 连接的 TLS 证书验证。 |
 
 完整的可用选项列表请参阅[配置](/admin-guide/configuration)。
 
@@ -202,6 +251,10 @@ Redis 充当实例之间的协调层。它提供分布式锁、共享任务队�
 ### HA 部署应该使用什么数据库？ {#what-database-should-i-use-for-ha-deployments}
 
 Semaphore 支持使用 PostgreSQL 和 MySQL 作为共享数据库。SQLite 和 BoltDB 不能在 HA 模式下使用，因为它们不支持多个进程的并发访问。
+
+### 如果 Redis 发生故障会怎样？ {#what-happens-if-redis-fails}
+
+在使用单个 Redis 服务器（`ha.engine: redis`）时，各节点在 Redis 恢复之前无法进行协调。使用 [Redis Sentinel](#redis-sentinel) 时，sentinel 会提升一个副本，每个 Semaphore 节点都会自动切换到它，通常在几秒内完成，无需重启。
 
 ### 如果某个 Semaphore 节点发生故障会怎样？ {#what-happens-if-one-semaphore-node-fails}
 

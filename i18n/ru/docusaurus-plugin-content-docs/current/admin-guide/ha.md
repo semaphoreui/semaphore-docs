@@ -36,11 +36,11 @@ SQLite и BoltDB не поддерживаются для HA-развёртыв�
 
 * Ключ подписки **Semaphore Enterprise**.
 * Общая база данных **PostgreSQL** или **MySQL**, доступная со всех узлов.
-* Экземпляр **Redis** (или кластер Redis), доступный со всех узлов.
+* Сервер **Redis** или развёртывание **Redis Sentinel**, доступное со всех узлов. Redis Cluster не поддерживается.
 * **Балансировщик нагрузки**, поддерживающий HTTP- и WebSocket-трафик.
 * Два или более сервера для запуска экземпляров Semaphore.
 
-Все узлы Semaphore должны использовать одну и ту же базу данных, один экземпляр Redis и одинаковую конфигурацию (за исключением `ha.node_id`, который должен быть уникальным для каждого узла).
+Все узлы Semaphore должны использовать одну и ту же базу данных, один и тот же бэкенд Redis и одинаковую конфигурацию (за исключением `ha.node_id`, который должен быть уникальным для каждого узла).
 
 ## Конфигурация {#configuration}
 
@@ -86,6 +86,45 @@ SEMAPHORE_HA_REDIS_DB=0
 SEMAPHORE_HA_REDIS_PASS=***
 ```
 
+### Redis Sentinel {#redis-sentinel}
+
+Чтобы кластер переживал отказ самого сервера Redis, укажите вместо одного адреса развёртывание [Redis Sentinel](https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/). Задайте для `ha.engine` значение `redis_sentinel` и опишите настройки Sentinel в `ha.redis_sentinel`:
+
+```json
+{
+  "ha": {
+    "enabled": true,
+    "node_id": "node-1",
+    "engine": "redis_sentinel",
+    "redis_sentinel": {
+      "master_name": "mymaster",
+      "addrs": ["sentinel-1.example.com:26379", "sentinel-2.example.com:26379", "sentinel-3.example.com:26379"],
+      "pass": "***"
+    }
+  }
+}
+```
+
+Каждый узел запрашивает у sentinel'ов текущий master и отслеживает failover без перезапуска: задача, выполнявшаяся в момент смены master'а, продолжает работу, а новые задачи, расписания и обновления в реальном времени продолжаются на повышенной реплике.
+
+Та же настройка с помощью переменных окружения (список sentinel'ов — JSON-массив):
+
+```bash
+SEMAPHORE_HA_ENABLED=true
+SEMAPHORE_HA_NODE_ID=node-1
+SEMAPHORE_HA_ENGINE=redis_sentinel
+SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME=mymaster
+SEMAPHORE_HA_REDIS_SENTINEL_ADDRS='["sentinel-1.example.com:26379","sentinel-2.example.com:26379","sentinel-3.example.com:26379"]'
+SEMAPHORE_HA_REDIS_SENTINEL_PASS=***
+```
+
+Примечания:
+
+* `ha.engine` определяет, какой блок считывается. `redis` (значение по умолчанию) считывает `ha.redis`; `redis_sentinel` считывает `ha.redis_sentinel`. Другой блок, если он присутствует, игнорируется, а при запуске в лог выводится предупреждение.
+* При `redis_sentinel` обязательны `master_name` и хотя бы один адрес в `addrs`; без них узел откажется запускаться.
+* `user` и `pass` используются для аутентификации на узлах данных Redis. Если сами sentinel'ы требуют аутентификации (`requirepass` в `sentinel.conf`), задайте также `sentinel_user` и `sentinel_pass`.
+* `tls` и `tls_skip_verify` применяются как к подключениям к Sentinel, так и к подключениям к узлам данных Redis.
+
 ### Справочник по конфигурации {#configuration-reference}
 
 | Опция файла конфигурации | Переменная окружения | Описание |
@@ -98,6 +137,16 @@ SEMAPHORE_HA_REDIS_PASS=***
 | `ha.redis.user` | `SEMAPHORE_HA_REDIS_USER` | Имя пользователя сервера Redis. |
 | `ha.redis.tls` | `SEMAPHORE_HA_REDIS_TLS` | Включить TLS для подключения к Redis. |
 | `ha.redis.tls_skip_verify` | `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` | Пропустить проверку TLS-сертификата для Redis. |
+| `ha.engine` | `SEMAPHORE_HA_ENGINE` | Бэкенд Redis: `redis` (один сервер, по умолчанию) или `redis_sentinel`. |
+| `ha.redis_sentinel.master_name` | `SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME` | Имя отслеживаемого master'а, как он настроен в Sentinel. |
+| `ha.redis_sentinel.addrs` | `SEMAPHORE_HA_REDIS_SENTINEL_ADDRS` | Адреса sentinel'ов в формате `host:port`. В переменной окружения — JSON-массив. |
+| `ha.redis_sentinel.sentinel_user` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_USER` | Имя пользователя для самих узлов Sentinel. |
+| `ha.redis_sentinel.sentinel_pass` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_PASS` | Пароль для самих узлов Sentinel. |
+| `ha.redis_sentinel.db` | `SEMAPHORE_HA_REDIS_SENTINEL_DB` | Номер базы данных Redis на узлах данных. |
+| `ha.redis_sentinel.user` | `SEMAPHORE_HA_REDIS_SENTINEL_USER` | Имя пользователя для узлов данных Redis. |
+| `ha.redis_sentinel.pass` | `SEMAPHORE_HA_REDIS_SENTINEL_PASS` | Пароль для узлов данных Redis. |
+| `ha.redis_sentinel.tls` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS` | Включить TLS для подключений к Sentinel и Redis. |
+| `ha.redis_sentinel.tls_skip_verify` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS_SKIP_VERIFY` | Пропустить проверку TLS-сертификата для подключений к Sentinel и Redis. |
 
 Полный список доступных опций см. в разделе [Конфигурация](/admin-guide/configuration).
 
@@ -202,6 +251,10 @@ Redis выступает слоем координации между экзем
 ### Какую базу данных использовать для HA-развёртываний? {#what-database-should-i-use-for-ha-deployments}
 
 Semaphore поддерживает PostgreSQL и MySQL в качестве общей базы данных. SQLite и BoltDB нельзя использовать в режиме HA, так как они не поддерживают одновременный доступ из нескольких процессов.
+
+### Что произойдёт, если Redis выйдет из строя? {#what-happens-if-redis-fails}
+
+При одном сервере Redis (`ha.engine: redis`) узлы не смогут координироваться, пока Redis не вернётся в работу. При использовании [Redis Sentinel](#redis-sentinel) sentinel'ы повышают реплику, и каждый узел Semaphore автоматически переключается на неё — обычно в течение нескольких секунд и без перезапуска.
 
 ### Что произойдёт, если один узел Semaphore выйдет из строя? {#what-happens-if-one-semaphore-node-fails}
 

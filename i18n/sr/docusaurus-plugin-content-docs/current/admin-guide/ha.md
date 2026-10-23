@@ -36,11 +36,11 @@ Pre podešavanja HA potrebno vam je:
 
 * Ključ pretplate na **Semaphore Enterprise**.
 * Deljena **PostgreSQL** ili **MySQL** baza podataka dostupna sa svih čvorova.
-* **Redis** instanca (ili Redis klaster) dostupna sa svih čvorova.
+* **Redis** server ili **Redis Sentinel** instalacija dostupna sa svih čvorova. Redis Cluster nije podržan.
 * **Balanser opterećenja** koji podržava HTTP i WebSocket saobraćaj.
 * Dva ili više servera za pokretanje Semaphore instanci.
 
-Svi Semaphore čvorovi moraju koristiti istu bazu podataka, istu Redis instancu i istu konfiguraciju (osim `ha.node_id`, koji mora biti jedinstven za svaki čvor).
+Svi Semaphore čvorovi moraju koristiti istu bazu podataka, isti Redis backend i istu konfiguraciju (osim `ha.node_id`, koji mora biti jedinstven za svaki čvor).
 
 ## Konfiguracija {#configuration}
 
@@ -86,6 +86,45 @@ SEMAPHORE_HA_REDIS_DB=0
 SEMAPHORE_HA_REDIS_PASS=***
 ```
 
+### Redis Sentinel {#redis-sentinel}
+
+Da biste preživeli otkazivanje samog Redis servera, usmerite klaster na [Redis Sentinel](https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/) instalaciju umesto na jednu adresu. Postavite `ha.engine` na `redis_sentinel` i opišite Sentinel postavku u `ha.redis_sentinel`:
+
+```json
+{
+  "ha": {
+    "enabled": true,
+    "node_id": "node-1",
+    "engine": "redis_sentinel",
+    "redis_sentinel": {
+      "master_name": "mymaster",
+      "addrs": ["sentinel-1.example.com:26379", "sentinel-2.example.com:26379", "sentinel-3.example.com:26379"],
+      "pass": "***"
+    }
+  }
+}
+```
+
+Svaki čvor pita sentinele koji je trenutni primarni čvor i prati preuzimanje uloge (failover) bez ponovnog pokretanja: zadatak koji se izvršava u trenutku promene primarnog čvora nastavlja da radi, a novi zadaci, rasporedi i ažuriranja u realnom vremenu nastavljaju se na promovisanoj replici.
+
+Ista postavka pomoću promenljivih okruženja (lista sentinela je JSON niz):
+
+```bash
+SEMAPHORE_HA_ENABLED=true
+SEMAPHORE_HA_NODE_ID=node-1
+SEMAPHORE_HA_ENGINE=redis_sentinel
+SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME=mymaster
+SEMAPHORE_HA_REDIS_SENTINEL_ADDRS='["sentinel-1.example.com:26379","sentinel-2.example.com:26379","sentinel-3.example.com:26379"]'
+SEMAPHORE_HA_REDIS_SENTINEL_PASS=***
+```
+
+Napomene:
+
+* `ha.engine` određuje koji se blok čita. `redis` (podrazumevano) čita `ha.redis`; `redis_sentinel` čita `ha.redis_sentinel`. Drugi blok, ako postoji, ignoriše se i pri pokretanju se u log upisuje upozorenje.
+* Sa `redis_sentinel` su obavezni `master_name` i najmanje jedna adresa u `addrs`; bez njih čvor odbija da se pokrene.
+* `user` i `pass` služe za autentifikaciju na Redis čvorovima sa podacima. Ako i sami sentineli zahtevaju autentifikaciju (`requirepass` u `sentinel.conf`), postavite i `sentinel_user` i `sentinel_pass`.
+* `tls` i `tls_skip_verify` važe i za vezu sa Sentinelom i za veze sa Redis čvorovima sa podacima.
+
 ### Referenca konfiguracije {#configuration-reference}
 
 | Opcija konfiguracionog fajla | Promenljiva okruženja | Opis |
@@ -98,6 +137,16 @@ SEMAPHORE_HA_REDIS_PASS=***
 | `ha.redis.user` | `SEMAPHORE_HA_REDIS_USER` | Korisničko ime Redis servera. |
 | `ha.redis.tls` | `SEMAPHORE_HA_REDIS_TLS` | Uključuje TLS za vezu sa Redis serverom. |
 | `ha.redis.tls_skip_verify` | `SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` | Preskače proveru TLS sertifikata za Redis. |
+| `ha.engine` | `SEMAPHORE_HA_ENGINE` | Redis backend: `redis` (jedan server, podrazumevano) ili `redis_sentinel`. |
+| `ha.redis_sentinel.master_name` | `SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME` | Naziv nadgledanog primarnog čvora kako je konfigurisan u Sentinelu. |
+| `ha.redis_sentinel.addrs` | `SEMAPHORE_HA_REDIS_SENTINEL_ADDRS` | Adrese sentinela, `host:port`. JSON niz u promenljivoj okruženja. |
+| `ha.redis_sentinel.sentinel_user` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_USER` | Korisničko ime za same Sentinel čvorove. |
+| `ha.redis_sentinel.sentinel_pass` | `SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_PASS` | Lozinka za same Sentinel čvorove. |
+| `ha.redis_sentinel.db` | `SEMAPHORE_HA_REDIS_SENTINEL_DB` | Broj Redis baze podataka na čvorovima sa podacima. |
+| `ha.redis_sentinel.user` | `SEMAPHORE_HA_REDIS_SENTINEL_USER` | Korisničko ime za Redis čvorove sa podacima. |
+| `ha.redis_sentinel.pass` | `SEMAPHORE_HA_REDIS_SENTINEL_PASS` | Lozinka za Redis čvorove sa podacima. |
+| `ha.redis_sentinel.tls` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS` | Uključuje TLS za Sentinel i Redis veze. |
+| `ha.redis_sentinel.tls_skip_verify` | `SEMAPHORE_HA_REDIS_SENTINEL_TLS_SKIP_VERIFY` | Preskače proveru TLS sertifikata za Sentinel i Redis veze. |
 
 Pogledajte [Konfiguracija](/admin-guide/configuration) za potpunu listu dostupnih opcija.
 
@@ -202,6 +251,10 @@ Redis služi kao koordinacioni sloj između instanci. Obezbeđuje distribuirane 
 ### Koju bazu podataka treba da koristim za HA instalacije? {#what-database-should-i-use-for-ha-deployments}
 
 Semaphore podržava PostgreSQL i MySQL kao deljenu bazu podataka. SQLite i BoltDB se ne mogu koristiti u HA režimu jer ne podržavaju istovremeni pristup iz više procesa.
+
+### Šta se dešava ako Redis otkaže? {#what-happens-if-redis-fails}
+
+Sa jednim Redis serverom (`ha.engine: redis`) čvorovi ne mogu da se koordiniraju dok se Redis ne vrati. Sa [Redis Sentinelom](#redis-sentinel) sentineli promovišu repliku i svaki Semaphore čvor automatski prelazi na nju, obično u roku od nekoliko sekundi, bez ponovnog pokretanja.
 
 ### Šta se dešava ako jedan Semaphore čvor otkaže? {#what-happens-if-one-semaphore-node-fails}
 

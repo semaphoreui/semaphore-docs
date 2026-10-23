@@ -290,13 +290,23 @@ Running several nodes against one database. See [High availability](/admin-guide
 | Option / Environment variable | Type / Default | Description |
 |---|---|---|
 | `ha.enabled` <Enterprise /><br />`SEMAPHORE_HA_ENABLED` | boolean | Enable High Availability (HA) mode. |
-| `ha.node_id` <Enterprise /><br />`SEMAPHORE_HA_NODE_ID` | string | auto-generated if empty |
-| `ha.redis.addr` <Enterprise /><br />`SEMAPHORE_HA_REDIS_ADDR` | string | Address of the Redis server used for HA. Example: `localhost:6379`. |
+| `ha.node_id` <Enterprise /><br />`SEMAPHORE_HA_NODE_ID` | string | Unique identifier of this node in the cluster. Auto-generated if empty. |
+| `ha.engine` <Enterprise /><br />`SEMAPHORE_HA_ENGINE` | string<br />Default: `redis` | Backend that stores the shared state and coordinates the HA nodes: `redis` (single server, settings in `ha.redis`) or `redis_sentinel` (Redis Sentinel, settings in `ha.redis_sentinel`). One of `redis`, `redis_sentinel`. |
+| `ha.redis.addr` <Enterprise /><br />`SEMAPHORE_HA_REDIS_ADDR` | string | Address of the Redis server, `host:port`. Default: `127.0.0.1:6379`. |
 | `ha.redis.db` <Enterprise /><br />`SEMAPHORE_HA_REDIS_DB` | integer | Redis database number. |
 | `ha.redis.pass` <Enterprise /><br />`SEMAPHORE_HA_REDIS_PASS` | string | Password for the Redis server. Secret: keep it out of shell history and version control. |
-| `ha.redis.user` <Enterprise /><br />`SEMAPHORE_HA_REDIS_USER` | string | Username for the Redis server. |
+| `ha.redis.user` <Enterprise /><br />`SEMAPHORE_HA_REDIS_USER` | string | Username (ACL) for the Redis server. |
 | `ha.redis.tls` <Enterprise /><br />`SEMAPHORE_HA_REDIS_TLS` | boolean | Enable TLS for the Redis connection. |
 | `ha.redis.tls_skip_verify` <Enterprise /><br />`SEMAPHORE_HA_REDIS_TLS_SKIP_VERIFY` | boolean | Skip TLS certificate verification for the Redis connection. |
+| `ha.redis_sentinel.master_name` <Enterprise /><br />`SEMAPHORE_HA_REDIS_SENTINEL_MASTER_NAME` | string | Name of the monitored master as configured in Sentinel (`sentinel monitor <name> ...`). |
+| `ha.redis_sentinel.addrs` <Enterprise /><br />`SEMAPHORE_HA_REDIS_SENTINEL_ADDRS` | array | Sentinel addresses, `host:port` each. As an environment variable, a JSON array string: `["s1:26379","s2:26379"]`. |
+| `ha.redis_sentinel.sentinel_user` <Enterprise /><br />`SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_USER` | string | Username (ACL) for the Sentinel nodes themselves, not for the Redis data nodes. |
+| `ha.redis_sentinel.sentinel_pass` <Enterprise /><br />`SEMAPHORE_HA_REDIS_SENTINEL_SENTINEL_PASS` | string | Password for the Sentinel nodes themselves (`requirepass` in sentinel.conf), not for the Redis data nodes. Secret: keep it out of shell history and version control. |
+| `ha.redis_sentinel.db` <Enterprise /><br />`SEMAPHORE_HA_REDIS_SENTINEL_DB` | integer | Redis database number on the data nodes. |
+| `ha.redis_sentinel.user` <Enterprise /><br />`SEMAPHORE_HA_REDIS_SENTINEL_USER` | string | Username (ACL) for the Redis data nodes. |
+| `ha.redis_sentinel.pass` <Enterprise /><br />`SEMAPHORE_HA_REDIS_SENTINEL_PASS` | string | Password for the Redis data nodes. Secret: keep it out of shell history and version control. |
+| `ha.redis_sentinel.tls` <Enterprise /><br />`SEMAPHORE_HA_REDIS_SENTINEL_TLS` | boolean | Enable TLS for both the Sentinel and the Redis data-node connections. |
+| `ha.redis_sentinel.tls_skip_verify` <Enterprise /><br />`SEMAPHORE_HA_REDIS_SENTINEL_TLS_SKIP_VERIFY` | boolean | Skip TLS certificate verification for the Sentinel and Redis connections. |
 
 ## Audit log {#audit-log}
 
