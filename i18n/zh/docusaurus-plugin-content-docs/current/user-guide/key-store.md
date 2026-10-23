@@ -1,91 +1,152 @@
-# 密钥库
+---
+title: Key Store
+description: Semaphore Key Store 凭据、SSH 密钥对生成、登录密码、令牌机密和外部密钥存储的综合指南。
+---
 
-Semaphore 的密钥库（Key Store）用于存储访问远程仓库（Repository）、访问远程主机的凭据、sudo 凭据以及 Ansible vault 密码。
+# Key Store
 
-![密钥库](/assets/key-store-keys.webp)
+**Key Store** 是 Semaphore 的集中式凭据库。它负责管理克隆远程 Git 仓库、连接目标基础设施主机、提升权限（`sudo`/`become`）以及解密 Ansible Vault 机密所需的身份验证资料。
 
-**Keys** 选项卡列出项目（Project）的凭据及其类型。**Storages** 选项卡（Pro）列出为项目配置的外部密钥存储，参见[密钥存储](#secret-storages)。
+![Key Store](/assets/key-store-keys.webp)
 
-## 类型 {#types}
+Key Store 分为两个主要视图：
+* **Keys 标签页**：列出为当前项目配置的所有凭据，包括名称、存储后端、凭据类型和同步状态。
+* **Storages 标签页 (Pro)**：配置外部机密后端（例如 HashiCorp Vault、OpenBao、AWS Secrets Manager 或 CyberArk），以实现动态机密解析和自动化同步。
 
-### 1. SSH {#1-ssh}
-SSH 密钥用于访问远程服务器以及远程仓库。
+---
 
-如果你需要快速生成密钥并将其放置到主机上，[这里有一份快速指南。](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
+## 凭据类型 {#types}
 
-对于使用 SSH 认证的 Git 仓库，你要克隆的 Git 仓库需要关联与私钥对应的公钥。
+Semaphore 将存储的凭据分为三种基本类型：
 
-以下是一些常见 Git 仓库托管服务的文档链接：
-* [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
-* [GitLab](https://docs.gitlab.com/ee/user/ssh.html)
-* [Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
+### 1. SSH 密钥 {#1-ssh}
+SSH 密钥提供非对称加密身份验证，用于连接 Linux/UNIX 节点并通过 SSH（`git@github.com:...`）克隆 Git 仓库。
+
+配置 SSH 密钥凭据时，可以指定：
+* **Key Name**：在项目清单和模板中标识该凭据的描述性标签。
+* **Username (Optional)**：建立 SSH 连接时使用的默认远程用户账户（例如 `ansible` 或 `ubuntu`）。
+* **Passphrase (Optional)**：解密加密私钥所需的密码短语。密码短语输入包含可见性切换图标（`眼睛`），默认处于遮蔽状态。
+* **Private Key**：原始 PEM/OpenSSH 私钥文本。
+
+#### 内置 SSH 密钥生成器 {#built-in-ssh-key-generator}
+
+无需在外部机器上手动执行 `ssh-keygen`，Semaphore 在模态框中直接集成了**内置的一键式 SSH 密钥对生成器**：
+
+![Generate SSH Key Modal](/assets/key-store-generate-ssh.webp)
+
+1. 在 **Type** 下拉菜单中选择 **SSH Key**。
+2. 勾选 **Generate SSH Key** 复选框。
+3. 手动输入的 **Private Key** 文本区域将自动禁用并锁定。
+4. 点击 **Create**。Semaphore 将自动生成密码学安全的密钥对（ED25519/RSA），将私钥加密保存至数据库中，并在弹出窗口中显示公钥：
+
+![Generated SSH Public Key](/assets/key-store-generated-public-key.webp)
+
+使用内置的 **Copy to Clipboard** 按钮复制公钥，并将其直接粘贴到 Git 提供商的 Deploy Keys 或目标节点的 `~/.ssh/authorized_keys` 文件中。
+
+#### 后续提取公钥（公钥抽屉） {#extracting-public-keys-later}
+
+如果您关闭了对话框或以后需要检索公钥，无需重新生成密钥对。编辑使用生成器创建的现有密钥时，Semaphore 提供了一个可展开的 **Public key** 抽屉：
+
+![Public Key Drawer](/assets/key-store-public-key-drawer.webp)
+
+* 点击 **Show** / **Hide** 预览原始公钥字符串。
+* 点击剪贴板图标即可即时复制公钥。
+
+#### 将 Deploy Keys 关联至常用 Git 托管平台
+
+对于需要 SSH 身份验证的 Git 仓库，请将生成的公钥添加为只读 Deploy Key：
+* [GitHub Deploy Keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+* [GitLab Deploy Keys](https://docs.gitlab.com/ee/user/project/deploy_keys/)
+* [Bitbucket Access Keys](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
+
+---
 
 ### 2. 密码登录 {#2-login-with-password}
-密码登录（Login With Password）是用户名与密码/访问令牌的组合，可用于以下用途：
-* 对远程主机进行认证（不过这比使用 SSH 密钥安全性更低）
-* 远程主机上的 sudo 凭据
-* 通过 HTTPS 对远程 Git 仓库进行认证（不过 SSH 更安全）
-* 解锁 Ansible vault
 
-:::tip
-    此类密钥可用作个人访问令牌（PAT）或密钥字符串。只需将 Login 字段留空即可。
+**Login with password** 凭据类型既支持传统的用户名/密码身份验证，也支持独立的机密字符串：
+
+* **主机与 sudo 认证**：提供基于密码的 SSH 访问及目标主机上的 `sudo` 提权凭据。
+* **HTTPS Git 认证**：使用用户名和个人访问令牌（PAT）通过 HTTPS 对远程仓库进行身份验证。
+* **Ansible Vault 密码**：在运行时解锁加密的 Ansible Vault 文件和变量。
+
+:::tip 机密字符串与个人访问令牌 (PAT)
+若要存储纯机密字符串（例如 API Bearer 令牌、Ansible Vault 密码短语或 PAT），**请将 Login / Username 字段留空**。Semaphore 会将其严格作为隔离的机密字符串处理，而不附加关联的用户标识符。
 :::
 
-### 3. 无 {#3-none}
-用作不需要认证的仓库的占位项，例如 GitLab 上的开源仓库。
+#### 机密遮蔽与防覆盖保护 {#secret-masking-and-override-protection}
 
+为保护凭据免遭未授权查看和意外篡改：
+* 密码和密码短语输入在界面中进行遮蔽，并提供可见性显示切换。
+* 编辑现有凭据时，敏感机密输入框默认处于禁用状态。
+* 若要更新或替换现有机密，必须显式勾选表单底部的 **Override** 复选框。此安全门机制可防止在日常维护编辑中意外覆盖凭据。
+
+---
+
+### 3. 无 {#3-none}
+
+**None** 凭据作为显式的空身份验证占位符。它用于无需 SSH 密钥或密码的公共开源 Git 仓库（例如 GitHub 或 GitLab 上的公共仓库）以及本地未授权的 Playbook 执行。
+
+---
 
 ## 密钥存储 {#secret-storages}
 
-Semaphore UI 支持多种密钥存储。你可以在创建或编辑密钥时为每个密钥选择存储。
+Semaphore 支持解耦的机密存储架构。在创建或编辑凭据时，可以通过源存储标签页选择基础机密资料的存放位置：
 
-外部存储在密钥库的 **Storages** 选项卡（Pro）中创建。每个存储都有名称和类型；密钥随后引用该存储以及密钥在其中的路径。
+| 存储来源标签页 | 支持版本 | 说明 |
+| :--- | :--- | :--- |
+| **Local** | Open Source & Pro | 密钥受信封加密保护，直接存储在 Semaphore 数据库中。 |
+| **Storage** | Pro | 密钥引用外部机密引擎（例如 HashiCorp Vault、AWS Secrets Manager）。 |
+| **Env** | Open Source & Pro | 密钥在运行时从 Semaphore 服务器上的环境变量动态解析。 |
+| **File** | Open Source & Pro | 密钥从服务器配置的密钥目录中的受保护文件读取。 |
 
 ![密钥存储](/assets/key-store-storages.webp)
 
-### 数据库 {#database}
+### 数据库存储 (Local) {#database}
 
-默认情况下，密钥以加密形式存储在数据库中。加密密钥通过配置选项
-`access_key_encryption` 或 `SEMAPHORE_ACCESS_KEY_ENCRYPTION` 进行配置（必须使用 `head -c32 /dev/urandom | base64` 生成）。
+默认情况下，密钥通过对称 AES 加密后存储在应用程序数据库中。主密钥通过服务器设置进行配置：
+* 配置项：`access_key_encryption`
+* 环境变量：`SEMAPHORE_ACCESS_KEY_ENCRYPTION`
 
-### 环境变量或文件 {#environment-variable-or-file}
+:::warning 生成主加密密钥
+在启动生产实例前，请生成密码学安全的 32 字节 base64 加密密钥：
+```bash
+head -c32 /dev/urandom | base64
+```
+请务必安全备份此密钥。如果加密密钥丢失，数据库中现有的机密将无法恢复。
+:::
 
-密钥可以从 Semaphore 服务器的环境变量或服务器上的文件中读取其值
-（例如挂载到容器中的 SSH 密钥）。密钥表单的 **Env** 和 **File** 选项卡用于选择此模式。
+### 环境变量与文件源（只读存储） {#environment-variable-or-file}
 
-文件必须位于配置的密钥目录内（`dirs.secrets` / `SEMAPHORE_SECRETS_PATH`，默认为 `/tmp/semaphore`），
-并且 SSH 和密码登录密钥必须封装在一个小型 JSON 文档中。
+选择 **Env** 或 **File** 来源标签页时，Semaphore 会将该存储视为外部只读来源。界面会显示明确提示：
 
-[阅读更多...](/user-guide/key-store/env-and-file-sources)
+> **Read-only secret storage chosen.**
 
-### HashiCorp Vault {#hashicorp-vault}
+![只读密钥存储](/assets/key-store-env-readonly-storage.webp)
 
-密钥可以存储在外部 HashiCorp Vault 实例中，而不是数据库中。
+* **Env 来源**：提供在 Semaphore 服务器主机或容器上导出的环境变量的确切名称（例如 `SEMAPHORE_EXTERNAL_VAULT_TOKEN`）。
+* **File 来源**：提供相对于配置的密钥路径（`dirs.secrets` / `SEMAPHORE_SECRETS_PATH`，默认值为 `/tmp/semaphore`）的相对文件路径。
 
-[阅读更多...](/user-guide/key-store/hashicorp-vault)
+对于结构化密钥，文件和环境变量内容必须格式化为有效的 JSON 对象。有关详细信息，请参阅[环境和文件源](/user-guide/key-store/env-and-file-sources)。
 
-### OpenBao {#openbao}
+### 外部企业级机密引擎 (Pro & Enterprise) {#external-secret-engines}
 
-密钥可以存储在外部 [OpenBao](https://openbao.org) 实例中（OpenBao 是 HashiCorp Vault 的开源且 API 兼容的分支）。
+Semaphore Pro 和 Enterprise 通过连接主要企业密钥管理器的原生连接器扩展了 Key Store：
 
-[阅读更多...](/user-guide/key-store/openbao)
+* **[HashiCorp Vault](/user-guide/key-store/hashicorp-vault)**：通过 AppRole 或令牌认证连接以读取和写入 KV v1/v2 机密。
+* **[OpenBao](/user-guide/key-store/openbao)**：HashiCorp Vault 的开源 API 兼容分支。
+* **[AWS Secrets Manager](/user-guide/key-store/aws-secrets-manager)** <Enterprise />：与 AWS IAM 角色或静态凭据集成。
+* **[Devolutions Server](/user-guide/key-store/devolutions-server)**：与集中式特权访问管理集成。
+* **[CyberArk PAM](/user-guide/key-store/cyberark)** <Enterprise />：使用 CyberArk PVWA REST API 读取和写入机密。
 
-### AWS Secrets Manager {#aws-secrets-manager}
-
-<Enterprise />
-
-密钥可以存储在 AWS Secrets Manager 中。使用 IAM 角色/实例配置文件或静态访问密钥进行认证。
-
-[阅读更多...](/user-guide/key-store/aws-secrets-manager)
-
-### Devolutions Server {#devolutions-server}
-
-密钥可以存储在外部 Devolutions Server 实例中，而不是数据库中。
-
-[阅读更多...](/user-guide/key-store/devolutions-server)
+---
 
 ## 从远程存储同步密钥 {#syncing-secrets-from-remote-storages}
 
-Semaphore 可以自动从外部密钥管理器（HashiCorp Vault、OpenBao、AWS Secrets Manager、Azure Key Vault 或 Devolutions Server）导入密钥并保持同步。同步路径让你可以选择导入哪些密钥以及如何命名它们。
+无需逐个手动注册凭据，Semaphore 支持从外部机密保险库进行自动化同步。
 
-[阅读更多...](/user-guide/key-store/secret-sync)
+当密钥通过同步维护时：
+* 它在 Key Store 表格中标记有活跃的 **synchronized** 徽章。
+* 界面中对密钥内容的手动编辑将被禁用，以保持外部保险库作为唯一的真实数据来源。
+* 外部机密引擎中的任何更新或轮换都会根据配置的同步时间间隔自动传播到 Semaphore。
+
+有关详细配置步骤，请参阅[密钥同步](/user-guide/key-store/secret-sync)。

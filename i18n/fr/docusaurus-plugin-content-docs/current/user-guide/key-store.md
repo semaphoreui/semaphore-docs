@@ -1,91 +1,152 @@
-# Magasin de clés
+---
+title: Key Store
+description: Guide complet des identifiants dans le Key Store Semaphore, génération de paires de clés SSH, mots de passe de connexion, secrets de jeton et stockages externes.
+---
 
-Le Magasin de clés de Semaphore sert à stocker les identifiants nécessaires pour accéder à des dépôts distants, accéder à des hôtes distants, élever les privilèges avec sudo et déverrouiller les vaults Ansible.
+# Key Store
 
-![Magasin de clés](/assets/key-store-keys.webp)
+Le **Key Store** sert de référentiel centralisé d'identifiants pour Semaphore. Il gère les éléments d'authentification nécessaires au clonage de dépôts Git distants, aux connexions vers les hôtes cibles, à l'élévation de privilèges (`sudo`/`become`) et au déchiffrement des secrets Ansible Vault.
 
-L'onglet **Clés** liste les identifiants du projet avec leur type. L'onglet **Stockages** (Pro) liste les stockages de secrets externes configurés pour le projet, voir [Stockages de secrets](#secret-storages).
+![Key Store](/assets/key-store-keys.webp)
 
-## Types {#types}
+Le Key Store est divisé en deux vues principales :
+* **Onglet Keys** : Liste tous les identifiants approvisionnés pour le projet actuel, avec leur nom, backend de stockage, type et état de synchronisation.
+* **Onglet Storages (Pro)** : Configure les backends de secrets externes (tels que HashiCorp Vault, OpenBao, AWS Secrets Manager ou CyberArk) pour la résolution dynamique et la synchronisation automatisée.
 
-### 1. SSH {#1-ssh}
-Les clés SSH servent à accéder aux serveurs distants ainsi qu'aux dépôts distants.
+---
 
-Si vous avez besoin d'aide pour générer rapidement une clé et la déposer sur votre hôte, [voici un guide rapide.](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
+## Types d'identifiants {#types}
 
-Pour les dépôts Git qui utilisent l'authentification SSH, le dépôt Git depuis lequel vous essayez de cloner doit avoir votre clé publique associée à la clé privée.
+Semaphore classe les identifiants stockés selon trois types fondamentaux :
 
-Voici des liens vers la documentation de quelques dépôts Git courants :
-* [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
-* [GitLab](https://docs.gitlab.com/ee/user/ssh.html)
-* [Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
+### 1. Clés SSH {#1-ssh}
+Les clés SSH fournissent une authentification asymétrique pour se connecter aux nœuds Linux/UNIX et cloner des dépôts Git via SSH (`git@github.com:...`).
+
+Lors de la configuration d'un identifiant de clé SSH, vous pouvez définir :
+* **Nom de clé** : Un libellé descriptif pour l'identifiant dans vos inventaires et modèles de projet.
+* **Nom d'utilisateur (Optionnel)** : Le compte utilisateur distant par défaut utilisé lors de la connexion SSH (par exemple `ansible` ou `ubuntu`).
+* **Phrase secrète (Optionnel)** : La phrase secrète requise pour déchiffrer les clés privées chiffrées. Les champs de phrase secrète incluent une icône de visibilité (`œil`) et sont masqués par défaut.
+* **Clé privée** : Le texte brut de la clé privée PEM/OpenSSH.
+
+#### Générateur de clés SSH intégré {#built-in-ssh-key-generator}
+
+Plutôt que d'exécuter manuellement `ssh-keygen` sur des machines externes, Semaphore intègre un **générateur de paires de clés SSH en un clic** directement dans la modale :
+
+![Generate SSH Key Modal](/assets/key-store-generate-ssh.webp)
+
+1. Sélectionnez **Clé SSH** dans le menu déroulant **Type**.
+2. Cochez la case **Générer une clé SSH**.
+3. La zone de texte pour la **clé privée** manuelle est automatiquement désactivée et verrouillée.
+4. Cliquez sur **Créer**. Semaphore génère automatiquement une paire de clés sécurisée (ED25519/RSA), chiffre la clé privée dans la base de données et affiche la clé publique dans un dialogue dédié :
+
+![Generated SSH Public Key](/assets/key-store-generated-public-key.webp)
+
+Utilisez le bouton **Copier dans le presse-papiers** pour copier la clé publique et collez-la dans les clés de déploiement de votre forge Git ou dans le fichier `~/.ssh/authorized_keys` de vos nœuds cibles.
+
+#### Extraction ultérieure des clés publiques (Tiroir de clé publique) {#extracting-public-keys-later}
+
+Si vous fermez le dialogue ou avez besoin de récupérer la clé publique ultérieurement, il n'est pas nécessaire de régénérer la paire de clés. Lors de l'édition d'une clé créée avec le générateur, Semaphore propose un volet déroulant **Clé publique** :
+
+![Public Key Drawer](/assets/key-store-public-key-drawer.webp)
+
+* Cliquez sur **Afficher** / **Masquer** pour visualiser la clé publique brute.
+* Cliquez sur l'icône de presse-papiers pour copier instantanément la clé publique.
+
+#### Association de clés de déploiement aux forges Git courantes
+
+Pour les dépôts Git nécessitant une authentification SSH, ajoutez la clé publique générée en tant que deploy key en lecture seule :
+* [GitHub Deploy Keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+* [GitLab Deploy Keys](https://docs.gitlab.com/ee/user/project/deploy_keys/)
+* [Bitbucket Access Keys](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
+
+---
 
 ### 2. Connexion avec mot de passe {#2-login-with-password}
-La connexion avec mot de passe est une combinaison d'un nom d'utilisateur et d'un mot de passe ou jeton d'accès, qui peut servir à :
-* S'authentifier auprès d'hôtes distants (bien que ce soit moins sûr que l'utilisation de clés SSH)
-* Fournir les identifiants sudo sur les hôtes distants
-* S'authentifier auprès de dépôts Git distants en HTTPS (bien que SSH soit plus sûr)
-* Déverrouiller les vaults Ansible
 
-:::tip
-    Ce type de secret peut être utilisé comme jeton d'accès personnel (PAT) ou comme chaîne secrète. Laissez simplement le champ Login vide.
+Le type d'identifiant **Connexion avec mot de passe** prend en charge aussi bien les combinaisons classiques nom d'utilisateur/mot de passe que les chaînes secrètes isolées :
+
+* **Authentification hôte et sudo** : Fournit l'accès SSH par mot de passe et l'élévation de privilèges `sudo` sur les hôtes cibles.
+* **Authentification Git HTTPS** : Authentifie sur les dépôts distants en HTTPS à l'aide d'un nom d'utilisateur et de jetons d'accès personnel (PAT).
+* **Mots de passe Ansible Vault** : Déverrouille les fichiers et variables chiffrés d'Ansible Vault lors de l'exécution.
+
+:::tip Chaînes secrètes et jetons d'accès personnel (PAT)
+Pour stocker une chaîne secrète brute (comme un jeton d'API, mot de passe Vault ou PAT), **laissez le champ Nom d'utilisateur vide**. Semaphore traitera l'élément comme un secret isolé sans lui associer d'identifiant utilisateur.
 :::
 
-### 3. Aucun {#3-none}
-Ce type sert de valeur de remplissage pour les dépôts qui ne nécessitent pas d'authentification, comme un dépôt open source sur GitLab.
+#### Masquage des secrets et protection contre l'écrasement {#secret-masking-and-override-protection}
 
+Pour protéger les identifiants contre toute exposition non autorisée et toute modification accidentelle :
+* Les champs de mot de passe et de phrase secrète sont masqués avec des options d'affichage temporaire.
+* Lors de l'édition d'un identifiant existant, les champs de secrets sensibles sont désactivés par défaut.
+* Pour mettre à jour un secret existant, vous devez obligatoirement cocher la case **Écraser** en bas du formulaire. Ce verrou de sécurité empêche les écrasements involontaires lors des modifications d'administration courantes.
+
+---
+
+### 3. Aucun {#3-none}
+
+L'identifiant **Aucun** sert d'espace réservé pour l'absence d'authentification. Il est utilisé pour les dépôts Git open-source publics (sur GitHub ou GitLab) et les exécutions locales de playbooks ne requérant ni clé SSH ni mot de passe.
+
+---
 
 ## Stockages de secrets {#secret-storages}
 
-Semaphore UI prend en charge différents stockages pour les secrets. Vous pouvez choisir le stockage secret par secret lors de la création ou de la modification d'un secret.
+Semaphore prend en charge les architectures découplées de stockage de secrets. Lors de la création ou de l'édition, vous pouvez choisir l'emplacement du secret via les onglets :
 
-Les stockages externes sont créés dans l'onglet **Stockages** du Magasin de clés (Pro). Chaque stockage possède un nom et un type ; les clés font ensuite référence au stockage et au chemin du secret à l'intérieur de celui-ci.
+| Onglet de stockage | Disponibilité | Description |
+| :--- | :--- | :--- |
+| **Local** | Open Source & Pro | Le secret est stocké directement dans la base de données Semaphore avec chiffrement d'enveloppe. |
+| **Storage** | Pro | Le secret référence un moteur externe (par exemple HashiCorp Vault, AWS Secrets Manager). |
+| **Env** | Open Source & Pro | Le secret est résolu dynamiquement à l'exécution depuis une variable d'environnement du serveur. |
+| **File** | Open Source & Pro | Le secret est lu depuis un fichier protégé situé dans le répertoire de secrets configuré. |
 
 ![Stockages de secrets](/assets/key-store-storages.webp)
 
-### Base de données {#database}
+### Stockage en base de données (Local) {#database}
 
-Par défaut, les secrets sont stockés dans la base de données sous forme chiffrée. La clé de chiffrement est configurée via l'option de configuration
-`access_key_encryption` ou `SEMAPHORE_ACCESS_KEY_ENCRYPTION` (elle doit être générée avec `head -c32 /dev/urandom | base64`).
+Par défaut, les secrets sont stockés de manière chiffrée dans la base de données grâce au chiffrement symétrique AES. La clé principale est configurée via le paramètre serveur :
+* Clé de configuration : `access_key_encryption`
+* Variable d'environnement : `SEMAPHORE_ACCESS_KEY_ENCRYPTION`
 
-### Variable d'environnement ou fichier {#environment-variable-or-file}
+:::warning Génération de la clé maîtresse de chiffrement
+Générez une clé cryptographique base64 de 32 octets avant de démarrer vos instances de production :
+```bash
+head -c32 /dev/urandom | base64
+```
+Assurez-vous de sauvegarder cette clé. En cas de perte, les secrets existants en base de données ne pourront pas être récupérés.
+:::
 
-Une clé peut lire sa valeur depuis une variable d'environnement du serveur Semaphore ou depuis un fichier présent sur le serveur
-(par exemple une clé SSH montée dans le conteneur). Les onglets **Env** et **File** du formulaire de clé permettent de choisir ce mode.
+### Sources de variables d'environnement et fichiers (Lecture seule) {#environment-variable-or-file}
 
-Les fichiers doivent se trouver dans le répertoire de secrets configuré (`dirs.secrets` / `SEMAPHORE_SECRETS_PATH`, par défaut `/tmp/semaphore`),
-et les clés SSH et de connexion avec mot de passe doivent être encapsulées dans un petit document JSON.
+Lorsque vous sélectionnez l'onglet **Env** ou **File**, Semaphore traite le stockage comme une source externe en lecture seule. L'interface affiche une notification explicite :
 
-[En savoir plus...](/user-guide/key-store/env-and-file-sources)
+> **Read-only secret storage chosen.**
 
-### HashiCorp Vault {#hashicorp-vault}
+![Stockage en lecture seule](/assets/key-store-env-readonly-storage.webp)
 
-Les secrets peuvent être stockés dans une instance HashiCorp Vault externe plutôt que dans la base de données.
+* **Source Env** : Fournissez le nom exact de la variable d'environnement exportée sur le serveur (par exemple `SEMAPHORE_EXTERNAL_VAULT_TOKEN`).
+* **Source File** : Fournissez le chemin relatif au répertoire de secrets configuré (`dirs.secrets` / `SEMAPHORE_SECRETS_PATH`, valeur par défaut `/tmp/semaphore`).
 
-[En savoir plus...](/user-guide/key-store/hashicorp-vault)
+Pour les clés structurées, le contenu des fichiers ou variables doit respecter le format JSON. Pour plus de détails, consultez [Sources d'environnement et fichiers](/user-guide/key-store/env-and-file-sources).
 
-### OpenBao {#openbao}
+### Moteurs de secrets d'entreprise externes (Pro & Enterprise) {#external-secret-engines}
 
-Les secrets peuvent être stockés dans une instance [OpenBao](https://openbao.org) externe (un fork open source de HashiCorp Vault compatible avec son API).
+Semaphore Pro et Enterprise étendent le Key Store avec des connecteurs natifs vers les gestionnaires de secrets leaders du marché :
 
-[En savoir plus...](/user-guide/key-store/openbao)
+* **[HashiCorp Vault](/user-guide/key-store/hashicorp-vault)** : Connexion via authentification AppRole ou Token pour lire et écrire des secrets KV v1/v2.
+* **[OpenBao](/user-guide/key-store/openbao)** : Fork open-source et compatible avec l'API de HashiCorp Vault.
+* **[AWS Secrets Manager](/user-guide/key-store/aws-secrets-manager)** <Enterprise /> : Intégration avec les rôles IAM AWS ou identifiants statiques.
+* **[Devolutions Server](/user-guide/key-store/devolutions-server)** : Intégration pour la gestion centralisée des accès à privilèges.
+* **[CyberArk PAM](/user-guide/key-store/cyberark)** <Enterprise /> : Lecture et écriture de secrets via l'API REST PVWA de CyberArk.
 
-### AWS Secrets Manager {#aws-secrets-manager}
+---
 
-<Enterprise />
+## Synchronisation des secrets depuis des stockages distants {#syncing-secrets-from-remote-storages}
 
-Les secrets peuvent être stockés dans AWS Secrets Manager. Authentifiez-vous avec un rôle IAM / profil d'instance ou avec des clés d'accès statiques.
+Plutôt que d'enregistrer les identifiants un par un, Semaphore prend en charge la synchronisation automatisée depuis des coffres de secrets externes.
 
-[En savoir plus...](/user-guide/key-store/aws-secrets-manager)
+Lorsqu'un secret est géré par synchronisation :
+* Il porte un badge actif **synchronized** dans le tableau du Key Store.
+* La modification manuelle du secret dans l'interface est désactivée afin de préserver le coffre externe comme source unique de vérité.
+* Toute mise à jour ou rotation dans le moteur distant est automatiquement répercutée dans Semaphore selon l'intervalle configuré.
 
-### Devolutions Server {#devolutions-server}
-
-Les secrets peuvent être stockés dans une instance Devolutions Server externe plutôt que dans la base de données.
-
-[En savoir plus...](/user-guide/key-store/devolutions-server)
-
-## Synchroniser les secrets depuis des stockages distants {#syncing-secrets-from-remote-storages}
-
-Semaphore peut importer automatiquement des secrets depuis un gestionnaire de secrets externe (HashiCorp Vault, OpenBao, AWS Secrets Manager, Azure Key Vault ou Devolutions Server) et les maintenir synchronisés. Les chemins de synchronisation vous permettent de choisir quels secrets importer et comment les nommer.
-
-[En savoir plus...](/user-guide/key-store/secret-sync)
+Pour découvrir toutes les étapes de configuration, consultez [Synchronisation des secrets](/user-guide/key-store/secret-sync).
