@@ -103,10 +103,13 @@
 | `SEMAPHORE_PROJECT_ID` | 任务所属项目的 ID |
 | `SEMAPHORE_WORKFLOW_ID` | 当任务是[工作流](./workflows#environment-variables)运行中的一个节点时，表示工作流 ID |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | 任务所属工作流运行的 ID |
+| `SEMAPHORE_WORKFLOW_VERSION` | 任务所属工作流运行的版本（如果有） |
 | `SEMAPHORE_WORKFLOW_URL` | 工作流运行页面的链接（要求在服务器配置中设置 `web_host`） |
 | `SEMAPHORE_OUTPUTS_FILE` | 工作流任务写入其[输出](./workflows#producing-outputs)的文件路径 |
 
 如果任务不是由工作流启动的，则不会设置工作流变量。
+
+完整列表（包括仅为某一应用设置的变量以及 git 和 SSH 的辅助变量）见参考文档：[任务环境变量](/reference/task-environment)。
 
 在特定情况下还会设置其他变量：
 

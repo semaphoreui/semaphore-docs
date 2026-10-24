@@ -103,10 +103,13 @@ Svaki zadatak, bez obzira na aplikaciju (Ansible, Terraform, Bash, PowerShell il
 | `SEMAPHORE_PROJECT_ID` | ID projekta kojem zadatak pripada |
 | `SEMAPHORE_WORKFLOW_ID` | ID workflow-a, kada je zadatak čvor pokretanja [workflow-a](./workflows#environment-variables) |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID pokretanja workflow-a kojem zadatak pripada |
+| `SEMAPHORE_WORKFLOW_VERSION` | Verzija pokretanja workflow-a kojem zadatak pripada, ako postoji |
 | `SEMAPHORE_WORKFLOW_URL` | Veza ka stranici pokretanja workflow-a (zahteva `web_host` u konfiguraciji servera) |
 | `SEMAPHORE_OUTPUTS_FILE` | Putanja datoteke u koju zadatak workflow-a upisuje svoje [izlaze](./workflows#producing-outputs) |
 
 Workflow promenljive nisu prisutne ako zadatak nije pokrenut iz workflow-a.
+
+Potpuna lista, uključujući promenljive koje se postavljaju samo za jednu aplikaciju i pomoćne promenljive za git i SSH, nalazi se u referenci: [Promenljive okruženja zadatka](/reference/task-environment).
 
 Druge promenljive se postavljaju u određenim slučajevima:
 

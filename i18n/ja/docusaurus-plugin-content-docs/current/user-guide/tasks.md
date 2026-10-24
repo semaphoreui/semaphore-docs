@@ -103,10 +103,13 @@ UI 上のどこかでタスクをクリックすると、タスクのウィン�
 | `SEMAPHORE_PROJECT_ID` | タスクが属するプロジェクトの ID |
 | `SEMAPHORE_WORKFLOW_ID` | タスクが[ワークフロー](./workflows#environment-variables)実行のノードである場合のワークフロー ID |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | タスクが属するワークフロー実行の ID |
+| `SEMAPHORE_WORKFLOW_VERSION` | タスクが属するワークフロー実行のバージョン（実行にバージョンがある場合） |
 | `SEMAPHORE_WORKFLOW_URL` | ワークフロー実行ページへのリンク（サーバー設定の `web_host` が必要です） |
 | `SEMAPHORE_OUTPUTS_FILE` | ワークフローのタスクが[出力](./workflows#producing-outputs)を書き込むファイルのパス |
 
 ワークフローによって開始されていないタスクには、ワークフロー変数は設定されません。
+
+アプリ固有の変数や git と SSH の補助変数を含む完全な一覧は、リファレンスの [タスクの環境変数](/reference/task-environment) にあります。
 
 特定の場合には、以下の変数も設定されます。
 

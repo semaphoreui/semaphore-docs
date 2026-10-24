@@ -232,6 +232,7 @@ Eine von einem Workflow gestartete Aufgabe erhält zusätzlich zu den
 | --- | --- |
 | `SEMAPHORE_WORKFLOW_ID` | ID des Workflows |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID des aktuellen Durchlaufs |
+| `SEMAPHORE_WORKFLOW_VERSION` | Version des aktuellen Durchlaufs, falls vorhanden |
 | `SEMAPHORE_WORKFLOW_URL` | Link zur Seite des Durchlaufs, z. B. `https://semaphore.example.com/project/1/workflows/7/runs/42` (erfordert `web_host` in der Serverkonfiguration) |
 | `SEMAPHORE_OUTPUTS_FILE` | Pfad der Datei, in die der Task seine [Outputs](#producing-outputs) schreibt |
 

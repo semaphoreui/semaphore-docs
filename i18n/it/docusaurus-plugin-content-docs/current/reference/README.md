@@ -19,6 +19,7 @@ sarebbe obsoleta al primo cambiamento di un'opzione, e nessuno se ne accorgerebb
 |---|---|
 | [Opzioni di configurazione](/reference/configuration) | Ogni chiave di `config.json` con la relativa variabile d'ambiente, il tipo e il valore predefinito. Generata. |
 | [Eventi di audit](/reference/audit-events) | Il formato degli eventi di audit e tutti gli eventi disponibili e previsti. |
+| [Variabili d'ambiente delle attività](/reference/task-environment) | Ogni variabile che Semaphore imposta nel processo di un'attività, per app, e la condizione in cui è presente. |
 | [CLI](/reference/cli) | Il comando `semaphore`: che cosa fa ogni gruppo di comandi, come viene individuato il file di configurazione e un elenco generato di tutti i comandi e i flag. |
 | [API](/reference/api) | Autenticarsi con un token e chiamare gli endpoint REST. |
 

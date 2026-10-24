@@ -224,6 +224,7 @@ Uma tarefa iniciada por um workflow recebe, além das
 | --- | --- |
 | `SEMAPHORE_WORKFLOW_ID` | ID do workflow |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID da execução atual |
+| `SEMAPHORE_WORKFLOW_VERSION` | Versão da execução atual, quando houver |
 | `SEMAPHORE_WORKFLOW_URL` | Link para a página da execução, por exemplo `https://semaphore.example.com/project/1/workflows/7/runs/42` (requer `web_host` na configuração do servidor) |
 | `SEMAPHORE_OUTPUTS_FILE` | Caminho do arquivo no qual a tarefa grava as suas [saídas](#producing-outputs) |
 

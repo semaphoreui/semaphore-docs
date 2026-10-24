@@ -229,6 +229,7 @@ Zadatak koji pokrene tok rada dobija, pored
 | --- | --- |
 | `SEMAPHORE_WORKFLOW_ID` | ID toka rada |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID trenutnog izvršavanja |
+| `SEMAPHORE_WORKFLOW_VERSION` | Verzija trenutnog izvršavanja, ako postoji |
 | `SEMAPHORE_WORKFLOW_URL` | Veza ka stranici izvršavanja, na primer `https://semaphore.example.com/project/1/workflows/7/runs/42` (zahteva `web_host` u konfiguraciji servera) |
 | `SEMAPHORE_OUTPUTS_FILE` | Putanja datoteke u koju zadatak upisuje svoje [izlaze](#producing-outputs) |
 

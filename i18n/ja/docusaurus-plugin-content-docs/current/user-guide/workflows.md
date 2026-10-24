@@ -218,6 +218,7 @@ EOF
 | --- | --- |
 | `SEMAPHORE_WORKFLOW_ID` | ワークフローの ID |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | 現在の実行の ID |
+| `SEMAPHORE_WORKFLOW_VERSION` | 現在の実行のバージョン（ある場合） |
 | `SEMAPHORE_WORKFLOW_URL` | 実行ページへのリンク（例：`https://semaphore.example.com/project/1/workflows/7/runs/42`。サーバー設定の `web_host` が必要です） |
 | `SEMAPHORE_OUTPUTS_FILE` | タスクが[出力](#producing-outputs)を書き込むファイルのパス |
 

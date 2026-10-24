@@ -19,6 +19,7 @@ put promeni, a niko to ne bi primetio.
 |---|---|
 | [Opcije konfiguracije](/reference/configuration) | Svaki ključ datoteke `config.json` sa svojom promenljivom okruženja, tipom i podrazumevanom vrednošću. Generisano. |
 | [Događaji revizije](/reference/audit-events) | Format događaja revizije i svi dostupni i planirani događaji. |
+| [Promenljive okruženja zadatka](/reference/task-environment) | Svaka promenljiva koju Semaphore postavlja u procesu zadatka, po aplikaciji, i uslov pod kojim je prisutna. |
 | [CLI](/reference/cli) | Komanda `semaphore`: šta radi svaka grupa komandi, kako se pronalazi datoteka konfiguracije i generisani spisak svih komandi i opcija. |
 | [API](/reference/api) | Autentifikacija tokenom i pozivanje REST krajnjih tačaka. |
 

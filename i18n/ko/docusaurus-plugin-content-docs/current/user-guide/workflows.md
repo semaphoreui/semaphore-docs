@@ -217,6 +217,7 @@ JSON으로 전달됨). 맞지 않는 값은 무시되고 그 이유가 작업 �
 | --- | --- |
 | `SEMAPHORE_WORKFLOW_ID` | 워크플로 ID |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | 현재 실행 ID |
+| `SEMAPHORE_WORKFLOW_VERSION` | 현재 실행의 버전 (있는 경우) |
 | `SEMAPHORE_WORKFLOW_URL` | 실행 페이지 링크 (예: `https://semaphore.example.com/project/1/workflows/7/runs/42`; 서버 설정에 `web_host`가 필요함) |
 | `SEMAPHORE_OUTPUTS_FILE` | 작업이 [출력](#producing-outputs)을 기록하는 파일의 경로 |
 

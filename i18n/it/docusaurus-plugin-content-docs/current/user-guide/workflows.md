@@ -224,6 +224,7 @@ Un Task avviato da un workflow riceve, oltre alle
 | --- | --- |
 | `SEMAPHORE_WORKFLOW_ID` | ID del workflow |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID dell'esecuzione corrente |
+| `SEMAPHORE_WORKFLOW_VERSION` | Versione dell'esecuzione corrente, se presente |
 | `SEMAPHORE_WORKFLOW_URL` | Link alla pagina dell'esecuzione, ad esempio `https://semaphore.example.com/project/1/workflows/7/runs/42` (richiede `web_host` nella configurazione del server) |
 | `SEMAPHORE_OUTPUTS_FILE` | Percorso del file in cui il Task scrive i propri [output](#producing-outputs) |
 

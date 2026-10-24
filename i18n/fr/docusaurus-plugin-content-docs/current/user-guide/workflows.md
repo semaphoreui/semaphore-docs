@@ -238,6 +238,7 @@ Une tâche démarrée par un workflow reçoit, en plus des
 | --- | --- |
 | `SEMAPHORE_WORKFLOW_ID` | ID du workflow |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID de l'exécution en cours |
+| `SEMAPHORE_WORKFLOW_VERSION` | Version de l'exécution en cours, si elle en a une |
 | `SEMAPHORE_WORKFLOW_URL` | Lien vers la page de l'exécution, par exemple `https://semaphore.example.com/project/1/workflows/7/runs/42` (nécessite `web_host` dans la configuration du serveur) |
 | `SEMAPHORE_OUTPUTS_FILE` | Chemin du fichier dans lequel la tâche écrit ses [sorties](#producing-outputs) |
 

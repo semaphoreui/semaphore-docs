@@ -108,6 +108,7 @@ const ENGLISH_ONLY = new Set([
   'reference/configuration',
   'reference/cli/commands',
   'reference/audit-events',
+  'reference/task-environment',
 ]);
 
 const referenced = new Set([

@@ -209,6 +209,7 @@ EOF
 | --- | --- |
 | `SEMAPHORE_WORKFLOW_ID` | 工作流 ID |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | 当前运行的 ID |
+| `SEMAPHORE_WORKFLOW_VERSION` | 当前运行的版本（如果有） |
 | `SEMAPHORE_WORKFLOW_URL` | 运行页面的链接，例如 `https://semaphore.example.com/project/1/workflows/7/runs/42`（要求在服务器配置中设置 `web_host`） |
 | `SEMAPHORE_OUTPUTS_FILE` | 任务写入其[输出](#producing-outputs)的文件路径 |
 

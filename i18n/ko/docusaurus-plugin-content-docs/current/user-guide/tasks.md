@@ -103,10 +103,13 @@ UI에서 작업을 클릭하면 작업 창이 열립니다. 헤더에는 템플�
 | `SEMAPHORE_PROJECT_ID` | 작업이 속한 프로젝트 ID |
 | `SEMAPHORE_WORKFLOW_ID` | 작업이 [워크플로](./workflows#environment-variables) 실행의 노드인 경우 워크플로 ID |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | 작업이 속한 워크플로 실행 ID |
+| `SEMAPHORE_WORKFLOW_VERSION` | 작업이 속한 워크플로 실행의 버전 (실행에 버전이 있는 경우) |
 | `SEMAPHORE_WORKFLOW_URL` | 워크플로 실행 페이지 링크 (서버 설정에 `web_host`가 필요함) |
 | `SEMAPHORE_OUTPUTS_FILE` | 워크플로 작업이 [출력](./workflows#producing-outputs)을 기록하는 파일의 경로 |
 
 워크플로에서 시작하지 않은 작업에는 워크플로 변수가 설정되지 않습니다.
+
+특정 앱에만 설정되는 변수와 git 및 SSH 보조 변수를 포함한 전체 목록은 참조 문서 [작업 환경 변수](/reference/task-environment)에 있습니다.
 
 특정한 경우에는 다음 변수도 설정됩니다.
 

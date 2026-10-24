@@ -228,6 +228,7 @@ Una tarea iniciada por un flujo de trabajo recibe, además de las
 | --- | --- |
 | `SEMAPHORE_WORKFLOW_ID` | ID del flujo de trabajo |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID de la ejecución actual |
+| `SEMAPHORE_WORKFLOW_VERSION` | Versión de la ejecución actual, si la tiene |
 | `SEMAPHORE_WORKFLOW_URL` | Enlace a la página de la ejecución, por ejemplo `https://semaphore.example.com/project/1/workflows/7/runs/42` (requiere `web_host` en la configuración del servidor) |
 | `SEMAPHORE_OUTPUTS_FILE` | Ruta del archivo en el que la tarea escribe sus [salidas](#producing-outputs) |
 

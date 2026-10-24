@@ -103,10 +103,13 @@ Chaque tâche, quelle que soit son application (Ansible, Terraform, Bash, PowerS
 | `SEMAPHORE_PROJECT_ID` | ID du projet auquel appartient la tâche |
 | `SEMAPHORE_WORKFLOW_ID` | ID du workflow, lorsque la tâche est un nœud d'une exécution de [workflow](./workflows#environment-variables) |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID de l'exécution du workflow à laquelle appartient la tâche |
+| `SEMAPHORE_WORKFLOW_VERSION` | Version de l'exécution du workflow à laquelle appartient la tâche, si elle en a une |
 | `SEMAPHORE_WORKFLOW_URL` | Lien vers la page de l'exécution du workflow (nécessite `web_host` dans la configuration du serveur) |
 | `SEMAPHORE_OUTPUTS_FILE` | Chemin du fichier dans lequel une tâche de workflow écrit ses [sorties](./workflows#producing-outputs) |
 
 Les variables de workflow sont absentes si la tâche n'a pas été démarrée par un workflow.
+
+La liste complète, y compris les variables définies pour une seule app et les variables auxiliaires pour git et SSH, se trouve dans la référence : [Variables d'environnement des tâches](/reference/task-environment).
 
 D'autres variables sont définies dans certains cas :
 

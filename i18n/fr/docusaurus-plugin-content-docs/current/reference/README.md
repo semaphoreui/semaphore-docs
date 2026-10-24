@@ -21,6 +21,7 @@ personne ne s'en apercevrait.
 |---|---|
 | [Options de configuration](/reference/configuration) | Chaque clé de `config.json` avec sa variable d'environnement, son type et sa valeur par défaut. Générée. |
 | [Événements d'audit](/reference/audit-events) | Format des événements d'audit et tous les événements disponibles et prévus. |
+| [Variables d'environnement des tâches](/reference/task-environment) | Chaque variable que Semaphore définit dans le processus d'une tâche, par app, et la condition sous laquelle elle est présente. |
 | [CLI](/reference/cli) | La commande `semaphore` : ce que fait chaque groupe de commandes, comment le fichier de configuration est localisé, et une liste générée de toutes les commandes et options. |
 | [API](/reference/api) | S'authentifier avec un jeton et appeler les points de terminaison REST. |
 

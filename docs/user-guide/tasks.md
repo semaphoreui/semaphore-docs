@@ -110,10 +110,13 @@ variables that identify it in Semaphore:
 | `SEMAPHORE_PROJECT_ID` | ID of the project the task belongs to |
 | `SEMAPHORE_WORKFLOW_ID` | ID of the workflow, when the task is a node of a [workflow](./workflows#environment-variables) run |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID of the workflow run the task belongs to |
+| `SEMAPHORE_WORKFLOW_VERSION` | Version of the workflow run the task belongs to, when the run has one |
 | `SEMAPHORE_WORKFLOW_URL` | Link to the workflow run page (requires `web_host` in the server config) |
 | `SEMAPHORE_OUTPUTS_FILE` | Path of the file a workflow task writes its [outputs](./workflows#producing-outputs) to |
 
 The workflow variables are absent when the task was not started by a workflow.
+
+The complete list, including the variables set for one app only and the helper variables for git and SSH, is in the reference: [Task environment variables](/reference/task-environment).
 
 Other variables are set in specific cases:
 

@@ -263,6 +263,7 @@ const sidebars = {
       items: [
         'reference/configuration',
         'reference/audit-events',
+        'reference/task-environment',
         {
           type: 'category',
           label: 'CLI',

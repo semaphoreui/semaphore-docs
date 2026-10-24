@@ -235,6 +235,7 @@ EOF
 | --- | --- |
 | `SEMAPHORE_WORKFLOW_ID` | ID рабочего процесса |
 | `SEMAPHORE_WORKFLOW_RUN_ID` | ID текущего запуска |
+| `SEMAPHORE_WORKFLOW_VERSION` | Версия текущего запуска, если она задана |
 | `SEMAPHORE_WORKFLOW_URL` | Ссылка на страницу запуска, например `https://semaphore.example.com/project/1/workflows/7/runs/42` (требуется `web_host` в конфигурации сервера) |
 | `SEMAPHORE_OUTPUTS_FILE` | Путь к файлу, в который задача записывает свои [выходные данные](#producing-outputs) |
 

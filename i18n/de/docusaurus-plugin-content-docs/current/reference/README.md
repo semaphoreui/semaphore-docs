@@ -21,6 +21,7 @@ bemerken.
 |---|---|
 | [Konfigurationsoptionen](/reference/configuration) | Jeder Schlüssel von `config.json` mit Umgebungsvariable, Typ und Standardwert. Erzeugt. |
 | [Audit-Ereignisse](/reference/audit-events) | Das Format der Audit-Ereignisse und alle verfügbaren und geplanten Ereignisse. |
+| [Umgebungsvariablen von Tasks](/reference/task-environment) | Jede Variable, die Semaphore im Prozess eines Tasks setzt, je App, und die Bedingung, unter der sie vorhanden ist. |
 | [CLI](/reference/cli) | Der Befehl `semaphore`: was jede Befehlsgruppe tut, wie die Konfigurationsdatei gefunden wird und eine erzeugte Liste aller Befehle und Flags. |
 | [API](/reference/api) | Authentifizierung mit einem Token und Aufruf der REST-Endpunkte. |
 

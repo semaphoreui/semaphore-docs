@@ -15,6 +15,7 @@ description: 説明ではなく正確な値 - 設定オプション、コマン�
 |---|---|
 | [設定オプション](/reference/configuration) | `config.json` のすべてのキーと、その環境変数、型、デフォルト値。自動生成。 |
 | [監査イベント](/reference/audit-events) | 監査イベントの形式と、利用可能なイベントおよび予定されているイベントのすべて。 |
+| [タスクの環境変数](/reference/task-environment) | Semaphore がタスクのプロセスに設定するすべての変数（アプリ別）と、それが存在する条件。 |
 | [CLI](/reference/cli) | `semaphore` コマンド。各コマンドグループの役割、設定ファイルの探索方法、そして自動生成されたすべてのコマンドとフラグの一覧。 |
 | [API](/reference/api) | トークンによる認証と、REST エンドポイントの呼び出し。 |
 
