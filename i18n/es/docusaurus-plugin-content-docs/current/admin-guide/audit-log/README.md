@@ -53,10 +53,7 @@ un éxito con `metadata.partial=true`, y `reason` indica qué no se completó:
 
 - `secret_failed`: se guardó o eliminó un entorno, pero algunos de sus secretos no se guardaron o no se
   quitaron;
-- `inventory_failed`: se creó una plantilla, pero no su inventario del workspace de Terraform;
-- `restore_failed`: se restauró un proyecto desde una copia, pero no todos sus objetos;
-- `setup_failed`: se creó un proyecto, pero no quedó configurado del todo; por ejemplo, su creador no se añadió
-  como propietario.
+- `inventory_failed`: se creó una plantilla, pero no su inventario del workspace de Terraform.
 
 ## Activar el registro de auditoría {#enable}
 

@@ -52,9 +52,7 @@ prikazuje grešku, iako je objekat kreiran ili obrisan. Takav događaj se belež
 `metadata.partial=true`, a `reason` navodi šta nije završeno:
 
 - `secret_failed`: okruženje je sačuvano ili obrisano, ali neke njegove tajne nisu sačuvane ili nisu uklonjene;
-- `inventory_failed`: šablon je kreiran, ali njegov inventar za Terraform workspace nije;
-- `restore_failed`: projekat je vraćen iz rezervne kopije, ali ne i svi njegovi objekti;
-- `setup_failed`: projekat je kreiran, ali nije potpuno podešen, na primer njegov tvorac nije dodat kao vlasnik.
+- `inventory_failed`: šablon je kreiran, ali njegov inventar za Terraform workspace nije.
 
 ## Uključivanje dnevnika revizije {#enable}
 

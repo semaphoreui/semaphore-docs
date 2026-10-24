@@ -53,10 +53,7 @@ then shows an error, although the object was created or deleted. Such an event i
 with `metadata.partial=true`, and `reason` says what did not complete:
 
 - `secret_failed`: an environment was saved or deleted, but some of its secrets were not saved or not removed;
-- `inventory_failed`: a template was created, but its Terraform workspace inventory was not;
-- `restore_failed`: a project was restored from a backup, but not all of its objects were;
-- `setup_failed`: a project was created, but not fully set up, for example its creator was not added as
-  owner.
+- `inventory_failed`: a template was created, but its Terraform workspace inventory was not.
 
 ## Enable the audit log {#enable}
 

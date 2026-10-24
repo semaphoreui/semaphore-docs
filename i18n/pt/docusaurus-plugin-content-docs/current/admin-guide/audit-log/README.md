@@ -53,10 +53,7 @@ como sucesso com `metadata.partial=true`, e `reason` indica o que não foi concl
 
 - `secret_failed`: um ambiente foi salvo ou excluído, mas alguns dos seus segredos não foram salvos ou não
   foram removidos;
-- `inventory_failed`: um modelo foi criado, mas não o seu inventário do workspace do Terraform;
-- `restore_failed`: um projeto foi restaurado de um backup, mas nem todos os seus objetos;
-- `setup_failed`: um projeto foi criado, mas não foi totalmente configurado; por exemplo, seu criador não foi
-  adicionado como proprietário.
+- `inventory_failed`: um modelo foi criado, mas não o seu inventário do workspace do Terraform.
 
 ## Ativar o log de auditoria {#enable}
 

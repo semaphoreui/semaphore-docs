@@ -56,10 +56,7 @@ Il arrive que Semaphore enregistre ou supprime un objet, mais qu'une partie ult�
 
 - `secret_failed` : un environnement a été enregistré ou supprimé, mais certains de ses secrets n'ont pas été
   enregistrés ou pas retirés ;
-- `inventory_failed` : un modèle a été créé, mais pas son inventaire de workspace Terraform ;
-- `restore_failed` : un projet a été restauré depuis une sauvegarde, mais pas tous ses objets ;
-- `setup_failed` : un projet a été créé, mais pas entièrement configuré ; par exemple, son créateur n'a pas été
-  ajouté comme propriétaire.
+- `inventory_failed` : un modèle a été créé, mais pas son inventaire de workspace Terraform.
 
 ## Activer le journal d'audit {#enable}
 
