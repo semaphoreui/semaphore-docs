@@ -10,9 +10,11 @@ L'URL del webhook del Project è mostrato sopra l'elenco. Ogni Integration ha un
 
 Tramite un'Integration è possibile avviare un Task Template specifico chiamando un endpoint dedicato (alias), per il quale si può configurare uno dei seguenti metodi di autenticazione:
 * GitHub Webhooks
+* Bitbucket Webhooks
 * Token
 * HMAC (SHA-256)
 * HMAC (SHA-512)
+* BasicAuth
 * Nessuna autenticazione
 
 L'alias corrisponde a un URL nel formato seguente: `/api/integrations/<random_string>`. Supporta le richieste `GET` e `POST`.
@@ -24,7 +26,9 @@ I metodi di autenticazione HMAC (`hmac` / SHA-256 e `hmac-sha512` / SHA-512) ver
 Configura:
 
 1. **Auth header** — l'intestazione della richiesta che contiene la firma (ad esempio `X-Signature` o `X-Hub-Signature-256`).
-2. **Auth secret** — una credenziale di accesso con nome utente e password dell'archivio chiavi; Semaphore usa il valore della **password** come segreto HMAC.
+2. **Auth secret** — una chiave di tipo **Stringa** dell'archivio chiavi (il suo valore è il segreto) oppure una credenziale con nome utente e password (la sua **password** è il segreto).
+
+Il metodo Token confronta il valore dell'intestazione con la stessa credenziale. BasicAuth è l'eccezione: verifica anche il nome utente, quindi richiede una credenziale con nome utente e password.
 
 Il mittente deve inserire in questa intestazione un digest HMAC **esadecimale non elaborato** del corpo originale della richiesta (senza prefisso `sha256=` / `sha512=`). Semaphore lo confronta con il valore `HMAC-SHA256` o `HMAC-SHA512` del corpo calcolato con il segreto configurato.
 

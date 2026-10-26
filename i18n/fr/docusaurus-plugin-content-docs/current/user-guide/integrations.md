@@ -10,9 +10,11 @@ L'URL du webhook du projet est affichée au-dessus de la liste. Chaque intégrat
 
 Grâce à une intégration, vous pouvez déclencher un modèle précis en appelant un point de terminaison spécial (alias), pour lequel vous pouvez configurer l'une des méthodes d'authentification suivantes :
 * Webhooks GitHub
+* Webhooks Bitbucket
 * Jeton
 * HMAC (SHA-256)
 * HMAC (SHA-512)
+* BasicAuth
 * Aucune authentification
 
 L'alias correspond à une URL au format suivant : `/api/integrations/<random_string>`. Il prend en charge les requêtes `GET` et `POST`.
@@ -24,7 +26,9 @@ Les méthodes d'authentification HMAC (`hmac` / SHA-256 et `hmac-sha512` / SHA-5
 Configurez :
 
 1. **Auth header** — l'en-tête de requête qui contient la signature (par exemple `X-Signature` ou `X-Hub-Signature-256`).
-2. **Auth secret** — un identifiant de type nom d'utilisateur/mot de passe du magasin de clés ; Semaphore utilise la valeur du **mot de passe** comme secret HMAC.
+2. **Auth secret** — une clé de type **Chaîne** du magasin de clés (sa valeur est le secret) ou un identifiant nom d'utilisateur/mot de passe (son **mot de passe** est le secret).
+
+La méthode Jeton compare la valeur de l'en-tête avec le même identifiant. BasicAuth fait exception : elle vérifie aussi le nom d'utilisateur et exige donc un identifiant nom d'utilisateur/mot de passe.
 
 L'émetteur doit placer dans cet en-tête un condensat HMAC **hexadécimal brut** du corps original de la requête (sans préfixe `sha256=` / `sha512=`). Semaphore le compare au `HMAC-SHA256` ou au `HMAC-SHA512` du corps calculé avec le secret configuré.
 

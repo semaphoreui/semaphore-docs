@@ -10,9 +10,11 @@
 
 通过集成，你可以调用一个特殊的端点（别名）来触发指定模板，并为其配置以下认证方式之一：
 * GitHub Webhooks
+* Bitbucket Webhooks
 * Token
 * HMAC (SHA-256)
 * HMAC (SHA-512)
+* BasicAuth
 * 无认证
 
 别名是如下格式的 URL：`/api/integrations/<random_string>`。支持 `GET` 和 `POST` 请求。
@@ -24,7 +26,9 @@ HMAC 认证方式（`hmac` / SHA-256 和 `hmac-sha512` / SHA-512）用于验证 
 请配置：
 
 1. **Auth header** — 用于携带签名的请求标头（例如 `X-Signature` 或 `X-Hub-Signature-256`）。
-2. **Auth secret** — 密钥存储中的登录名/密码凭据；Semaphore 使用其中的**密码**值作为 HMAC 密钥。
+2. **Auth secret** — 密钥存储中的 **字符串** 密钥（其值即为密钥）或登录名/密码凭据（其**密码**即为密钥）。
+
+Token 方式将标头值与同一凭据进行比较。BasicAuth 是例外：它还会检查登录名，因此需要登录名/密码凭据。
 
 发送方必须将原始请求正文的 HMAC 摘要以**不带前缀的十六进制值**放入该标头（不使用 `sha256=` / `sha512=` 前缀）。Semaphore 会使用配置的密钥计算正文的 `HMAC-SHA256` 或 `HMAC-SHA512`，并与该值进行比较。
 

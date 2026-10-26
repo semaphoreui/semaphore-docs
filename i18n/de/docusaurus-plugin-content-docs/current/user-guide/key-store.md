@@ -17,7 +17,7 @@ Der Key Store ist in zwei Hauptansichten unterteilt:
 
 ## Typen von Anmeldedaten {#types}
 
-Semaphore unterteilt gespeicherte Anmeldedaten in drei grundlegende Typen:
+Semaphore unterteilt gespeicherte Anmeldedaten in vier grundlegende Typen:
 
 ### 1. SSH-Schlüssel {#1-ssh}
 SSH-Schlüssel bieten eine asymmetrische kryptografische Authentifizierung für Verbindungen zu Linux/UNIX-Knoten und das Klonen von Git-Repositories über SSH (`git@github.com:...`).
@@ -70,7 +70,7 @@ Der Anmeldedatentyp **Anmeldung mit Passwort** unterstützt sowohl traditionelle
 * **Ansible-Vault-Passwörter**: Entsperrt verschlüsselte Ansible-Vault-Dateien und -Variablen zur Laufzeit.
 
 :::tip Secret-Zeichenketten und Personal Access Tokens (PAT)
-Um eine reine Secret-Zeichenkette zu speichern (wie ein API-Token, Vault-Passwort oder PAT), **lassen Sie das Feld Benutzername leer**. Semaphore behandelt den Eintrag dann als reines Secret ohne zugehörigen Benutzernamen.
+Um eine reine Secret-Zeichenkette zu speichern, etwa ein API-Bearer-Token oder ein Webhook-Geheimnis, verwenden Sie den Typ **Zeichenkette** unten. Der Typ **Anmeldung mit Passwort** mit leerem Login bleibt für Ansible-Vault-Passwörter und HTTPS-Git-Token nötig, da diese Verbraucher nur diesen Typ akzeptieren.
 :::
 
 #### Maskierung und Überschreibschutz {#secret-masking-and-override-protection}
@@ -85,6 +85,26 @@ Zum Schutz vor unbefugter Einsicht und versehentlicher Änderung:
 ### 3. Keine {#3-none}
 
 Der Typ **Keine** dient als Null-Authentifizierungs-Platzhalter. Er wird für öffentliche Open-Source-Git-Repositories (z. B. auf GitHub oder GitLab) und lokale Playbook-Ausführungen ohne SSH-Schlüssel oder Passwörter verwendet.
+
+---
+
+### 4. Zeichenkette {#4-string}
+
+Der Anmeldedatentyp **Zeichenkette** enthält einen einzelnen geheimen Wert ohne Login: ein API-Token, ein Webhook-Geheimnis, ein Passwort für sich allein. Er wird wie alle anderen Anmeldedaten verschlüsselt gespeichert, nie von der API zurückgegeben oder erneut im Formular angezeigt und kann nur über das Kontrollkästchen **Override** ersetzt werden.
+
+Verwendung:
+* **Integrationen**: als *Auth secret* der Authentifizierungsmethoden Token, HMAC, GitHub und Bitbucket, siehe [Integrationen](/user-guide/integrations#hmac-authentication).
+
+Wo der Typ nicht passt, bieten ihn die Auswahlfelder schlicht nicht an: Der SSH-Schlüssel eines Repositorys oder Inventars, die Sudo-Zugangsdaten und das Ansible-Vault-Passwort benötigen einen SSH-Schlüssel oder Login/Passwort.
+
+Über die API werden dieselben Anmeldedaten mit `"type": "string"` angelegt:
+
+```bash
+curl -X POST "https://semaphore.example.com/api/project/1/keys" \
+  -H "Authorization: Bearer <api-token>" \
+  -H "Content-Type: application/json" \
+  -d '{"project_id": 1, "name": "webhook-secret", "type": "string", "string": "s3cr3t"}'
+```
 
 ---
 

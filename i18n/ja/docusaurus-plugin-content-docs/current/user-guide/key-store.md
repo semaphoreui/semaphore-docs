@@ -17,7 +17,7 @@ Key Store は主に2つの画面で構成されています：
 
 ## 認証情報の種類 {#types}
 
-Semaphore は保存される認証情報を以下の3つの基本的なタイプに分類します：
+Semaphore は保存される認証情報を以下の4つの基本的なタイプに分類します：
 
 ### 1. SSH 鍵 {#1-ssh}
 SSH 鍵は、Linux/UNIX ノードへの接続および SSH 経由（`git@github.com:...`）での Git リポジトリのクローンに使用される非対称暗号認証を提供します。
@@ -70,7 +70,7 @@ SSH 認証を必要とする Git リポジトリの場合、生成された公�
 * **Ansible Vault パスワード**: 実行時に暗号化された Ansible Vault ファイルおよび変数をロック解除します。
 
 :::tip シークレット文字列とパーソナルアクセストークン (PAT)
-純粋なシークレット文字列（API ベアラートークン、Ansible Vault パスフレーズ、または PAT など）を保存するには、**Login / Username フィールドを空のままにします**。Semaphore は関連するユーザー識別子を付加せず、独立したシークレット文字列として処理します。
+API の Bearer トークンや Webhook のシークレットのような純粋なシークレット文字列を保存するには、下記の **文字列** タイプを使用してください。Ansible Vault のパスワードと HTTPS Git のトークンには引き続きログイン欄を空にした **パスワードでログイン** タイプが必要です。これらの利用先はそのタイプしか受け付けないためです。
 :::
 
 #### シークレットのマスキングと上書き保護 {#secret-masking-and-override-protection}
@@ -85,6 +85,26 @@ SSH 認証を必要とする Git リポジトリの場合、生成された公�
 ### 3. なし {#3-none}
 
 **None** 認証情報は、明示的な認証なしのプレースホルダーとして機能します。SSH 鍵やパスワードを必要としないパブリックなオープンソース Git リポジトリ（GitHub や GitLab 上の公開リポジトリなど）やローカルの未認証プレイブック実行に使用されます。
+
+---
+
+### 4. 文字列 {#4-string}
+
+**文字列** 認証情報は、ログインを伴わない単一のシークレット値（API トークン、Webhook のシークレット、単独のパスワード）を保持します。他の認証情報と同様に暗号化して保存され、API から返されることもフォームに再表示されることもなく、置き換えるには **Override** チェックボックスが必要です。
+
+使用される場所：
+* **インテグレーション**: Token、HMAC、GitHub、Bitbucket 認証方式の *Auth secret* として。[インテグレーション](/user-guide/integrations#hmac-authentication) を参照してください。
+
+適さない場所では、認証情報の選択リストにそもそも表示されません。リポジトリやインベントリの SSH キー、sudo の認証情報、Ansible Vault のパスワードには SSH キーまたはログイン/パスワードが必要です。
+
+API では同じ認証情報を `"type": "string"` で作成します：
+
+```bash
+curl -X POST "https://semaphore.example.com/api/project/1/keys" \
+  -H "Authorization: Bearer <api-token>" \
+  -H "Content-Type: application/json" \
+  -d '{"project_id": 1, "name": "webhook-secret", "type": "string", "string": "s3cr3t"}'
+```
 
 ---
 

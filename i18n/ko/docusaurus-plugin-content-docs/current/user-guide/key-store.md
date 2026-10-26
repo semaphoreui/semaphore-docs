@@ -17,7 +17,7 @@ Key Store는 두 가지 기본 뷰로 나뉩니다:
 
 ## 자격 증명 유형 {#types}
 
-Semaphore는 저장된 자격 증명을 세 가지 기본 유형으로 분류합니다:
+Semaphore는 저장된 자격 증명을 네 가지 기본 유형으로 분류합니다:
 
 ### 1. SSH 키 {#1-ssh}
 SSH 키는 Linux/UNIX 노드에 연결하고 SSH(`git@github.com:...`)를 통해 Git 리포지토리를 복제하는 데 사용되는 비대칭 암호화 인증을 제공합니다.
@@ -70,7 +70,7 @@ SSH 인증이 필요한 Git 리포지토리의 경우 생성된 공개 키를 �
 * **Ansible Vault 비밀번호**: 런타임 시 암호화된 Ansible Vault 파일 및 변수의 잠금을 해제합니다.
 
 :::tip 시크릿 문자열 및 개인 액세스 토큰 (PAT)
-순수 시크릿 문자열(API Bearer 토큰, Ansible Vault 암호 구문 또는 PAT 등)을 저장하려면 **로그인 / 사용자 이름 필드를 비워 두세요**. Semaphore는 연결된 사용자 식별자를 추가하지 않고 항목을 엄격하게 격리된 시크릿 문자열로 처리합니다.
+API Bearer 토큰이나 웹훅 시크릿 같은 순수한 시크릿 문자열을 저장하려면 아래의 **문자열** 유형을 사용하세요. Ansible Vault 비밀번호와 HTTPS Git 토큰에는 여전히 로그인을 비워 둔 **비밀번호로 로그인** 유형이 필요합니다. 해당 사용처는 이 유형만 허용하기 때문입니다.
 :::
 
 #### 시크릿 마스킹 및 덮어쓰기 방지 {#secret-masking-and-override-protection}
@@ -85,6 +85,26 @@ SSH 인증이 필요한 Git 리포지토리의 경우 생성된 공개 키를 �
 ### 3. 없음 {#3-none}
 
 **없음** 자격 증명은 명시적인 널 인증 자리 표시자 역할을 합니다. SSH 키나 비밀번호가 필요 없는 공개 오픈 소스 Git 리포지토리(GitHub 또는 GitLab의 공개 리포지토리 등) 및 로컬 비인증 플레이북 실행에 사용됩니다.
+
+---
+
+### 4. 문자열 {#4-string}
+
+**문자열** 자격 증명은 로그인 없이 단일 비밀 값(API 토큰, 웹훅 시크릿, 단독 비밀번호)을 보관합니다. 다른 자격 증명과 마찬가지로 암호화되어 저장되며, API가 반환하거나 폼에 다시 표시하지 않고, **Override** 체크박스로만 교체할 수 있습니다.
+
+사용되는 곳:
+* **통합**: Token, HMAC, GitHub, Bitbucket 인증 방식의 *Auth secret*으로 사용합니다. [통합](/user-guide/integrations#hmac-authentication)을 참고하세요.
+
+적합하지 않은 곳에서는 자격 증명 선택 목록에 아예 표시되지 않습니다. 리포지토리나 인벤토리의 SSH 키, sudo 자격 증명, Ansible Vault 비밀번호에는 SSH 키 또는 로그인/비밀번호가 필요합니다.
+
+API에서는 같은 자격 증명을 `"type": "string"`으로 생성합니다:
+
+```bash
+curl -X POST "https://semaphore.example.com/api/project/1/keys" \
+  -H "Authorization: Bearer <api-token>" \
+  -H "Content-Type: application/json" \
+  -d '{"project_id": 1, "name": "webhook-secret", "type": "string", "string": "s3cr3t"}'
+```
 
 ---
 

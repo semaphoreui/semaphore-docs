@@ -17,7 +17,7 @@ Key Store je podeljen na dva glavna prikaza:
 
 ## Tipovi akreditiva {#types}
 
-Semaphore klasifikuje sačuvane akreditive u tri osnovna tipa:
+Semaphore klasifikuje sačuvane akreditive u četiri osnovna tipa:
 
 ### 1. SSH ključevi {#1-ssh}
 SSH ključevi pružaju asimetričnu kriptografsku autentifikaciju za povezivanje sa Linux/UNIX čvorovima i kloniranje Git repozitorijuma preko SSH-a (`git@github.com:...`).
@@ -70,7 +70,7 @@ Tip akreditiva **Prijava lozinkom** podržava i tradicionalnu autentifikaciju ko
 * **Lozinke za Ansible Vault**: Otključava šifrovane Ansible Vault fajlove i promenljive prilikom izvršavanja.
 
 :::tip Tajni stringovi i lični pristupni tokeni (PAT)
-Za skladištenje čistog tajnog stringa (poput API tokena, Vault lozinke ili PAT-a), **ostavite polje za korisničko ime prazno**. Semaphore će unos tretirati isključivo kao izolovanu tajnu bez dodeljivanja korisnika.
+Za čuvanje čistog tajnog stringa, kao što je API bearer token ili tajna webhook-a, koristite tip **String** ispod. Tip **Prijava lozinkom** sa praznim korisničkim imenom i dalje je potreban za lozinke Ansible Vault-a i HTTPS Git tokene, jer ti potrošači prihvataju samo taj tip.
 :::
 
 #### Maskiranje tajni i zaštita od prepisivanja {#secret-masking-and-override-protection}
@@ -85,6 +85,26 @@ Za zaštitu akreditiva od neovlašćenog pristupa i slučajnih izmena:
 ### 3. Nema {#3-none}
 
 Akreditiv **Nema** služi kao prazan autentifikacioni čuvar mesta. Koristi se za javne open-source Git repozitorijume (na GitHub-u ili GitLab-u) i lokalna izvršavanja plejbook-a koja ne zahtevaju SSH ključeve niti lozinke.
+
+---
+
+### 4. String {#4-string}
+
+Akreditiv tipa **String** čuva jednu tajnu vrednost bez korisničkog imena: API token, tajnu webhook-a, samu lozinku. Čuva se šifrovano kao i svaki drugi akreditiv, API ga nikada ne vraća niti se ponovo prikazuje u formi, a može se zameniti samo označavanjem polja **Override**.
+
+Gde se koristi:
+* **Integracije**: kao *Auth secret* metoda autentifikacije Token, HMAC, GitHub i Bitbucket, pogledajte [Integracije](/user-guide/integrations#hmac-authentication).
+
+Tamo gde ne odgovara, birači akreditiva ga jednostavno ne nude: SSH ključ repozitorijuma ili inventara, sudo akreditivi i lozinka Ansible Vault-a zahtevaju SSH ključ ili korisničko ime/lozinku.
+
+Preko API-ja isti akreditiv se kreira sa `"type": "string"`:
+
+```bash
+curl -X POST "https://semaphore.example.com/api/project/1/keys" \
+  -H "Authorization: Bearer <api-token>" \
+  -H "Content-Type: application/json" \
+  -d '{"project_id": 1, "name": "webhook-secret", "type": "string", "string": "s3cr3t"}'
+```
 
 ---
 
