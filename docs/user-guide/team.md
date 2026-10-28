@@ -46,6 +46,8 @@ Below are detailed descriptions of each role and its permissions.
 
 - **Broad project control:** Managers have almost the same permissions as Owners, allowing them to handle most day-to-day tasks and manage the project environment.
 
+- **Workflows:** Managers create, edit, run and approve workflows.
+
 - Managers **cannot**:
   - Remove the project.
   - Remove or change the roles of Owners.
@@ -55,6 +57,8 @@ Below are detailed descriptions of each role and its permissions.
 ### Task Runner {#task-runner}
 
 - **Run tasks:** Task Runners can execute any task template that exists within the project.
+
+- **Run and approve workflows:** Task Runners can start, stop and approve any workflow of the project, but cannot edit one.
 
 - **Read-only for other resources:** While they can run tasks, they only have read‐only access to other resources such as inventory, variables, repositories, etc.
 
@@ -143,11 +147,14 @@ Choose only the project-wide permissions that the role needs:
 | **Can update project** | Edit basic project information in **Dashboard** > **Settings**. |
 | **Can manage project resources** | Manage project resources, such as task templates, repositories, inventory, environments, Key Store entries, schedules, integrations, and runners. This is project-wide access. It cannot be limited to individual non-template resources. |
 | **Can manage project users** | Manage project membership and role assignments. |
+| **Can run workflows** | Start and stop any workflow of the project. |
+| **Can edit workflows** | Create, edit and delete workflows, and manage their **Permissions** tab. |
+| **Can approve workflows** | Approve or reject the approval steps of any workflow run. |
 
-Project-wide permissions cannot be limited to a single inventory, repository, environment, or Key Store entry. Task templates are the only resource type that supports granular role assignments.
+Project-wide permissions cannot be limited to a single inventory, repository, environment, or Key Store entry. Task templates and workflows are the resource types that support granular role assignments.
 
-:::tip Template-only access
-To create a granular role that adds access only to selected task templates, leave every project-wide permission unchecked. The role then adds no project-wide permissions of its own. Add it to the required templates and choose only the actions that role needs there.
+:::tip Object-only access
+To create a granular role that adds access only to selected task templates or workflows, leave every project-wide permission unchecked. The role then adds no project-wide permissions of its own. Add it to the required templates and workflows and choose only the actions that role needs there.
 :::
 
 Select **Save** when the role configuration is ready.
@@ -168,11 +175,17 @@ The **Permissions** tab lists the roles already added to the template.
 **Add the role and grant template permissions**
 
 1. Select **Add Role** and choose the custom role to add to this template.
-2. Select only the template permissions that the role needs, such as **Can run tasks** or **Can update the template**.
+2. Select only the template permissions that the role needs: **Can run this template** or **Can edit this template**.
 
 This example uses a previously created role with no project-wide permissions. You can choose any custom role that is available in the project.
 
 ![Template permissions dialog with the required controls highlighted](/assets/custom-roles-template-permissions-annotated.png)
+
+### Configure access to specific workflows {#configure-access-to-specific-workflows}
+
+Workflow permissions work the same way as template permissions and need the Enterprise edition. Open **Workflows**, select the workflow and open its **Permissions** tab, which you see with **Can edit workflows**. Select **Add Role**, choose the role and select the actions it gets on this workflow: **Can run this workflow** (start and stop its runs), **Can edit this workflow** or **Can approve this workflow** (approve or reject its approval steps).
+
+A member with a permission on a workflow sees that workflow's buttons only on that workflow.
 
 To grant the same role access to additional templates, repeat these steps for each template.
 
