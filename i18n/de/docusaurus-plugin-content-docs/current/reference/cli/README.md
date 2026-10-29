@@ -19,6 +19,7 @@ gibt es eine eigene Befehlsgruppe:
 | [`semaphore vaults`](/reference/cli/vaults) | Gespeicherte Geheimnisse neu verschlüsseln und die Verwendung der Verschlüsselungsschlüssel prüfen. |
 | [`semaphore runner`](/reference/cli/runners) | Im Runner-Modus laufen sowie Runner registrieren/abmelden. |
 | [`semaphore migrate`](/reference/cli/migrations) | Datenbankmigrationen anwenden oder zurückrollen. |
+| [`semaphore client`](/reference/cli/client) | Einen laufenden Server über seine REST-API aus dem Terminal und aus Skripten verwalten: Projekte, Vorlagen, Aufgaben und die übrigen Ressourcen. |
 
 Mehrere Befehlsgruppen haben kürzere Aliasse: `users`/`user`, `projects`/`project`,
 `vaults`/`vault` und `server`/`service`.

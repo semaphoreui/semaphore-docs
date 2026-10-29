@@ -23,6 +23,7 @@ dedicated command group:
 | [`semaphore vaults`](/reference/cli/vaults) | Re-encrypt stored secrets and inspect encryption key usage. |
 | [`semaphore runner`](/reference/cli/runners) | Run in runner mode and register/unregister runners. |
 | [`semaphore migrate`](/reference/cli/migrations) | Apply or roll back database migrations. |
+| [`semaphore client`](/reference/cli/client) | Manage a running server over its REST API from the terminal and from scripts: projects, templates, tasks, and the other resources. |
 
 Several command groups have shorter aliases: `users`/`user`, `projects`/`project`,
 `vaults`/`vault`, and `server`/`service`.

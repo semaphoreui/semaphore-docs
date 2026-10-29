@@ -18,6 +18,7 @@ posebnu grupu komandi:
 | [`semaphore vaults`](/reference/cli/vaults) | Ponovno šifrovanje sačuvanih tajni i pregled upotrebe ključeva za šifrovanje. |
 | [`semaphore runner`](/reference/cli/runners) | Rad u runner režimu i registracija/odjava runnera (Runner). |
 | [`semaphore migrate`](/reference/cli/migrations) | Primena ili vraćanje migracija baze podataka. |
+| [`semaphore client`](/reference/cli/client) | Upravljanje pokrenutim serverom preko njegovog REST API-ja iz terminala i skripti: projekti, šabloni, zadaci i ostali resursi. |
 
 Nekoliko grupa komandi ima kraće alijase: `users`/`user`, `projects`/`project`,
 `vaults`/`vault` i `server`/`service`.

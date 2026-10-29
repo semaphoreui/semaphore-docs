@@ -270,6 +270,7 @@ const sidebars = {
           link: { type: 'doc', id: 'reference/cli/README' },
           items: [
             'reference/cli/commands',
+            'reference/cli/client',
             'reference/cli/users',
             'reference/cli/projects',
             'reference/cli/vaults',
