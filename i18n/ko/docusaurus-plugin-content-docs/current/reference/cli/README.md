@@ -17,6 +17,7 @@ semaphore help
 | [`semaphore vaults`](/reference/cli/vaults) | 저장된 비밀 정보 재암호화 및 암호화 키 사용 현황 확인. |
 | [`semaphore runner`](/reference/cli/runners) | runner 모드로 실행하고 runner를 등록/등록 해제. |
 | [`semaphore migrate`](/reference/cli/migrations) | 데이터베이스 마이그레이션 적용 또는 롤백. |
+| [`semaphore client`](/reference/cli/client) | 터미널과 스크립트에서 REST API를 통해 실행 중인 서버를 관리합니다: 프로젝트, 템플릿, 작업 및 기타 리소스. |
 
 일부 명령 그룹에는 짧은 별칭이 있습니다: `users`/`user`, `projects`/`project`,
 `vaults`/`vault`, `server`/`service`.

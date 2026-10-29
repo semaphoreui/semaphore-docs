@@ -16,6 +16,7 @@ semaphore help
 | [`semaphore vaults`](/reference/cli/vaults) | 重新加密已存储的密钥并查看加密密钥的使用情况。 |
 | [`semaphore runner`](/reference/cli/runners) | 以运行器（Runner）模式运行，以及注册/注销运行器。 |
 | [`semaphore migrate`](/reference/cli/migrations) | 应用或回滚数据库迁移。 |
+| [`semaphore client`](/reference/cli/client) | 在终端和脚本中通过 REST API 管理正在运行的服务器：项目、模板、任务及其他资源。 |
 
 若干命令组有更短的别名：`users`/`user`、`projects`/`project`、
 `vaults`/`vault` 以及 `server`/`service`。

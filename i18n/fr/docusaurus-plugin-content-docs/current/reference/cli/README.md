@@ -18,6 +18,7 @@ d'administration disposent d'un groupe de commandes dédié :
 | [`semaphore vaults`](/reference/cli/vaults) | Rechiffrer les secrets stockés et consulter l'utilisation des clés de chiffrement. |
 | [`semaphore runner`](/reference/cli/runners) | Fonctionner en mode runner et enregistrer/désenregistrer des runners. |
 | [`semaphore migrate`](/reference/cli/migrations) | Appliquer ou annuler des migrations de base de données. |
+| [`semaphore client`](/reference/cli/client) | Gérer un serveur en fonctionnement via son API REST depuis le terminal et depuis des scripts : projets, modèles, tâches et les autres ressources. |
 
 Plusieurs groupes de commandes ont des alias plus courts : `users`/`user`, `projects`/`project`,
 `vaults`/`vault` et `server`/`service`.
