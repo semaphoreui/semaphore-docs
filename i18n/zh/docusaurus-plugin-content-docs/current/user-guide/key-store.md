@@ -17,7 +17,7 @@ Key Store 分为两个主要视图：
 
 ## 凭据类型 {#types}
 
-Semaphore 将存储的凭据分为三种基本类型：
+Semaphore 将存储的凭据分为四种基本类型：
 
 ### 1. SSH 密钥 {#1-ssh}
 SSH 密钥提供非对称加密身份验证，用于连接 Linux/UNIX 节点并通过 SSH（`git@github.com:...`）克隆 Git 仓库。
@@ -70,7 +70,7 @@ SSH 密钥提供非对称加密身份验证，用于连接 Linux/UNIX 节点并�
 * **Ansible Vault 密码**：在运行时解锁加密的 Ansible Vault 文件和变量。
 
 :::tip 机密字符串与个人访问令牌 (PAT)
-若要存储纯机密字符串（例如 API Bearer 令牌、Ansible Vault 密码短语或 PAT），**请将 Login / Username 字段留空**。Semaphore 会将其严格作为隔离的机密字符串处理，而不附加关联的用户标识符。
+若要存储纯机密字符串（例如 API Bearer 令牌或 Webhook 密钥），请使用下文的 **字符串** 类型。Ansible Vault 密码和 HTTPS Git 令牌仍然需要登录名留空的 **密码登录** 类型，因为这些使用方只接受该类型。
 :::
 
 #### 机密遮蔽与防覆盖保护 {#secret-masking-and-override-protection}
@@ -85,6 +85,26 @@ SSH 密钥提供非对称加密身份验证，用于连接 Linux/UNIX 节点并�
 ### 3. 无 {#3-none}
 
 **None** 凭据作为显式的空身份验证占位符。它用于无需 SSH 密钥或密码的公共开源 Git 仓库（例如 GitHub 或 GitLab 上的公共仓库）以及本地未授权的 Playbook 执行。
+
+---
+
+### 4. 字符串 {#4-string}
+
+**字符串** 凭据保存一个不带登录名的机密值：API 令牌、Webhook 密钥或单独的密码。它与其他凭据一样加密存储，API 不会返回它，表单也不会再次显示它，只能通过勾选 **Override** 来替换。
+
+使用场景：
+* **集成**：作为 Token、HMAC、GitHub 和 Bitbucket 认证方式的 *Auth secret*，参见[集成](/user-guide/integrations#hmac-authentication)。
+
+在不适用的地方，凭据选择器根本不会提供它：仓库或清单的 SSH 密钥、sudo 凭据和 Ansible Vault 密码都需要 SSH 密钥或登录名/密码。
+
+通过 API 创建同类凭据时使用 `"type": "string"`：
+
+```bash
+curl -X POST "https://semaphore.example.com/api/project/1/keys" \
+  -H "Authorization: Bearer <api-token>" \
+  -H "Content-Type: application/json" \
+  -d '{"project_id": 1, "name": "webhook-secret", "type": "string", "string": "s3cr3t"}'
+```
 
 ---
 

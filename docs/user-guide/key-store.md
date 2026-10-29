@@ -17,7 +17,7 @@ The Key Store is partitioned into two primary views:
 
 ## Credential Types {#types}
 
-Semaphore categorizes stored credentials into three foundational types:
+Semaphore categorizes stored credentials into four foundational types:
 
 ### 1. SSH Keys {#1-ssh}
 SSH Keys provide asymmetric cryptographic authentication used to connect to remote Linux/UNIX nodes and clone Git repositories over SSH (`git@github.com:...`).
@@ -70,7 +70,7 @@ The **Login with password** credential type supports both traditional username/p
 * **Ansible Vault Passwords**: Unlocks encrypted Ansible Vault files and variables at runtime.
 
 :::tip Secret Strings & Personal Access Tokens (PAT)
-To store a pure secret string (such as an API Bearer token, Ansible Vault passphrase, or Personal Access Token), **leave the Login / Username field blank**. Semaphore will treat the entry strictly as an isolated secret string without appending an associated user identifier.
+To store a pure secret string, such as an API bearer token or a webhook secret, use the **String** type below. The **Login with password** type with a blank login is still what Ansible Vault passwords and HTTPS Git tokens need, because those consumers accept only this type.
 :::
 
 #### Secret Masking & Override Protection {#secret-masking-and-override-protection}
@@ -85,6 +85,26 @@ To protect credentials from unauthorized exposure and accidental modification:
 ### 3. None {#3-none}
 
 The **None** credential acts as an explicit null authentication placeholder. It is used for public open-source Git repositories (such as public repositories on GitHub or GitLab) and local unauthenticated playbook executions where no SSH keys or passwords are required.
+
+---
+
+### 4. String {#4-string}
+
+The **String** credential holds a single secret value with no login attached: an API token, a webhook secret, a password on its own. It is stored encrypted like every other credential, is never returned by the API or shown in the form again, and can only be replaced with the **Override** checkbox.
+
+Where it is used:
+* **Integrations**: as the *Auth secret* of the Token, HMAC, GitHub and Bitbucket authentication methods, see [Integrations](/user-guide/integrations#hmac-authentication).
+
+Where it does not fit, the credential pickers simply do not offer it: a repository or inventory SSH key, the sudo credentials and the Ansible Vault password all need an SSH key or a login/password credential.
+
+Through the API the same credential is created with `"type": "string"`:
+
+```bash
+curl -X POST "https://semaphore.example.com/api/project/1/keys" \
+  -H "Authorization: Bearer <api-token>" \
+  -H "Content-Type: application/json" \
+  -d '{"project_id": 1, "name": "webhook-secret", "type": "string", "string": "s3cr3t"}'
+```
 
 ---
 

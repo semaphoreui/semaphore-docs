@@ -17,7 +17,7 @@ Le Key Store est divisé en deux vues principales :
 
 ## Types d'identifiants {#types}
 
-Semaphore classe les identifiants stockés selon trois types fondamentaux :
+Semaphore classe les identifiants stockés selon quatre types fondamentaux :
 
 ### 1. Clés SSH {#1-ssh}
 Les clés SSH fournissent une authentification asymétrique pour se connecter aux nœuds Linux/UNIX et cloner des dépôts Git via SSH (`git@github.com:...`).
@@ -70,7 +70,7 @@ Le type d'identifiant **Connexion avec mot de passe** prend en charge aussi bien
 * **Mots de passe Ansible Vault** : Déverrouille les fichiers et variables chiffrés d'Ansible Vault lors de l'exécution.
 
 :::tip Chaînes secrètes et jetons d'accès personnel (PAT)
-Pour stocker une chaîne secrète brute (comme un jeton d'API, mot de passe Vault ou PAT), **laissez le champ Nom d'utilisateur vide**. Semaphore traitera l'élément comme un secret isolé sans lui associer d'identifiant utilisateur.
+Pour stocker une chaîne secrète pure, comme un jeton bearer d'API ou le secret d'un webhook, utilisez le type **Chaîne** ci-dessous. Le type **Connexion avec mot de passe** avec un identifiant vide reste nécessaire pour les mots de passe Ansible Vault et les jetons Git HTTPS, car ces consommateurs n'acceptent que ce type.
 :::
 
 #### Masquage des secrets et protection contre l'écrasement {#secret-masking-and-override-protection}
@@ -85,6 +85,26 @@ Pour protéger les identifiants contre toute exposition non autorisée et toute 
 ### 3. Aucun {#3-none}
 
 L'identifiant **Aucun** sert d'espace réservé pour l'absence d'authentification. Il est utilisé pour les dépôts Git open-source publics (sur GitHub ou GitLab) et les exécutions locales de playbooks ne requérant ni clé SSH ni mot de passe.
+
+---
+
+### 4. Chaîne {#4-string}
+
+L'identifiant **Chaîne** contient une seule valeur secrète sans nom d'utilisateur : un jeton d'API, le secret d'un webhook, un mot de passe seul. Il est stocké chiffré comme tout autre identifiant, n'est jamais renvoyé par l'API ni réaffiché dans le formulaire, et ne peut être remplacé qu'en cochant **Override**.
+
+Où il est utilisé :
+* **Intégrations** : comme *Auth secret* des méthodes d'authentification Token, HMAC, GitHub et Bitbucket, voir [Intégrations](/user-guide/integrations#hmac-authentication).
+
+Là où ce type ne convient pas, les sélecteurs d'identifiants ne le proposent tout simplement pas : la clé SSH d'un dépôt ou d'un inventaire, les identifiants sudo et le mot de passe Ansible Vault exigent une clé SSH ou un identifiant/mot de passe.
+
+Via l'API, le même identifiant se crée avec `"type": "string"` :
+
+```bash
+curl -X POST "https://semaphore.example.com/api/project/1/keys" \
+  -H "Authorization: Bearer <api-token>" \
+  -H "Content-Type: application/json" \
+  -d '{"project_id": 1, "name": "webhook-secret", "type": "string", "string": "s3cr3t"}'
+```
 
 ---
 

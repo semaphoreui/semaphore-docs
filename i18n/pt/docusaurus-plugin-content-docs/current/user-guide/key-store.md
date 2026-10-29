@@ -17,7 +17,7 @@ O Key Store é dividido em duas visualizações principais:
 
 ## Tipos de credenciais {#types}
 
-O Semaphore categoriza as credenciais armazenadas em três tipos fundamentais:
+O Semaphore categoriza as credenciais armazenadas em quatro tipos fundamentais:
 
 ### 1. Chaves SSH {#1-ssh}
 As chaves SSH fornecem autenticação criptográfica assimétrica para conectar-se a nós Linux/UNIX e clonar repositórios Git via SSH (`git@github.com:...`).
@@ -70,7 +70,7 @@ O tipo de credencial **Login com senha** oferece suporte tanto à autenticação
 * **Senhas do Ansible Vault**: Desbloqueia arquivos e variáveis criptografados do Ansible Vault em tempo de execução.
 
 :::tip Strings de segredo e tokens de acesso pessoal (PAT)
-Para armazenar uma string de segredo pura (como um token Bearer de API, senha do Vault ou PAT), **deixe o campo Usuário em branco**. O Semaphore tratará a entrada como um segredo isolado sem associar um usuário.
+Para guardar uma string de segredo pura, como um token bearer de API ou o segredo de um webhook, use o tipo **Texto** abaixo. O tipo **Login com senha** com o login em branco continua necessário para senhas do Ansible Vault e tokens Git por HTTPS, porque esses consumidores aceitam apenas esse tipo.
 :::
 
 #### Mascaramento de segredos e proteção contra sobrescrita {#secret-masking-and-override-protection}
@@ -85,6 +85,26 @@ Para proteger as credenciais contra exposição não autorizada e modificação 
 ### 3. Nenhum {#3-none}
 
 A credencial **Nenhum** atua como um espaço reservado explícito para autenticação nula. É usada para repositórios Git públicos de código aberto (como no GitHub ou GitLab) e execuções de playbooks locais sem senhas ou chaves SSH.
+
+---
+
+### 4. Texto {#4-string}
+
+A credencial **Texto** guarda um único valor secreto sem login associado: um token de API, o segredo de um webhook, uma senha por si só. É armazenada cifrada como qualquer outra credencial, nunca é devolvida pela API nem mostrada de novo no formulário, e só pode ser substituída marcando **Override**.
+
+Onde é usada:
+* **Integrações**: como *Auth secret* dos métodos de autenticação Token, HMAC, GitHub e Bitbucket; veja [Integrações](/user-guide/integrations#hmac-authentication).
+
+Onde não se aplica, os seletores de credenciais simplesmente não a oferecem: a chave SSH de um repositório ou inventário, as credenciais sudo e a senha do Ansible Vault exigem uma chave SSH ou um login/senha.
+
+Pela API a mesma credencial é criada com `"type": "string"`:
+
+```bash
+curl -X POST "https://semaphore.example.com/api/project/1/keys" \
+  -H "Authorization: Bearer <api-token>" \
+  -H "Content-Type: application/json" \
+  -d '{"project_id": 1, "name": "webhook-secret", "type": "string", "string": "s3cr3t"}'
+```
 
 ---
 

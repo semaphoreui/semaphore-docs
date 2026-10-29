@@ -10,9 +10,11 @@ Webhook URL projekta (Project) prikazan je iznad liste. Svaka integracija ima na
 
 Pomoću integracije možete pokrenuti određeni šablon pozivanjem posebne krajnje tačke (alias), za koju možete podesiti jedan od sledećih načina autentifikacije:
 * GitHub Webhooks
+* Bitbucket Webhooks
 * Token
 * HMAC (SHA-256)
 * HMAC (SHA-512)
+* BasicAuth
 * Bez autentifikacije
 
 Alias predstavlja URL u sledećem formatu: `/api/integrations/<random_string>`. Podržava `GET` i `POST` zahteve.
@@ -24,7 +26,9 @@ HMAC metode autentifikacije (`hmac` / SHA-256 i `hmac-sha512` / SHA-512) provera
 Podesite:
 
 1. **Auth header** — zaglavlje zahteva koje prenosi potpis (na primer `X-Signature` ili `X-Hub-Signature-256`).
-2. **Auth secret** — kredencijal za prijavu i lozinku iz skladišta ključeva; Semaphore koristi vrednost **lozinke** kao HMAC tajnu.
+2. **Auth secret** — ključ tipa **String** iz skladišta ključeva (njegova vrednost je tajna) ili kredencijal za prijavu i lozinku (njegova **lozinka** je tajna).
+
+Metod Token poredi vrednost zaglavlja sa istim kredencijalom. BasicAuth je izuzetak: proverava i korisničko ime, pa zahteva kredencijal za prijavu i lozinku.
 
 Pošiljalac mora u to zaglavlje da postavi HMAC sažetak neobrađenog tela zahteva kao **sirovu heksadecimalnu vrednost** (bez prefiksa `sha256=` / `sha512=`). Semaphore ga poredi sa `HMAC-SHA256` ili `HMAC-SHA512` vrednošću tela izračunatom pomoću podešene tajne.
 
