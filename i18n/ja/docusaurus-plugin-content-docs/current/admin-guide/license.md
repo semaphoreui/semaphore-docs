@@ -74,6 +74,10 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 ## プロキシ経由でライセンスサーバーに接続する {#reach-the-license-server-through-a-proxy}
 
+:::info v2.20 以降
+プロキシは **Semaphore 2.20** 以降で利用できます。
+:::
+
 キーのアクティベーション、ライセンストークンの更新、毎日のトークン更新はいずれも `subscription.server_url` の Semaphore UI ポータルを呼び出します。サーバーがインターネットに直接アクセスできないネットワークでは、これらの通信を HTTP プロキシ経由にします。
 
 ```json

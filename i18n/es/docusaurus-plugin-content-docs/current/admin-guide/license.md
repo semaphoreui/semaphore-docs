@@ -74,6 +74,10 @@ Cuando la clave de licencia se gestiona desde la configuración, Semaphore UI de
 
 ## Acceder al servidor de licencias a través de un proxy {#reach-the-license-server-through-a-proxy}
 
+:::info Desde la v2.20
+El proxy está disponible desde **Semaphore 2.20**.
+:::
+
 La activación de una clave, la renovación del token de licencia y la renovación diaria del token llaman al Portal de Semaphore UI en `subscription.server_url`. En una red donde el servidor no tiene acceso directo a internet, dirija esas llamadas a través de un proxy HTTP:
 
 ```json

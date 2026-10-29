@@ -74,6 +74,10 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 ## 通过代理访问许可证服务器 {#reach-the-license-server-through-a-proxy}
 
+:::info 自 v2.20 起
+代理自 **Semaphore 2.20** 起可用。
+:::
+
 激活密钥、刷新许可证令牌以及每日令牌刷新都会访问 `subscription.server_url` 上的 Semaphore UI 门户。如果服务器所在网络无法直接访问互联网，请让这些请求通过 HTTP 代理：
 
 ```json

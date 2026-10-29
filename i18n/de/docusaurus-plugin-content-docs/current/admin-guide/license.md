@@ -74,6 +74,10 @@ Wenn der Lizenzschlüssel über die Konfiguration verwaltet wird, deaktiviert Se
 
 ## Lizenzserver über einen Proxy erreichen {#reach-the-license-server-through-a-proxy}
 
+:::info Seit v2.20
+Der Proxy ist seit **Semaphore 2.20** verfügbar.
+:::
+
 Die Aktivierung eines Schlüssels, das Erneuern des Lizenz-Tokens und die tägliche Token-Erneuerung rufen alle das Semaphore UI Portal unter `subscription.server_url` auf. In einem Netzwerk, in dem der Server keinen direkten Internetzugang hat, leiten Sie diese Aufrufe über einen HTTP-Proxy:
 
 ```json

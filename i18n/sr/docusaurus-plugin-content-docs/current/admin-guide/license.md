@@ -74,6 +74,10 @@ Kada se licencnim ključem upravlja kroz konfiguraciju, Semaphore UI onemogućav
 
 ## Pristup serveru licenci preko proksija {#reach-the-license-server-through-a-proxy}
 
+:::info Od verzije 2.20
+Proksi je dostupan od verzije **Semaphore 2.20**.
+:::
+
 Aktivacija ključa, osvežavanje tokena licence i dnevno osvežavanje tokena pozivaju Semaphore UI portal na adresi `subscription.server_url`. U mreži u kojoj server nema direktan pristup internetu, usmerite te pozive preko HTTP proksija:
 
 ```json

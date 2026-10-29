@@ -74,6 +74,10 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 ## 프록시를 통해 라이선스 서버에 연결 {#reach-the-license-server-through-a-proxy}
 
+:::info v2.20부터
+프록시는 **Semaphore 2.20**부터 사용할 수 있습니다.
+:::
+
 키 활성화, 라이선스 토큰 갱신, 매일 수행되는 토큰 갱신은 모두 `subscription.server_url` 의 Semaphore UI 포털을 호출합니다. 서버가 인터넷에 직접 접속할 수 없는 네트워크에서는 이러한 호출을 HTTP 프록시로 보내십시오.
 
 ```json

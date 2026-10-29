@@ -77,6 +77,10 @@ When the license key is managed by configuration, Semaphore UI disables editing 
 
 ## Reach the license server through a proxy {#reach-the-license-server-through-a-proxy}
 
+:::info Since v2.20
+The proxy is available since **Semaphore 2.20**.
+:::
+
 Activating a key, refreshing the license token, and the daily token refresh all call the Semaphore
 UI Portal at `subscription.server_url`. In a network where the server has no direct internet
 access, route those calls through an HTTP proxy:

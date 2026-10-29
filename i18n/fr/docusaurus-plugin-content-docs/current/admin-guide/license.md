@@ -74,6 +74,10 @@ Lorsque la clé de licence est gérée par la configuration, Semaphore UI désac
 
 ## Joindre le serveur de licences via un proxy {#reach-the-license-server-through-a-proxy}
 
+:::info Depuis la v2.20
+Le proxy est disponible depuis **Semaphore 2.20**.
+:::
+
 L'activation d'une clé, le rafraîchissement du jeton de licence et le rafraîchissement quotidien du jeton appellent tous le Portail Semaphore UI à l'adresse `subscription.server_url`. Dans un réseau où le serveur n'a pas d'accès direct à internet, faites passer ces appels par un proxy HTTP :
 
 ```json

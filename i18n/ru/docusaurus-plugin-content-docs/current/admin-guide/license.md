@@ -74,6 +74,10 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 ## Доступ к серверу лицензий через прокси {#reach-the-license-server-through-a-proxy}
 
+:::info Начиная с v2.20
+Прокси доступен начиная с **Semaphore 2.20**.
+:::
+
 Активация ключа, обновление лицензионного токена и ежедневное обновление токена обращаются к порталу Semaphore UI по адресу `subscription.server_url`. В сети, где у сервера нет прямого доступа в интернет, направьте эти запросы через HTTP-прокси:
 
 ```json
