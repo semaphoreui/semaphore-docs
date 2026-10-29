@@ -72,6 +72,45 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 Wenn der Lizenzschlüssel über die Konfiguration verwaltet wird, deaktiviert Semaphore UI die Bearbeitungs- und Aktivierungselemente im Dialog **Abonnement & Abrechnung**. Dies gilt sowohl für `subscription.key` als auch für `subscription.key_file`, da der Server die Schlüsseldatei beim Start in den Laufzeit-Lizenzschlüssel einliest.
 
+## Funktionsweise der Lizenzprüfung {#how-license-validation-works}
+
+Semaphore UI prüft die Lizenz gegen das Semaphore UI Portal. Die Adresse steht in `subscription.server_url`, standardmäßig `https://portal.semaphoreui.com/billing`.
+
+### Womit sich Semaphore UI verbindet {#what-semaphore-ui-connects-to}
+
+| Wann | Anfrage |
+| --- | --- |
+| Aktivierung eines Schlüssels | `POST {server_url}/subscriptions/{key}/activate` |
+| Prüfung und Erneuerung der Lizenz | `POST {server_url}/subscriptions/{key}/validate` |
+
+Beides sind einfache JSON-Anfragen, und eine Anfrage wird nach 20 Sekunden abgebrochen. Die Aktivierungsanfrage sendet den Lizenzschlüssel, die Prüfanfrage sendet das Lizenz-Token, das der Server in diesem Moment besitzt. Nichts anderes verlässt die Installation: Benutzerkonten, Projektnamen, Inventare, Hostnamen oder Task-Ausgaben sind nicht Teil dieser Anfragen.
+
+Die Antwort ist in beiden Fällen ein **Lizenz-Token** — ein JWT, das das Portal mit einem RSA-Schlüssel signiert. Semaphore UI prüft die Signatur gegen den passenden öffentlichen Schlüssel, der in die Server-Binärdatei eingebaut ist, sodass ein Token nicht gefälscht oder verändert werden kann. Seine Claims enthalten den Umfang der Lizenz: den Plan, den Abonnementstatus, den Firmennamen, das Ablaufdatum sowie die Anzahl der Pro-Benutzer, Nodes und UIs. Der Server speichert den Schlüssel und das Token in der Datenbank, in den Optionen `subscription_key` und `subscription_token`.
+
+### Wann die Prüfung läuft {#when-the-check-runs}
+
+| Auslöser | Was passiert |
+| --- | --- |
+| Serverstart | Das Lizenz-Token wird einmal erneuert. |
+| Täglich um 01:00 Uhr Serverzeit | Das Lizenz-Token wird erneuert. |
+| Aktivierung eines Schlüssels in der Weboberfläche oder über `subscription.key` | Der Schlüssel wird aktiviert und liefert das erste Token. |
+| **Neu laden** im Dialog **Abonnement & Abrechnung** | Das Lizenz-Token wird bei Bedarf erneuert. |
+
+Zwischen diesen Aufrufen kontaktiert Semaphore UI das Portal nicht. Jede Lizenzprüfung — ob Pro-Funktionen aktiv sind und ob ein weiterer Pro-Benutzer, ein weiterer Runner oder ein weiterer HTTP-Backend-State für Terraform/OpenTofu in die Lizenz passt — liest das gespeicherte Token lokal.
+
+### Wenn das Portal nicht erreichbar ist {#when-the-portal-cannot-be-reached}
+
+Eine fehlgeschlagene Erneuerung wird im Serverlog unter dem Kontext `subscription` protokolliert und lässt das gespeicherte Token unberührt, sodass ein Netzwerkausfall oder ein nicht verfügbares Portal die Pro-Funktionen nicht abschaltet. Die Installation läuft weiter, bis das im Token selbst hinterlegte Ablaufdatum überschritten ist: ein abgelaufenes Token wird noch geladen, sein Status wird aber `expired`, und die Pro-Funktionen enden.
+
+### Online- und Offline-Schlüssel {#online-and-offline-keys}
+
+- Ein **Online-Schlüssel** ist eine UUID in der Form `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. Seine Aktivierung ruft das Portal auf, und die tägliche Erneuerung hält ihn aktuell. Ein Wert, der keine UUID ist, wird abgelehnt, bevor überhaupt eine Anfrage gestellt wird.
+- Ein **Offline-Schlüssel** ist selbst ein Lizenz-Token — eine lange signierte Zeichenfolge für eine Installation ohne Internetzugang. Semaphore UI prüft sie lokal und ruft dafür niemals das Portal auf, die tägliche Erneuerung stellt also überhaupt keine Anfrage. Um eine Offline-Lizenz zu verlängern, ersetzen Sie den Schlüssel durch einen neu ausgestellten.
+
+### Hochverfügbarkeit {#high-availability}
+
+Jeder Server-Node erneuert die Lizenz bei seinem eigenen Start und nach seinem eigenen Tagesplan und schreibt das Ergebnis in die gemeinsame Datenbank, sodass jeder Node des Clusters dasselbe Lizenz-Token liest. Zusätzliche Konfiguration ist nicht nötig.
+
 ## Lizenzserver über einen Proxy erreichen {#reach-the-license-server-through-a-proxy}
 
 :::info Seit v2.20

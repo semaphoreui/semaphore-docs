@@ -72,6 +72,45 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 Cuando la clave de licencia se gestiona desde la configuración, Semaphore UI desactiva los controles de edición y activación del cuadro de diálogo **Suscripción y facturación**. Esto se aplica tanto a `subscription.key` como a `subscription.key_file`, ya que el servidor lee el archivo de la clave y lo carga como clave de licencia en tiempo de ejecución durante el arranque.
 
+## Cómo funciona la validación de la licencia {#how-license-validation-works}
+
+Semaphore UI valida la licencia contra el Portal de Semaphore UI. La dirección está en `subscription.server_url`, que por defecto es `https://portal.semaphoreui.com/billing`.
+
+### A dónde se conecta Semaphore UI {#what-semaphore-ui-connects-to}
+
+| Cuándo | Solicitud |
+| --- | --- |
+| Activación de una clave | `POST {server_url}/subscriptions/{key}/activate` |
+| Validación y renovación de la licencia | `POST {server_url}/subscriptions/{key}/validate` |
+
+Ambas son solicitudes JSON simples, y una solicitud se abandona después de 20 segundos. La solicitud de activación envía la clave de licencia; la solicitud de validación envía el token de licencia que el servidor tiene en ese momento. Nada más sale de la instalación: las cuentas de usuario, los nombres de proyecto, los inventarios, los nombres de host y la salida de las tareas no forman parte de estas solicitudes.
+
+La respuesta en ambos casos es un **token de licencia**: un JWT firmado por el portal con una clave RSA. Semaphore UI verifica la firma con la clave pública correspondiente incorporada en el binario del servidor, por lo que un token no se puede falsificar ni modificar. Sus claims contienen lo que permite la licencia: el plan, el estado de la suscripción, el nombre de la empresa, la fecha de caducidad y el número de usuarios Pro, nodos e interfaces (UIs). El servidor guarda la clave y el token en la base de datos, en las opciones `subscription_key` y `subscription_token`.
+
+### Cuándo se ejecuta la comprobación {#when-the-check-runs}
+
+| Disparador | Qué ocurre |
+| --- | --- |
+| Arranque del servidor | El token de licencia se renueva una vez. |
+| Cada día a la 01:00, hora del servidor | El token de licencia se renueva. |
+| Activación de una clave en la interfaz web o mediante `subscription.key` | La clave se activa y devuelve el primer token. |
+| **Recargar** en el diálogo **Suscripción y facturación** | El token de licencia se renueva a demanda. |
+
+Entre esas llamadas Semaphore UI no contacta con el portal. Cada comprobación de licencia —si las funciones Pro están habilitadas y si cabe en la licencia un usuario Pro, un runner o un estado de backend HTTP de Terraform/OpenTofu más— lee el token almacenado localmente.
+
+### Cuando no se puede alcanzar el portal {#when-the-portal-cannot-be-reached}
+
+Una renovación fallida se escribe en el log del servidor con el contexto `subscription` y deja intacto el token almacenado, de modo que un corte de red o un portal no disponible no desactiva las funciones Pro. La instalación sigue funcionando hasta que pasa la fecha de caducidad contenida en el propio token: un token caducado todavía se carga, pero su estado pasa a `expired` y las funciones Pro se detienen.
+
+### Claves en línea y sin conexión {#online-and-offline-keys}
+
+- Una **clave en línea** es un UUID con la forma `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. Al activarla se llama al portal, y la renovación diaria la mantiene actualizada. Un valor que no sea un UUID se rechaza antes de realizar cualquier solicitud.
+- Una **clave sin conexión** es un token de licencia en sí misma: una cadena firmada larga emitida para una instalación sin acceso a internet. Semaphore UI la verifica localmente y nunca llama al portal por ella, por lo que la renovación diaria no realiza ninguna solicitud. Para renovar una licencia sin conexión, sustituya la clave por una recién emitida.
+
+### Alta disponibilidad {#high-availability}
+
+Cada nodo del servidor renueva la licencia en su propio arranque y según su propia programación diaria, y escribe el resultado en la base de datos compartida, por lo que todos los nodos del clúster leen el mismo token de licencia. No se necesita configuración adicional.
+
 ## Acceder al servidor de licencias a través de un proxy {#reach-the-license-server-through-a-proxy}
 
 :::info Desde la v2.20
