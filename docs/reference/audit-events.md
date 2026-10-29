@@ -157,6 +157,13 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `task.execution` | `complete` | `end` | success |  | `result`, `end_reason`, `template_id`, `initiator_id`, `duration_ms` | Community |
 | `task.history` | `delete` | `deletion` | success |  | `template_id` | Community |
 
+## Workflows {#workflows}
+
+| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition |
+| --- | --- | --- | --- | --- | --- | --- |
+| `workflow.approval` | `approve` | `change` | success |  | `run_id`, `node_id` | Pro |
+| `workflow.approval` | `reject` | `change` | success |  | `run_id`, `node_id` | Pro |
+
 ## Runners {#runners}
 
 | Event code | Action | Type | Outcomes | Reasons | Metadata | Edition |
