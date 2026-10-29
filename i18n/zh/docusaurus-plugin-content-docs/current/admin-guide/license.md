@@ -72,6 +72,42 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 当许可证密钥由配置管理时，Semaphore UI 会禁用 **订阅与账单** 对话框中的编辑和激活控件。这同时适用于 `subscription.key` 和 `subscription.key_file`，因为服务器在启动时会将密钥文件读入运行时许可证密钥。
 
+## 通过代理访问许可证服务器 {#reach-the-license-server-through-a-proxy}
+
+:::info 自 v2.20 起
+代理自 **Semaphore 2.20** 起可用。
+:::
+
+激活密钥、刷新许可证令牌以及每日令牌刷新都会访问 `subscription.server_url` 上的 Semaphore UI 门户。如果服务器所在网络无法直接访问互联网，请让这些请求通过 HTTP 代理：
+
+```json
+{
+  "subscription": {
+    "proxy": {
+      "url": "http://proxy.example.com:3128",
+      "username": "semaphore",
+      "password": "PROXY_PASSWORD"
+    }
+  }
+}
+```
+
+或使用环境变量：
+
+```bash
+export SEMAPHORE_SUBSCRIPTION_PROXY_URL=http://proxy.example.com:3128
+export SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME=semaphore
+export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
+```
+
+说明：
+
+- 支持 `http`、`https`、`socks5` 和 `socks5h` 协议。代理地址无效时，服务器会在启动时停止。
+- `username` 和 `password` 为可选项，并会覆盖 `url` 中给出的凭据。单独配置可使密码不出现在 Semaphore UI 记录的代理地址中。
+- 代理仅作用于发往许可证服务器的请求，不影响任务、Git 克隆和其他出站连接。
+- 未设置 `subscription.proxy` 时，许可证服务器仍按原来的方式通过服务器进程的代理变量（`HTTP_PROXY`、`HTTPS_PROXY`、`NO_PROXY`）访问。
+- 完全离网的部署需要离线许可证密钥而不是代理——此时服务器从不访问门户。
+
 ## 管理或替换许可证密钥 {#manage-or-replace-a-license-key}
 
 若要续订、替换或查看您的许可证，请打开管理员菜单并选择 **订阅与账单**。

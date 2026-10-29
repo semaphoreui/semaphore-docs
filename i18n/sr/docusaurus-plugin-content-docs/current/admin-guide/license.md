@@ -72,6 +72,42 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 Kada se licencnim ključem upravlja kroz konfiguraciju, Semaphore UI onemogućava kontrole za izmenu i aktivaciju u dijalogu **Pretplata i naplata** (Subscription & Billing). Ovo važi i za `subscription.key` i za `subscription.key_file`, jer server pri pokretanju učitava fajl sa ključem u licencni ključ koji se koristi tokom rada.
 
+## Pristup serveru licenci preko proksija {#reach-the-license-server-through-a-proxy}
+
+:::info Od verzije 2.20
+Proksi je dostupan od verzije **Semaphore 2.20**.
+:::
+
+Aktivacija ključa, osvežavanje tokena licence i dnevno osvežavanje tokena pozivaju Semaphore UI portal na adresi `subscription.server_url`. U mreži u kojoj server nema direktan pristup internetu, usmerite te pozive preko HTTP proksija:
+
+```json
+{
+  "subscription": {
+    "proxy": {
+      "url": "http://proxy.example.com:3128",
+      "username": "semaphore",
+      "password": "PROXY_PASSWORD"
+    }
+  }
+}
+```
+
+Ili kao promenljive okruženja:
+
+```bash
+export SEMAPHORE_SUBSCRIPTION_PROXY_URL=http://proxy.example.com:3128
+export SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME=semaphore
+export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
+```
+
+Napomene:
+
+- Podržane su sheme `http`, `https`, `socks5` i `socks5h`. Neispravna adresa proksija zaustavlja server pri pokretanju.
+- `username` i `password` su opcioni i nadjačavaju podatke navedene unutar `url`. Kada su odvojeni, lozinka ne ulazi u adresu proksija koju Semaphore UI upisuje u log.
+- Proksi važi samo za zahteve ka serveru licenci. Zadaci, Git kloniranja i druge izlazne veze nisu pogođeni.
+- Bez `subscription.proxy`, server licenci se dostiže preko proksi promenljivih procesa servera (`HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`), kao i do sada.
+- Instalaciji bez pristupa internetu potreban je oflajn ključ licence umesto proksija — za njega server nikada ne poziva portal.
+
 ## Upravljanje licencnim ključem ili njegova zamena {#manage-or-replace-a-license-key}
 
 Da biste obnovili, zamenili ili pregledali licencu, otvorite meni Admin i izaberite **Pretplata i naplata** (Subscription & Billing).

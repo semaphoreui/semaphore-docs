@@ -72,6 +72,42 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 ライセンスキーが設定で管理されている場合、Semaphore UI は **サブスクリプションと請求** ダイアログの編集および有効化のコントロールを無効にします。サーバーは起動時にキーファイルを読み込んで実行時のライセンスキーとして使用するため、これは `subscription.key` と `subscription.key_file` の両方に適用されます。
 
+## プロキシ経由でライセンスサーバーに接続する {#reach-the-license-server-through-a-proxy}
+
+:::info v2.20 以降
+プロキシは **Semaphore 2.20** 以降で利用できます。
+:::
+
+キーのアクティベーション、ライセンストークンの更新、毎日のトークン更新はいずれも `subscription.server_url` の Semaphore UI ポータルを呼び出します。サーバーがインターネットに直接アクセスできないネットワークでは、これらの通信を HTTP プロキシ経由にします。
+
+```json
+{
+  "subscription": {
+    "proxy": {
+      "url": "http://proxy.example.com:3128",
+      "username": "semaphore",
+      "password": "PROXY_PASSWORD"
+    }
+  }
+}
+```
+
+または環境変数で指定します。
+
+```bash
+export SEMAPHORE_SUBSCRIPTION_PROXY_URL=http://proxy.example.com:3128
+export SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME=semaphore
+export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
+```
+
+注意:
+
+- `http`、`https`、`socks5`、`socks5h` のスキームに対応しています。プロキシアドレスが不正な場合、サーバーは起動時に停止します。
+- `username` と `password` は省略可能で、`url` に含めた認証情報より優先されます。分けて指定すると、Semaphore UI がログに記録するプロキシアドレスにパスワードが含まれません。
+- プロキシはライセンスサーバーへのリクエストにのみ適用されます。タスク、Git のクローン、その他の外向き通信には影響しません。
+- `subscription.proxy` を設定しない場合、ライセンスサーバーへの接続は従来どおりサーバープロセスのプロキシ変数（`HTTP_PROXY`、`HTTPS_PROXY`、`NO_PROXY`）に従います。
+- インターネットから切り離された環境では、プロキシではなくオフラインライセンスキーが必要です。その場合サーバーはポータルを一切呼び出しません。
+
 ## ライセンスキーの管理と置き換え {#manage-or-replace-a-license-key}
 
 ライセンスを更新、置き換え、または確認するには、管理メニューを開いて **サブスクリプションと請求** を選択します。

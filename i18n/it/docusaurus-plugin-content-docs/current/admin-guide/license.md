@@ -72,6 +72,42 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 Quando la chiave di licenza è gestita tramite configurazione, Semaphore UI disabilita i controlli di modifica e attivazione nella finestra **Abbonamento e fatturazione**. Questo vale sia per `subscription.key` sia per `subscription.key_file`, perché all'avvio il server legge il file della chiave nella chiave di licenza in uso.
 
+## Raggiungere il server delle licenze tramite un proxy {#reach-the-license-server-through-a-proxy}
+
+:::info Dalla v2.20
+Il proxy è disponibile da **Semaphore 2.20**.
+:::
+
+L'attivazione di una chiave, l'aggiornamento del token di licenza e l'aggiornamento giornaliero del token chiamano tutti il Portale di Semaphore UI su `subscription.server_url`. In una rete in cui il server non ha accesso diretto a internet, instrada quelle chiamate attraverso un proxy HTTP:
+
+```json
+{
+  "subscription": {
+    "proxy": {
+      "url": "http://proxy.example.com:3128",
+      "username": "semaphore",
+      "password": "PROXY_PASSWORD"
+    }
+  }
+}
+```
+
+Oppure come variabili d'ambiente:
+
+```bash
+export SEMAPHORE_SUBSCRIPTION_PROXY_URL=http://proxy.example.com:3128
+export SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME=semaphore
+export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
+```
+
+Note:
+
+- Sono supportati gli schemi `http`, `https`, `socks5` e `socks5h`. Un indirizzo proxy non valido arresta il server all'avvio.
+- `username` e `password` sono opzionali e sovrascrivono le credenziali indicate dentro `url`. Tenerle separate mantiene la password fuori dall'indirizzo del proxy che Semaphore UI registra nei log.
+- Il proxy vale solo per le richieste al server delle licenze. Le attività, i cloni Git e le altre connessioni in uscita non sono interessate.
+- Senza `subscription.proxy`, il server delle licenze viene raggiunto tramite le variabili proxy del processo del server (`HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`), come prima.
+- Un'installazione isolata da internet richiede una chiave di licenza offline invece di un proxy: per essa il server non chiama mai il portale.
+
 ## Gestione o sostituzione di una chiave di licenza {#manage-or-replace-a-license-key}
 
 Per rinnovare, sostituire o consultare la licenza, aprire il menu Admin e selezionare **Abbonamento e fatturazione**.

@@ -282,6 +282,9 @@ Activating Pro or Enterprise. See [License](/admin-guide/license).
 | `subscription.key`<br />`SEMAPHORE_SUBSCRIPTION_KEY` | string | Subscription key or token that can be set via config. When this is set, subscription activation from the web interface is disabled. Secret: keep it out of shell history and version control. |
 | `subscription.key_file`<br />`SEMAPHORE_SUBSCRIPTION_KEY_FILE` | string | Path to subscription key or token file. |
 | `subscription.server_url`<br />`SEMAPHORE_SUBSCRIPTION_SERVER_URL` | string<br />Default: `https://portal.semaphoreui.com/billing` | Subscription / billing server URL. Default: https://portal.semaphoreui.com/billing |
+| `subscription.proxy.url`<br />`SEMAPHORE_SUBSCRIPTION_PROXY_URL` | string | Proxy endpoint, for example http://proxy.example.com:3128. Schemes http, https, socks5 and socks5h are supported. When empty, the proxy variables of the server process are used (HTTP_PROXY, HTTPS_PROXY, NO_PROXY), as for every other outgoing request. |
+| `subscription.proxy.username`<br />`SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME` | string | Authenticates against the proxy. It overrides a user name given in URL, and keeps the credentials out of the logged proxy address. |
+| `subscription.proxy.password`<br />`SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD` | string | Belongs to Username. It overrides a password given in URL. Secret: keep it out of shell history and version control. |
 
 ## High availability {#high-availability}
 

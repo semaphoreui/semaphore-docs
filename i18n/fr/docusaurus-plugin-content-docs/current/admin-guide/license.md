@@ -72,6 +72,42 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 Lorsque la clé de licence est gérée par la configuration, Semaphore UI désactive les contrôles de modification et d'activation dans la boîte de dialogue **Abonnement et facturation**. Cela s'applique aussi bien à `subscription.key` qu'à `subscription.key_file`, car le serveur lit le fichier de clé dans la clé de licence d'exécution au démarrage.
 
+## Joindre le serveur de licences via un proxy {#reach-the-license-server-through-a-proxy}
+
+:::info Depuis la v2.20
+Le proxy est disponible depuis **Semaphore 2.20**.
+:::
+
+L'activation d'une clé, le rafraîchissement du jeton de licence et le rafraîchissement quotidien du jeton appellent tous le Portail Semaphore UI à l'adresse `subscription.server_url`. Dans un réseau où le serveur n'a pas d'accès direct à internet, faites passer ces appels par un proxy HTTP :
+
+```json
+{
+  "subscription": {
+    "proxy": {
+      "url": "http://proxy.example.com:3128",
+      "username": "semaphore",
+      "password": "PROXY_PASSWORD"
+    }
+  }
+}
+```
+
+Ou comme variables d'environnement :
+
+```bash
+export SEMAPHORE_SUBSCRIPTION_PROXY_URL=http://proxy.example.com:3128
+export SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME=semaphore
+export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
+```
+
+Remarques :
+
+- Les schémas `http`, `https`, `socks5` et `socks5h` sont pris en charge. Une adresse de proxy invalide arrête le serveur au démarrage.
+- `username` et `password` sont facultatifs et remplacent les identifiants indiqués dans `url`. Les garder à part évite que le mot de passe apparaisse dans l'adresse de proxy journalisée par Semaphore UI.
+- Le proxy ne s'applique qu'aux requêtes vers le serveur de licences. Les tâches, les clones Git et les autres connexions sortantes ne sont pas concernés.
+- Sans `subscription.proxy`, le serveur de licences est joint via les variables de proxy du processus serveur (`HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`), comme auparavant.
+- Une installation coupée d'internet a besoin d'une clé de licence hors ligne plutôt que d'un proxy — le serveur n'appelle alors jamais le portail.
+
 ## Gérer ou remplacer une clé de licence {#manage-or-replace-a-license-key}
 
 Pour renouveler, remplacer ou consulter votre licence, ouvrez le menu Admin et sélectionnez **Abonnement et facturation**.

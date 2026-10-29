@@ -72,6 +72,42 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 라이선스 키가 구성으로 관리되는 경우 Semaphore UI는 **구독 및 결제** 대화 상자의 편집 및 활성화 컨트롤을 비활성화합니다. 서버가 시작 시 키 파일을 읽어 런타임 라이선스 키로 사용하기 때문에, 이는 `subscription.key`와 `subscription.key_file` 모두에 적용됩니다.
 
+## 프록시를 통해 라이선스 서버에 연결 {#reach-the-license-server-through-a-proxy}
+
+:::info v2.20부터
+프록시는 **Semaphore 2.20**부터 사용할 수 있습니다.
+:::
+
+키 활성화, 라이선스 토큰 갱신, 매일 수행되는 토큰 갱신은 모두 `subscription.server_url` 의 Semaphore UI 포털을 호출합니다. 서버가 인터넷에 직접 접속할 수 없는 네트워크에서는 이러한 호출을 HTTP 프록시로 보내십시오.
+
+```json
+{
+  "subscription": {
+    "proxy": {
+      "url": "http://proxy.example.com:3128",
+      "username": "semaphore",
+      "password": "PROXY_PASSWORD"
+    }
+  }
+}
+```
+
+또는 환경 변수로 지정합니다.
+
+```bash
+export SEMAPHORE_SUBSCRIPTION_PROXY_URL=http://proxy.example.com:3128
+export SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME=semaphore
+export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
+```
+
+참고:
+
+- `http`, `https`, `socks5`, `socks5h` 스킴을 지원합니다. 프록시 주소가 잘못되면 서버가 시작 단계에서 멈춥니다.
+- `username` 과 `password` 는 선택 사항이며 `url` 안에 적은 자격 증명보다 우선합니다. 따로 지정하면 Semaphore UI 가 로그에 남기는 프록시 주소에 비밀번호가 포함되지 않습니다.
+- 프록시는 라이선스 서버로 가는 요청에만 적용됩니다. 작업, Git 클론, 그 밖의 외부 연결에는 영향을 주지 않습니다.
+- `subscription.proxy` 를 설정하지 않으면 라이선스 서버는 이전처럼 서버 프로세스의 프록시 변수(`HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`)를 통해 연결됩니다.
+- 인터넷이 차단된 설치 환경에는 프록시가 아니라 오프라인 라이선스 키가 필요합니다. 이 경우 서버는 포털을 전혀 호출하지 않습니다.
+
 ## 라이선스 키 관리 또는 교체 {#manage-or-replace-a-license-key}
 
 라이선스를 갱신, 교체 또는 확인하려면 관리자 메뉴를 열고 **구독 및 결제**를 선택합니다.
