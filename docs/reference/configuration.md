@@ -44,7 +44,7 @@ Where the HTTP server listens and how users reach it. Set `web_host` to the URL 
 
 | Option / Environment variable | Type / Default | Description |
 |---|---|---|
-| `port`<br />`SEMAPHORE_PORT` | string<br />Default: `:3000` | Format `:port_num` eg, :3000 if : is missing it will be corrected |
+| `port`<br />`SEMAPHORE_PORT` | string<br />Default: `:3000` | TCP port the HTTP server listens on, as `:port_num` (e.g. `:3000`) or a bare number (`3000`, quoted or not). A missing `:` is added automatically. |
 | `tls.enabled`<br />`SEMAPHORE_TLS_ENABLED` | boolean | Enable or disable TLS (HTTPS) for secure communication with the Semaphore server. |
 | `tls.cert_file`<br />`SEMAPHORE_TLS_CERT_FILE` | string | Path to TLS certificate file. |
 | `tls.key_file`<br />`SEMAPHORE_TLS_KEY_FILE` | string | Path to TLS key file. |
@@ -63,7 +63,7 @@ Directories Semaphore writes to. Everything here except the database is a cache 
 |---|---|---|
 | `tmp_path`<br />`SEMAPHORE_TMP_PATH` | string<br />Default: `/tmp/semaphore` | semaphore stores ephemeral projects here |
 | `secrets_path`<br />`SEMAPHORE_SECRETS_PATH` | string | Legacy top-level setting for backwards compatibility. Users should prefer configuring dirs.secrets instead. |
-| `home_dir_mode`<br />`SEMAPHORE_HOME_DIR_MODE` | string<br />Default: `template_dir` | Controls how the HOME environment variable is set for tasks. "template_dir" (default) — HOME is not overridden (keeps the HOME of the server or runner process). Ansible tasks get ANSIBLE_HOME set to a per-template "_home/.ansible" directory under the project temp directory, isolating .ansible/ across parallel tasks. "project_home" — HOME is set to the project temp directory (legacy behavior). Parallel ansible-galaxy runs in the same project may conflict. "user_home" — HOME is not overridden (keeps the real user HOME) and ANSIBLE_HOME is not set. One of `user_home`, `project_home`, `template_dir`. |
+| `home_dir_mode`<br />`SEMAPHORE_HOME_DIR_MODE` | string<br />Default: `template_dir` | Controls how the HOME environment variable is set for tasks. "template_home" (default) — HOME is set to a per-template directory, isolating .ansible/ across parallel tasks. Repo is cloned into a "src" subdirectory under HOME. "project_home" — HOME is set to the project temp directory (legacy behavior). Parallel ansible-galaxy runs in the same project may conflict. "user_home" — HOME is not overridden (keeps the real user HOME). ANSIBLE_HOME is set per template to isolate .ansible/ for Ansible tasks. One of `user_home`, `project_home`, `template_dir`. |
 | `dirs.secrets`<br />`SEMAPHORE_SECRETS_PATH` | string<br />Default: `/tmp/semaphore` | Path to directory where secrets are stored (for example Vault token files). Default: `/tmp/semaphore`. Legacy top-level `secrets_path` is still accepted when `dirs.secrets` is unset or left at the default. |
 | `dirs.repos`<br />`SEMAPHORE_REPOS_DIR` | string | Path to directory where repositories are stored. |
 | `dirs.ssh_agent_sockets`<br />`SEMAPHORE_SSH_AGENT_SOCKETS_DIR` | string<br />Default: `/tmp/semaphore` | Path to directory where SSH agent sockets are stored. Default: /tmp/semaphore |
@@ -282,6 +282,9 @@ Activating Pro or Enterprise. See [License](/admin-guide/license).
 | `subscription.key`<br />`SEMAPHORE_SUBSCRIPTION_KEY` | string | Subscription key or token that can be set via config. When this is set, subscription activation from the web interface is disabled. Secret: keep it out of shell history and version control. |
 | `subscription.key_file`<br />`SEMAPHORE_SUBSCRIPTION_KEY_FILE` | string | Path to subscription key or token file. |
 | `subscription.server_url`<br />`SEMAPHORE_SUBSCRIPTION_SERVER_URL` | string<br />Default: `https://portal.semaphoreui.com/billing` | Subscription / billing server URL. Default: https://portal.semaphoreui.com/billing |
+| `subscription.proxy.url`<br />`SEMAPHORE_SUBSCRIPTION_PROXY_URL` | string | Proxy endpoint, for example http://proxy.example.com:3128. Schemes http, https, socks5 and socks5h are supported. When empty, the proxy variables of the server process are used (HTTP_PROXY, HTTPS_PROXY, NO_PROXY), as for every other outgoing request. |
+| `subscription.proxy.username`<br />`SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME` | string | Authenticates against the proxy. It overrides a user name given in URL, and keeps the credentials out of the logged proxy address. |
+| `subscription.proxy.password`<br />`SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD` | string | Belongs to Username. It overrides a password given in URL. Secret: keep it out of shell history and version control. |
 
 ## High availability {#high-availability}
 

@@ -72,6 +72,38 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 Cuando la clave de licencia se gestiona desde la configuración, Semaphore UI desactiva los controles de edición y activación del cuadro de diálogo **Suscripción y facturación**. Esto se aplica tanto a `subscription.key` como a `subscription.key_file`, ya que el servidor lee el archivo de la clave y lo carga como clave de licencia en tiempo de ejecución durante el arranque.
 
+## Acceder al servidor de licencias a través de un proxy {#reach-the-license-server-through-a-proxy}
+
+La activación de una clave, la renovación del token de licencia y la renovación diaria del token llaman al Portal de Semaphore UI en `subscription.server_url`. En una red donde el servidor no tiene acceso directo a internet, dirija esas llamadas a través de un proxy HTTP:
+
+```json
+{
+  "subscription": {
+    "proxy": {
+      "url": "http://proxy.example.com:3128",
+      "username": "semaphore",
+      "password": "PROXY_PASSWORD"
+    }
+  }
+}
+```
+
+O como variables de entorno:
+
+```bash
+export SEMAPHORE_SUBSCRIPTION_PROXY_URL=http://proxy.example.com:3128
+export SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME=semaphore
+export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
+```
+
+Notas:
+
+- Se admiten los esquemas `http`, `https`, `socks5` y `socks5h`. Una dirección de proxy no válida detiene el servidor al arrancar.
+- `username` y `password` son opcionales y sustituyen las credenciales indicadas dentro de `url`. Mantenerlas aparte evita que la contraseña aparezca en la dirección del proxy que Semaphore UI registra.
+- El proxy se aplica solo a las peticiones al servidor de licencias. Las tareas, los clones de Git y otras conexiones salientes no se ven afectadas.
+- Sin `subscription.proxy`, el servidor de licencias se alcanza a través de las variables de proxy del proceso del servidor (`HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`), como antes.
+- Una instalación aislada de internet necesita una clave de licencia sin conexión en lugar de un proxy: para ella el servidor nunca llama al portal.
+
 ## Gestionar o sustituir una clave de licencia {#manage-or-replace-a-license-key}
 
 Para renovar, sustituir o revisar su licencia, abra el menú de administración y seleccione **Suscripción y facturación**.

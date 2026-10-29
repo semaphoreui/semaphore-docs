@@ -72,6 +72,38 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 Когда лицензионный ключ управляется через конфигурацию, Semaphore UI отключает элементы редактирования и активации в диалоге **Subscription & Billing**. Это относится и к `subscription.key`, и к `subscription.key_file`, поскольку сервер при запуске считывает файл ключа в лицензионный ключ времени выполнения.
 
+## Доступ к серверу лицензий через прокси {#reach-the-license-server-through-a-proxy}
+
+Активация ключа, обновление лицензионного токена и ежедневное обновление токена обращаются к порталу Semaphore UI по адресу `subscription.server_url`. В сети, где у сервера нет прямого доступа в интернет, направьте эти запросы через HTTP-прокси:
+
+```json
+{
+  "subscription": {
+    "proxy": {
+      "url": "http://proxy.example.com:3128",
+      "username": "semaphore",
+      "password": "PROXY_PASSWORD"
+    }
+  }
+}
+```
+
+Или как переменные окружения:
+
+```bash
+export SEMAPHORE_SUBSCRIPTION_PROXY_URL=http://proxy.example.com:3128
+export SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME=semaphore
+export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
+```
+
+Примечания:
+
+- Поддерживаются схемы `http`, `https`, `socks5` и `socks5h`. Неверный адрес прокси останавливает сервер при запуске.
+- `username` и `password` необязательны и перекрывают учётные данные, указанные внутри `url`. Отдельные поля не дают паролю попасть в адрес прокси, который Semaphore UI пишет в лог.
+- Прокси действует только для запросов к серверу лицензий. Задачи, клонирование Git и другие исходящие соединения он не затрагивает.
+- Без `subscription.proxy` сервер лицензий доступен через переменные прокси процесса сервера (`HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`), как и раньше.
+- Установке без доступа в интернет нужен офлайн-ключ лицензии, а не прокси — для него сервер никогда не обращается к порталу.
+
 ## Управление лицензионным ключом и его замена {#manage-or-replace-a-license-key}
 
 Чтобы продлить, заменить или просмотреть лицензию, откройте меню администратора и выберите **Subscription & Billing**.

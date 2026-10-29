@@ -75,6 +75,45 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 When the license key is managed by configuration, Semaphore UI disables editing and activation controls in the **Subscription & Billing** dialog. This applies to both `subscription.key` and `subscription.key_file`, because the server reads the key file into the runtime license key at startup.
 
+## Reach the license server through a proxy {#reach-the-license-server-through-a-proxy}
+
+Activating a key, refreshing the license token, and the daily token refresh all call the Semaphore
+UI Portal at `subscription.server_url`. In a network where the server has no direct internet
+access, route those calls through an HTTP proxy:
+
+```json
+{
+  "subscription": {
+    "proxy": {
+      "url": "http://proxy.example.com:3128",
+      "username": "semaphore",
+      "password": "PROXY_PASSWORD"
+    }
+  }
+}
+```
+
+Or as environment variables:
+
+```bash
+export SEMAPHORE_SUBSCRIPTION_PROXY_URL=http://proxy.example.com:3128
+export SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME=semaphore
+export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
+```
+
+Notes:
+
+- The schemes `http`, `https`, `socks5`, and `socks5h` are supported. An invalid proxy address
+  stops the server at startup.
+- `username` and `password` are optional, and override credentials given inside `url`. Keeping
+  them separate keeps the password out of the proxy address Semaphore UI logs.
+- The proxy applies only to requests to the license server. Tasks, Git clones, and other outgoing
+  connections are not affected.
+- Without `subscription.proxy`, the license server is reached through the proxy variables of the
+  server process (`HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`), as before.
+- An air-gapped installation needs an offline license key instead of a proxy — the server never
+  calls the portal for it.
+
 ## Manage or replace a license key {#manage-or-replace-a-license-key}
 
 To renew, replace, or review your license, open the Admin menu and select **Subscription & Billing**.

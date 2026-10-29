@@ -72,6 +72,38 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 Quando a chave de licença é gerenciada pela configuração, o Semaphore UI desabilita os controles de edição e ativação na caixa de diálogo **Assinatura e Cobrança**. Isso se aplica tanto a `subscription.key` quanto a `subscription.key_file`, porque o servidor lê o arquivo da chave para a chave de licença em tempo de execução durante a inicialização.
 
+## Acessar o servidor de licenças por um proxy {#reach-the-license-server-through-a-proxy}
+
+A ativação de uma chave, a renovação do token de licença e a renovação diária do token chamam o Portal do Semaphore UI em `subscription.server_url`. Em uma rede em que o servidor não tem acesso direto à internet, encaminhe essas chamadas por um proxy HTTP:
+
+```json
+{
+  "subscription": {
+    "proxy": {
+      "url": "http://proxy.example.com:3128",
+      "username": "semaphore",
+      "password": "PROXY_PASSWORD"
+    }
+  }
+}
+```
+
+Ou como variáveis de ambiente:
+
+```bash
+export SEMAPHORE_SUBSCRIPTION_PROXY_URL=http://proxy.example.com:3128
+export SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME=semaphore
+export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
+```
+
+Observações:
+
+- Os esquemas `http`, `https`, `socks5` e `socks5h` são suportados. Um endereço de proxy inválido interrompe o servidor na inicialização.
+- `username` e `password` são opcionais e substituem as credenciais informadas dentro de `url`. Mantê-las separadas evita que a senha apareça no endereço de proxy registrado nos logs do Semaphore UI.
+- O proxy vale apenas para as requisições ao servidor de licenças. Tarefas, clones do Git e outras conexões de saída não são afetadas.
+- Sem `subscription.proxy`, o servidor de licenças é alcançado pelas variáveis de proxy do processo do servidor (`HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`), como antes.
+- Uma instalação sem acesso à internet precisa de uma chave de licença offline em vez de um proxy — para ela o servidor nunca chama o portal.
+
 ## Gerenciar ou substituir uma chave de licença {#manage-or-replace-a-license-key}
 
 Para renovar, substituir ou revisar a sua licença, abra o menu Admin e selecione **Assinatura e Cobrança**.
