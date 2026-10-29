@@ -66,7 +66,7 @@ Below are detailed descriptions of each role and its permissions.
 
 ### Guest {#guest}
 
-- **Read-only access:** Guests have read-only access to all project resources (e.g., viewing logs, inventories, dashboards).
+- **Read-only access:** Guests have read-only access to all project resources (e.g., viewing logs, inventories, dashboards). The role holds only **Can read project**.
 
 - **No write permissions:** They cannot modify settings, run tasks, or change roles.
 
@@ -143,6 +143,7 @@ Choose only the project-wide permissions that the role needs:
 
 | Permission | Description |
 | --- | --- |
+| **Can read project** | See the project: its templates, workflows, task history, inventories, repositories, environments, Key Store, schedules, team and activity. Without it the member sees only the templates and workflows added to the role on their **Permissions** tab, and nothing else of the project. Every built-in role has it. |
 | **Can run project tasks** | Run project tasks. |
 | **Can update project** | Edit basic project information in **Dashboard** > **Settings**. |
 | **Can manage project resources** | Manage project resources, such as task templates, repositories, inventory, environments, Key Store entries, schedules, integrations, and runners. This is project-wide access. It cannot be limited to individual non-template resources. |
@@ -154,7 +155,7 @@ Choose only the project-wide permissions that the role needs:
 Project-wide permissions cannot be limited to a single inventory, repository, environment, or Key Store entry. Task templates and workflows are the resource types that support granular role assignments.
 
 :::tip Object-only access
-To create a granular role that adds access only to selected task templates or workflows, leave every project-wide permission unchecked. The role then adds no project-wide permissions of its own. Add it to the required templates and workflows and choose only the actions that role needs there.
+To create a granular role that adds access only to selected task templates or workflows, leave every project-wide permission unchecked, **Can read project** included. The role then adds no project-wide permissions of its own. Add it to the required templates and workflows and choose only the actions that role needs there. A member with only such a role sees in the project menu **Task Templates**, **Workflows** and the **Dashboard**, and in them only the objects the role was added to.
 :::
 
 Select **Save** when the role configuration is ready.
@@ -175,7 +176,7 @@ The **Permissions** tab lists the roles already added to the template.
 **Add the role and grant template permissions**
 
 1. Select **Add Role** and choose the custom role to add to this template.
-2. Select only the template permissions that the role needs: **Can run this template** or **Can edit this template**.
+2. Select only the template permissions that the role needs: **Can see this template**, **Can run this template** or **Can edit this template**. Running or editing a template includes seeing it, so the first box is checked together with the others.
 
 This example uses a previously created role with no project-wide permissions. You can choose any custom role that is available in the project.
 
@@ -183,7 +184,7 @@ This example uses a previously created role with no project-wide permissions. Yo
 
 ### Configure access to specific workflows {#configure-access-to-specific-workflows}
 
-Workflow permissions work the same way as template permissions and need the Enterprise edition. Open **Workflows**, select the workflow and open its **Permissions** tab, which you see with **Can edit workflows**. Select **Add Role**, choose the role and select the actions it gets on this workflow: **Can run this workflow** (start and stop its runs), **Can edit this workflow** or **Can approve this workflow** (approve or reject its approval steps).
+Workflow permissions work the same way as template permissions and need the Enterprise edition. Open **Workflows**, select the workflow and open its **Permissions** tab, which you see with **Can edit workflows**. Select **Add Role**, choose the role and select the actions it gets on this workflow: **Can see this workflow**, **Can run this workflow** (start and stop its runs), **Can edit this workflow** or **Can approve this workflow** (approve or reject its approval steps).
 
 A member with a permission on a workflow sees that workflow's buttons only on that workflow.
 
