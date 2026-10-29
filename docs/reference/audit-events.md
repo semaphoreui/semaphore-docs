@@ -79,6 +79,9 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `iam.template_permission` | `create` | `creation` | success |  | `template_id`, `role`, `permissions` | Community |
 | `iam.template_permission` | `update` | `change` | success |  | `template_id`, `role`, `permissions` | Community |
 | `iam.template_permission` | `delete` | `deletion` | success |  | `template_id`, `role` | Community |
+| `iam.workflow_permission` | `create` | `creation` | success |  | `workflow_id`, `role`, `permissions` | Pro |
+| `iam.workflow_permission` | `update` | `change` | success |  | `workflow_id`, `role`, `permissions` | Pro |
+| `iam.workflow_permission` | `delete` | `deletion` | success |  | `workflow_id`, `role` | Pro |
 
 ## Resources {#resources}
 
