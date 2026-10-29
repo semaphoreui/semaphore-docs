@@ -72,6 +72,45 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 라이선스 키가 구성으로 관리되는 경우 Semaphore UI는 **구독 및 결제** 대화 상자의 편집 및 활성화 컨트롤을 비활성화합니다. 서버가 시작 시 키 파일을 읽어 런타임 라이선스 키로 사용하기 때문에, 이는 `subscription.key`와 `subscription.key_file` 모두에 적용됩니다.
 
+## 라이선스 검증 동작 방식 {#how-license-validation-works}
+
+Semaphore UI는 라이선스를 Semaphore UI 포털에서 검증합니다. 주소는 `subscription.server_url` 에 지정하며 기본값은 `https://portal.semaphoreui.com/billing` 입니다.
+
+### Semaphore UI가 연결하는 대상 {#what-semaphore-ui-connects-to}
+
+| 시점 | 요청 |
+| --- | --- |
+| 키 활성화 | `POST {server_url}/subscriptions/{key}/activate` |
+| 라이선스 검증 및 갱신 | `POST {server_url}/subscriptions/{key}/validate` |
+
+둘 다 단순한 JSON 요청이며, 하나의 요청은 20초 후에 중단됩니다. 활성화 요청은 라이선스 키를 전송하고, 검증 요청은 서버가 그 시점에 보유한 라이선스 토큰을 전송합니다. 그 외에는 설치 환경에서 아무것도 나가지 않습니다. 사용자 계정, 프로젝트 이름, 인벤토리, 호스트 이름, 태스크 출력은 이 요청에 포함되지 않습니다.
+
+두 요청의 응답은 모두 **라이선스 토큰** 으로, 포털이 RSA 키로 서명한 JWT입니다. Semaphore UI는 서버 바이너리에 내장된 해당 공개 키로 서명을 검증하므로 토큰을 위조하거나 변경할 수 없습니다. 클레임에는 라이선스가 허용하는 내용, 즉 플랜, 구독 상태, 회사 이름, 만료일, Pro 사용자 수, 노드 수, UI 수가 담겨 있습니다. 서버는 키와 토큰을 데이터베이스의 `subscription_key` 및 `subscription_token` 옵션에 저장합니다.
+
+### 검증이 실행되는 시점 {#when-the-check-runs}
+
+| 트리거 | 동작 |
+| --- | --- |
+| 서버 시작 | 라이선스 토큰을 한 번 갱신합니다. |
+| 매일 01:00(서버 시간) | 라이선스 토큰을 갱신합니다. |
+| 웹 인터페이스 또는 `subscription.key` 를 통한 키 활성화 | 키가 활성화되고 첫 번째 토큰이 반환됩니다. |
+| **구독 및 결제** 대화 상자의 **다시 불러오기** | 요청 시 라이선스 토큰을 갱신합니다. |
+
+이러한 호출 사이에 Semaphore UI는 포털에 접속하지 않습니다. Pro 기능이 켜져 있는지, Pro 사용자나 러너 또는 Terraform/OpenTofu HTTP 백엔드 상태를 하나 더 추가할 수 있는지 등 모든 라이선스 확인은 저장된 토큰을 로컬에서 읽어 수행됩니다.
+
+### 포털에 연결할 수 없을 때 {#when-the-portal-cannot-be-reached}
+
+갱신이 실패하면 `subscription` 컨텍스트로 서버 로그에 기록되며 저장된 토큰은 그대로 유지됩니다. 따라서 네트워크 장애나 포털 중단으로 Pro 기능이 꺼지지는 않습니다. 토큰 자체의 만료일이 지나기 전까지 설치 환경은 계속 동작합니다. 만료된 토큰도 읽을 수는 있지만 상태가 `expired` 가 되어 Pro 기능이 중단됩니다.
+
+### 온라인 키와 오프라인 키 {#online-and-offline-keys}
+
+- **온라인 키** 는 `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` 형식의 UUID입니다. 활성화할 때 포털을 호출하며, 매일 수행되는 갱신으로 최신 상태가 유지됩니다. UUID가 아닌 값은 요청을 보내기 전에 거부됩니다.
+- **오프라인 키** 는 라이선스 토큰 자체로, 인터넷에 접속할 수 없는 설치 환경을 위해 발급된 긴 서명 문자열입니다. Semaphore UI는 이를 로컬에서 검증하고 포털을 전혀 호출하지 않으므로, 매일 수행되는 갱신에서도 요청이 발생하지 않습니다. 오프라인 라이선스를 갱신하려면 키를 새로 발급받은 키로 교체하십시오.
+
+### 고가용성 {#high-availability}
+
+각 서버 노드는 자신의 시작 시점과 자신의 일일 일정에 따라 라이선스를 갱신하고 결과를 공유 데이터베이스에 기록합니다. 따라서 클러스터의 모든 노드가 동일한 라이선스 토큰을 읽습니다. 추가 설정은 필요하지 않습니다.
+
 ## 프록시를 통해 라이선스 서버에 연결 {#reach-the-license-server-through-a-proxy}
 
 :::info v2.20부터

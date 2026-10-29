@@ -75,6 +75,66 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 When the license key is managed by configuration, Semaphore UI disables editing and activation controls in the **Subscription & Billing** dialog. This applies to both `subscription.key` and `subscription.key_file`, because the server reads the key file into the runtime license key at startup.
 
+## How license validation works {#how-license-validation-works}
+
+Semaphore UI validates a license against the Semaphore UI Portal. The address is
+`subscription.server_url`, `https://portal.semaphoreui.com/billing` by default.
+
+### What Semaphore UI connects to {#what-semaphore-ui-connects-to}
+
+| When | Request |
+| --- | --- |
+| Activating a key | `POST {server_url}/subscriptions/{key}/activate` |
+| Validating and refreshing the license | `POST {server_url}/subscriptions/{key}/validate` |
+
+Both are plain JSON requests, and a request is given up after 20 seconds. The activation request
+sends the license key; the validation request sends the license token the server holds at that
+moment. Nothing else leaves the installation: no user accounts, project names, inventories, host
+names, or task output are part of these requests.
+
+The answer to both is a **license token** — a JWT signed by the portal with an RSA key. Semaphore UI
+verifies the signature against the matching public key built into the server binary, so a token
+cannot be forged or edited. Its claims carry what the license allows: the plan, the subscription
+state, the company name, the expiry date, and the number of Pro users, nodes, and UIs. The server
+keeps the key and the token in the database, in the `subscription_key` and `subscription_token`
+options.
+
+### When the check runs {#when-the-check-runs}
+
+| Trigger | What happens |
+| --- | --- |
+| Server startup | The license token is refreshed once. |
+| Every day at 01:00, server time | The license token is refreshed. |
+| Activating a key in the UI, or a key in `subscription.key` | The key is activated, which returns the first token. |
+| **Reload** in the **Subscription & Billing** dialog | The license token is refreshed on demand. |
+
+Between those calls Semaphore UI does not contact the portal. Every license check — whether Pro
+features are enabled, and whether one more Pro user, runner, or Terraform/OpenTofu HTTP backend
+state fits into the license — reads the stored token locally.
+
+### When the portal cannot be reached {#when-the-portal-cannot-be-reached}
+
+A failed refresh is written to the server log under the `subscription` context and leaves the stored
+token untouched, so a network outage or an unavailable portal does not switch Pro features off. The
+installation keeps running until the expiry date in the token itself passes: an expired token still
+loads, but its state becomes `expired` and Pro features stop.
+
+### Online and offline keys {#online-and-offline-keys}
+
+- An **online key** is a UUID, in the form `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. Activating it
+  calls the portal, and the daily refresh keeps it current. A value that is not a UUID is refused
+  before any request is made.
+- An **offline key** is a license token itself — a long signed string issued for an installation
+  without internet access. Semaphore UI verifies it locally and never calls the portal for it, so
+  the daily refresh makes no request at all. To renew an offline license, replace the key with a
+  newly issued one.
+
+### High availability {#high-availability}
+
+Each server node refreshes the license on its own startup and on its own daily schedule, and writes
+the result into the shared database, so every node of the cluster reads the same license token. No
+extra configuration is needed.
+
 ## Reach the license server through a proxy {#reach-the-license-server-through-a-proxy}
 
 :::info Since v2.20

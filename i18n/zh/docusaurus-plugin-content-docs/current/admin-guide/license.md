@@ -72,6 +72,45 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 当许可证密钥由配置管理时，Semaphore UI 会禁用 **订阅与账单** 对话框中的编辑和激活控件。这同时适用于 `subscription.key` 和 `subscription.key_file`，因为服务器在启动时会将密钥文件读入运行时许可证密钥。
 
+## 许可证校验的工作方式 {#how-license-validation-works}
+
+Semaphore UI 会向 Semaphore UI 门户校验许可证。地址由 `subscription.server_url` 指定，默认为 `https://portal.semaphoreui.com/billing`。
+
+### Semaphore UI 会连接到哪里 {#what-semaphore-ui-connects-to}
+
+| 时机 | 请求 |
+| --- | --- |
+| 激活密钥 | `POST {server_url}/subscriptions/{key}/activate` |
+| 校验并刷新许可证 | `POST {server_url}/subscriptions/{key}/validate` |
+
+两者都是普通的 JSON 请求，单个请求在 20 秒后放弃。激活请求发送许可证密钥，校验请求发送服务器当时持有的许可证令牌。除此之外没有任何内容离开本地安装：用户账户、项目名称、清单、主机名以及任务输出都不包含在这些请求中。
+
+两者的响应都是一个 **许可证令牌**，即门户使用 RSA 密钥签名的 JWT。Semaphore UI 使用内置于服务器二进制文件中的对应公钥校验签名，因此令牌无法伪造或篡改。其 claim 中记录了许可证允许的内容：套餐、订阅状态、公司名称、到期日期，以及 Pro 用户数、节点数和 UI 数。服务器将密钥和令牌保存在数据库的 `subscription_key` 与 `subscription_token` 选项中。
+
+### 校验在何时执行 {#when-the-check-runs}
+
+| 触发条件 | 发生的操作 |
+| --- | --- |
+| 服务器启动 | 许可证令牌刷新一次。 |
+| 每天 01:00（服务器时间） | 许可证令牌被刷新。 |
+| 在 Web 界面或通过 `subscription.key` 激活密钥 | 密钥被激活，并返回第一个令牌。 |
+| 在 **订阅与账单** 对话框中执行 **重新加载** | 按需刷新许可证令牌。 |
+
+在这些调用之间，Semaphore UI 不会联系门户。所有许可证检查——Pro 功能是否启用，以及许可证是否还能容纳一个 Pro 用户、一个 runner 或一个 Terraform/OpenTofu HTTP 后端状态——都在本地读取已保存的令牌。
+
+### 无法访问门户时 {#when-the-portal-cannot-be-reached}
+
+刷新失败会以 `subscription` 上下文写入服务器日志，并且不会改动已保存的令牌，因此网络中断或门户不可用不会关闭 Pro 功能。在令牌自身的到期日期到来之前，安装会继续工作：过期的令牌仍可加载，但其状态变为 `expired`，Pro 功能随之停止。
+
+### 在线密钥与离线密钥 {#online-and-offline-keys}
+
+- **在线密钥** 是形如 `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` 的 UUID。激活时会调用门户，每日刷新使其保持有效。不是 UUID 的值在发出任何请求之前就会被拒绝。
+- **离线密钥** 本身就是一个许可证令牌，是为无法访问互联网的安装环境签发的一长串签名字符串。Semaphore UI 在本地校验它，从不为它调用门户，因此每日刷新不会发出任何请求。若要续订离线许可证，请将密钥替换为新签发的密钥。
+
+### 高可用 {#high-availability}
+
+每个服务器节点都在自己启动时以及按自己的每日计划刷新许可证，并把结果写入共享数据库，因此集群中的所有节点读取到相同的许可证令牌。无需额外配置。
+
 ## 通过代理访问许可证服务器 {#reach-the-license-server-through-a-proxy}
 
 :::info 自 v2.20 起

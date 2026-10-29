@@ -72,6 +72,45 @@ export SEMAPHORE_SUBSCRIPTION_KEY_FILE=/run/secrets/semaphore-license-key
 
 Kada se licencnim ključem upravlja kroz konfiguraciju, Semaphore UI onemogućava kontrole za izmenu i aktivaciju u dijalogu **Pretplata i naplata** (Subscription & Billing). Ovo važi i za `subscription.key` i za `subscription.key_file`, jer server pri pokretanju učitava fajl sa ključem u licencni ključ koji se koristi tokom rada.
 
+## Kako funkcioniše provera licence {#how-license-validation-works}
+
+Semaphore UI proverava licencu na Semaphore UI portalu. Adresa se zadaje u `subscription.server_url`, podrazumevano `https://portal.semaphoreui.com/billing`.
+
+### Na šta se Semaphore UI povezuje {#what-semaphore-ui-connects-to}
+
+| Kada | Zahtev |
+| --- | --- |
+| Aktivacija ključa | `POST {server_url}/subscriptions/{key}/activate` |
+| Provera i osvežavanje licence | `POST {server_url}/subscriptions/{key}/validate` |
+
+Oba su obični JSON zahtevi, a jedan zahtev se prekida posle 20 sekundi. Zahtev za aktivaciju šalje ključ licence, a zahtev za proveru šalje token licence koji server ima u tom trenutku. Ništa drugo ne izlazi iz instalacije: korisnički računi, imena projekata, inventari, imena hostova i izlaz zadataka nisu deo ovih zahteva.
+
+Odgovor je u oba slučaja **token licence** — JWT koji portal potpisuje RSA ključem. Semaphore UI proverava potpis odgovarajućim javnim ključem ugrađenim u izvršni fajl servera, tako da token nije moguće falsifikovati ni izmeniti. Njegovi claim-ovi nose ono što licenca dozvoljava: plan, stanje pretplate, naziv kompanije, datum isteka i broj Pro korisnika, nodova i UI-ja. Server čuva ključ i token u bazi podataka, u opcijama `subscription_key` i `subscription_token`.
+
+### Kada se provera izvršava {#when-the-check-runs}
+
+| Povod | Šta se dešava |
+| --- | --- |
+| Pokretanje servera | Token licence se osvežava jednom. |
+| Svakog dana u 01:00 po vremenu servera | Token licence se osvežava. |
+| Aktivacija ključa u veb interfejsu ili preko `subscription.key` | Ključ se aktivira i vraća prvi token. |
+| **Ponovno učitavanje** u dijalogu **Pretplata i naplata** (Subscription & Billing) | Token licence se osvežava na zahtev. |
+
+Između tih poziva Semaphore UI ne kontaktira portal. Svaka provera licence — da li su Pro funkcije uključene i da li u licencu ulazi još jedan Pro korisnik, runner ili stanje HTTP backend-a za Terraform/OpenTofu — čita sačuvani token lokalno.
+
+### Kada portal nije dostupan {#when-the-portal-cannot-be-reached}
+
+Neuspelo osvežavanje se upisuje u log servera sa kontekstom `subscription` i ne dira sačuvani token, pa prekid mreže ili nedostupan portal ne isključuju Pro funkcije. Instalacija radi dalje dok ne prođe datum isteka upisan u sam token: istekli token se i dalje učitava, ali njegovo stanje postaje `expired` i Pro funkcije se zaustavljaju.
+
+### Onlajn i oflajn ključevi {#online-and-offline-keys}
+
+- **Onlajn ključ** je UUID u obliku `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`. Njegova aktivacija poziva portal, a dnevno osvežavanje ga drži ažurnim. Vrednost koja nije UUID odbija se pre nego što se pošalje bilo koji zahtev.
+- **Oflajn ključ** je sam token licence — dug potpisan niz izdat za instalaciju bez pristupa internetu. Semaphore UI ga proverava lokalno i nikada zbog njega ne poziva portal, pa dnevno osvežavanje ne šalje nijedan zahtev. Da biste obnovili oflajn licencu, zamenite ključ novoizdatim.
+
+### Visoka dostupnost {#high-availability}
+
+Svaki node servera osvežava licencu pri svom pokretanju i po svom dnevnom rasporedu i upisuje rezultat u zajedničku bazu podataka, pa svi nodovi klastera čitaju isti token licence. Dodatna konfiguracija nije potrebna.
+
 ## Pristup serveru licenci preko proksija {#reach-the-license-server-through-a-proxy}
 
 :::info Od verzije 2.20
