@@ -175,6 +175,13 @@ Da biste istoj ulozi dodelili pristup dodatnim šablonima, ponovite ove korake z
 Dozvole nad šablonom su aditivne. One dodaju pristup, ne zamenjujući niti umanjujući pristup koji proističe iz ugrađene uloge korisnika ili drugih prilagođenih uloga. Ako korisnik već može da pokreće ili menja sve šablone zadataka, dodavanje uloge vezane za šablon neće suziti taj pristup.
 :::
 
+
+### Konfigurisanje pristupa određenim radnim tokovima {#configure-access-to-specific-workflows}
+
+Dozvole za radne tokove funkcionišu isto kao dozvole za šablone i zahtevaju Enterprise izdanje. Otvorite **Workflows**, izaberite radni tok i otvorite karticu **Dozvole**. Izaberite **Dodaj ulogu**, odaberite ulogu i izaberite akcije: **Može videti ovaj radni tok**, **Može pokrenuti ovaj radni tok**, **Može izmeniti ovaj radni tok** ili **Može odobriti ovaj radni tok**.
+
+Član sa dozvolom na radnom toku vidi odgovarajuću dugmad samo na tom radnom toku.
+
 ### Dodela prilagođene uloge u projektu {#assign-a-custom-role-in-a-project}
 
 Nakon kreiranja i podešavanja globalne uloge ili uloge projekta, dodelite je potrebnom članu tima:

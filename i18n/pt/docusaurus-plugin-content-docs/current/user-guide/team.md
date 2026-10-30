@@ -175,6 +175,13 @@ Para conceder ao mesmo papel acesso a outros modelos, repita estes passos para c
 As permissões de modelo são aditivas. Elas adicionam acesso sem substituir ou reduzir o acesso proveniente do papel integrado do usuário ou de outros papéis personalizados. Se um usuário já pode executar ou atualizar todos os modelos de tarefa, adicionar um papel específico de modelo não restringe esse acesso.
 :::
 
+
+### Configurar acesso a fluxos de trabalho específicos {#configure-access-to-specific-workflows}
+
+As permissões de fluxo de trabalho funcionam da mesma forma que as permissões de modelo e requerem a edição Enterprise. Abra **Workflows**, selecione o fluxo de trabalho e abra a guia **Permissões**. Selecione **Adicionar função**, escolha a função e selecione as ações: **Pode ver este fluxo de trabalho**, **Pode executar este fluxo de trabalho**, **Pode editar este fluxo de trabalho** ou **Pode aprovar este fluxo de trabalho**.
+
+Um membro com permissão em um fluxo de trabalho visualiza os botões relevantes apenas nesse fluxo de trabalho.
+
 ### Atribuir um papel personalizado em um projeto {#assign-a-custom-role-in-a-project}
 
 Após criar e configurar um papel global ou de projeto, atribua-o ao membro da equipe desejado:

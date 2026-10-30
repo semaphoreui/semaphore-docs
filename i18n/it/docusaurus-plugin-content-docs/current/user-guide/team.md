@@ -175,6 +175,13 @@ Per concedere allo stesso ruolo l'accesso ad altri Task Template, ripetere quest
 I permessi a livello di Task Template sono additivi. Aggiungono accesso senza sostituire o ridurre quello derivante dal ruolo integrato dell'utente o da altri ruoli personalizzati. Se un utente può già eseguire o modificare tutti i Task Template, l'aggiunta di un ruolo specifico per un Task Template non restringe tale accesso.
 :::
 
+
+### Configura l'accesso a flussi di lavoro specifici {#configure-access-to-specific-workflows}
+
+I permessi del flusso di lavoro funzionano allo stesso modo dei permessi del modello e richiedono l'edizione Enterprise. Apri **Workflows**, seleziona il flusso di lavoro e apri la scheda **Autorizzazioni**. Seleziona **Aggiungi ruolo**, scegli il ruolo e seleziona le azioni: **Può visualizzare questo flusso di lavoro**, **Può eseguire questo flusso di lavoro**, **Può modificare questo flusso di lavoro** o **Può approvare questo flusso di lavoro**.
+
+Un membro con un permesso su un flusso di lavoro visualizza i pulsanti pertinenti solo su quel flusso di lavoro.
+
 ### Assegnazione di un ruolo personalizzato in un Project {#assign-a-custom-role-in-a-project}
 
 Dopo aver creato e configurato un ruolo globale o di Project, assegnarlo al membro del Team desiderato:
