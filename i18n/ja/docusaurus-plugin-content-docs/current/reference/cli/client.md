@@ -157,8 +157,15 @@ semaphore client task logs "$id" --raw > deploy.log
 
 `--var k=v` と `--extra-vars-file` はタスクの追加変数を設定します。
 `--inventory`、`--branch`、`--limit`、`--tags`、`--check`、`--diff` は、テンプレートが
-上書きを許可している項目を上書きします。確認が必要なテンプレートでは、タスクは
-`waiting_confirmation` のまま止まります。`task confirm <id>` を実行すると先に進みます。
+上書きを許可している項目を上書きします。
+
+タスクは途中で止まり、承認を待つことがあります。適用前の Terraform のプランや、
+最初に確認するアプリを使うテンプレートがそうです。端末では、クライアントが
+`Apply task <id>? [yes/no]` と表示し、答えをサーバーに送ります。端末がない場合は
+停止を stderr に伝えて待ち続けるため、CI ジョブでは別の場所から
+`task confirm <id>` または `task reject <id>` を実行するか、テンプレートが
+許可していれば `--auto-approve` を使うか、`--wait-timeout` で打ち切る必要があります。
+拒否したタスクは `error` で終わるので、終了コードは 3 です。
 
 表に表示されない情報は、`-o json` と `jq` を組み合わせて取得します。
 

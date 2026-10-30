@@ -159,8 +159,16 @@ semaphore client task logs "$id" --raw > deploy.log
 
 `--var k=v` e `--extra-vars-file` valorizzano le variabili extra del task;
 `--inventory`, `--branch`, `--limit`, `--tags`, `--check` e `--diff` sovrascrivono
-ciò che il modello consente di sovrascrivere. Un modello che richiede conferma
-lascia il task in `waiting_confirmation`; `task confirm <id>` gli permette di proseguire.
+ciò che il modello consente di sovrascrivere.
+
+Un task può fermarsi a metà e attendere un'approvazione: un piano Terraform
+prima di essere applicato, o qualsiasi modello la cui applicazione chiede prima.
+In un terminale il client stampa `Apply task <id>? [yes/no]` e invia la risposta
+al server. Senza terminale segnala la sosta su stderr e continua ad attendere,
+quindi un job CI ha bisogno di `task confirm <id>` o `task reject <id>` da
+un'altra parte, di `--auto-approve` quando il modello lo consente, oppure di
+`--wait-timeout` per rinunciare. Un task rifiutato termina come `error`, cioè
+con codice di uscita 3.
 
 Combinare `-o json` con `jq` per tutto ciò che la tabella non mostra:
 

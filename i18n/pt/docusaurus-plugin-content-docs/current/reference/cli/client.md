@@ -159,8 +159,16 @@ semaphore client task logs "$id" --raw > deploy.log
 
 `--var k=v` e `--extra-vars-file` preenchem as variáveis extras da tarefa;
 `--inventory`, `--branch`, `--limit`, `--tags`, `--check` e `--diff` sobrescrevem
-o que o template permite sobrescrever. Um template que exige confirmação
-deixa a tarefa em `waiting_confirmation`; `task confirm <id>` permite que ela prossiga.
+o que o template permite sobrescrever.
+
+Uma tarefa pode parar no meio e esperar aprovação: um plano do Terraform antes
+de ser aplicado, ou qualquer template cuja aplicação pergunte primeiro. Em um
+terminal, o cliente imprime `Apply task <id>? [yes/no]` e envia a resposta ao
+servidor. Sem terminal, ele relata a parada no stderr e continua esperando,
+então um job de CI precisa de `task confirm <id>` ou `task reject <id>` de outro
+lugar, de `--auto-approve` quando o template permite, ou de `--wait-timeout`
+para desistir. Uma tarefa rejeitada termina como `error`, ou seja, com código de
+saída 3.
 
 Combine `-o json` com `jq` para tudo o que a tabela não mostra:
 

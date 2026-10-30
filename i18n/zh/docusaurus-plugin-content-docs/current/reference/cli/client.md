@@ -150,8 +150,14 @@ semaphore client task logs "$id" --raw > deploy.log
 
 `--var k=v` 和 `--extra-vars-file` 用于填写任务的额外变量；
 `--inventory`、`--branch`、`--limit`、`--tags`、`--check` 和 `--diff` 用于覆盖
-模板允许覆盖的设置。需要确认的模板会让任务停留在 `waiting_confirmation` 状态；
-`task confirm <id>` 可让其继续执行。
+模板允许覆盖的设置。
+
+任务可能在中途停下来等待批准：应用之前的 Terraform 计划，或任何会先询问的应用
+所使用的模板。在终端中，客户端会打印 `Apply task <id>? [yes/no]` 并把答案发送给
+服务器。没有终端时，它会在 stderr 上报告这次停顿并继续等待，因此 CI 作业需要从
+别处运行 `task confirm <id>` 或 `task reject <id>`，在模板允许时使用
+`--auto-approve`，或者用 `--wait-timeout` 放弃等待。被拒绝的任务以 `error`
+结束，也就是退出码 3。
 
 对于表格中未显示的内容，可将 `-o json` 与 `jq` 结合使用：
 

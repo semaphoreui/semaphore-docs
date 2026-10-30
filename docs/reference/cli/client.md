@@ -159,8 +159,15 @@ semaphore client task logs "$id" --raw > deploy.log
 
 `--var k=v` and `--extra-vars-file` fill the task's extra variables;
 `--inventory`, `--branch`, `--limit`, `--tags`, `--check` and `--diff` override
-what the template allows to override. A template that requires confirmation
-leaves the task in `waiting_confirmation`; `task confirm <id>` lets it proceed.
+what the template allows to override.
+
+A task can stop halfway and wait for approval: a Terraform plan before it is
+applied, or any template whose app asks first. In a terminal the client prints
+`Apply task <id>? [yes/no]` and sends the answer to the server. Without a
+terminal it reports the stop on stderr and keeps waiting, so a CI job needs
+`task confirm <id>` or `task reject <id>` from elsewhere, `--auto-approve` when
+the template allows it, or `--wait-timeout` to give up. A rejected task ends as
+`error`, which means exit code 3.
 
 Combine `-o json` with `jq` for anything the table does not show:
 

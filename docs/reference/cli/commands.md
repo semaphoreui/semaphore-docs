@@ -1540,7 +1540,7 @@ semaphore client task list -p 1
 
 ## `semaphore client task logs` {#semaphore-client-task-logs}
 
-Print the log of a task. --raw streams the plain-text log the server keeps (ANSI codes stripped); otherwise the stored lines are printed, or listed as records with -o json. With --follow new lines are printed until the task finishes and the exit code follows its status.
+Print the log of a task. --raw streams the plain-text log the server keeps (ANSI codes stripped); otherwise the stored lines are printed, or listed as records with -o json. With --follow new lines are printed until the task finishes and the exit code follows its status; a task that stops for approval is answered right here when the session is interactive.
 
 ```
 semaphore client task logs <id> [flags]
@@ -1636,7 +1636,7 @@ semaphore client task stop 42 -p 1
 
 ## `semaphore client task wait` {#semaphore-client-task-wait}
 
-Wait until a task finishes without printing anything, for scripts. Exit code 0 on success, 3 on error, 6 when the task was stopped, 124 when --wait-timeout runs out (the task keeps running on the server).
+Wait until a task finishes without printing anything, for scripts. Exit code 0 on success, 3 on error, 6 when the task was stopped, 124 when --wait-timeout runs out (the task keeps running on the server).  A task waiting for approval is reported on stderr: in a terminal the question is asked here, in a script run 'task confirm' or 'task reject' elsewhere.
 
 ```
 semaphore client task wait <id> [flags]
@@ -1785,7 +1785,7 @@ semaphore client template list -p 1
 
 ## `semaphore client template run` {#semaphore-client-template-run}
 
-Start a task from a template. By default the task id is printed and the command returns at once; --wait blocks until the task finishes and sets the exit code from its status (0 success, 3 error, 6 stopped); --follow also streams the log.  Overrides (--limit, --tags, --check, --branch, --inventory, …) apply only when the template allows them; otherwise the server rejects the task. Ctrl+C while waiting only disconnects the client — the task goes on — unless --stop-on-interrupt is given.
+Start a task from a template. By default the task id is printed and the command returns at once; --wait blocks until the task finishes and sets the exit code from its status (0 success, 3 error, 6 stopped); --follow also streams the log.  Overrides (--limit, --tags, --check, --branch, --inventory, …) apply only when the template allows them; otherwise the server rejects the task. Ctrl+C while waiting only disconnects the client — the task goes on — unless --stop-on-interrupt is given.  A task may stop halfway and wait for approval: a Terraform plan before it is applied, or any template whose app asks first. While waiting in a terminal the client asks "Apply task N? [yes/no]" and answers the server for you; without a terminal it says which 'task confirm' to run and keeps waiting. Use --auto-approve to skip the question altogether when the template allows it.
 
 ```
 semaphore client template run <id|name> [flags]

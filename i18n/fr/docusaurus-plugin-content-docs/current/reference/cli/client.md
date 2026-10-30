@@ -159,8 +159,16 @@ semaphore client task logs "$id" --raw > deploy.log
 
 `--var k=v` et `--extra-vars-file` renseignent les variables supplémentaires de la tâche ;
 `--inventory`, `--branch`, `--limit`, `--tags`, `--check` et `--diff` remplacent
-ce que le modèle autorise à remplacer. Un modèle qui exige une confirmation laisse la
-tâche en `waiting_confirmation` ; `task confirm <id>` lui permet de continuer.
+ce que le modèle autorise à remplacer.
+
+Une tâche peut s'arrêter en cours de route et attendre une approbation : un plan
+Terraform avant son application, ou tout modèle dont l'application demande
+d'abord. Dans un terminal, le client affiche `Apply task <id>? [yes/no]` et
+transmet la réponse au serveur. Sans terminal, il signale l'arrêt sur stderr et
+continue d'attendre ; un job CI a donc besoin de `task confirm <id>` ou
+`task reject <id>` depuis ailleurs, de `--auto-approve` si le modèle l'autorise,
+ou de `--wait-timeout` pour abandonner. Une tâche rejetée se termine en `error`,
+donc avec le code de sortie 3.
 
 Combinez `-o json` avec `jq` pour tout ce que le tableau n'affiche pas :
 

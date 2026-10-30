@@ -159,8 +159,15 @@ semaphore client task logs "$id" --raw > deploy.log
 
 `--var k=v` i `--extra-vars-file` popunjavaju dodatne promenljive zadatka;
 `--inventory`, `--branch`, `--limit`, `--tags`, `--check` i `--diff` menjaju
-ono što šablon dozvoljava da se promeni. Šablon koji zahteva potvrdu
-ostavlja zadatak u stanju `waiting_confirmation`; `task confirm <id>` mu dozvoljava da nastavi.
+ono što šablon dozvoljava da se promeni.
+
+Zadatak može da stane na pola puta i čeka odobrenje: Terraform plan pre primene,
+ili bilo koji šablon čija aplikacija prvo pita. U terminalu klijent ispisuje
+`Apply task <id>? [yes/no]` i šalje odgovor serveru. Bez terminala prijavljuje
+zastoj na stderr i nastavlja da čeka, pa je CI poslu potreban
+`task confirm <id>` ili `task reject <id>` sa druge strane, `--auto-approve`
+kada šablon to dozvoljava, ili `--wait-timeout` da odustane. Odbijen zadatak
+završava kao `error`, što znači izlazni kod 3.
 
 Kombinujte `-o json` sa `jq` za sve što tabela ne prikazuje:
 

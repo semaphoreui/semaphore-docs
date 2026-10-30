@@ -159,8 +159,16 @@ semaphore client task logs "$id" --raw > deploy.log
 
 `--var k=v` und `--extra-vars-file` füllen die zusätzlichen Variablen der Aufgabe;
 `--inventory`, `--branch`, `--limit`, `--tags`, `--check` und `--diff` überschreiben,
-was die Vorlage zu überschreiben erlaubt. Eine Vorlage, die eine Bestätigung verlangt,
-belässt die Aufgabe in `waiting_confirmation`; `task confirm <id>` lässt sie fortfahren.
+was die Vorlage zu überschreiben erlaubt.
+
+Eine Aufgabe kann auf halbem Weg anhalten und auf eine Freigabe warten: ein
+Terraform-Plan vor dem Anwenden oder jede Vorlage, deren Anwendung zuerst
+nachfragt. In einem Terminal gibt der Client `Apply task <id>? [yes/no]` aus und
+schickt die Antwort an den Server. Ohne Terminal meldet er den Halt auf stderr
+und wartet weiter; ein CI-Job braucht daher `task confirm <id>` oder
+`task reject <id>` von anderer Stelle, `--auto-approve`, sofern die Vorlage es
+zulässt, oder `--wait-timeout`, um aufzugeben. Eine abgelehnte Aufgabe endet als
+`error`, also mit Exit-Code 3.
 
 Kombinieren Sie `-o json` mit `jq` für alles, was die Tabelle nicht zeigt:
 

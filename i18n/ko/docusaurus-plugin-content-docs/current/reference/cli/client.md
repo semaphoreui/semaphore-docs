@@ -155,8 +155,15 @@ semaphore client task logs "$id" --raw > deploy.log
 
 `--var k=v`와 `--extra-vars-file`은 작업의 추가 변수를 채웁니다.
 `--inventory`, `--branch`, `--limit`, `--tags`, `--check`, `--diff`는 템플릿이
-재정의를 허용하는 항목을 재정의합니다. 확인이 필요한 템플릿은 작업을
-`waiting_confirmation` 상태로 둡니다. `task confirm <id>`를 실행하면 작업이 진행됩니다.
+재정의를 허용하는 항목을 재정의합니다.
+
+작업은 도중에 멈춰 승인을 기다릴 수 있습니다. 적용 전의 Terraform 플랜이나,
+먼저 묻는 앱을 쓰는 템플릿이 그렇습니다. 터미널에서는 클라이언트가
+`Apply task <id>? [yes/no]`를 출력하고 답을 서버로 보냅니다. 터미널이 없으면
+멈춤을 stderr에 알리고 계속 기다리므로, CI 작업에서는 다른 곳에서
+`task confirm <id>` 또는 `task reject <id>`를 실행하거나, 템플릿이 허용하면
+`--auto-approve`를 쓰거나, `--wait-timeout`으로 중단해야 합니다. 거부된 작업은
+`error`로 끝나므로 종료 코드는 3입니다.
 
 표에 나타나지 않는 정보는 `-o json`과 `jq`를 함께 사용해 얻으십시오.
 
