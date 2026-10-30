@@ -49,19 +49,24 @@ ofrece inicio de sesión único — cree el token en la página **Tokens** de su
 echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
 ```
 
-Ambas formas guardan un *contexto* con el nombre del host del servidor en
-`~/.semaphore/client.yml` y lo convierten en el actual. Compruebe cuál se está usando con
+Ambas formas guardan en `~/.semaphore/client.yml` un *contexto* llamado
+`default`: es el que usa cualquier comando mientras no se diga otra cosa. Con
+`--context <nombre>` se guarda un segundo servidor con su propio nombre, y con
+ese mismo `--context <nombre>` (o `SEMAPHORE_CLIENT_CONTEXT`) se trabaja con él.
+Nada en el archivo marca un contexto como «actual», así que iniciar sesión en un
+servidor nunca puede redirigir otro. Compruebe cuál se está usando con
 `semaphore client auth status`.
 
 ## Configuración {#configuration}
 
-Cada ajuste puede proceder de una opción, de una variable de entorno o del contexto
-actual, en este orden de precedencia: **opción > entorno > contexto > valor predeterminado**.
+Cada ajuste puede proceder de una opción, de una variable de entorno o del
+contexto en uso, en este orden de precedencia:
+**opción > entorno > contexto > valor predeterminado**.
 
 | Opción | Variable de entorno | Significado |
 |--------|---------------------|-------------|
 | `--url` | `SEMAPHORE_CLIENT_URL` | URL del servidor, por ejemplo `https://semaphore.example.com`. |
-| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Nombre del contexto que se usa en lugar del actual. |
+| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Nombre del contexto que se usa en lugar de `default`. |
 | — | `SEMAPHORE_CLIENT_TOKEN` | Token de API. No existe una opción `--token` a propósito: los argumentos de los procesos son visibles en `ps` y en el historial de la shell. |
 | — | `SEMAPHORE_CLIENT_TOKEN_FILE` | Archivo que contiene el token (se ignora un salto de línea final). |
 | `-p`, `--project` | `SEMAPHORE_CLIENT_PROJECT` | Id o nombre del proyecto para los comandos de ámbito de proyecto. |
@@ -83,9 +88,8 @@ alguien ejecuta el mismo job con `--context other`.
 lo escriben; también puede editarlo a mano.
 
 ```yaml
-current_context: prod
 contexts:
-  prod:
+  default:
     url: https://semaphore.example.com
     token: 8s3k...            # o token_file
     project: 3                # proyecto predeterminado, id o nombre

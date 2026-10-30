@@ -49,19 +49,24 @@ Single Sign-On anbietet — erstellen Sie das Token auf der Seite **Tokens** Ihr
 echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
 ```
 
-Beide Varianten speichern einen *Kontext*, benannt nach dem Server-Host, in
-`~/.semaphore/client.yml` und machen ihn zum aktuellen. Was gerade verwendet wird,
-zeigt `semaphore client auth status`.
+Beide Varianten speichern in `~/.semaphore/client.yml` einen *Kontext* namens
+`default`: den verwendet jeder Befehl, solange nichts anderes gesagt wird. Mit
+`--context <name>` wird ein zweiter Server unter eigenem Namen abgelegt, und mit
+demselben `--context <name>` (oder `SEMAPHORE_CLIENT_CONTEXT`) arbeitet man mit
+ihm. Nichts in der Datei markiert einen Kontext als "aktuell", also kann die
+Anmeldung an einem Server niemals einen anderen umbiegen. Was gerade verwendet
+wird, zeigt `semaphore client auth status`.
 
 ## Konfiguration {#configuration}
 
-Jede Einstellung kann aus einem Flag, einer Umgebungsvariablen oder dem aktuellen
-Kontext stammen, in dieser Rangfolge: **Flag > Umgebung > Kontext > Standardwert**.
+Jede Einstellung kann aus einem Flag, einer Umgebungsvariablen oder dem
+verwendeten Kontext stammen, in dieser Rangfolge:
+**Flag > Umgebung > Kontext > Standardwert**.
 
 | Flag | Umgebungsvariable | Bedeutung |
 |------|-------------------|-----------|
 | `--url` | `SEMAPHORE_CLIENT_URL` | Server-URL, zum Beispiel `https://semaphore.example.com`. |
-| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Name des Kontexts, der anstelle des aktuellen verwendet wird. |
+| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Name des Kontexts, der anstelle von `default` verwendet wird. |
 | — | `SEMAPHORE_CLIENT_TOKEN` | API-Token. Ein Flag `--token` gibt es bewusst nicht: Prozessargumente sind in `ps` und im Shell-Verlauf sichtbar. |
 | — | `SEMAPHORE_CLIENT_TOKEN_FILE` | Datei mit dem Token (ein abschließender Zeilenumbruch wird ignoriert). |
 | `-p`, `--project` | `SEMAPHORE_CLIENT_PROJECT` | Projekt-ID oder -Name für projektbezogene Befehle. |
@@ -83,9 +88,8 @@ gesendet, wenn jemand denselben Job mit `--context other` ausführt.
 schreiben sie; Sie können sie auch von Hand bearbeiten.
 
 ```yaml
-current_context: prod
 contexts:
-  prod:
+  default:
     url: https://semaphore.example.com
     token: 8s3k...            # oder token_file
     project: 3                # Standardprojekt, ID oder Name

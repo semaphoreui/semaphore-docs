@@ -182,7 +182,7 @@ curl -H "Authorization: Bearer $(semaphore client auth token)" https://semaphore
 
 ## `semaphore client context` {#semaphore-client-context}
 
-Manage the contexts saved in ~/.semaphore/client.yml. A context is a server URL with its token, an optional default project and TLS settings. One context is current; --context or SEMAPHORE_CLIENT_CONTEXT selects another one per call.
+Manage the contexts saved in ~/.semaphore/client.yml. A context is a server URL with its token, an optional default project and TLS settings.  The context named "default" is the one commands use when nothing says otherwise; --context or SEMAPHORE_CLIENT_CONTEXT picks another one per call. There is no "current context" to set: a file that remembered a choice made 'auth login' against another server overwrite whichever context was selected.
 
 ```
 semaphore client context
@@ -194,17 +194,16 @@ Example:
 
 ```bash
 semaphore client context list
-  semaphore client context use staging
   semaphore client context set prod --url https://semaphore.example.com --project 3
+  semaphore client project list --context prod
 ```
 
 | Subcommand | Purpose |
 |---|---|
 | [`semaphore client context delete`](#semaphore-client-context-delete) | Delete a context |
-| [`semaphore client context get`](#semaphore-client-context-get) | Show one context (the current one by default) |
+| [`semaphore client context get`](#semaphore-client-context-get) | Show one context ("default" when no name is given) |
 | [`semaphore client context list`](#semaphore-client-context-list) | List saved contexts |
 | [`semaphore client context set`](#semaphore-client-context-set) | Create or change a context without logging in |
-| [`semaphore client context use`](#semaphore-client-context-use) | Make a context the current one |
 
 ## `semaphore client context delete` {#semaphore-client-context-delete}
 
@@ -224,7 +223,7 @@ semaphore client context delete staging -y
 
 ## `semaphore client context get` {#semaphore-client-context-get}
 
-Show one saved context without its token. Without a name the current context is shown.
+Show one saved context without its token. Without a name the context "default" is shown.
 
 ```
 semaphore client context get [NAME]
@@ -241,7 +240,7 @@ semaphore client context get
 
 ## `semaphore client context list` {#semaphore-client-context-list}
 
-List the contexts of the configuration file: name, whether it is current, server URL, default project and where its token comes from (inline, file or none). Token values are never shown. Works without a server connection.
+List the contexts of the configuration file: name, server URL, default project and where its token comes from (inline, file or none). Token values are never shown. The context named "default" is the one used when --context and SEMAPHORE_CLIENT_CONTEXT are absent. Works without a server connection.
 
 ```
 semaphore client context list
@@ -276,20 +275,6 @@ semaphore client context set staging --url https://staging.example.com --token-f
 | `--no-insecure` | bool | — | Turn TLS verification back on |
 | `--no-project` | bool | — | Remove the default project |
 | `--token-file` | string | — | File holding the API token (replaces an inline token) |
-
-## `semaphore client context use` {#semaphore-client-context-use}
-
-Make a saved context the current one, so later commands use its server, token and default project unless --context or SEMAPHORE_CLIENT_CONTEXT say otherwise.
-
-```
-semaphore client context use NAME
-```
-
-Example:
-
-```bash
-semaphore client context use staging
-```
 
 ## `semaphore client environment` {#semaphore-client-environment}
 

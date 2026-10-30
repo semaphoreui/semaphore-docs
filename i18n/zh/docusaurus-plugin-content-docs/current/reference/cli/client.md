@@ -47,18 +47,21 @@ semaphore client auth login --url https://semaphore.example.com
 echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
 ```
 
-两种方式都会在 `~/.semaphore/client.yml` 中保存一个以服务器主机名命名的*上下文*，
-并将其设为当前上下文。使用 `semaphore client auth status` 查看当前正在使用的配置。
+两种方式都会在 `~/.semaphore/client.yml` 中保存一个名为 `default` 的*上下文*：
+没有其他指定时，所有命令都使用它。第二台服务器用 `--context <名称>` 以自己的名字
+保存，并用同样的 `--context <名称>`（或 `SEMAPHORE_CLIENT_CONTEXT`）来使用它。
+文件中没有任何内容把某个上下文标记为"当前"，因此登录一台服务器绝不会改写另一个
+上下文。使用 `semaphore client auth status` 查看当前正在使用的配置。
 
 ## 配置 {#configuration}
 
-每项设置都可以来自命令行参数、环境变量或当前上下文，优先级顺序为：
+每项设置都可以来自命令行参数、环境变量或正在使用的上下文，优先级顺序为：
 **参数 > 环境变量 > 上下文 > 默认值**。
 
 | 参数 | 环境变量 | 含义 |
 |------|----------------------|---------|
 | `--url` | `SEMAPHORE_CLIENT_URL` | 服务器 URL，例如 `https://semaphore.example.com`。 |
-| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | 要使用的上下文名称，代替当前上下文。 |
+| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | 要使用的上下文名称，代替 `default`。 |
 | — | `SEMAPHORE_CLIENT_TOKEN` | API 令牌。特意没有提供 `--token` 参数：进程参数在 `ps` 和 shell 历史记录中可见。 |
 | — | `SEMAPHORE_CLIENT_TOKEN_FILE` | 保存令牌的文件（末尾的换行符会被忽略）。 |
 | `-p`, `--project` | `SEMAPHORE_CLIENT_PROJECT` | 项目级命令所用的项目 ID 或名称。 |
@@ -79,9 +82,8 @@ echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com 
 会写入该文件；你也可以手动编辑它。
 
 ```yaml
-current_context: prod
 contexts:
-  prod:
+  default:
     url: https://semaphore.example.com
     token: 8s3k...            # 或使用 token_file
     project: 3                # 默认项目，ID 或名称

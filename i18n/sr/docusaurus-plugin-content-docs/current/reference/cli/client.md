@@ -49,19 +49,24 @@ jedinstvenu prijavu (SSO) — kreirajte token na stranici **Tokens** svog profil
 echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
 ```
 
-Oba oblika čuvaju *kontekst* nazvan po hostu servera u
-`~/.semaphore/client.yml` i postavljaju ga kao trenutni. Šta se trenutno koristi proverite
-komandom `semaphore client auth status`.
+Oba oblika čuvaju u `~/.semaphore/client.yml` *kontekst* pod imenom `default`:
+njega koristi svaka komanda dok se ne kaže drugačije. Sa `--context <ime>` drugi
+server se čuva pod sopstvenim imenom, a istim `--context <ime>` (ili
+`SEMAPHORE_CLIENT_CONTEXT`) se sa njim radi. Ništa u datoteci ne označava
+kontekst kao "trenutni", pa prijava na jedan server nikada ne može da preusmeri
+drugi. Šta se trenutno koristi proverite komandom
+`semaphore client auth status`.
 
 ## Konfiguracija {#configuration}
 
-Svako podešavanje može doći iz flega, promenljive okruženja ili trenutnog
-konteksta, ovim redosledom prioriteta: **fleg > okruženje > kontekst > podrazumevano**.
+Svako podešavanje može doći iz flega, promenljive okruženja ili konteksta koji
+se koristi, ovim redosledom prioriteta:
+**fleg > okruženje > kontekst > podrazumevano**.
 
 | Fleg | Promenljiva okruženja | Značenje |
 |------|----------------------|---------|
 | `--url` | `SEMAPHORE_CLIENT_URL` | URL servera, na primer `https://semaphore.example.com`. |
-| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Naziv konteksta koji se koristi umesto trenutnog. |
+| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Naziv konteksta koji se koristi umesto `default`. |
 | — | `SEMAPHORE_CLIENT_TOKEN` | API token. Fleg `--token` namerno ne postoji: argumenti procesa su vidljivi u `ps` i u istoriji šela. |
 | — | `SEMAPHORE_CLIENT_TOKEN_FILE` | Fajl koji sadrži token (završni prelazak u novi red se zanemaruje). |
 | `-p`, `--project` | `SEMAPHORE_CLIENT_PROJECT` | ID ili naziv projekta za komande vezane za projekat. |
@@ -83,9 +88,8 @@ serveru kada neko pokrene isti posao sa `--context other`.
 možete ga uređivati i ručno.
 
 ```yaml
-current_context: prod
 contexts:
-  prod:
+  default:
     url: https://semaphore.example.com
     token: 8s3k...            # ili token_file
     project: 3                # podrazumevani projekat, ID ili naziv

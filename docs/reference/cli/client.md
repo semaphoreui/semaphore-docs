@@ -49,19 +49,22 @@ single sign-on — create the token on the **Tokens** page of your profile):
 echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
 ```
 
-Both forms save a *context* named after the server host in
-`~/.semaphore/client.yml` and make it the current one. Check what is in use with
-`semaphore client auth status`.
+Both forms save a *context* called `default` in `~/.semaphore/client.yml`:
+that is the one every command uses when nothing else is said. Pass
+`--context <name>` to keep a second server under its own name, and the same
+`--context <name>` (or `SEMAPHORE_CLIENT_CONTEXT`) to work with it. Nothing in
+the file marks a context as "current", so logging in to one server can never
+re-point another. Check what is in use with `semaphore client auth status`.
 
 ## Configuration {#configuration}
 
-Every setting can come from a flag, an environment variable or the current
-context, in that order of precedence: **flag > environment > context > default**.
+Every setting can come from a flag, an environment variable or the context in
+use, in that order of precedence: **flag > environment > context > default**.
 
 | Flag | Environment variable | Meaning |
 |------|----------------------|---------|
 | `--url` | `SEMAPHORE_CLIENT_URL` | Server URL, for example `https://semaphore.example.com`. |
-| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Name of the context to use instead of the current one. |
+| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Name of the context to use instead of `default`. |
 | — | `SEMAPHORE_CLIENT_TOKEN` | API token. There is deliberately no `--token` flag: process arguments are visible in `ps` and in shell history. |
 | — | `SEMAPHORE_CLIENT_TOKEN_FILE` | File holding the token (a trailing newline is ignored). |
 | `-p`, `--project` | `SEMAPHORE_CLIENT_PROJECT` | Project id or name for project-scoped commands. |
@@ -83,9 +86,8 @@ server when someone runs the same job with `--context other`.
 write it; you can also edit it by hand.
 
 ```yaml
-current_context: prod
 contexts:
-  prod:
+  default:
     url: https://semaphore.example.com
     token: 8s3k...            # or token_file
     project: 3                # default project, id or name

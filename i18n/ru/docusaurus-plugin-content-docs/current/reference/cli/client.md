@@ -49,19 +49,24 @@ semaphore client auth login --url https://semaphore.example.com
 echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
 ```
 
-Оба способа сохраняют в `~/.semaphore/client.yml` *контекст*, названный по имени
-хоста сервера, и делают его текущим. Проверить, что используется сейчас, можно командой
+Оба способа сохраняют в `~/.semaphore/client.yml` *контекст* с именем `default`:
+именно его берёт любая команда, пока не сказано иное. Второй сервер сохраняется
+под собственным именем через `--context <имя>`, и работают с ним тем же
+`--context <имя>` (или `SEMAPHORE_CLIENT_CONTEXT`). В файле ничто не помечает
+контекст как «текущий», поэтому вход на один сервер не может переназначить
+другой. Проверить, что используется сейчас, можно командой
 `semaphore client auth status`.
 
 ## Конфигурация {#configuration}
 
-Каждый параметр можно задать флагом, переменной окружения или в текущем
-контексте; приоритет именно такой: **флаг > окружение > контекст > значение по умолчанию**.
+Каждый параметр можно задать флагом, переменной окружения или в используемом
+контексте; приоритет именно такой:
+**флаг > окружение > контекст > значение по умолчанию**.
 
 | Флаг | Переменная окружения | Значение |
 |------|----------------------|---------|
 | `--url` | `SEMAPHORE_CLIENT_URL` | URL сервера, например `https://semaphore.example.com`. |
-| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Имя контекста, который используется вместо текущего. |
+| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Имя контекста, который используется вместо `default`. |
 | — | `SEMAPHORE_CLIENT_TOKEN` | API-токен. Флага `--token` намеренно нет: аргументы процесса видны в `ps` и в истории оболочки. |
 | — | `SEMAPHORE_CLIENT_TOKEN_FILE` | Файл с токеном (завершающий перевод строки игнорируется). |
 | `-p`, `--project` | `SEMAPHORE_CLIENT_PROJECT` | ID или имя проекта для команд, работающих в рамках проекта. |
@@ -83,9 +88,8 @@ echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com 
 `context set`; его можно редактировать и вручную.
 
 ```yaml
-current_context: prod
 contexts:
-  prod:
+  default:
     url: https://semaphore.example.com
     token: 8s3k...            # или token_file
     project: 3                # проект по умолчанию, ID или имя

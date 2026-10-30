@@ -49,19 +49,24 @@ que l'authentification unique — créez le token sur la page **Tokens** de votr
 echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
 ```
 
-Les deux variantes enregistrent un *contexte* nommé d'après l'hôte du serveur dans
-`~/.semaphore/client.yml` et en font le contexte courant. Vérifiez celui qui est utilisé avec
-`semaphore client auth status`.
+Les deux variantes enregistrent dans `~/.semaphore/client.yml` un *contexte*
+nommé `default` : c'est celui qu'utilise toute commande tant que rien d'autre
+n'est indiqué. `--context <nom>` conserve un second serveur sous son propre nom,
+et le même `--context <nom>` (ou `SEMAPHORE_CLIENT_CONTEXT`) permet d'y
+travailler. Rien dans le fichier ne marque un contexte comme « courant » : se
+connecter à un serveur ne peut donc jamais réorienter un autre. Vérifiez celui
+qui est utilisé avec `semaphore client auth status`.
 
 ## Configuration {#configuration}
 
-Chaque paramètre peut provenir d'une option, d'une variable d'environnement ou du contexte
-courant, dans cet ordre de priorité : **option > environnement > contexte > valeur par défaut**.
+Chaque paramètre peut provenir d'une option, d'une variable d'environnement ou
+du contexte utilisé, dans cet ordre de priorité :
+**option > environnement > contexte > valeur par défaut**.
 
 | Option | Variable d'environnement | Signification |
 |--------|--------------------------|---------------|
 | `--url` | `SEMAPHORE_CLIENT_URL` | URL du serveur, par exemple `https://semaphore.example.com`. |
-| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Nom du contexte à utiliser à la place du contexte courant. |
+| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Nom du contexte à utiliser à la place de `default`. |
 | — | `SEMAPHORE_CLIENT_TOKEN` | Token d'API. Il n'y a volontairement pas d'option `--token` : les arguments des processus sont visibles dans `ps` et dans l'historique du shell. |
 | — | `SEMAPHORE_CLIENT_TOKEN_FILE` | Fichier contenant le token (un saut de ligne final est ignoré). |
 | `-p`, `--project` | `SEMAPHORE_CLIENT_PROJECT` | Id ou nom du projet pour les commandes liées à un projet. |
@@ -83,9 +88,8 @@ serveur lorsque quelqu'un exécute le même job avec `--context other`.
 l'écrivent ; vous pouvez aussi le modifier à la main.
 
 ```yaml
-current_context: prod
 contexts:
-  prod:
+  default:
     url: https://semaphore.example.com
     token: 8s3k...            # ou token_file
     project: 3                # projet par défaut, id ou nom

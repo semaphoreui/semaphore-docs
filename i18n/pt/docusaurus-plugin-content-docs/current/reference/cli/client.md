@@ -49,19 +49,24 @@ single sign-on — crie o token na página **Tokens** do seu perfil):
 echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
 ```
 
-Ambas as formas salvam um *contexto* com o nome do host do servidor em
-`~/.semaphore/client.yml` e o tornam o contexto atual. Verifique o que está em uso com
+Ambas as formas salvam em `~/.semaphore/client.yml` um *contexto* chamado
+`default`: é ele que todo comando usa enquanto nada for dito. Com
+`--context <nome>` guarda-se um segundo servidor com nome próprio, e com esse
+mesmo `--context <nome>` (ou `SEMAPHORE_CLIENT_CONTEXT`) trabalha-se com ele.
+Nada no arquivo marca um contexto como "atual", então entrar em um servidor
+nunca redireciona outro. Verifique o que está em uso com
 `semaphore client auth status`.
 
 ## Configuração {#configuration}
 
 Cada configuração pode vir de uma flag, de uma variável de ambiente ou do
-contexto atual, nesta ordem de precedência: **flag > ambiente > contexto > padrão**.
+contexto em uso, nesta ordem de precedência:
+**flag > ambiente > contexto > padrão**.
 
 | Flag | Variável de ambiente | Significado |
 |------|----------------------|---------|
 | `--url` | `SEMAPHORE_CLIENT_URL` | URL do servidor, por exemplo `https://semaphore.example.com`. |
-| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Nome do contexto a usar no lugar do atual. |
+| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | Nome do contexto a usar no lugar de `default`. |
 | — | `SEMAPHORE_CLIENT_TOKEN` | Token de API. Não existe uma flag `--token` de propósito: os argumentos do processo ficam visíveis no `ps` e no histórico do shell. |
 | — | `SEMAPHORE_CLIENT_TOKEN_FILE` | Arquivo que contém o token (uma quebra de linha final é ignorada). |
 | `-p`, `--project` | `SEMAPHORE_CLIENT_PROJECT` | ID ou nome do projeto para comandos no escopo de um projeto. |
@@ -83,9 +88,8 @@ servidor quando alguém executa o mesmo job com `--context other`.
 gravam nele; você também pode editá-lo manualmente.
 
 ```yaml
-current_context: prod
 contexts:
-  prod:
+  default:
     url: https://semaphore.example.com
     token: 8s3k...            # ou token_file
     project: 3                # projeto padrão, ID ou nome

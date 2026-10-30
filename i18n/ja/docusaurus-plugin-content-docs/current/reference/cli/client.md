@@ -49,19 +49,23 @@ semaphore client auth login --url https://semaphore.example.com
 echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
 ```
 
-どちらの方法でも、サーバーのホスト名を名前にした*コンテキスト*が
-`~/.semaphore/client.yml` に保存され、それが現在のコンテキストになります。使用中のものは
+どちらの方法でも、`default` という名前の*コンテキスト*が
+`~/.semaphore/client.yml` に保存されます。ほかに指定がなければ、すべてのコマンドが
+これを使います。2 台目のサーバーは `--context <名前>` で独自の名前のまま保存し、
+同じ `--context <名前>`（または `SEMAPHORE_CLIENT_CONTEXT`）で利用します。
+ファイルの中で「現在の」コンテキストを示すものは何もないため、あるサーバーに
+ログインしても別のコンテキストが書き換わることはありません。使用中のものは
 `semaphore client auth status` で確認できます。
 
 ## 設定 {#configuration}
 
-各設定はフラグ、環境変数、または現在のコンテキストから取得でき、優先順位は
+各設定はフラグ、環境変数、または使用中のコンテキストから取得でき、優先順位は
 **フラグ > 環境変数 > コンテキスト > デフォルト** の順です。
 
 | フラグ | 環境変数 | 意味 |
 |------|----------------------|---------|
 | `--url` | `SEMAPHORE_CLIENT_URL` | サーバーの URL。例: `https://semaphore.example.com`。 |
-| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | 現在のコンテキストの代わりに使うコンテキストの名前。 |
+| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | `default` の代わりに使うコンテキストの名前。 |
 | — | `SEMAPHORE_CLIENT_TOKEN` | API トークン。`--token` フラグは意図的に用意していません。プロセスの引数は `ps` やシェルの履歴から見えてしまうためです。 |
 | — | `SEMAPHORE_CLIENT_TOKEN_FILE` | トークンを格納したファイル (末尾の改行は無視されます)。 |
 | `-p`, `--project` | `SEMAPHORE_CLIENT_PROJECT` | プロジェクト単位のコマンドで使うプロジェクトの ID または名前。 |
@@ -83,9 +87,8 @@ echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com 
 がこのファイルに書き込みますが、手動で編集することもできます。
 
 ```yaml
-current_context: prod
 contexts:
-  prod:
+  default:
     url: https://semaphore.example.com
     token: 8s3k...            # または token_file
     project: 3                # デフォルトのプロジェクト (ID または名前)

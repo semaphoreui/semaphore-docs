@@ -47,19 +47,22 @@ token은 프로필의 **Tokens** 페이지에서 생성하십시오):
 echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
 ```
 
-두 방식 모두 서버 호스트 이름을 딴 *컨텍스트*를 `~/.semaphore/client.yml`에 저장하고
-이를 현재 컨텍스트로 지정합니다. 사용 중인 컨텍스트는 `semaphore client auth status`로
-확인할 수 있습니다.
+두 방식 모두 `~/.semaphore/client.yml`에 `default`라는 *컨텍스트*를 저장합니다.
+다른 지정이 없으면 모든 명령이 이 컨텍스트를 사용합니다. 두 번째 서버는
+`--context <이름>`으로 고유한 이름으로 저장하고, 같은 `--context <이름>`(또는
+`SEMAPHORE_CLIENT_CONTEXT`)으로 사용합니다. 파일에는 어떤 컨텍스트가 "현재"인지
+표시하는 항목이 없으므로, 한 서버에 로그인해도 다른 컨텍스트가 바뀌지 않습니다.
+사용 중인 컨텍스트는 `semaphore client auth status`로 확인할 수 있습니다.
 
 ## 설정 {#configuration}
 
-모든 설정은 플래그, 환경 변수 또는 현재 컨텍스트에서 가져올 수 있으며, 우선순위는
-**플래그 > 환경 변수 > 컨텍스트 > 기본값** 순입니다.
+모든 설정은 플래그, 환경 변수 또는 사용 중인 컨텍스트에서 가져올 수 있으며,
+우선순위는 **플래그 > 환경 변수 > 컨텍스트 > 기본값** 순입니다.
 
 | 플래그 | 환경 변수 | 의미 |
 |------|----------------------|---------|
 | `--url` | `SEMAPHORE_CLIENT_URL` | 서버 URL. 예: `https://semaphore.example.com`. |
-| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | 현재 컨텍스트 대신 사용할 컨텍스트의 이름. |
+| `--context` | `SEMAPHORE_CLIENT_CONTEXT` | `default` 대신 사용할 컨텍스트의 이름. |
 | — | `SEMAPHORE_CLIENT_TOKEN` | API token. `--token` 플래그는 의도적으로 제공하지 않습니다. 프로세스 인수는 `ps`와 셸 기록에서 보이기 때문입니다. |
 | — | `SEMAPHORE_CLIENT_TOKEN_FILE` | token이 담긴 파일(끝의 줄바꿈은 무시됩니다). |
 | `-p`, `--project` | `SEMAPHORE_CLIENT_PROJECT` | 프로젝트 범위 명령에 사용할 프로젝트 ID 또는 이름. |
@@ -81,9 +84,8 @@ echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com 
 이 파일을 기록하며, 직접 편집할 수도 있습니다.
 
 ```yaml
-current_context: prod
 contexts:
-  prod:
+  default:
     url: https://semaphore.example.com
     token: 8s3k...            # 또는 token_file
     project: 3                # 기본 프로젝트, ID 또는 이름
