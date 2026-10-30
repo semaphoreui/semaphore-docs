@@ -167,8 +167,9 @@ terminal, o cliente imprime `Apply task <id>? [yes/no]` e envia a resposta ao
 servidor. Sem terminal, ele relata a parada no stderr e continua esperando,
 então um job de CI precisa de `task confirm <id>` ou `task reject <id>` de outro
 lugar, de `--auto-approve` quando o template permite, ou de `--wait-timeout`
-para desistir. Uma tarefa rejeitada termina como `error`, ou seja, com código de
-saída 3.
+para desistir. Para um pipeline que nunca deve parar diante de um portão,
+`--auto-reject` recusa essa tarefa assim que ela pergunta. Uma tarefa rejeitada
+termina como `error`, ou seja, com código de saída 3.
 
 Combine `-o json` com `jq` para tudo o que a tabela não mostra:
 

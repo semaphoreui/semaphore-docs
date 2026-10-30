@@ -156,7 +156,8 @@ semaphore client task logs "$id" --raw > deploy.log
 所使用的模板。在终端中，客户端会打印 `Apply task <id>? [yes/no]` 并把答案发送给
 服务器。没有终端时，它会在 stderr 上报告这次停顿并继续等待，因此 CI 作业需要从
 别处运行 `task confirm <id>` 或 `task reject <id>`，在模板允许时使用
-`--auto-approve`，或者用 `--wait-timeout` 放弃等待。被拒绝的任务以 `error`
+`--auto-approve`，或者用 `--wait-timeout` 放弃等待。如果流水线不应在任何关卡前
+停住，`--auto-reject` 会在任务刚一询问时就拒绝它。被拒绝的任务以 `error`
 结束，也就是退出码 3。
 
 对于表格中未显示的内容，可将 `-o json` 与 `jq` 结合使用：

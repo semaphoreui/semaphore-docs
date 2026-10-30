@@ -167,8 +167,9 @@ nachfragt. In einem Terminal gibt der Client `Apply task <id>? [yes/no]` aus und
 schickt die Antwort an den Server. Ohne Terminal meldet er den Halt auf stderr
 und wartet weiter; ein CI-Job braucht daher `task confirm <id>` oder
 `task reject <id>` von anderer Stelle, `--auto-approve`, sofern die Vorlage es
-zulässt, oder `--wait-timeout`, um aufzugeben. Eine abgelehnte Aufgabe endet als
-`error`, also mit Exit-Code 3.
+zulässt, oder `--wait-timeout`, um aufzugeben. Für eine Pipeline, die an keinem
+Tor stehen bleiben soll, lehnt `--auto-reject` eine solche Aufgabe ab, sobald
+sie fragt. Eine abgelehnte Aufgabe endet als `error`, also mit Exit-Code 3.
 
 Kombinieren Sie `-o json` mit `jq` für alles, was die Tabelle nicht zeigt:
 

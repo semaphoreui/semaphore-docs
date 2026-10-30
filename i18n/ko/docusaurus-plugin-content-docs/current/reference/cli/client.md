@@ -162,8 +162,9 @@ semaphore client task logs "$id" --raw > deploy.log
 `Apply task <id>? [yes/no]`를 출력하고 답을 서버로 보냅니다. 터미널이 없으면
 멈춤을 stderr에 알리고 계속 기다리므로, CI 작업에서는 다른 곳에서
 `task confirm <id>` 또는 `task reject <id>`를 실행하거나, 템플릿이 허용하면
-`--auto-approve`를 쓰거나, `--wait-timeout`으로 중단해야 합니다. 거부된 작업은
-`error`로 끝나므로 종료 코드는 3입니다.
+`--auto-approve`를 쓰거나, `--wait-timeout`으로 중단해야 합니다. 게이트 앞에서
+멈추면 안 되는 파이프라인이라면 `--auto-reject`가 그런 작업을 묻는 즉시
+거부합니다. 거부된 작업은 `error`로 끝나므로 종료 코드는 3입니다.
 
 표에 나타나지 않는 정보는 `-o json`과 `jq`를 함께 사용해 얻으십시오.
 

@@ -166,8 +166,9 @@ ili bilo koji šablon čija aplikacija prvo pita. U terminalu klijent ispisuje
 `Apply task <id>? [yes/no]` i šalje odgovor serveru. Bez terminala prijavljuje
 zastoj na stderr i nastavlja da čeka, pa je CI poslu potreban
 `task confirm <id>` ili `task reject <id>` sa druge strane, `--auto-approve`
-kada šablon to dozvoljava, ili `--wait-timeout` da odustane. Odbijen zadatak
-završava kao `error`, što znači izlazni kod 3.
+kada šablon to dozvoljava, ili `--wait-timeout` da odustane. Za cevovod koji ne
+sme da stane ni pred jednom kapijom, `--auto-reject` odbija takav zadatak čim
+pita. Odbijen zadatak završava kao `error`, što znači izlazni kod 3.
 
 Kombinujte `-o json` sa `jq` za sve što tabela ne prikazuje:
 

@@ -1556,6 +1556,7 @@ semaphore client task logs 42
 
 | Flag | Type | Default | Description |
 |---|---|---|---|
+| `--auto-reject` | bool | — | With --follow: reject the task instead of waiting if it asks for approval |
 | `--follow`, `-f` | bool | — | Keep printing new lines until the task finishes |
 | `--raw` | bool | — | Stream the plain-text log as the server stores it |
 
@@ -1592,6 +1593,7 @@ semaphore client task rerun 42 -p 1
 |---|---|---|---|
 | `--arguments` | string | — | Extra CLI arguments as a JSON array, e.g. '["-vv"]' (if the template allows it) |
 | `--auto-approve` | bool | — | Terraform/OpenTofu: apply without approval |
+| `--auto-reject` | bool | — | Reject the task instead of waiting if it asks for approval (it ends as error, exit 3) |
 | `--branch` | string | — | Git branch to check out (if the template allows it) |
 | `--check` | bool | — | Ansible check mode (dry run, no changes) |
 | `--debug-level` | int | `0` | Ansible verbosity level 1-4 (implies --debug-task) |
@@ -1650,6 +1652,7 @@ semaphore client task wait 42; case $? in 0) echo ok;; 3) echo failed;; 6) echo 
 
 | Flag | Type | Default | Description |
 |---|---|---|---|
+| `--auto-reject` | bool | — | Reject the task instead of waiting if it asks for approval |
 | `--wait-timeout` | duration | `0s` | Give up after this long, exit 124 (default: no limit) |
 
 ## `semaphore client task watch` {#semaphore-client-task-watch}
@@ -1669,6 +1672,7 @@ semaphore client task watch 42 -p 1
 
 | Flag | Type | Default | Description |
 |---|---|---|---|
+| `--auto-reject` | bool | — | Reject the task instead of waiting if it asks for approval |
 | `--exit-status` | bool | — | Exit with 3 or 6 when the task failed or was stopped |
 | `--wait-timeout` | duration | `0s` | Give up after this long, exit 124 (default: no limit) |
 
@@ -1808,6 +1812,7 @@ Example:
 |---|---|---|---|
 | `--arguments` | string | — | Extra CLI arguments as a JSON array, e.g. '["-vv"]' (if the template allows it) |
 | `--auto-approve` | bool | — | Terraform/OpenTofu: apply without approval |
+| `--auto-reject` | bool | — | Reject the task instead of waiting if it asks for approval (it ends as error, exit 3) |
 | `--branch` | string | — | Git branch to check out (if the template allows it) |
 | `--check` | bool | — | Ansible check mode (dry run, no changes) |
 | `--debug-level` | int | `0` | Ansible verbosity level 1-4 (implies --debug-task) |

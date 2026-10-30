@@ -165,7 +165,9 @@ semaphore client task logs "$id" --raw > deploy.log
 停止を stderr に伝えて待ち続けるため、CI ジョブでは別の場所から
 `task confirm <id>` または `task reject <id>` を実行するか、テンプレートが
 許可していれば `--auto-approve` を使うか、`--wait-timeout` で打ち切る必要があります。
-拒否したタスクは `error` で終わるので、終了コードは 3 です。
+ゲートで止まってはいけないパイプラインでは、`--auto-reject` を使うと、
+タスクが尋ねた時点で拒否されます。拒否したタスクは `error` で終わるので、
+終了コードは 3 です。
 
 表に表示されない情報は、`-o json` と `jq` を組み合わせて取得します。
 

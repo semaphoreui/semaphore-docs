@@ -166,8 +166,9 @@ applied, or any template whose app asks first. In a terminal the client prints
 `Apply task <id>? [yes/no]` and sends the answer to the server. Without a
 terminal it reports the stop on stderr and keeps waiting, so a CI job needs
 `task confirm <id>` or `task reject <id>` from elsewhere, `--auto-approve` when
-the template allows it, or `--wait-timeout` to give up. A rejected task ends as
-`error`, which means exit code 3.
+the template allows it, or `--wait-timeout` to give up. For a pipeline that
+should never stop on a gate, `--auto-reject` turns such a task down as soon as
+it asks. A rejected task ends as `error`, which means exit code 3.
 
 Combine `-o json` with `jq` for anything the table does not show:
 

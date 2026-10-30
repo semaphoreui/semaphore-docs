@@ -167,8 +167,9 @@ In un terminale il client stampa `Apply task <id>? [yes/no]` e invia la risposta
 al server. Senza terminale segnala la sosta su stderr e continua ad attendere,
 quindi un job CI ha bisogno di `task confirm <id>` o `task reject <id>` da
 un'altra parte, di `--auto-approve` quando il modello lo consente, oppure di
-`--wait-timeout` per rinunciare. Un task rifiutato termina come `error`, cioè
-con codice di uscita 3.
+`--wait-timeout` per rinunciare. Per una pipeline che non deve mai fermarsi
+davanti a un cancello, `--auto-reject` rifiuta il task non appena chiede. Un
+task rifiutato termina come `error`, cioè con codice di uscita 3.
 
 Combinare `-o json` con `jq` per tutto ciò che la tabella non mostra:
 

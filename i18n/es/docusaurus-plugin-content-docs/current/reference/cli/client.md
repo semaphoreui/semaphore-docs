@@ -167,8 +167,9 @@ primero. En una terminal el cliente imprime `Apply task <id>? [yes/no]` y envía
 la respuesta al servidor. Sin terminal informa de la parada por stderr y sigue
 esperando, así que un trabajo de CI necesita `task confirm <id>` o
 `task reject <id>` desde otro sitio, `--auto-approve` cuando la plantilla lo
-permite, o `--wait-timeout` para rendirse. Una tarea rechazada termina como
-`error`, es decir, con código de salida 3.
+permite, o `--wait-timeout` para rendirse. Para una canalización que nunca debe
+detenerse ante una puerta, `--auto-reject` rechaza esa tarea en cuanto pregunta.
+Una tarea rechazada termina como `error`, es decir, con código de salida 3.
 
 Combine `-o json` con `jq` para todo lo que la tabla no muestra:
 
