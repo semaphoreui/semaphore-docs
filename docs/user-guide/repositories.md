@@ -1,7 +1,10 @@
 ---
 title: Repositories
-description: Supported repository URL types, authentication keys, creating and deleting repositories, and how requirements.yml is processed.
+description: Supported repository URL types, authentication keys, deploy keys, subdirectory playbooks, creating and deleting repositories, and how requirements.yml is processed.
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Repositories
 
@@ -27,6 +30,67 @@ For remote Repositories that use SSH, you will need to use your SSH key in the *
 For Remote Repositories that do not have authentication, you can create a Key with the type of `None`.
 
 The key of a Repository is used for that Repository only. To reach submodules, `requirements.yml` roles or other repositories hosted elsewhere with their own credentials, add a mapping in [Host config](/user-guide/host-config).
+
+### Configuring Deploy Keys {#deploy-keys}
+
+In enterprise automation environments, using dedicated **Deploy Keys** (or Access Keys) scoped to a single repository is the recommended best practice over personal user SSH keys or Personal Access Tokens (PATs). Deploy keys ensure:
+* **Lifecycle Isolation**: CI/CD and automation pipelines do not depend on individual employee accounts or personal credentials.
+* **Least Privilege**: Deploy keys can be granted strictly read-only access, ensuring Semaphore cannot push unwanted changes to the source repository.
+* **Scoped Blast Radius**: If a key needs to be rotated, only the specific repository is affected.
+
+:::tip Generate SSH Keys Directly in Semaphore
+You do not need to generate SSH keys on the command line. In Semaphore, go to **Key Store** &rarr; **New Key** &rarr; select **SSH Key** &rarr; click **Generate**. Semaphore will create a secure keypair and present a dialog with the **Public Key** ready to copy. See [Key Store](/user-guide/key-store#built-in-ssh-key-generator) for details.
+:::
+
+Copy the public key generated in Semaphore and add it to your Git provider:
+
+<Tabs groupId="git-provider">
+  <TabItem value="github" label="GitHub" default>
+
+1. In GitHub, open your repository and go to **Settings** &rarr; **Deploy keys**.
+2. Click **Add deploy key**.
+3. Enter a descriptive title (for example, `Semaphore UI Runner`).
+4. Paste the public key into the **Key** field.
+5. Leave **Allow write access** unchecked to maintain read-only permissions.
+6. Click **Add key**.
+
+In Semaphore, set the Repository URL to the SSH format:
+
+```text
+git@github.com:organization/repository.git
+```
+
+  </TabItem>
+  <TabItem value="gitlab" label="GitLab">
+
+1. In GitLab, navigate to your project and open **Settings** &rarr; **Repository**.
+2. Expand the **Deploy keys** section.
+3. Click **Add key**.
+4. Enter a title (for example, `Semaphore UI Runner`), paste the public key, and leave **Grant write permissions to this key** unchecked.
+5. Click **Add key**.
+
+In Semaphore, set the Repository URL to the SSH format:
+
+```text
+git@gitlab.com:organization/project.git
+```
+
+  </TabItem>
+  <TabItem value="bitbucket" label="Bitbucket">
+
+1. In Bitbucket, open your repository and navigate to **Repository settings** &rarr; **Access keys** (under *Security*).
+2. Click **Add key**.
+3. Label the key (for example, `Semaphore UI Runner`), paste the public key, and set **Permissions** to `Read`.
+4. Click **Add access key**.
+
+In Semaphore, set the Repository URL to the SSH format:
+
+```text
+git@bitbucket.org:workspace/repository.git
+```
+
+  </TabItem>
+</Tabs>
 
 ## Creating a New Repository {#creating-a-new-repository}
 1. Make sure you have configured the key for the Repository you are about to add in the key store section.
@@ -71,19 +135,69 @@ How the shared checkout works:
 
 Because every template works in the same checkout on the same branch, a template of a monorepo cannot have a **Branch** of its own, and it cannot enable the **Branch** prompt that lets a task pick a branch or commit. The template form disables both and explains why, and the API rejects such a template. Make sure the playbooks do not write into the checkout: a changed working tree breaks the next pull, and Semaphore then removes the checkout and clones it again.
 
+## Playbooks in Subdirectories {#subdirectories}
+
+Enterprise repositories frequently organize automation across dedicated directories, monorepos, or multi-environment layouts rather than placing all playbooks at the repository root.
+
+```text
+my-automation-repo/
+├── ansible.cfg
+├── collections/
+│   └── requirements.yml
+├── roles/
+│   └── common/
+└── playbooks/
+    ├── site.yml
+    ├── provisioning/
+    │   └── aws-vms.yml
+    └── maintenance/
+        └── patch-nodes.yml
+```
+
+When creating a [Task Template](/user-guide/task-templates), the **Playbook filename** is always specified **relative to the repository root**:
+
+* **Use relative paths**: Enter `playbooks/site.yml` or `playbooks/provisioning/aws-vms.yml`.
+* **No leading slash**: Do not use `/playbooks/site.yml`. A leading slash causes the executor to search from the system root directory instead of the repository clone.
+* **Unix forward slashes**: Always use `/` even if running on Windows runner nodes.
+* **Case-sensitive**: Paths must match exact folder and file casing (for example, `playbooks/site.yml`).
+
+:::info Working Directory and Requirements
+When a playbook runs from a subdirectory (such as `playbooks/site.yml`), Semaphore evaluates both the playbook directory (`playbook_dir`) and the repository root (`repo_path`) when resolving roles and collections. See [Requirements](#requirements) below for the exact search order.
+:::
+
 ## Editing an Existing Repository {#editing-an-existing-repository}
 1. Go to the Repositories section of Semaphore.
 
 2. Click on the pencil icon next to the Repository you wish to change, then you will be presented with the Repository configuration.
 
 ## Deleting a Repository {#deleting-a-repository}
-Make sure the Repository that is about to be delete is not in use by any Task Templates.
-A Repository cannot be deleted if it is used in any Task Templates:
-1. Go to the Repositories section of Semaphore.
 
-2. Click on the trash can icon on of the Repository you wish to delete.
+To prevent breaking existing automation jobs, Semaphore enforces relational dependency safeguards when deleting repositories.
 
-3. Click Yes on the confirmation pop-up if you are sure you want this Repository to be deleted.
+### Dependency Protection & In-Use Safeguards {#dependency-protection}
+
+A repository cannot be deleted if it is currently assigned to one or more Task Templates.
+
+Before attempting deletion, Semaphore queries active template references:
+1. In the Repositories list, clicking the trash icon checks if the repository is referenced by any project templates.
+2. If dependencies exist, Semaphore displays a warning dialog listing the exact Task Templates referencing this repository, with direct links to each template.
+3. If deleted directly via the API while in use, the request is rejected with HTTP `400 Bad Request`:
+
+```json
+{
+  "error": "Repository is in use by one or more templates",
+  "inUse": true
+}
+```
+
+To safely delete a repository:
+1. Navigate to **Templates** and reassign each dependent template to another repository, or delete the unused templates.
+2. Return to **Repositories** and click the trash can icon next to the repository.
+3. Confirm deletion in the pop-up dialog.
+
+:::tip Automatic Checkout Cache Purge
+When a repository is successfully deleted, Semaphore automatically purges the repository's local checkout working directory from the host/runner filesystem, freeing disk space.
+:::
 
 ## Requirements {#requirements}
 Upon project initialization Semaphore searches for and installs Ansible roles and collections from requirements.yml in the following locations and order.

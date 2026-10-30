@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Repository
 
 Un repository è un luogo in cui archiviare e gestire contenuti Ansible come playbook e ruoli.
@@ -20,6 +23,58 @@ Per i repository remoti che utilizzano SSH, è necessario utilizzare la propria 
 Per i repository remoti che non richiedono autenticazione, è possibile creare una chiave di tipo `None`.
 
 La chiave di un Repository viene usata solo per quel Repository. Per raggiungere submoduli, ruoli di `requirements.yml` o altri repository ospitati altrove con credenziali proprie, aggiungere una mappatura in [Host config](/user-guide/host-config).
+
+### Configurazione delle Deploy Key {#deploy-keys}
+
+Negli ambienti di automazione aziendale, l'uso di **Deploy Key** dedicate (o Access Key) limitate a un singolo repository è la best practice consigliata rispetto alle chiavi SSH personali o ai Personal Access Tokens (PAT). Le Deploy Key garantiscono:
+* **Isolamento del ciclo di vita**: Le pipeline CI/CD e di automazione non dipendono da account individuali dei dipendenti o credenziali personali.
+* **Privilegio minimo**: Le Deploy Key possono essere concesse rigorosamente in sola lettura, garantendo che Semaphore non possa inviare modifiche indesiderate al repository sorgente.
+* **Raggio di impatto limitato**: Se una chiave deve essere ruotata, solo il repository specifico viene influenzato.
+
+:::tip Genera chiavi SSH direttamente in Semaphore
+Non è necessario generare chiavi SSH dalla riga di comando. In Semaphore, vai su **Key Store** &rarr; **Nuova chiave** &rarr; seleziona **SSH Key** &rarr; fai clic su **Generate**. Semaphore creerà una coppia di chiavi sicura e mostrerà una finestra di dialogo con la **Chiave pubblica** pronta per la copia. Consulta [Key Store](/user-guide/key-store#built-in-ssh-key-generator) per i dettagli.
+:::
+
+Copia la chiave pubblica generata in Semaphore e aggiungila al tuo provider Git:
+
+<Tabs groupId="git-provider">
+  <TabItem value="github" label="GitHub" default>
+
+1. GitHub: **Settings** &rarr; **Deploy keys** &rarr; **Add deploy key**.
+2. Title: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. **Allow write access**: Unchecked.
+
+```text
+git@github.com:organization/repository.git
+```
+
+  </TabItem>
+  <TabItem value="gitlab" label="GitLab">
+
+1. GitLab: **Settings** &rarr; **Repository** &rarr; **Deploy keys**.
+2. Title: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. **Grant write permissions**: Unchecked.
+
+```text
+git@gitlab.com:organization/project.git
+```
+
+  </TabItem>
+  <TabItem value="bitbucket" label="Bitbucket">
+
+1. Bitbucket: **Repository settings** &rarr; **Access keys**.
+2. Label: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. Permissions: `Read`.
+
+```text
+git@bitbucket.org:workspace/repository.git
+```
+
+  </TabItem>
+</Tabs>
 
 ## Creazione di un nuovo repository {#creating-a-new-repository}
 1. Assicurarsi di aver configurato nella sezione Key Store la chiave per il repository che si sta per aggiungere.
@@ -64,6 +119,36 @@ Come funziona il checkout condiviso:
 
 Poiché tutti i modelli lavorano nello stesso checkout sullo stesso branch, un modello di un monorepo non può avere un **Branch** proprio e non può abilitare il prompt **Branch** che consente a un task di scegliere un branch o un commit. Il modulo del modello disabilita entrambi e ne spiega il motivo, e l'API rifiuta un modello di questo tipo. Assicurarsi che i playbook non scrivano nel checkout: una working tree modificata interrompe il pull successivo e Semaphore rimuove quindi il checkout e lo clona di nuovo.
 
+## Playbook in sottodirectory {#subdirectories}
+
+I repository aziendali spesso organizzano l'automazione in directory dedicate, monorepository o layout multi-ambiente anziché posizionare tutti i playbook nella radice.
+
+```text
+my-automation-repo/
+├── ansible.cfg
+├── collections/
+│   └── requirements.yml
+├── roles/
+│   └── common/
+└── playbooks/
+    ├── site.yml
+    ├── provisioning/
+    │   └── aws-vms.yml
+    └── maintenance/
+        └── patch-nodes.yml
+```
+
+Quando si crea un [Modello di attività](/user-guide/task-templates), il **Nome file playbook** viene sempre specificato **relativo alla radice del repository**:
+
+* **Usa percorsi relativi**: Inserisci `playbooks/site.yml` o `playbooks/provisioning/aws-vms.yml`.
+* **Nessuna barra iniziale**: Non usare `/playbooks/site.yml`. Una barra iniziale induce l'esecutore a cercare dalla directory principale del sistema anziché dal clone del repository.
+* **Barre oblique Unix**: Usa sempre `/`, anche se in esecuzione su nodi runner Windows.
+* **Distinzione tra maiuscole e minuscole**: I percorsi devono corrispondere esattamente alla grafia di cartelle e file (ad esempio, `playbooks/site.yml`).
+
+:::info Directory di lavoro e requisiti
+Quando un playbook viene eseguito da una sottodirectory (come `playbooks/site.yml`), Semaphore valuta sia la directory del playbook (`playbook_dir`) sia la radice del repository (`repo_path`) durante la risoluzione di ruoli e raccolte. Consulta [Requisiti](#requirements) di seguito per l'ordine di ricerca esatto.
+:::
+
 ## Modifica di un repository esistente {#editing-an-existing-repository}
 1. Andare nella sezione Repository di Semaphore.
 
@@ -77,6 +162,31 @@ Un repository non può essere eliminato se è utilizzato in un modello di task:
 2. Fare clic sull'icona del cestino del repository da eliminare.
 
 3. Fare clic su Sì nella finestra di conferma se si è sicuri di voler eliminare il repository.
+
+### Protezione delle dipendenze e verifiche di utilizzo {#dependency-protection}
+
+Un repository non può essere eliminato se è attualmente assegnato a uno o più modelli di attività.
+
+Prima di tentare l'eliminazione, Semaphore verifica i riferimenti dei modelli attivi:
+1. Nell'elenco dei repository, facendo clic sull'icona del cestino si controlla se il repository è referenziato da modelli di progetto.
+2. Se esistono dipendenze, Semaphore mostra una finestra di avviso che elenca i modelli esatti che fanno riferimento a questo repository, con collegamenti diretti a ciascun modello.
+3. Se viene eliminato direttamente tramite l'API mentre è ancora in uso, la richiesta viene respinta con HTTP `400 Bad Request`:
+
+```json
+{
+  "error": "Repository is in use by one or more templates",
+  "inUse": true
+}
+```
+
+Per eliminare in sicurezza un repository:
+1. Vai su **Modelli** e riassegna ciascun modello dipendente a un altro repository, oppure elimina i modelli inutilizzati.
+2. Torna su **Repository** e fai clic sull'icona del cestino accanto al repository.
+3. Conferma l'eliminazione nella finestra a comparsa.
+
+:::tip Pulizia automatica della cache di checkout
+Quando un repository viene eliminato con successo, Semaphore elimina automaticamente la directory di lavoro locale del checkout nel filesystem dell'host/runner, liberando spazio su disco.
+:::
 
 ## Requisiti {#requirements}
 All'inizializzazione del progetto, Semaphore cerca e installa i ruoli e le collection Ansible dai file requirements.yml nelle seguenti posizioni e nel seguente ordine.

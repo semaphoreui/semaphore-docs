@@ -175,6 +175,13 @@ Pour accorder au même rôle l'accès à d'autres modèles, répétez ces étape
 Les permissions de modèle sont additives. Elles ajoutent un accès sans remplacer ni réduire l'accès issu du rôle intégré d'un utilisateur ou d'autres rôles personnalisés. Si un utilisateur peut déjà exécuter ou modifier tous les modèles de tâches, l'ajout d'un rôle spécifique à un modèle ne restreint pas cet accès.
 :::
 
+
+### Configurer l'accès à des workflows spécifiques {#configure-access-to-specific-workflows}
+
+Les autorisations de workflow fonctionnent de la même manière que les autorisations de modèle et nécessitent l'édition Enterprise. Ouvrez **Workflows**, sélectionnez le workflow et ouvrez son onglet **Autorisations**. Sélectionnez **Ajouter un rôle**, choisissez le rôle et sélectionnez les actions appropriées : **Peut voir ce workflow**, **Peut exécuter ce workflow**, **Peut modifier ce workflow** ou **Peut approuver ce workflow**.
+
+Un membre disposant d'une autorisation sur un workflow voit les boutons correspondants uniquement sur ce workflow.
+
 ### Attribuer un rôle personnalisé dans un projet {#assign-a-custom-role-in-a-project}
 
 Après avoir créé et configuré un rôle global ou de projet, attribuez-le au membre de l'équipe concerné :

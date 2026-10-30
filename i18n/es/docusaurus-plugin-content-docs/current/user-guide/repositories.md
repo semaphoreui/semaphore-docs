@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Repositorios
 
 Un repositorio es un lugar para almacenar y gestionar contenido de Ansible, como playbooks y roles.
@@ -20,6 +23,58 @@ Para repositorios remotos que usan SSH, deberá usar su clave SSH en el **Almac�
 Para repositorios remotos sin autenticación, puede crear una clave de tipo `None`.
 
 La clave de un repositorio se usa solo para ese repositorio. Para acceder a submódulos, roles de `requirements.yml` u otros repositorios alojados en otro lugar con sus propias credenciales, añada una asignación en [Host config](/user-guide/host-config).
+
+### Configuración de Deploy Keys {#deploy-keys}
+
+En entornos de automatización empresarial, el uso de **Deploy Keys** dedicadas (o Access Keys) asignadas a un único repositorio es la práctica recomendada frente a claves SSH de usuario o Personal Access Tokens (PAT). Las Deploy Keys garantizan:
+* **Aislamiento del ciclo de vida**: Las canalizaciones de CI/CD y automatización no dependen de cuentas de empleados individuales ni de credenciales personales.
+* **Mínimo privilegio**: Las Deploy Keys pueden configurarse estrictamente con acceso de solo lectura, lo que garantiza que Semaphore no pueda enviar cambios no deseados al repositorio de origen.
+* **Radio de impacto limitado**: Si es necesario rotar una clave, solo se ve afectado el repositorio específico.
+
+:::tip Generar claves SSH directamente en Semaphore
+No necesita generar claves SSH en la línea de comandos. En Semaphore, vaya a **Key Store** &rarr; **Nueva clave** &rarr; seleccione **SSH Key** &rarr; haga clic en **Generate**. Semaphore creará un par de claves seguro y mostrará un cuadro de diálogo con la **Clave pública** lista para copiar. Consulte [Key Store](/user-guide/key-store#built-in-ssh-key-generator) para más detalles.
+:::
+
+Copie la clave pública generada en Semaphore y agréguela a su proveedor Git:
+
+<Tabs groupId="git-provider">
+  <TabItem value="github" label="GitHub" default>
+
+1. GitHub: **Settings** &rarr; **Deploy keys** &rarr; **Add deploy key**.
+2. Title: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. **Allow write access**: Unchecked.
+
+```text
+git@github.com:organization/repository.git
+```
+
+  </TabItem>
+  <TabItem value="gitlab" label="GitLab">
+
+1. GitLab: **Settings** &rarr; **Repository** &rarr; **Deploy keys**.
+2. Title: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. **Grant write permissions**: Unchecked.
+
+```text
+git@gitlab.com:organization/project.git
+```
+
+  </TabItem>
+  <TabItem value="bitbucket" label="Bitbucket">
+
+1. Bitbucket: **Repository settings** &rarr; **Access keys**.
+2. Label: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. Permissions: `Read`.
+
+```text
+git@bitbucket.org:workspace/repository.git
+```
+
+  </TabItem>
+</Tabs>
 
 ## Crear un nuevo repositorio {#creating-a-new-repository}
 1. Asegúrese de haber configurado en la sección del almacén de claves la clave del repositorio que va a añadir.
@@ -64,6 +119,36 @@ Cómo funciona la copia compartida:
 
 Como todas las plantillas trabajan en la misma copia y en la misma rama, una plantilla de un monorepo no puede tener una **Rama** propia ni activar la solicitud **Rama**, que permite a una tarea elegir una rama o un commit. El formulario de la plantilla desactiva ambas opciones y explica el motivo, y la API rechaza una plantilla así. Asegúrese de que los playbooks no escriban en la copia: un árbol de trabajo modificado rompe el siguiente pull, y Semaphore entonces elimina la copia y la clona de nuevo.
 
+## Playbooks en subdirectorios {#subdirectories}
+
+Los repositorios empresariales frecuentemente organizan la automatización en directorios dedicados, monorrepositorios o estructuras multientorno en lugar de colocar todos los playbooks en la raíz del repositorio.
+
+```text
+my-automation-repo/
+├── ansible.cfg
+├── collections/
+│   └── requirements.yml
+├── roles/
+│   └── common/
+└── playbooks/
+    ├── site.yml
+    ├── provisioning/
+    │   └── aws-vms.yml
+    └── maintenance/
+        └── patch-nodes.yml
+```
+
+Al crear una [Plantilla de tarea](/user-guide/task-templates), el **Nombre de archivo del playbook** siempre se especifica **relativo a la raíz del repositorio**:
+
+* **Usar rutas relativas**: Introduzca `playbooks/site.yml` o `playbooks/provisioning/aws-vms.yml`.
+* **Sin barra inicial**: No use `/playbooks/site.yml`. Una barra inicial hace que el ejecutor busque desde el directorio raíz del sistema en lugar del clon del repositorio.
+* **Barras diagonales Unix**: Utilice siempre `/`, incluso si se ejecuta en nodos runner de Windows.
+* **Sensible a mayúsculas y minúsculas**: Las rutas deben coincidir exactamente con el nombre de carpetas y archivos (por ejemplo, `playbooks/site.yml`).
+
+:::info Directorio de trabajo y requisitos
+Cuando un playbook se ejecuta desde un subdirectorio (como `playbooks/site.yml`), Semaphore evalúa tanto el directorio del playbook (`playbook_dir`) como la raíz del repositorio (`repo_path`) al resolver roles y colecciones. Consulte [Requisitos](#requirements) a continuación para el orden de búsqueda exacto.
+:::
+
 ## Editar un repositorio existente {#editing-an-existing-repository}
 1. Vaya a la sección Repositorios de Semaphore.
 
@@ -77,6 +162,31 @@ Un repositorio no puede eliminarse si se usa en alguna plantilla de tareas:
 2. Haga clic en el icono de la papelera del repositorio que desea eliminar.
 
 3. Haga clic en Sí en la ventana emergente de confirmación si está seguro de que desea eliminar este repositorio.
+
+### Protección de dependencias y comprobaciones de uso {#dependency-protection}
+
+Un repositorio no se puede eliminar si está asignado actualmente a una o más plantillas de tareas.
+
+Antes de intentar la eliminación, Semaphore comprueba las referencias activas de plantillas:
+1. En la lista de repositorios, al hacer clic en el icono de papelera se comprueba si el repositorio está referenciado por alguna plantilla del proyecto.
+2. Si existen dependencias, Semaphore muestra un cuadro de diálogo de advertencia con la lista exacta de plantillas de tareas que hacen referencia a este repositorio, con enlaces directos a cada plantilla.
+3. Si se elimina directamente a través de la API mientras está en uso, la solicitud se rechaza con HTTP `400 Bad Request`:
+
+```json
+{
+  "error": "Repository is in use by one or more templates",
+  "inUse": true
+}
+```
+
+Para eliminar de forma segura un repositorio:
+1. Vaya a **Plantillas** y reasigne cada plantilla dependiente a otro repositorio, o elimine las plantillas en desuso.
+2. Vuelva a **Repositorios** y haga clic en el icono de papelera junto al repositorio.
+3. Confirme la eliminación en el cuadro de diálogo emergente.
+
+:::tip Limpieza automática de la caché de checkout
+Cuando un repositorio se elimina correctamente, Semaphore purga automáticamente el directorio de trabajo local del checkout en el sistema de archivos del host/runner, liberando espacio en disco.
+:::
 
 ## Requisitos {#requirements}
 Al inicializar el proyecto, Semaphore busca e instala roles y colecciones de Ansible desde requirements.yml en las siguientes ubicaciones y en este orden.

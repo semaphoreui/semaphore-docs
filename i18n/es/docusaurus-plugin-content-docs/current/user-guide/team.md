@@ -175,6 +175,13 @@ Para conceder al mismo rol acceso a plantillas adicionales, repita estos pasos p
 Los permisos de plantilla son aditivos. Añaden acceso sin reemplazar ni reducir el acceso derivado del rol integrado del usuario o de otros roles personalizados. Si un usuario ya puede ejecutar o actualizar todas las plantillas de tareas, agregar un rol específico de plantilla no restringe ese acceso.
 :::
 
+
+### Configurar acceso a flujos de trabajo específicos {#configure-access-to-specific-workflows}
+
+Los permisos de flujo de trabajo funcionan igual que los permisos de plantilla y requieren la edición Enterprise. Abra **Workflows**, seleccione el flujo de trabajo y abra su pestaña **Permisos**. Seleccione **Agregar rol**, elija el rol y seleccione las acciones correspondientes: **Puede ver este flujo de trabajo**, **Puede ejecutar este flujo de trabajo**, **Puede editar este flujo de trabajo** o **Puede aprobar este flujo de trabajo**.
+
+Un miembro con permiso en un flujo de trabajo ve los botones correspondientes solo en ese flujo de trabajo.
+
 ### Asignar un rol personalizado en un proyecto {#assign-a-custom-role-in-a-project}
 
 Después de crear y configurar un rol global o de proyecto, asígnelo al miembro del equipo correspondiente:
