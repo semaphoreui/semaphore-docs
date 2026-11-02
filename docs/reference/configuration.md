@@ -85,8 +85,8 @@ How users sign in. See [Authentication](/admin-guide/authentication) for the pro
 
 | Option / Environment variable | Type / Default | Description |
 |---|---|---|
-| `auth.max_session_life_hours`<br />`SEMAPHORE_AUTH_MAX_SESSION_LIFE_HOURS` | integer | Absolute lifetime of a login session in hours, counted from the moment the user logged in. Once exceeded the session is rejected and expired, even if it was active recently, and the user must log in again. 0 (default) means no absolute limit: sessions then only expire after the inactivity timeout without activity. |
-| `auth.session_inactivity_hours`<br />`SEMAPHORE_AUTH_SESSION_INACTIVITY_HOURS` | integer | How long a login session may stay unused, in hours, before it is rejected and expired. Every authenticated request resets the counter. 0 (default) means the built-in 168 hours (7 days). The inactivity timeout cannot be disabled. |
+| `auth.max_session_life_hours`<br />`SEMAPHORE_SESSION_MAX_LIFE_HOURS` | integer | Absolute lifetime of a login session in hours, counted from the moment the user logged in. Once exceeded the session is rejected and expired, even if it was active recently, and the user must log in again. 0 (default) means no absolute limit: sessions then only expire after the inactivity timeout without activity. |
+| `auth.session_inactivity_hours`<br />`SEMAPHORE_SESSION_INACTIVITY_HOURS` | integer | How long a login session may stay unused, in hours, before it is rejected and expired. Every authenticated request resets the counter. 0 (default) means the built-in 168 hours (7 days). The inactivity timeout cannot be disabled. |
 | `mfa.totp.enabled`<br />`SEMAPHORE_TOTP_ENABLED` | boolean | Enable Two-factor authentication using TOTP. |
 | `mfa.totp.allow_recovery`<br />`SEMAPHORE_TOTP_ALLOW_RECOVERY` | boolean | Allow users to reset TOTP using a recovery code. |
 | `mfa.totp.app_name`<br />`SEMAPHORE_TOTP_ISSUER` | string | Issuer label (Semaphore title) shown in TOTP authenticator apps. |
