@@ -86,11 +86,22 @@ second factor being requested. Turn it back on and the old enrolments apply agai
 
 ## Session lifetime {#session-lifetime}
 
-A session expires after **seven days without activity**. That inactivity timeout is
-built in and not configurable.
+Two independent limits end a session; whichever is hit first signs the user out.
 
-An absolute limit is, and it is measured from the moment of sign-in rather than from
-the last request, so an actively used session also ends:
+The **inactivity timeout** counts from the last request. Every authenticated request,
+including the background polling of an open browser tab, resets it. The default is
+168 hours (seven days):
+
+```json
+{
+  "auth": {
+    "session_inactivity_hours": 8
+  }
+}
+```
+
+The **absolute limit** counts from the moment of sign-in rather than from the last
+request, so an actively used session also ends:
 
 ```json
 {
@@ -101,7 +112,9 @@ the last request, so an actively used session also ends:
 ```
 
 The default, `0`, means no absolute limit. Set it where a shared workstation or a
-compliance rule requires people to re-authenticate on a schedule.
+compliance rule requires people to re-authenticate on a schedule. A browser left open
+on a page that polls the API keeps the session active, so only the absolute limit
+reliably ends such a session.
 
 ## Turn password sign-in off {#turn-password-sign-in-off}
 

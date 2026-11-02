@@ -85,7 +85,8 @@ How users sign in. See [Authentication](/admin-guide/authentication) for the pro
 
 | Option / Environment variable | Type / Default | Description |
 |---|---|---|
-| `auth.max_session_life_hours`<br />`SEMAPHORE_AUTH_MAX_SESSION_LIFE_HOURS` | integer | Absolute lifetime of a login session in hours, counted from the moment the user logged in. Once exceeded the session is rejected and expired, even if it was active recently, and the user must log in again. 0 (default) means no absolute limit: sessions then only expire after SessionInactivityTimeout without activity. |
+| `auth.max_session_life_hours`<br />`SEMAPHORE_AUTH_MAX_SESSION_LIFE_HOURS` | integer | Absolute lifetime of a login session in hours, counted from the moment the user logged in. Once exceeded the session is rejected and expired, even if it was active recently, and the user must log in again. 0 (default) means no absolute limit: sessions then only expire after the inactivity timeout without activity. |
+| `auth.session_inactivity_hours`<br />`SEMAPHORE_AUTH_SESSION_INACTIVITY_HOURS` | integer | How long a login session may stay unused, in hours, before it is rejected and expired. Every authenticated request resets the counter. 0 (default) means the built-in 168 hours (7 days). The inactivity timeout cannot be disabled. |
 | `mfa.totp.enabled`<br />`SEMAPHORE_TOTP_ENABLED` | boolean | Enable Two-factor authentication using TOTP. |
 | `mfa.totp.allow_recovery`<br />`SEMAPHORE_TOTP_ALLOW_RECOVERY` | boolean | Allow users to reset TOTP using a recovery code. |
 | `mfa.totp.app_name`<br />`SEMAPHORE_TOTP_ISSUER` | string | Issuer label (Semaphore title) shown in TOTP authenticator apps. |
@@ -282,7 +283,7 @@ Activating Pro or Enterprise. See [License](/admin-guide/license).
 | `subscription.key`<br />`SEMAPHORE_SUBSCRIPTION_KEY` | string | Subscription key or token that can be set via config. When this is set, subscription activation from the web interface is disabled. Secret: keep it out of shell history and version control. |
 | `subscription.key_file`<br />`SEMAPHORE_SUBSCRIPTION_KEY_FILE` | string | Path to subscription key or token file. |
 | `subscription.server_url`<br />`SEMAPHORE_SUBSCRIPTION_SERVER_URL` | string<br />Default: `https://portal.semaphoreui.com/billing` | Subscription / billing server URL. Default: https://portal.semaphoreui.com/billing |
-| `subscription.proxy.url`<br />`SEMAPHORE_SUBSCRIPTION_PROXY_URL` | string | Proxy endpoint, for example http://proxy.example.com:3128. Schemes http, https, socks5 and socks5h are supported. When empty, the proxy variables of the server process are used (HTTP_PROXY, HTTPS_PROXY, NO_PROXY), as for every other outgoing request. |
+| `subscription.proxy.url`<br />`SEMAPHORE_SUBSCRIPTION_PROXY_URL` | string | Proxy endpoint, for example http://proxy.example.com:3128. Schemes http, https, socks5 and socks5h are supported. When empty, the proxy variables of the server process are used (HTTP_PROXY, HTTPS_PROXY, NO_PROXY), as for every other outgoing request. Secret: keep it out of shell history and version control. |
 | `subscription.proxy.username`<br />`SEMAPHORE_SUBSCRIPTION_PROXY_USERNAME` | string | Authenticates against the proxy. It overrides a user name given in URL, and keeps the credentials out of the logged proxy address. |
 | `subscription.proxy.password`<br />`SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD` | string | Belongs to Username. It overrides a password given in URL. Secret: keep it out of shell history and version control. |
 
