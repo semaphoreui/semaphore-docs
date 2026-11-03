@@ -35,6 +35,9 @@
 | `ldap_mappings.cn`    | `SEMAPHORE_LDAP_MAPPING_CN` | 用户姓名声明表达式[\*](#claim-expression)。 |
 | `ldap_enable`         | `SEMAPHORE_LDAP_ENABLE` | 是否启用 LDAP。 |
 | `ldap_needtls`        | `SEMAPHORE_LDAP_NEEDTLS` | 通过 SSL 连接 LDAP 服务器。 |
+| `ldap_group_search_dn` | `SEMAPHORE_LDAP_GROUP_SEARCH_DN` | 搜索组的范围。启用[组映射](#project-roles-from-groups)。在 `ldap_providers` 中为 `group_search_dn`。 |
+| `ldap_group_search_filter` | `SEMAPHORE_LDAP_GROUP_SEARCH_FILTER` | 组搜索表达式。默认值：`(\|(member={{ .dn }})(uniqueMember={{ .dn }})(memberUid={{ .username }}))`。在 `ldap_providers` 中为 `group_search_filter`。 |
+| `ldap_group_name_attribute` | `SEMAPHORE_LDAP_GROUP_NAME_ATTRIBUTE` | 包含组名的属性。默认值：`cn`。在 `ldap_providers` 中为 `group_name_attribute`。 |
 
 
 ### \*声明表达式 {#claim-expression}
@@ -74,6 +77,69 @@ ldapwhoami\
 
 :::
 
+
+## 根据组授予项目角色 <Enterprise /> {#project-roles-from-groups}
+
+:::info
+组映射在 **Semaphore Enterprise** 版中可用。
+:::
+
+组映射会为目录中某个组的每个用户授予一个项目角色。例如，一个组映射可以为 `devops` 组的成员授予 `Infrastructure` 项目中的 **Manager** 角色。
+
+### 从目录读取组 {#read-groups-from-the-directory}
+
+将 `ldap_group_search_dn` 设置为组所在的位置。在 `ldap_providers` 中，使用 `group_search_dn`。如果不设置，登录不会更改来自组映射的角色。
+
+在 Active Directory 和 OpenLDAP 中，只需这一行：
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com"
+}
+```
+
+另外两个选项是可选的：
+
+- `ldap_group_search_filter` 用于查找用户所属的组。默认值会查找将该用户列为 `member`、`uniqueMember` 或 `memberUid` 的组。
+- `ldap_group_name_attribute` 是包含组名的属性。默认值为 `cn`。
+
+在过滤器中，`{{ .dn }}` 是用户的 DN，`{{ .username }}` 是用户的登录名，即 `uid` 映射的值。Semaphore 会对这两个值进行转义。
+
+如果名称属性中是 DN，组名就是 DN 的第一部分。例如，`CN=DevOps,OU=Groups,DC=corp,DC=com` 得到的组名是 `DevOps`。
+
+#### Active Directory 中的嵌套组 {#nested-groups-in-active-directory}
+
+要包含那些含有其他组的组，请使用 matching rule in chain：
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com",
+  "ldap_group_search_filter": "(member:1.2.840.113556.1.4.1941:={{ .dn }})"
+}
+```
+
+#### 从用户条目获取组 {#groups-from-the-user-entry}
+
+如果用户条目列出了其所属的组（例如在 `memberOf` 中），请搜索用户而不是组。此示例适用于 Active Directory。启用 `memberOf` overlay 的 OpenLDAP 则改用 `(uid={{ .username }})` 作为过滤器。
+
+```json
+{
+  "ldap_group_search_dn": "ou=people,dc=corp,dc=com",
+  "ldap_group_search_filter": "(sAMAccountName={{ .username }})",
+  "ldap_group_name_attribute": "memberOf"
+}
+```
+
+### 创建组映射 {#create-a-group-mapping}
+
+按照与 OpenID Connect 相同的方式创建映射。请参阅[步骤](/admin-guide/authentication/openid#create-a-group-mapping)。选择 LDAP 提供方，并按目录返回的形式输入组名。
+
+- 用户每次通过提供方登录时，Semaphore 都会更新来自组映射的角色。
+- 每次登录都会应用本次登录所用提供方的映射，并移除来自其他提供方映射的角色。因此，先通过 Okta 登录、再通过 LDAP 登录的用户只会保留为 LDAP 映射的角色。
+- 在任何组中都找不到的用户不会获得来自组映射的角色。
+- 如果没有 `ldap_group_search_dn`，登录不会更改来自组映射的角色。
+- 如果目录无法返回组，例如服务器没有响应或过滤器有语法错误，登录会被拒绝。服务器日志会说明原因。
+- ID 相同的 OpenID Connect 提供方和 LDAP 提供方共享组映射。
 
 ## 示例：使用 OpenLDAP 服务器 {#example-using-openldap-server}
 

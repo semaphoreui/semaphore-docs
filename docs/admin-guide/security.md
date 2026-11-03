@@ -16,7 +16,7 @@ Semaphore supports secure authentication and flexible authorization mechanisms:
 - **Login methods:**
   - **Username/password**<br />Default method using credentials stored in the Semaphore database. Passwords are never stored in plain text; they are hashed with Argon2id (see [Password hashing](#password-hashing)).
 
-  - **LDAP**<br />Allows integration with enterprise directory services. Supports user/group filtering and secure connections via LDAPS.
+  - **LDAP**<br />Allows integration with enterprise directory services. Supports user/group filtering, group mappings, and secure connections via LDAPS.
 
   - **OpenID Connect (OIDC)**<br />Enables single sign-on with identity providers like Google, Azure AD, or Keycloak. Supports custom claims and group mappings.
 

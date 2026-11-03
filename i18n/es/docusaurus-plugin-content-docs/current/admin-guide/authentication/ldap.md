@@ -35,6 +35,9 @@ Todas las opciones del proveedor de SSO:
 | `ldap_mappings.cn`    | `SEMAPHORE_LDAP_MAPPING_CN` | Expresión de claim del nombre del usuario[\*](#claim-expression). |
 | `ldap_enable`         | `SEMAPHORE_LDAP_ENABLE` | LDAP habilitado. |
 | `ldap_needtls`        | `SEMAPHORE_LDAP_NEEDTLS` | Conectar al servidor LDAP mediante SSL. |
+| `ldap_group_search_dn` | `SEMAPHORE_LDAP_GROUP_SEARCH_DN` | Ámbito en el que se buscarán los grupos. Activa las [asignaciones de grupo](#project-roles-from-groups). En `ldap_providers` es `group_search_dn`. |
+| `ldap_group_search_filter` | `SEMAPHORE_LDAP_GROUP_SEARCH_FILTER` | Expresión de búsqueda de grupos. Valor predeterminado: `(\|(member={{ .dn }})(uniqueMember={{ .dn }})(memberUid={{ .username }}))`. En `ldap_providers` es `group_search_filter`. |
+| `ldap_group_name_attribute` | `SEMAPHORE_LDAP_GROUP_NAME_ATTRIBUTE` | Atributo con el nombre del grupo. Valor predeterminado: `cn`. En `ldap_providers` es `group_name_attribute`. |
 
 
 ### \*Expresión de claim {#claim-expression}
@@ -74,6 +77,69 @@ Consulte la sección [Solución de problemas](/faq/troubleshooting#unable-to-rea
 
 :::
 
+
+## Roles de proyecto a partir de grupos <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Las asignaciones de grupo están disponibles en la edición **Semaphore Enterprise**.
+:::
+
+Una asignación de grupo da un rol de proyecto a cada usuario de un grupo del directorio. Por ejemplo, una asignación puede dar a los miembros del grupo `devops` el rol **Gestor** en el proyecto `Infrastructure`.
+
+### Leer los grupos del directorio {#read-groups-from-the-directory}
+
+Establezca `ldap_group_search_dn` con el lugar donde están sus grupos. En `ldap_providers`, use `group_search_dn`. Sin este ajuste, los inicios de sesión no cambian los roles de asignaciones de grupo.
+
+En Active Directory y OpenLDAP, basta con esta línea:
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com"
+}
+```
+
+Hay dos opciones más, que son opcionales:
+
+- `ldap_group_search_filter` busca los grupos del usuario. El valor predeterminado busca los grupos que incluyen al usuario como `member`, `uniqueMember` o `memberUid`.
+- `ldap_group_name_attribute` es el atributo con el nombre del grupo. El valor predeterminado es `cn`.
+
+En el filtro, `{{ .dn }}` es el DN del usuario y `{{ .username }}` es el nombre de usuario (login), es decir, el valor de la asignación `uid`. Semaphore escapa ambos valores.
+
+Si el atributo de nombre contiene un DN, el nombre del grupo es la primera parte del DN. Por ejemplo, `CN=DevOps,OU=Groups,DC=corp,DC=com` da el nombre de grupo `DevOps`.
+
+#### Grupos anidados en Active Directory {#nested-groups-in-active-directory}
+
+Para incluir los grupos que contienen otros grupos, use la regla «matching rule in chain»:
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com",
+  "ldap_group_search_filter": "(member:1.2.840.113556.1.4.1941:={{ .dn }})"
+}
+```
+
+#### Grupos desde la entrada del usuario {#groups-from-the-user-entry}
+
+Si la entrada del usuario enumera sus grupos, por ejemplo en `memberOf`, busque el usuario en lugar de los grupos. Este ejemplo es para Active Directory. OpenLDAP con el overlay `memberOf` usa en su lugar el filtro `(uid={{ .username }})`.
+
+```json
+{
+  "ldap_group_search_dn": "ou=people,dc=corp,dc=com",
+  "ldap_group_search_filter": "(sAMAccountName={{ .username }})",
+  "ldap_group_name_attribute": "memberOf"
+}
+```
+
+### Crear una asignación de grupo {#create-a-group-mapping}
+
+Cree la asignación igual que para OpenID Connect. Consulte los [pasos](/admin-guide/authentication/openid#create-a-group-mapping). Elija su proveedor LDAP y escriba el nombre del grupo tal como lo devuelve el directorio.
+
+- Semaphore actualiza los roles de asignaciones de grupo cada vez que el usuario inicia sesión a través del proveedor.
+- Cada inicio de sesión aplica las asignaciones del proveedor usado en ese inicio de sesión y quita los roles de las asignaciones de otros proveedores. Así, un usuario que inicia sesión a través de Okta y después a través de LDAP conserva solo los roles asignados para LDAP.
+- Un usuario que no se encuentra en ningún grupo no recibe roles de asignaciones de grupo.
+- Sin `ldap_group_search_dn`, un inicio de sesión no cambia los roles de asignaciones de grupo.
+- Si el directorio no puede devolver los grupos, por ejemplo porque el servidor no responde o el filtro tiene un error de sintaxis, el inicio de sesión se rechaza. El registro del servidor indica el motivo.
+- Un proveedor OpenID Connect y un proveedor LDAP con el mismo ID comparten sus asignaciones de grupo.
 
 ## Ejemplo: uso de un servidor OpenLDAP {#example-using-openldap-server}
 

@@ -35,6 +35,9 @@
 | `ldap_mappings.cn`    | `SEMAPHORE_LDAP_MAPPING_CN` | 사용자 이름 클레임 표현식[\*](#claim-expression)입니다. |
 | `ldap_enable`         | `SEMAPHORE_LDAP_ENABLE` | LDAP 활성화 여부입니다. |
 | `ldap_needtls`        | `SEMAPHORE_LDAP_NEEDTLS` | SSL로 LDAP 서버에 연결합니다. |
+| `ldap_group_search_dn` | `SEMAPHORE_LDAP_GROUP_SEARCH_DN` | 그룹을 검색할 범위입니다. [그룹 매핑](#project-roles-from-groups)을 켭니다. `ldap_providers`에서는 `group_search_dn`입니다. |
+| `ldap_group_search_filter` | `SEMAPHORE_LDAP_GROUP_SEARCH_FILTER` | 그룹 검색 표현식입니다. 기본값: `(\|(member={{ .dn }})(uniqueMember={{ .dn }})(memberUid={{ .username }}))`. `ldap_providers`에서는 `group_search_filter`입니다. |
+| `ldap_group_name_attribute` | `SEMAPHORE_LDAP_GROUP_NAME_ATTRIBUTE` | 그룹 이름이 담긴 속성입니다. 기본값: `cn`. `ldap_providers`에서는 `group_name_attribute`입니다. |
 
 
 ### \*클레임 표현식 {#claim-expression}
@@ -74,6 +77,69 @@ LDAP에 문제가 있는 경우 [문제 해결](/faq/troubleshooting#unable-to-r
 
 :::
 
+
+## 그룹에 따른 프로젝트 역할 <Enterprise /> {#project-roles-from-groups}
+
+:::info
+그룹 매핑은 **Semaphore Enterprise** 에디션에서 사용할 수 있습니다.
+:::
+
+그룹 매핑은 디렉터리의 그룹에 속한 모든 사용자에게 프로젝트 역할을 부여합니다. 예를 들어 그룹 매핑으로 `devops` 그룹 구성원에게 `Infrastructure` 프로젝트의 **Manager** 역할을 부여할 수 있습니다.
+
+### 디렉터리에서 그룹 읽기 {#read-groups-from-the-directory}
+
+`ldap_group_search_dn`에 그룹이 있는 위치를 설정합니다. `ldap_providers`에서는 `group_search_dn`을 사용합니다. 이 값을 설정하지 않으면 로그인은 그룹 매핑으로 받은 역할을 바꾸지 않습니다.
+
+Active Directory와 OpenLDAP에서는 이 한 줄이면 충분합니다:
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com"
+}
+```
+
+선택 사항인 옵션이 두 개 더 있습니다:
+
+- `ldap_group_search_filter`는 사용자의 그룹을 찾습니다. 기본값은 사용자를 `member`, `uniqueMember` 또는 `memberUid`로 포함하는 그룹을 찾습니다.
+- `ldap_group_name_attribute`는 그룹 이름이 담긴 속성입니다. 기본값은 `cn`입니다.
+
+필터에서 `{{ .dn }}`은 사용자의 DN이고 `{{ .username }}`은 사용자 로그인 이름, 즉 `uid` 매핑의 값입니다. Semaphore는 두 값을 모두 이스케이프합니다.
+
+이름 속성에 DN이 들어 있으면 그 첫 번째 부분이 그룹 이름이 됩니다. 예를 들어 `CN=DevOps,OU=Groups,DC=corp,DC=com`에서는 그룹 이름 `DevOps`를 얻습니다.
+
+#### Active Directory의 중첩 그룹 {#nested-groups-in-active-directory}
+
+다른 그룹을 포함하는 그룹까지 포함하려면 matching rule in chain을 사용합니다:
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com",
+  "ldap_group_search_filter": "(member:1.2.840.113556.1.4.1941:={{ .dn }})"
+}
+```
+
+#### 사용자 항목의 그룹 {#groups-from-the-user-entry}
+
+사용자 항목에 그룹이 나열되어 있으면(예: `memberOf`) 그룹 대신 사용자를 검색합니다. 이 예제는 Active Directory용입니다. `memberOf` 오버레이를 사용하는 OpenLDAP에서는 대신 `(uid={{ .username }})`을 필터로 사용합니다.
+
+```json
+{
+  "ldap_group_search_dn": "ou=people,dc=corp,dc=com",
+  "ldap_group_search_filter": "(sAMAccountName={{ .username }})",
+  "ldap_group_name_attribute": "memberOf"
+}
+```
+
+### 그룹 매핑 만들기 {#create-a-group-mapping}
+
+OpenID Connect와 같은 방법으로 매핑을 만드십시오. [단계](/admin-guide/authentication/openid#create-a-group-mapping)를 참고하십시오. LDAP 제공자를 선택하고 디렉터리가 반환하는 그대로 그룹 이름을 입력합니다.
+
+- Semaphore는 사용자가 제공자를 통해 로그인할 때마다 그룹 매핑으로 받은 역할을 업데이트합니다.
+- 각 로그인은 그 로그인에 사용한 제공자의 매핑을 적용하고 다른 제공자의 매핑으로 받은 역할을 제거합니다. 따라서 Okta로 로그인한 다음 LDAP로 로그인한 사용자에게는 LDAP용으로 매핑된 역할만 남습니다.
+- 어떤 그룹에서도 찾을 수 없는 사용자는 그룹 매핑으로 역할을 받지 않습니다.
+- `ldap_group_search_dn`이 없으면 로그인은 그룹 매핑으로 받은 역할을 바꾸지 않습니다.
+- 서버가 응답하지 않거나 필터에 구문 오류가 있는 등의 이유로 디렉터리가 그룹을 반환하지 못하면 로그인이 거부됩니다. 서버 로그에 그 이유가 남습니다.
+- ID가 같은 OpenID Connect 제공자와 LDAP 제공자는 그룹 매핑을 공유합니다.
 
 ## 예제: OpenLDAP 서버 사용 {#example-using-openldap-server}
 

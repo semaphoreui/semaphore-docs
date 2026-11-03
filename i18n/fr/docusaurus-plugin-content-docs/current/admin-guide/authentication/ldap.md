@@ -35,6 +35,9 @@ Toutes les options du fournisseur SSO :
 | `ldap_mappings.cn`    | `SEMAPHORE_LDAP_MAPPING_CN` | Expression de claim pour le nom de l'utilisateur[\*](#claim-expression). |
 | `ldap_enable`         | `SEMAPHORE_LDAP_ENABLE` | LDAP activé. |
 | `ldap_needtls`        | `SEMAPHORE_LDAP_NEEDTLS` | Connexion au serveur LDAP via SSL. |
+| `ldap_group_search_dn` | `SEMAPHORE_LDAP_GROUP_SEARCH_DN` | Périmètre dans lequel les groupes seront recherchés. Active les [mappages de groupe](#project-roles-from-groups). Dans `ldap_providers`, l'option s'appelle `group_search_dn`. |
+| `ldap_group_search_filter` | `SEMAPHORE_LDAP_GROUP_SEARCH_FILTER` | Expression de recherche des groupes. Par défaut : `(\|(member={{ .dn }})(uniqueMember={{ .dn }})(memberUid={{ .username }}))`. Dans `ldap_providers`, l'option s'appelle `group_search_filter`. |
+| `ldap_group_name_attribute` | `SEMAPHORE_LDAP_GROUP_NAME_ATTRIBUTE` | Attribut qui contient le nom du groupe. Par défaut : `cn`. Dans `ldap_providers`, l'option s'appelle `group_name_attribute`. |
 
 
 ### \*Expression de claim {#claim-expression}
@@ -74,6 +77,69 @@ Veuillez lire la section [Dépannage](/faq/troubleshooting#unable-to-read-ldap-r
 
 :::
 
+
+## Rôles de projet à partir des groupes <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Les mappages de groupe sont disponibles dans l'édition **Semaphore Enterprise**.
+:::
+
+Un mappage de groupe donne un rôle de projet à chaque utilisateur d'un groupe de l'annuaire. Par exemple, un mappage peut donner aux membres du groupe `devops` le rôle **Manager** dans le projet `Infrastructure`.
+
+### Lire les groupes depuis l'annuaire {#read-groups-from-the-directory}
+
+Donnez à `ldap_group_search_dn` l'emplacement de vos groupes. Dans `ldap_providers`, utilisez `group_search_dn`. Sans ce paramètre, les connexions ne modifient pas les rôles issus des mappages de groupe.
+
+Dans Active Directory et OpenLDAP, cette seule ligne suffit :
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com"
+}
+```
+
+Deux autres options sont facultatives :
+
+- `ldap_group_search_filter` trouve les groupes de l'utilisateur. Par défaut, il trouve les groupes qui indiquent l'utilisateur comme `member`, `uniqueMember` ou `memberUid`.
+- `ldap_group_name_attribute` est l'attribut qui contient le nom du groupe. Par défaut, c'est `cn`.
+
+Dans le filtre, `{{ .dn }}` est le DN de l'utilisateur et `{{ .username }}` est l'identifiant de connexion de l'utilisateur, c'est-à-dire la valeur du mappage `uid`. Semaphore échappe les deux valeurs.
+
+Si l'attribut de nom contient un DN, le nom du groupe est la première partie de ce DN. Par exemple, `CN=DevOps,OU=Groups,DC=corp,DC=com` donne le nom de groupe `DevOps`.
+
+#### Groupes imbriqués dans Active Directory {#nested-groups-in-active-directory}
+
+Pour inclure les groupes qui contiennent d'autres groupes, utilisez la règle « matching rule in chain » :
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com",
+  "ldap_group_search_filter": "(member:1.2.840.113556.1.4.1941:={{ .dn }})"
+}
+```
+
+#### Groupes depuis l'entrée de l'utilisateur {#groups-from-the-user-entry}
+
+Si l'entrée de l'utilisateur liste ses groupes, par exemple dans `memberOf`, recherchez l'utilisateur au lieu des groupes. Cet exemple concerne Active Directory. Avec l'overlay `memberOf`, OpenLDAP utilise plutôt le filtre `(uid={{ .username }})`.
+
+```json
+{
+  "ldap_group_search_dn": "ou=people,dc=corp,dc=com",
+  "ldap_group_search_filter": "(sAMAccountName={{ .username }})",
+  "ldap_group_name_attribute": "memberOf"
+}
+```
+
+### Créer un mappage de groupe {#create-a-group-mapping}
+
+Créez le mappage de la même façon que pour OpenID Connect. Voir les [étapes](/admin-guide/authentication/openid#create-a-group-mapping). Choisissez votre fournisseur LDAP et saisissez le nom du groupe tel que l'annuaire le renvoie.
+
+- Semaphore met à jour les rôles issus des mappages de groupe à chaque connexion de l'utilisateur via le fournisseur.
+- Chaque connexion applique les mappages du fournisseur utilisé pour cette connexion et retire les rôles issus des mappages des autres fournisseurs. Ainsi, un utilisateur qui se connecte via Okta puis via LDAP ne garde que les rôles mappés pour LDAP.
+- Un utilisateur qui n'est trouvé dans aucun groupe ne reçoit aucun rôle issu des mappages de groupe.
+- Sans `ldap_group_search_dn`, une connexion ne modifie pas les rôles issus des mappages de groupe.
+- Si l'annuaire ne peut pas renvoyer les groupes, par exemple parce que le serveur ne répond pas ou que le filtre contient une erreur de syntaxe, la connexion est refusée. Le journal du serveur en indique la raison.
+- Un fournisseur OpenID Connect et un fournisseur LDAP qui ont le même ID partagent leurs mappages de groupe.
 
 ## Exemple : utilisation d'un serveur OpenLDAP {#example-using-openldap-server}
 

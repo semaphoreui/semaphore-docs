@@ -208,7 +208,7 @@
 组映射在 **Semaphore Enterprise** 版中可用。
 :::
 
-管理员可以在 **Group mappings** 页面上，为身份提供方中某个组的所有成员授予项目角色。用户每次通过身份提供方登录时，Semaphore 都会更新这些角色。参见[根据组授予项目角色](/admin-guide/authentication/openid#project-roles-from-groups)。
+管理员可以在 **Group mappings** 页面上，为身份提供方或 LDAP 目录中某个组的所有成员授予项目角色。用户每次通过身份提供方或 LDAP 目录登录时，Semaphore 都会更新这些角色。参见 [OpenID Connect](/admin-guide/authentication/openid#project-roles-from-groups) 和 [LDAP](/admin-guide/authentication/ldap#project-roles-from-groups) 的“根据组授予项目角色”。
 
 在 **Team** 页面上，这类角色带有锁形图标。将鼠标悬停在角色上，可以看到提供方和组，例如 `keycloak: devops`。
 

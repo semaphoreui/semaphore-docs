@@ -11,7 +11,7 @@ Semaphore 支持安全的认证和灵活的授权机制：
 - **登录方式：**
   - **用户名/密码**<br />默认方式，使用存储在 Semaphore 数据库中的凭据。密码从不以明文存储；它们使用 Argon2id 进行哈希（参见[密码哈希](#password-hashing)）。
 
-  - **LDAP**<br />允许与企业目录服务集成。支持用户/组过滤以及通过 LDAPS 的安全连接。
+  - **LDAP**<br />允许与企业目录服务集成。支持用户/组过滤、组映射以及通过 LDAPS 的安全连接。
 
   - **OpenID Connect（OIDC）**<br />支持与 Google、Azure AD 或 Keycloak 等身份提供商的单点登录。支持自定义声明和组映射。
 

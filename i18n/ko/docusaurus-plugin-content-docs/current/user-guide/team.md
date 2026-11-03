@@ -208,7 +208,7 @@ Semaphore UI에서 모든 프로젝트는 **팀**과 연결됩니다. 팀 구성
 그룹 매핑은 **Semaphore Enterprise** 에디션에서 사용할 수 있습니다.
 :::
 
-관리자는 **Group mappings** 페이지에서 ID 제공자에 있는 그룹의 모든 구성원에게 프로젝트 역할을 부여할 수 있습니다. Semaphore는 사용자가 ID 제공자를 통해 로그인할 때마다 이 역할을 업데이트합니다. 자세한 내용은 [그룹에 따른 프로젝트 역할](/admin-guide/authentication/openid#project-roles-from-groups)을 참고하십시오.
+관리자는 **Group mappings** 페이지에서 ID 제공자 또는 LDAP 디렉터리에 있는 그룹의 모든 구성원에게 프로젝트 역할을 부여할 수 있습니다. Semaphore는 사용자가 ID 제공자 또는 LDAP 디렉터리를 통해 로그인할 때마다 이 역할을 업데이트합니다. 자세한 내용은 [OpenID Connect](/admin-guide/authentication/openid#project-roles-from-groups) 및 [LDAP](/admin-guide/authentication/ldap#project-roles-from-groups)의 그룹에 따른 프로젝트 역할을 참고하십시오.
 
 **Team** 페이지에서 이런 역할에는 자물쇠 아이콘이 표시됩니다. 역할 위에 마우스를 올리면 제공자와 그룹이 표시됩니다(예: `keycloak: devops`).
 

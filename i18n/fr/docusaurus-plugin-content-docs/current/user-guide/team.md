@@ -208,7 +208,7 @@ Si des [mappages de groupe](#roles-from-group-mappings) utilisent le rôle, la b
 Les mappages de groupe sont disponibles dans l'édition **Semaphore Enterprise**.
 :::
 
-Un administrateur peut donner un rôle de projet à tous les membres d'un groupe de votre fournisseur d'identité sur la page **Group mappings**. Semaphore met à jour ces rôles à chaque connexion de l'utilisateur via le fournisseur d'identité. Voir [Rôles de projet à partir des groupes](/admin-guide/authentication/openid#project-roles-from-groups).
+Un administrateur peut donner un rôle de projet à tous les membres d'un groupe de votre fournisseur d'identité ou de votre annuaire LDAP sur la page **Group mappings**. Semaphore met à jour ces rôles à chaque connexion de l'utilisateur via le fournisseur d'identité ou l'annuaire LDAP. Voir Rôles de projet à partir des groupes pour [OpenID Connect](/admin-guide/authentication/openid#project-roles-from-groups) et [LDAP](/admin-guide/authentication/ldap#project-roles-from-groups).
 
 Sur la page **Équipe**, un tel rôle porte une icône de cadenas. Survolez le rôle pour voir le fournisseur et le groupe, par exemple `keycloak: devops`.
 

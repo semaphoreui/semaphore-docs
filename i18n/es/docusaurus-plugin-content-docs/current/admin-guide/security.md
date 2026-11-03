@@ -11,7 +11,7 @@ Semaphore admite mecanismos de autenticación seguros y de autorización flexibl
 - **Métodos de inicio de sesión:**
   - **Usuario/contraseña**<br />Método predeterminado que usa credenciales almacenadas en la base de datos de Semaphore. Las contraseñas nunca se guardan en texto plano; se cifran con Argon2id (consulte [Cifrado de contraseñas](#password-hashing)).
 
-  - **LDAP**<br />Permite la integración con servicios de directorio corporativos. Admite el filtrado de usuarios y grupos, así como conexiones seguras mediante LDAPS.
+  - **LDAP**<br />Permite la integración con servicios de directorio corporativos. Admite el filtrado de usuarios y grupos y la asignación de grupos, así como conexiones seguras mediante LDAPS.
 
   - **OpenID Connect (OIDC)**<br />Habilita el inicio de sesión único con proveedores de identidad como Google, Azure AD o Keycloak. Admite reclamaciones personalizadas y asignación de grupos.
 
