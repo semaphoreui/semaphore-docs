@@ -103,7 +103,7 @@ Još dve opcije nisu obavezne:
 - `ldap_group_search_filter` pronalazi grupe korisnika. Podrazumevano pronalazi grupe koje navode korisnika kao `member`, `uniqueMember` ili `memberUid`.
 - `ldap_group_name_attribute` je atribut sa nazivom grupe. Podrazumevano je `cn`.
 
-U filteru je `{{ .dn }}` DN korisnika, a `{{ .username }}` login korisnika, odnosno vrednost mapiranja `uid`. Semaphore escape-uje obe vrednosti.
+U filteru je `{{ .dn }}` DN korisnika, a `{{ .username }}` atribut `uid` korisnika, odnosno login korisnika ako unos nema `uid`. Semaphore escape-uje obe vrednosti.
 
 Ako atribut sa nazivom sadrži DN, naziv grupe je prvi deo tog DN-a. Na primer, iz `CN=DevOps,OU=Groups,DC=corp,DC=com` dobija se naziv grupe `DevOps`.
 

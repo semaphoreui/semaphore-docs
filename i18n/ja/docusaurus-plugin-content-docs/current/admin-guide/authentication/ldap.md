@@ -103,7 +103,7 @@ Active Directory と OpenLDAP では、次の 1 行だけで十分です。
 - `ldap_group_search_filter` はユーザーのグループを検索します。デフォルトでは、ユーザーを `member`、`uniqueMember`、`memberUid` のいずれかとして含むグループを検索します。
 - `ldap_group_name_attribute` はグループ名を持つ属性です。デフォルトは `cn` です。
 
-フィルター内の `{{ .dn }}` はユーザーの DN、`{{ .username }}` はユーザーのログイン名(`uid` マッピングの値)です。Semaphore はどちらの値もエスケープします。
+フィルター内の `{{ .dn }}` はユーザーの DN、`{{ .username }}` はユーザーの `uid` 属性です。エントリに `uid` がない場合はユーザーのログイン名になります。Semaphore はどちらの値もエスケープします。
 
 名前の属性に DN が入っている場合、グループ名はその最初の部分になります。たとえば、`CN=DevOps,OU=Groups,DC=corp,DC=com` からはグループ名 `DevOps` が得られます。
 

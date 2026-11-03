@@ -103,7 +103,7 @@ Active Directory와 OpenLDAP에서는 이 한 줄이면 충분합니다:
 - `ldap_group_search_filter`는 사용자의 그룹을 찾습니다. 기본값은 사용자를 `member`, `uniqueMember` 또는 `memberUid`로 포함하는 그룹을 찾습니다.
 - `ldap_group_name_attribute`는 그룹 이름이 담긴 속성입니다. 기본값은 `cn`입니다.
 
-필터에서 `{{ .dn }}`은 사용자의 DN이고 `{{ .username }}`은 사용자 로그인 이름, 즉 `uid` 매핑의 값입니다. Semaphore는 두 값을 모두 이스케이프합니다.
+필터에서 `{{ .dn }}`은 사용자의 DN이고 `{{ .username }}`은 사용자의 `uid` 속성입니다. 항목에 `uid`가 없으면 사용자 로그인 이름이 사용됩니다. Semaphore는 두 값을 모두 이스케이프합니다.
 
 이름 속성에 DN이 들어 있으면 그 첫 번째 부분이 그룹 이름이 됩니다. 예를 들어 `CN=DevOps,OU=Groups,DC=corp,DC=com`에서는 그룹 이름 `DevOps`를 얻습니다.
 

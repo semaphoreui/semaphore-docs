@@ -103,7 +103,7 @@ ldapwhoami\
 - `ldap_group_search_filter` 用于查找用户所属的组。默认值会查找将该用户列为 `member`、`uniqueMember` 或 `memberUid` 的组。
 - `ldap_group_name_attribute` 是包含组名的属性。默认值为 `cn`。
 
-在过滤器中，`{{ .dn }}` 是用户的 DN，`{{ .username }}` 是用户的登录名，即 `uid` 映射的值。Semaphore 会对这两个值进行转义。
+在过滤器中，`{{ .dn }}` 是用户的 DN，`{{ .username }}` 是用户的 `uid` 属性，如果条目没有 `uid`，则是用户的登录名。Semaphore 会对这两个值进行转义。
 
 如果名称属性中是 DN，组名就是 DN 的第一部分。例如，`CN=DevOps,OU=Groups,DC=corp,DC=com` 得到的组名是 `DevOps`。
 

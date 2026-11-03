@@ -103,7 +103,7 @@ Altre due opzioni sono facoltative:
 - `ldap_group_search_filter` trova i gruppi dell'utente. Il valore predefinito trova i gruppi che elencano l'utente come `member`, `uniqueMember` o `memberUid`.
 - `ldap_group_name_attribute` è l'attributo con il nome del gruppo. Il valore predefinito è `cn`.
 
-Nel filtro, `{{ .dn }}` è il DN dell'utente e `{{ .username }}` è il login dell'utente, cioè il valore della mappatura `uid`. Semaphore applica l'escape a entrambi i valori.
+Nel filtro, `{{ .dn }}` è il DN dell'utente e `{{ .username }}` è l'attributo `uid` dell'utente, oppure il login dell'utente se la voce non ha `uid`. Semaphore applica l'escape a entrambi i valori.
 
 Se l'attributo del nome contiene un DN, il nome del gruppo è la prima parte del DN. Ad esempio, `CN=DevOps,OU=Groups,DC=corp,DC=com` dà il nome di gruppo `DevOps`.
 
