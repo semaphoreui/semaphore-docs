@@ -125,7 +125,7 @@ To include groups that contain other groups, use the matching rule in chain:
 
 #### Groups from the user entry {#groups-from-the-user-entry}
 
-If the user entry lists its groups, for example in `memberOf`, search for the user instead of the groups. This example is for Active Directory. OpenLDAP with the `memberOf` overlay uses `(uid={{ .username }})` as the filter instead.
+If the user entry lists its groups, for example in `memberOf`, search for the user instead of the groups. Use the base of `ldap_searchdn` so that the search finds only the signed-in user. This example is for Active Directory. OpenLDAP with the `memberOf` overlay uses `(uid={{ .username }})` as the filter instead.
 
 ```json
 {

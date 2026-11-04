@@ -120,7 +120,7 @@ Para incluir los grupos que contienen otros grupos, use la regla «matching rule
 
 #### Grupos desde la entrada del usuario {#groups-from-the-user-entry}
 
-Si la entrada del usuario enumera sus grupos, por ejemplo en `memberOf`, busque el usuario en lugar de los grupos. Este ejemplo es para Active Directory. OpenLDAP con el overlay `memberOf` usa en su lugar el filtro `(uid={{ .username }})`.
+Si la entrada del usuario enumera sus grupos, por ejemplo en `memberOf`, busque el usuario en lugar de los grupos. Use la base de `ldap_searchdn` para que la búsqueda encuentre solo al usuario que inicia sesión. Este ejemplo es para Active Directory. OpenLDAP con el overlay `memberOf` usa en su lugar el filtro `(uid={{ .username }})`.
 
 ```json
 {

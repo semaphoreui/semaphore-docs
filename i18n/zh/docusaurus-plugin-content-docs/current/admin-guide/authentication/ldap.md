@@ -120,7 +120,7 @@ ldapwhoami\
 
 #### 从用户条目获取组 {#groups-from-the-user-entry}
 
-如果用户条目列出了其所属的组（例如在 `memberOf` 中），请搜索用户而不是组。此示例适用于 Active Directory。启用 `memberOf` overlay 的 OpenLDAP 则改用 `(uid={{ .username }})` 作为过滤器。
+如果用户条目列出了其所属的组（例如在 `memberOf` 中），请搜索用户而不是组。请使用 `ldap_searchdn` 的基础 DN，使搜索只找到已登录的用户。此示例适用于 Active Directory。启用 `memberOf` overlay 的 OpenLDAP 则改用 `(uid={{ .username }})` 作为过滤器。
 
 ```json
 {
