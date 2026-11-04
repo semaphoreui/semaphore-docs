@@ -120,7 +120,7 @@ Da biste uključili grupe koje sadrže druge grupe, koristite pravilo „matchin
 
 #### Grupe iz zapisa korisnika {#groups-from-the-user-entry}
 
-Ako zapis korisnika navodi svoje grupe, na primer u `memberOf`, pretražujte korisnika umesto grupa. Koristite bazu iz `ldap_searchdn` da bi pretraga našla samo prijavljenog korisnika. Ovaj primer je za Active Directory. OpenLDAP sa overlay-em `memberOf` umesto toga koristi filter `(uid={{ .username }})`.
+Ako zapis korisnika navodi svoje grupe, na primer u `memberOf`, pretražujte korisnika umesto grupa. Koristite bazu pretrage korisnika da bi pretraga našla samo prijavljenog korisnika. Ovaj primer je za Active Directory. OpenLDAP sa overlay-em `memberOf` umesto toga koristi filter `(uid={{ .username }})`.
 
 ```json
 {

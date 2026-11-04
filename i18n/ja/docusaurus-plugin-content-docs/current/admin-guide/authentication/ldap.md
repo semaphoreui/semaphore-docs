@@ -120,7 +120,7 @@ Active Directory と OpenLDAP では、次の 1 行だけで十分です。
 
 #### ユーザーエントリーのグループ {#groups-from-the-user-entry}
 
-ユーザーエントリーにグループが列挙されている場合(たとえば `memberOf`)、グループではなくユーザーを検索します。検索がサインインしたユーザーだけを見つけるように、`ldap_searchdn` のベースを使います。この例は Active Directory 用です。`memberOf` オーバーレイを使う OpenLDAP では、代わりに `(uid={{ .username }})` をフィルターにします。
+ユーザーエントリーにグループが列挙されている場合(たとえば `memberOf`)、グループではなくユーザーを検索します。検索がサインインしたユーザーだけを見つけるように、ユーザー検索のベースを使います。この例は Active Directory 用です。`memberOf` オーバーレイを使う OpenLDAP では、代わりに `(uid={{ .username }})` をフィルターにします。
 
 ```json
 {

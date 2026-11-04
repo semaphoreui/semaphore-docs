@@ -120,7 +120,7 @@ Per includere i gruppi che contengono altri gruppi, usare la regola «matching r
 
 #### Gruppi dalla voce dell'utente {#groups-from-the-user-entry}
 
-Se la voce dell'utente elenca i suoi gruppi, ad esempio in `memberOf`, cercare l'utente invece dei gruppi. Usare la base di `ldap_searchdn` in modo che la ricerca trovi solo l'utente che accede. Questo esempio è per Active Directory. OpenLDAP con l'overlay `memberOf` usa invece il filtro `(uid={{ .username }})`.
+Se la voce dell'utente elenca i suoi gruppi, ad esempio in `memberOf`, cercare l'utente invece dei gruppi. Usare la base della ricerca utenti in modo che la ricerca trovi solo l'utente che accede. Questo esempio è per Active Directory. OpenLDAP con l'overlay `memberOf` usa invece il filtro `(uid={{ .username }})`.
 
 ```json
 {

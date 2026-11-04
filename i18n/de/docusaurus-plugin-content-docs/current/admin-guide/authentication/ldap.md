@@ -120,7 +120,7 @@ Um auch Gruppen einzubeziehen, die andere Gruppen enthalten, verwenden Sie die R
 
 #### Gruppen aus dem Benutzereintrag {#groups-from-the-user-entry}
 
-Wenn der Benutzereintrag seine Gruppen auflistet, zum Beispiel in `memberOf`, suchen Sie nach dem Benutzer statt nach den Gruppen. Verwenden Sie die Basis aus `ldap_searchdn`, damit die Suche nur den angemeldeten Benutzer findet. Dieses Beispiel gilt für Active Directory. OpenLDAP mit dem Overlay `memberOf` verwendet stattdessen `(uid={{ .username }})` als Filter.
+Wenn der Benutzereintrag seine Gruppen auflistet, zum Beispiel in `memberOf`, suchen Sie nach dem Benutzer statt nach den Gruppen. Verwenden Sie die Basis der Benutzersuche, damit die Suche nur den angemeldeten Benutzer findet. Dieses Beispiel gilt für Active Directory. OpenLDAP mit dem Overlay `memberOf` verwendet stattdessen `(uid={{ .username }})` als Filter.
 
 ```json
 {

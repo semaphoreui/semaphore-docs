@@ -120,7 +120,7 @@ Active Directory와 OpenLDAP에서는 이 한 줄이면 충분합니다:
 
 #### 사용자 항목의 그룹 {#groups-from-the-user-entry}
 
-사용자 항목에 그룹이 나열되어 있으면(예: `memberOf`) 그룹 대신 사용자를 검색합니다. 검색이 로그인한 사용자만 찾도록 `ldap_searchdn`의 베이스를 사용합니다. 이 예제는 Active Directory용입니다. `memberOf` 오버레이를 사용하는 OpenLDAP에서는 대신 `(uid={{ .username }})`을 필터로 사용합니다.
+사용자 항목에 그룹이 나열되어 있으면(예: `memberOf`) 그룹 대신 사용자를 검색합니다. 검색이 로그인한 사용자만 찾도록 사용자 검색의 베이스를 사용합니다. 이 예제는 Active Directory용입니다. `memberOf` 오버레이를 사용하는 OpenLDAP에서는 대신 `(uid={{ .username }})`을 필터로 사용합니다.
 
 ```json
 {
