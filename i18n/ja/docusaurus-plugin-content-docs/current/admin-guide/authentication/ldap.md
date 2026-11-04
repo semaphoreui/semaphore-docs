@@ -105,7 +105,7 @@ Active Directory と OpenLDAP では、次の 1 行だけで十分です。
 
 フィルター内の `{{ .dn }}` はユーザーの DN、`{{ .username }}` はユーザーの `uid` 属性です。エントリに `uid` がない場合はユーザーのログイン名になります。Semaphore はどちらの値もエスケープします。
 
-名前の属性に DN が入っている場合、グループ名はその最初の部分になります。たとえば、`CN=DevOps,OU=Groups,DC=corp,DC=com` からはグループ名 `DevOps` が得られます。
+名前の属性に DN が入っている場合、グループ名はその `cn` の部分になります。たとえば、`CN=DevOps,OU=Groups,DC=corp,DC=com` からはグループ名 `DevOps` が得られます。
 
 #### Active Directory のネストされたグループ {#nested-groups-in-active-directory}
 

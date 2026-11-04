@@ -110,7 +110,7 @@ Two more options are optional:
 
 In the filter, `{{ .dn }}` is the DN of the user and `{{ .username }}` is the `uid` attribute of the user, or the user login when the entry has no `uid`. Semaphore escapes both values.
 
-If the name attribute holds a DN, the group name is the first part of it. For example, `CN=DevOps,OU=Groups,DC=corp,DC=com` gives the group name `DevOps`.
+If the name attribute holds a DN, the group name is the `cn` part of it. For example, `CN=DevOps,OU=Groups,DC=corp,DC=com` gives the group name `DevOps`.
 
 #### Nested groups in Active Directory {#nested-groups-in-active-directory}
 

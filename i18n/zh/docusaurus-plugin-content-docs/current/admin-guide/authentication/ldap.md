@@ -105,7 +105,7 @@ ldapwhoami\
 
 在过滤器中，`{{ .dn }}` 是用户的 DN，`{{ .username }}` 是用户的 `uid` 属性，如果条目没有 `uid`，则是用户的登录名。Semaphore 会对这两个值进行转义。
 
-如果名称属性中是 DN，组名就是 DN 的第一部分。例如，`CN=DevOps,OU=Groups,DC=corp,DC=com` 得到的组名是 `DevOps`。
+如果名称属性中是 DN，组名就是 DN 中的 `cn` 部分。例如，`CN=DevOps,OU=Groups,DC=corp,DC=com` 得到的组名是 `DevOps`。
 
 #### Active Directory 中的嵌套组 {#nested-groups-in-active-directory}
 

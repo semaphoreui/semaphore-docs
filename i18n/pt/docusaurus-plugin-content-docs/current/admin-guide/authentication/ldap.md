@@ -105,7 +105,7 @@ Outras duas opções são opcionais:
 
 No filtro, `{{ .dn }}` é o DN do usuário e `{{ .username }}` é o atributo `uid` do usuário, ou o login do usuário quando a entrada não tem `uid`. O Semaphore faz o escape dos dois valores.
 
-Se o atributo de nome contém um DN, o nome do grupo é a primeira parte desse DN. Por exemplo, `CN=DevOps,OU=Groups,DC=corp,DC=com` dá o nome de grupo `DevOps`.
+Se o atributo de nome contém um DN, o nome do grupo é a parte `cn` desse DN. Por exemplo, `CN=DevOps,OU=Groups,DC=corp,DC=com` dá o nome de grupo `DevOps`.
 
 #### Grupos aninhados no Active Directory {#nested-groups-in-active-directory}
 

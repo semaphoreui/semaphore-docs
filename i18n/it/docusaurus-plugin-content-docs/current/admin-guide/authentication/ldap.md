@@ -105,7 +105,7 @@ Altre due opzioni sono facoltative:
 
 Nel filtro, `{{ .dn }}` è il DN dell'utente e `{{ .username }}` è l'attributo `uid` dell'utente, oppure il login dell'utente se la voce non ha `uid`. Semaphore applica l'escape a entrambi i valori.
 
-Se l'attributo del nome contiene un DN, il nome del gruppo è la prima parte del DN. Ad esempio, `CN=DevOps,OU=Groups,DC=corp,DC=com` dà il nome di gruppo `DevOps`.
+Se l'attributo del nome contiene un DN, il nome del gruppo è la parte `cn` del DN. Ad esempio, `CN=DevOps,OU=Groups,DC=corp,DC=com` dà il nome di gruppo `DevOps`.
 
 #### Gruppi annidati in Active Directory {#nested-groups-in-active-directory}
 

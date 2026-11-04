@@ -105,7 +105,7 @@ Još dve opcije nisu obavezne:
 
 U filteru je `{{ .dn }}` DN korisnika, a `{{ .username }}` atribut `uid` korisnika, odnosno login korisnika ako unos nema `uid`. Semaphore escape-uje obe vrednosti.
 
-Ako atribut sa nazivom sadrži DN, naziv grupe je prvi deo tog DN-a. Na primer, iz `CN=DevOps,OU=Groups,DC=corp,DC=com` dobija se naziv grupe `DevOps`.
+Ako atribut sa nazivom sadrži DN, naziv grupe je deo `cn` tog DN-a. Na primer, iz `CN=DevOps,OU=Groups,DC=corp,DC=com` dobija se naziv grupe `DevOps`.
 
 #### Ugnežđene grupe u Active Directory-ju {#nested-groups-in-active-directory}
 

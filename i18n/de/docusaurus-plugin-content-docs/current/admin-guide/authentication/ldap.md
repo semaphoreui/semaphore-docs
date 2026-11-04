@@ -105,7 +105,7 @@ Zwei weitere Optionen sind optional:
 
 Im Filter ist `{{ .dn }}` der DN des Benutzers und `{{ .username }}` das Attribut `uid` des Benutzers oder, wenn der Eintrag kein `uid` hat, der Login des Benutzers. Semaphore maskiert beide Werte.
 
-Wenn das Namensattribut einen DN enthält, ist der Gruppenname dessen erster Teil. Zum Beispiel ergibt `CN=DevOps,OU=Groups,DC=corp,DC=com` den Gruppennamen `DevOps`.
+Wenn das Namensattribut einen DN enthält, ist der Gruppenname dessen Teil `cn`. Zum Beispiel ergibt `CN=DevOps,OU=Groups,DC=corp,DC=com` den Gruppennamen `DevOps`.
 
 #### Verschachtelte Gruppen in Active Directory {#nested-groups-in-active-directory}
 

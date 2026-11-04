@@ -105,7 +105,7 @@ Active Directory와 OpenLDAP에서는 이 한 줄이면 충분합니다:
 
 필터에서 `{{ .dn }}`은 사용자의 DN이고 `{{ .username }}`은 사용자의 `uid` 속성입니다. 항목에 `uid`가 없으면 사용자 로그인 이름이 사용됩니다. Semaphore는 두 값을 모두 이스케이프합니다.
 
-이름 속성에 DN이 들어 있으면 그 첫 번째 부분이 그룹 이름이 됩니다. 예를 들어 `CN=DevOps,OU=Groups,DC=corp,DC=com`에서는 그룹 이름 `DevOps`를 얻습니다.
+이름 속성에 DN이 들어 있으면 그 `cn` 부분이 그룹 이름이 됩니다. 예를 들어 `CN=DevOps,OU=Groups,DC=corp,DC=com`에서는 그룹 이름 `DevOps`를 얻습니다.
 
 #### Active Directory의 중첩 그룹 {#nested-groups-in-active-directory}
 

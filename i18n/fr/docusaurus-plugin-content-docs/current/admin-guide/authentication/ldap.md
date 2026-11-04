@@ -105,7 +105,7 @@ Deux autres options sont facultatives :
 
 Dans le filtre, `{{ .dn }}` est le DN de l'utilisateur et `{{ .username }}` est l'attribut `uid` de l'utilisateur, ou son identifiant de connexion si l'entrée n'a pas de `uid`. Semaphore échappe les deux valeurs.
 
-Si l'attribut de nom contient un DN, le nom du groupe est la première partie de ce DN. Par exemple, `CN=DevOps,OU=Groups,DC=corp,DC=com` donne le nom de groupe `DevOps`.
+Si l'attribut de nom contient un DN, le nom du groupe est la partie `cn` de ce DN. Par exemple, `CN=DevOps,OU=Groups,DC=corp,DC=com` donne le nom de groupe `DevOps`.
 
 #### Groupes imbriqués dans Active Directory {#nested-groups-in-active-directory}
 
