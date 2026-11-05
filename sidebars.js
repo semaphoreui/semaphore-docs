@@ -130,6 +130,15 @@ const sidebars = {
         },
         'admin-guide/cicd',
         'admin-guide/runners',
+        {
+          type: 'category',
+          label: 'Executors',
+          link: { type: 'doc', id: 'admin-guide/executors/README' },
+          items: [
+            { type: 'doc', id: 'admin-guide/executors/docker', customProps: { edition: 'pro' } },
+            { type: 'doc', id: 'admin-guide/executors/kubernetes', customProps: { edition: 'enterprise' } },
+          ],
+        },
         'admin-guide/logs',
         {
           type: 'category',

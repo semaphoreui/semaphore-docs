@@ -44,13 +44,13 @@ const features = [
     key: 'docker-executor',
     name: 'Docker executor',
     edition: 'pro',
-    doc: '/user-guide/task-templates#executor-image-docker-and-kubernetes-runners',
+    doc: '/admin-guide/executors/docker',
   },
   {
     key: 'k8s-executor',
     name: 'Kubernetes executor',
     edition: 'enterprise',
-    doc: '/user-guide/task-templates#executor-image-docker-and-kubernetes-runners',
+    doc: '/admin-guide/executors/kubernetes',
   },
   {
     key: 'task-summary',

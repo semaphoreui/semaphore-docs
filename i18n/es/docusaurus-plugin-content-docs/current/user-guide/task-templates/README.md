@@ -130,4 +130,4 @@ Cuando un runner del proyecto usa el ejecutor **Docker** (Pro) o **Kubernetes** 
 - Plantillas que necesitan un conjunto de herramientas diferente (una versión antigua de Ansible, una versión concreta de Terraform, paquetes del sistema adicionales incluidos en una imagen personalizada)
 - Imágenes aisladas para plantillas sensibles desde el punto de vista de la seguridad, sin cambiar el valor predeterminado de todo el runner
 
-Consulte [Configuración del runner](/admin-guide/configuration) para los ajustes de la imagen predeterminada y [Runners del proyecto](/user-guide/projects/runners) para la configuración del ejecutor.
+Consulte [Configuración del runner](/admin-guide/executors) para los ajustes de la imagen predeterminada y [Runners del proyecto](/user-guide/projects/runners) para la configuración del ejecutor.

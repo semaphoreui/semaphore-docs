@@ -208,6 +208,12 @@ grande de logs de tarefas nunca é cortado no meio da transferência.
 
 Você pode atribuir uma ou mais tags a um runner de projeto. Os modelos de tarefa podem então exigir uma tag para que as tarefas sejam executadas apenas nos runners correspondentes. Configure as tags ao adicionar um runner na interface do projeto e defina a tag exigida nas configurações do modelo.
 
+## Executores {#executors}
+
+Por padrão, um runner inicia cada tarefa como um processo no próprio host. Para executar
+cada tarefa em um novo contêiner Docker ou Pod do Kubernetes, defina
+`runner.executor.type`, consulte [Executores](/admin-guide/executors).
+
 ## Cancelamento do registro do runner {#runner-deregistration}
 
 Você pode remover um runner pela interface web.

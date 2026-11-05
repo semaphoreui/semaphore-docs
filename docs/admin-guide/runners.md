@@ -212,6 +212,12 @@ logs is never cut off mid-transfer.
 
 You can assign one or more tags to a project runner. Templates can then require a tag so tasks run only on matching runners. Configure tags when adding a runner in the project UI, and set the required tag in the template settings.
 
+## Executors {#executors}
+
+By default a runner starts each task as a process on its own host. To run every task
+in a fresh Docker container or Kubernetes Pod instead, set `runner.executor.type`, see
+[Executors](/admin-guide/executors).
+
 ## Runner deregistration {#runner-deregistration}
 
 You can remove a runner using the web interface.

@@ -202,6 +202,12 @@ SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS=3
 
 你可以为项目（Project）运行器分配一个或多个标签。任务模板（Task Templates）随后可以要求特定标签，使任务仅在匹配的运行器上运行。在项目 UI 中添加运行器时配置标签，并在模板设置中设置所需的标签。
 
+## 执行器 {#executors}
+
+默认情况下，运行器在自己的主机上以进程方式启动每个任务。若要让每个任务改为在全新的
+Docker 容器或 Kubernetes Pod 中运行，请设置 `runner.executor.type`，参见
+[执行器](/admin-guide/executors)。
+
 ## 注销运行器 {#runner-deregistration}
 
 你可以通过 Web 界面移除运行器。

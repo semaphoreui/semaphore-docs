@@ -208,6 +208,12 @@ zadataka nikada ne bude presečena tokom prenosa.
 
 Runneru projekta (Project) možete dodeliti jednu ili više oznaka. Šabloni zadataka (Task Template) zatim mogu zahtevati oznaku, tako da se zadaci izvršavaju samo na runnerima koji joj odgovaraju. Oznake podešavate prilikom dodavanja runnera u korisničkom interfejsu projekta, a zahtevanu oznaku postavljate u podešavanjima šablona.
 
+## Executori {#executors}
+
+Podrazumevano runner pokreće svaki zadatak kao proces na sopstvenom hostu. Da biste umesto toga
+izvršavali svaki zadatak u novom Docker kontejneru ili Kubernetes Podu, podesite `runner.executor.type`, pogledajte
+[Executori](/admin-guide/executors).
+
 ## Uklanjanje registracije runnera {#runner-deregistration}
 
 Runner možete ukloniti preko veb interfejsa.

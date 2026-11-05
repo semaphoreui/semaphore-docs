@@ -211,6 +211,12 @@ trasferimento.
 
 È possibile assegnare uno o più tag a un runner di progetto. I template possono quindi richiedere un tag, in modo che le attività vengano eseguite solo sui runner corrispondenti. Configurare i tag durante l'aggiunta di un runner nell'interfaccia del progetto e impostare il tag richiesto nelle impostazioni del template.
 
+## Executor {#executors}
+
+Per impostazione predefinita un runner avvia ogni attività come processo sul proprio host.
+Per eseguire invece ogni attività in un nuovo container Docker o Pod Kubernetes, impostare
+`runner.executor.type`, vedere [Executor](/admin-guide/executors).
+
 ## Rimozione della registrazione del runner {#runner-deregistration}
 
 È possibile rimuovere un runner tramite l'interfaccia web.

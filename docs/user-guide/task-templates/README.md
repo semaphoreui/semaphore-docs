@@ -136,4 +136,4 @@ When a project runner uses the **Docker** (Pro) or **Kubernetes** (Enterprise) e
 - Templates that need a different toolchain (older Ansible, a specific Terraform version, extra OS packages baked into a custom image)
 - Isolated images for security-sensitive templates without changing the runner-wide default
 
-See [Runner configuration](/admin-guide/configuration) for default image settings and [Project runners](/user-guide/projects/runners) for executor setup.
+See [Executors](/admin-guide/executors) for default image settings and [Project runners](/user-guide/projects/runners) for executor setup.

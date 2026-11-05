@@ -210,6 +210,12 @@ lote grande de logs de tareas nunca se corta a mitad de la transferencia.
 
 Puede asignar una o varias etiquetas a un runner de proyecto. Las plantillas pueden entonces exigir una etiqueta, de modo que las tareas se ejecuten solo en los runners que coincidan. Configure las etiquetas al añadir un runner en la interfaz del proyecto y establezca la etiqueta requerida en los ajustes de la plantilla.
 
+## Ejecutores {#executors}
+
+De forma predeterminada, un runner inicia cada tarea como un proceso en su propio host.
+Para ejecutar cada tarea en un contenedor Docker o un Pod de Kubernetes nuevos, defina
+`runner.executor.type`; consulte [Ejecutores](/admin-guide/executors).
+
 ## Dar de baja un runner {#runner-deregistration}
 
 Puede eliminar un runner mediante la interfaz web.

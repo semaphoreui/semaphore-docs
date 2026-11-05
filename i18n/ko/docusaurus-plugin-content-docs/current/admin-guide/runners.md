@@ -203,6 +203,12 @@ SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS=3
 
 프로젝트 runner에 하나 이상의 태그를 지정할 수 있습니다. 템플릿에서 태그를 요구하면 작업이 해당 태그와 일치하는 runner에서만 실행됩니다. 프로젝트 UI에서 runner를 추가할 때 태그를 설정하고, 템플릿 설정에서 필요한 태그를 지정합니다.
 
+## 익스큐터 {#executors}
+
+기본적으로 runner는 각 작업을 자신의 호스트에서 프로세스로 시작합니다. 대신 모든 작업을
+새 Docker 컨테이너나 Kubernetes Pod에서 실행하려면 `runner.executor.type`을 설정하십시오.
+[익스큐터](/admin-guide/executors)를 참조하십시오.
+
 ## Runner 등록 해제 {#runner-deregistration}
 
 웹 인터페이스를 사용하여 runner를 제거할 수 있습니다.

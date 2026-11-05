@@ -130,4 +130,4 @@ Wenn ein Projekt-Runner den **Docker**- (Pro) oder **Kubernetes**-Executor (Ente
 - Task Templates, die eine andere Toolchain benötigen (älteres Ansible, eine bestimmte Terraform-Version, zusätzliche OS-Pakete in einem eigenen Image)
 - Isolierte Images für sicherheitskritische Task Templates, ohne den Runner-weiten Standard zu ändern
 
-Siehe [Runner-Konfiguration](/admin-guide/configuration) für die Standard-Image-Einstellungen und [Projekt-Runner](/user-guide/projects/runners) für die Einrichtung des Executors.
+Siehe [Runner-Konfiguration](/admin-guide/executors) für die Standard-Image-Einstellungen und [Projekt-Runner](/user-guide/projects/runners) für die Einrichtung des Executors.

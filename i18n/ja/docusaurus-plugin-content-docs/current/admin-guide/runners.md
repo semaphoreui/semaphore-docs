@@ -204,6 +204,12 @@ SEMAPHORE_RUNNER_CONNECTION_TIMEOUT_SECONDS=3
 
 プロジェクトのランナーに 1 つ以上のタグを割り当てられます。テンプレートでタグを必須にすると、タスクは一致するランナーでのみ実行されます。タグはプロジェクトの UI でランナーを追加する際に設定し、必須タグはテンプレートの設定で指定します。
 
+## エグゼキューター {#executors}
+
+既定では、ランナーは各タスクを自身のホスト上のプロセスとして起動します。代わりにすべてのタスクを
+新しい Docker コンテナーまたは Kubernetes Pod で実行するには、`runner.executor.type` を設定します。
+[エグゼキューター](/admin-guide/executors)を参照してください。
+
 ## ランナーの登録解除 {#runner-deregistration}
 
 Web インターフェースからランナーを削除できます。

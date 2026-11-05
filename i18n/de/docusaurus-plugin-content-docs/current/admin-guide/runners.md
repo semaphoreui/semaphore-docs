@@ -210,6 +210,12 @@ Stapel von Task-Logs nie mitten in der Übertragung abgeschnitten wird.
 
 Sie können einem Projekt-Runner ein oder mehrere Tags zuweisen. Vorlagen können dann ein Tag verlangen, sodass Tasks nur auf passenden Runnern ausgeführt werden. Konfigurieren Sie Tags beim Hinzufügen eines Runners in der Projektoberfläche und legen Sie das erforderliche Tag in den Vorlageneinstellungen fest.
 
+## Executoren {#executors}
+
+Standardmäßig startet ein Runner jeden Task als Prozess auf seinem eigenen Host. Um
+stattdessen jeden Task in einem frischen Docker-Container oder Kubernetes-Pod auszuführen,
+setzen Sie `runner.executor.type`, siehe [Executoren](/admin-guide/executors).
+
 ## Runner abmelden {#runner-deregistration}
 
 Sie können einen Runner über die Weboberfläche entfernen.

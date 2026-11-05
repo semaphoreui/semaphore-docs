@@ -209,6 +209,12 @@ de journaux de tâches ne soit jamais coupé en cours de transfert.
 
 Vous pouvez attribuer un ou plusieurs tags à un runner de projet. Les modèles peuvent ensuite exiger un tag afin que les tâches ne s'exécutent que sur les runners correspondants. Configurez les tags lors de l'ajout d'un runner dans l'interface du projet, et définissez le tag requis dans les paramètres du modèle.
 
+## Exécuteurs {#executors}
+
+Par défaut, un runner démarre chaque tâche comme un processus sur son propre hôte. Pour
+exécuter plutôt chaque tâche dans un nouveau conteneur Docker ou un Pod Kubernetes, définissez
+`runner.executor.type`, voir [Exécuteurs](/admin-guide/executors).
+
 ## Désenregistrement du runner {#runner-deregistration}
 
 Vous pouvez supprimer un runner via l'interface web.

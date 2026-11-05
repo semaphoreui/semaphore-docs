@@ -130,4 +130,4 @@ Quando un Runner di Project utilizza l'executor **Docker** (Pro) o **Kubernetes*
 - Task Template che necessitano di una toolchain differente (una versione più vecchia di Ansible, una versione specifica di Terraform, pacchetti di sistema aggiuntivi inclusi in un'immagine personalizzata)
 - Immagini isolate per Task Template sensibili dal punto di vista della sicurezza, senza modificare il valore predefinito per l'intero Runner
 
-Vedere [Configurazione del Runner](/admin-guide/configuration) per le impostazioni delle immagini predefinite e [Runner del Project](/user-guide/projects/runners) per la configurazione degli executor.
+Vedere [Configurazione del Runner](/admin-guide/executors) per le impostazioni delle immagini predefinite e [Runner del Project](/user-guide/projects/runners) per la configurazione degli executor.

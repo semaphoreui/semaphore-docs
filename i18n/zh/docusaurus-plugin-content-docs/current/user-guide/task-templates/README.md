@@ -130,4 +130,4 @@
 - 需要不同工具链的模板（旧版本 Ansible、特定版本的 Terraform、内置于自定义镜像中的额外操作系统软件包）
 - 为安全敏感的模板使用隔离镜像，而无需更改运行器范围的默认值
 
-默认镜像设置参见[运行器配置](/admin-guide/configuration)，执行器设置参见[项目运行器](/user-guide/projects/runners)。
+默认镜像设置参见[运行器配置](/admin-guide/executors)，执行器设置参见[项目运行器](/user-guide/projects/runners)。

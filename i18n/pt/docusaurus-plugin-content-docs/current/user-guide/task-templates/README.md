@@ -130,4 +130,4 @@ Quando um runner de projeto usa o executor **Docker** (Pro) ou **Kubernetes** (E
 - Modelos que precisam de um conjunto de ferramentas diferente (Ansible mais antigo, uma versão específica do Terraform, pacotes extras do SO incluídos em uma imagem personalizada)
 - Imagens isoladas para modelos sensíveis à segurança sem alterar o padrão global do runner
 
-Consulte [Configuração do runner](/admin-guide/configuration) para as configurações de imagem padrão e [Runners do projeto](/user-guide/projects/runners) para a configuração do executor.
+Consulte [Configuração do runner](/admin-guide/executors) para as configurações de imagem padrão e [Runners do projeto](/user-guide/projects/runners) para a configuração do executor.

@@ -130,4 +130,4 @@ Kada runner projekta koristi **Docker** (Pro) ili **Kubernetes** (Enterprise) ex
 - Šabloni kojima je potreban drugačiji skup alata (stariji Ansible, određena verzija Terraform-a, dodatni OS paketi ugrađeni u prilagođeni image)
 - Izolovani image-i za bezbednosno osetljive šablone bez promene podrazumevane vrednosti za ceo runner
 
-Pogledajte [Podešavanje runner-a](/admin-guide/configuration) za podešavanja podrazumevanog image-a i [Runner-i projekta](/user-guide/projects/runners) za podešavanje executor-a.
+Pogledajte [Podešavanje runner-a](/admin-guide/executors) za podešavanja podrazumevanog image-a i [Runner-i projekta](/user-guide/projects/runners) za podešavanje executor-a.

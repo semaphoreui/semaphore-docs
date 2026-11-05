@@ -130,4 +130,4 @@
 - 다른 툴체인이 필요한 템플릿(구버전 Ansible, 특정 Terraform 버전, 사용자 지정 이미지에 포함된 추가 OS 패키지)
 - 러너 전체의 기본값을 변경하지 않고 보안이 중요한 템플릿을 위한 격리된 이미지
 
-기본 이미지 설정은 [러너 설정](/admin-guide/configuration)을, 익스큐터 구성은 [프로젝트 러너](/user-guide/projects/runners)를 참조하십시오.
+기본 이미지 설정은 [러너 설정](/admin-guide/executors)을, 익스큐터 구성은 [프로젝트 러너](/user-guide/projects/runners)를 참조하십시오.
