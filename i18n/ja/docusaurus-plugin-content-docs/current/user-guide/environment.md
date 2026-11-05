@@ -26,6 +26,11 @@ Ansible は、グループの変数を一時ファイルから追加変数とし
 2. 変数グループの横にあるゴミ箱アイコンをクリックします。
 3. 本当に変数グループを削除してよければ「はい」をクリックします。
 
+## シークレット {#secrets}
+**Secrets** タブには、暗号化して保存され、保存後は API から返されない値を格納します。**Extra variables** のシークレットは Ansible には追加変数として、Terraform/OpenTofu には `-var` として渡されます。**Environment variables** のシークレットはタスクプロセスの環境に設定されます。
+
+[Key Store](/user-guide/key-store) のキーはこの方法ではタスクに渡されません。プレイブックの例は[プレイブックでのシークレット](/user-guide/key-store#secrets-in-playbooks)を参照してください。
+
 ## 変数グループの使用 - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
 保存した変数グループの変数やシークレットを terraform テンプレートで利用したい場合は、terraform スクリプトがそれを使用できるように、名前の先頭に `TF_VAR_` を付ける必要があります。 
 
