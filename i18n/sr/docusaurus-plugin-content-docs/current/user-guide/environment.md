@@ -26,6 +26,11 @@ Ako niste sigurni koji resursi koriste grupu promenljivih, pratite korake 1 i 2 
 2. Kliknite na ikonu kante za otpatke pored grupe promenljivih.
 3. Kliknite Da (Yes) ako ste sigurni da želite da uklonite grupu promenljivih.
 
+## Tajne {#secrets}
+Kartica **Secrets** sadrži vrednosti koje se čuvaju šifrovane i koje API ne vraća nakon čuvanja. Tajna pod **Extra variables** stiže do Ansible-a kao dodatna promenljiva, a do Terraform/OpenTofu kao `-var`; tajna pod **Environment variables** postavlja se u okruženje procesa zadatka.
+
+Ključevi iz [Key Store-a](/user-guide/key-store) se ne prosleđuju zadatku na ovaj način. Primere za playbook pogledajte u odeljku [Tajne u playbook-ovima](/user-guide/key-store#secrets-in-playbooks).
+
 ## Korišćenje grupa promenljivih - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
 Kada želite da iskoristite sačuvanu promenljivu ili tajnu iz grupe promenljivih u svom Terraform šablonu, morate dodati prefiks `TF_VAR_` nazivu da bi je Terraform skripta koristila. 
 

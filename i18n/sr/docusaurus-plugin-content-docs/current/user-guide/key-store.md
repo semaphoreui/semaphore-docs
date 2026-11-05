@@ -108,6 +108,46 @@ curl -X POST "https://semaphore.example.com/api/project/1/keys" \
 
 ---
 
+## Tajne u playbook-ovima {#secrets-in-playbooks}
+
+Semaphore ne prosleđuje ključeve iz Key Store-a playbook-u. Koristi ih sam: za kloniranje repozitorijuma, za povezivanje sa hostovima inventara i `become` na njima, kao i za odgovor na upit za Ansible Vault lozinku. Ključ nikada ne postaje Ansible promenljiva niti promenljiva okruženja zadatka, pa `lookup('env', 'MY_KEY')` vraća prazan string, a playbook ne može da pročita sačuvanu lozinku ili privatni ključ. Jedan ključ je upotrebljiv posredno: SSH ključ inventara učitava se u SSH agenta, pa `ssh` i `git` komande koje playbook pokreće na Semaphore hostu mogu da se autentifikuju preko `SSH_AUTH_SOCK` bez uvida u ključ. Pogledajte [Promenljive okruženja zadatka](/reference/task-environment#every-task).
+
+Da biste playbook-u predali vrednost, sačuvajte je kao tajnu [grupe promenljivih](/user-guide/environment#secrets) i izaberite tu grupu u šablonu. Kartica **Secrets** grupe promenljivih ima dve liste:
+
+| Lista | Playbook dobija tajnu kao | Čitanje |
+| :--- | :--- | :--- |
+| **Extra variables** | Ansible dodatnu promenljivu | `{{ db_password }}` |
+| **Environment variables** | Promenljivu okruženja procesa `ansible-playbook` | `{{ lookup('env', 'API_TOKEN') }}` |
+
+```yaml
+- hosts: app
+  tasks:
+    - name: Write the database password
+      ansible.builtin.copy:
+        dest: /etc/myapp/db_password
+        content: "{{ db_password }}"
+        mode: "0600"
+      no_log: true
+
+    - name: Call the deploy API
+      ansible.builtin.uri:
+        url: https://api.example.com/deploy
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('env', 'API_TOKEN') }}"
+      no_log: true
+```
+
+Semaphore ne uklanja vrednosti tajni iz izlaza zadatka. Ansible može da ispiše vrednost u rezultatu neuspelog zadatka ili pri višem nivou detaljnosti, zato dodajte `no_log: true` svakom zadatku koji radi sa tajnom.
+
+Polje za tajnu u formi prima jedan red. Da biste distribuirali fajl kao što je privatni SSH ključ, sačuvajte ga kodiranog u base64 (`base64 < id_ed25519 | tr -d '\n'`) i upišite ga sa `content: "{{ deploy_key_b64 | b64decode }}"`, ili čuvajte fajl u repozitorijumu šifrovan pomoću `ansible-vault` i povežite vault lozinku sa šablonom, pogledajte [Više vault lozinki](/user-guide/apps/ansible#multiple-vault-passwords). Za vrednost koja se unosi pri pokretanju zadatka koristite [anketnu promenljivu tipa secret](/user-guide/task-templates/survey-vars#secret).
+
+:::info Od verzije 2.20
+Od **Semaphore 2.20** tajne koje se prosleđuju kao dodatne promenljive stižu do Ansible-a u fajlu šifrovanom pomoću Ansible Vault-a. Ranije verzije prosleđuju svaku od njih u komandnoj liniji `ansible-playbook` kao `--extra-vars name=value`, pa se vrednost vidi u listi procesa Semaphore hosta, a Ansible je odseca na prvom razmaku. U tim verzijama za vrednosti sa razmacima koristite tajnu tipa promenljiva okruženja.
+:::
+
+---
+
 ## Skladišta tajni {#secret-storages}
 
 Semaphore podržava razdvojene arhitekture skladištenja tajni. Prilikom kreiranja ili izmene možete izabrati gde se nalazi tajni materijal putem kartica:
