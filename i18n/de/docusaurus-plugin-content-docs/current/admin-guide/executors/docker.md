@@ -255,31 +255,11 @@ Alle Optionen befinden sich unter `runner.executor.docker` in der Runner-Konfigu
 | `pull_policy` | `SEMAPHORE_RUNNER_DOCKER_PULL_POLICY` | `if-not-present` | `always`, `if-not-present` oder `never`. Ein unbekannter Wert fällt auf `if-not-present` zurück. |
 | `cpu_limit` | `SEMAPHORE_RUNNER_DOCKER_CPU_LIMIT` | kein Limit | CPUs pro Container, wie `docker run --cpus`. Bruchteile sind erlaubt: `0.5`. |
 | `memory_limit` | `SEMAPHORE_RUNNER_DOCKER_MEMORY_LIMIT` | kein Limit | Speicher pro Container: Bytes oder mit `k`, `m`, `g` (`512m`, `2g`). Ein nicht auswertbarer Wert bedeutet kein Limit. |
-| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | Führt die Container mit `--privileged` aus. Siehe [Sicherheit](#security). |
+| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | Führt die Container mit `--privileged` aus. |
 | `cleanup_grace_seconds` | `SEMAPHORE_RUNNER_DOCKER_CLEANUP_GRACE_SECONDS` | `30` | Sekunden, die `docker stop` nach **Stop** wartet, bevor der Container beendet wird. |
 | `poll_interval_seconds` | `SEMAPHORE_RUNNER_DOCKER_POLL_INTERVAL_SECONDS` | `2` | Nicht verwendet: Der Executor wartet auf das Ende des Containers, statt ihn abzufragen. |
 
 Die Limits, das Netzwerk und `privileged` gelten gleichermaßen für den Klon- und den Build-Container.
-
-## Sicherheit {#security}
-
-- **Zugriff auf den Daemon bedeutet Root auf dessen Host.** Wer den Runner kontrolliert –
-  oder ein Task, der aus seinem Container ausbricht –, kontrolliert jeden Container auf
-  diesem Daemon. Bevorzugen Sie einen dedizierten Docker-Host oder eine VM für
-  Task-Container, nicht den Host des Semaphore-Servers oder Ihrer Datenbanken.
-- **Lassen Sie `privileged` ausgeschaltet.** Ein privilegierter Container hat vollen
-  Zugriff auf die Geräte und den Kernel des Hosts. Schalten Sie es nur für einen
-  dedizierten, wegwerfbaren Daemon ein, auf dem nichts anderes läuft.
-- **Secret-Dateien** (SSH-Schlüssel, Vault-Passwörter, Extra-Variablen) werden in ein
-  Volume pro Task auf dem Daemon geschrieben, schreibgeschützt eingebunden und mit dem
-  Task entfernt. Sie berühren nie die Festplatte des Runners.
-- **Secret-Umgebungsvariablen** (Secrets der Variable Group vom Typ *Umgebungsvariable*
-  und `SEMAPHORE_JWT`) werden auf dem Build-Container gesetzt. Solange er läuft, kann
-  jeder mit Zugriff auf den Daemon sie mit `docker inspect` lesen.
-- **Netzwerk.** Im Netzwerk `bridge` kann ein Task jede Adresse erreichen, die auch der
-  Daemon-Host erreicht. Verwenden Sie ein separates Netzwerk und Firewall-Regeln, um
-  einzuschränken, was Tasks erreichen.
-- **Entfernte Daemons** müssen [TLS](#remote-docker-daemon-over-tls) verwenden.
 
 ## Stoppen und aufräumen {#stop-and-clean-up}
 

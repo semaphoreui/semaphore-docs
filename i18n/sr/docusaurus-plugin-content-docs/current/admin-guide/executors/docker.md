@@ -252,30 +252,11 @@ Sve opcije se nalaze pod `runner.executor.docker` u konfiguraciji runnera.
 | `pull_policy` | `SEMAPHORE_RUNNER_DOCKER_PULL_POLICY` | `if-not-present` | `always`, `if-not-present` ili `never`. Nepoznata vrednost se svodi na `if-not-present`. |
 | `cpu_limit` | `SEMAPHORE_RUNNER_DOCKER_CPU_LIMIT` | bez ograničenja | CPU po kontejneru, kao `docker run --cpus`. Dozvoljeni su razlomci: `0.5`. |
 | `memory_limit` | `SEMAPHORE_RUNNER_DOCKER_MEMORY_LIMIT` | bez ograničenja | Memorija po kontejneru: bajtovi ili sa `k`, `m`, `g` (`512m`, `2g`). Vrednost koja se ne može parsirati znači bez ograničenja. |
-| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | Pokreće kontejnere sa `--privileged`. Pogledajte [Bezbednost](#security). |
+| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | Pokreće kontejnere sa `--privileged`. |
 | `cleanup_grace_seconds` | `SEMAPHORE_RUNNER_DOCKER_CLEANUP_GRACE_SECONDS` | `30` | Koliko sekundi `docker stop` čeka posle **Stop** pre nego što ubije kontejner. |
 | `poll_interval_seconds` | `SEMAPHORE_RUNNER_DOCKER_POLL_INTERVAL_SECONDS` | `2` | Ne koristi se: executor čeka da se kontejner završi umesto da ga proverava. |
 
 Ograničenja, mreža i `privileged` važe podjednako za kontejner za kloniranje i build kontejner.
-
-## Bezbednost {#security}
-
-- **Pristup daemonu je root na njegovom hostu.** Ko god upravlja runnerom — ili zadatak
-  koji pobegne iz svog kontejnera — upravlja svim kontejnerima na tom daemonu. Za
-  kontejnere zadataka koristite namenski Docker host ili VM, a ne host Semaphore servera
-  ili vaših baza podataka.
-- **Držite `privileged` isključenim.** Privilegovani kontejner ima pun pristup uređajima
-  i kernelu hosta. Uključite ga samo za namenski, jednokratni daemon koji ne pokreće
-  ništa drugo.
-- **Datoteke tajni** (SSH ključevi, vault lozinke, dodatne promenljive) upisuju se u
-  volumen po zadatku na daemonu, montiraju samo za čitanje i uklanjaju zajedno sa zadatkom.
-  Nikada ne dodiruju disk runnera.
-- **Tajne promenljive okruženja** (tajne iz Variable Group tipa *Environment
-  variable* i `SEMAPHORE_JWT`) postavljaju se na build kontejner. Dok radi, svako
-  sa pristupom daemonu može da ih pročita pomoću `docker inspect`.
-- **Mreža.** Na `bridge` zadatak može da pristupi svakoj adresi kojoj može host daemona.
-  Koristite posebnu mrežu i pravila firewall-a da ograničite šta zadaci dosežu.
-- **Udaljeni daemoni** moraju koristiti [TLS](#remote-docker-daemon-over-tls).
 
 ## Zaustavljanje i čišćenje {#stop-and-clean-up}
 

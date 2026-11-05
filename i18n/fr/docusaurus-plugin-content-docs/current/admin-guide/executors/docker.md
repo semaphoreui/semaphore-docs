@@ -253,30 +253,11 @@ Toutes les options se trouvent sous `runner.executor.docker` dans la configurati
 | `pull_policy` | `SEMAPHORE_RUNNER_DOCKER_PULL_POLICY` | `if-not-present` | `always`, `if-not-present` ou `never`. Une valeur inconnue revient à `if-not-present`. |
 | `cpu_limit` | `SEMAPHORE_RUNNER_DOCKER_CPU_LIMIT` | aucune limite | CPU par conteneur, comme `docker run --cpus`. Fractions autorisées : `0.5`. |
 | `memory_limit` | `SEMAPHORE_RUNNER_DOCKER_MEMORY_LIMIT` | aucune limite | Mémoire par conteneur : en octets, ou avec `k`, `m`, `g` (`512m`, `2g`). Une valeur illisible signifie aucune limite. |
-| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | Exécute les conteneurs avec `--privileged`. Voir [Sécurité](#security). |
+| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | Exécute les conteneurs avec `--privileged`. |
 | `cleanup_grace_seconds` | `SEMAPHORE_RUNNER_DOCKER_CLEANUP_GRACE_SECONDS` | `30` | Secondes pendant lesquelles `docker stop` attend après **Stop** avant de tuer le conteneur. |
 | `poll_interval_seconds` | `SEMAPHORE_RUNNER_DOCKER_POLL_INTERVAL_SECONDS` | `2` | Non utilisée : l'exécuteur attend la fin du conteneur au lieu de l'interroger. |
 
 Les limites, le réseau et `privileged` s'appliquent aussi bien au conteneur de clonage qu'au conteneur de build.
-
-## Sécurité {#security}
-
-- **L'accès au démon équivaut à root sur son hôte.** Quiconque contrôle le runner — ou une
-  tâche qui s'échappe de son conteneur — contrôle tous les conteneurs de ce démon. Préférez
-  un hôte Docker ou une VM dédiés aux conteneurs des tâches, et non l'hôte du serveur
-  Semaphore ou de vos bases de données.
-- **Laissez `privileged` désactivé.** Un conteneur privilégié a un accès complet aux
-  périphériques et au noyau de l'hôte. Ne l'activez que pour un démon dédié et jetable
-  qui n'exécute rien d'autre.
-- **Les fichiers secrets** (clés SSH, mots de passe vault, variables supplémentaires) sont
-  écrits dans un volume propre à la tâche sur le démon, monté en lecture seule et supprimé
-  avec la tâche. Ils ne touchent jamais le disque du runner.
-- **Les variables d'environnement secrètes** (secrets de groupe de variables de type *Variable
-  d'environnement* et `SEMAPHORE_JWT`) sont définies sur le conteneur de build. Pendant son
-  exécution, quiconque a accès au démon peut les lire avec `docker inspect`.
-- **Réseau.** Sur `bridge`, une tâche peut atteindre toutes les adresses que l'hôte du démon
-  atteint. Utilisez un réseau séparé et des règles de pare-feu pour limiter ce que les tâches atteignent.
-- **Les démons distants** doivent utiliser [TLS](#remote-docker-daemon-over-tls).
 
 ## Arrêt et nettoyage {#stop-and-clean-up}
 

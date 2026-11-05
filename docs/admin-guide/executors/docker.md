@@ -251,7 +251,7 @@ All options live under `runner.executor.docker` in the runner configuration.
 | `pull_policy` | `SEMAPHORE_RUNNER_DOCKER_PULL_POLICY` | `if-not-present` | `always`, `if-not-present` or `never`. An unknown value falls back to `if-not-present`. |
 | `cpu_limit` | `SEMAPHORE_RUNNER_DOCKER_CPU_LIMIT` | no limit | CPUs per container, like `docker run --cpus`. Fractions allowed: `0.5`. |
 | `memory_limit` | `SEMAPHORE_RUNNER_DOCKER_MEMORY_LIMIT` | no limit | Memory per container: bytes, or with `k`, `m`, `g` (`512m`, `2g`). An unparseable value means no limit. |
-| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | Runs the containers with `--privileged`. See [Security](#security). |
+| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | Runs the containers with `--privileged`. |
 | `cleanup_grace_seconds` | `SEMAPHORE_RUNNER_DOCKER_CLEANUP_GRACE_SECONDS` | `30` | Seconds `docker stop` waits after **Stop** before it kills the container. |
 | `poll_interval_seconds` | `SEMAPHORE_RUNNER_DOCKER_POLL_INTERVAL_SECONDS` | `2` | Not used: the executor waits for the container to exit instead of polling it. |
 

@@ -249,27 +249,11 @@ SEMAPHORE_RUNNER_EXECUTOR='{"type":"docker","docker":{"network":"semaphore-tasks
 | `pull_policy` | `SEMAPHORE_RUNNER_DOCKER_PULL_POLICY` | `if-not-present` | `always`、`if-not-present`、`never`。不明な値は `if-not-present` として扱われます。 |
 | `cpu_limit` | `SEMAPHORE_RUNNER_DOCKER_CPU_LIMIT` | 制限なし | コンテナーごとの CPU 数。`docker run --cpus` と同じです。小数も指定できます：`0.5`。 |
 | `memory_limit` | `SEMAPHORE_RUNNER_DOCKER_MEMORY_LIMIT` | 制限なし | コンテナーごとのメモリー：バイト数、または `k`、`m`、`g` 付き（`512m`、`2g`）。解析できない値は制限なしになります。 |
-| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | コンテナーを `--privileged` で実行します。[セキュリティ](#security)を参照してください。 |
+| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | コンテナーを `--privileged` で実行します。 |
 | `cleanup_grace_seconds` | `SEMAPHORE_RUNNER_DOCKER_CLEANUP_GRACE_SECONDS` | `30` | **Stop** の後、`docker stop` がコンテナーを強制終了するまで待つ秒数。 |
 | `poll_interval_seconds` | `SEMAPHORE_RUNNER_DOCKER_POLL_INTERVAL_SECONDS` | `2` | 使用されません。エグゼキューターはポーリングせずにコンテナーの終了を待ちます。 |
 
 制限、ネットワーク、`privileged` は、クローン用コンテナーとビルドコンテナーの両方に適用されます。
-
-## セキュリティ {#security}
-
-- **デーモンへのアクセスは、そのホストの root 権限に等しい。** ランナーを操作できる人、またはコンテナーから
-  抜け出したタスクは、そのデーモン上のすべてのコンテナーを操作できます。タスクのコンテナーには、
-  Semaphore サーバーやデータベースのホストではなく、専用の Docker ホストまたは VM を使用してください。
-- **`privileged` は無効のままにする。** 特権コンテナーは、ホストのデバイスとカーネルに完全にアクセスできます。
-  他に何も動かしていない、専用の使い捨てデーモンでのみ有効にしてください。
-- **シークレットファイル**（SSH キー、Vault のパスワード、追加変数）は、デーモン上のタスクごとの
-  ボリュームに書き込まれ、読み取り専用でマウントされ、タスクとともに削除されます。ランナーのディスクには
-  一切書き込まれません。
-- **シークレットの環境変数**（種類が*環境変数*の変数グループのシークレットと `SEMAPHORE_JWT`）は、
-  ビルドコンテナーに設定されます。実行中は、デーモンにアクセスできる人なら誰でも `docker inspect` で読み取れます。
-- **ネットワーク。** `bridge` では、タスクはデーモンのホストが到達できるすべてのアドレスに到達できます。
-  別のネットワークとファイアウォールのルールで、タスクの到達先を制限してください。
-- **リモートのデーモン**では [TLS](#remote-docker-daemon-over-tls) を必ず使用してください。
 
 ## 停止とクリーンアップ {#stop-and-clean-up}
 

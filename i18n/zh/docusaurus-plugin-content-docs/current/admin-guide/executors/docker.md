@@ -245,27 +245,11 @@ SEMAPHORE_RUNNER_EXECUTOR='{"type":"docker","docker":{"network":"semaphore-tasks
 | `pull_policy` | `SEMAPHORE_RUNNER_DOCKER_PULL_POLICY` | `if-not-present` | `always`、`if-not-present` 或 `never`。未知值回退为 `if-not-present`。 |
 | `cpu_limit` | `SEMAPHORE_RUNNER_DOCKER_CPU_LIMIT` | 无限制 | 每个容器的 CPU 数，类似 `docker run --cpus`。允许小数：`0.5`。 |
 | `memory_limit` | `SEMAPHORE_RUNNER_DOCKER_MEMORY_LIMIT` | 无限制 | 每个容器的内存：字节数，或带 `k`、`m`、`g`（`512m`、`2g`）。无法解析的值表示无限制。 |
-| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | 以 `--privileged` 运行容器。参见[安全](#security)。 |
+| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | 以 `--privileged` 运行容器。 |
 | `cleanup_grace_seconds` | `SEMAPHORE_RUNNER_DOCKER_CLEANUP_GRACE_SECONDS` | `30` | 点击 **Stop** 后 `docker stop` 在强制终止容器前等待的秒数。 |
 | `poll_interval_seconds` | `SEMAPHORE_RUNNER_DOCKER_POLL_INTERVAL_SECONDS` | `2` | 未使用：执行器等待容器退出，而不是轮询。 |
 
 资源限制、网络和 `privileged` 同时适用于克隆容器和构建容器。
-
-## 安全 {#security}
-
-- **访问守护进程即等于拥有其主机的 root 权限。** 控制运行器的人——或逃逸出容器的
-  任务——可以控制该守护进程上的所有容器。请为任务容器使用专用的 Docker 主机或虚拟机，
-  而不是 Semaphore 服务器或数据库所在的主机。
-- **保持 `privileged` 关闭。** 特权容器可以完全访问主机设备和内核。仅在专用、
-  可随时丢弃且不运行其他任何内容的守护进程上启用。
-- **机密文件**（SSH 密钥、vault 密码、额外变量）写入守护进程上每个任务独立的卷，
-  以只读方式挂载，并随任务一起删除。它们从不接触运行器的磁盘。
-- **机密环境变量**（类型为 *Environment variable* 的变量组机密以及 `SEMAPHORE_JWT`）
-  设置在构建容器上。容器运行期间，任何有权访问守护进程的人都可以通过 `docker inspect`
-  读取它们。
-- **网络。** 在 `bridge` 上，任务可以访问守护进程主机能访问的所有地址。请使用独立
-  网络和防火墙规则限制任务可访问的范围。
-- **远程守护进程**必须使用 [TLS](#remote-docker-daemon-over-tls)。
 
 ## 停止与清理 {#stop-and-clean-up}
 

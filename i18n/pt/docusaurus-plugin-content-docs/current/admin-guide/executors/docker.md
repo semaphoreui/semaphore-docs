@@ -252,30 +252,11 @@ Todas as opções ficam em `runner.executor.docker` na configuração do runner.
 | `pull_policy` | `SEMAPHORE_RUNNER_DOCKER_PULL_POLICY` | `if-not-present` | `always`, `if-not-present` ou `never`. Um valor desconhecido volta para `if-not-present`. |
 | `cpu_limit` | `SEMAPHORE_RUNNER_DOCKER_CPU_LIMIT` | sem limite | CPUs por contêiner, como `docker run --cpus`. Frações permitidas: `0.5`. |
 | `memory_limit` | `SEMAPHORE_RUNNER_DOCKER_MEMORY_LIMIT` | sem limite | Memória por contêiner: bytes, ou com `k`, `m`, `g` (`512m`, `2g`). Um valor inválido significa sem limite. |
-| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | Executa os contêineres com `--privileged`. Consulte [Segurança](#security). |
+| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | Executa os contêineres com `--privileged`. |
 | `cleanup_grace_seconds` | `SEMAPHORE_RUNNER_DOCKER_CLEANUP_GRACE_SECONDS` | `30` | Segundos que o `docker stop` aguarda após **Stop** antes de matar o contêiner. |
 | `poll_interval_seconds` | `SEMAPHORE_RUNNER_DOCKER_POLL_INTERVAL_SECONDS` | `2` | Não usado: o executor aguarda o contêiner terminar em vez de consultá-lo. |
 
 Os limites, a rede e `privileged` se aplicam igualmente ao contêiner de clonagem e ao de build.
-
-## Segurança {#security}
-
-- **Acesso ao daemon é root no host dele.** Quem controla o runner — ou uma tarefa que
-  escapa do contêiner — controla todos os contêineres desse daemon. Prefira um host Docker
-  ou VM dedicado para os contêineres das tarefas, não o host do servidor Semaphore nem o
-  dos seus bancos de dados.
-- **Mantenha `privileged` desligado.** Um contêiner privilegiado tem acesso total aos
-  dispositivos e ao kernel do host. Ative-o apenas para um daemon dedicado e descartável
-  que não execute mais nada.
-- **Arquivos secretos** (chaves SSH, senhas do vault, variáveis extras) são gravados em um
-  volume por tarefa no daemon, montado somente leitura e removido com a tarefa. Eles nunca
-  tocam o disco do runner.
-- **Variáveis de ambiente secretas** (segredos do Variable Group do tipo *Environment
-  variable* e `SEMAPHORE_JWT`) são definidas no contêiner build. Enquanto ele roda, qualquer
-  pessoa com acesso ao daemon pode lê-las com `docker inspect`.
-- **Rede.** Na `bridge`, uma tarefa alcança qualquer endereço que o host do daemon alcança.
-  Use uma rede separada e regras de firewall para limitar o que as tarefas alcançam.
-- **Daemons remotos** devem usar [TLS](#remote-docker-daemon-over-tls).
 
 ## Parar e limpar {#stop-and-clean-up}
 

@@ -249,26 +249,11 @@ SEMAPHORE_RUNNER_EXECUTOR='{"type":"docker","docker":{"network":"semaphore-tasks
 | `pull_policy` | `SEMAPHORE_RUNNER_DOCKER_PULL_POLICY` | `if-not-present` | `always`, `if-not-present` 또는 `never`. 알 수 없는 값은 `if-not-present`로 처리됩니다. |
 | `cpu_limit` | `SEMAPHORE_RUNNER_DOCKER_CPU_LIMIT` | 제한 없음 | 컨테이너당 CPU 수로, `docker run --cpus`와 같습니다. 소수도 가능합니다: `0.5`. |
 | `memory_limit` | `SEMAPHORE_RUNNER_DOCKER_MEMORY_LIMIT` | 제한 없음 | 컨테이너당 메모리: 바이트 단위 또는 `k`, `m`, `g` 접미사(`512m`, `2g`). 해석할 수 없는 값은 제한 없음을 의미합니다. |
-| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | 컨테이너를 `--privileged`로 실행합니다. [보안](#security)을 참조하십시오. |
+| `privileged` | `SEMAPHORE_RUNNER_DOCKER_PRIVILEGED` | `false` | 컨테이너를 `--privileged`로 실행합니다. |
 | `cleanup_grace_seconds` | `SEMAPHORE_RUNNER_DOCKER_CLEANUP_GRACE_SECONDS` | `30` | **Stop** 후 `docker stop`이 컨테이너를 강제 종료하기 전에 기다리는 초. |
 | `poll_interval_seconds` | `SEMAPHORE_RUNNER_DOCKER_POLL_INTERVAL_SECONDS` | `2` | 사용되지 않습니다. 익스큐터는 폴링하지 않고 컨테이너가 종료될 때까지 기다립니다. |
 
 제한, 네트워크, `privileged`는 복제 컨테이너와 빌드 컨테이너에 동일하게 적용됩니다.
-
-## 보안 {#security}
-
-- **데몬에 대한 접근은 해당 호스트의 root 권한과 같습니다.** 러너를 제어하는 사람 또는
-  컨테이너를 탈출한 작업은 그 데몬의 모든 컨테이너를 제어합니다. 작업 컨테이너에는
-  Semaphore 서버나 데이터베이스의 호스트가 아닌 전용 Docker 호스트 또는 VM을 사용하십시오.
-- **`privileged`는 끈 상태로 두십시오.** 특권 컨테이너는 호스트 장치와 커널에 완전히
-  접근할 수 있습니다. 다른 것은 실행하지 않는 전용 일회용 데몬에서만 켜십시오.
-- **비밀 파일**(SSH 키, vault 비밀번호, 추가 변수)은 데몬의 작업별 볼륨에 기록되고,
-  읽기 전용으로 마운트되며, 작업과 함께 제거됩니다. 러너의 디스크에는 전혀 기록되지 않습니다.
-- **비밀 환경 변수**(유형이 *환경 변수*인 변수 그룹 비밀과 `SEMAPHORE_JWT`)는 빌드
-  컨테이너에 설정됩니다. 실행 중에는 데몬에 접근할 수 있는 누구나 `docker inspect`로 읽을 수 있습니다.
-- **네트워크.** `bridge`에서는 작업이 데몬 호스트가 접근할 수 있는 모든 주소에 접근할 수
-  있습니다. 별도 네트워크와 방화벽 규칙으로 작업의 접근 범위를 제한하십시오.
-- **원격 데몬**은 반드시 [TLS](#remote-docker-daemon-over-tls)를 사용해야 합니다.
 
 ## 중지 및 정리 {#stop-and-clean-up}
 
