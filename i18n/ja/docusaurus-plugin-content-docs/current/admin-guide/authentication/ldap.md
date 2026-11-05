@@ -35,6 +35,9 @@ SSO プロバイダーのすべてのオプション:
 | `ldap_mappings.cn`    | `SEMAPHORE_LDAP_MAPPING_CN` | ユーザー名のクレーム式[\*](#claim-expression)。 |
 | `ldap_enable`         | `SEMAPHORE_LDAP_ENABLE` | LDAP を有効にします。 |
 | `ldap_needtls`        | `SEMAPHORE_LDAP_NEEDTLS` | SSL で LDAP サーバーに接続します。 |
+| `ldap_group_search_dn` | `SEMAPHORE_LDAP_GROUP_SEARCH_DN` | グループを検索するスコープ。[グループマッピング](#project-roles-from-groups)を有効にします。`ldap_providers` では `group_search_dn` です。 |
+| `ldap_group_search_filter` | `SEMAPHORE_LDAP_GROUP_SEARCH_FILTER` | グループの検索式。デフォルト: `(\|(member={{ .dn }})(uniqueMember={{ .dn }})(memberUid={{ .username }}))`。`ldap_providers` では `group_search_filter` です。 |
+| `ldap_group_name_attribute` | `SEMAPHORE_LDAP_GROUP_NAME_ATTRIBUTE` | グループ名を持つ属性。デフォルト: `cn`。`ldap_providers` では `group_name_attribute` です。 |
 
 
 ### \*クレーム式 {#claim-expression}
@@ -74,6 +77,69 @@ LDAP で問題が発生した場合は、 [トラブルシューティング](/f
 
 :::
 
+
+## グループによるプロジェクトのロール <Enterprise /> {#project-roles-from-groups}
+
+:::info
+グループマッピングは **Semaphore Enterprise** エディションで利用できます。
+:::
+
+グループマッピングは、ディレクトリのグループに属するすべてのユーザーにプロジェクトのロールを付与します。たとえば、`devops` グループのメンバーに `Infrastructure` プロジェクトの **マネージャー** ロールを付与できます。
+
+### ディレクトリからグループを読み取る {#read-groups-from-the-directory}
+
+`ldap_group_search_dn` に、グループがある場所を設定します。`ldap_providers` では `group_search_dn` を使います。設定しない場合、ログインはグループマッピングによるロールを変更しません。
+
+Active Directory と OpenLDAP では、次の 1 行だけで十分です。
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com"
+}
+```
+
+ほかに 2 つのオプションがありますが、どちらも省略できます。
+
+- `ldap_group_search_filter` はユーザーのグループを検索します。デフォルトでは、ユーザーを `member`、`uniqueMember`、`memberUid` のいずれかとして含むグループを検索します。
+- `ldap_group_name_attribute` はグループ名を持つ属性です。デフォルトは `cn` です。
+
+フィルター内の `{{ .dn }}` はユーザーの DN、`{{ .username }}` はユーザーの `uid` 属性です。エントリに `uid` がない場合はユーザーのログイン名になります。Semaphore はどちらの値もエスケープします。
+
+名前の属性に DN が入っている場合、グループ名はその `cn` の部分になります。たとえば、`CN=DevOps,OU=Groups,DC=corp,DC=com` からはグループ名 `DevOps` が得られます。
+
+#### Active Directory のネストされたグループ {#nested-groups-in-active-directory}
+
+ほかのグループを含むグループも対象にするには、matching rule in chain を使います。
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com",
+  "ldap_group_search_filter": "(member:1.2.840.113556.1.4.1941:={{ .dn }})"
+}
+```
+
+#### ユーザーエントリーのグループ {#groups-from-the-user-entry}
+
+ユーザーエントリーにグループが列挙されている場合(たとえば `memberOf`)、グループではなくユーザーを検索します。検索がサインインしたユーザーだけを見つけるように、ユーザー検索のベースを使います。この例は Active Directory 用です。`memberOf` オーバーレイを使う OpenLDAP では、代わりに `(uid={{ .username }})` をフィルターにします。
+
+```json
+{
+  "ldap_group_search_dn": "ou=people,dc=corp,dc=com",
+  "ldap_group_search_filter": "(sAMAccountName={{ .username }})",
+  "ldap_group_name_attribute": "memberOf"
+}
+```
+
+### グループマッピングを作成する {#create-a-group-mapping}
+
+OpenID Connect の場合と同じ方法でマッピングを作成します。[手順](/admin-guide/authentication/openid#create-a-group-mapping)を参照してください。LDAP プロバイダーを選び、ディレクトリが返すとおりにグループ名を入力します。
+
+- ユーザーがプロバイダー経由でログインするたびに、Semaphore はグループマッピングによるロールを更新します。
+- ログインのたびに、そのログインで使ったプロバイダーのマッピングが適用され、ほかのプロバイダーのマッピングによるロールは外されます。そのため、Okta でログインしたあと LDAP でログインしたユーザーには、LDAP 用にマッピングされたロールだけが残ります。
+- どのグループにも見つからないユーザーには、グループマッピングによるロールは付与されません。
+- `ldap_group_search_dn` を設定しない場合、ログインはグループマッピングによるロールを変更しません。
+- サーバーが応答しない、フィルターに構文エラーがあるなどの理由でディレクトリがグループを返せない場合、ログインは拒否されます。理由はサーバーログに記録されます。
+- 同じ ID を持つ OpenID Connect プロバイダーと LDAP プロバイダーは、グループマッピングを共有します。
 
 ## 例: OpenLDAP サーバーの使用 {#example-using-openldap-server}
 

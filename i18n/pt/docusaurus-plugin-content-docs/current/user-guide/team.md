@@ -208,7 +208,7 @@ Se [mapeamentos de grupo](#roles-from-group-mappings) usam o papel, a caixa de d
 Os mapeamentos de grupo estão disponíveis na edição **Semaphore Enterprise**.
 :::
 
-Um administrador pode dar um papel de projeto a todos os membros de um grupo do seu provedor de identidade na página **Group mappings**. O Semaphore atualiza esses papéis cada vez que o usuário faz login pelo provedor de identidade. Veja [Papéis de projeto a partir de grupos](/admin-guide/authentication/openid#project-roles-from-groups).
+Um administrador pode dar um papel de projeto a todos os membros de um grupo do seu provedor de identidade ou diretório LDAP na página **Group mappings**. O Semaphore atualiza esses papéis cada vez que o usuário faz login pelo provedor de identidade ou pelo diretório LDAP. Veja Papéis de projeto a partir de grupos para [OpenID Connect](/admin-guide/authentication/openid#project-roles-from-groups) e [LDAP](/admin-guide/authentication/ldap#project-roles-from-groups).
 
 Na página **Team**, um papel assim tem um ícone de cadeado. Passe o mouse sobre o papel para ver o provedor e o grupo, por exemplo `keycloak: devops`.
 

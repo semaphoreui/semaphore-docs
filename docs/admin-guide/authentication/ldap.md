@@ -40,6 +40,9 @@ All SSO provider options:
 | `ldap_mappings.cn`    | `SEMAPHORE_LDAP_MAPPING_CN` | User name claim expression[\*](#claim-expression). |
 | `ldap_enable`         | `SEMAPHORE_LDAP_ENABLE` | LDAP enabled. |
 | `ldap_needtls`        | `SEMAPHORE_LDAP_NEEDTLS` | Connect to LDAP server by SSL. |
+| `ldap_group_search_dn` | `SEMAPHORE_LDAP_GROUP_SEARCH_DN` | Scope where groups will be searched. Turns on [group mappings](#project-roles-from-groups). In `ldap_providers` it is `group_search_dn`. |
+| `ldap_group_search_filter` | `SEMAPHORE_LDAP_GROUP_SEARCH_FILTER` | Groups search expression. Default: `(\|(member={{ .dn }})(uniqueMember={{ .dn }})(memberUid={{ .username }}))`. In `ldap_providers` it is `group_search_filter`. |
+| `ldap_group_name_attribute` | `SEMAPHORE_LDAP_GROUP_NAME_ATTRIBUTE` | Attribute with the group name. Default: `cn`. In `ldap_providers` it is `group_name_attribute`. |
 
 
 ### \*Claim expression {#claim-expression}
@@ -79,6 +82,69 @@ Please read [Troubleshooting](/faq/troubleshooting#unable-to-read-ldap-response-
 
 :::
 
+
+## Project roles from groups <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Group mappings are available in the **Semaphore Enterprise** edition.
+:::
+
+A group mapping gives a project role to every user in a group of the directory. For example, a mapping can give the members of the `devops` group the **Manager** role in the `Infrastructure` project.
+
+### Read groups from the directory {#read-groups-from-the-directory}
+
+Set `ldap_group_search_dn` to the place where your groups are. In `ldap_providers`, use `group_search_dn`. Without it, sign-ins do not change roles from group mappings.
+
+In Active Directory and OpenLDAP, this one line is enough:
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com"
+}
+```
+
+Two more options are optional:
+
+- `ldap_group_search_filter` finds the groups of the user. The default finds groups that list the user as `member`, `uniqueMember` or `memberUid`.
+- `ldap_group_name_attribute` is the attribute with the group name. The default is `cn`.
+
+In the filter, `{{ .dn }}` is the DN of the user and `{{ .username }}` is the `uid` attribute of the user, or the user login when the entry has no `uid`. Semaphore escapes both values.
+
+If the name attribute holds a DN, the group name is the `cn` part of it. For example, `CN=DevOps,OU=Groups,DC=corp,DC=com` gives the group name `DevOps`.
+
+#### Nested groups in Active Directory {#nested-groups-in-active-directory}
+
+To include groups that contain other groups, use the matching rule in chain:
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com",
+  "ldap_group_search_filter": "(member:1.2.840.113556.1.4.1941:={{ .dn }})"
+}
+```
+
+#### Groups from the user entry {#groups-from-the-user-entry}
+
+If the user entry lists its groups, for example in `memberOf`, search for the user instead of the groups. Use the base of the user search so that the search finds only the signed-in user. This example is for Active Directory. OpenLDAP with the `memberOf` overlay uses `(uid={{ .username }})` as the filter instead.
+
+```json
+{
+  "ldap_group_search_dn": "ou=people,dc=corp,dc=com",
+  "ldap_group_search_filter": "(sAMAccountName={{ .username }})",
+  "ldap_group_name_attribute": "memberOf"
+}
+```
+
+### Create a group mapping {#create-a-group-mapping}
+
+Create the mapping in the same way as for OpenID Connect. See the [steps](/admin-guide/authentication/openid#create-a-group-mapping). Choose your LDAP provider and enter the group name as the directory returns it.
+
+- Semaphore updates roles from group mappings each time a user signs in through the provider.
+- Each sign-in applies the mappings of the provider used for that sign-in and takes away the roles from the mappings of other providers, so a user who signs in through Okta and then through LDAP keeps only the roles mapped for LDAP.
+- A user who is found in no group gets no roles from group mappings.
+- Without `ldap_group_search_dn`, a sign-in does not change roles from group mappings.
+- If the directory cannot return the groups, for example because the server does not answer or the filter has a syntax error, the sign-in is refused. The server log says why.
+- An OpenID Connect provider and an LDAP provider with the same ID share their group mappings.
 
 ## Example: Using OpenLDAP Server {#example-using-openldap-server}
 

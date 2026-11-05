@@ -35,6 +35,9 @@
 | `ldap_mappings.cn`    | `SEMAPHORE_LDAP_MAPPING_CN` | Выражение claim для имени пользователя[\*](#claim-expression). |
 | `ldap_enable`         | `SEMAPHORE_LDAP_ENABLE` | LDAP включён. |
 | `ldap_needtls`        | `SEMAPHORE_LDAP_NEEDTLS` | Подключаться к серверу LDAP по SSL. |
+| `ldap_group_search_dn` | `SEMAPHORE_LDAP_GROUP_SEARCH_DN` | Область, в которой будет выполняться поиск групп. Включает [сопоставления групп](#project-roles-from-groups). В `ldap_providers` это `group_search_dn`. |
+| `ldap_group_search_filter` | `SEMAPHORE_LDAP_GROUP_SEARCH_FILTER` | Выражение для поиска групп. По умолчанию: `(\|(member={{ .dn }})(uniqueMember={{ .dn }})(memberUid={{ .username }}))`. В `ldap_providers` это `group_search_filter`. |
+| `ldap_group_name_attribute` | `SEMAPHORE_LDAP_GROUP_NAME_ATTRIBUTE` | Атрибут с именем группы. По умолчанию: `cn`. В `ldap_providers` это `group_name_attribute`. |
 
 
 ### \*Выражение claim {#claim-expression}
@@ -74,6 +77,69 @@ ldapwhoami\
 
 :::
 
+
+## Роли в проекте по группам <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Сопоставления групп доступны в редакции **Semaphore Enterprise**.
+:::
+
+Сопоставление группы даёт роль в проекте каждому пользователю из группы в каталоге. Например, сопоставление может дать участникам группы `devops` роль **Manager** в проекте `Infrastructure`.
+
+### Чтение групп из каталога {#read-groups-from-the-directory}
+
+Укажите в `ldap_group_search_dn` место, где находятся ваши группы. В `ldap_providers` используйте `group_search_dn`. Без этого параметра вход не меняет роли из сопоставлений групп.
+
+Для Active Directory и OpenLDAP достаточно одной этой строки:
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com"
+}
+```
+
+Ещё два параметра необязательны:
+
+- `ldap_group_search_filter` находит группы пользователя. По умолчанию он находит группы, в которых пользователь указан как `member`, `uniqueMember` или `memberUid`.
+- `ldap_group_name_attribute` — атрибут с именем группы. По умолчанию это `cn`.
+
+В фильтре `{{ .dn }}` — это DN пользователя, а `{{ .username }}` — атрибут `uid` пользователя, или его логин, если в записи нет `uid`. Semaphore экранирует оба значения.
+
+Если атрибут с именем содержит DN, именем группы становится часть `cn` этого DN. Например, из `CN=DevOps,OU=Groups,DC=corp,DC=com` получается имя группы `DevOps`.
+
+#### Вложенные группы в Active Directory {#nested-groups-in-active-directory}
+
+Чтобы учитывать группы, в которые входят другие группы, используйте правило «matching rule in chain»:
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com",
+  "ldap_group_search_filter": "(member:1.2.840.113556.1.4.1941:={{ .dn }})"
+}
+```
+
+#### Группы из записи пользователя {#groups-from-the-user-entry}
+
+Если в записи пользователя перечислены его группы, например в `memberOf`, ищите пользователя, а не группы. Используйте базу поиска пользователей, чтобы поиск находил только вошедшего пользователя. Этот пример для Active Directory. Для OpenLDAP с оверлеем `memberOf` используйте вместо этого фильтр `(uid={{ .username }})`.
+
+```json
+{
+  "ldap_group_search_dn": "ou=people,dc=corp,dc=com",
+  "ldap_group_search_filter": "(sAMAccountName={{ .username }})",
+  "ldap_group_name_attribute": "memberOf"
+}
+```
+
+### Создание сопоставления группы {#create-a-group-mapping}
+
+Создайте сопоставление так же, как для OpenID Connect. См. [шаги](/admin-guide/authentication/openid#create-a-group-mapping). Выберите ваш провайдер LDAP и введите имя группы в том виде, в каком его возвращает каталог.
+
+- Semaphore обновляет роли из сопоставлений групп при каждом входе пользователя через провайдера.
+- Каждый вход применяет сопоставления того провайдера, через который выполнен вход, и убирает роли из сопоставлений других провайдеров. Поэтому пользователь, который вошёл через Okta, а затем через LDAP, сохраняет только роли, сопоставленные для LDAP.
+- Пользователь, которого не нашли ни в одной группе, не получает ролей из сопоставлений групп.
+- Без `ldap_group_search_dn` вход не меняет роли из сопоставлений групп.
+- Если каталог не может вернуть группы, например потому что сервер не отвечает или в фильтре есть синтаксическая ошибка, вход отклоняется. Причина указана в журнале сервера.
+- Провайдер OpenID Connect и провайдер LDAP с одинаковым ID используют общие сопоставления групп.
 
 ## Пример: использование сервера OpenLDAP {#example-using-openldap-server}
 

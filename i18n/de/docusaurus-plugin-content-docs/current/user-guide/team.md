@@ -208,7 +208,7 @@ Wenn [Gruppenzuordnungen](#roles-from-group-mappings) die Rolle verwenden, zeigt
 Gruppenzuordnungen sind in der Edition **Semaphore Enterprise** verfügbar.
 :::
 
-Ein Administrator kann auf der Seite **Group mappings** allen Mitgliedern einer Gruppe in Ihrem Identitätsanbieter eine Projektrolle geben. Semaphore aktualisiert diese Rollen bei jeder Anmeldung des Benutzers über den Identitätsanbieter. Siehe [Projektrollen aus Gruppen](/admin-guide/authentication/openid#project-roles-from-groups).
+Ein Administrator kann auf der Seite **Group mappings** allen Mitgliedern einer Gruppe in Ihrem Identitätsanbieter oder LDAP-Verzeichnis eine Projektrolle geben. Semaphore aktualisiert diese Rollen bei jeder Anmeldung des Benutzers über den Identitätsanbieter oder das LDAP-Verzeichnis. Siehe Projektrollen aus Gruppen für [OpenID Connect](/admin-guide/authentication/openid#project-roles-from-groups) und [LDAP](/admin-guide/authentication/ldap#project-roles-from-groups).
 
 Auf der Seite **Team** hat eine solche Rolle ein Schlosssymbol. Fahren Sie mit der Maus über die Rolle, um den Anbieter und die Gruppe zu sehen, zum Beispiel `keycloak: devops`.
 

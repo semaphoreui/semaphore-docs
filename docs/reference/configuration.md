@@ -107,6 +107,9 @@ How users sign in. See [Authentication](/admin-guide/authentication) for the pro
 | `ldap_mappings.cn`<br />`SEMAPHORE_LDAP_MAPPING_CN` | string<br />Default: `cn` | LDAP attribute to use as the common name (CN) mapping for user authentication. |
 | `ldap_needtls`<br />`SEMAPHORE_LDAP_NEEDTLS` | boolean | Flag to enable or disable TLS for LDAP connections. |
 | `ldap_tls_skip_verify`<br />`SEMAPHORE_LDAP_TLS_SKIP_VERIFY` | boolean | Disables verification of the LDAP server's TLS certificate for the legacy flat ldap_* config. Defaults to false (certificates are verified). See LdapProvider.TLSSkipVerify. |
+| `ldap_group_search_dn`<br />`SEMAPHORE_LDAP_GROUP_SEARCH_DN` | string | Base DN of the group search. Empty: groups are not read. |
+| `ldap_group_search_filter`<br />`SEMAPHORE_LDAP_GROUP_SEARCH_FILTER` | string | The filter used to find the groups of a user, with `{{ .dn }}` and `{{ .username }}` available. Default matches member, uniqueMember and memberUid. |
+| `ldap_group_name_attribute`<br />`SEMAPHORE_LDAP_GROUP_NAME_ATTRIBUTE` | string | Group attribute that holds the group name. Default: cn |
 | `ldap_providers`<br />`SEMAPHORE_LDAP_PROVIDERS` | object | Configures multiple LDAP directories (like OidcProviders for OIDC). The key is the provider ID shown in identity records; the ID "ldap" is reserved for the legacy flat ldap_* config above. |
 | `oidc_providers`<br />`SEMAPHORE_OIDC_PROVIDERS` | object | Configures OpenID Connect sign-in. The key is the provider ID that appears in identity records and in the /auth/oidc/\<id>/login URL, so it must stay stable once users have signed in through it. |
 | `password_login_disable`<br />`SEMAPHORE_PASSWORD_LOGIN_DISABLED` | boolean | Rejects the "password" login method, leaving LDAP and OpenID Connect as the only ways in. Set it once an identity provider is configured and working, so that local passwords stop being a second door. |

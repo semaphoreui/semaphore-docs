@@ -35,6 +35,9 @@ Sve opcije SSO provajdera:
 | `ldap_mappings.cn`    | `SEMAPHORE_LDAP_MAPPING_CN` | Claim izraz za ime korisnika[\*](#claim-expression). |
 | `ldap_enable`         | `SEMAPHORE_LDAP_ENABLE` | LDAP uključen. |
 | `ldap_needtls`        | `SEMAPHORE_LDAP_NEEDTLS` | Povezivanje sa LDAP serverom preko SSL-a. |
+| `ldap_group_search_dn` | `SEMAPHORE_LDAP_GROUP_SEARCH_DN` | Opseg u kome se pretražuju grupe. Uključuje [mapiranja grupa](#project-roles-from-groups). U `ldap_providers` to je `group_search_dn`. |
+| `ldap_group_search_filter` | `SEMAPHORE_LDAP_GROUP_SEARCH_FILTER` | Izraz za pretragu grupa. Podrazumevano: `(\|(member={{ .dn }})(uniqueMember={{ .dn }})(memberUid={{ .username }}))`. U `ldap_providers` to je `group_search_filter`. |
+| `ldap_group_name_attribute` | `SEMAPHORE_LDAP_GROUP_NAME_ATTRIBUTE` | Atribut sa nazivom grupe. Podrazumevano: `cn`. U `ldap_providers` to je `group_name_attribute`. |
 
 
 ### \*Claim izraz {#claim-expression}
@@ -74,6 +77,69 @@ Ako imate problema sa LDAP-om, pročitajte odeljak [Rešavanje problema](/faq/tr
 
 :::
 
+
+## Uloge u projektu na osnovu grupa <Enterprise /> {#project-roles-from-groups}
+
+:::info
+Mapiranja grupa dostupna su u izdanju **Semaphore Enterprise**.
+:::
+
+Mapiranje grupe daje ulogu u projektu svakom korisniku iz jedne grupe u direktorijumu. Na primer, mapiranje može da da članovima grupe `devops` ulogu **Manager** u projektu `Infrastructure`.
+
+### Čitanje grupa iz direktorijuma {#read-groups-from-the-directory}
+
+Postavite `ldap_group_search_dn` na mesto gde se nalaze vaše grupe. U `ldap_providers` koristite `group_search_dn`. Bez ovog podešavanja prijave ne menjaju uloge iz mapiranja grupa.
+
+Za Active Directory i OpenLDAP dovoljan je samo ovaj red:
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com"
+}
+```
+
+Još dve opcije nisu obavezne:
+
+- `ldap_group_search_filter` pronalazi grupe korisnika. Podrazumevano pronalazi grupe koje navode korisnika kao `member`, `uniqueMember` ili `memberUid`.
+- `ldap_group_name_attribute` je atribut sa nazivom grupe. Podrazumevano je `cn`.
+
+U filteru je `{{ .dn }}` DN korisnika, a `{{ .username }}` atribut `uid` korisnika, odnosno login korisnika ako unos nema `uid`. Semaphore escape-uje obe vrednosti.
+
+Ako atribut sa nazivom sadrži DN, naziv grupe je deo `cn` tog DN-a. Na primer, iz `CN=DevOps,OU=Groups,DC=corp,DC=com` dobija se naziv grupe `DevOps`.
+
+#### Ugnežđene grupe u Active Directory-ju {#nested-groups-in-active-directory}
+
+Da biste uključili grupe koje sadrže druge grupe, koristite pravilo „matching rule in chain“:
+
+```json
+{
+  "ldap_group_search_dn": "ou=groups,dc=corp,dc=com",
+  "ldap_group_search_filter": "(member:1.2.840.113556.1.4.1941:={{ .dn }})"
+}
+```
+
+#### Grupe iz zapisa korisnika {#groups-from-the-user-entry}
+
+Ako zapis korisnika navodi svoje grupe, na primer u `memberOf`, pretražujte korisnika umesto grupa. Koristite bazu pretrage korisnika da bi pretraga našla samo prijavljenog korisnika. Ovaj primer je za Active Directory. OpenLDAP sa overlay-em `memberOf` umesto toga koristi filter `(uid={{ .username }})`.
+
+```json
+{
+  "ldap_group_search_dn": "ou=people,dc=corp,dc=com",
+  "ldap_group_search_filter": "(sAMAccountName={{ .username }})",
+  "ldap_group_name_attribute": "memberOf"
+}
+```
+
+### Kreiranje mapiranja grupe {#create-a-group-mapping}
+
+Kreirajte mapiranje na isti način kao za OpenID Connect. Pogledajte [korake](/admin-guide/authentication/openid#create-a-group-mapping). Izaberite svoj LDAP provajder i unesite naziv grupe onako kako ga vraća direktorijum.
+
+- Semaphore ažurira uloge iz mapiranja grupa pri svakoj prijavi korisnika preko provajdera.
+- Svaka prijava primenjuje mapiranja provajdera preko kog je ta prijava izvršena i oduzima uloge iz mapiranja drugih provajdera. Zato korisnik koji se prijavi preko provajdera Okta, a zatim preko LDAP-a, zadržava samo uloge mapirane za LDAP.
+- Korisnik koji nije pronađen ni u jednoj grupi ne dobija uloge iz mapiranja grupa.
+- Bez `ldap_group_search_dn` prijava ne menja uloge iz mapiranja grupa.
+- Ako direktorijum ne može da vrati grupe, na primer zato što server ne odgovara ili filter ima sintaksnu grešku, prijava se odbija. Razlog je naveden u logu servera.
+- OpenID Connect provajder i LDAP provajder sa istim ID-jem dele mapiranja grupa.
 
 ## Primer: korišćenje OpenLDAP servera {#example-using-openldap-server}
 

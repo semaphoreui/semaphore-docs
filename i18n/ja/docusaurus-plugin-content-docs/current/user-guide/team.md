@@ -208,7 +208,7 @@ Semaphore UI では、すべてのプロジェクトが **チーム** に関連�
 グループマッピングは **Semaphore Enterprise** エディションで利用できます。
 :::
 
-管理者は **Group mappings** ページで、アイデンティティプロバイダーにあるグループのメンバー全員にプロジェクトのロールを付与できます。ユーザーがアイデンティティプロバイダー経由でログインするたびに、Semaphore はこれらのロールを更新します。詳しくは[グループによるプロジェクトのロール](/admin-guide/authentication/openid#project-roles-from-groups)を参照してください。
+管理者は **Group mappings** ページで、アイデンティティプロバイダーまたは LDAP ディレクトリにあるグループのメンバー全員にプロジェクトのロールを付与できます。ユーザーがアイデンティティプロバイダーまたは LDAP ディレクトリ経由でログインするたびに、Semaphore はこれらのロールを更新します。詳しくは、[OpenID Connect](/admin-guide/authentication/openid#project-roles-from-groups) と [LDAP](/admin-guide/authentication/ldap#project-roles-from-groups) の「グループによるプロジェクトのロール」を参照してください。
 
 **チーム** ページでは、このようなロールに鍵アイコンが表示されます。ロールにマウスを重ねると、プロバイダーとグループが表示されます(例: `keycloak: devops`)。
 

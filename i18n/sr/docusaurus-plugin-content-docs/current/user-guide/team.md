@@ -208,7 +208,7 @@ Ako [mapiranja grupa](#roles-from-group-mappings) koriste ulogu, dijalog prikazu
 Mapiranja grupa dostupna su u izdanju **Semaphore Enterprise**.
 :::
 
-Administrator može na stranici **Group mappings** dati ulogu u projektu svim članovima jedne grupe u vašem provajderu identiteta. Semaphore ažurira te uloge pri svakoj prijavi korisnika preko provajdera identiteta. Pogledajte [Uloge u projektu na osnovu grupa](/admin-guide/authentication/openid#project-roles-from-groups).
+Administrator može na stranici **Group mappings** dati ulogu u projektu svim članovima jedne grupe u vašem provajderu identiteta ili LDAP direktorijumu. Semaphore ažurira te uloge pri svakoj prijavi korisnika preko provajdera identiteta ili LDAP direktorijuma. Pogledajte Uloge u projektu na osnovu grupa za [OpenID Connect](/admin-guide/authentication/openid#project-roles-from-groups) i [LDAP](/admin-guide/authentication/ldap#project-roles-from-groups).
 
 Na stranici **Team** takva uloga ima ikonu katanca. Zadržite pokazivač iznad uloge da biste videli provajdera i grupu, na primer `keycloak: devops`.
 

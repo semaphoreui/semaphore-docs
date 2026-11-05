@@ -11,7 +11,7 @@ Semaphore prend en charge une authentification sécurisée et des mécanismes d'
 - **Méthodes de connexion :**
   - **Nom d'utilisateur / mot de passe**<br />Méthode par défaut utilisant des identifiants stockés dans la base de données Semaphore. Les mots de passe ne sont jamais stockés en clair ; ils sont hachés avec Argon2id (voir [Hachage des mots de passe](#password-hashing)).
 
-  - **LDAP**<br />Permet l'intégration avec des annuaires d'entreprise. Prend en charge le filtrage des utilisateurs et des groupes ainsi que les connexions sécurisées via LDAPS.
+  - **LDAP**<br />Permet l'intégration avec des annuaires d'entreprise. Prend en charge le filtrage des utilisateurs et des groupes, les correspondances de groupes ainsi que les connexions sécurisées via LDAPS.
 
   - **OpenID Connect (OIDC)**<br />Permet l'authentification unique avec des fournisseurs d'identité tels que Google, Azure AD ou Keycloak. Prend en charge les revendications personnalisées et les correspondances de groupes.
 

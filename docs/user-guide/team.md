@@ -220,7 +220,7 @@ If [group mappings](#roles-from-group-mappings) use the role, the dialog also sh
 Group mappings are available in the **Semaphore Enterprise** edition.
 :::
 
-An admin can give a project role to everyone in a group of your identity provider on the **Group mappings** page. Semaphore updates these roles each time the user signs in through the identity provider. See [Project roles from groups](/admin-guide/authentication/openid#project-roles-from-groups).
+An admin can give a project role to everyone in a group of your identity provider or LDAP directory on the **Group mappings** page. Semaphore updates these roles each time the user signs in through the identity provider or LDAP directory. See Project roles from groups for [OpenID Connect](/admin-guide/authentication/openid#project-roles-from-groups) and [LDAP](/admin-guide/authentication/ldap#project-roles-from-groups).
 
 On the **Team** page, such a role has a lock icon. Hover over the role to see the provider and the group, for example `keycloak: devops`.
 

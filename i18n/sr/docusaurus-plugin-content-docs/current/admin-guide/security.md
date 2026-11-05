@@ -11,7 +11,7 @@ Semaphore podržava bezbednu autentifikaciju i fleksibilne mehanizme autorizacij
 - **Načini prijavljivanja:**
   - **Korisničko ime/lozinka**<br />Podrazumevani način koji koristi kredencijale sačuvane u Semaphore bazi podataka. Lozinke se nikada ne čuvaju u čitljivom obliku; heširaju se algoritmom Argon2id (pogledajte [Heširanje lozinki](#password-hashing)).
 
-  - **LDAP**<br />Omogućava integraciju sa korporativnim servisima direktorijuma. Podržava filtriranje korisnika/grupa i bezbedne veze preko LDAPS-a.
+  - **LDAP**<br />Omogućava integraciju sa korporativnim servisima direktorijuma. Podržava filtriranje korisnika/grupa, mapiranje grupa i bezbedne veze preko LDAPS-a.
 
   - **OpenID Connect (OIDC)**<br />Omogućava jedinstveno prijavljivanje (SSO) sa provajderima identiteta kao što su Google, Azure AD ili Keycloak. Podržava prilagođene claim-ove i mapiranje grupa.
 

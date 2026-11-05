@@ -208,7 +208,7 @@ Si [asignaciones de grupo](#roles-from-group-mappings) usan el rol, el diálogo 
 Las asignaciones de grupo están disponibles en la edición **Semaphore Enterprise**.
 :::
 
-Un administrador puede dar un rol de proyecto a todos los miembros de un grupo de su proveedor de identidad en la página **Group mappings**. Semaphore actualiza estos roles cada vez que el usuario inicia sesión a través del proveedor de identidad. Consulte [Roles de proyecto a partir de grupos](/admin-guide/authentication/openid#project-roles-from-groups).
+Un administrador puede dar un rol de proyecto a todos los miembros de un grupo de su proveedor de identidad o directorio LDAP en la página **Group mappings**. Semaphore actualiza estos roles cada vez que el usuario inicia sesión a través del proveedor de identidad o del directorio LDAP. Consulte Roles de proyecto a partir de grupos para [OpenID Connect](/admin-guide/authentication/openid#project-roles-from-groups) y [LDAP](/admin-guide/authentication/ldap#project-roles-from-groups).
 
 En la página **Equipo**, un rol así tiene un icono de candado. Pase el cursor sobre el rol para ver el proveedor y el grupo, por ejemplo `keycloak: devops`.
 
