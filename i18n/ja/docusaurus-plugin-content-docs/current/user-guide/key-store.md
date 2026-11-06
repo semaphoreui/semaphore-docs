@@ -108,6 +108,46 @@ curl -X POST "https://semaphore.example.com/api/project/1/keys" \
 
 ---
 
+## プレイブックでのシークレット {#secrets-in-playbooks}
+
+Semaphore は Key Store のキーをプレイブックに渡しません。キーは Semaphore 自身が使用します。リポジトリのクローン、インベントリのホストへの接続とそのホスト上での `become`、Ansible Vault のパスワードプロンプトへの応答です。キーが Ansible 変数やタスクの環境変数になることはないため、`lookup('env', 'MY_KEY')` は空文字列を返し、プレイブックから保存済みのパスワードや秘密鍵を読み取ることはできません。間接的に使えるキーは一つだけです。インベントリの SSH 鍵は SSH エージェントに読み込まれるため、プレイブックが Semaphore ホスト上で起動する `ssh` や `git` コマンドは、鍵そのものを見ることなく `SSH_AUTH_SOCK` 経由で認証できます。[タスクの環境変数](/reference/task-environment#every-task)を参照してください。
+
+プレイブックに値を渡すには、その値を[変数グループ](/user-guide/environment#secrets)のシークレットとして保存し、テンプレートでそのグループを選択します。変数グループの **Secrets** タブには 2 つのリストがあります。
+
+| リスト | プレイブックが受け取る形式 | 読み取り方法 |
+| :--- | :--- | :--- |
+| **Extra variables** | Ansible の追加変数 | `{{ db_password }}` |
+| **Environment variables** | `ansible-playbook` プロセスの環境変数 | `{{ lookup('env', 'API_TOKEN') }}` |
+
+```yaml
+- hosts: app
+  tasks:
+    - name: Write the database password
+      ansible.builtin.copy:
+        dest: /etc/myapp/db_password
+        content: "{{ db_password }}"
+        mode: "0600"
+      no_log: true
+
+    - name: Call the deploy API
+      ansible.builtin.uri:
+        url: https://api.example.com/deploy
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('env', 'API_TOKEN') }}"
+      no_log: true
+```
+
+Semaphore はタスク出力からシークレットの値を除去しません。Ansible は失敗したタスクの結果や詳細度を上げた実行で値を表示することがあるため、シークレットを扱うすべてのタスクに `no_log: true` を付けてください。
+
+フォームのシークレット欄は 1 行のみ入力できます。SSH 秘密鍵のようなファイルを配布するには、base64 でエンコードして保存し（`base64 < id_ed25519 | tr -d '\n'`）、`content: "{{ deploy_key_b64 | b64decode }}"` で書き出すか、ファイルを `ansible-vault` で暗号化してリポジトリに置き、Vault パスワードをテンプレートに関連付けます。[複数の Vault パスワード](/user-guide/apps/ansible#multiple-vault-passwords)を参照してください。タスク開始時に入力する値には、[secret 型のサーベイ変数](/user-guide/task-templates/survey-vars#secret)を使用します。
+
+:::info v2.20 以降
+**Semaphore 2.20** 以降、追加変数として渡されるシークレットは Ansible Vault で暗号化されたファイルで Ansible に届きます。それ以前のバージョンでは、各シークレットを `ansible-playbook` のコマンドラインに `--extra-vars name=value` として渡すため、値は Semaphore ホストのプロセス一覧に表示され、Ansible は最初の空白で値を切り詰めます。これらのバージョンでは、空白を含む値には環境変数のシークレットを使用してください。
+:::
+
+---
+
 ## シークレットストレージ {#secret-storages}
 
 Semaphore は分離されたシークレットストレージアーキテクチャをサポートしています。認証情報を作成または編集する際、シークレットの実体が配置される場所をストレージタブから選択できます：

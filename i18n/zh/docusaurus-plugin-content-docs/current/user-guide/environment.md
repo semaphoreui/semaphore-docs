@@ -26,6 +26,11 @@ Ansible 从一个临时文件中以额外变量的形式接收变量组中的变
 2. 点击变量组旁边的垃圾桶图标。
 3. 如果确定要删除该变量组，请点击 Yes。
 
+## 密钥 {#secrets}
+**Secrets** 选项卡保存加密存储的值，保存后 API 不再返回这些值。**Extra variables** 下的密钥以额外变量的形式传给 Ansible，以 `-var` 的形式传给 Terraform/OpenTofu；**Environment variables** 下的密钥设置在任务进程的环境中。
+
+[Key Store](/user-guide/key-store) 中的密钥不会以这种方式传给任务。playbook 示例参见[在 playbook 中使用密钥](/user-guide/key-store#secrets-in-playbooks)。
+
 ## 使用变量组 - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
 当你想在 Terraform 模板中使用已存储的变量组变量或密钥时，必须为名称添加 `TF_VAR_` 前缀，Terraform 脚本才能使用它。
 
