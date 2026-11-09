@@ -242,6 +242,8 @@ HA는 태스크 실행의 수평 확장도 가능하게 합니다. Semaphore 노
 
 ## FAQ {#faq}
 
+<Faq>
+
 ### 액티브-액티브 고가용성이란 무엇입니까? {#what-is-active-active-high-availability}
 
 액티브-액티브 HA는 여러 애플리케이션 인스턴스가 동시에 실행되며 모든 인스턴스가 요청을 처리하는 방식입니다. 주 노드가 없으므로 어떤 인스턴스든 트래픽을 처리하고 작업을 실행할 수 있습니다.
@@ -265,3 +267,5 @@ Semaphore는 공유 데이터베이스로 PostgreSQL과 MySQL을 지원합니다
 ### 수평 확장이 가능합니까? {#can-i-scale-horizontally}
 
 예. 로드 밸런서 뒤에 Semaphore 노드를 추가하여 웹/API 용량을 늘리고, [runner](/admin-guide/runners)를 추가하여 태스크 실행 용량을 늘릴 수 있습니다.
+
+</Faq>

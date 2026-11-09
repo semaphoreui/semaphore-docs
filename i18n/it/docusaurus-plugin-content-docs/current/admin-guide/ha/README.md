@@ -242,6 +242,8 @@ Consultare [Runner](/admin-guide/runners) per le istruzioni di configurazione.
 
 ## FAQ {#faq}
 
+<Faq>
+
 ### Che cos'è l'alta disponibilità active-active? {#what-is-active-active-high-availability}
 
 L'HA active-active significa che più istanze dell'applicazione vengono eseguite contemporaneamente e tutte servono le richieste. Non esiste un nodo primario: qualsiasi istanza può gestire il traffico ed eseguire i job.
@@ -265,3 +267,5 @@ Il bilanciatore di carico instrada il traffico verso i nodi rimanenti. I job in 
 ### È possibile scalare orizzontalmente? {#can-i-scale-horizontally}
 
 Sì. È possibile aggiungere nodi Semaphore dietro il bilanciatore di carico per aumentare la capacità web/API e aggiungere [runner](/admin-guide/runners) per aumentare la capacità di esecuzione dei task.
+
+</Faq>

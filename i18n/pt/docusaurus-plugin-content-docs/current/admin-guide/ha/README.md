@@ -242,6 +242,8 @@ Consulte [Runners](/admin-guide/runners) para ver as instruções de configuraç
 
 ## Perguntas frequentes {#faq}
 
+<Faq>
+
 ### O que é alta disponibilidade ativo-ativo? {#what-is-active-active-high-availability}
 
 HA ativo-ativo significa que várias instâncias da aplicação são executadas simultaneamente e todas atendem requisições. Não há nó primário — qualquer instância pode atender o tráfego e executar jobs.
@@ -265,3 +267,5 @@ O balanceador de carga direciona o tráfego para os nós restantes. Os jobs em e
 ### Posso escalar horizontalmente? {#can-i-scale-horizontally}
 
 Sim. Você pode adicionar nós do Semaphore atrás do balanceador de carga para aumentar a capacidade web/API e adicionar [runners](/admin-guide/runners) para aumentar a capacidade de execução de tarefas.
+
+</Faq>

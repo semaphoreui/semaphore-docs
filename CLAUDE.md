@@ -106,6 +106,29 @@ Never write `(Pro)` or a shields.io badge by hand. Add the feature to
 The [Editions page](docs/editions.md) renders the same registry as a table, so the
 badges and the feature matrix cannot drift apart.
 
+### FAQ sections
+
+FAQ answers are collapsible, as on semaphoreui.com. Wrap the questions in the
+globally available `<Faq>` component and keep each question an ordinary heading
+with an explicit id:
+
+```md
+## FAQ {#faq}
+
+<Faq>
+
+### Can I scale horizontally? {#can-i-scale-horizontally}
+
+Yes. You can add Semaphore nodes behind the load balancer...
+
+</Faq>
+```
+
+Each heading starts a question, and everything up to the next heading is its
+answer. Keep the blank lines around the tags. The headings keep their anchors and
+their place in the table of contents, and a link to a question opens its answer.
+Translated copies wrap the same questions in the same tags.
+
 ## Relationship to the product
 
 The **Semaphore application** source code is **not** in this repo—only the docs. For product behavior or API details, align with the main Semaphore repository and keep docs accurate to the shipped version when making substantive claims.

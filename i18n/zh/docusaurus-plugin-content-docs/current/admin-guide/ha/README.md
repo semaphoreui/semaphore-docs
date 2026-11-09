@@ -242,6 +242,8 @@ HA 还支持任务执行的水平扩展。除了仅在 Semaphore 节点自身上
 
 ## 常见问题 {#faq}
 
+<Faq>
+
 ### 什么是双活高可用？ {#what-is-active-active-high-availability}
 
 双活 HA 意味着多个应用实例同时运行，并且全部都在处理请求。没有主节点——任何实例都可以处理流量并执行作业。
@@ -265,3 +267,5 @@ Semaphore 支持使用 PostgreSQL 和 MySQL 作为共享数据库。SQLite 和 B
 ### 可以水平扩展吗？ {#can-i-scale-horizontally}
 
 可以。你可以在负载均衡器后面添加 Semaphore 节点以提升 Web/API 容量，也可以添加[运行器](/admin-guide/runners)以提升任务执行容量。
+
+</Faq>

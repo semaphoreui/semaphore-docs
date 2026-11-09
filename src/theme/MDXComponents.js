@@ -1,5 +1,6 @@
 import MDXComponents from '@theme-original/MDXComponents';
 import FeatureState, {Pro, Enterprise} from '@site/src/components/FeatureState';
+import Faq from '@site/src/components/Faq';
 
 /**
  * Components available in every .md and .mdx page without an import.
@@ -13,4 +14,5 @@ export default {
   FeatureState,
   Pro,
   Enterprise,
+  Faq,
 };

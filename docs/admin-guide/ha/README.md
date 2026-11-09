@@ -243,6 +243,8 @@ See [Runners](/admin-guide/runners) for setup instructions.
 
 ## FAQ {#faq}
 
+<Faq>
+
 ### What is active-active high availability? {#what-is-active-active-high-availability}
 
 Active-active HA means multiple application instances run simultaneously, and all of them serve requests. There is no primary node — any instance can handle traffic and execute jobs.
@@ -266,3 +268,5 @@ The load balancer routes traffic to the remaining nodes. Running jobs continue o
 ### Can I scale horizontally? {#can-i-scale-horizontally}
 
 Yes. You can add Semaphore nodes behind the load balancer to increase web/API capacity, and add [runners](/admin-guide/runners) to increase task execution capacity.
+
+</Faq>

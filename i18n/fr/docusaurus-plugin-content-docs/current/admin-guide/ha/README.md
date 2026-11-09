@@ -242,6 +242,8 @@ Consultez [Runners](/admin-guide/runners) pour les instructions de configuration
 
 ## FAQ {#faq}
 
+<Faq>
+
 ### Qu'est-ce que la haute disponibilité actif-actif ? {#what-is-active-active-high-availability}
 
 La HA actif-actif signifie que plusieurs instances de l'application s'exécutent simultanément et que toutes servent des requêtes. Il n'y a pas de nœud principal : n'importe quelle instance peut traiter le trafic et exécuter des tâches.
@@ -265,3 +267,5 @@ Le répartiteur de charge redirige le trafic vers les nœuds restants. Les tâch
 ### Puis-je effectuer une mise à l'échelle horizontale ? {#can-i-scale-horizontally}
 
 Oui. Vous pouvez ajouter des nœuds Semaphore derrière le répartiteur de charge pour augmenter la capacité web/API, et ajouter des [runners](/admin-guide/runners) pour augmenter la capacité d'exécution des tâches.
+
+</Faq>

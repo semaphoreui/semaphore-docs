@@ -242,6 +242,8 @@ Pogledajte [Runneri](/admin-guide/runners) za uputstva za podešavanje.
 
 ## Česta pitanja {#faq}
 
+<Faq>
+
 ### Šta je aktivno-aktivna visoka dostupnost? {#what-is-active-active-high-availability}
 
 Aktivno-aktivna HA znači da više instanci aplikacije radi istovremeno i da sve one opslužuju zahteve. Ne postoji primarni čvor — bilo koja instanca može obrađivati saobraćaj i izvršavati poslove.
@@ -265,3 +267,5 @@ Balanser opterećenja usmerava saobraćaj na preostale čvorove. Pokrenuti poslo
 ### Mogu li da skaliram horizontalno? {#can-i-scale-horizontally}
 
 Da. Možete dodati Semaphore čvorove iza balansera opterećenja da biste povećali veb/API kapacitet, i dodati [runnere](/admin-guide/runners) da biste povećali kapacitet izvršavanja zadataka.
+
+</Faq>

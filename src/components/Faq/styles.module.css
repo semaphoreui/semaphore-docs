@@ -1,0 +1,76 @@
+/*
+ * Mirrors the FAQ on semaphoreui.com (website/src/scss/_Pro.scss, .ProFaq):
+ * a rule between questions, the question in bold, and a plus on the right that
+ * turns into a minus while the answer is open.
+ */
+
+.faq {
+  margin-bottom: var(--ifm-leading);
+}
+
+.item {
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.item:first-child {
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.question {
+  position: relative;
+  display: block;
+  padding: 1.5rem 2.5rem 1.5rem 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+.question::-webkit-details-marker {
+  display: none;
+}
+
+.question:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+/* The page's Markdown heading, kept for its anchor and the table of contents. */
+.question > :is(h2, h3, h4, h5, h6) {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+}
+
+/*
+ * The plus and minus are two bars rather than text, so they look the same in
+ * every font. They sit on the middle of the question's first line.
+ */
+.question::before,
+.question::after {
+  content: '';
+  position: absolute;
+  top: 2.25rem;
+  right: 0.5rem;
+  width: 0.875rem;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 1px;
+  background-color: var(--ifm-color-primary);
+  transition: transform var(--ifm-transition-fast) ease;
+}
+
+.question::after {
+  transform: rotate(90deg);
+}
+
+.item[open] > .question::after {
+  transform: rotate(0deg);
+}
+
+.answer {
+  padding: 0 2.5rem 1.5rem 0;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.answer > :last-child {
+  margin-bottom: 0;
+}
