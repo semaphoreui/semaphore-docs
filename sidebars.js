@@ -149,7 +149,16 @@ const sidebars = {
           ],
         },
         'admin-guide/metrics',
-        { type: 'doc', id: 'admin-guide/ha', customProps: { edition: 'enterprise' } },
+        {
+          type: 'category',
+          label: 'High Availability',
+          link: { type: 'doc', id: 'admin-guide/ha/README' },
+          className: 'sidebar-edition sidebar-edition--enterprise',
+          items: [
+            'admin-guide/ha/coordination',
+            'admin-guide/ha/runner-cache',
+          ],
+        },
         'admin-guide/license',
         {
           type: 'category',

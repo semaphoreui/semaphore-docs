@@ -30,6 +30,8 @@ SQLite e BoltDB non sono supportati per le distribuzioni HA. Utilizzare PostgreS
 * Lo **stato condiviso della coda dei task** mantiene la coda dei task in modo che ogni job venga preso in carico esattamente da un solo worker. Tutti i nodi vedono la stessa coda e coordinano l'esecuzione.
 * La **messaggistica Pub/Sub** consente ai nodi di trasmettere eventi come aggiornamenti dei task, notifiche del cluster, invalidazione della cache e modifiche dello stato dell'interfaccia utente. In questo modo tutti i nodi restano sincronizzati in tempo reale.
 
+Le chiavi, i lock e i canali esatti dietro queste funzioni sono descritti in [Coordinamento del cluster](/admin-guide/ha/coordination). La cache condivisa dei record dei runner è descritta in [Cache di autenticazione dei runner](/admin-guide/ha/runner-cache).
+
 ## Prerequisiti {#prerequisites}
 
 Prima di configurare l'HA sono necessari:
@@ -218,110 +220,6 @@ In una distribuzione multi-nodo, l'esecuzione dei task segue un flusso coordinat
 3. **Un nodo prende in carico il task.** Uno dei nodi disponibili recupera il task da Redis, acquisisce un lock distribuito e lo contrassegna come in esecuzione nel database.
 4. **Il task viene eseguito.** Il nodo esegue il task localmente o lo delega a un [runner remoto](/admin-guide/runners). Avanzamento e log vengono scritti nel database.
 5. **I risultati vengono trasmessi.** Gli aggiornamenti del task si propagano tramite Redis Pub/Sub, così tutti i nodi e i client dell'interfaccia utente connessi restano sincronizzati.
-
-## Come funziona l'HA dietro le quinte {#under-the-hood}
-
-I nodi Semaphore non comunicano mai direttamente tra loro. Tutto ciò su cui devono accordarsi passa attraverso Redis: chi è attivo, quale task appartiene a quale nodo, chi avvia una pianificazione e quali messaggi dell'interfaccia utente inoltrare. Ogni parte di questo stato è un piccolo insieme di chiavi Redis con una scadenza, quindi un nodo che si blocca non può lasciare nulla alle sue spalle a lungo. I dati durevoli (task, template, log, runner) risiedono sempre nel database; Redis contiene solo lo stato di coordinamento.
-
-Tutte le chiavi usano i prefissi fissi `ha:` e `tasks:`. Non sono configurabili, quindi due cluster Semaphore che condividono lo stesso server Redis devono usare numeri di database diversi (`ha.redis.db`).
-
-### Registro dei nodi {#node-registry}
-
-Ogni nodo si registra all'avvio e poi aggiorna il proprio record ogni 10 secondi. Il record scade dopo 30 secondi, quindi un nodo che smette di aggiornarlo viene considerato morto al massimo dopo mezzo minuto. In caso di arresto regolare, il nodo rimuove immediatamente il proprio record.
-
-| Chiave | Tipo | Scopo |
-| --- | --- | --- |
-| `ha:node:<node_id>` | stringa, JSON | Heartbeat di un nodo: `node_id`, `started_at`, `version`, `last_beat`. Scade 30 s dopo l'ultimo aggiornamento. |
-| `ha:nodes` | set | ID di tutti i nodi registrati. I membri la cui chiave di heartbeat è scaduta vengono rimossi dagli altri nodi. |
-
-Il registro dei nodi è ciò che mostra la dashboard Cluster ed è ciò che consulta il pulitore dei task orfani (vedi sotto) per decidere se il proprietario di un task è ancora attivo.
-
-### Coda dei task e task in esecuzione {#task-queue}
-
-La coda dei task è condivisa, quindi un task avviato su un nodo può essere assegnato, monitorato e finalizzato da qualsiasi altro. Redis memorizza solo gli ID dei task e alcuni campi transitori; il task stesso viene caricato dal database dal nodo che ne ha bisogno.
-
-| Chiave | Tipo | Scopo |
-| --- | --- | --- |
-| `tasks:queue` | lista | ID dei task in attesa di essere assegnati, in ordine. |
-| `tasks:claim:<task_id>` | stringa | ID del nodo proprietario del task. Scritto atomicamente insieme alla rimozione dalla coda, così un task viene preso in carico esattamente da un nodo. Scade dopo 5 minuti; il proprietario lo aggiorna ogni minuto. |
-| `tasks:running` | set | ID dei task attualmente in esecuzione. |
-| `tasks:active:<project_id>` | set | ID dei task attivi (in attesa o in esecuzione) in un progetto. Usato per i limiti di concorrenza per progetto. |
-| `tasks:task_project` | hash | `task_id` → `project_id`, così qualsiasi nodo può caricare il task dal database. |
-| `tasks:aliases` | hash | `alias` → `task_id` per i task a cui si fa riferimento tramite un alias. |
-| `tasks:runtime:<task_id>` | hash | Campi che cambiano mentre il task è in esecuzione, come l'ID del runner e l'utente che lo ha avviato. |
-| `tasks:finalize:<task_id>` | stringa | Lock acquisito dal nodo che scrive il risultato finale di un task eseguito su un runner remoto. Scade dopo 5 minuti. |
-
-Le voci in `tasks:task_project`, `tasks:aliases` e `tasks:runtime:*` vengono rimosse al termine del task e, come misura di sicurezza, scadono comunque dopo 7 giorni.
-
-Un nodo preleva un task dalla coda con una singola operazione atomica: verifica che il task sia ancora in coda, scrive la presa in carico, rimuove il task dalla coda e lo aggiunge al set dei task in esecuzione. Se due nodi ci provano contemporaneamente, solo uno riesce.
-
-**Pulitore dei task orfani.** Una volta al minuto ogni nodo esamina i task in esecuzione il cui proprietario è morto, cioè la presa in carico è scaduta o l'heartbeat del proprietario è scomparso. Un task che il database indica già come terminato viene semplicemente rimosso da Redis. Un task che non è mai stato consegnato a un runner viene rimesso in coda, così che un nodo attivo lo assegni. Un task già in esecuzione su un runner viene lasciato stare: il runner continua a lavorare e il task viene ripulito quando il database lo indica come terminato.
-
-### Lock {#locks}
-
-I lock sono singole chiavi create con `SET NX`: il nodo che riesce a creare la chiave detiene il lock. Ogni lock ha una scadenza, e i lock mantenuti a lungo vengono aggiornati dal loro proprietario, quindi un nodo che si blocca rilascia automaticamente i propri lock.
-
-| Chiave | Scadenza | Scopo |
-| --- | --- | --- |
-| `ha:sched:lock:<schedule_id>:<minute>` | 55 s | Un lock per pianificazione per minuto. Il nodo che lo crea avvia la pianificazione; gli altri la saltano. |
-| `ha:wf:lock:<project_id>:<run_id>` | 30 s, aggiornato ogni 10 s | Solo un nodo alla volta fa avanzare una determinata esecuzione di workflow. |
-| `ha:wf:start:<project_id>:<template_id>` | 10 s | Lock breve durante la creazione di una nuova esecuzione di workflow, così due nodi non avviano lo stesso workflow due volte. |
-| `ha:audit:export:<destination_id>` | 30 s, aggiornato ogni 10 s | Solo un nodo esporta gli eventi di audit verso una determinata destinazione. Se Redis non è disponibile, nessun nodo esporta, quindi gli eventi non vengono mai inviati due volte. |
-
-I lock di pianificazione e di workflow sono "fail open": se Redis non è raggiungibile, il nodo procede invece di saltare il lavoro, e gli aggiornamenti condizionali nel database mantengono corretto il risultato. Il lease dell'esportazione di audit è invece "fail closed", perché un'esportazione duplicata non può essere annullata.
-
-### Canali Pub/Sub {#pubsub-channels}
-
-| Canale | Scopo |
-| --- | --- |
-| `ha:ws:broadcast` | Messaggi WebSocket per l'interfaccia utente. Un nodo consegna un messaggio ai propri browser connessi e lo pubblica qui; gli altri nodi lo inoltrano ai loro. |
-| `tasks:events` | Modifiche alla coda dei task e al set dei task in esecuzione, aggiornamenti dei campi di runtime e richieste di arresto forzato. I nodi usano questi eventi per mantenere aggiornata la propria vista in memoria della coda e per fermare un task che un altro nodo ha chiesto di fermare. |
-
-I messaggi contengono l'ID del nodo mittente, quindi un nodo ignora i propri messaggi.
-
-### Chiavi della cache dei runner {#runner-cache-keys}
-
-Le chiavi `ha:runner:*` appartengono alla [cache dei runner](#runner-cache), descritta nella sezione successiva.
-
-## Cache dei runner {#runner-cache}
-
-Ogni richiesta che un [runner](/admin-guide/runners) invia al server contiene il suo token, e il server deve trasformare quel token in un record del runner prima di poter fare qualsiasi altra cosa. I runner interrogano il server ogni pochi secondi e riportano l'avanzamento ogni secondo mentre un job è in esecuzione, quindi senza una cache ognuna di queste richieste costerebbe una query al database. La cache dei runner risponde alla maggior parte di esse dalla memoria.
-
-Un singolo nodo tiene la cache nella propria memoria. In modalità HA questo non basta: se si modifica un runner sul nodo A, il nodo B non deve continuare a servire il vecchio record. Per questo in modalità HA la cache risiede in Redis ed è condivisa da tutti i nodi, e una modifica effettuata tramite qualsiasi nodo è visibile a tutti immediatamente.
-
-:::note
-Questa cache non è l'azione **Svuota cache** della pagina Runner. Quell'azione chiede al runner stesso di eliminare le directory di lavoro sulla sua macchina.
-:::
-
-### Cosa viene memorizzato nella cache e per quanto tempo {#runner-cache-ttl}
-
-Il valore memorizzato nella cache è il record del runner senza i suoi tag e senza il token. Il token non raggiunge mai Redis: la chiave è derivata da un hash SHA-256 del token, e il campo del token viene svuotato prima che il record venga salvato.
-
-Una voce vive al massimo 30 secondi. In pratica viene eliminata molto prima, perché ogni modifica effettuata tramite Semaphore invalida subito la cache:
-
-* La creazione, la modifica, l'eliminazione o la nuova registrazione di un runner, oppure l'eliminazione di un progetto, elimina **tutti** i runner in cache su tutti i nodi.
-* Un heartbeat di un runner elimina **solo la voce di quel runner**, così l'orario "visto l'ultima volta" memorizzato resta aggiornato senza toccare gli altri. Un heartbeat viene scritto al massimo una volta per intervallo pari a un terzo di `runners.offline_timeout_sec`, con un limite di 45 secondi; con il timeout predefinito di 120 secondi, ciò avviene ogni 40 secondi.
-
-La scadenza di 30 secondi conta solo per le modifiche effettuate al di fuori di Semaphore, ad esempio modificando direttamente la tabella `runner` o ripristinando un backup.
-
-### Come vengono evitate le scritture obsolete {#runner-cache-generation}
-
-Una ricerca che non trova la voce in cache legge il runner dal database e poi lo salva. Tra questi due passaggi un altro nodo potrebbe modificare il runner. Per garantire che la ricerca non metta mai in cache ciò che ha letto prima della modifica, la cache mantiene un contatore che cresce a ogni invalidazione. La ricerca ricorda il valore del contatore visto prima di accedere al database, e il salvataggio viene rifiutato se nel frattempo il contatore è avanzato. Ogni passaggio viene eseguito come un unico script Lua in Redis, così il contatore e la voce vengono letti e scritti insieme.
-
-### Chiavi Redis {#runner-cache-redis-keys}
-
-| Chiave | Tipo | Scopo |
-| --- | --- | --- |
-| `ha:runner:gen` | stringa, intero | Il contatore. Cresce di uno a ogni invalidazione, sia dell'intera cache sia di un singolo runner. |
-| `ha:runner:inv` | stringa, intero | Valore del contatore all'ultima invalidazione completa. Fa parte di ogni chiave di voce, quindi un'invalidazione completa rende tutte le voci esistenti irraggiungibili in un colpo solo; poi scadono da sole. |
-| `ha:runner:token:<inv>:<sha256(token)>` | stringa, binario | Il record del runner in cache. Scade dopo 30 s. |
-| `ha:runner:forgot:<sha256(token)>` | stringa, intero | Valore del contatore all'ultimo heartbeat di questo runner. Una ricerca iniziata prima dell'heartbeat non può salvare il record precedente all'heartbeat. Scade dopo 30 s. |
-
-La dashboard Cluster riporta il numero di chiavi `ha:runner:token:*` come dimensione della cache dei runner.
-
-### Comportamento in caso di problemi con Redis {#runner-cache-failures}
-
-La cache non fa mai fallire una richiesta di un runner. Ogni operazione sulla cache è limitata a 500 millisecondi; se Redis è lento o irraggiungibile, la ricerca viene trattata come un miss e va al database, e nulla viene salvato. L'unico caso da tenere presente è un'invalidazione che fallisce perché Redis è giù nel momento in cui un runner viene modificato: gli altri nodi potrebbero allora servire il vecchio record finché non scade, al massimo 30 secondi dopo. L'errore viene registrato a livello error.
 
 ## Scalabilità con i runner {#scaling-with-runners}
 

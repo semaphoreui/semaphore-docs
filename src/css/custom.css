@@ -877,3 +877,35 @@ video {
   height: 100%;
   border: 0;
 }
+
+/*
+ * Edition badge on a sidebar category. Page links get theirs from
+ * src/theme/DocSidebarItem/Link; a category label also feeds the collapse
+ * button's aria-label, so it has to stay a plain string and the badge is drawn
+ * with CSS instead. Colours mirror src/components/FeatureState/styles.module.css.
+ */
+.sidebar-edition > .menu__list-item-collapsible > .menu__link::after {
+  margin-left: auto;
+  padding: 0.05rem 0.45rem;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sidebar-edition--enterprise > .menu__list-item-collapsible > .menu__link::after {
+  content: 'Ent';
+  background-color: #fdf0d5;
+  border-color: #efc76b;
+  color: #855400;
+}
+
+[data-theme='dark'] .sidebar-edition--enterprise > .menu__list-item-collapsible > .menu__link::after {
+  background-color: #4a3a12;
+  border-color: #8c6f24;
+  color: #f6dda0;
+}
