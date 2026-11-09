@@ -902,6 +902,7 @@ video {
   background-color: #fdf0d5;
   border-color: #efc76b;
   color: #855400;
+  transform: none !important;
 }
 
 [data-theme='dark'] .sidebar-edition--enterprise > .menu__list-item-collapsible > .menu__link::after {
