@@ -70,12 +70,14 @@ Only the English labels are used. The docs site has one locale.
 
 **Navbar** (`navbar.items`, in website order)
 - Each `.SiteHeader__dropdown` becomes `{ type: 'dropdown', label, position: 'left', items: [...] }`.
-- Product dropdown items are labelled `"<title> · <tag>"` (for example `Pro · For teams`); the description text is dropped.
-- A `.SiteHeader__categoryTitle` inside a dropdown becomes `{ type: 'html', value: '<div class="dropdown__category">Comparison</div>' }` placed before the links it heads.
+- Each dropdown carries a `className` (`navbar-menu--product`, `--features`, `--explore`, `--list`) that selects its panel layout in `custom.css`.
+- Product dropdown items are built with `productItem(name, tag, desc, href)`: title, tag and description, as on the website.
+- A `.SiteHeader__categoryTitle` inside a dropdown becomes `categoryItem(title)` placed before the links it heads.
+- Labels are translated in `i18n/<locale>/docusaurus-theme-classic/navbar.json`. Strings inside `html` items (product tags and descriptions, category titles) cannot go there; they live in `src/data/navbarStrings.js`. Both come from `website/src/i18n/<locale>.yml`.
 - Direct links (Pricing) become plain `{ label, href, position: 'left' }`.
-- Right side: `GitHub` (repo link) and `Sign in` (`https://portal.semaphoreui.com`), `position: 'right'`.
-- Do not add the "Contact sales" button (depends on the website's live-chat script) or the star counter.
-- Search is provided by the existing `custom-SearchNavbarItem` theme component; leave `src/theme/NavbarItem/ComponentTypes.js` spreading the original map.
+- Right side: the star counter (`html` item), `Sign in` (`https://portal.semaphoreui.com`), the locale dropdown, and the two buttons (`navbar-cta`).
+- "Contact sales" links to `/contact`, because the website's button depends on its live-chat script. "Start Pro trial" is shown in the mobile drawer only: on desktop the search box, language switch and theme switch take its room.
+- Search and the theme switch are added by Docusaurus itself; `custom.css` orders them inside the bar.
 
 **Footer** (`footer.links`, `style: 'light'`)
 - Column 1 is the brand column: `title: ' '` and a single `html` item containing the logo links (both light and dark PNGs), the `footer.brand_desc` text, and the "Contact us" rows (Sales, Support, Security, Legal). Its title is hidden by CSS.
@@ -88,7 +90,8 @@ Only the English labels are used. The docs site has one locale.
 - The docs link is internal (`to: '/'`), so the diff helper ignores `/docs`.
 
 **Styling constraints already in place** (keep them)
-- Navbar dropdown panel follows the theme (white in light, surface color in dark) via Infima variables.
-- Dropdown caret is a thin outlined chevron (`.navbar .dropdown > .navbar__link::after`), 1.5px stroke.
+- The navbar copies the website's `SiteHeader.scss`: a floating rounded bar with dropdown panels attached to its bottom edge. Colors are driven by `--sem-header-*` custom properties with a `[data-theme='dark']` override (the website has no dark theme).
+- Translated labels vary in width. After changing items, check that the bar does not overflow in the long locales (es, fr, de, ru) at 1000px and 1440px.
+- Dropdown caret is a thin outlined chevron (`.navbar .dropdown > .navbar__link::after`).
 - External-link icons are hidden in navbar and footer.
 - Footer colors are driven by `--footer-*` custom properties with a `[data-theme='dark']` override.

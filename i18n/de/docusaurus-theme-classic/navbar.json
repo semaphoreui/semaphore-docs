@@ -1,8 +1,4 @@
 {
-  "title": {
-    "message": "Semaphore UI",
-    "description": "The title in the navbar"
-  },
   "logo.alt": {
     "message": "Semaphore UI Logo",
     "description": "The alt text of navbar logo"
@@ -23,25 +19,9 @@
     "message": "Preise",
     "description": "Navbar item with label Pricing"
   },
-  "item.label.GitHub": {
-    "message": "GitHub",
-    "description": "Navbar item with label GitHub"
-  },
   "item.label.Sign in": {
     "message": "Anmelden",
     "description": "Navbar item with label Sign in"
-  },
-  "item.label.Pro · For teams": {
-    "message": "Pro · Für Teams",
-    "description": "Navbar item with label Pro · For teams"
-  },
-  "item.label.Enterprise · For large-scale operations": {
-    "message": "Enterprise · Für große Umgebungen",
-    "description": "Navbar item with label Enterprise · For large-scale operations"
-  },
-  "item.label.Community · For homelab": {
-    "message": "Community · Für das Homelab",
-    "description": "Navbar item with label Community · For homelab"
   },
   "item.label.Features": {
     "message": "Funktionen",
@@ -98,5 +78,93 @@
   "item.label.API References": {
     "message": "API-Referenz",
     "description": "Navbar item with label API References"
+  },
+  "item.label.Company": {
+    "message": "Unternehmen",
+    "description": "Navbar item with label Company"
+  },
+  "item.label.Task templates": {
+    "message": "Aufgabenvorlagen",
+    "description": "Navbar item with label Task templates"
+  },
+  "item.label.Workflows": {
+    "message": "Workflows",
+    "description": "Navbar item with label Workflows"
+  },
+  "item.label.Schedules": {
+    "message": "Zeitpläne",
+    "description": "Navbar item with label Schedules"
+  },
+  "item.label.API & webhooks": {
+    "message": "API und Webhooks",
+    "description": "Navbar item with label API & webhooks"
+  },
+  "item.label.Secrets & credentials": {
+    "message": "Secrets und Zugangsdaten",
+    "description": "Navbar item with label Secrets & credentials"
+  },
+  "item.label.Access control": {
+    "message": "Zugriffskontrolle",
+    "description": "Navbar item with label Access control"
+  },
+  "item.label.Run history & logs": {
+    "message": "Audit und Protokolle",
+    "description": "Navbar item with label Run history & logs"
+  },
+  "item.label.Notifications": {
+    "message": "Benachrichtigungen",
+    "description": "Navbar item with label Notifications"
+  },
+  "item.label.Runners": {
+    "message": "Runner",
+    "description": "Navbar item with label Runners"
+  },
+  "item.label.High availability": {
+    "message": "Hochverfügbarkeit",
+    "description": "Navbar item with label High availability"
+  },
+  "item.label.Terraform provider": {
+    "message": "Terraform-Provider",
+    "description": "Navbar item with label Terraform provider"
+  },
+  "item.label.MCP": {
+    "message": "MCP und KI",
+    "description": "Navbar item with label MCP"
+  },
+  "item.label.AWX migration": {
+    "message": "Migration von AWX",
+    "description": "Navbar item with label AWX migration"
+  },
+  "item.label.What's new?": {
+    "message": "Was gibt's Neues?",
+    "description": "Navbar item with label What's new?"
+  },
+  "item.label.About us": {
+    "message": "Über uns",
+    "description": "Navbar item with label About us"
+  },
+  "item.label.Partnership": {
+    "message": "Partnerschaft",
+    "description": "Navbar item with label Partnership"
+  },
+  "item.label.Careers": {
+    "message": "Karriere",
+    "description": "Navbar item with label Careers"
+  },
+  "item.label.Contact": {
+    "message": "Kontakt",
+    "description": "Navbar item with label Contact"
+  },
+  "item.label.Legal": {
+    "message": "Rechtliches",
+    "description": "Navbar item with label Legal"
+  },
+  "item.label.Start Pro trial": {
+    "message": "Pro-Testversion starten",
+    "description": "Navbar item with label Start Pro trial"
+  },
+  "item.label.Contact sales": {
+    "message": "Vertrieb kontaktieren",
+    "description": "Navbar item with label Contact sales"
   }
 }

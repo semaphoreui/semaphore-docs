@@ -1,8 +1,4 @@
 {
-  "title": {
-    "message": "Semaphore UI",
-    "description": "The title in the navbar"
-  },
   "logo.alt": {
     "message": "Semaphore UI Logo",
     "description": "The alt text of navbar logo"
@@ -23,25 +19,9 @@
     "message": "Pricing",
     "description": "Navbar item with label Pricing"
   },
-  "item.label.GitHub": {
-    "message": "GitHub",
-    "description": "Navbar item with label GitHub"
-  },
   "item.label.Sign in": {
     "message": "Sign in",
     "description": "Navbar item with label Sign in"
-  },
-  "item.label.Pro · For teams": {
-    "message": "Pro · For teams",
-    "description": "Navbar item with label Pro · For teams"
-  },
-  "item.label.Enterprise · For large-scale operations": {
-    "message": "Enterprise · For large-scale operations",
-    "description": "Navbar item with label Enterprise · For large-scale operations"
-  },
-  "item.label.Community · For homelab": {
-    "message": "Community · For homelab",
-    "description": "Navbar item with label Community · For homelab"
   },
   "item.label.Features": {
     "message": "Features",
@@ -98,5 +78,93 @@
   "item.label.API References": {
     "message": "API References",
     "description": "Navbar item with label API References"
+  },
+  "item.label.Company": {
+    "message": "Empresa",
+    "description": "Navbar item with label Company"
+  },
+  "item.label.Task templates": {
+    "message": "Modelos de tarefas",
+    "description": "Navbar item with label Task templates"
+  },
+  "item.label.Workflows": {
+    "message": "Fluxos de trabalho",
+    "description": "Navbar item with label Workflows"
+  },
+  "item.label.Schedules": {
+    "message": "Agendamentos",
+    "description": "Navbar item with label Schedules"
+  },
+  "item.label.API & webhooks": {
+    "message": "API e webhooks",
+    "description": "Navbar item with label API & webhooks"
+  },
+  "item.label.Secrets & credentials": {
+    "message": "Segredos e credenciais",
+    "description": "Navbar item with label Secrets & credentials"
+  },
+  "item.label.Access control": {
+    "message": "Controle de acesso",
+    "description": "Navbar item with label Access control"
+  },
+  "item.label.Run history & logs": {
+    "message": "Auditoria e logs",
+    "description": "Navbar item with label Run history & logs"
+  },
+  "item.label.Notifications": {
+    "message": "Notificações",
+    "description": "Navbar item with label Notifications"
+  },
+  "item.label.Runners": {
+    "message": "Runners",
+    "description": "Navbar item with label Runners"
+  },
+  "item.label.High availability": {
+    "message": "Alta disponibilidade",
+    "description": "Navbar item with label High availability"
+  },
+  "item.label.Terraform provider": {
+    "message": "Provedor Terraform",
+    "description": "Navbar item with label Terraform provider"
+  },
+  "item.label.MCP": {
+    "message": "MCP e IA",
+    "description": "Navbar item with label MCP"
+  },
+  "item.label.AWX migration": {
+    "message": "Migração do AWX",
+    "description": "Navbar item with label AWX migration"
+  },
+  "item.label.What's new?": {
+    "message": "Novidades?",
+    "description": "Navbar item with label What's new?"
+  },
+  "item.label.About us": {
+    "message": "Sobre nós",
+    "description": "Navbar item with label About us"
+  },
+  "item.label.Partnership": {
+    "message": "Parceria",
+    "description": "Navbar item with label Partnership"
+  },
+  "item.label.Careers": {
+    "message": "Carreiras",
+    "description": "Navbar item with label Careers"
+  },
+  "item.label.Contact": {
+    "message": "Contato",
+    "description": "Navbar item with label Contact"
+  },
+  "item.label.Legal": {
+    "message": "Jurídico",
+    "description": "Navbar item with label Legal"
+  },
+  "item.label.Start Pro trial": {
+    "message": "Iniciar teste do Pro",
+    "description": "Navbar item with label Start Pro trial"
+  },
+  "item.label.Contact sales": {
+    "message": "Falar com vendas",
+    "description": "Navbar item with label Contact sales"
   }
 }

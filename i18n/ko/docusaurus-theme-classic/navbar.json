@@ -1,8 +1,4 @@
 {
-  "title": {
-    "message": "Semaphore UI",
-    "description": "The title in the navbar"
-  },
   "logo.alt": {
     "message": "Semaphore UI 로고",
     "description": "The alt text of navbar logo"
@@ -23,25 +19,9 @@
     "message": "가격",
     "description": "Navbar item with label Pricing"
   },
-  "item.label.GitHub": {
-    "message": "GitHub",
-    "description": "Navbar item with label GitHub"
-  },
   "item.label.Sign in": {
     "message": "로그인",
     "description": "Navbar item with label Sign in"
-  },
-  "item.label.Pro · For teams": {
-    "message": "Pro · 팀용",
-    "description": "Navbar item with label Pro · For teams"
-  },
-  "item.label.Enterprise · For large-scale operations": {
-    "message": "Enterprise · 대규모 운영용",
-    "description": "Navbar item with label Enterprise · For large-scale operations"
-  },
-  "item.label.Community · For homelab": {
-    "message": "커뮤니티 · 홈랩용",
-    "description": "Navbar item with label Community · For homelab"
   },
   "item.label.Features": {
     "message": "기능",
@@ -98,5 +78,93 @@
   "item.label.API References": {
     "message": "API 레퍼런스",
     "description": "Navbar item with label API References"
+  },
+  "item.label.Company": {
+    "message": "회사",
+    "description": "Navbar item with label Company"
+  },
+  "item.label.Task templates": {
+    "message": "작업 템플릿",
+    "description": "Navbar item with label Task templates"
+  },
+  "item.label.Workflows": {
+    "message": "워크플로",
+    "description": "Navbar item with label Workflows"
+  },
+  "item.label.Schedules": {
+    "message": "일정",
+    "description": "Navbar item with label Schedules"
+  },
+  "item.label.API & webhooks": {
+    "message": "API 및 웹훅",
+    "description": "Navbar item with label API & webhooks"
+  },
+  "item.label.Secrets & credentials": {
+    "message": "시크릿 및 자격 증명",
+    "description": "Navbar item with label Secrets & credentials"
+  },
+  "item.label.Access control": {
+    "message": "접근 제어",
+    "description": "Navbar item with label Access control"
+  },
+  "item.label.Run history & logs": {
+    "message": "감사 및 로그",
+    "description": "Navbar item with label Run history & logs"
+  },
+  "item.label.Notifications": {
+    "message": "알림",
+    "description": "Navbar item with label Notifications"
+  },
+  "item.label.Runners": {
+    "message": "러너",
+    "description": "Navbar item with label Runners"
+  },
+  "item.label.High availability": {
+    "message": "고가용성",
+    "description": "Navbar item with label High availability"
+  },
+  "item.label.Terraform provider": {
+    "message": "Terraform 프로바이더",
+    "description": "Navbar item with label Terraform provider"
+  },
+  "item.label.MCP": {
+    "message": "MCP 및 AI",
+    "description": "Navbar item with label MCP"
+  },
+  "item.label.AWX migration": {
+    "message": "AWX에서 마이그레이션",
+    "description": "Navbar item with label AWX migration"
+  },
+  "item.label.What's new?": {
+    "message": "새로운 소식?",
+    "description": "Navbar item with label What's new?"
+  },
+  "item.label.About us": {
+    "message": "회사 소개",
+    "description": "Navbar item with label About us"
+  },
+  "item.label.Partnership": {
+    "message": "파트너십",
+    "description": "Navbar item with label Partnership"
+  },
+  "item.label.Careers": {
+    "message": "채용",
+    "description": "Navbar item with label Careers"
+  },
+  "item.label.Contact": {
+    "message": "문의",
+    "description": "Navbar item with label Contact"
+  },
+  "item.label.Legal": {
+    "message": "법적 고지",
+    "description": "Navbar item with label Legal"
+  },
+  "item.label.Start Pro trial": {
+    "message": "Pro 무료 체험",
+    "description": "Navbar item with label Start Pro trial"
+  },
+  "item.label.Contact sales": {
+    "message": "영업팀 문의",
+    "description": "Navbar item with label Contact sales"
   }
 }

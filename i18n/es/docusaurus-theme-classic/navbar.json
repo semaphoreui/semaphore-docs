@@ -1,8 +1,4 @@
 {
-  "title": {
-    "message": "Semaphore UI",
-    "description": "The title in the navbar"
-  },
   "logo.alt": {
     "message": "Logotipo de Semaphore UI",
     "description": "The alt text of navbar logo"
@@ -23,25 +19,9 @@
     "message": "Precios",
     "description": "Navbar item with label Pricing"
   },
-  "item.label.GitHub": {
-    "message": "GitHub",
-    "description": "Navbar item with label GitHub"
-  },
   "item.label.Sign in": {
     "message": "Iniciar sesión",
     "description": "Navbar item with label Sign in"
-  },
-  "item.label.Pro · For teams": {
-    "message": "Pro · Para equipos",
-    "description": "Navbar item with label Pro · For teams"
-  },
-  "item.label.Enterprise · For large-scale operations": {
-    "message": "Enterprise · Para operaciones a gran escala",
-    "description": "Navbar item with label Enterprise · For large-scale operations"
-  },
-  "item.label.Community · For homelab": {
-    "message": "Community · Para homelab",
-    "description": "Navbar item with label Community · For homelab"
   },
   "item.label.Features": {
     "message": "Funcionalidades",
@@ -98,5 +78,93 @@
   "item.label.API References": {
     "message": "Referencia de la API",
     "description": "Navbar item with label API References"
+  },
+  "item.label.Company": {
+    "message": "Empresa",
+    "description": "Navbar item with label Company"
+  },
+  "item.label.Task templates": {
+    "message": "Plantillas de tareas",
+    "description": "Navbar item with label Task templates"
+  },
+  "item.label.Workflows": {
+    "message": "Flujos de trabajo",
+    "description": "Navbar item with label Workflows"
+  },
+  "item.label.Schedules": {
+    "message": "Programaciones",
+    "description": "Navbar item with label Schedules"
+  },
+  "item.label.API & webhooks": {
+    "message": "API y webhooks",
+    "description": "Navbar item with label API & webhooks"
+  },
+  "item.label.Secrets & credentials": {
+    "message": "Secretos y credenciales",
+    "description": "Navbar item with label Secrets & credentials"
+  },
+  "item.label.Access control": {
+    "message": "Control de acceso",
+    "description": "Navbar item with label Access control"
+  },
+  "item.label.Run history & logs": {
+    "message": "Auditoría y registros",
+    "description": "Navbar item with label Run history & logs"
+  },
+  "item.label.Notifications": {
+    "message": "Notificaciones",
+    "description": "Navbar item with label Notifications"
+  },
+  "item.label.Runners": {
+    "message": "Runners",
+    "description": "Navbar item with label Runners"
+  },
+  "item.label.High availability": {
+    "message": "Alta disponibilidad",
+    "description": "Navbar item with label High availability"
+  },
+  "item.label.Terraform provider": {
+    "message": "Proveedor de Terraform",
+    "description": "Navbar item with label Terraform provider"
+  },
+  "item.label.MCP": {
+    "message": "MCP e IA",
+    "description": "Navbar item with label MCP"
+  },
+  "item.label.AWX migration": {
+    "message": "Migración desde AWX",
+    "description": "Navbar item with label AWX migration"
+  },
+  "item.label.What's new?": {
+    "message": "¿Qué hay de nuevo?",
+    "description": "Navbar item with label What's new?"
+  },
+  "item.label.About us": {
+    "message": "Sobre nosotros",
+    "description": "Navbar item with label About us"
+  },
+  "item.label.Partnership": {
+    "message": "Colaboración",
+    "description": "Navbar item with label Partnership"
+  },
+  "item.label.Careers": {
+    "message": "Empleo",
+    "description": "Navbar item with label Careers"
+  },
+  "item.label.Contact": {
+    "message": "Contacto",
+    "description": "Navbar item with label Contact"
+  },
+  "item.label.Legal": {
+    "message": "Legal",
+    "description": "Navbar item with label Legal"
+  },
+  "item.label.Start Pro trial": {
+    "message": "Probar Pro gratis",
+    "description": "Navbar item with label Start Pro trial"
+  },
+  "item.label.Contact sales": {
+    "message": "Contactar ventas",
+    "description": "Navbar item with label Contact sales"
   }
 }
