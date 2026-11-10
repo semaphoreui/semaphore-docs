@@ -11,6 +11,8 @@ const websiteUrl = (path = '/') =>
 
 // Strings of the navbar's `html` items; labels are translated in i18n/*/navbar.json.
 const strings = require('./src/data/navbarStrings')[currentLocale];
+// Same for the footer's brand column; link labels are in i18n/*/footer.json.
+const footerStrings = require('./src/data/footerStrings')[currentLocale];
 
 // Product menu entry in the website header's layout: "Name | tag" over a description.
 const productItem = (name, tag, desc, href) => ({
@@ -262,6 +264,9 @@ const config = {
           },
         ],
       },
+      // Mirrors the footer of the main website (SiteFooter component there).
+      // src/theme/Footer lays the columns out and turns them into accordions
+      // on mobile; the styles live in src/css/custom.css under "Footer".
       footer: {
         style: 'light',
         links: [
@@ -274,32 +279,33 @@ const config = {
                     <img class="footer__logo footer__logo--light" src="/docs/img/semaphore-light.png" alt="Semaphore UI" />
                     <img class="footer__logo footer__logo--dark" src="/docs/img/semaphore-dark.png" alt="Semaphore UI" />
                   </a>
-                  <p class="footer__desc">A self-hosted automation control plane for Ansible, Terraform, OpenTofu, Terragrunt, Bash, PowerShell, and Python workflows.</p>
+                  <p class="footer__desc">${footerStrings.brandDesc}</p>
                   <div class="footer__contact">
-                    <div class="footer__contactTitle">Contact us</div>
-                    <div class="footer__contactRow"><span class="footer__contactLabel">Sales</span><a href="mailto:sales@semaphoreui.com">sales@semaphoreui.com</a></div>
-                    <div class="footer__contactRow"><span class="footer__contactLabel">Partnership</span><a href="mailto:partners@semaphoreui.com">partners@semaphoreui.com</a></div>
-                    <div class="footer__contactRow"><span class="footer__contactLabel">Support</span><a href="mailto:support@semaphoreui.com">support@semaphoreui.com</a></div>
-                    <div class="footer__contactRow"><span class="footer__contactLabel">Security</span><a href="mailto:security@semaphoreui.com">security@semaphoreui.com</a></div>
-                    <div class="footer__contactRow"><span class="footer__contactLabel">Legal</span><a href="mailto:legal@semaphoreui.com">legal@semaphoreui.com</a></div>
+                    <div class="footer__contactRow"><span class="footer__contactLabel">${footerStrings.sales}</span><a href="mailto:sales@semaphoreui.com">sales@semaphoreui.com</a></div>
+                    <div class="footer__contactRow"><span class="footer__contactLabel">${footerStrings.partnership}</span><a href="mailto:partners@semaphoreui.com">partners@semaphoreui.com</a></div>
+                    <div class="footer__contactRow"><span class="footer__contactLabel">${footerStrings.support}</span><a href="mailto:support@semaphoreui.com">support@semaphoreui.com</a></div>
+                    <div class="footer__contactRow"><span class="footer__contactLabel">${footerStrings.security}</span><a href="mailto:security@semaphoreui.com">security@semaphoreui.com</a></div>
+                    <div class="footer__contactRow"><span class="footer__contactLabel">${footerStrings.legal}</span><a href="mailto:legal@semaphoreui.com">legal@semaphoreui.com</a></div>
                   </div>
                 `,
               },
             ],
           },
+          // The order below is the order of the mobile accordions. On desktop
+          // src/theme/Footer stacks Product over Help and Explore over Company.
           {
             title: 'Product',
             items: [
               { label: 'Community', href: 'https://github.com/semaphoreui/semaphore', target: '_self' },
               { label: 'Pro', href: websiteUrl('/pro'), target: '_self' },
               { label: 'Enterprise', href: websiteUrl('/enterprise'), target: '_self' },
+              { label: 'Features', href: websiteUrl('/features'), target: '_self' },
               { label: 'Pricing', href: websiteUrl('/pricing/'), target: '_self' },
             ],
           },
           {
             title: 'Explore',
             items: [
-              { label: 'Features', href: websiteUrl('/features'), target: '_self' },
               { label: 'Use cases', href: websiteUrl('/use-cases'), target: '_self' },
               { label: 'Case studies', href: websiteUrl('/case-studies'), target: '_self' },
               { label: 'Roadmap', href: websiteUrl('/roadmap'), target: '_self' },
@@ -312,6 +318,15 @@ const config = {
               { label: 'Installation', href: websiteUrl('/install'), target: '_self' },
               { label: 'Documentation', to: '/' },
               { label: 'API References', href: websiteUrl('/api-docs/'), target: '_self' },
+            ],
+          },
+          {
+            title: 'Company',
+            items: [
+              { label: 'About us', href: websiteUrl('/about'), target: '_self' },
+              { label: 'Partnership', href: websiteUrl('/partners/'), target: '_self' },
+              { label: 'Careers', href: websiteUrl('/careers'), target: '_self' },
+              { label: 'Contact', href: websiteUrl('/contact'), target: '_self' },
             ],
           },
           {
@@ -331,6 +346,7 @@ const config = {
             items: [
               { label: 'Terms of Service', href: websiteUrl('/legal/terms-of-service'), target: '_self' },
               { label: 'Subscription Agreement', href: websiteUrl('/legal/subscription-agreement'), target: '_self' },
+              { label: 'Acceptable Use Policy', href: websiteUrl('/legal/acceptable-use-policy'), target: '_self' },
               { label: 'Refund Policy', href: websiteUrl('/legal/refund-policy'), target: '_self' },
               { label: 'Privacy Policy', href: websiteUrl('/privacy/policy'), target: '_self' },
               { label: 'Cookie Policy', href: websiteUrl('/privacy/cookies'), target: '_self' },

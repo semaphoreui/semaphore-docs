@@ -15,17 +15,20 @@ All paths are relative to the repo root (one level above this `docs/` folder):
 | What | File |
 |------|------|
 | Header structure and links | `website/src/components/SiteHeader/SiteHeader.pug` (desktop `nav.SiteHeader__nav` block) |
-| Footer structure and links | `website/src/components/SiteFooter/SiteFooter.pug` (desktop `.SiteFooter__columns` block plus `.SiteFooter__brandCol`) |
+| Footer structure and links | `website/src/components/SiteFooter/SiteFooter.pug` (`.SiteFooter__brandCol`, desktop `.SiteFooter__columns`, `.SiteFooter__mobileAccordions`, `.SiteFooter__bottom`) |
+| Footer styles | `website/src/components/SiteFooter/SiteFooter.scss`, link colors in `website/src/scss/_Links.scss` |
 | Labels | `website/src/i18n/en.yml`, keys `header.*` and `footer.*` |
 
-Only the English labels are used. The docs site has one locale.
+English labels go into `docusaurus.config.js`; the ten other locales are translated as described below.
 
 ## Targets (docs)
 
 | What | Where |
 |------|-------|
 | Navbar items | `docusaurus.config.js` → `themeConfig.navbar.items` |
-| Footer columns | `docusaurus.config.js` → `themeConfig.footer.links` |
+| Footer link groups | `docusaurus.config.js` → `themeConfig.footer.links` |
+| Footer layout, mobile accordions, language selector | `src/theme/Footer/index.js` |
+| Footer brand column strings | `src/data/footerStrings.js` |
 | Styling | `src/css/custom.css` (navbar dropdown, chevron, footer sections) |
 | Logos | `static/img/semaphore-light.png`, `static/img/semaphore-dark.png` (copied from `website/src/img/`) |
 
@@ -45,7 +48,7 @@ Only the English labels are used. The docs site has one locale.
 3. If the website added a new CSS-visible element (a new category title inside a
    dropdown, a new brand-column block), add matching styles in `src/css/custom.css`.
    Existing hooks: `.dropdown__category`, `.footer__brand`, `.footer__desc`,
-   `.footer__contact*`.
+   `.footer__contact*`, `.footer__group*`, `.footer__lang*`, `.footer__sheet*`.
 
 4. Build and verify:
 
@@ -79,11 +82,13 @@ Only the English labels are used. The docs site has one locale.
 - "Contact sales" links to `/contact`, because the website's button depends on its live-chat script. "Start Pro trial" is shown in the mobile drawer only: on desktop the search box, language switch and theme switch take its room.
 - Search and the theme switch are added by Docusaurus itself; `custom.css` orders them inside the bar.
 
-**Footer** (`footer.links`, `style: 'light'`)
-- Column 1 is the brand column: `title: ' '` and a single `html` item containing the logo links (both light and dark PNGs), the `footer.brand_desc` text, and the "Contact us" rows (Sales, Support, Security, Legal). Its title is hidden by CSS.
-- Columns 2..6 mirror `.SiteFooter__col` blocks in order: Product, Explore, Help, Links, Legal. Titles and labels come from `footer.*` in `en.yml`.
+**Footer** (`footer.links`, `style: 'light'`, rendered by `src/theme/Footer`)
+- Entry 1 is the brand column: `title: ' '` and a single `html` item containing the logo links (both light and dark PNGs), the `footer.brand_desc` text, and the contact rows (Sales, Partnership, Support, Security, Legal). Its strings come from `src/data/footerStrings.js`, one set per locale, taken from `footer.*` in `website/src/i18n/<locale>.yml`.
+- The other entries mirror the website's link groups in the order of `.SiteFooter__mobileAccordions`: Product, Explore, Help, Company, Links, Legal. Titles and labels come from `footer.*` in `en.yml`; translations go to `i18n/<locale>/docusaurus-theme-classic/footer.json`.
+- The desktop columns (`.SiteFooter__col`, which stack Product over Help and Explore over Company) are `DESKTOP_COLUMNS` in `src/theme/Footer/index.js`, as indexes into those groups. Update it when the website regroups its columns.
+- On mobile (up to 996px, the Docusaurus breakpoint; the website switches at 1023px) the same groups become accordions, closed by default.
 - `copyright` is `` `© ${new Date().getFullYear()} Semaphore UI. All rights reserved.` ``.
-- Do not add the language selector or the mobile accordions.
+- The language selector next to the copyright lists the docs locales (`i18n.locales`), not the website's: an upward popup on desktop, a bottom sheet on mobile.
 
 **Accepted differences** (do not "fix" these when syncing)
 - `API References (Swagger)` on the website is shortened to `API References` in the docs navbar and footer.
@@ -94,4 +99,4 @@ Only the English labels are used. The docs site has one locale.
 - Translated labels vary in width. After changing items, check that the bar does not overflow in the long locales (es, fr, de, ru) at 1000px and 1440px.
 - Dropdown caret is a thin outlined chevron (`.navbar .dropdown > .navbar__link::after`).
 - External-link icons are hidden in navbar and footer.
-- Footer colors are driven by `--footer-*` custom properties with a `[data-theme='dark']` override.
+- Footer colors are driven by `--footer-*` custom properties with a `[data-theme='dark']` override (the website has no dark theme).

@@ -127,6 +127,30 @@
     "message": "Offerta di supporto",
     "description": "The label of footer link with label=Support Offering linking to https://semaphoreui.com/legal/support-offering"
   },
+  "link.title.Company": {
+    "message": "Azienda",
+    "description": "The title of the footer links column with title=Company in the footer"
+  },
+  "link.item.label.About us": {
+    "message": "Chi siamo",
+    "description": "The label of footer link with label=About us linking to https://semaphoreui.com/about"
+  },
+  "link.item.label.Partnership": {
+    "message": "Partnership",
+    "description": "The label of footer link with label=Partnership linking to https://semaphoreui.com/partners/"
+  },
+  "link.item.label.Careers": {
+    "message": "Lavora con noi",
+    "description": "The label of footer link with label=Careers linking to https://semaphoreui.com/careers"
+  },
+  "link.item.label.Contact": {
+    "message": "Contatti",
+    "description": "The label of footer link with label=Contact linking to https://semaphoreui.com/contact"
+  },
+  "link.item.label.Acceptable Use Policy": {
+    "message": "Politica di utilizzo accettabile",
+    "description": "The label of footer link with label=Acceptable Use Policy linking to https://semaphoreui.com/legal/acceptable-use-policy"
+  },
   "copyright": {
     "message": "© 2026 Semaphore UI. Tutti i diritti riservati.",
     "description": "The footer copyright"
