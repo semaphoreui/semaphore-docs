@@ -17,6 +17,7 @@
   --sem-layout-width: var(--ifm-container-width);
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-navbar-item-padding-horizontal: 8px;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -225,7 +226,6 @@ hr {
   --ifm-navbar-link-color: var(--sem-header-text);
   --ifm-navbar-link-hover-color: var(--sem-header-accent);
   --ifm-navbar-link-active-color: var(--sem-header-accent);
-  --ifm-navbar-item-padding-horizontal: 8px;
   --ifm-navbar-item-padding-vertical: 6px;
 }
 
@@ -325,7 +325,7 @@ hr {
   margin-left: 0.5em;
   border: solid currentColor;
   border-width: 0 2px 2px 0;
-  transform: translateY(-35%) rotate(45deg);
+  transform: translateY(-35%) rotate(45deg) scale(0.8);
   position: relative;
   top: 0;
   transition: transform 0.2s ease;
@@ -333,7 +333,7 @@ hr {
 
 .navbar .dropdown:hover > .navbar__link::after,
 .navbar .dropdown:focus-within > .navbar__link::after {
-  transform: translateY(15%) rotate(225deg);
+  transform: translateY(15%) rotate(225deg) scale(0.8);
 }
 
 .navbar .dropdown__menu {
@@ -692,7 +692,7 @@ hr {
 /* Fluid scaling while the layout is narrower than the wide container */
 @media (min-width: 997px) and (max-width: 1439px) {
   :root {
-    --ifm-navbar-item-padding-horizontal: 5px;
+    --ifm-navbar-item-padding-horizontal: 8px;
   }
 
   .navbar__inner {
