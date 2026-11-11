@@ -83,7 +83,7 @@ Semaphore führt benutzerdefinierte Playbooks und Befehle aus, was riskant sein 
 
 - **Minimale Rechte**<br />Mit dem Docker- und dem Kubernetes-Executor wählen Sie Image, Netzwerk und Service-Account selbst, sodass ein Task nur das bekommt, was er braucht.
 
-- **Prozessbenutzer für Tasks**<br />Tasks können unter einem dedizierten Systembenutzer ohne Root-Rechte (z. B. `semaphore`) ausgeführt werden, um die Auswirkungen potenzieller Exploits zu verringern. Dies ist optional und kann entsprechend den Systemrichtlinien konfiguriert werden.
+- **Dienstbenutzer**<br />Ein Task, der als lokaler Prozess gestartet wird, läuft unter dem Betriebssystembenutzer des Semaphore-Servers oder Runners, der ihn startet. Betreiben Sie diesen Dienst unter einem dedizierten Systembenutzer ohne Root-Rechte (z. B. `semaphore`), um die Auswirkungen potenzieller Exploits zu verringern; siehe [Dienstbenutzer](/admin-guide/installation_manually#service-user).
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->
 
 ## Sichere Bereitstellung {#secure-deployment}
