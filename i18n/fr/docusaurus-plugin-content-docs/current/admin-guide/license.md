@@ -162,3 +162,11 @@ Si la clé est configurée sur le serveur :
 1. Remplacez la valeur de `subscription.key`, ou mettez à jour le contenu du fichier référencé par `subscription.key_file`.
 2. Redémarrez Semaphore UI afin que le serveur recharge la clé de licence.
 3. Vérifiez que les options Pro ou Enterprise attendues sont disponibles dans Semaphore UI.
+
+## Nodes {#nodes}
+
+Pour les licences Pro et Enterprise, la boîte de dialogue **Abonnement et facturation** comporte une ligne **Nodes** : combien
+d'hôtes sont utilisés et combien la licence en inclut. Un hôte est utilisé lorsqu'une tâche Ansible l'a atteint
+au cours du dernier mois et qu'un administrateur ne l'a pas désactivé. Lorsque plus d'hôtes sont utilisés que
+la licence n'en inclut, la ligne devient rouge et affiche **(limit exceeded)**. Pour plus d'informations, voir
+[Hosts](/admin-guide/hosts#license-count).

@@ -44,7 +44,7 @@
 |---|---|
 | **Log** | 带时间戳的任务实时输出。任务运行期间日志会持续流式传输。**Raw log** 在新的浏览器标签页中打开未经处理的输出。 |
 | **Details** | 模板信息（应用、模板）、提交信息（提交消息和哈希），以及运行信息：消息、创建时间、开始时间、结束时间、持续时间，以及（如果设置了）本次运行使用的运行器（Runner）、分支、limit 和变量。 |
-| **Summary**（Pro） | 对于 Ansible 任务：显示多少台主机成功完成、多少台失败，并附带每台服务器上失败任务的表格。 |
+| **Summary**（Pro） | 对于 Ansible 任务：显示多少台主机成功完成、多少台失败，并附带每台服务器上失败任务的表格。**All servers** 列出该任务的每台主机及其计数，请参阅[任务的主机](/user-guide/hosts#hosts-of-a-task)。 |
 
 <div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![任务详情](/assets/task-details.webp)

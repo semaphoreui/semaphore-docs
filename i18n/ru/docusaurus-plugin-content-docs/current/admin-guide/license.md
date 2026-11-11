@@ -162,3 +162,11 @@ export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
 1. Замените значение `subscription.key` или обновите содержимое файла, на который ссылается `subscription.key_file`.
 2. Перезапустите Semaphore UI, чтобы сервер перечитал лицензионный ключ.
 3. Убедитесь, что ожидаемые возможности Pro или Enterprise доступны в Semaphore UI.
+
+## Nodes {#nodes}
+
+Для лицензий Pro и Enterprise в диалоге **Subscription & Billing** есть строка **Nodes**: сколько
+хостов используется и сколько включает лицензия. Хост используется, когда задача Ansible дошла до него
+за последний месяц и администратор не вывел его из эксплуатации. Когда используется больше хостов, чем
+включает лицензия, строка краснеет и показывает **(limit exceeded)**. Подробнее см.
+[Hosts](/admin-guide/hosts#license-count).

@@ -162,3 +162,7 @@ export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
 1. `subscription.key` 값을 교체하거나 `subscription.key_file`이 참조하는 파일의 내용을 업데이트합니다.
 2. 서버가 라이선스 키를 다시 불러오도록 Semaphore UI를 재시작합니다.
 3. Semaphore UI에서 예상되는 Pro 또는 Enterprise 옵션을 사용할 수 있는지 확인합니다.
+
+## Nodes {#nodes}
+
+Pro 및 Enterprise 라이선스에서는 **구독 및 결제** 대화 상자에 **Nodes** 행이 있습니다. 사용 중인 호스트 수와 라이선스에 포함된 호스트 수가 표시됩니다. 지난달 이내에 Ansible 작업이 접속했고 관리자가 폐기하지 않은 호스트가 사용 중인 호스트입니다. 사용 중인 호스트가 라이선스에 포함된 수보다 많으면 행이 빨간색으로 바뀌며 **(limit exceeded)**가 표시됩니다. 자세한 내용은 [호스트](/admin-guide/hosts#license-count)를 참고하십시오.

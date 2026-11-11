@@ -44,7 +44,7 @@ Facendo clic su un Task in qualsiasi punto dell'interfaccia si apre la finestra 
 |---|---|
 | **Log** | Output in tempo reale del Task con i timestamp. Il log viene trasmesso in streaming durante l'esecuzione del Task. **Raw log** apre l'output non elaborato in una nuova scheda del browser. |
 | **Details** | Informazioni sul Task Template (applicazione, Task Template), informazioni sul commit (messaggio e hash) e informazioni sull'esecuzione: messaggio, data di creazione, di avvio e di fine, durata e, quando impostati, il Runner, il branch, il limit e le variabili utilizzate per l'esecuzione. |
-| **Summary** (Pro) | Per i Task Ansible: quanti host sono terminati con esito OK e quanti sono falliti, con una tabella dei task falliti per server. |
+| **Summary** (Pro) | Per i Task Ansible: quanti host sono terminati con esito OK e quanti sono falliti, con una tabella dei task falliti per server. **All servers** elenca ogni host del Task con i suoi contatori, vedere [Host di un Task](/user-guide/hosts#hosts-of-a-task). |
 
 <div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Dettagli del Task](/assets/task-details.webp)

@@ -162,3 +162,7 @@ export SEMAPHORE_SUBSCRIPTION_PROXY_PASSWORD=PROXY_PASSWORD
 1. 替换 `subscription.key` 的值，或更新 `subscription.key_file` 所引用文件的内容。
 2. 重启 Semaphore UI，使服务器重新加载许可证密钥。
 3. 确认 Semaphore UI 中已提供预期的 Pro 或 Enterprise 选项。
+
+## Nodes {#nodes}
+
+对于 Pro 和 Enterprise 许可证，**订阅与账单** 对话框中有一个 **Nodes** 行：正在使用多少台主机，以及许可证包含多少台。当 Ansible 任务在上个月内触达过某台主机，且管理员没有停用它时，该主机处于使用中。当使用中的主机多于许可证包含的数量时，该行变红并显示 **(limit exceeded)**。更多信息请参阅 [Hosts](/admin-guide/hosts#license-count)。

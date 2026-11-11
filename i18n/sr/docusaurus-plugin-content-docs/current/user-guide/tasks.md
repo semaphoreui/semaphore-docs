@@ -44,7 +44,7 @@ Klik na zadatak bilo gde u korisničkom interfejsu otvara prozor zadatka. Zaglav
 |---|---|
 | **Log** | Izlaz zadatka uživo sa vremenskim oznakama. Log se prenosi dok se zadatak izvršava. **Sirovi log** (Raw log) otvara neobrađeni izlaz u novoj kartici pregledača. |
 | **Detalji** (Details) | Informacije o šablonu (aplikacija, šablon), informacije o commit-u (poruka i heš) i informacije o izvršavanju: poruka, vreme kreiranja, početka i završetka, trajanje i, kada su postavljeni, runner, grana, limit i promenljive korišćene za pokretanje. |
-| **Rezime** (Summary) (Pro) | Za Ansible zadatke: koliko je hostova završilo uspešno, a koliko neuspešno, sa tabelom neuspelih taskova po serveru. |
+| **Rezime** (Summary) (Pro) | Za Ansible zadatke: koliko je hostova završilo uspešno, a koliko neuspešno, sa tabelom neuspelih taskova po serveru. **All servers** navodi svaki host zadatka sa njegovim brojačima, pogledajte [Hosts zadatka](/user-guide/hosts#hosts-of-a-task). |
 
 <div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Detalji zadatka](/assets/task-details.webp)
