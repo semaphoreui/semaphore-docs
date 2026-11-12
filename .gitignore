@@ -10,3 +10,5 @@ node_modules/
 /deploy/invs/aws
 /deploy/invs/dev
 .DS_Store
+/semaphore
+/website
