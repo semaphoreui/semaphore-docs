@@ -1,6 +1,6 @@
 # 애플리케이션
 
-애플리케이션은 작업 템플릿이 실행하는 도구입니다. Semaphore에는 7개의 내장 애플리케이션이 포함되어 있으며, 관리자는 이를 켜고 끌 수 있고 직접 만든 애플리케이션을 등록할 수도 있습니다.
+애플리케이션은 작업 템플릿이 실행하는 도구입니다. Semaphore에는 9개의 내장 애플리케이션이 포함되어 있으며, 관리자는 이를 켜고 끌 수 있고 직접 만든 애플리케이션을 등록할 수도 있습니다.
 
 | 애플리케이션 | ID | 템플릿이 실행하는 내용 | 가이드 |
 |---|---|---|---|
@@ -11,6 +11,8 @@
 | Bash Script | `bash` | `/bin/bash`로 셸 스크립트를 실행합니다 | [셸](./bash) |
 | PowerShell Script | `powershell` | `pwsh`로 `.ps1` 스크립트를 실행합니다 | [PowerShell](./powershell) |
 | Python Script | `python` | `python3`로 `.py` 스크립트를 실행합니다 | [Python](./python) |
+| Claude Code Agent | `claude` | 프롬프트와 함께 Claude Code 에이전트를 실행합니다 | [AI 에이전트](./ai-agents) |
+| Codex Agent | `codex` | 프롬프트와 함께 Codex 에이전트를 실행합니다 | [AI 에이전트](./ai-agents) |
 
 해당 도구는 작업을 실행하는 머신, 즉 Semaphore 서버 또는 [러너](/admin-guide/runners)에 설치되어 있어야 합니다. 공식 Docker 이미지에는 Ansible, Terraform, OpenTofu, Bash, Python이 포함되어 있습니다.
 

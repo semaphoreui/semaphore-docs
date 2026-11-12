@@ -5,7 +5,7 @@ description: The built-in applications a task template can run, how admins enabl
 
 # Applications
 
-An application is the tool a task template runs. Semaphore ships with seven built-in applications; administrators can switch them on and off and register their own.
+An application is the tool a task template runs. Semaphore ships with nine built-in applications; administrators can switch them on and off and register their own.
 
 | Application | ID | What a template runs | Guide |
 |---|---|---|---|
@@ -16,6 +16,8 @@ An application is the tool a task template runs. Semaphore ships with seven buil
 | Bash Script | `bash` | a shell script with `/bin/bash` | [Shell](./bash) |
 | PowerShell Script | `powershell` | a `.ps1` script with `pwsh` | [PowerShell](./powershell) |
 | Python Script | `python` | a `.py` script with `python3` | [Python](./python) |
+| Claude Code Agent | `claude` | the Claude Code agent with a prompt | [AI agents](./ai-agents) |
+| Codex Agent | `codex` | the Codex agent with a prompt | [AI agents](./ai-agents) |
 
 The tool itself must be installed on the machine that executes tasks: the Semaphore server or the [runner](/admin-guide/runners). The official Docker image contains Ansible, Terraform, OpenTofu, Bash, and Python.
 
