@@ -7,6 +7,12 @@ description: Kreiranje šablona Claude Code ili Codex agenta, njegov prompt i iz
 
 Pomoću Semaphore UI možete da pokrećete AI agente za programiranje: [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) i [Codex](https://developers.openai.com/codex/cli). Šablon agenta pokreće agentov alat komandne linije u direktorijumu repozitorijuma i prosleđuje mu prompt. Agent radi samostalno, bez ikoga ko bi odgovarao na njegova pitanja, i o onome što radi izveštava u logu zadatka.
 
+:::note
+
+Šabloni AI agenata dostupni su od verzije **Semaphore 2.21**.
+
+:::
+
 Koristite šablon agenta za posao koji biste inače opisali kolegi: pregledaj poslednji commit, pronađi i ispravi test koji pada, ažuriraj zavisnost i otvori pull request. Kao i svaki drugi šablon, može se pokrenuti ručno, [rasporedom](/user-guide/schedules), [integracijom](/user-guide/integrations) ili [tokom rada](/user-guide/workflows).
 
 ## Pre nego što počnete {#before-you-begin}

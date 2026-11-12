@@ -7,6 +7,12 @@ description: Claude Code 또는 Codex 에이전트 템플릿 생성, 프롬프�
 
 Semaphore UI를 사용하면 AI 코딩 에이전트인 [Claude Code](https://docs.claude.com/en/docs/claude-code/overview)와 [Codex](https://developers.openai.com/codex/cli)를 실행할 수 있습니다. 에이전트 템플릿은 리포지토리의 디렉터리에서 에이전트의 명령줄 도구를 시작하고 프롬프트를 전달합니다. 에이전트는 질문에 답해 줄 사람 없이 스스로 작업하며, 수행한 내용을 작업 로그에 기록합니다.
 
+:::note
+
+AI 에이전트 템플릿은 **Semaphore 2.21**부터 사용할 수 있습니다.
+
+:::
+
 에이전트 템플릿은 동료에게 말로 설명해서 맡길 만한 작업에 사용하십시오. 예를 들어 마지막 커밋을 검토하거나, 실패하는 테스트를 찾아 수정하거나, 의존성을 업데이트하고 풀 리퀘스트를 여는 작업입니다. 다른 템플릿과 마찬가지로 직접 시작할 수도 있고, [스케줄](/user-guide/schedules), [통합](/user-guide/integrations), [워크플로](/user-guide/workflows)로 시작할 수도 있습니다.
 
 ## 시작하기 전에 {#before-you-begin}

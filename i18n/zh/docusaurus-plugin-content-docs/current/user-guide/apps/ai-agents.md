@@ -7,6 +7,12 @@ description: 创建 Claude Code 或 Codex 智能体模板，及其提示词与�
 
 使用 Semaphore UI 可以运行 AI 编程智能体：[Claude Code](https://docs.claude.com/en/docs/claude-code/overview) 和 [Codex](https://developers.openai.com/codex/cli)。智能体模板会在仓库的某个目录中启动智能体的命令行工具，并向它提供提示词。智能体独立工作，没有人回答它的问题，并把自己所做的事情报告到任务日志中。
 
+:::note
+
+AI 智能体模板自 **Semaphore 2.21** 起可用。
+
+:::
+
 凡是您原本会向同事描述的工作，都可以交给智能体模板：审查最近一次提交、找出并修复失败的测试、更新某个依赖并发起 pull request。与其他模板一样，它可以手动启动，也可以由[计划任务](/user-guide/schedules)、[集成](/user-guide/integrations)或[工作流](/user-guide/workflows)启动。
 
 ## 开始之前 {#before-you-begin}

@@ -7,6 +7,12 @@ description: Cómo crear una plantilla de agente Claude Code o Codex, su prompt 
 
 Con Semaphore UI puede ejecutar agentes de programación de IA: [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) y [Codex](https://developers.openai.com/codex/cli). Una plantilla de agente inicia la herramienta de línea de comandos del agente en un directorio de un repositorio y le entrega un prompt. El agente trabaja por su cuenta, sin nadie que responda a sus preguntas, e informa de lo que hace en el registro de la tarea.
 
+:::note
+
+Las plantillas de agentes de IA están disponibles desde **Semaphore 2.21**.
+
+:::
+
 Use una plantilla de agente para el trabajo que, de otro modo, describiría a un compañero: revisar el último commit, encontrar y corregir una prueba que falla, actualizar una dependencia y abrir un pull request. Como cualquier otra plantilla, puede iniciarse a mano, mediante una [programación](/user-guide/schedules), una [integración](/user-guide/integrations) o un [flujo de trabajo](/user-guide/workflows).
 
 ## Antes de empezar {#before-you-begin}

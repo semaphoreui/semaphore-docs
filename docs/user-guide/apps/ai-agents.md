@@ -7,6 +7,12 @@ description: Creating a Claude Code or Codex agent template, its prompt and prom
 
 Using Semaphore UI you can run AI coding agents: [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) and [Codex](https://developers.openai.com/codex/cli). An agent template starts the agent's command line tool in a directory of a repository and gives it a prompt. The agent works on its own, without anyone to answer its questions, and reports what it does to the task log.
 
+:::note
+
+AI agent templates are available since **Semaphore 2.21**.
+
+:::
+
 Use an agent template for work you would otherwise describe to a colleague: review the last commit, find and fix a failing test, update a dependency and open a pull request. Like any other template, it can be started by hand, by a [schedule](/user-guide/schedules), an [integration](/user-guide/integrations), or a [workflow](/user-guide/workflows).
 
 ## Before you begin {#before-you-begin}

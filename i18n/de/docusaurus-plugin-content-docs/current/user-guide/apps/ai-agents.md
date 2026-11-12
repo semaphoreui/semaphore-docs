@@ -7,6 +7,12 @@ description: Ein Template für einen Claude-Code- oder Codex-Agenten erstellen �
 
 Mit Semaphore UI können Sie KI-Coding-Agenten ausführen: [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) und [Codex](https://developers.openai.com/codex/cli). Ein Agenten-Template startet das Kommandozeilen-Werkzeug des Agenten in einem Verzeichnis eines Repositorys und übergibt ihm einen Prompt. Der Agent arbeitet selbstständig, ohne dass jemand seine Fragen beantwortet, und berichtet im Task-Log, was er tut.
 
+:::note
+
+KI-Agenten-Templates sind seit **Semaphore 2.21** verfügbar.
+
+:::
+
 Verwenden Sie ein Agenten-Template für Arbeit, die Sie sonst einem Kollegen beschreiben würden: den letzten Commit prüfen, einen fehlschlagenden Test finden und beheben, eine Abhängigkeit aktualisieren und einen Pull Request öffnen. Wie jedes andere Template kann es von Hand, durch einen [Zeitplan](/user-guide/schedules), eine [Integration](/user-guide/integrations) oder einen [Workflow](/user-guide/workflows) gestartet werden.
 
 ## Bevor Sie beginnen {#before-you-begin}

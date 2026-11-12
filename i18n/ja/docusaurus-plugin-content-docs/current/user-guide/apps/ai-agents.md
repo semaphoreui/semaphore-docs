@@ -7,6 +7,12 @@ description: Claude Code または Codex エージェントのテンプレート
 
 Semaphore UI を使用すると、AI コーディングエージェントである [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) と [Codex](https://developers.openai.com/codex/cli) を実行できます。エージェントテンプレートは、リポジトリのディレクトリでエージェントのコマンドラインツールを起動し、プロンプトを渡します。エージェントは、質問に答える人がいない状態で自律的に作業し、行った内容をタスクログに出力します。
 
+:::note
+
+AI エージェントのテンプレートは **Semaphore 2.21** 以降で利用できます。
+
+:::
+
 エージェントテンプレートは、同僚に口頭で頼むような作業に使用します。たとえば、最新のコミットをレビューする、失敗しているテストを見つけて修正する、依存関係を更新してプルリクエストを作成する、といった作業です。ほかのテンプレートと同様に、手動で開始することも、[スケジュール](/user-guide/schedules)、[インテグレーション](/user-guide/integrations)、[ワークフロー](/user-guide/workflows)から開始することもできます。
 
 ## 始める前に {#before-you-begin}

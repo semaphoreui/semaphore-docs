@@ -7,6 +7,12 @@ description: Creazione di un Task Template per un agente Claude Code o Codex, il
 
 Con Semaphore UI è possibile eseguire agenti di programmazione IA: [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) e [Codex](https://developers.openai.com/codex/cli). Un Task Template di tipo agente avvia lo strumento a riga di comando dell'agente in una directory di un Repository e gli fornisce un prompt. L'agente lavora in autonomia, senza nessuno che risponda alle sue domande, e riporta ciò che fa nel log del Task.
 
+:::note
+
+I template degli agenti IA sono disponibili a partire da **Semaphore 2.21**.
+
+:::
+
 Utilizzare un Task Template di tipo agente per un lavoro che altrimenti si descriverebbe a un collega: rivedere l'ultimo commit, trovare e correggere un test che fallisce, aggiornare una dipendenza e aprire una pull request. Come qualsiasi altro Task Template, può essere avviato manualmente, da una [pianificazione](/user-guide/schedules), da un'[integrazione](/user-guide/integrations) o da un [workflow](/user-guide/workflows).
 
 ## Prima di iniziare {#before-you-begin}

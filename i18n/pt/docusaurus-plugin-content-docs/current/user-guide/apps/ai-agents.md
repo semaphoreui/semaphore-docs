@@ -7,6 +7,12 @@ description: Como criar um modelo de agente Claude Code ou Codex, seu prompt e a
 
 Usando o Semaphore UI, você pode executar agentes de IA para programação: [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) e [Codex](https://developers.openai.com/codex/cli). Um modelo de agente inicia a ferramenta de linha de comando do agente em um diretório de um repositório e entrega a ela um prompt. O agente trabalha sozinho, sem ninguém para responder às suas perguntas, e relata o que faz no log da tarefa.
 
+:::note
+
+Os modelos de agentes de IA estão disponíveis desde o **Semaphore 2.21**.
+
+:::
+
 Use um modelo de agente para trabalhos que, de outra forma, você descreveria a um colega: revisar o último commit, encontrar e corrigir um teste que falha, atualizar uma dependência e abrir um pull request. Como qualquer outro modelo, ele pode ser iniciado manualmente, por um [agendamento](/user-guide/schedules), por uma [integração](/user-guide/integrations) ou por um [workflow](/user-guide/workflows).
 
 ## Antes de começar {#before-you-begin}
