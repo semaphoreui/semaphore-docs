@@ -49,7 +49,7 @@ Clicking a task anywhere in the UI opens the task window. The header shows the t
 |---|---|
 | **Log** | Live output of the task with timestamps. The log is streamed while the task runs. **Raw log** opens the unprocessed output in a new browser tab. |
 | **Details** | Template info (application, template), commit info (message and hash), and running info: message, created, started, and end time, duration, and, when set, the runner, branch, limit, and variables used for the run. |
-| **Summary** (Pro) | For Ansible tasks: how many hosts finished OK and how many failed, with a table of failed tasks per server. |
+| **Summary** (Pro) | For Ansible tasks: how many hosts finished OK and how many failed, with a table of failed tasks per server. **All servers** lists every host of the task with its counters, see [Hosts of a task](/user-guide/hosts#how-it-works). |
 
 <div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Task details](/assets/task-details.webp)

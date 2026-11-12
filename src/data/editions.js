@@ -58,6 +58,12 @@ const features = [
     edition: 'pro',
     doc: '/user-guide/tasks#task-window',
   },
+  {
+    key: 'hosts',
+    name: 'Hosts registry',
+    edition: 'pro',
+    doc: '/user-guide/hosts',
+  },
 
   // Secrets
   {
