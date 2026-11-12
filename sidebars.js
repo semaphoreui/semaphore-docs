@@ -229,6 +229,7 @@ const sidebars = {
             { type: 'doc', id: 'user-guide/apps/bash', className: 'sidebar-icon sidebar-icon--bash' },
             { type: 'doc', id: 'user-guide/apps/powershell', className: 'sidebar-icon sidebar-icon--powershell' },
             { type: 'doc', id: 'user-guide/apps/python', className: 'sidebar-icon sidebar-icon--python' },
+            { type: 'doc', id: 'user-guide/apps/ai-agents', className: 'sidebar-icon sidebar-icon--ai-agents' },
           ],
         },
         'user-guide/tasks',

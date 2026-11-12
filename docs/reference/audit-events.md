@@ -92,8 +92,8 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `resource.project` | `delete` | `deletion` | success |  |  | Community |
 | `resource.project_backup` | `export` | `access` | success |  |  | Community |
 | `resource.project_backup` | `restore` | `creation` | success |  | `objects` | Community |
-| `resource.inventory` | `create` | `creation` | success |  |  | Community |
-| `resource.inventory` | `update` | `change` | success |  |  | Community |
+| `resource.inventory` | `create` | `creation` | success |  | `type`, `mcp_servers`, `tokens_created`, `tokens_updated`, `tokens_deleted` | Community |
+| `resource.inventory` | `update` | `change` | success |  | `type`, `mcp_servers`, `tokens_created`, `tokens_updated`, `tokens_deleted` | Community |
 | `resource.inventory` | `delete` | `deletion` | success |  |  | Community |
 | `resource.repository` | `create` | `creation` | success |  |  | Community |
 | `resource.repository` | `update` | `change` | success |  |  | Community |
