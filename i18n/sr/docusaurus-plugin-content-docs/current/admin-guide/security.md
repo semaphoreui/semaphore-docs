@@ -83,7 +83,7 @@ Semaphore izvršava playbook-ove i komande koje definišu korisnici, što može 
 
 - **Najmanje privilegije**<br />Sa Docker i Kubernetes izvršiocima sami birate imidž, mrežu i servisni nalog, pa zadatak dobija samo ono što mu je potrebno.
 
-- **Korisnik procesa zadatka**<br />Zadaci se mogu izvršavati pod namenskim sistemskim korisnikom koji nije root (npr. `semaphore`), čime se smanjuje uticaj potencijalnih eksploatacija. Ovo je opciono i može se podesiti u skladu sa sistemskim politikama.
+- **Korisnik servisa**<br />Zadatak pokrenut kao lokalni proces izvršava se pod korisnikom operativnog sistema Semaphore servera ili ranera koji ga pokreće. Pokrećite taj servis pod namenskim sistemskim korisnikom koji nije root (npr. `semaphore`), čime se smanjuje uticaj potencijalnih eksploatacija; pogledajte [Korisnik servisa](/admin-guide/installation_manually#service-user).
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->
 
 ## Bezbedno uvođenje {#secure-deployment}

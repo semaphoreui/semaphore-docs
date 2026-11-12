@@ -81,9 +81,7 @@ Semaphore 会运行用户定义的 playbook 和命令，这可能带来风险：
 
 - **最小权限**<br />使用 Docker 和 Kubernetes 执行器时，镜像、网络和服务账户都由你选择，因此任务只会获得它所需要的东西。
 
-- **Chroot 执行**<br />Semaphore 可以在 chroot 监狱中执行任务，进一步将执行环境与宿主机系统隔离。
-
-- **任务进程用户**<br />任务可以在专用的非 root 系统用户（例如 `semaphore`）下执行，以降低潜在漏洞利用的影响。这是可选的，可根据系统策略进行配置。
+- **服务用户**<br />作为本地进程启动的任务，以启动它的 Semaphore 服务器或运行器的操作系统用户身份运行。请使用专用的非 root 系统用户（例如 `semaphore`）运行该服务，以降低潜在漏洞利用的影响；参见[服务用户](/admin-guide/installation_manually#service-user)。
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->
 
 ## 安全部署 {#secure-deployment}

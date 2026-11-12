@@ -142,16 +142,6 @@ Concurrency, retention, and the environment task processes run in.
 | `apps`<br />`SEMAPHORE_APPS` | object | JSON map which contains apps configuration. |
 | `env_vars`<br />`SEMAPHORE_ENV_VARS` | object | JSON map which contains environment variables exposed to task runs. |
 | `forwarded_env_vars`<br />`SEMAPHORE_FORWARDED_ENV_VARS` | array | Lists host environment variables copied into task runs and into the child git processes that clone and update repositories. Proxy variables are not forwarded implicitly: they reach a task only if they are named here or set in env_vars. A bare-metal (systemd) installation behind a corporate proxy therefore has to list the proxy variables explicitly, including the bypass list for internal hosts: ["HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY"]. |
-| `process.user`<br />`SEMAPHORE_PROCESS_USER` | string | User under which wrapped processes (such as Ansible, Terraform, or OpenTofu) will run. |
-| `process.uid`<br />`SEMAPHORE_PROCESS_UID` | integer | ID of user under which wrapped processes (such as Ansible, Terraform, or OpenTofu) will run. |
-| `process.chroot`<br />`SEMAPHORE_PROCESS_CHROOT` | string | Chroot directory for wrapped processes. |
-| `process.gid`<br />`SEMAPHORE_PROCESS_GID` | integer | ID for group under which wrapped processes (such as Ansible, Terraform, or OpenTofu) will run. |
-| `process.no_new_privs`<br />`SEMAPHORE_PROCESS_NO_NEW_PRIVS` | boolean | Set the `no_new_privs` flag so wrapped processes cannot gain new privileges. |
-| `process.app_namespaces.user`<br />`SEMAPHORE_PROCESS_APP_NS_USER` | boolean | Isolates UIDs/GIDs (CLONE_NEWUSER). Enables unprivileged use of the other namespaces. |
-| `process.app_namespaces.mount`<br />`SEMAPHORE_PROCESS_APP_NS_MOUNT` | boolean | Hides host mount points such as secret tmpfs (CLONE_NEWNS). |
-| `process.app_namespaces.pid`<br />`SEMAPHORE_PROCESS_APP_NS_PID` | boolean | Hides host processes from child apps (CLONE_NEWPID). |
-| `process.app_namespaces.ipc`<br />`SEMAPHORE_PROCESS_APP_NS_IPC` | boolean | Isolates SysV IPC and POSIX message queues (CLONE_NEWIPC). |
-| `process.app_namespaces.uts`<br />`SEMAPHORE_PROCESS_APP_NS_UTS` | boolean | Isolates hostname and domain (CLONE_NEWUTS). |
 | `schedule.timezone`<br />`SEMAPHORE_SCHEDULE_TIMEZONE` | string<br />Default: `UTC` | Timezone used for scheduling tasks and cron jobs. Default: UTC |
 
 ## Runners {#runners}
