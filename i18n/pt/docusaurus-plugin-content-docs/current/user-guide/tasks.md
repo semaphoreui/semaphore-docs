@@ -44,7 +44,7 @@ Clicar em uma tarefa em qualquer lugar da interface abre a janela da tarefa. O c
 |---|---|
 | **Log** | Saída ao vivo da tarefa com marcações de tempo. O log é transmitido enquanto a tarefa é executada. **Raw log** abre a saída não processada em uma nova aba do navegador. |
 | **Details** | Informações do modelo (aplicação, modelo), informações do commit (mensagem e hash) e informações da execução: mensagem, horários de criação, início e fim, duração e, quando definidos, o runner, o branch, o limit e as variáveis usadas na execução. |
-| **Summary** (Pro) | Para tarefas do Ansible: quantos hosts terminaram com OK e quantos falharam, com uma tabela das tarefas que falharam por servidor. **All servers** lista todos os hosts da tarefa com seus contadores, veja [Hosts de uma tarefa](/user-guide/hosts#hosts-of-a-task). |
+| **Summary** (Pro) | Para tarefas do Ansible: quantos hosts terminaram com OK e quantos falharam, com uma tabela das tarefas que falharam por servidor. **All servers** lista todos os hosts da tarefa com seus contadores, veja [Hosts de uma tarefa](/user-guide/hosts#how-it-works). |
 
 <div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Detalhes da tarefa](/assets/task-details.webp)

@@ -44,7 +44,7 @@ Cliquer sur une tâche n'importe où dans l'interface ouvre la fenêtre de tâch
 |---|---|
 | **Log** | Sortie en direct de la tâche avec horodatage. Le journal est diffusé pendant l'exécution de la tâche. **Raw log** ouvre la sortie brute dans un nouvel onglet du navigateur. |
 | **Détails** | Informations sur le modèle (application, modèle), informations sur le commit (message et hachage) et informations d'exécution : message, dates de création, de démarrage et de fin, durée et, le cas échéant, le runner, la branche, la limite et les variables utilisées pour l'exécution. |
-| **Résumé** (Pro) | Pour les tâches Ansible : combien d'hôtes se sont terminés correctement et combien ont échoué, avec un tableau des tâches en échec par serveur. **All servers** liste chaque hôte de la tâche avec ses compteurs, voir [Hôtes d'une tâche](/user-guide/hosts#hosts-of-a-task). |
+| **Résumé** (Pro) | Pour les tâches Ansible : combien d'hôtes se sont terminés correctement et combien ont échoué, avec un tableau des tâches en échec par serveur. **All servers** liste chaque hôte de la tâche avec ses compteurs, voir [Hôtes d'une tâche](/user-guide/hosts#how-it-works). |
 
 <div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Détails de la tâche](/assets/task-details.webp)

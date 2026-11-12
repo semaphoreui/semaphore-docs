@@ -44,7 +44,7 @@ Al hacer clic en una tarea en cualquier parte de la interfaz se abre la ventana 
 |---|---|
 | **Registro** | Salida en directo de la tarea con marcas de tiempo. El registro se transmite mientras la tarea se ejecuta. **Raw log** abre la salida sin procesar en una nueva pestaña del navegador. |
 | **Detalles** | Información de la plantilla (aplicación, plantilla), información del commit (mensaje y hash) e información de la ejecución: mensaje, hora de creación, de inicio y de finalización, duración y, cuando se han definido, el runner, la rama, el limit y las variables usadas en la ejecución. |
-| **Resumen** (Pro) | En las tareas de Ansible: cuántos hosts terminaron correctamente y cuántos fallaron, con una tabla de las tareas fallidas por servidor. **All servers** lista todos los hosts de la tarea con sus contadores, consulte [Hosts de una tarea](/user-guide/hosts#hosts-of-a-task). |
+| **Resumen** (Pro) | En las tareas de Ansible: cuántos hosts terminaron correctamente y cuántos fallaron, con una tabla de las tareas fallidas por servidor. **All servers** lista todos los hosts de la tarea con sus contadores, consulte [Hosts de una tarea](/user-guide/hosts#how-it-works). |
 
 <div class="DialogScreenshot" style={{maxWidth: 1000}}>
 ![Detalles de la tarea](/assets/task-details.webp)
