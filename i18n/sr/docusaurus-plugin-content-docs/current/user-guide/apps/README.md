@@ -1,6 +1,6 @@
 # Aplikacije
 
-Aplikacija (App) je alat koji šablon zadatka (Task Template) pokreće. Semaphore dolazi sa sedam ugrađenih aplikacija; administratori ih mogu uključivati i isključivati, kao i registrovati sopstvene.
+Aplikacija (App) je alat koji šablon zadatka (Task Template) pokreće. Semaphore dolazi sa devet ugrađenih aplikacija; administratori ih mogu uključivati i isključivati, kao i registrovati sopstvene.
 
 | Aplikacija | ID | Šta šablon pokreće | Vodič |
 |---|---|---|---|
@@ -11,6 +11,8 @@ Aplikacija (App) je alat koji šablon zadatka (Task Template) pokreće. Semaphor
 | Bash Script | `bash` | shell skriptu pomoću `/bin/bash` | [Shell](./bash) |
 | PowerShell Script | `powershell` | `.ps1` skriptu pomoću `pwsh` | [PowerShell](./powershell) |
 | Python Script | `python` | `.py` skriptu pomoću `python3` | [Python](./python) |
+| Claude Code Agent | `claude` | Claude Code agenta sa promptom | [AI agenti](./ai-agents) |
+| Codex Agent | `codex` | Codex agenta sa promptom | [AI agenti](./ai-agents) |
 
 Sam alat mora biti instaliran na mašini koja izvršava zadatke: na Semaphore serveru ili na [runner-u](/admin-guide/runners). Zvanični Docker image sadrži Ansible, Terraform, OpenTofu, Bash i Python.
 

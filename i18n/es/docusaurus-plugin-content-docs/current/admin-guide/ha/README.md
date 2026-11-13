@@ -30,6 +30,8 @@ SQLite y BoltDB no son compatibles con despliegues de HA. Utilice PostgreSQL o M
 * **Estado compartido de la cola de tareas**: mantiene la cola de tareas para que cada trabajo sea tomado exactamente por un worker. Todos los nodos ven la misma cola y coordinan la ejecución.
 * **Mensajería Pub/Sub**: permite a los nodos difundir eventos como actualizaciones de tareas, notificaciones del clúster, invalidación de caché y cambios de estado de la interfaz. Esto mantiene todos los nodos sincronizados en tiempo real.
 
+Las claves, bloqueos y canales exactos detrás de estas funciones se describen en [Coordinación del clúster](/admin-guide/ha/coordination). La caché compartida de registros de runners se describe en [Caché de autenticación de runners](/admin-guide/ha/runner-cache).
+
 ## Requisitos previos {#prerequisites}
 
 Antes de configurar HA necesita:
@@ -240,6 +242,8 @@ Consulte [Runners](/admin-guide/runners) para ver las instrucciones de configura
 
 ## Preguntas frecuentes {#faq}
 
+<Faq>
+
 ### ¿Qué es la alta disponibilidad activo-activo? {#what-is-active-active-high-availability}
 
 La HA activo-activo significa que varias instancias de la aplicación se ejecutan simultáneamente y todas ellas atienden solicitudes. No existe un nodo principal: cualquier instancia puede gestionar el tráfico y ejecutar trabajos.
@@ -263,3 +267,5 @@ El balanceador de carga dirige el tráfico a los nodos restantes. Los trabajos e
 ### ¿Puedo escalar horizontalmente? {#can-i-scale-horizontally}
 
 Sí. Puede añadir nodos de Semaphore detrás del balanceador de carga para aumentar la capacidad web/API, y añadir [runners](/admin-guide/runners) para aumentar la capacidad de ejecución de tareas.
+
+</Faq>

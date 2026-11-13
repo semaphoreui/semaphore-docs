@@ -30,6 +30,8 @@ SQLite et BoltDB ne sont pas pris en charge pour les déploiements HA. Utilisez 
 * L'**état partagé de la file d'attente des tâches** maintient la file d'attente afin que chaque tâche soit prise en charge par exactement un worker. Tous les nœuds voient la même file d'attente et coordonnent l'exécution.
 * La **messagerie Pub/Sub** permet aux nœuds de diffuser des événements tels que les mises à jour de tâches, les notifications du cluster, l'invalidation du cache et les changements d'état de l'interface. Cela maintient tous les nœuds synchronisés en temps réel.
 
+Les clés, verrous et canaux exacts derrière ces fonctions sont décrits dans [Coordination du cluster](/admin-guide/ha/coordination). Le cache partagé des enregistrements de runners est décrit dans [Cache d'authentification des runners](/admin-guide/ha/runner-cache).
+
 ## Prérequis {#prerequisites}
 
 Avant de configurer la HA, vous avez besoin de :
@@ -240,6 +242,8 @@ Consultez [Runners](/admin-guide/runners) pour les instructions de configuration
 
 ## FAQ {#faq}
 
+<Faq>
+
 ### Qu'est-ce que la haute disponibilité actif-actif ? {#what-is-active-active-high-availability}
 
 La HA actif-actif signifie que plusieurs instances de l'application s'exécutent simultanément et que toutes servent des requêtes. Il n'y a pas de nœud principal : n'importe quelle instance peut traiter le trafic et exécuter des tâches.
@@ -263,3 +267,5 @@ Le répartiteur de charge redirige le trafic vers les nœuds restants. Les tâch
 ### Puis-je effectuer une mise à l'échelle horizontale ? {#can-i-scale-horizontally}
 
 Oui. Vous pouvez ajouter des nœuds Semaphore derrière le répartiteur de charge pour augmenter la capacité web/API, et ajouter des [runners](/admin-guide/runners) pour augmenter la capacité d'exécution des tâches.
+
+</Faq>

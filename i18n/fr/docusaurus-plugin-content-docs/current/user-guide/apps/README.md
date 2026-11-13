@@ -1,6 +1,6 @@
 # Applications
 
-Une application est l'outil qu'exécute un modèle de tâche. Semaphore est livré avec sept applications intégrées ; les administrateurs peuvent les activer, les désactiver et enregistrer les leurs.
+Une application est l'outil qu'exécute un modèle de tâche. Semaphore est livré avec neuf applications intégrées ; les administrateurs peuvent les activer, les désactiver et enregistrer les leurs.
 
 | Application | ID | Ce qu'exécute un modèle | Guide |
 |---|---|---|---|
@@ -11,6 +11,8 @@ Une application est l'outil qu'exécute un modèle de tâche. Semaphore est livr
 | Bash Script | `bash` | un script shell avec `/bin/bash` | [Shell](./bash) |
 | PowerShell Script | `powershell` | un script `.ps1` avec `pwsh` | [PowerShell](./powershell) |
 | Python Script | `python` | un script `.py` avec `python3` | [Python](./python) |
+| Claude Code Agent | `claude` | l'agent Claude Code avec un prompt | [Agents IA](./ai-agents) |
+| Codex Agent | `codex` | l'agent Codex avec un prompt | [Agents IA](./ai-agents) |
 
 L'outil lui-même doit être installé sur la machine qui exécute les tâches : le serveur Semaphore ou le [runner](/admin-guide/runners). L'image Docker officielle contient Ansible, Terraform, OpenTofu, Bash et Python.
 

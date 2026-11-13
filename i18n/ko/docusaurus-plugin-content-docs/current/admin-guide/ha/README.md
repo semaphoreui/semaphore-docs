@@ -30,6 +30,8 @@ SQLite와 BoltDB는 HA 배포에서 지원되지 않습니다. PostgreSQL 또는
 * **공유 태스크 큐 상태**는 작업이 정확히 하나의 워커에 의해 처리되도록 태스크 큐를 유지합니다. 모든 노드는 동일한 큐를 보고 실행을 조정합니다.
 * **Pub/Sub 메시징**은 태스크 업데이트, 클러스터 알림, 캐시 무효화, UI 상태 변경 등의 이벤트를 노드가 브로드캐스트할 수 있게 합니다. 이를 통해 모든 노드가 실시간으로 동기화됩니다.
 
+이러한 기능을 뒷받침하는 정확한 키, 잠금, 채널은 [클러스터 조정](/admin-guide/ha/coordination)에서 설명합니다. runner 레코드의 공유 캐시는 [Runner 인증 캐시](/admin-guide/ha/runner-cache)에서 설명합니다.
+
 ## 사전 요구 사항 {#prerequisites}
 
 HA를 설정하기 전에 다음이 필요합니다.
@@ -240,6 +242,8 @@ HA는 태스크 실행의 수평 확장도 가능하게 합니다. Semaphore 노
 
 ## FAQ {#faq}
 
+<Faq>
+
 ### 액티브-액티브 고가용성이란 무엇입니까? {#what-is-active-active-high-availability}
 
 액티브-액티브 HA는 여러 애플리케이션 인스턴스가 동시에 실행되며 모든 인스턴스가 요청을 처리하는 방식입니다. 주 노드가 없으므로 어떤 인스턴스든 트래픽을 처리하고 작업을 실행할 수 있습니다.
@@ -263,3 +267,5 @@ Semaphore는 공유 데이터베이스로 PostgreSQL과 MySQL을 지원합니다
 ### 수평 확장이 가능합니까? {#can-i-scale-horizontally}
 
 예. 로드 밸런서 뒤에 Semaphore 노드를 추가하여 웹/API 용량을 늘리고, [runner](/admin-guide/runners)를 추가하여 태스크 실행 용량을 늘릴 수 있습니다.
+
+</Faq>

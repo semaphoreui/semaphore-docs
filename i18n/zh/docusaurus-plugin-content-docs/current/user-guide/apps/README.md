@@ -1,6 +1,6 @@
 # 应用
 
-应用（App）是任务模板（Task Template）所运行的工具。Semaphore 内置七个应用；管理员可以启用或禁用它们，也可以注册自己的应用。
+应用（App）是任务模板（Task Template）所运行的工具。Semaphore 内置九个应用；管理员可以启用或禁用它们，也可以注册自己的应用。
 
 | 应用 | ID | 模板运行的内容 | 指南 |
 |---|---|---|---|
@@ -11,6 +11,8 @@
 | Bash Script | `bash` | 使用 `/bin/bash` 运行 shell 脚本 | [Shell](./bash) |
 | PowerShell Script | `powershell` | 使用 `pwsh` 运行 `.ps1` 脚本 | [PowerShell](./powershell) |
 | Python Script | `python` | 使用 `python3` 运行 `.py` 脚本 | [Python](./python) |
+| Claude Code Agent | `claude` | 带提示词运行 Claude Code 智能体 | [AI 智能体](./ai-agents) |
+| Codex Agent | `codex` | 带提示词运行 Codex 智能体 | [AI 智能体](./ai-agents) |
 
 工具本身必须安装在执行任务的机器上：Semaphore 服务器或[运行器（Runner）](/admin-guide/runners)。官方 Docker 镜像包含 Ansible、Terraform、OpenTofu、Bash 和 Python。
 

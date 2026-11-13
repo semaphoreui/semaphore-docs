@@ -1,8 +1,4 @@
 {
-  "title": {
-    "message": "Semaphore UI",
-    "description": "The title in the navbar"
-  },
   "logo.alt": {
     "message": "Logo Semaphore UI",
     "description": "The alt text of navbar logo"
@@ -23,25 +19,9 @@
     "message": "Tarifs",
     "description": "Navbar item with label Pricing"
   },
-  "item.label.GitHub": {
-    "message": "GitHub",
-    "description": "Navbar item with label GitHub"
-  },
   "item.label.Sign in": {
     "message": "Se connecter",
     "description": "Navbar item with label Sign in"
-  },
-  "item.label.Pro · For teams": {
-    "message": "Pro · Pour les équipes",
-    "description": "Navbar item with label Pro · For teams"
-  },
-  "item.label.Enterprise · For large-scale operations": {
-    "message": "Enterprise · Pour les opérations à grande échelle",
-    "description": "Navbar item with label Enterprise · For large-scale operations"
-  },
-  "item.label.Community · For homelab": {
-    "message": "Communauté · Pour le homelab",
-    "description": "Navbar item with label Community · For homelab"
   },
   "item.label.Features": {
     "message": "Fonctionnalités",
@@ -98,5 +78,93 @@
   "item.label.API References": {
     "message": "Références API",
     "description": "Navbar item with label API References"
+  },
+  "item.label.Company": {
+    "message": "Entreprise",
+    "description": "Navbar item with label Company"
+  },
+  "item.label.Task templates": {
+    "message": "Modèles de tâches",
+    "description": "Navbar item with label Task templates"
+  },
+  "item.label.Workflows": {
+    "message": "Workflows",
+    "description": "Navbar item with label Workflows"
+  },
+  "item.label.Schedules": {
+    "message": "Planifications",
+    "description": "Navbar item with label Schedules"
+  },
+  "item.label.API & webhooks": {
+    "message": "API et webhooks",
+    "description": "Navbar item with label API & webhooks"
+  },
+  "item.label.Secrets & credentials": {
+    "message": "Secrets et identifiants",
+    "description": "Navbar item with label Secrets & credentials"
+  },
+  "item.label.Access control": {
+    "message": "Contrôle d’accès",
+    "description": "Navbar item with label Access control"
+  },
+  "item.label.Run history & logs": {
+    "message": "Audit et journaux",
+    "description": "Navbar item with label Run history & logs"
+  },
+  "item.label.Notifications": {
+    "message": "Notifications",
+    "description": "Navbar item with label Notifications"
+  },
+  "item.label.Runners": {
+    "message": "Runners",
+    "description": "Navbar item with label Runners"
+  },
+  "item.label.High availability": {
+    "message": "Haute disponibilité",
+    "description": "Navbar item with label High availability"
+  },
+  "item.label.Terraform provider": {
+    "message": "Provider Terraform",
+    "description": "Navbar item with label Terraform provider"
+  },
+  "item.label.MCP": {
+    "message": "MCP et IA",
+    "description": "Navbar item with label MCP"
+  },
+  "item.label.AWX migration": {
+    "message": "Migration depuis AWX",
+    "description": "Navbar item with label AWX migration"
+  },
+  "item.label.What's new?": {
+    "message": "Quoi de neuf ?",
+    "description": "Navbar item with label What's new?"
+  },
+  "item.label.About us": {
+    "message": "À propos",
+    "description": "Navbar item with label About us"
+  },
+  "item.label.Partnership": {
+    "message": "Partenariat",
+    "description": "Navbar item with label Partnership"
+  },
+  "item.label.Careers": {
+    "message": "Carrières",
+    "description": "Navbar item with label Careers"
+  },
+  "item.label.Contact": {
+    "message": "Contact",
+    "description": "Navbar item with label Contact"
+  },
+  "item.label.Legal": {
+    "message": "Mentions légales",
+    "description": "Navbar item with label Legal"
+  },
+  "item.label.Start Pro trial": {
+    "message": "Essai gratuit Pro",
+    "description": "Navbar item with label Start Pro trial"
+  },
+  "item.label.Contact sales": {
+    "message": "Contacter les ventes",
+    "description": "Navbar item with label Contact sales"
   }
 }

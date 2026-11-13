@@ -1,8 +1,4 @@
 {
-  "title": {
-    "message": "Semaphore UI",
-    "description": "The title in the navbar"
-  },
   "logo.alt": {
     "message": "Semaphore UI 标志",
     "description": "The alt text of navbar logo"
@@ -23,25 +19,9 @@
     "message": "价格",
     "description": "Navbar item with label Pricing"
   },
-  "item.label.GitHub": {
-    "message": "GitHub",
-    "description": "Navbar item with label GitHub"
-  },
   "item.label.Sign in": {
     "message": "登录",
     "description": "Navbar item with label Sign in"
-  },
-  "item.label.Pro · For teams": {
-    "message": "Pro · 面向团队",
-    "description": "Navbar item with label Pro · For teams"
-  },
-  "item.label.Enterprise · For large-scale operations": {
-    "message": "Enterprise · 面向大规模运维",
-    "description": "Navbar item with label Enterprise · For large-scale operations"
-  },
-  "item.label.Community · For homelab": {
-    "message": "Community · 面向家庭实验室",
-    "description": "Navbar item with label Community · For homelab"
   },
   "item.label.Features": {
     "message": "功能特性",
@@ -98,5 +78,93 @@
   "item.label.API References": {
     "message": "API 参考",
     "description": "Navbar item with label API References"
+  },
+  "item.label.Company": {
+    "message": "公司",
+    "description": "Navbar item with label Company"
+  },
+  "item.label.Task templates": {
+    "message": "任务模板",
+    "description": "Navbar item with label Task templates"
+  },
+  "item.label.Workflows": {
+    "message": "工作流",
+    "description": "Navbar item with label Workflows"
+  },
+  "item.label.Schedules": {
+    "message": "计划任务",
+    "description": "Navbar item with label Schedules"
+  },
+  "item.label.API & webhooks": {
+    "message": "API 与 Webhook",
+    "description": "Navbar item with label API & webhooks"
+  },
+  "item.label.Secrets & credentials": {
+    "message": "密钥与凭据",
+    "description": "Navbar item with label Secrets & credentials"
+  },
+  "item.label.Access control": {
+    "message": "访问控制",
+    "description": "Navbar item with label Access control"
+  },
+  "item.label.Run history & logs": {
+    "message": "审计与日志",
+    "description": "Navbar item with label Run history & logs"
+  },
+  "item.label.Notifications": {
+    "message": "通知",
+    "description": "Navbar item with label Notifications"
+  },
+  "item.label.Runners": {
+    "message": "运行器",
+    "description": "Navbar item with label Runners"
+  },
+  "item.label.High availability": {
+    "message": "高可用性",
+    "description": "Navbar item with label High availability"
+  },
+  "item.label.Terraform provider": {
+    "message": "Terraform Provider",
+    "description": "Navbar item with label Terraform provider"
+  },
+  "item.label.MCP": {
+    "message": "MCP 与 AI",
+    "description": "Navbar item with label MCP"
+  },
+  "item.label.AWX migration": {
+    "message": "从 AWX 迁移",
+    "description": "Navbar item with label AWX migration"
+  },
+  "item.label.What's new?": {
+    "message": "最新动态",
+    "description": "Navbar item with label What's new?"
+  },
+  "item.label.About us": {
+    "message": "关于我们",
+    "description": "Navbar item with label About us"
+  },
+  "item.label.Partnership": {
+    "message": "合作",
+    "description": "Navbar item with label Partnership"
+  },
+  "item.label.Careers": {
+    "message": "加入我们",
+    "description": "Navbar item with label Careers"
+  },
+  "item.label.Contact": {
+    "message": "联系我们",
+    "description": "Navbar item with label Contact"
+  },
+  "item.label.Legal": {
+    "message": "法律与条款",
+    "description": "Navbar item with label Legal"
+  },
+  "item.label.Start Pro trial": {
+    "message": "开始 Pro 试用",
+    "description": "Navbar item with label Start Pro trial"
+  },
+  "item.label.Contact sales": {
+    "message": "联系销售",
+    "description": "Navbar item with label Contact sales"
   }
 }

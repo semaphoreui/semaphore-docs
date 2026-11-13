@@ -1,6 +1,6 @@
 # アプリケーション
 
-アプリケーションとは、タスクテンプレートが実行するツールのことです。Semaphore には 7 つの組み込みアプリケーションが付属しており、管理者はそれらの有効・無効を切り替えたり、独自のアプリケーションを登録したりできます。
+アプリケーションとは、タスクテンプレートが実行するツールのことです。Semaphore には 9 つの組み込みアプリケーションが付属しており、管理者はそれらの有効・無効を切り替えたり、独自のアプリケーションを登録したりできます。
 
 | アプリケーション | ID | テンプレートが実行する内容 | ガイド |
 |---|---|---|---|
@@ -11,6 +11,8 @@
 | Bash Script | `bash` | `/bin/bash` によるシェルスクリプト | [シェル](./bash) |
 | PowerShell Script | `powershell` | `pwsh` による `.ps1` スクリプト | [PowerShell](./powershell) |
 | Python Script | `python` | `python3` による `.py` スクリプト | [Python](./python) |
+| Claude Code Agent | `claude` | プロンプトを指定した Claude Code エージェント | [AI エージェント](./ai-agents) |
+| Codex Agent | `codex` | プロンプトを指定した Codex エージェント | [AI エージェント](./ai-agents) |
 
 ツール自体は、タスクを実行するマシン（Semaphore サーバーまたは[ランナー](/admin-guide/runners)）にインストールされている必要があります。公式の Docker イメージには Ansible、Terraform、OpenTofu、Bash、Python が含まれています。
 

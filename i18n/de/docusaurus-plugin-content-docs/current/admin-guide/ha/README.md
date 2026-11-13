@@ -30,6 +30,8 @@ SQLite und BoltDB werden für HA-Deployments nicht unterstützt. Verwenden Sie P
 * **Gemeinsamer Zustand der Task-Warteschlange** verwaltet die Task-Warteschlange, sodass Jobs von genau einem Worker übernommen werden. Alle Knoten sehen dieselbe Warteschlange und koordinieren die Ausführung.
 * **Pub/Sub-Messaging** ermöglicht es Knoten, Ereignisse wie Task-Updates, Cluster-Benachrichtigungen, Cache-Invalidierung und Änderungen des UI-Zustands zu verbreiten. So bleiben alle Knoten in Echtzeit synchron.
 
+Die genauen Schlüssel, Sperren und Kanäle hinter diesen Funktionen sind unter [Cluster-Koordination](/admin-guide/ha/coordination) beschrieben. Den gemeinsamen Cache der Runner-Datensätze beschreibt [Runner-Authentifizierungscache](/admin-guide/ha/runner-cache).
+
 ## Voraussetzungen {#prerequisites}
 
 Bevor Sie HA einrichten, benötigen Sie:
@@ -240,6 +242,8 @@ Anweisungen zur Einrichtung finden Sie unter [Runner](/admin-guide/runners).
 
 ## FAQ {#faq}
 
+<Faq>
+
 ### Was ist Aktiv-Aktiv-Hochverfügbarkeit? {#what-is-active-active-high-availability}
 
 Aktiv-Aktiv-HA bedeutet, dass mehrere Anwendungsinstanzen gleichzeitig laufen und alle Anfragen bedienen. Es gibt keinen primären Knoten — jede Instanz kann Verkehr verarbeiten und Jobs ausführen.
@@ -263,3 +267,5 @@ Der Load Balancer leitet den Verkehr an die verbleibenden Knoten weiter. Laufend
 ### Kann ich horizontal skalieren? {#can-i-scale-horizontally}
 
 Ja. Sie können Semaphore-Knoten hinter dem Load Balancer hinzufügen, um die Web-/API-Kapazität zu erhöhen, und [Runner](/admin-guide/runners) hinzufügen, um die Kapazität für die Task-Ausführung zu erhöhen.
+
+</Faq>

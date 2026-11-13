@@ -30,6 +30,8 @@ SQLite e BoltDB não são suportados em implantações HA. Use PostgreSQL ou MyS
 * **Estado compartilhado da fila de tarefas** mantém a fila de tarefas para que cada job seja capturado por exatamente um worker. Todos os nós veem a mesma fila e coordenam a execução.
 * **Mensageria Pub/Sub** permite que os nós transmitam eventos como atualizações de tarefas, notificações do cluster, invalidação de cache e mudanças de estado da interface. Isso mantém todos os nós sincronizados em tempo real.
 
+As chaves, locks e canais exatos por trás dessas funções estão descritos em [Coordenação do cluster](/admin-guide/ha/coordination). O cache compartilhado de registros de runners está descrito em [Cache de autenticação de runners](/admin-guide/ha/runner-cache).
+
 ## Pré-requisitos {#prerequisites}
 
 Antes de configurar o HA, você precisa de:
@@ -240,6 +242,8 @@ Consulte [Runners](/admin-guide/runners) para ver as instruções de configuraç
 
 ## Perguntas frequentes {#faq}
 
+<Faq>
+
 ### O que é alta disponibilidade ativo-ativo? {#what-is-active-active-high-availability}
 
 HA ativo-ativo significa que várias instâncias da aplicação são executadas simultaneamente e todas atendem requisições. Não há nó primário — qualquer instância pode atender o tráfego e executar jobs.
@@ -263,3 +267,5 @@ O balanceador de carga direciona o tráfego para os nós restantes. Os jobs em e
 ### Posso escalar horizontalmente? {#can-i-scale-horizontally}
 
 Sim. Você pode adicionar nós do Semaphore atrás do balanceador de carga para aumentar a capacidade web/API e adicionar [runners](/admin-guide/runners) para aumentar a capacidade de execução de tarefas.
+
+</Faq>

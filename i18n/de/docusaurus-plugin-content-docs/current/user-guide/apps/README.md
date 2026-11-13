@@ -1,6 +1,6 @@
 # Anwendungen
 
-Eine Anwendung ist das Werkzeug, das ein Task Template ausführt. Semaphore bringt sieben integrierte Anwendungen mit; Administratoren können sie ein- und ausschalten und eigene registrieren.
+Eine Anwendung ist das Werkzeug, das ein Task Template ausführt. Semaphore bringt neun integrierte Anwendungen mit; Administratoren können sie ein- und ausschalten und eigene registrieren.
 
 | Anwendung | ID | Was ein Template ausführt | Anleitung |
 |---|---|---|---|
@@ -11,6 +11,8 @@ Eine Anwendung ist das Werkzeug, das ein Task Template ausführt. Semaphore brin
 | Bash Script | `bash` | ein Shell-Skript mit `/bin/bash` | [Shell](./bash) |
 | PowerShell Script | `powershell` | ein `.ps1`-Skript mit `pwsh` | [PowerShell](./powershell) |
 | Python Script | `python` | ein `.py`-Skript mit `python3` | [Python](./python) |
+| Claude Code Agent | `claude` | der Claude-Code-Agent mit einem Prompt | [KI-Agenten](./ai-agents) |
+| Codex Agent | `codex` | der Codex-Agent mit einem Prompt | [KI-Agenten](./ai-agents) |
 
 Das Werkzeug selbst muss auf dem Rechner installiert sein, der die Tasks ausführt: dem Semaphore-Server oder dem [Runner](/admin-guide/runners). Das offizielle Docker-Image enthält Ansible, Terraform, OpenTofu, Bash und Python.
 

@@ -14,10 +14,10 @@
   --ifm-color-primary-light: #0096a3;
   --ifm-color-primary-lighter: #00a4b6;
   --ifm-color-primary-lightest: #00b8cc;
-  --ifm-navbar-height: 52px;
   --sem-layout-width: var(--ifm-container-width);
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-navbar-item-padding-horizontal: 8px;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -198,18 +198,632 @@ hr {
   white-space: nowrap;
 }
 
-/* Custom navbar styling */
-.navbar {
-  background-color: #008890 !important;
-  color: white !important;
-  padding-top: 3px !important;
+/* ===========================================================================
+   Navbar — mirrors the header of the main website
+   (website: src/components/SiteHeader/SiteHeader.scss).
+
+   A floating rounded bar on a transparent strip; dropdowns hang off the bar's
+   bottom edge. The website has no dark theme, so the dark tokens are ours.
+   Menu structure and class names come from docusaurus.config.js.
+   =========================================================================== */
+:root {
+  --sem-header-gap: 16px;
+  --sem-header-bar-height: 70px;
+  --ifm-navbar-height: calc(var(--sem-header-bar-height) + 2 * var(--sem-header-gap));
+  --sem-header-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --sem-header-bg: #ffffffcf;
+  --sem-header-bg-solid: #ffffff;
+  --sem-header-border: #eef2f2;
+  --sem-header-divider: #d8e9e7;
+  --sem-header-text: #475569;
+  --sem-header-title: #1c2b2d;
+  --sem-header-accent: #005e65;
+  --sem-header-accent-hover: #004d53;
+  --sem-header-control-bg: #f8fafb;
+  --sem-header-control-border: #d0dede;
+  --sem-header-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+
+  --ifm-navbar-link-color: var(--sem-header-text);
+  --ifm-navbar-link-hover-color: var(--sem-header-accent);
+  --ifm-navbar-link-active-color: var(--sem-header-accent);
+  --ifm-navbar-item-padding-vertical: 6px;
 }
 
-/* Keep the navbar content the same width as the footer container
+[data-theme='dark'] {
+  --sem-header-bg: #242526cf;
+  --sem-header-bg-solid: #242526;
+  --sem-header-border: #36383a;
+  --sem-header-divider: #3d4043;
+  --sem-header-text: #b6bfca;
+  --sem-header-title: #f1f5f9;
+  --sem-header-accent: var(--ifm-color-primary);
+  --sem-header-accent-hover: var(--ifm-color-primary-light);
+  --sem-header-control-bg: #2e3032;
+  --sem-header-control-border: #4a4e52;
+  --sem-header-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* The strip around the bar is transparent and lets clicks through. */
+.navbar {
+  padding: var(--sem-header-gap) var(--ifm-spacing-horizontal);
+  background: transparent;
+  box-shadow: none;
+  font-family: var(--sem-header-font);
+  pointer-events: none;
+}
+
+.navbar > * {
+  pointer-events: auto;
+}
+
+/* Keep the bar the same width as the footer container
    (Infima .container: --ifm-container-width minus its horizontal padding) */
 .navbar__inner {
   max-width: calc(var(--sem-layout-width) - 2 * var(--ifm-spacing-horizontal));
   margin: 0 auto;
+  padding: 0 20px;
+  flex-wrap: nowrap;
+  background: var(--sem-header-bg);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--sem-header-border);
+  border-radius: 10px;
+  box-shadow: var(--sem-header-shadow);
+  transition: background 0.2s ease;
+}
+
+.navbar__inner:hover,
+.navbar__inner:focus-within {
+  background: var(--sem-header-bg-solid);
+}
+
+.navbar__items {
+  gap: 2px;
+}
+
+.navbar__brand {
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+
+.navbar__logo {
+  height: 28px;
+  margin-right: 0;
+}
+
+.navbar__link {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+/* Only the external-link icon is hidden; the locale dropdown keeps its globe. */
+.navbar [class*='iconExternalLink'],
+.navbar-sidebar [class*='iconExternalLink'] {
+  display: none;
+}
+
+/* Dropdowns span the bar's height, so their menus start at its bottom edge. */
+.navbar .dropdown {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.navbar .dropdown:hover > .navbar__link,
+.navbar .dropdown:focus-within > .navbar__link {
+  color: var(--sem-header-accent);
+}
+
+/* Dropdown caret: small outlined chevron instead of Infima's filled triangle */
+.navbar .dropdown > .navbar__link::after {
+  content: '';
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  margin-left: 0.5em;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: translateY(-35%) rotate(45deg) scale(0.8);
+  position: relative;
+  top: 0;
+  transition: transform 0.2s ease;
+}
+
+.navbar .dropdown:hover > .navbar__link::after,
+.navbar .dropdown:focus-within > .navbar__link::after {
+  transform: translateY(15%) rotate(225deg) scale(0.8);
+}
+
+.navbar .dropdown__menu {
+  top: 100%;
+  left: -12px;
+  min-width: 0;
+  max-height: none;
+  padding: 0 20px 16px;
+  overflow: visible;
+  background: var(--sem-header-bg-solid);
+  border: 1px solid var(--sem-header-border);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  box-shadow: none;
+  transform: none;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+.navbar .dropdown--right .dropdown__menu {
+  left: auto;
+  right: -12px;
+}
+
+.navbar .dropdown__menu > li {
+  margin: 0;
+}
+
+.navbar .dropdown__link {
+  margin: 0;
+  padding: 5px 0;
+  border-radius: 0;
+  background: none;
+  color: var(--sem-header-text);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.navbar .dropdown__link:hover,
+.navbar .dropdown__link:focus-visible,
+.navbar .dropdown__link--active {
+  background: none;
+  color: var(--sem-header-accent);
+}
+
+/* Group title inside a dropdown (e.g. "Comparison" in the Explore menu) */
+.navbar .dropdown__category {
+  margin-bottom: 6px;
+  color: var(--sem-header-text);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  user-select: none;
+}
+
+/* Help, Company, languages: a plain list of bold links */
+.navbar .navbar-menu--list + .dropdown__menu,
+.navbar .navbar-locale + .dropdown__menu {
+  min-width: 260px;
+}
+
+.navbar .navbar-menu--list + .dropdown__menu .dropdown__link,
+.navbar .navbar-locale + .dropdown__menu .dropdown__link {
+  padding: 8px 0;
+  font-weight: 700;
+}
+
+.navbar .navbar-locale + .dropdown__menu {
+  min-width: 180px;
+}
+
+/* Product: "Name | tag" over a description, separated by hairlines */
+.navbar .navbar-menu--product + .dropdown__menu {
+  min-width: 330px;
+  padding: 0;
+}
+
+.navbar-product {
+  position: relative;
+  display: block;
+  padding: 14px 20px;
+  white-space: nowrap;
+}
+
+.navbar-product:hover {
+  text-decoration: none;
+}
+
+.navbar .dropdown__menu > li:first-child > .navbar-product {
+  padding-top: 0;
+}
+
+.navbar .dropdown__menu > li:not(:last-child) > .navbar-product::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: var(--sem-header-divider);
+}
+
+.navbar-product__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.navbar-product__title strong {
+  color: var(--sem-header-title);
+  font-weight: 700;
+  transition: color 0.15s ease;
+}
+
+.navbar-product:hover .navbar-product__title strong {
+  color: var(--sem-header-accent);
+}
+
+.navbar-product__title span {
+  color: var(--sem-header-text);
+  font-weight: 400;
+}
+
+.navbar-product__title span::before {
+  content: '| ';
+  margin-right: 2px;
+}
+
+.navbar-product__desc {
+  display: block;
+  margin-top: 4px;
+  color: var(--sem-header-text);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Features: capabilities in three columns, automation tools in four */
+.navbar .navbar-menu--features + .dropdown__menu {
+  width: 660px;
+  max-width: calc(100vw - 40px);
+  padding-bottom: 20px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 28px;
+  row-gap: 2px;
+}
+
+.navbar .dropdown--hoverable:hover > .navbar-menu--features + .dropdown__menu,
+.navbar .dropdown--show > .navbar-menu--features + .dropdown__menu,
+.navbar .dropdown--hoverable:hover > .navbar-menu--explore + .dropdown__menu,
+.navbar .dropdown--show > .navbar-menu--explore + .dropdown__menu {
+  display: grid;
+}
+
+.navbar .navbar-menu--features + .dropdown__menu > li {
+  grid-column: span 4;
+}
+
+.navbar .navbar-menu--features + .dropdown__menu > li:has(> .dropdown__category) {
+  grid-column: 1 / -1;
+}
+
+.navbar .navbar-menu--features + .dropdown__menu > li:has(> .navbar-menu__tool) {
+  grid-column: span 3;
+}
+
+.navbar .navbar-menu--features + .dropdown__menu > .navbar-menu__tools {
+  margin: 18px -20px 0;
+  padding: 20px 20px 0;
+  border-top: 1px solid var(--sem-header-divider);
+}
+
+.navbar .navbar-menu--features + .dropdown__menu .dropdown__link {
+  padding: 4px 0;
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+/* Explore: bold links on the left, the comparison list on the right. The two
+   columns have different row heights, so rows are counted in 1px units. */
+.navbar .navbar-menu--explore + .dropdown__menu {
+  padding-bottom: 20px;
+  grid-template-columns: auto auto;
+  grid-auto-rows: 1px;
+  grid-auto-flow: row dense;
+  column-gap: 32px;
+}
+
+.navbar .navbar-menu--explore + .dropdown__menu > li {
+  grid-column: 1;
+  grid-row: span 36;
+}
+
+.navbar .navbar-menu--explore + .dropdown__menu > li:has(> .navbar-menu__comparison),
+.navbar .navbar-menu--explore + .dropdown__menu > .navbar-menu__comparison {
+  grid-column: 2;
+  grid-row: span 30;
+  padding-left: 28px;
+  border-left: 1px solid var(--sem-header-divider);
+}
+
+.navbar .navbar-menu--explore + .dropdown__menu .dropdown__link {
+  padding: 6px 0;
+  font-weight: 700;
+}
+
+.navbar .navbar-menu--explore + .dropdown__menu .dropdown__link.navbar-menu__comparison {
+  padding: 4px 0;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Right side: search, GitHub stars, sign in, languages, theme switch, CTA.
+   Translated labels differ in width a lot; when the bar gets tight, the menu
+   keeps its size and the search box gives up its placeholder. */
+.navbar__items:not(.navbar__items--right) {
+  flex: 0 0 auto;
+}
+
+.navbar__items--right {
+  flex: 1 1 0;
+  gap: 4px;
+}
+
+.navbar__items--right > * {
+  flex-shrink: 0;
+}
+
+.navbar__items--right > .navbar__link,
+.navbar-github a {
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.navbar-github {
+  display: flex;
+}
+
+.navbar-github a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--sem-header-text);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.navbar-github a:hover {
+  color: var(--sem-header-accent);
+}
+
+/* The language switch shows its icon only; the menu lists the names. */
+.navbar__items .navbar-locale {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0;
+}
+
+.navbar__items .navbar-locale::after {
+  font-size: 13.5px;
+}
+
+.navbar [class*='colorModeToggle'] button {
+  color: var(--sem-header-text);
+}
+
+/* Docusaurus appends the search box last; the bar shows it first. */
+.navbar [class*='navbarSearchContainer'] {
+  order: -1;
+  flex-shrink: 1;
+  min-width: 38px;
+  margin-right: 8px;
+  padding: 0;
+}
+
+.navbar .DocSearch-Button {
+  max-width: 100%;
+  overflow: hidden;
+  height: 38px;
+  margin: 0;
+  padding: 0 10px;
+  border: 1px solid var(--sem-header-control-border);
+  border-radius: 8px;
+  background: var(--sem-header-control-bg);
+  color: var(--sem-header-text);
+  font-family: var(--sem-header-font);
+  box-shadow: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.navbar .DocSearch-Button:hover {
+  border-color: var(--sem-header-accent);
+  color: var(--sem-header-accent);
+  box-shadow: none;
+}
+
+.navbar .DocSearch-Button .DocSearch-Search-Icon {
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+}
+
+.navbar .DocSearch-Button-Placeholder {
+  padding: 0 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.navbar .DocSearch-Button-Keys {
+  display: none;
+}
+
+.navbar .navbar-cta {
+  order: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  max-width: 145px;
+  margin-left: 4px;
+  padding: 6px 12px;
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
+  transition: all 0.15s ease;
+}
+
+/* The search box, language switch and theme switch take the room the website
+   gives to its second button, so the trial link lives in the mobile drawer. */
+.navbar__items .navbar-cta--trial {
+  display: none;
+}
+
+.navbar .navbar-cta--contact,
+.navbar-sidebar .navbar-cta--contact {
+  background: #005e65;
+  border-color: #005e65;
+  color: #ffffff;
+}
+
+.navbar .navbar-cta--contact:hover,
+.navbar-sidebar .navbar-cta--contact:hover {
+  background: #004d53;
+  border-color: #004d53;
+  color: #ffffff;
+}
+
+/* Fluid scaling while the layout is narrower than the wide container */
+@media (min-width: 997px) and (max-width: 1439px) {
+  :root {
+    --ifm-navbar-item-padding-horizontal: 8px;
+  }
+
+  .navbar__inner {
+    padding: 0 12px;
+  }
+
+  .navbar__items {
+    gap: 0;
+  }
+
+  .navbar__link,
+  .navbar__items--right > .navbar__link,
+  .navbar-github a {
+    font-size: 12.5px;
+  }
+
+  .navbar .navbar-cta {
+    min-height: 36px;
+    max-width: 130px;
+    padding: 4px 8px;
+    font-size: 11.5px;
+  }
+
+  /* Icon-only search */
+  .navbar .DocSearch-Button-Placeholder {
+    display: none;
+  }
+
+  .navbar [class*='navbarSearchContainer'] {
+    margin-right: 2px;
+  }
+}
+
+/* Just above the mobile breakpoint the longer locales need the room. */
+@media (min-width: 997px) and (max-width: 1099px) {
+  .navbar-github,
+  .navbar__items .navbar-signin {
+    display: none;
+  }
+}
+
+/* Mobile: a full-width 72px bar with the burger on the right */
+@media (max-width: 996px) {
+  :root {
+    --sem-header-gap: 0px;
+    --sem-header-bar-height: 72px;
+  }
+
+  .navbar {
+    padding: 0;
+  }
+
+  /* Infima hides the items here; the desktop rules above must not undo it. */
+  .navbar .navbar__inner .navbar__item {
+    display: none;
+  }
+
+  .navbar__inner {
+    max-width: none;
+    padding: 0 24px;
+    align-items: center;
+    gap: 8px;
+    border-width: 0 0 1px;
+    border-radius: 0;
+  }
+
+  .navbar__items {
+    display: contents;
+  }
+
+  .navbar__brand {
+    margin-right: auto;
+  }
+
+  /* Infima's `display: inherit` would pick up `contents` from the group. */
+  .navbar__toggle {
+    display: flex;
+    order: 1;
+    margin-right: -6px;
+    color: var(--sem-header-accent);
+  }
+
+  .navbar [class*='navbarSearchContainer'] {
+    position: static;
+    order: 0;
+    margin-right: 0;
+  }
+}
+
+/* Mobile drawer */
+.navbar-sidebar {
+  color: var(--ifm-font-color-base);
+  font-family: var(--sem-header-font);
+}
+
+.navbar-sidebar__brand {
+  padding: 0 24px;
+  box-shadow: none;
+  border-bottom: 1px solid var(--sem-header-divider);
+}
+
+.navbar-sidebar__close {
+  color: var(--sem-header-accent);
+}
+
+.navbar-sidebar .navbar-product {
+  padding: 8px 12px;
+  white-space: normal;
+}
+
+.navbar-sidebar .navbar-product__title {
+  flex-wrap: wrap;
+}
+
+.navbar-sidebar .dropdown__category {
+  padding: 10px 12px 4px;
+  color: var(--sem-header-text);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.navbar-sidebar .navbar-github {
+  padding: 8px 12px;
+}
+
+.navbar-sidebar .navbar-cta {
+  justify-content: center;
+  margin-top: 10px;
+  border: 1px solid var(--sem-header-control-border);
+  border-radius: 10px;
+  font-weight: 700;
 }
 
 /* Center the complete docs layout, including its sticky sidebar, on the
@@ -226,63 +840,6 @@ hr {
   :root {
     --sem-layout-width: var(--ifm-container-width-xl);
   }
-}
-
-/* White links belong to the teal header, not the mobile sidebar. */
-.navbar__inner a {
-  color: white !important;
-}
-
-.navbar__inner a:hover {
-  color: rgba(255, 255, 255, 0.8) !important;
-}
-
-.navbar__inner .navbar__brand {
-  color: white !important;
-}
-
-.navbar__inner .navbar__link {
-  color: white !important;
-}
-
-.navbar__inner .navbar__link:hover {
-  color: rgba(255, 255, 255, 0.8) !important;
-}
-
-.navbar__inner .navbar__item {
-  color: white !important;
-}
-
-.navbar-sidebar {
-  color: var(--ifm-font-color-base);
-}
-
-/* Dropdown menus follow the site theme: white in light mode, dark surface in dark mode */
-.navbar .dropdown__menu {
-  background-color: var(--ifm-dropdown-background-color);
-  box-shadow: var(--ifm-global-shadow-md);
-}
-
-.navbar .dropdown__link {
-  color: var(--ifm-dropdown-link-color) !important;
-}
-
-.navbar .dropdown__link:hover,
-.navbar .dropdown__link--active {
-  background-color: var(--ifm-dropdown-hover-background-color);
-  color: var(--ifm-color-primary) !important;
-}
-
-.navbar__title {
-  line-height: 1;
-}
-
-.navbar__title::after {
-  display: block;
-  content: 'Documentation';
-  color: #ffc000;
-  /* opacity: 0.7; */
-  font-size: 0.9em;
 }
 
 .tabs-container > .margin-top--md {
@@ -322,111 +879,49 @@ hr {
 :root {
   --ifm-global-shadow-lw: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 }
-/* Navbar dropdown category title (e.g. "Comparison" in Explore menu) */
-.navbar .dropdown__category {
-  padding: 0.5rem 0.75rem 0.25rem;
-  margin-top: 0.25rem;
-  border-top: 1px solid var(--ifm-color-emphasis-200);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--ifm-color-emphasis-600);
-}
-
-.navbar .dropdown__menu {
-  min-width: 14rem;
-}
-
-/* Hide the external-link icon on navbar items */
-.navbar__link svg,
-.dropdown__link svg,
-.navbar-sidebar .menu__link svg {
-  display: none;
-}
-
-/* Dropdown caret: small outlined chevron instead of Infima's filled triangle */
-.navbar .dropdown > .navbar__link::after {
-  content: '';
-  display: inline-block;
-  width: 0.4em;
-  height: 0.4em;
-  margin-left: 0.4em;
-  border: solid currentColor;
-  border-width: 0 2px 2px 0;
-  transform: translateY(-25%) rotate(45deg);
-  position: relative;
-  top: 0;
-  opacity: 0.5;
-}
-
-/* Footer: mirrors the main website footer */
+/* Footer: mirrors the main website footer (SiteFooter.scss there).
+   The markup comes from src/theme/Footer. */
 .footer {
   --footer-bg: #ffffff;
   --footer-text: #475569;
+  --footer-link: #4b5563;
   --footer-title: #1c2b2d;
   --footer-muted: #6b7c7c;
-  --footer-hover: #005e65;
-  --footer-divider: #d8e9e7;
+  --footer-accent: #005e65;
+  --footer-accent-hover: #003e43;
+  --footer-divider: #d6e5e8;
+  --footer-control-border: #d0dede;
+  --footer-control-hover: #f8fafb;
   background-color: var(--footer-bg);
   color: var(--footer-text);
   padding: 60px 0 40px;
-  border-top: 1px solid var(--footer-divider);
+  font-family: var(--sem-header-font);
 }
 
 [data-theme='dark'] .footer {
   --footer-bg: var(--ifm-background-surface-color);
   --footer-text: var(--ifm-color-emphasis-700);
+  --footer-link: var(--ifm-color-emphasis-700);
   --footer-title: var(--ifm-font-color-base);
   --footer-muted: var(--ifm-color-emphasis-600);
-  --footer-hover: var(--ifm-color-primary);
+  --footer-accent: var(--ifm-color-primary);
+  --footer-accent-hover: var(--ifm-color-primary-light);
   --footer-divider: var(--ifm-color-emphasis-200);
+  --footer-control-border: var(--ifm-color-emphasis-300);
+  --footer-control-hover: var(--ifm-color-emphasis-100);
 }
 
-.footer .footer__links {
-  gap: 24px 0;
+.footer .footer__main {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 24px;
 }
 
-.footer .footer__col {
-  flex: 1 1 0;
-  min-width: 120px;
-}
-
-.footer .footer__col:first-child {
-  flex: 0 0 260px;
-  max-width: 260px;
-}
-
-.footer .footer__col:first-child .footer__title {
-  display: none;
-}
-
-.footer .footer__title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--footer-title);
-  margin-bottom: 8px;
-}
-
-.footer .footer__item {
-  font-size: 14px;
-  line-height: 1.3;
-  padding: 4px 0;
-}
-
-.footer .footer__link-item {
-  color: var(--footer-text);
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.footer .footer__link-item:hover {
-  color: var(--footer-hover);
-  text-decoration: none;
-}
-
-.footer .footer__link-item svg {
-  display: none;
+.footer .footer__brandCol {
+  flex: 0 0 290px;
+  min-width: 0;
+  max-width: 290px;
 }
 
 .footer .footer__brand {
@@ -438,9 +933,10 @@ hr {
   height: 32px;
   width: auto;
   display: block;
+  max-width: none;
+  margin-top: 0;
   border-radius: 0;
   box-shadow: none;
-  margin-top: -12px !important;
 }
 
 .footer .footer__logo--dark {
@@ -459,46 +955,97 @@ hr {
   font-size: 13px;
   line-height: 20px;
   color: var(--footer-text);
-  max-width: 240px;
+  max-width: 290px;
   margin-bottom: 20px;
 }
 
-.footer .footer__contactTitle {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--footer-title);
-  margin-bottom: 4px;
+.footer .footer__contact {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
 }
 
 .footer .footer__contactRow {
   display: flex;
-  align-items: center;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
   font-size: 12px;
-  line-height: 19px;
+  line-height: 1.5;
 }
 
 .footer .footer__contactLabel {
-  width: 77px;
-  min-width: 77px;
-  max-width: 77px;
+  flex: 0 0 72px;
   color: var(--footer-muted);
-  font-weight: 500;
 }
 
 .footer .footer__contactRow a {
-  color: var(--footer-text);
-  text-decoration: underline;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--footer-accent);
+  text-decoration: none;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
 }
 
 .footer .footer__contactRow a:hover {
-  color: var(--footer-hover);
+  color: var(--footer-accent-hover);
+  text-decoration: underline;
+}
+
+.footer .footer__navCol {
+  flex: 0 1 auto;
+  max-width: 210px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.footer .footer__groupTitle {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--footer-title);
+  margin: 0 0 12px;
+}
+
+/* The accordion header replaces the title on mobile */
+.footer .footer__groupHeader {
+  display: none;
+}
+
+.footer .footer__groupLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer .footer__link-item {
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--footer-link);
+  text-decoration: none;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.footer .footer__link-item:hover {
+  color: var(--footer-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.footer .footer__link-item svg {
+  display: none;
 }
 
 .footer .footer__bottom {
-  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0;
   padding-top: 24px;
-  border-top: 1px solid var(--footer-divider);
-  text-align: left;
 }
 
 .footer .footer__copyright {
@@ -506,18 +1053,344 @@ hr {
   color: var(--footer-text);
 }
 
+/* Language selector */
+.footer .footer__langWrapper {
+  position: relative;
+  display: inline-flex;
+  height: 38px;
+}
+
+.footer .footer__langBtn,
+.footer .footer__langActiveRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 16px;
+  background: var(--footer-bg);
+  color: var(--footer-accent);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.footer .footer__langBtn {
+  justify-content: center;
+  border: 1px solid var(--footer-control-border);
+  border-radius: 999px;
+}
+
+.footer .footer__langBtn:hover {
+  background: var(--footer-control-hover);
+  border-color: var(--footer-accent);
+}
+
+.footer .footer__langGlobe,
+.footer .footer__chevron {
+  flex-shrink: 0;
+}
+
+.footer .footer__langPopup {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 500;
+  display: none;
+  flex-direction: column;
+  width: max-content;
+  min-width: 100%;
+  overflow: hidden;
+  background: var(--footer-bg);
+  border: 1px solid var(--footer-control-border);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.footer .footer__langPopup--open {
+  display: flex;
+}
+
+.footer .footer__langList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 16px 10px;
+}
+
+.footer .footer__langOption {
+  padding: 4px 0;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--footer-title);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.footer .footer__langOption:hover {
+  color: var(--footer-accent);
+}
+
+.footer .footer__langActiveRow {
+  justify-content: space-between;
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--footer-divider);
+}
+
+.footer .footer__langActiveRow:hover {
+  background: var(--footer-control-hover);
+}
+
+/* Mobile language sheet; never shown on desktop */
+.footer .footer__sheetBackdrop,
+.footer .footer__sheet {
+  display: none;
+}
+
+@media (min-width: 997px) and (max-width: 1199px) {
+  .footer .footer__main {
+    gap: 24px;
+  }
+
+  .footer .footer__brandCol {
+    flex-basis: 260px;
+    max-width: 260px;
+  }
+
+  .footer .footer__desc {
+    max-width: 210px;
+  }
+
+  .footer .footer__groupLinks {
+    gap: 6px;
+  }
+
+  .footer .footer__link-item {
+    font-size: 13px;
+  }
+}
+
 @media (max-width: 996px) {
   .footer {
     padding: 40px 24px;
   }
 
-  .footer .footer__col:first-child {
-    flex: 1 1 100%;
+  .footer .container {
+    padding: 0;
+  }
+
+  .footer .footer__main {
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 32px;
+  }
+
+  .footer .footer__brandCol {
+    flex: none;
     max-width: 100%;
+    margin-bottom: 32px;
   }
 
   .footer .footer__desc {
+    font-size: 14px;
+    line-height: 22px;
     max-width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .footer .footer__contact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Columns dissolve; the groups line up in config order as accordions */
+  .footer .footer__navCol {
+    display: contents;
+  }
+
+  .footer .footer__group {
+    border-bottom: 1px solid var(--footer-divider);
+  }
+
+  .footer .footer__groupTitle {
+    display: none;
+  }
+
+  .footer .footer__groupHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 0;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--footer-title);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .footer .footer__groupHeader .footer__chevron {
+    width: 18px;
+    height: 18px;
+    color: var(--footer-accent);
+    transition: transform 0.2s ease;
+  }
+
+  .footer .footer__group--open .footer__groupHeader {
+    color: var(--footer-accent);
+  }
+
+  .footer .footer__group--open .footer__groupHeader .footer__chevron {
+    transform: rotate(180deg);
+  }
+
+  .footer .footer__groupLinks {
+    display: none;
+    gap: 12px;
+    padding-bottom: 16px;
+  }
+
+  .footer .footer__group--open .footer__groupLinks {
+    display: flex;
+  }
+
+  .footer .footer__link-item {
+    font-size: 15px;
+  }
+
+  .footer .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer .footer__copyright {
+    font-size: 14px;
+  }
+
+  .footer .footer__langPopup {
+    display: none;
+  }
+
+  .footer .footer__sheetBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 99998;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .footer .footer__sheetBackdrop--open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .footer .footer__sheet {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 99999;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 12px 24px 32px;
+    background: var(--footer-bg);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(100%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
+  }
+
+  .footer .footer__sheet--open {
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .footer .footer__sheetHandle {
+    width: 40px;
+    height: 4px;
+    margin: 0 auto 16px;
+    background: var(--footer-control-border);
+    border-radius: 2px;
+  }
+
+  .footer .footer__sheetHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--footer-divider);
+  }
+
+  .footer .footer__sheetTitle {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--footer-title);
+  }
+
+  .footer .footer__sheetClose {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--footer-accent);
+    cursor: pointer;
+  }
+
+  .footer .footer__sheetList {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer .footer__sheetOption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    font-size: 16px;
+    color: var(--footer-title);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer .footer__sheetOption:hover,
+  .footer .footer__sheetOption--active {
+    color: var(--footer-accent);
+  }
+
+  .footer .footer__sheetOption--active {
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 479px) {
+  .footer .footer__contact {
+    grid-template-columns: 1fr;
+  }
+
+  .footer .footer__contactLabel {
+    flex-basis: 88px;
   }
 }
 
@@ -559,9 +1432,11 @@ html[data-theme='dark'] {
   --sem-sidebar-border: #495057;
 }
 
-/* Hairline between the sidebar and the content */
+/* Hairline between the sidebar and the content. The container starts behind
+   the navbar, so it is clipped to keep the line out of the floating header. */
 aside.theme-doc-sidebar-container {
   border-right: 1px solid var(--sem-sidebar-border);
+  clip-path: inset(var(--ifm-navbar-height) 0 0 0);
 }
 
 .theme-doc-sidebar-menu {
@@ -723,6 +1598,10 @@ html[data-theme='dark'] {
   --sem-sidebar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3H9a3 3 0 0 0 -3 3v3h6M6 8H5a3 3 0 0 0 -3 3v3a3 3 0 0 0 3 3h2M12 3h3a3 3 0 0 1 3 3v3a3 3 0 0 1 -3 3H9a3 3 0 0 0 -3 3v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3 -3v-3h-6M18 16h1a3 3 0 0 0 3 -3v-3a3 3 0 0 0 -3 -3h-2M9 6h.01M15 18h.01'/%3E%3C/svg%3E");
 }
 
+.sidebar-icon--ai-agents {
+  --sem-sidebar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 3l1.8 5.2L17 10l-5.2 1.8L10 17l-1.8 -5.2L3 10l5.2 -1.8zM18 14l.9 2.1L21 17l-2.1 .9L18 20l-.9 -2.1L15 17l2.1 -.9z'/%3E%3C/svg%3E");
+}
+
 .sidebar-icon--email {
   --sem-sidebar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='M3 7l9 6l9 -6'/%3E%3C/svg%3E");
 }
@@ -876,4 +1755,37 @@ video {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+/*
+ * Edition badge on a sidebar category. Page links get theirs from
+ * src/theme/DocSidebarItem/Link; a category label also feeds the collapse
+ * button's aria-label, so it has to stay a plain string and the badge is drawn
+ * with CSS instead. Colours mirror src/components/FeatureState/styles.module.css.
+ */
+.sidebar-edition > .menu__list-item-collapsible > .menu__link::after {
+  margin-left: auto;
+  padding: 0.05rem 0.45rem;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sidebar-edition--enterprise > .menu__list-item-collapsible > .menu__link::after {
+  content: 'Ent';
+  background-color: #fdf0d5;
+  border-color: #efc76b;
+  color: #855400;
+  transform: none !important;
+}
+
+[data-theme='dark'] .sidebar-edition--enterprise > .menu__list-item-collapsible > .menu__link::after {
+  background-color: #4a3a12;
+  border-color: #8c6f24;
+  color: #f6dda0;
 }

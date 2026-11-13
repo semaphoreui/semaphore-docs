@@ -30,6 +30,8 @@ SQLite e BoltDB non sono supportati per le distribuzioni HA. Utilizzare PostgreS
 * Lo **stato condiviso della coda dei task** mantiene la coda dei task in modo che ogni job venga preso in carico esattamente da un solo worker. Tutti i nodi vedono la stessa coda e coordinano l'esecuzione.
 * La **messaggistica Pub/Sub** consente ai nodi di trasmettere eventi come aggiornamenti dei task, notifiche del cluster, invalidazione della cache e modifiche dello stato dell'interfaccia utente. In questo modo tutti i nodi restano sincronizzati in tempo reale.
 
+Le chiavi, i lock e i canali esatti dietro queste funzioni sono descritti in [Coordinamento del cluster](/admin-guide/ha/coordination). La cache condivisa dei record dei runner è descritta in [Cache di autenticazione dei runner](/admin-guide/ha/runner-cache).
+
 ## Prerequisiti {#prerequisites}
 
 Prima di configurare l'HA sono necessari:
@@ -240,6 +242,8 @@ Consultare [Runner](/admin-guide/runners) per le istruzioni di configurazione.
 
 ## FAQ {#faq}
 
+<Faq>
+
 ### Che cos'è l'alta disponibilità active-active? {#what-is-active-active-high-availability}
 
 L'HA active-active significa che più istanze dell'applicazione vengono eseguite contemporaneamente e tutte servono le richieste. Non esiste un nodo primario: qualsiasi istanza può gestire il traffico ed eseguire i job.
@@ -263,3 +267,5 @@ Il bilanciatore di carico instrada il traffico verso i nodi rimanenti. I job in 
 ### È possibile scalare orizzontalmente? {#can-i-scale-horizontally}
 
 Sì. È possibile aggiungere nodi Semaphore dietro il bilanciatore di carico per aumentare la capacità web/API e aggiungere [runner](/admin-guide/runners) per aumentare la capacità di esecuzione dei task.
+
+</Faq>

@@ -30,6 +30,8 @@ SQLite i BoltDB nisu podržani za HA instalacije. Koristite PostgreSQL ili MySQL
 * **Deljeno stanje reda zadataka** održava red zadataka tako da svaki posao preuzima tačno jedan radnik. Svi čvorovi vide isti red i koordiniraju izvršavanje.
 * **Pub/Sub razmena poruka** omogućava čvorovima da emituju događaje kao što su ažuriranja zadataka, obaveštenja klastera, poništavanje keša i promene stanja korisničkog interfejsa. Time svi čvorovi ostaju sinhronizovani u realnom vremenu.
 
+Tačni ključevi, brave i kanali iza ovih funkcija opisani su u odeljku [Koordinacija klastera](/admin-guide/ha/coordination). Deljeni keš zapisa runnera opisan je u odeljku [Keš za autentifikaciju runnera](/admin-guide/ha/runner-cache).
+
 ## Preduslovi {#prerequisites}
 
 Pre podešavanja HA potrebno vam je:
@@ -240,6 +242,8 @@ Pogledajte [Runneri](/admin-guide/runners) za uputstva za podešavanje.
 
 ## Česta pitanja {#faq}
 
+<Faq>
+
 ### Šta je aktivno-aktivna visoka dostupnost? {#what-is-active-active-high-availability}
 
 Aktivno-aktivna HA znači da više instanci aplikacije radi istovremeno i da sve one opslužuju zahteve. Ne postoji primarni čvor — bilo koja instanca može obrađivati saobraćaj i izvršavati poslove.
@@ -263,3 +267,5 @@ Balanser opterećenja usmerava saobraćaj na preostale čvorove. Pokrenuti poslo
 ### Mogu li da skaliram horizontalno? {#can-i-scale-horizontally}
 
 Da. Možete dodati Semaphore čvorove iza balansera opterećenja da biste povećali veb/API kapacitet, i dodati [runnere](/admin-guide/runners) da biste povećali kapacitet izvršavanja zadataka.
+
+</Faq>

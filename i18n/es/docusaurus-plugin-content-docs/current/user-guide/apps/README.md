@@ -1,6 +1,6 @@
 # Aplicaciones
 
-Una aplicación es la herramienta que ejecuta una plantilla de tarea. Semaphore incluye siete aplicaciones integradas; los administradores pueden activarlas y desactivarlas, así como registrar las suyas propias.
+Una aplicación es la herramienta que ejecuta una plantilla de tarea. Semaphore incluye nueve aplicaciones integradas; los administradores pueden activarlas y desactivarlas, así como registrar las suyas propias.
 
 | Aplicación | ID | Qué ejecuta una plantilla | Guía |
 |---|---|---|---|
@@ -11,6 +11,8 @@ Una aplicación es la herramienta que ejecuta una plantilla de tarea. Semaphore 
 | Bash Script | `bash` | un script de shell con `/bin/bash` | [Shell](./bash) |
 | PowerShell Script | `powershell` | un script `.ps1` con `pwsh` | [PowerShell](./powershell) |
 | Python Script | `python` | un script `.py` con `python3` | [Python](./python) |
+| Claude Code Agent | `claude` | el agente Claude Code con un prompt | [Agentes de IA](./ai-agents) |
+| Codex Agent | `codex` | el agente Codex con un prompt | [Agentes de IA](./ai-agents) |
 
 La herramienta en sí debe estar instalada en la máquina que ejecuta las tareas: el servidor de Semaphore o el [runner](/admin-guide/runners). La imagen oficial de Docker contiene Ansible, Terraform, OpenTofu, Bash y Python.
 

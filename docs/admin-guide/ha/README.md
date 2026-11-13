@@ -31,6 +31,8 @@ SQLite and BoltDB are not supported for HA deployments. Use PostgreSQL or MySQL.
 * **Shared Task Queue State** maintains the task queue so that jobs are picked up by exactly one worker. All nodes see the same queue and coordinate execution.
 * **Pub/Sub Messaging** allows nodes to broadcast events such as task updates, cluster notifications, cache invalidation, and UI state changes. This keeps all nodes synchronized in real time.
 
+For the exact keys, locks and channels behind these functions, see [Cluster coordination](/admin-guide/ha/coordination). The shared cache of runner records is described in [Runner authentication cache](/admin-guide/ha/runner-cache).
+
 ## Prerequisites {#prerequisites}
 
 Before setting up HA you need:
@@ -241,6 +243,8 @@ See [Runners](/admin-guide/runners) for setup instructions.
 
 ## FAQ {#faq}
 
+<Faq>
+
 ### What is active-active high availability? {#what-is-active-active-high-availability}
 
 Active-active HA means multiple application instances run simultaneously, and all of them serve requests. There is no primary node — any instance can handle traffic and execute jobs.
@@ -264,3 +268,5 @@ The load balancer routes traffic to the remaining nodes. Running jobs continue o
 ### Can I scale horizontally? {#can-i-scale-horizontally}
 
 Yes. You can add Semaphore nodes behind the load balancer to increase web/API capacity, and add [runners](/admin-guide/runners) to increase task execution capacity.
+
+</Faq>
