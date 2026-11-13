@@ -22,6 +22,8 @@ Ako koristite udaljeni repozitorijum koji zahteva autentifikaciju, moraćete da 
 
 Za udaljene repozitorijume koji koriste SSH moraćete da koristite svoj SSH ključ u odeljku **Key Store**.
 
+Za udaljene repozitorijume koji koriste HTTPS koristite ključ tipa **Prijava lozinkom** ili ključ tipa **String** koji sadrži lični pristupni token (PAT). Semaphore šalje ključ tipa **String** kao lozinku korisnika `oauth2`, što prihvataju GitHub, GitLab, Azure DevOps i Gitea. Ako server zahteva određeno korisničko ime, kao što je `x-token-auth` za [Bitbucket pristupni token](/user-guide/repositories/bitbucket_access_token), koristite **Prijava lozinkom**.
+
 Za udaljene repozitorijume koji nemaju autentifikaciju možete kreirati ključ tipa `None`.
 
 Ključ repozitorijuma koristi se samo za taj repozitorijum. Da biste dosegli submodule, uloge iz `requirements.yml` ili druge repozitorijume hostovane na drugom mestu sa sopstvenim pristupnim podacima, dodajte mapiranje u [Host config](/user-guide/host-config).

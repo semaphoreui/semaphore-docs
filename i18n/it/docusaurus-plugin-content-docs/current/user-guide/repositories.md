@@ -20,6 +20,8 @@ Se si utilizza un repository remoto che richiede l'autenticazione, è necessario
 
 Per i repository remoti che utilizzano SSH, è necessario utilizzare la propria chiave SSH nel **Key Store**.
 
+Per i repository remoti che utilizzano HTTPS, utilizzare una chiave di tipo **Accesso con password** oppure una chiave di tipo **Stringa** che contiene un token di accesso personale (PAT). Semaphore invia una chiave di tipo **Stringa** come password dell'utente `oauth2`, cosa che GitHub, GitLab, Azure DevOps e Gitea accettano. Se il server richiede un nome utente specifico, come `x-token-auth` per un [token di accesso Bitbucket](/user-guide/repositories/bitbucket_access_token), utilizzare **Accesso con password**.
+
 Per i repository remoti che non richiedono autenticazione, è possibile creare una chiave di tipo `None`.
 
 La chiave di un Repository viene usata solo per quel Repository. Per raggiungere submoduli, ruoli di `requirements.yml` o altri repository ospitati altrove con credenziali proprie, aggiungere una mappatura in [Host config](/user-guide/host-config).

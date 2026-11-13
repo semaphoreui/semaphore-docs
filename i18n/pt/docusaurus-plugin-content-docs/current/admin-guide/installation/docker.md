@@ -1,21 +1,49 @@
 # Docker
 
-&#x20;Crie um arquivo `docker-compose.yml` com o seguinte conteúdo:
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Escolha um banco de dados e crie um arquivo `docker-compose.yml` com o seguinte conteúdo:
+
+<Tabs groupId="database">
+  <TabItem value="sqlite" label="SQLite">
 
 ```yaml
 services:
-  # uncomment this section and comment out the mysql section to use postgres instead of mysql
-  #postgres:
-    #restart: unless-stopped
-    #image: postgres:14
-    #hostname: postgres
-    #volumes:
-    #  - semaphore-postgres:/var/lib/postgresql/data
-    #environment:
-    #  POSTGRES_USER: semaphore
-    #  POSTGRES_PASSWORD: semaphore
-    #  POSTGRES_DB: semaphore
-  # if you wish to use postgres, comment the mysql service section below
+  semaphore:
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    image: semaphoreui/semaphore:latest
+    volumes:
+      - semaphore-data:/var/lib/semaphore
+    environment:
+      SEMAPHORE_DB_DIALECT: sqlite
+      SEMAPHORE_DB_PATH: /var/lib/semaphore
+      SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
+      SEMAPHORE_ADMIN_PASSWORD: changeme
+      SEMAPHORE_ADMIN_NAME: admin
+      SEMAPHORE_ADMIN_EMAIL: admin@localhost
+      SEMAPHORE_ADMIN: admin
+      SEMAPHORE_ACCESS_KEY_ENCRYPTION: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
+      SEMAPHORE_LDAP_ACTIVATED: 'no' # if you wish to use ldap, set to: 'yes'
+      SEMAPHORE_LDAP_HOST: dc01.local.example.com
+      SEMAPHORE_LDAP_PORT: '636'
+      SEMAPHORE_LDAP_NEEDTLS: 'yes'
+      SEMAPHORE_LDAP_DN_BIND: 'uid=bind_user,cn=users,cn=accounts,dc=local,dc=shiftsystems,dc=net'
+      SEMAPHORE_LDAP_PASSWORD: 'ldap_bind_account_password'
+      SEMAPHORE_LDAP_DN_SEARCH: 'dc=local,dc=example,dc=com'
+      SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
+      TZ: UTC
+volumes:
+  semaphore-data:
+```
+
+  </TabItem>
+  <TabItem value="mysql" label="MySQL">
+
+```yaml
+services:
   mysql:
     restart: unless-stopped
     image: mysql:8.0
@@ -35,13 +63,10 @@ services:
     environment:
       SEMAPHORE_DB_USER: semaphore
       SEMAPHORE_DB_PASS: semaphore
-      SEMAPHORE_DB_HOST: mysql # for postgres, change to: postgres
-      SEMAPHORE_DB_PORT: 3306 # change to 5432 for postgres
-      SEMAPHORE_DB_DIALECT: mysql # for postgres, change to: postgres
+      SEMAPHORE_DB_HOST: mysql
+      SEMAPHORE_DB_PORT: 3306
+      SEMAPHORE_DB_DIALECT: mysql
       SEMAPHORE_DB: semaphore
-      # To use SQLite instead of MySQL/Postgres (v2.16+)
-      # SEMAPHORE_DB_DIALECT: sqlite
-      # SEMAPHORE_DB: "/etc/semaphore/semaphore.sqlite"
       SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
       SEMAPHORE_ADMIN_PASSWORD: changeme
       SEMAPHORE_ADMIN_NAME: admin
@@ -55,17 +80,68 @@ services:
       SEMAPHORE_LDAP_DN_BIND: 'uid=bind_user,cn=users,cn=accounts,dc=local,dc=shiftsystems,dc=net'
       SEMAPHORE_LDAP_PASSWORD: 'ldap_bind_account_password'
       SEMAPHORE_LDAP_DN_SEARCH: 'dc=local,dc=example,dc=com'
-      SEMAPHORE_LDAP_SEARCH_FILTER: "(&(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
+      SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
       TZ: UTC
     depends_on:
-      - mysql # for postgres, change to: postgres
+      - mysql
 volumes:
-  semaphore-mysql: # to use postgres, switch to: semaphore-postgres
+  semaphore-mysql:
 ```
+
+  </TabItem>
+  <TabItem value="postgres" label="Postgres">
+
+```yaml
+services:
+  postgres:
+    restart: unless-stopped
+    image: postgres:14
+    hostname: postgres
+    volumes:
+      - semaphore-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: semaphore
+      POSTGRES_PASSWORD: semaphore
+      POSTGRES_DB: semaphore
+  semaphore:
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    image: semaphoreui/semaphore:latest
+    environment:
+      SEMAPHORE_DB_USER: semaphore
+      SEMAPHORE_DB_PASS: semaphore
+      SEMAPHORE_DB_HOST: postgres
+      SEMAPHORE_DB_PORT: 5432
+      SEMAPHORE_DB_DIALECT: postgres
+      SEMAPHORE_DB: semaphore
+      SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
+      SEMAPHORE_ADMIN_PASSWORD: changeme
+      SEMAPHORE_ADMIN_NAME: admin
+      SEMAPHORE_ADMIN_EMAIL: admin@localhost
+      SEMAPHORE_ADMIN: admin
+      SEMAPHORE_ACCESS_KEY_ENCRYPTION: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
+      SEMAPHORE_LDAP_ACTIVATED: 'no' # if you wish to use ldap, set to: 'yes'
+      SEMAPHORE_LDAP_HOST: dc01.local.example.com
+      SEMAPHORE_LDAP_PORT: '636'
+      SEMAPHORE_LDAP_NEEDTLS: 'yes'
+      SEMAPHORE_LDAP_DN_BIND: 'uid=bind_user,cn=users,cn=accounts,dc=local,dc=shiftsystems,dc=net'
+      SEMAPHORE_LDAP_PASSWORD: 'ldap_bind_account_password'
+      SEMAPHORE_LDAP_DN_SEARCH: 'dc=local,dc=example,dc=com'
+      SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
+      TZ: UTC
+    depends_on:
+      - postgres
+volumes:
+  semaphore-postgres:
+```
+
+  </TabItem>
+</Tabs>
 
 Você deve especificar as seguintes variáveis confidenciais:
 
-* `MYSQL_PASSWORD` e `SEMAPHORE_DB_PASS` &mdash; senha do usuário do MySQL.
+* `SEMAPHORE_DB_PASS` e `MYSQL_PASSWORD` ou `POSTGRES_PASSWORD` &mdash; senha do usuário do banco de dados. Não é necessária para SQLite.
 * `SEMAPHORE_ADMIN_PASSWORD` &mdash; senha do usuário administrador do Semaphore.
 * `SEMAPHORE_ACCESS_KEY_ENCRYPTION` &mdash; chave para criptografar as chaves de acesso no banco de dados. Ela deve ser gerada com o seguinte comando: `head -c32 /dev/urandom | base64`.
 
@@ -92,7 +168,7 @@ services:
 ```
 
 
-Execute o seguinte comando para iniciar o Semaphore com o banco de dados configurado (MySQL ou Postgres):
+Execute o seguinte comando para iniciar o Semaphore com o banco de dados configurado (SQLite, MySQL ou Postgres):
 
 ```bash
 docker-compose up

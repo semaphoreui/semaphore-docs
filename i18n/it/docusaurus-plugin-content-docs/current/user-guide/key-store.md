@@ -70,7 +70,7 @@ Il tipo di credenziale **Accesso con password** supporta sia l'autenticazione tr
 * **Password Ansible Vault**: Sblocca file e variabili crittografati di Ansible Vault in fase di esecuzione.
 
 :::tip Stringhe segrete e token di accesso personale (PAT)
-Per archiviare una stringa segreta pura, come un token bearer per API o il segreto di un webhook, usa il tipo **Stringa** descritto sotto. Il tipo **Accesso con password** con il nome utente vuoto resta necessario per le password di Ansible Vault e i token Git HTTPS, perché quei consumatori accettano solo questo tipo.
+Per archiviare una stringa segreta pura, come un token bearer per API, il segreto di un webhook o un token di accesso personale Git, usa il tipo **Stringa** descritto sotto. Il tipo **Accesso con password** con il nome utente vuoto resta necessario per le password di Ansible Vault, perché quel consumatore accetta solo questo tipo.
 :::
 
 #### Mascheramento dei segreti e protezione dalla sovrascrittura {#secret-masking-and-override-protection}
@@ -94,8 +94,9 @@ La credenziale **Stringa** contiene un singolo valore segreto senza nome utente:
 
 Dove si usa:
 * **Integrazioni**: come *Auth secret* dei metodi di autenticazione Token, HMAC, GitHub e Bitbucket, vedi [Integrazioni](/user-guide/integrations#hmac-authentication).
+* **Repository**: come chiave di accesso di un repository con URL `https://` o `http://`, dove il valore è un token di accesso personale, vedi [Repository](/user-guide/repositories#authentication).
 
-Dove non è adatta, i selettori delle credenziali semplicemente non la propongono: la chiave SSH di un repository o di un inventario, le credenziali sudo e la password di Ansible Vault richiedono una chiave SSH o un nome utente/password.
+Dove non è adatta, i selettori delle credenziali semplicemente non la propongono: un repository raggiunto via SSH, la chiave SSH di un inventario, le credenziali sudo e la password di Ansible Vault richiedono una chiave SSH o un nome utente/password.
 
 Tramite l'API la stessa credenziale si crea con `"type": "string"`:
 

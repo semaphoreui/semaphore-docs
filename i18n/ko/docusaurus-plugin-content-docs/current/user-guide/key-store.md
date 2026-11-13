@@ -70,7 +70,7 @@ SSH 인증이 필요한 Git 리포지토리의 경우 생성된 공개 키를 �
 * **Ansible Vault 비밀번호**: 런타임 시 암호화된 Ansible Vault 파일 및 변수의 잠금을 해제합니다.
 
 :::tip 시크릿 문자열 및 개인 액세스 토큰 (PAT)
-API Bearer 토큰이나 웹훅 시크릿 같은 순수한 시크릿 문자열을 저장하려면 아래의 **문자열** 유형을 사용하세요. Ansible Vault 비밀번호와 HTTPS Git 토큰에는 여전히 로그인을 비워 둔 **비밀번호로 로그인** 유형이 필요합니다. 해당 사용처는 이 유형만 허용하기 때문입니다.
+API Bearer 토큰, 웹훅 시크릿, Git 개인 액세스 토큰 같은 순수한 시크릿 문자열을 저장하려면 아래의 **문자열** 유형을 사용하세요. Ansible Vault 비밀번호에는 여전히 로그인을 비워 둔 **비밀번호로 로그인** 유형이 필요합니다. 해당 사용처는 이 유형만 허용하기 때문입니다.
 :::
 
 #### 시크릿 마스킹 및 덮어쓰기 방지 {#secret-masking-and-override-protection}
@@ -94,8 +94,9 @@ API Bearer 토큰이나 웹훅 시크릿 같은 순수한 시크릿 문자열을
 
 사용되는 곳:
 * **통합**: Token, HMAC, GitHub, Bitbucket 인증 방식의 *Auth secret*으로 사용합니다. [통합](/user-guide/integrations#hmac-authentication)을 참고하세요.
+* **리포지토리**: URL이 `https://` 또는 `http://`인 리포지토리의 액세스 키로 사용하며, 값은 개인 액세스 토큰입니다. [리포지토리](/user-guide/repositories#authentication)를 참고하세요.
 
-적합하지 않은 곳에서는 자격 증명 선택 목록에 아예 표시되지 않습니다. 리포지토리나 인벤토리의 SSH 키, sudo 자격 증명, Ansible Vault 비밀번호에는 SSH 키 또는 로그인/비밀번호가 필요합니다.
+적합하지 않은 곳에서는 자격 증명 선택 목록에 아예 표시되지 않습니다. SSH로 접근하는 리포지토리, 인벤토리의 SSH 키, sudo 자격 증명, Ansible Vault 비밀번호에는 SSH 키 또는 로그인/비밀번호가 필요합니다.
 
 API에서는 같은 자격 증명을 `"type": "string"`으로 생성합니다:
 

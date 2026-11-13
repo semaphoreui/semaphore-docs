@@ -70,7 +70,7 @@ El tipo de credencial **Inicio de sesión con contraseña** admite tanto autenti
 * **Contraseñas de Ansible Vault**: Desbloquea archivos y variables cifrados de Ansible Vault en tiempo de ejecución.
 
 :::tip Cadenas secretas y tokens de acceso personal (PAT)
-Para guardar una cadena secreta pura, como un token bearer de API o el secreto de un webhook, use el tipo **Cadena** descrito abajo. El tipo **Inicio de sesión con contraseña** con el usuario en blanco sigue siendo necesario para las contraseñas de Ansible Vault y los tokens Git por HTTPS, porque esos consumidores solo aceptan ese tipo.
+Para guardar una cadena secreta pura, como un token bearer de API, el secreto de un webhook o un token de acceso personal de Git, use el tipo **Cadena** descrito abajo. El tipo **Inicio de sesión con contraseña** con el usuario en blanco sigue siendo necesario para las contraseñas de Ansible Vault, porque ese consumidor solo acepta ese tipo.
 :::
 
 #### Enmascaramiento y protección contra sobreescritura {#secret-masking-and-override-protection}
@@ -94,8 +94,9 @@ La credencial **Cadena** guarda un único valor secreto sin usuario asociado: un
 
 Dónde se usa:
 * **Integraciones**: como *Auth secret* de los métodos de autenticación Token, HMAC, GitHub y Bitbucket; consulte [Integraciones](/user-guide/integrations#hmac-authentication).
+* **Repositorios**: como clave de acceso de un repositorio con una URL `https://` o `http://`, donde el valor es un token de acceso personal; consulte [Repositorios](/user-guide/repositories#authentication).
 
-Donde no encaja, los selectores de credenciales simplemente no la ofrecen: la clave SSH de un repositorio o inventario, las credenciales sudo y la contraseña de Ansible Vault requieren una clave SSH o un usuario/contraseña.
+Donde no encaja, los selectores de credenciales simplemente no la ofrecen: un repositorio al que se accede por SSH, la clave SSH de un inventario, las credenciales sudo y la contraseña de Ansible Vault requieren una clave SSH o un usuario/contraseña.
 
 A través de la API la misma credencial se crea con `"type": "string"`:
 

@@ -22,6 +22,8 @@ Semaphore는 다음과 같은 리포지토리를 인식합니다:
 
 SSH를 사용하는 원격 리포지토리의 경우 **키 저장소**에 있는 SSH 키를 사용해야 합니다.
 
+HTTPS를 사용하는 원격 리포지토리의 경우 **비밀번호로 로그인** 유형의 키 또는 개인 액세스 토큰(PAT)을 담은 **문자열** 유형의 키를 사용합니다. Semaphore는 **문자열** 키를 사용자 `oauth2`의 비밀번호로 전송하며, GitHub, GitLab, Azure DevOps, Gitea가 이를 허용합니다. [Bitbucket 액세스 토큰](/user-guide/repositories/bitbucket_access_token)의 `x-token-auth`처럼 서버가 특정 사용자 이름을 요구하면 **비밀번호로 로그인**을 사용하세요.
+
 인증이 없는 원격 리포지토리의 경우 `None` 유형의 키를 생성할 수 있습니다.
 
 리포지토리의 키는 해당 리포지토리에만 사용됩니다. 다른 곳에 호스팅되어 별도의 자격 증명이 필요한 서브모듈, `requirements.yml` 역할 또는 기타 리포지토리에 접근하려면 [Host config](/user-guide/host-config)에서 매핑을 추가하세요.

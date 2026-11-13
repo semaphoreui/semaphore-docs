@@ -70,7 +70,7 @@ O tipo de credencial **Login com senha** oferece suporte tanto à autenticação
 * **Senhas do Ansible Vault**: Desbloqueia arquivos e variáveis criptografados do Ansible Vault em tempo de execução.
 
 :::tip Strings de segredo e tokens de acesso pessoal (PAT)
-Para guardar uma string de segredo pura, como um token bearer de API ou o segredo de um webhook, use o tipo **Texto** abaixo. O tipo **Login com senha** com o login em branco continua necessário para senhas do Ansible Vault e tokens Git por HTTPS, porque esses consumidores aceitam apenas esse tipo.
+Para guardar uma string de segredo pura, como um token bearer de API, o segredo de um webhook ou um token de acesso pessoal do Git, use o tipo **Texto** abaixo. O tipo **Login com senha** com o login em branco continua necessário para senhas do Ansible Vault, porque esse consumidor aceita apenas esse tipo.
 :::
 
 #### Mascaramento de segredos e proteção contra sobrescrita {#secret-masking-and-override-protection}
@@ -94,8 +94,9 @@ A credencial **Texto** guarda um único valor secreto sem login associado: um to
 
 Onde é usada:
 * **Integrações**: como *Auth secret* dos métodos de autenticação Token, HMAC, GitHub e Bitbucket; veja [Integrações](/user-guide/integrations#hmac-authentication).
+* **Repositórios**: como chave de acesso de um Repositório com URL `https://` ou `http://`, em que o valor é um token de acesso pessoal; veja [Repositórios](/user-guide/repositories#authentication).
 
-Onde não se aplica, os seletores de credenciais simplesmente não a oferecem: a chave SSH de um repositório ou inventário, as credenciais sudo e a senha do Ansible Vault exigem uma chave SSH ou um login/senha.
+Onde não se aplica, os seletores de credenciais simplesmente não a oferecem: um repositório acessado por SSH, a chave SSH de um inventário, as credenciais sudo e a senha do Ansible Vault exigem uma chave SSH ou um login/senha.
 
 Pela API a mesma credencial é criada com `"type": "string"`:
 

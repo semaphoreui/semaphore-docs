@@ -70,7 +70,7 @@ The **Login with password** credential type supports both traditional username/p
 * **Ansible Vault Passwords**: Unlocks encrypted Ansible Vault files and variables at runtime.
 
 :::tip Secret Strings & Personal Access Tokens (PAT)
-To store a pure secret string, such as an API bearer token or a webhook secret, use the **String** type below. The **Login with password** type with a blank login is still what Ansible Vault passwords and HTTPS Git tokens need, because those consumers accept only this type.
+To store a pure secret string, such as an API bearer token, a webhook secret or a Git personal access token, use the **String** type below. The **Login with password** type with a blank login is still what Ansible Vault passwords need, because that consumer accepts only this type.
 :::
 
 #### Secret Masking & Override Protection {#secret-masking-and-override-protection}
@@ -94,8 +94,9 @@ The **String** credential holds a single secret value with no login attached: an
 
 Where it is used:
 * **Integrations**: as the *Auth secret* of the Token, HMAC, GitHub and Bitbucket authentication methods, see [Integrations](/user-guide/integrations#hmac-authentication).
+* **Repositories**: as the access key of a Repository with an `https://` or `http://` URL, where the value is a personal access token, see [Repositories](/user-guide/repositories#authentication).
 
-Where it does not fit, the credential pickers simply do not offer it: a repository or inventory SSH key, the sudo credentials and the Ansible Vault password all need an SSH key or a login/password credential.
+Where it does not fit, the credential pickers simply do not offer it: a repository reached over SSH, an inventory SSH key, the sudo credentials and the Ansible Vault password all need an SSH key or a login/password credential.
 
 Through the API the same credential is created with `"type": "string"`:
 

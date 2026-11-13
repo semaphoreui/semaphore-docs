@@ -27,6 +27,8 @@ If you are using a remote Repository that requires authentication, you will need
 
 For remote Repositories that use SSH, you will need to use your SSH key in the **Key Store**.
 
+For remote Repositories that use HTTPS, use a key of the type `Login with password`, or a key of the type `String` that holds a personal access token (PAT). Semaphore sends a `String` key as the password of the user `oauth2`, which GitHub, GitLab, Azure DevOps and Gitea accept. If the server requires a particular username, such as `x-token-auth` for a [Bitbucket access token](/user-guide/repositories/bitbucket_access_token), use `Login with password` instead.
+
 For Remote Repositories that do not have authentication, you can create a Key with the type of `None`.
 
 The key of a Repository is used for that Repository only. To reach submodules, `requirements.yml` roles or other repositories hosted elsewhere with their own credentials, add a mapping in [Host config](/user-guide/host-config).

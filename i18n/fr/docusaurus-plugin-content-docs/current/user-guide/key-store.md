@@ -70,7 +70,7 @@ Le type d'identifiant **Connexion avec mot de passe** prend en charge aussi bien
 * **Mots de passe Ansible Vault** : Déverrouille les fichiers et variables chiffrés d'Ansible Vault lors de l'exécution.
 
 :::tip Chaînes secrètes et jetons d'accès personnel (PAT)
-Pour stocker une chaîne secrète pure, comme un jeton bearer d'API ou le secret d'un webhook, utilisez le type **Chaîne** ci-dessous. Le type **Connexion avec mot de passe** avec un identifiant vide reste nécessaire pour les mots de passe Ansible Vault et les jetons Git HTTPS, car ces consommateurs n'acceptent que ce type.
+Pour stocker une chaîne secrète pure, comme un jeton bearer d'API, le secret d'un webhook ou un jeton d'accès personnel Git, utilisez le type **Chaîne** ci-dessous. Le type **Connexion avec mot de passe** avec un identifiant vide reste nécessaire pour les mots de passe Ansible Vault, car ce consommateur n'accepte que ce type.
 :::
 
 #### Masquage des secrets et protection contre l'écrasement {#secret-masking-and-override-protection}
@@ -94,8 +94,9 @@ L'identifiant **Chaîne** contient une seule valeur secrète sans nom d'utilisat
 
 Où il est utilisé :
 * **Intégrations** : comme *Auth secret* des méthodes d'authentification Token, HMAC, GitHub et Bitbucket, voir [Intégrations](/user-guide/integrations#hmac-authentication).
+* **Dépôts** : comme clé d'accès d'un dépôt dont l'URL commence par `https://` ou `http://`, la valeur étant un jeton d'accès personnel, voir [Dépôts](/user-guide/repositories#authentication).
 
-Là où ce type ne convient pas, les sélecteurs d'identifiants ne le proposent tout simplement pas : la clé SSH d'un dépôt ou d'un inventaire, les identifiants sudo et le mot de passe Ansible Vault exigent une clé SSH ou un identifiant/mot de passe.
+Là où ce type ne convient pas, les sélecteurs d'identifiants ne le proposent tout simplement pas : un dépôt accessible en SSH, la clé SSH d'un inventaire, les identifiants sudo et le mot de passe Ansible Vault exigent une clé SSH ou un identifiant/mot de passe.
 
 Via l'API, le même identifiant se crée avec `"type": "string"` :
 

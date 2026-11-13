@@ -20,6 +20,8 @@ Wenn Sie ein entferntes Repository verwenden, das eine Authentifizierung erforde
 
 Für entfernte Repositories, die SSH verwenden, müssen Sie Ihren SSH-Schlüssel im **Key Store** verwenden.
 
+Für entfernte Repositories, die HTTPS verwenden, nutzen Sie einen Schlüssel vom Typ **Anmeldung mit Passwort** oder einen Schlüssel vom Typ **Zeichenkette**, der ein Personal Access Token (PAT) enthält. Semaphore sendet einen Schlüssel vom Typ **Zeichenkette** als Passwort des Benutzers `oauth2`, was GitHub, GitLab, Azure DevOps und Gitea akzeptieren. Verlangt der Server einen bestimmten Benutzernamen, etwa `x-token-auth` für ein [Bitbucket-Access-Token](/user-guide/repositories/bitbucket_access_token), verwenden Sie stattdessen **Anmeldung mit Passwort**.
+
 Für entfernte Repositories ohne Authentifizierung können Sie einen Schlüssel vom Typ `None` erstellen.
 
 Der Schlüssel eines Repositories wird nur für dieses Repository verwendet. Um Submodule, Rollen aus `requirements.yml` oder andere anderswo gehostete Repositories mit eigenen Zugangsdaten zu erreichen, fügen Sie eine Zuordnung in der [Host config](/user-guide/host-config) hinzu.

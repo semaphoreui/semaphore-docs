@@ -70,7 +70,7 @@ Der Anmeldedatentyp **Anmeldung mit Passwort** unterstützt sowohl traditionelle
 * **Ansible-Vault-Passwörter**: Entsperrt verschlüsselte Ansible-Vault-Dateien und -Variablen zur Laufzeit.
 
 :::tip Secret-Zeichenketten und Personal Access Tokens (PAT)
-Um eine reine Secret-Zeichenkette zu speichern, etwa ein API-Bearer-Token oder ein Webhook-Geheimnis, verwenden Sie den Typ **Zeichenkette** unten. Der Typ **Anmeldung mit Passwort** mit leerem Login bleibt für Ansible-Vault-Passwörter und HTTPS-Git-Token nötig, da diese Verbraucher nur diesen Typ akzeptieren.
+Um eine reine Secret-Zeichenkette zu speichern, etwa ein API-Bearer-Token, ein Webhook-Geheimnis oder ein Personal Access Token für Git, verwenden Sie den Typ **Zeichenkette** unten. Der Typ **Anmeldung mit Passwort** mit leerem Login bleibt für Ansible-Vault-Passwörter nötig, da dieser Verbraucher nur diesen Typ akzeptiert.
 :::
 
 #### Maskierung und Überschreibschutz {#secret-masking-and-override-protection}
@@ -94,8 +94,9 @@ Der Anmeldedatentyp **Zeichenkette** enthält einen einzelnen geheimen Wert ohne
 
 Verwendung:
 * **Integrationen**: als *Auth secret* der Authentifizierungsmethoden Token, HMAC, GitHub und Bitbucket, siehe [Integrationen](/user-guide/integrations#hmac-authentication).
+* **Repositories**: als Zugriffsschlüssel eines Repositories mit einer `https://`- oder `http://`-URL, wobei der Wert ein Personal Access Token ist, siehe [Repositories](/user-guide/repositories#authentication).
 
-Wo der Typ nicht passt, bieten ihn die Auswahlfelder schlicht nicht an: Der SSH-Schlüssel eines Repositorys oder Inventars, die Sudo-Zugangsdaten und das Ansible-Vault-Passwort benötigen einen SSH-Schlüssel oder Login/Passwort.
+Wo der Typ nicht passt, bieten ihn die Auswahlfelder schlicht nicht an: Ein über SSH erreichtes Repository, der SSH-Schlüssel eines Inventars, die Sudo-Zugangsdaten und das Ansible-Vault-Passwort benötigen einen SSH-Schlüssel oder Login/Passwort.
 
 Über die API werden dieselben Anmeldedaten mit `"type": "string"` angelegt:
 

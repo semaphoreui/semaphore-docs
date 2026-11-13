@@ -70,7 +70,7 @@ SSH 密钥提供非对称加密身份验证，用于连接 Linux/UNIX 节点并�
 * **Ansible Vault 密码**：在运行时解锁加密的 Ansible Vault 文件和变量。
 
 :::tip 机密字符串与个人访问令牌 (PAT)
-若要存储纯机密字符串（例如 API Bearer 令牌或 Webhook 密钥），请使用下文的 **字符串** 类型。Ansible Vault 密码和 HTTPS Git 令牌仍然需要登录名留空的 **密码登录** 类型，因为这些使用方只接受该类型。
+若要存储纯机密字符串（例如 API Bearer 令牌、Webhook 密钥或 Git 个人访问令牌），请使用下文的 **字符串** 类型。Ansible Vault 密码仍然需要登录名留空的 **密码登录** 类型，因为该使用方只接受该类型。
 :::
 
 #### 机密遮蔽与防覆盖保护 {#secret-masking-and-override-protection}
@@ -94,8 +94,9 @@ SSH 密钥提供非对称加密身份验证，用于连接 Linux/UNIX 节点并�
 
 使用场景：
 * **集成**：作为 Token、HMAC、GitHub 和 Bitbucket 认证方式的 *Auth secret*，参见[集成](/user-guide/integrations#hmac-authentication)。
+* **仓库**：作为 URL 为 `https://` 或 `http://` 的仓库的访问密钥，其值是个人访问令牌，参见[仓库](/user-guide/repositories#authentication)。
 
-在不适用的地方，凭据选择器根本不会提供它：仓库或清单的 SSH 密钥、sudo 凭据和 Ansible Vault 密码都需要 SSH 密钥或登录名/密码。
+在不适用的地方，凭据选择器根本不会提供它：通过 SSH 访问的仓库、清单的 SSH 密钥、sudo 凭据和 Ansible Vault 密码都需要 SSH 密钥或登录名/密码。
 
 通过 API 创建同类凭据时使用 `"type": "string"`：
 

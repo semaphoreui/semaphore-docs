@@ -20,6 +20,8 @@ Si usa un repositorio remoto que requiere autenticación, deberá configurar una
 
 Para repositorios remotos que usan SSH, deberá usar su clave SSH en el **Almacén de claves**.
 
+Para repositorios remotos que usan HTTPS, use una clave de tipo **Inicio de sesión con contraseña** o una clave de tipo **Cadena** que contenga un token de acceso personal (PAT). Semaphore envía una clave de tipo **Cadena** como la contraseña del usuario `oauth2`, algo que GitHub, GitLab, Azure DevOps y Gitea aceptan. Si el servidor exige un nombre de usuario concreto, como `x-token-auth` para un [token de acceso de Bitbucket](/user-guide/repositories/bitbucket_access_token), use **Inicio de sesión con contraseña**.
+
 Para repositorios remotos sin autenticación, puede crear una clave de tipo `None`.
 
 La clave de un repositorio se usa solo para ese repositorio. Para acceder a submódulos, roles de `requirements.yml` u otros repositorios alojados en otro lugar con sus propias credenciales, añada una asignación en [Host config](/user-guide/host-config).

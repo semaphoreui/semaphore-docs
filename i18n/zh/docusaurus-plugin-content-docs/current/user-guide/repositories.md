@@ -22,6 +22,8 @@ Semaphore 支持以下类型的仓库：
 
 对于使用 SSH 的远程仓库，你需要在**密钥库**中使用你的 SSH 密钥。
 
+对于使用 HTTPS 的远程仓库，请使用 **密码登录** 类型的密钥，或保存个人访问令牌（PAT）的 **字符串** 类型的密钥。Semaphore 会将 **字符串** 密钥作为用户 `oauth2` 的密码发送，GitHub、GitLab、Azure DevOps 和 Gitea 都接受这种方式。如果服务器要求特定的用户名，例如 [Bitbucket 访问令牌](/user-guide/repositories/bitbucket_access_token)使用的 `x-token-auth`，请使用 **密码登录**。
+
 对于不需要认证的远程仓库，可以创建类型为 `None` 的密钥。
 
 仓库的密钥仅用于该仓库。要访问托管在别处、拥有各自凭据的子模块、`requirements.yml` 角色或其他仓库，请在 [Host config](/user-guide/host-config) 中添加一条映射。

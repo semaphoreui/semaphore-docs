@@ -20,6 +20,8 @@ Si vous utilisez un dépôt distant nécessitant une authentification, vous devr
 
 Pour les dépôts distants utilisant SSH, vous devrez utiliser votre clé SSH dans le **magasin de clés**.
 
+Pour les dépôts distants utilisant HTTPS, utilisez une clé de type **Connexion avec mot de passe** ou une clé de type **Chaîne** contenant un jeton d'accès personnel (PAT). Semaphore envoie une clé de type **Chaîne** comme mot de passe de l'utilisateur `oauth2`, ce que GitHub, GitLab, Azure DevOps et Gitea acceptent. Si le serveur exige un nom d'utilisateur précis, comme `x-token-auth` pour un [jeton d'accès Bitbucket](/user-guide/repositories/bitbucket_access_token), utilisez **Connexion avec mot de passe**.
+
 Pour les dépôts distants sans authentification, vous pouvez créer une clé de type `None`.
 
 La clé d'un dépôt n'est utilisée que pour ce dépôt. Pour atteindre des sous-modules, des rôles de `requirements.yml` ou d'autres dépôts hébergés ailleurs avec leurs propres identifiants, ajoutez un mappage dans [Host config](/user-guide/host-config).

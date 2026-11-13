@@ -70,7 +70,7 @@ Tip akreditiva **Prijava lozinkom** podržava i tradicionalnu autentifikaciju ko
 * **Lozinke za Ansible Vault**: Otključava šifrovane Ansible Vault fajlove i promenljive prilikom izvršavanja.
 
 :::tip Tajni stringovi i lični pristupni tokeni (PAT)
-Za čuvanje čistog tajnog stringa, kao što je API bearer token ili tajna webhook-a, koristite tip **String** ispod. Tip **Prijava lozinkom** sa praznim korisničkim imenom i dalje je potreban za lozinke Ansible Vault-a i HTTPS Git tokene, jer ti potrošači prihvataju samo taj tip.
+Za čuvanje čistog tajnog stringa, kao što je API bearer token, tajna webhook-a ili Git lični pristupni token, koristite tip **String** ispod. Tip **Prijava lozinkom** sa praznim korisničkim imenom i dalje je potreban za lozinke Ansible Vault-a, jer taj potrošač prihvata samo taj tip.
 :::
 
 #### Maskiranje tajni i zaštita od prepisivanja {#secret-masking-and-override-protection}
@@ -94,8 +94,9 @@ Akreditiv tipa **String** čuva jednu tajnu vrednost bez korisničkog imena: API
 
 Gde se koristi:
 * **Integracije**: kao *Auth secret* metoda autentifikacije Token, HMAC, GitHub i Bitbucket, pogledajte [Integracije](/user-guide/integrations#hmac-authentication).
+* **Repozitorijumi**: kao pristupni ključ repozitorijuma sa `https://` ili `http://` URL-om, gde je vrednost lični pristupni token, pogledajte [Repozitorijumi](/user-guide/repositories#authentication).
 
-Tamo gde ne odgovara, birači akreditiva ga jednostavno ne nude: SSH ključ repozitorijuma ili inventara, sudo akreditivi i lozinka Ansible Vault-a zahtevaju SSH ključ ili korisničko ime/lozinku.
+Tamo gde ne odgovara, birači akreditiva ga jednostavno ne nude: repozitorijum kome se pristupa preko SSH-a, SSH ključ inventara, sudo akreditivi i lozinka Ansible Vault-a zahtevaju SSH ključ ili korisničko ime/lozinku.
 
 Preko API-ja isti akreditiv se kreira sa `"type": "string"`:
 
