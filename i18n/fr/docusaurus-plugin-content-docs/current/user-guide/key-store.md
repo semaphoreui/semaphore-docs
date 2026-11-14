@@ -109,6 +109,46 @@ curl -X POST "https://semaphore.example.com/api/project/1/keys" \
 
 ---
 
+## Secrets dans les playbooks {#secrets-in-playbooks}
+
+Semaphore ne transmet pas les clés du Key Store à un playbook. Il les utilise lui-même : pour cloner le dépôt, pour se connecter aux hôtes de l'inventaire et y effectuer `become`, et pour répondre à l'invite du mot de passe Ansible Vault. Une clé ne devient jamais une variable Ansible ni une variable d'environnement de la tâche : `lookup('env', 'MY_KEY')` renvoie donc une chaîne vide, et un playbook ne peut pas lire un mot de passe ou une clé privée enregistrés. Une clé reste utilisable indirectement : la clé SSH de l'inventaire est chargée dans un agent SSH, si bien que les commandes `ssh` et `git` lancées par le playbook sur l'hôte Semaphore peuvent s'authentifier via `SSH_AUTH_SOCK` sans voir la clé. Voir [Variables d'environnement de la tâche](/reference/task-environment#every-task).
+
+Pour transmettre une valeur à un playbook, enregistrez-la comme secret d'un [groupe de variables](/user-guide/environment#secrets) et sélectionnez ce groupe dans le modèle. L'onglet **Secrets** d'un groupe de variables comporte deux listes :
+
+| Liste | Le playbook reçoit le secret sous forme de | Lecture |
+| :--- | :--- | :--- |
+| **Extra variables** | Variable extra Ansible | `{{ db_password }}` |
+| **Environment variables** | Variable d'environnement du processus `ansible-playbook` | `{{ lookup('env', 'API_TOKEN') }}` |
+
+```yaml
+- hosts: app
+  tasks:
+    - name: Write the database password
+      ansible.builtin.copy:
+        dest: /etc/myapp/db_password
+        content: "{{ db_password }}"
+        mode: "0600"
+      no_log: true
+
+    - name: Call the deploy API
+      ansible.builtin.uri:
+        url: https://api.example.com/deploy
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('env', 'API_TOKEN') }}"
+      no_log: true
+```
+
+Semaphore ne retire pas les valeurs secrètes de la sortie de la tâche. Ansible peut afficher une valeur dans le résultat d'une tâche en échec ou avec un niveau de verbosité plus élevé : ajoutez donc `no_log: true` à chaque tâche qui manipule un secret.
+
+Le champ de secret du formulaire n'accepte qu'une seule ligne. Pour distribuer un fichier tel qu'une clé privée SSH, enregistrez-le encodé en base64 (`base64 < id_ed25519 | tr -d '\n'`) et écrivez-le avec `content: "{{ deploy_key_b64 | b64decode }}"`, ou conservez le fichier dans le dépôt chiffré avec `ansible-vault` et associez le mot de passe vault au modèle, voir [Plusieurs mots de passe vault](/user-guide/apps/ansible#multiple-vault-passwords). Pour une valeur saisie au lancement de la tâche, utilisez une [variable de questionnaire de type secret](/user-guide/task-templates/survey-vars#secret).
+
+:::info Depuis la v2.20
+Depuis **Semaphore 2.20**, les secrets transmis comme variables extra parviennent à Ansible dans un fichier chiffré avec Ansible Vault. Les versions antérieures transmettent chacun d'eux sur la ligne de commande de `ansible-playbook` sous la forme `--extra-vars name=value` : la valeur apparaît alors dans la liste des processus de l'hôte Semaphore, et Ansible la coupe au premier espace. Sur ces versions, utilisez un secret de type variable d'environnement pour les valeurs contenant des espaces.
+:::
+
+---
+
 ## Stockages de secrets {#secret-storages}
 
 Semaphore prend en charge les architectures découplées de stockage de secrets. Lors de la création ou de l'édition, vous pouvez choisir l'emplacement du secret via les onglets :

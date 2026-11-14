@@ -26,6 +26,11 @@ Si vous ne savez pas quelles ressources sont utilisées dans un groupe de variab
 2. Cliquez sur l'icône de corbeille à côté du groupe de variables.
 3. Cliquez sur Oui si vous êtes sûr de vouloir supprimer le groupe de variables.
 
+## Secrets {#secrets}
+L'onglet **Secrets** contient des valeurs stockées chiffrées que l'API ne renvoie plus une fois enregistrées. Un secret de la liste **Extra variables** parvient à Ansible comme variable extra et à Terraform/OpenTofu comme `-var` ; un secret de la liste **Environment variables** est défini dans l'environnement du processus de la tâche.
+
+Les clés du [Key Store](/user-guide/key-store) ne sont pas transmises à la tâche de cette manière. Pour des exemples de playbooks, voir [Secrets dans les playbooks](/user-guide/key-store#secrets-in-playbooks).
+
 ## Utiliser les groupes de variables - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
 Lorsque vous souhaitez utiliser une variable ou un secret stocké dans un groupe de variables au sein de votre modèle terraform, vous devez préfixer son nom par `TF_VAR_` pour que le script terraform puisse l'utiliser. 
 

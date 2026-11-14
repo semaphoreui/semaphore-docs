@@ -109,6 +109,46 @@ curl -X POST "https://semaphore.example.com/api/project/1/keys" \
 
 ---
 
+## 在 playbook 中使用密钥 {#secrets-in-playbooks}
+
+Semaphore 不会把 Key Store 中的密钥传给 playbook，而是自己使用它们：克隆仓库、连接清单主机并在其上执行 `become`，以及应答 Ansible Vault 密码提示。密钥永远不会成为 Ansible 变量或任务的环境变量，因此 `lookup('env', 'MY_KEY')` 返回空字符串，playbook 也无法读取已存储的密码或私钥。只有一个密钥可以间接使用：清单的 SSH 密钥会加载到 SSH agent 中，因此 playbook 在 Semaphore 主机上启动的 `ssh` 和 `git` 命令可以通过 `SSH_AUTH_SOCK` 认证，而无需看到密钥本身。参见[任务环境变量](/reference/task-environment#every-task)。
+
+要把一个值交给 playbook，请将其保存为[变量组](/user-guide/environment#secrets)的密钥，并在模板中选择该变量组。变量组的 **Secrets** 选项卡有两个列表：
+
+| 列表 | playbook 收到密钥的形式 | 读取方式 |
+| :--- | :--- | :--- |
+| **Extra variables** | Ansible 额外变量 | `{{ db_password }}` |
+| **Environment variables** | `ansible-playbook` 进程的环境变量 | `{{ lookup('env', 'API_TOKEN') }}` |
+
+```yaml
+- hosts: app
+  tasks:
+    - name: Write the database password
+      ansible.builtin.copy:
+        dest: /etc/myapp/db_password
+        content: "{{ db_password }}"
+        mode: "0600"
+      no_log: true
+
+    - name: Call the deploy API
+      ansible.builtin.uri:
+        url: https://api.example.com/deploy
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('env', 'API_TOKEN') }}"
+      no_log: true
+```
+
+Semaphore 不会从任务输出中过滤密钥值。Ansible 可能会在失败任务的结果中或在较高的详细级别下打印该值，因此请为每个处理密钥的任务添加 `no_log: true`。
+
+表单中的密钥字段只接受单行。要分发 SSH 私钥之类的文件，请以 base64 编码保存（`base64 < id_ed25519 | tr -d '\n'`），并通过 `content: "{{ deploy_key_b64 | b64decode }}"` 写出；或者将文件用 `ansible-vault` 加密后放在仓库中，并把 vault 密码关联到模板，参见[多个 vault 密码](/user-guide/apps/ansible#multiple-vault-passwords)。对于在启动任务时输入的值，请使用 [secret 类型的调查变量](/user-guide/task-templates/survey-vars#secret)。
+
+:::info 自 v2.20 起
+自 **Semaphore 2.20** 起，作为额外变量传递的密钥会通过一个用 Ansible Vault 加密的文件交给 Ansible。更早的版本会把每个密钥以 `--extra-vars name=value` 的形式放在 `ansible-playbook` 命令行上，因此该值会出现在 Semaphore 主机的进程列表中，并且 Ansible 会在第一个空格处截断它。在这些版本中，对包含空格的值请使用环境变量类型的密钥。
+:::
+
+---
+
 ## 密钥存储 {#secret-storages}
 
 Semaphore 支持解耦的机密存储架构。在创建或编辑凭据时，可以通过源存储标签页选择基础机密资料的存放位置：

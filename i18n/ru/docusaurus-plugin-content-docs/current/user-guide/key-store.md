@@ -109,6 +109,46 @@ curl -X POST "https://semaphore.example.com/api/project/1/keys" \
 
 ---
 
+## Секреты в playbook {#secrets-in-playbooks}
+
+Semaphore не передаёт ключи из Key Store в playbook. Он использует их сам: чтобы клонировать репозиторий, подключаться к хостам инвентаря и выполнять на них `become`, а также отвечать на запрос пароля Ansible Vault. Ключ никогда не становится переменной Ansible или переменной окружения задачи, поэтому `lookup('env', 'MY_KEY')` возвращает пустую строку, а playbook не может прочитать сохранённый пароль или закрытый ключ. Косвенно доступен один ключ: SSH-ключ инвентаря загружается в SSH-агент, поэтому команды `ssh` и `git`, которые playbook запускает на хосте Semaphore, могут аутентифицироваться через `SSH_AUTH_SOCK`, не видя самого ключа. См. [Переменные окружения задачи](/reference/task-environment#every-task).
+
+Чтобы передать значение в playbook, сохраните его как секрет [группы переменных](/user-guide/environment#secrets) и выберите эту группу в шаблоне. На вкладке **Secrets** группы переменных два списка:
+
+| Список | Playbook получает секрет как | Как прочитать |
+| :--- | :--- | :--- |
+| **Extra variables** | Extra-переменную Ansible | `{{ db_password }}` |
+| **Environment variables** | Переменную окружения процесса `ansible-playbook` | `{{ lookup('env', 'API_TOKEN') }}` |
+
+```yaml
+- hosts: app
+  tasks:
+    - name: Write the database password
+      ansible.builtin.copy:
+        dest: /etc/myapp/db_password
+        content: "{{ db_password }}"
+        mode: "0600"
+      no_log: true
+
+    - name: Call the deploy API
+      ansible.builtin.uri:
+        url: https://api.example.com/deploy
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('env', 'API_TOKEN') }}"
+      no_log: true
+```
+
+Semaphore не вырезает значения секретов из вывода задачи. Ansible может напечатать значение в результате упавшей задачи или при повышенном уровне подробности, поэтому добавляйте `no_log: true` в каждую задачу, которая работает с секретом.
+
+Поле секрета в форме принимает одну строку. Чтобы раздать файл, например закрытый SSH-ключ, сохраните его в base64 (`base64 < id_ed25519 | tr -d '\n'`) и запишите через `content: "{{ deploy_key_b64 | b64decode }}"` либо храните файл в репозитории зашифрованным через `ansible-vault` и привяжите пароль vault к шаблону, см. [Несколько паролей vault](/user-guide/apps/ansible#multiple-vault-passwords). Для значения, которое вводится при запуске задачи, используйте [survey-переменную типа secret](/user-guide/task-templates/survey-vars#secret).
+
+:::info Начиная с v2.20
+Начиная с **Semaphore 2.20** секреты, передаваемые как extra-переменные, попадают в Ansible в файле, зашифрованном Ansible Vault. Более ранние версии передают каждый из них в командной строке `ansible-playbook` как `--extra-vars name=value`, поэтому значение видно в списке процессов хоста Semaphore, а Ansible обрезает его на первом пробеле. В этих версиях для значений с пробелами используйте секрет-переменную окружения.
+:::
+
+---
+
 ## Хранилища секретов {#secret-storages}
 
 Semaphore поддерживает архитектуру раздельного хранения секретов. При создании или редактировании ключа вы можете выбрать место хранения секрета с помощью вкладок:
