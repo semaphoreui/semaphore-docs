@@ -25,8 +25,8 @@ Semaphore использует файл `config.json` для основной к
 ### Генерация на сайте {#generate-on-the-website}
 
 Также можно воспользоваться интерактивным веб-конфигуратором:
-* [Конфигуратор сервера](https://semaphoreui.com/install/binary/2_13/config)
-* [Конфигуратор runner'а](https://semaphoreui.com/install/binary/2_13/runner)
+* [Конфигуратор сервера](https://semaphoreui.com/install/binary/2_20/config)
+* [Конфигуратор runner'а](https://semaphoreui.com/install/binary/2_20/runner)
 
 ## Пример файла конфигурации {#configuration-file-example}
 

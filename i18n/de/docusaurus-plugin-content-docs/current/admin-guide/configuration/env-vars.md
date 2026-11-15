@@ -3,8 +3,8 @@
 Mit Umgebungsvariablen können Sie jede verfügbare Konfigurationsoption überschreiben.
 
 Sie können den interaktiven Generator für Umgebungsvariablen (für Docker) verwenden:
-* für den [Server](https://semaphoreui.com/install/docker/2_12/)
-* für den [Runner](https://semaphoreui.com/install/docker/2_12/runner).
+* für den [Server](https://semaphoreui.com/install/docker/2_20/)
+* für den [Runner](https://semaphoreui.com/install/docker/2_20/runner).
 
 ---
 

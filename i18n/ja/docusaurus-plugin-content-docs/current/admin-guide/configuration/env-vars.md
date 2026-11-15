@@ -3,8 +3,8 @@
 環境変数を使うと、利用可能な任意の設定オプションを上書きできます。
 
 対話型の環境変数ジェネレーター (Docker 用) を使用できます:
-* [サーバー](https://semaphoreui.com/install/docker/2_12/)用
-* [ランナー](https://semaphoreui.com/install/docker/2_12/runner)用。
+* [サーバー](https://semaphoreui.com/install/docker/2_20/)用
+* [ランナー](https://semaphoreui.com/install/docker/2_20/runner)用。
 
 ---
 

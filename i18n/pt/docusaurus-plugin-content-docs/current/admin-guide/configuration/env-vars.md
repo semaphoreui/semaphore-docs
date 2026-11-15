@@ -3,8 +3,8 @@
 Usando variáveis de ambiente, você pode sobrescrever qualquer opção de configuração disponível.
 
 Você pode usar o gerador interativo de variáveis de ambiente (para Docker):
-* para o [servidor](https://semaphoreui.com/install/docker/2_12/)
-* para o [runner](https://semaphoreui.com/install/docker/2_12/runner).
+* para o [servidor](https://semaphoreui.com/install/docker/2_20/)
+* para o [runner](https://semaphoreui.com/install/docker/2_20/runner).
 
 ---
 

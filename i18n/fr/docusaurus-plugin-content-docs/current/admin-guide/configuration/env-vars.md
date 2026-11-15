@@ -3,8 +3,8 @@
 En utilisant des variables d'environnement, vous pouvez remplacer n'importe quelle option de configuration disponible.
 
 Vous pouvez utiliser le générateur interactif de variables d'environnement (pour Docker) :
-* pour le [serveur](https://semaphoreui.com/install/docker/2_12/)
-* pour le [runner](https://semaphoreui.com/install/docker/2_12/runner).
+* pour le [serveur](https://semaphoreui.com/install/docker/2_20/)
+* pour le [runner](https://semaphoreui.com/install/docker/2_20/runner).
 
 ---
 

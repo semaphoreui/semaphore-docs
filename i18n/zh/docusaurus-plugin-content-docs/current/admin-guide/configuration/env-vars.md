@@ -3,8 +3,8 @@
 通过使用环境变量，你可以覆盖任何可用的配置选项。
 
 你可以使用交互式环境变量生成器（适用于 Docker）：
-* 用于[服务器](https://semaphoreui.com/install/docker/2_12/)
-* 用于[运行器（Runner）](https://semaphoreui.com/install/docker/2_12/runner)。
+* 用于[服务器](https://semaphoreui.com/install/docker/2_20/)
+* 用于[运行器（Runner）](https://semaphoreui.com/install/docker/2_20/runner)。
 
 ---
 

@@ -3,8 +3,8 @@
 환경 변수를 사용하면 사용 가능한 모든 설정 옵션을 재정의할 수 있습니다.
 
 대화형 환경 변수 생성기(Docker용)를 사용할 수 있습니다.
-* [서버](https://semaphoreui.com/install/docker/2_12/)용
-* [runner](https://semaphoreui.com/install/docker/2_12/runner)용.
+* [서버](https://semaphoreui.com/install/docker/2_20/)용
+* [runner](https://semaphoreui.com/install/docker/2_20/runner)용.
 
 ---
 

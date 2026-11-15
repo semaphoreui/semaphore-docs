@@ -3,8 +3,8 @@
 Pomoću promenljivih okruženja možete nadjačati bilo koju dostupnu konfiguracionu opciju.
 
 Možete koristiti interaktivni generator promenljivih okruženja (za Docker):
-* za [server](https://semaphoreui.com/install/docker/2_12/)
-* za [runner](https://semaphoreui.com/install/docker/2_12/runner).
+* za [server](https://semaphoreui.com/install/docker/2_20/)
+* za [runner](https://semaphoreui.com/install/docker/2_20/runner).
 
 ---
 
