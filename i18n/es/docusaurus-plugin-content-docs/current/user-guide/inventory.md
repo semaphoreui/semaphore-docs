@@ -7,6 +7,7 @@ Un inventario también almacena variables que pueden usar los playbooks. Un inve
 Encontrará más información sobre los inventarios en la [documentación de Ansible.](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html)
 
 Semaphore UI puede leer un inventario desde un archivo del servidor al que el usuario de Semaphore tenga acceso de lectura, o bien un inventario estático que se edita desde la interfaz web.
+Un inventario administrado guarda los hosts y las variables como registros que se editan desde la interfaz web.
 Cada inventario tiene además al menos una credencial vinculada.
 La credencial de usuario es obligatoria y es la que Ansible usa para iniciar sesión en los hosts de ese inventario. Las credenciales sudo se usan para elevar privilegios en dicho host.
 Para crear un inventario es necesario disponer de una credencial de usuario, ya sea un nombre de usuario con inicio de sesión o una clave SSH configurada en el Almacén de claves.
@@ -19,6 +20,7 @@ Encontrará información sobre las credenciales en la sección [Almacén de clav
 | `static` | Inventario en formato INI que se edita en la interfaz web. |
 | `static-yaml` | Inventario en formato YAML que se edita en la interfaz web. Úselo para inventarios de complementos como [NetBox](./inventory/netbox-dynamic-inventory) o [Consul](./inventory/consul-dynamic-inventory). |
 | `file` | Ruta a un archivo de inventario. Una ruta relativa apunta al repositorio de la plantilla; una ruta absoluta, a un archivo del servidor. Opcionalmente, seleccione un **Repositorio de inventario** aparte si el archivo se encuentra en otro repositorio Git. |
+| `managed` | Hosts y variables se mantienen como registros en la interfaz web. Consulte [Inventario administrado](#managed-inventory). |
 | `terraform-workspace`, `tofu-workspace`, `terragrunt-workspace` | No es un inventario de Ansible: es un espacio de trabajo para las plantillas de [Terraform/OpenTofu](./apps/terraform/workspaces) y [Terragrunt](./apps/terragrunt). |
 
 ## Crear un inventario {#creating-an-inventory}
@@ -28,6 +30,7 @@ Encontrará información sobre las credenciales en la sección [Almacén de clav
 4. Seleccione el tipo de inventario
   * Si selecciona file, use la ruta absoluta al archivo. Si este archivo se encuentra en su repositorio git, use la ruta relativa. Ej. `inventory/linux-hosts.yaml`
   * Si selecciona static o static-yaml, pegue o escriba su inventario en el formulario
+  * Si selecciona managed, cree primero el inventario y luego agregue hosts y variables en su página. Consulte [Inventario administrado](#managed-inventory)
 5. Haga clic en Crear.
 
 ## Actualizar un inventario {#updating-an-inventory}
@@ -36,6 +39,8 @@ Encontrará información sobre las credenciales en la sección [Almacén de clav
 3. Realice sus cambios
 4. Haga clic en Guardar
 
+Para cambiar los hosts y las variables de un inventario administrado, consulte [Inventario administrado](#managed-inventory).
+
 ## Eliminar un inventario {#deleting-an-inventory}
 Antes de eliminar un inventario, debe eliminar todos los recursos vinculados a él.
 Si no está seguro de qué recursos se usan en un entorno, siga los pasos 1 y 2 a continuación. Se le mostrará qué recursos se están usando, con enlaces a dichos recursos.
@@ -43,3 +48,29 @@ Si no está seguro de qué recursos se usan en un entorno, siga los pasos 1 y 2 
 1. Haga clic en la pestaña Inventario
 2. Haga clic en el icono de la papelera junto al inventario
 3. Haga clic en Sí si está seguro de que desea eliminar el inventario
+
+## Inventario administrado {#managed-inventory}
+
+Un inventario administrado guarda sus hosts como registros en lugar de texto de inventario. Úselo cuando agregue, cambie o desactive hosts con frecuencia y no quiera editar un texto largo.
+
+Haga clic en el nombre del inventario en la lista. La página tiene dos pestañas:
+
+* **Hosts**: busque hosts por nombre, agréguelos, edítelos y elimínelos.
+* **Variables**: variables de todo el inventario.
+
+Un host tiene un nombre, una descripción opcional y variables. El nombre es lo que Ansible ve como host. Debe ser único en el inventario, distingue mayúsculas de minúsculas y no debe contener espacios, comas, corchetes ni dos puntos. Ponga la dirección y el puerto en las variables `ansible_host` y `ansible_port`.
+
+Escriba las variables de un host y del inventario en YAML o JSON, como un mapeo:
+
+```yaml
+ansible_host: 10.0.0.5
+ansible_user: deploy
+```
+
+Un valor definido en un host prevalece sobre la misma variable definida en el inventario. No se aceptan anclas, alias ni claves de fusión de YAML.
+
+Para omitir un host, desactive su interruptor en la lista de hosts. Las tareas creadas después no usan ese host. Actívelo de nuevo para volver a usarlo.
+
+* No puede cambiar el tipo de un inventario a `managed` ni desde `managed` después de crearlo.
+* Los hosts y las variables de un inventario administrado forman parte de la copia de seguridad del proyecto.
+* Los usuarios que solo pueden ver el proyecto pueden abrir la página, pero no pueden cambiarla.

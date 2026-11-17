@@ -7,6 +7,7 @@ Un inventaire stocke également des variables utilisables par les playbooks. Un 
 Vous trouverez plus d'informations sur les inventaires dans la [documentation Ansible.](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html)
 
 Semaphore UI peut lire un inventaire soit depuis un fichier du serveur auquel l'utilisateur Semaphore a un accès en lecture, soit depuis un inventaire statique édité via l'interface web.
+Un inventaire géré conserve les hôtes et les variables sous forme d'enregistrements que vous modifiez dans l'interface web.
 Chaque inventaire est également associé à au moins un identifiant.
 L'identifiant utilisateur est obligatoire : c'est celui qu'Ansible utilise pour se connecter aux hôtes de cet inventaire. Les identifiants sudo servent à élever les privilèges sur l'hôte.
 Pour créer un inventaire, vous devez disposer d'un identifiant utilisateur, soit un nom d'utilisateur avec mot de passe, soit une clé SSH configurée dans le Magasin de clés.
@@ -19,6 +20,7 @@ Vous trouverez des informations sur les identifiants dans la section [Magasin de
 | `static` | Inventaire au format INI édité dans l'interface web. |
 | `static-yaml` | Inventaire au format YAML édité dans l'interface web. Utilisez-le pour les inventaires fournis par des plugins, comme [NetBox](./inventory/netbox-dynamic-inventory) ou [Consul](./inventory/consul-dynamic-inventory). |
 | `file` | Chemin vers un fichier d'inventaire. Un chemin relatif pointe dans le dépôt du modèle, un chemin absolu vers un fichier sur le serveur. Vous pouvez éventuellement sélectionner un **Dépôt d'inventaire** distinct si le fichier se trouve dans un autre dépôt Git. |
+| `managed` | Les hôtes et les variables sont gérés comme des enregistrements dans l'interface web. Voir [Inventaire géré](#managed-inventory). |
 | `terraform-workspace`, `tofu-workspace`, `terragrunt-workspace` | Il ne s'agit pas d'un inventaire Ansible : c'est un espace de travail pour les modèles [Terraform/OpenTofu](./apps/terraform/workspaces) et [Terragrunt](./apps/terragrunt). |
 
 ## Créer un inventaire {#creating-an-inventory}
@@ -28,6 +30,7 @@ Vous trouverez des informations sur les identifiants dans la section [Magasin de
 4. Sélectionnez le type d'inventaire
   * Si vous choisissez file, utilisez le chemin absolu du fichier. Si ce fichier se trouve dans votre dépôt git, utilisez un chemin relatif. Ex. `inventory/linux-hosts.yaml`
   * Si vous choisissez static ou static-yaml, collez ou saisissez votre inventaire dans le formulaire
+  * Si vous choisissez managed, créez d'abord l'inventaire, puis ajoutez les hôtes et les variables sur sa page. Voir [Inventaire géré](#managed-inventory)
 5. Cliquez sur Créer.
 
 ## Mettre à jour un inventaire {#updating-an-inventory}
@@ -36,6 +39,8 @@ Vous trouverez des informations sur les identifiants dans la section [Magasin de
 3. Effectuez vos modifications
 4. Cliquez sur Enregistrer
 
+Pour modifier les hôtes et les variables d'un inventaire géré, voir [Inventaire géré](#managed-inventory).
+
 ## Supprimer un inventaire {#deleting-an-inventory}
 Avant de supprimer un inventaire, vous devez supprimer toutes les ressources qui lui sont liées.
 Si vous ne savez pas quelles ressources sont utilisées dans un environnement, suivez les étapes 1 et 2 ci-dessous. Elles vous indiqueront les ressources utilisées, avec des liens vers celles-ci.
@@ -43,3 +48,29 @@ Si vous ne savez pas quelles ressources sont utilisées dans un environnement, s
 1. Cliquez sur l'onglet Inventaire
 2. Cliquez sur l'icône de corbeille à côté de l'inventaire
 3. Cliquez sur Oui si vous êtes sûr de vouloir supprimer l'inventaire
+
+## Inventaire géré {#managed-inventory}
+
+Un inventaire géré conserve vos hôtes sous forme d'enregistrements plutôt que de texte d'inventaire. Utilisez-le si vous ajoutez, modifiez ou désactivez souvent des hôtes et que vous ne voulez pas modifier un long texte.
+
+Cliquez sur le nom de l'inventaire dans la liste. La page comporte deux onglets :
+
+* **Hosts** : recherchez des hôtes par nom, ajoutez-les, modifiez-les et supprimez-les.
+* **Variables** : variables de l'inventaire entier.
+
+Un hôte a un nom, une description facultative et des variables. Le nom est ce qu'Ansible voit comme hôte. Il doit être unique dans l'inventaire, il distingue les majuscules des minuscules, et il ne doit pas contenir d'espaces, de virgules, de crochets ni de deux-points. Placez l'adresse et le port dans les variables `ansible_host` et `ansible_port`.
+
+Écrivez les variables d'un hôte et de l'inventaire en YAML ou en JSON, sous forme de mapping :
+
+```yaml
+ansible_host: 10.0.0.5
+ansible_user: deploy
+```
+
+Une valeur définie sur un hôte l'emporte sur la même variable définie sur l'inventaire. Les ancres, les alias et les clés de fusion YAML ne sont pas acceptés.
+
+Pour ignorer un hôte, désactivez son interrupteur dans la liste des hôtes. Les tâches créées ensuite n'utilisent pas cet hôte. Réactivez-le pour l'utiliser de nouveau.
+
+* Vous ne pouvez pas changer le type d'un inventaire vers `managed` ni depuis `managed` après sa création.
+* Les hôtes et les variables d'un inventaire géré font partie de la sauvegarde du projet.
+* Les utilisateurs qui peuvent seulement consulter le projet peuvent ouvrir la page, mais ils ne peuvent pas la modifier.
