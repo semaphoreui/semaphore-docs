@@ -55,7 +55,7 @@ Un Inventory gestito conserva gli host come record invece che come testo di Inve
 
 Fare clic sul nome dell'Inventory nell'elenco. La pagina ha due schede:
 
-* **Hosts**: cercare gli host per nome, aggiungerli, modificarli ed eliminarli.
+* **Hosts**: cercare gli host per nome, aggiungerli, modificarli ed eliminarli. La colonna **Variables** mostra quante variabili ha un host. Fare clic su una riga per vederle.
 * **Variables**: variabili dell'intero Inventory.
 
 Un host ha un nome, una descrizione facoltativa e variabili. Il nome è ciò che Ansible vede come host. Deve essere univoco nell'Inventory, distingue tra maiuscole e minuscole e non deve contenere spazi, virgole, parentesi quadre o due punti. Inserire l'indirizzo e la porta nelle variabili `ansible_host` e `ansible_port`.

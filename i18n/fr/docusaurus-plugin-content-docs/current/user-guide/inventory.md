@@ -55,7 +55,7 @@ Un inventaire géré conserve vos hôtes sous forme d'enregistrements plutôt qu
 
 Cliquez sur le nom de l'inventaire dans la liste. La page comporte deux onglets :
 
-* **Hosts** : recherchez des hôtes par nom, ajoutez-les, modifiez-les et supprimez-les.
+* **Hosts** : recherchez des hôtes par nom, ajoutez-les, modifiez-les et supprimez-les. La colonne **Variables** indique combien de variables possède un hôte. Cliquez sur une ligne pour les voir.
 * **Variables** : variables de l'inventaire entier.
 
 Un hôte a un nom, une description facultative et des variables. Le nom est ce qu'Ansible voit comme hôte. Il doit être unique dans l'inventaire, il distingue les majuscules des minuscules, et il ne doit pas contenir d'espaces, de virgules, de crochets ni de deux-points. Placez l'adresse et le port dans les variables `ansible_host` et `ansible_port`.

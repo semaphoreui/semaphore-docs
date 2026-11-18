@@ -55,7 +55,7 @@ Um inventário gerenciado guarda seus hosts como registros em vez de texto de in
 
 Clique no nome do inventário na lista. A página tem duas abas:
 
-* **Hosts**: pesquise hosts pelo nome, adicione, edite e exclua.
+* **Hosts**: pesquise hosts pelo nome, adicione, edite e exclua. A coluna **Variables** mostra quantas variáveis um host tem. Clique em uma linha para vê-las.
 * **Variables**: variáveis do inventário inteiro.
 
 Um host tem um nome, uma descrição opcional e variáveis. O nome é o que o Ansible vê como host. Ele deve ser único no inventário, diferencia maiúsculas de minúsculas e não deve conter espaços, vírgulas, colchetes ou dois-pontos. Coloque o endereço e a porta nas variáveis `ansible_host` e `ansible_port`.

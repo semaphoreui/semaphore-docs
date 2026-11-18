@@ -55,7 +55,7 @@ Ein Managed Inventory speichert Ihre Hosts als Datensätze statt als Inventory-T
 
 Klicken Sie in der Liste auf den Namen des Inventory. Die Seite hat zwei Tabs:
 
-* **Hosts**: Hosts nach Namen suchen, hinzufügen, bearbeiten und löschen.
+* **Hosts**: Hosts nach Namen suchen, hinzufügen, bearbeiten und löschen. Die Spalte **Variables** zeigt, wie viele Variablen ein Host hat. Klicken Sie auf eine Zeile, um sie zu sehen.
 * **Variables**: Variablen des gesamten Inventory.
 
 Ein Host hat einen Namen, eine optionale Beschreibung und Variablen. Der Name ist das, was Ansible als Host sieht. Er muss im Inventory eindeutig sein, Groß- und Kleinschreibung wird unterschieden, und er darf keine Leerzeichen, Kommas, eckigen Klammern oder Doppelpunkte enthalten. Schreiben Sie die Adresse und den Port in die Variablen `ansible_host` und `ansible_port`.

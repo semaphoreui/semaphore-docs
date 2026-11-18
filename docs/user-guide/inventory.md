@@ -60,7 +60,7 @@ A managed inventory keeps your hosts as records instead of inventory text. Use i
 
 Click the name of the inventory in the list. The page has two tabs:
 
-* **Hosts**: search hosts by name, add, edit, and delete them.
+* **Hosts**: search hosts by name, add, edit, and delete them. The **Variables** column shows how many variables a host has. Click a row to see them.
 * **Variables**: variables of the whole inventory.
 
 A host has a name, an optional description, and variables. The name is what Ansible sees as the host. It must be unique in the inventory, it is case-sensitive, and it must not contain spaces, commas, square brackets, or colons. Put the address and the port into the variables `ansible_host` and `ansible_port`.
