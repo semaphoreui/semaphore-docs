@@ -53,9 +53,10 @@ Si vous ne savez pas quelles ressources sont utilisées dans un environnement, s
 
 Un inventaire géré conserve vos hôtes sous forme d'enregistrements plutôt que de texte d'inventaire. Utilisez-le si vous ajoutez, modifiez ou désactivez souvent des hôtes et que vous ne voulez pas modifier un long texte.
 
-Cliquez sur le nom de l'inventaire dans la liste. La page comporte deux onglets :
+Cliquez sur le nom de l'inventaire dans la liste. La page comporte trois onglets :
 
-* **Hosts** : recherchez des hôtes par nom, ajoutez-les, modifiez-les et supprimez-les. La colonne **Variables** indique combien de variables possède un hôte.
+* **Hosts** : recherchez des hôtes par nom, filtrez-les par groupe, ajoutez-les, modifiez-les et supprimez-les. La colonne **Groups** indique les groupes d'un hôte. La colonne **Variables** indique combien de variables possède un hôte.
+* **Groups** : groupes d'hôtes. Voir [Groupes](#managed-inventory-groups).
 * **Variables** : variables de l'inventaire entier.
 
 Un hôte a un nom, une description facultative et des variables. Le nom est ce qu'Ansible voit comme hôte. Il doit être unique dans l'inventaire, il distingue les majuscules des minuscules, et il ne doit pas contenir d'espaces, de virgules, de crochets ni de deux-points. Placez l'adresse et le port dans les variables `ansible_host` et `ansible_port`.
@@ -74,3 +75,15 @@ Pour ignorer un hôte, désactivez son interrupteur dans la liste des hôtes. Le
 * Vous ne pouvez pas changer le type d'un inventaire vers `managed` ni depuis `managed` après sa création.
 * Les hôtes et les variables d'un inventaire géré font partie de la sauvegarde du projet.
 * Les utilisateurs qui peuvent seulement consulter le projet peuvent ouvrir la page, mais ils ne peuvent pas la modifier.
+
+### Groupes {#managed-inventory-groups}
+
+Un groupe vous permet d'exécuter un playbook sur une partie des hôtes, par exemple avec `hosts: web`, et de définir une variable une seule fois pour de nombreux hôtes.
+
+Ajoutez un groupe dans l'onglet **Groups**. Un groupe a un nom, une description facultative, des variables et des groupes enfants. Le nom doit être unique dans l'inventaire, et les noms `all` et `ungrouped` sont réservés. Les hôtes d'un groupe enfant appartiennent aussi au groupe parent. Un groupe ne peut pas être son propre ancêtre.
+
+Pour placer un hôte dans des groupes, choisissez-les dans le champ **Groups** lorsque vous ajoutez ou modifiez l'hôte. Pour modifier plusieurs hôtes à la fois, sélectionnez-les dans l'onglet **Hosts** et cliquez sur **Add to groups** ou **Remove from groups**. Un hôte peut appartenir à plusieurs groupes.
+
+Pour voir les hôtes d'un groupe, choisissez le groupe dans le filtre de l'onglet **Hosts**. La liste inclut les hôtes de ses groupes enfants.
+
+Une valeur définie sur un hôte l'emporte sur la même variable définie sur un groupe, et une valeur définie sur un groupe l'emporte sur l'inventaire. Une tâche qui cible un groupe s'exécute sur ses hôtes activés.

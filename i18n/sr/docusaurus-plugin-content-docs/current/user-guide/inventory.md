@@ -53,9 +53,10 @@ Ako niste sigurni koji resursi koriste okruženje, pratite korake 1 i 2 ispod. P
 
 Upravljani inventar čuva vaše hostove kao zapise umesto kao tekst inventara. Koristite ga kada često dodajete, menjate ili isključujete hostove i ne želite da uređujete dugačak tekst.
 
-Kliknite na naziv inventara u listi. Stranica ima dve kartice:
+Kliknite na naziv inventara u listi. Stranica ima tri kartice:
 
-* **Hosts**: pretražujte hostove po nazivu, dodajte ih, izmenite i obrišite. Kolona **Variables** prikazuje koliko promenljivih host ima.
+* **Hosts**: pretražujte hostove po nazivu, filtrirajte ih po grupi, dodajte ih, izmenite i obrišite. Kolona **Groups** prikazuje grupe hosta. Kolona **Variables** prikazuje koliko promenljivih host ima.
+* **Groups**: grupe hostova. Pogledajte [Grupe](#managed-inventory-groups).
 * **Variables**: promenljive celog inventara.
 
 Host ima naziv, opcioni opis i promenljive. Naziv je ono što Ansible vidi kao host. Mora biti jedinstven u inventaru, razlikuju se velika i mala slova, i ne sme sadržati razmake, zapete, uglaste zagrade ni dvotačke. Adresu i port upišite u promenljive `ansible_host` i `ansible_port`.
@@ -74,3 +75,15 @@ Da biste preskočili host, isključite njegov prekidač u listi hostova. Zadaci 
 * Posle kreiranja ne možete promeniti tip inventara u `managed` niti iz `managed`.
 * Hostovi i promenljive upravljanog inventara deo su rezervne kopije projekta.
 * Korisnici koji mogu samo da pregledaju projekat mogu da otvore stranicu, ali ne mogu da je menjaju.
+
+### Grupe {#managed-inventory-groups}
+
+Grupa vam omogućava da pokrenete playbook na delu hostova, na primer sa `hosts: web`, i da jednom postavite promenljivu za mnogo hostova.
+
+Dodajte grupu na kartici **Groups**. Grupa ima naziv, opcioni opis, promenljive i podređene grupe. Naziv mora biti jedinstven u inventaru, a nazivi `all` i `ungrouped` su zauzeti. Hostovi podređene grupe pripadaju i nadređenoj grupi. Grupa ne može biti sopstveni predak.
+
+Da biste stavili host u grupe, izaberite ih u polju **Groups** kada dodajete ili menjate host. Da biste promenili više hostova odjednom, izaberite ih na kartici **Hosts** i kliknite na **Add to groups** ili **Remove from groups**. Host može biti u više grupa.
+
+Da biste videli hostove grupe, izaberite grupu u filteru na kartici **Hosts**. Lista obuhvata i hostove njenih podređenih grupa.
+
+Vrednost postavljena na hostu ima prednost nad istom promenljivom postavljenom na grupi, a vrednost postavljena na grupi ima prednost nad inventarom. Zadatak koji cilja grupu pokreće se na njenim hostovima čiji je prekidač uključen.

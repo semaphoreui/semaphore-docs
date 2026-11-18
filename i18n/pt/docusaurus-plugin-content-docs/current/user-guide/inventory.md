@@ -53,9 +53,10 @@ Se você não tem certeza de quais recursos estão sendo usados em um ambiente, 
 
 Um inventário gerenciado guarda seus hosts como registros em vez de texto de inventário. Use-o quando você adiciona, altera ou desativa hosts com frequência e não quer editar um texto longo.
 
-Clique no nome do inventário na lista. A página tem duas abas:
+Clique no nome do inventário na lista. A página tem três abas:
 
-* **Hosts**: pesquise hosts pelo nome, adicione, edite e exclua. A coluna **Variables** mostra quantas variáveis um host tem.
+* **Hosts**: pesquise hosts pelo nome, filtre por grupo, adicione, edite e exclua. A coluna **Groups** mostra os grupos de um host. A coluna **Variables** mostra quantas variáveis um host tem.
+* **Groups**: grupos de hosts. Veja [Grupos](#managed-inventory-groups).
 * **Variables**: variáveis do inventário inteiro.
 
 Um host tem um nome, uma descrição opcional e variáveis. O nome é o que o Ansible vê como host. Ele deve ser único no inventário, diferencia maiúsculas de minúsculas e não deve conter espaços, vírgulas, colchetes ou dois-pontos. Coloque o endereço e a porta nas variáveis `ansible_host` e `ansible_port`.
@@ -74,3 +75,15 @@ Para pular um host, desligue a chave dele na lista de hosts. As tarefas criadas 
 * Você não pode mudar o tipo de um inventário para `managed` nem a partir de `managed` depois de criá-lo.
 * Os hosts e as variáveis de um inventário gerenciado fazem parte do backup do projeto.
 * Usuários que só podem ver o projeto podem abrir a página, mas não podem alterá-la.
+
+### Grupos {#managed-inventory-groups}
+
+Um grupo permite executar um playbook em uma parte dos hosts, por exemplo com `hosts: web`, e definir uma variável uma única vez para muitos hosts.
+
+Adicione um grupo na aba **Groups**. Um grupo tem um nome, uma descrição opcional, variáveis e grupos filhos. O nome deve ser único no inventário, e os nomes `all` e `ungrouped` são reservados. Os hosts de um grupo filho também pertencem ao grupo pai. Um grupo não pode ser seu próprio ancestral.
+
+Para colocar um host em grupos, escolha-os no campo **Groups** ao adicionar ou editar o host. Para alterar vários hosts de uma vez, selecione-os na aba **Hosts** e clique em **Add to groups** ou **Remove from groups**. Um host pode estar em vários grupos.
+
+Para ver os hosts de um grupo, escolha o grupo no filtro da aba **Hosts**. A lista inclui os hosts dos seus grupos filhos.
+
+Um valor definido em um host prevalece sobre a mesma variável definida em um grupo, e um valor definido em um grupo prevalece sobre o inventário. Uma tarefa que tem um grupo como alvo é executada nos hosts dele com a chave ligada.

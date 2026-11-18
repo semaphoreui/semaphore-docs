@@ -58,9 +58,10 @@ If you are not sure which resources are being used in an environment, follow ste
 
 A managed inventory keeps your hosts as records instead of inventory text. Use it when you add, change, or switch off hosts often, and you do not want to edit one big text.
 
-Click the name of the inventory in the list. The page has two tabs:
+Click the name of the inventory in the list. The page has three tabs:
 
-* **Hosts**: search hosts by name, add, edit, and delete them. The **Variables** column shows how many variables a host has.
+* **Hosts**: search hosts by name, filter them by group, add, edit, and delete them. The **Groups** column shows the groups of a host. The **Variables** column shows how many variables a host has.
+* **Groups**: groups of hosts. See [Groups](#managed-inventory-groups).
 * **Variables**: variables of the whole inventory.
 
 A host has a name, an optional description, and variables. The name is what Ansible sees as the host. It must be unique in the inventory, it is case-sensitive, and it must not contain spaces, commas, square brackets, or colons. Put the address and the port into the variables `ansible_host` and `ansible_port`.
@@ -79,3 +80,15 @@ To skip a host, turn off its switch in the list of hosts. Tasks created after th
 * You cannot change the type of an inventory to or from `managed` after you create it.
 * Hosts and variables of a managed inventory are part of the project backup.
 * Users who can only view the project can open the page, but they cannot change it.
+
+### Groups {#managed-inventory-groups}
+
+A group lets you run a playbook on a part of the hosts, for example with `hosts: web`, and set a variable once for many hosts.
+
+Add a group on the **Groups** tab. A group has a name, an optional description, variables, and child groups. The name must be unique in the inventory, and the names `all` and `ungrouped` are taken. The hosts of a child group also belong to the parent group. A group can not be its own ancestor.
+
+To put a host into groups, choose them in the **Groups** field when you add or edit the host. To change several hosts at once, select them on the **Hosts** tab and click **Add to groups** or **Remove from groups**. A host can be in several groups.
+
+To see the hosts of a group, choose the group in the filter on the **Hosts** tab. The list includes the hosts of its child groups.
+
+A value set on a host wins over the same variable set on a group, and a value set on a group wins over the inventory. A task that targets a group runs on its hosts that are switched on.
