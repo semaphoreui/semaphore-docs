@@ -7,6 +7,7 @@
 인벤토리에 대한 자세한 정보는 [Ansible 문서](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html)에서 확인할 수 있습니다.
 
 Semaphore UI는 Semaphore 사용자가 읽기 권한을 가진 서버상의 파일에서 인벤토리를 읽거나, 웹 GUI를 통해 편집하는 정적 인벤토리를 사용할 수 있습니다.
+Managed 인벤토리는 호스트와 변수를 레코드로 보관하며, 웹 GUI에서 편집합니다.
 각 인벤토리에는 최소 하나의 자격 증명이 연결되어 있습니다.
 사용자 자격 증명은 필수이며, Ansible이 해당 인벤토리의 호스트에 로그인할 때 사용됩니다. Sudo 자격 증명은 해당 호스트에서 권한을 상승시키는 데 사용됩니다.
 인벤토리를 생성하려면 키 저장소에 로그인 정보가 있는 사용자 이름 또는 SSH로 구성된 사용자 자격 증명이 있어야 합니다.
@@ -19,6 +20,7 @@ Semaphore UI는 Semaphore 사용자가 읽기 권한을 가진 서버상의 파�
 | `static` | 웹 UI에서 편집하는 INI 형식의 인벤토리입니다. |
 | `static-yaml` | 웹 UI에서 편집하는 YAML 형식의 인벤토리입니다. [NetBox](./inventory/netbox-dynamic-inventory)나 [Consul](./inventory/consul-dynamic-inventory)과 같은 플러그인 인벤토리에 사용하십시오. |
 | `file` | 인벤토리 파일의 경로입니다. 상대 경로는 템플릿의 리포지토리를 가리키고, 절대 경로는 서버상의 파일을 가리킵니다. 파일이 다른 Git 리포지토리에 있는 경우 선택적으로 별도의 **인벤토리 리포지토리**를 선택할 수 있습니다. |
+| `managed` | 호스트와 변수를 웹 UI에서 레코드로 관리합니다. [Managed 인벤토리](#managed-inventory)를 참조하십시오. |
 | `terraform-workspace`, `tofu-workspace`, `terragrunt-workspace` | Ansible 인벤토리가 아니라 [Terraform/OpenTofu](./apps/terraform/workspaces) 및 [Terragrunt](./apps/terragrunt) 템플릿을 위한 워크스페이스입니다. |
 
 ## 인벤토리 생성 {#creating-an-inventory}
@@ -28,6 +30,7 @@ Semaphore UI는 Semaphore 사용자가 읽기 권한을 가진 서버상의 파�
 4. 인벤토리 유형을 선택합니다
   * 파일을 선택한 경우 파일의 절대 경로를 사용합니다. 이 파일이 git 리포지토리에 있는 경우 상대 경로를 사용합니다. 예: `inventory/linux-hosts.yaml`
   * static 또는 static-yaml을 선택한 경우 양식에 인벤토리를 붙여넣거나 입력합니다
+  * managed를 선택한 경우 먼저 인벤토리를 생성한 다음 인벤토리 페이지에서 호스트와 변수를 추가합니다. [Managed 인벤토리](#managed-inventory)를 참조하십시오
 5. 생성을 클릭합니다.
 
 ## 인벤토리 업데이트 {#updating-an-inventory}
@@ -36,6 +39,8 @@ Semaphore UI는 Semaphore 사용자가 읽기 권한을 가진 서버상의 파�
 3. 변경 사항을 적용합니다
 4. 저장을 클릭합니다
 
+Managed 인벤토리의 호스트와 변수를 변경하려면 [Managed 인벤토리](#managed-inventory)를 참조하십시오.
+
 ## 인벤토리 삭제 {#deleting-an-inventory}
 인벤토리를 제거하기 전에 해당 인벤토리에 연결된 모든 리소스를 제거해야 합니다.
 어떤 리소스가 환경에서 사용되고 있는지 확실하지 않은 경우 아래 1단계와 2단계를 따르십시오. 사용 중인 리소스와 해당 리소스로의 링크가 표시됩니다.
@@ -43,3 +48,29 @@ Semaphore UI는 Semaphore 사용자가 읽기 권한을 가진 서버상의 파�
 1. 인벤토리 탭을 클릭합니다
 2. 인벤토리 옆의 휴지통 아이콘을 클릭합니다
 3. 인벤토리를 제거하려는 것이 확실하면 예를 클릭합니다
+
+## Managed 인벤토리 {#managed-inventory}
+
+Managed 인벤토리는 인벤토리 텍스트 대신 호스트를 레코드로 보관합니다. 호스트를 자주 추가, 변경, 비활성화하고 긴 텍스트를 편집하고 싶지 않을 때 사용하십시오.
+
+목록에서 인벤토리 이름을 클릭합니다. 페이지에는 두 개의 탭이 있습니다.
+
+* **Hosts**: 이름으로 호스트를 검색하고, 추가, 편집, 삭제합니다. **Variables** 열은 호스트의 변수 개수를 보여 줍니다. 행을 클릭하면 변수를 볼 수 있습니다.
+* **Variables**: 인벤토리 전체의 변수입니다.
+
+호스트에는 이름, 선택 사항인 설명, 변수가 있습니다. 이름은 Ansible이 호스트로 인식하는 값입니다. 인벤토리 안에서 고유해야 하고, 대소문자를 구분하며, 공백, 쉼표, 대괄호, 콜론을 포함할 수 없습니다. 주소와 포트는 변수 `ansible_host`와 `ansible_port`에 넣습니다.
+
+호스트와 인벤토리의 변수는 매핑으로 YAML 또는 JSON으로 작성합니다.
+
+```yaml
+ansible_host: 10.0.0.5
+ansible_user: deploy
+```
+
+호스트에 설정한 값은 인벤토리에 설정한 같은 변수보다 우선합니다. YAML 앵커, 별칭, 병합 키는 사용할 수 없습니다.
+
+호스트를 건너뛰려면 호스트 목록에서 해당 스위치를 끕니다. 그 후에 생성한 태스크는 그 호스트를 사용하지 않습니다. 다시 사용하려면 스위치를 켭니다.
+
+* 생성한 후에는 인벤토리 유형을 `managed`로 바꾸거나 `managed`에서 다른 유형으로 바꿀 수 없습니다.
+* Managed 인벤토리의 호스트와 변수는 프로젝트 백업에 포함됩니다.
+* 프로젝트를 보기만 할 수 있는 사용자는 페이지를 열 수 있지만 변경할 수는 없습니다.

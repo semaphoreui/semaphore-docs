@@ -12,6 +12,7 @@ An Inventory also stores variables that can be used by playbooks. An Inventory c
 More information about Inventories can be found in the [Ansible Documentation.](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html)
 
 Semaphore UI can either read an Inventory from a file on the server that the Semaphore user has read access to, or a static Inventory that is edited via the web GUI.
+A managed Inventory keeps hosts and variables as records that you edit in the web GUI.
 Each Inventory also has at least one credential tied to it.
 The user credential is required, and is what Ansible uses to log into hosts for that Inventory. Sudo credentials are used for escalating privileges on that host.
 It is required to have a user credential that is either a username with a login, or SSH configured in the Key Store to create an Inventory.
@@ -24,6 +25,7 @@ Information about credentials can be found in the [Key Store](key-store) section
 | `static` | Inventory in INI format edited in the web UI. |
 | `static-yaml` | Inventory in YAML format edited in the web UI. Use it for plugin inventories such as [NetBox](./inventory/netbox-dynamic-inventory) or [Consul](./inventory/consul-dynamic-inventory). |
 | `file` | Path to an inventory file. A relative path points into the repository of the template, an absolute path to a file on the server. Optionally select a separate **Inventory repository** if the file lives in another Git repository. |
+| `managed` | Hosts and variables are kept as records and edited in the web UI. See [Managed inventory](#managed-inventory). |
 | `terraform-workspace`, `tofu-workspace`, `terragrunt-workspace` | Not an Ansible inventory: a workspace for [Terraform/OpenTofu](./apps/terraform/workspaces) and [Terragrunt](./apps/terragrunt) templates. |
 
 ## Creating an Inventory {#creating-an-inventory}
@@ -33,6 +35,7 @@ Information about credentials can be found in the [Key Store](key-store) section
 4. Select the Inventory type
   * If you select file, use the absolute path to the file. If this file is located in your git repo, then use relative path. Ex. `inventory/linux-hosts.yaml`
   * If you select static or static-yaml, paste in or type your Inventory into the form
+  * If you select managed, create the Inventory first, then add hosts and variables on its page. See [Managed inventory](#managed-inventory)
 5. Click Create.
 
 ## Updating an Inventory {#updating-an-inventory}
@@ -41,6 +44,8 @@ Information about credentials can be found in the [Key Store](key-store) section
 3. Make your changes
 4. Click Save
 
+To change the hosts and variables of a managed Inventory, see [Managed inventory](#managed-inventory).
+
 ## Deleting an Inventory {#deleting-an-inventory}
 Before you remove an Inventory, you must remove all resources tied to it.
 If you are not sure which resources are being used in an environment, follow steps 1 and 2 below. It will show you which resources are being used, with links to those resources.
@@ -48,3 +53,29 @@ If you are not sure which resources are being used in an environment, follow ste
 1. Click on the Inventory tab
 2. Click the trash can icon next to the Inventory
 3. Click Yes if you are sure you want to remove the Inventory
+
+## Managed inventory {#managed-inventory}
+
+A managed inventory keeps your hosts as records instead of inventory text. Use it when you add, change, or switch off hosts often, and you do not want to edit one big text.
+
+Click the name of the inventory in the list. The page has two tabs:
+
+* **Hosts**: search hosts by name, add, edit, and delete them. The **Variables** column shows how many variables a host has. Click a row to see them.
+* **Variables**: variables of the whole inventory.
+
+A host has a name, an optional description, and variables. The name is what Ansible sees as the host. It must be unique in the inventory, it is case-sensitive, and it must not contain spaces, commas, square brackets, or colons. Put the address and the port into the variables `ansible_host` and `ansible_port`.
+
+Write variables of a host and of the inventory in YAML or JSON, as a mapping:
+
+```yaml
+ansible_host: 10.0.0.5
+ansible_user: deploy
+```
+
+A value set on a host wins over the same variable set on the inventory. YAML anchors, aliases, and merge keys are not accepted.
+
+To skip a host, turn off its switch in the list of hosts. Tasks created after that do not use the host. Turn the switch on to use the host again.
+
+* You cannot change the type of an inventory to or from `managed` after you create it.
+* Hosts and variables of a managed inventory are part of the project backup.
+* Users who can only view the project can open the page, but they cannot change it.

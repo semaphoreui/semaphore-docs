@@ -7,6 +7,7 @@ Un Inventory memorizza inoltre variabili che possono essere utilizzate dai playb
 Ulteriori informazioni sugli Inventory sono disponibili nella [documentazione di Ansible.](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html)
 
 Semaphore UI può leggere un Inventory da un file sul server a cui l'utente Semaphore ha accesso in lettura, oppure un Inventory statico modificato tramite l'interfaccia web.
+Un Inventory gestito conserva host e variabili come record che si modificano nell'interfaccia web.
 A ogni Inventory è inoltre associata almeno una credenziale.
 La credenziale utente è obbligatoria ed è quella che Ansible utilizza per accedere agli host di quell'Inventory. Le credenziali sudo vengono utilizzate per l'elevazione dei privilegi sull'host.
 Per creare un Inventory è necessario disporre nel Key Store di una credenziale utente, costituita da un nome utente con password oppure da una configurazione SSH.
@@ -19,6 +20,7 @@ Le informazioni sulle credenziali sono disponibili nella sezione [Key Store](key
 | `static` | Inventory in formato INI modificato nell'interfaccia web. |
 | `static-yaml` | Inventory in formato YAML modificato nell'interfaccia web. Da utilizzare per gli Inventory basati su plugin come [NetBox](./inventory/netbox-dynamic-inventory) o [Consul](./inventory/consul-dynamic-inventory). |
 | `file` | Percorso di un file di Inventory. Un percorso relativo punta all'interno del Repository del Task Template, un percorso assoluto a un file sul server. Facoltativamente è possibile selezionare un **Inventory repository** separato se il file si trova in un altro repository Git. |
+| `managed` | Host e variabili sono gestiti come record nell'interfaccia web. Vedere [Inventory gestito](#managed-inventory). |
 | `terraform-workspace`, `tofu-workspace`, `terragrunt-workspace` | Non è un Inventory di Ansible: è un workspace per i Task Template [Terraform/OpenTofu](./apps/terraform/workspaces) e [Terragrunt](./apps/terragrunt). |
 
 ## Creazione di un Inventory {#creating-an-inventory}
@@ -28,6 +30,7 @@ Le informazioni sulle credenziali sono disponibili nella sezione [Key Store](key
 4. Selezionare il tipo di Inventory
   * Se si seleziona file, utilizzare il percorso assoluto del file. Se il file si trova nel repository git, utilizzare il percorso relativo. Es. `inventory/linux-hosts.yaml`
   * Se si seleziona static o static-yaml, incollare o digitare l'Inventory nel modulo
+  * Se si seleziona managed, creare prima l'Inventory e poi aggiungere host e variabili nella sua pagina. Vedere [Inventory gestito](#managed-inventory)
 5. Fare clic su Crea.
 
 ## Aggiornamento di un Inventory {#updating-an-inventory}
@@ -36,6 +39,8 @@ Le informazioni sulle credenziali sono disponibili nella sezione [Key Store](key
 3. Apportare le modifiche
 4. Fare clic su Salva
 
+Per modificare gli host e le variabili di un Inventory gestito, vedere [Inventory gestito](#managed-inventory).
+
 ## Eliminazione di un Inventory {#deleting-an-inventory}
 Prima di rimuovere un Inventory, è necessario rimuovere tutte le risorse ad esso collegate.
 Se non si è sicuri di quali risorse utilizzino un ambiente, seguire i passaggi 1 e 2 riportati di seguito. Verranno mostrate le risorse in uso, con i collegamenti a tali risorse.
@@ -43,3 +48,29 @@ Se non si è sicuri di quali risorse utilizzino un ambiente, seguire i passaggi 
 1. Fare clic sulla scheda Inventory
 2. Fare clic sull'icona del cestino accanto all'Inventory
 3. Fare clic su Sì se si è sicuri di voler rimuovere l'Inventory
+
+## Inventory gestito {#managed-inventory}
+
+Un Inventory gestito conserva gli host come record invece che come testo di Inventory. Utilizzarlo quando si aggiungono, modificano o disattivano host spesso e non si vuole modificare un testo lungo.
+
+Fare clic sul nome dell'Inventory nell'elenco. La pagina ha due schede:
+
+* **Hosts**: cercare gli host per nome, aggiungerli, modificarli ed eliminarli. La colonna **Variables** mostra quante variabili ha un host. Fare clic su una riga per vederle.
+* **Variables**: variabili dell'intero Inventory.
+
+Un host ha un nome, una descrizione facoltativa e variabili. Il nome è ciò che Ansible vede come host. Deve essere univoco nell'Inventory, distingue tra maiuscole e minuscole e non deve contenere spazi, virgole, parentesi quadre o due punti. Inserire l'indirizzo e la porta nelle variabili `ansible_host` e `ansible_port`.
+
+Scrivere le variabili di un host e dell'Inventory in YAML o JSON, come mappatura:
+
+```yaml
+ansible_host: 10.0.0.5
+ansible_user: deploy
+```
+
+Un valore impostato su un host ha la precedenza sulla stessa variabile impostata sull'Inventory. Ancore, alias e chiavi di merge YAML non sono accettati.
+
+Per saltare un host, disattivare il suo interruttore nell'elenco degli host. I task creati dopo non usano quell'host. Riattivarlo per usarlo di nuovo.
+
+* Dopo la creazione non è possibile cambiare il tipo di un Inventory in `managed` né da `managed`.
+* Gli host e le variabili di un Inventory gestito fanno parte del backup del progetto.
+* Gli utenti che possono solo visualizzare il progetto possono aprire la pagina, ma non possono modificarla.
