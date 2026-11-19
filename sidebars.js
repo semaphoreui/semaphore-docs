@@ -160,6 +160,7 @@ const sidebars = {
           ],
         },
         'admin-guide/license',
+        'admin-guide/hosts',
         {
           type: 'category',
           label: 'Notifications',
@@ -233,6 +234,7 @@ const sidebars = {
           ],
         },
         'user-guide/tasks',
+        'user-guide/hosts',
         'user-guide/workflows',
         'user-guide/schedules',
         {

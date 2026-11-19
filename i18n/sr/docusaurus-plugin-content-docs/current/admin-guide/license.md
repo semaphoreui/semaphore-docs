@@ -162,3 +162,7 @@ Ako je ključ podešen na serveru:
 1. Zamenite vrednost `subscription.key` ili ažurirajte sadržaj fajla na koji ukazuje `subscription.key_file`.
 2. Ponovo pokrenite Semaphore UI da bi server ponovo učitao licencni ključ.
 3. Proverite da li su očekivane Pro ili Enterprise opcije dostupne u Semaphore UI.
+
+## Nodes {#nodes}
+
+Za Pro i Enterprise licence dijalog **Pretplata i naplata** ima red **Nodes**: koliko je hostova u upotrebi i koliko ih licenca uključuje. Host je u upotrebi kada je Ansible zadatak stigao do njega u poslednjih mesec dana i administrator ga nije ukinuo. Kada je u upotrebi više hostova nego što licenca uključuje, red postaje crven i prikazuje **(limit exceeded)**. Za više informacija pogledajte [Hosts](/admin-guide/hosts#license-count).

@@ -162,3 +162,11 @@ Se la chiave è configurata sul server:
 1. Sostituire il valore di `subscription.key` oppure aggiornare il contenuto del file indicato da `subscription.key_file`.
 2. Riavviare Semaphore UI affinché il server ricarichi la chiave di licenza.
 3. Verificare che le opzioni Pro o Enterprise previste siano disponibili in Semaphore UI.
+
+## Nodes {#nodes}
+
+Per le licenze Pro e Enterprise, la finestra **Abbonamento e fatturazione** ha una riga **Nodes**: quanti
+host sono in uso e quanti ne include la licenza. Un host è in uso quando un Task Ansible lo ha raggiunto
+nell'ultimo mese e un amministratore non lo ha dismesso. Quando sono in uso più host di quanti ne
+include la licenza, la riga diventa rossa e mostra **(limit exceeded)**. Per ulteriori informazioni, vedere
+[Hosts](/admin-guide/hosts#license-count).
