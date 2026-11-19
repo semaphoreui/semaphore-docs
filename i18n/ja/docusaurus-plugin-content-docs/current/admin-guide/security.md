@@ -81,9 +81,7 @@ Semaphore はユーザーが定義した playbook やコマンドを実行する
 
 - **最小権限**<br />Docker および Kubernetes エグゼキューターでは、イメージ、ネットワーク、サービスアカウントを自分で選べるため、タスクには必要なものだけを与えられます。
 
-- **chroot による実行**<br />Semaphore は chroot jail 内でタスクを実行し、実行環境をホストシステムからさらに分離できます。
-
-- **タスクプロセスのユーザー**<br />タスクは専用の非 root システムユーザー（例: `semaphore`）として実行でき、潜在的な脆弱性悪用の影響を軽減できます。これは任意であり、システムのポリシーに応じて設定できます。
+- **サービスユーザー**<br />ローカルプロセスとして起動されたタスクは、それを起動した Semaphore サーバーまたはランナーの OS ユーザーとして実行されます。潜在的な脆弱性悪用の影響を軽減するため、サービスは専用の非 root システムユーザー（例: `semaphore`）で実行してください。詳しくは[サービスユーザー](/admin-guide/installation_manually#service-user)を参照してください。
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->
 
 ## 安全なデプロイ {#secure-deployment}

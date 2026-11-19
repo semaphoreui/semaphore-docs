@@ -83,7 +83,7 @@ O Semaphore executa playbooks e comandos definidos pelo usuário, o que pode ser
 
 - **Privilégio mínimo**<br />Com os executores Docker e Kubernetes, escolhe a imagem, a rede e a conta de serviço, pelo que a tarefa recebe apenas aquilo de que precisa.
 
-- **Usuário do processo da tarefa**<br />As tarefas podem ser executadas sob um usuário de sistema dedicado e não root (por exemplo, `semaphore`) para reduzir o impacto de possíveis exploits. Isso é opcional e pode ser configurado conforme as políticas do sistema.
+- **Usuário do serviço**<br />Uma tarefa iniciada como processo local é executada com o usuário do sistema operacional do servidor ou runner do Semaphore que a inicia. Execute esse serviço sob um usuário de sistema dedicado e não root (por exemplo, `semaphore`) para reduzir o impacto de possíveis exploits; consulte [Usuário do serviço](/admin-guide/installation_manually#service-user).
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->
 
 ## Implantação segura {#secure-deployment}

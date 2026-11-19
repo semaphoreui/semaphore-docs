@@ -86,9 +86,7 @@ Semaphore runs user-defined playbooks and commands, which can be risky:
 
 - **Least privilege**<br />With the Docker and Kubernetes executors you choose the image, the network, and the service account, so a task is given only what it needs.
 
-- **Chroot execution**<br />Semaphore can execute tasks inside a chroot jail to further isolate the execution environment from the host system.
-
-- **Task process user**<br />Tasks can be executed under a dedicated non-root system user (e.g., `semaphore`) to reduce the impact of potential exploits. This is optional and can be configured based on system policies.
+- **Service user**<br />A task started as a local process runs as the operating-system user of the Semaphore server or runner that starts it. Run that service as a dedicated non-root user (e.g., `semaphore`) to reduce the impact of potential exploits; see [Service user](/admin-guide/installation_manually#service-user).
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->
 
 ## Secure Deployment {#secure-deployment}
