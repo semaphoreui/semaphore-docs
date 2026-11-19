@@ -25,8 +25,8 @@ Utilisez les commandes suivantes pour générer le fichier de configuration de m
 ### Générer sur le site web {#generate-on-the-website}
 
 Vous pouvez également utiliser le configurateur interactif en ligne :
-* [Configurateur du serveur](https://semaphoreui.com/install/binary/2_13/config)
-* [Configurateur du runner](https://semaphoreui.com/install/binary/2_13/runner)
+* [Configurateur du serveur](https://semaphoreui.com/install/binary/2_20/config)
+* [Configurateur du runner](https://semaphoreui.com/install/binary/2_20/runner)
 
 ## Exemple de fichier de configuration {#configuration-file-example}
 

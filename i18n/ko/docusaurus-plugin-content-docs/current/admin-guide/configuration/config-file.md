@@ -25,8 +25,8 @@ Semaphore는 핵심 설정에 `config.json` 파일을 사용합니다. 이 파�
 ### 웹사이트에서 생성 {#generate-on-the-website}
 
 또는 웹 기반 대화형 구성 도구를 사용할 수 있습니다.
-* [서버 구성 도구](https://semaphoreui.com/install/binary/2_13/config)
-* [Runner 구성 도구](https://semaphoreui.com/install/binary/2_13/runner)
+* [서버 구성 도구](https://semaphoreui.com/install/binary/2_20/config)
+* [Runner 구성 도구](https://semaphoreui.com/install/binary/2_20/runner)
 
 ## 설정 파일 예제 {#configuration-file-example}
 

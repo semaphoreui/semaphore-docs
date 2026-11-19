@@ -3,8 +3,8 @@
 Tramite le variabili d'ambiente è possibile sovrascrivere qualsiasi opzione di configurazione disponibile.
 
 È disponibile un generatore interattivo di variabili d'ambiente (per Docker):
-* per il [server](https://semaphoreui.com/install/docker/2_12/)
-* per il [runner](https://semaphoreui.com/install/docker/2_12/runner).
+* per il [server](https://semaphoreui.com/install/docker/2_20/)
+* per il [runner](https://semaphoreui.com/install/docker/2_20/runner).
 
 ---
 

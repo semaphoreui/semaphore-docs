@@ -25,8 +25,8 @@ Semaphore はコア設定に `config.json` ファイルを使用します。こ�
 ### Web サイトで生成する {#generate-on-the-website}
 
 あるいは、Web ベースの対話型コンフィギュレーターを使用することもできます:
-* [サーバー用コンフィギュレーター](https://semaphoreui.com/install/binary/2_13/config)
-* [ランナー用コンフィギュレーター](https://semaphoreui.com/install/binary/2_13/runner)
+* [サーバー用コンフィギュレーター](https://semaphoreui.com/install/binary/2_20/config)
+* [ランナー用コンフィギュレーター](https://semaphoreui.com/install/binary/2_20/runner)
 
 ## 設定ファイルの例 {#configuration-file-example}
 

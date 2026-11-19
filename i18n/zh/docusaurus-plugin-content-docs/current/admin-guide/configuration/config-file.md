@@ -24,8 +24,8 @@ Semaphore 使用 `config.json` 文件作为其核心配置。你可以使用内�
 ### 在网站上生成 {#generate-on-the-website}
 
 或者，你也可以使用基于网页的交互式配置生成器：
-* [服务器配置生成器](https://semaphoreui.com/install/binary/2_13/config)
-* [运行器配置生成器](https://semaphoreui.com/install/binary/2_13/runner)
+* [服务器配置生成器](https://semaphoreui.com/install/binary/2_20/config)
+* [运行器配置生成器](https://semaphoreui.com/install/binary/2_20/runner)
 
 ## 配置文件示例 {#configuration-file-example}
 
