@@ -26,6 +26,11 @@ Se non si è sicuri di quali risorse vengano utilizzate in un Variable Group, se
 2. Fare clic sull'icona del cestino accanto al Variable Group.
 3. Fare clic su Sì se si è sicuri di voler rimuovere il Variable Group.
 
+## Segreti {#secrets}
+La scheda **Secrets** contiene valori memorizzati cifrati che l'API non restituisce dopo il salvataggio. Un segreto in **Extra variables** arriva ad Ansible come variabile extra e a Terraform/OpenTofu come `-var`; un segreto in **Environment variables** viene impostato nell'ambiente del processo del task.
+
+Le chiavi del [Key Store](/user-guide/key-store) non vengono passate al task in questo modo. Per esempi di playbook, vedere [Segreti nei playbook](/user-guide/key-store#secrets-in-playbooks).
+
 ## Utilizzo dei Variable Group - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
 Quando si desidera utilizzare una variabile o un segreto memorizzato in un Variable Group all'interno di un Task Template terraform, è necessario anteporre al nome il prefisso `TF_VAR_` affinché lo script terraform lo utilizzi. 
 
