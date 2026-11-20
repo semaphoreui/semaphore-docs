@@ -55,7 +55,7 @@ Upravljani inventar čuva vaše hostove kao zapise umesto kao tekst inventara. K
 
 Kliknite na naziv inventara u listi. Stranica ima dve kartice:
 
-* **Hosts**: pretražujte hostove po nazivu, dodajte ih, izmenite i obrišite. Kolona **Variables** prikazuje koliko promenljivih host ima. Kliknite na red da biste ih videli.
+* **Hosts**: pretražujte hostove po nazivu, dodajte ih, izmenite i obrišite. Kolona **Variables** prikazuje koliko promenljivih host ima.
 * **Variables**: promenljive celog inventara.
 
 Host ima naziv, opcioni opis i promenljive. Naziv je ono što Ansible vidi kao host. Mora biti jedinstven u inventaru, razlikuju se velika i mala slova, i ne sme sadržati razmake, zapete, uglaste zagrade ni dvotačke. Adresu i port upišite u promenljive `ansible_host` i `ansible_port`.

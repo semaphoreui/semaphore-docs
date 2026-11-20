@@ -55,7 +55,7 @@ Un inventario administrado guarda sus hosts como registros en lugar de texto de 
 
 Haga clic en el nombre del inventario en la lista. La página tiene dos pestañas:
 
-* **Hosts**: busque hosts por nombre, agréguelos, edítelos y elimínelos. La columna **Variables** muestra cuántas variables tiene un host. Haga clic en una fila para verlas.
+* **Hosts**: busque hosts por nombre, agréguelos, edítelos y elimínelos. La columna **Variables** muestra cuántas variables tiene un host.
 * **Variables**: variables de todo el inventario.
 
 Un host tiene un nombre, una descripción opcional y variables. El nombre es lo que Ansible ve como host. Debe ser único en el inventario, distingue mayúsculas de minúsculas y no debe contener espacios, comas, corchetes ni dos puntos. Ponga la dirección y el puerto en las variables `ansible_host` y `ansible_port`.
