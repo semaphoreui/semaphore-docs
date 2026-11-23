@@ -72,6 +72,8 @@ Ein Wert, der an einem Host gesetzt ist, hat Vorrang vor derselben Variable im I
 
 Um einen Host zu überspringen, schalten Sie seinen Schalter in der Host-Liste aus. Danach erstellte Tasks verwenden den Host nicht. Schalten Sie ihn wieder ein, um den Host erneut zu verwenden.
 
+Auf dem Tab **Hosts** zeigt die Spalte **Last run** <Pro /> für jeden Host, wie die letzte Aufgabe mit diesem Inventar auf ihm endete und wann. Klicken Sie auf das Datum, um die Aufgabe zu öffnen. Ein Host, auf dem noch nichts lief, zeigt „never run“. Klicken Sie auf den Namen eines Hosts, auf dem schon etwas lief, um seine Seite mit dem Aufgabenverlauf zu öffnen. Ein umbenannter Host behält seinen letzten Lauf.
+
 * Den Typ eines Inventory können Sie nach dem Erstellen nicht zu `managed` oder von `managed` weg ändern.
 * Hosts und Variablen eines Managed Inventory sind Teil des Projekt-Backups.
 * Benutzer, die das Projekt nur ansehen dürfen, können die Seite öffnen, aber nichts ändern.

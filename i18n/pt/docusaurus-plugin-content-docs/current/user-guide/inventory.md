@@ -72,6 +72,8 @@ Um valor definido em um host prevalece sobre a mesma variável definida no inven
 
 Para pular um host, desligue a chave dele na lista de hosts. As tarefas criadas depois não usam o host. Ligue a chave para usar o host de novo.
 
+Na aba **Hosts**, a coluna **Last run** <Pro /> mostra como a última tarefa com este inventário terminou em cada host e quando. Clique na data para abrir a tarefa. Um host em que ainda nada foi executado mostra “never run”. Clique no nome de um host que já foi executado para abrir a página dele com o histórico de tarefas. Um host renomeado mantém a última execução.
+
 * Você não pode mudar o tipo de um inventário para `managed` nem a partir de `managed` depois de criá-lo.
 * Os hosts e as variáveis de um inventário gerenciado fazem parte do backup do projeto.
 * Usuários que só podem ver o projeto podem abrir a página, mas não podem alterá-la.

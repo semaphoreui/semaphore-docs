@@ -32,6 +32,8 @@ er Ihr Inventar verlassen hat.
   einem Monat kein Task berührt hat.
 - **Template** schränkt die Liste auf die Hosts einer Vorlage ein.
 
+Die Spalte **Inventories** zeigt die verwalteten Inventare des Projekts, in denen der Host deklariert ist. Klicken Sie auf ein Inventar, um dessen Tab **Hosts** zu öffnen.
+
 Klicken Sie auf einen Host, um seine Karte zu öffnen: wann er zum ersten Mal gesehen wurde, wie viele
 Läufe er hatte, wie viele der letzten 10 Läufe fehlgeschlagen sind und welche Tasks ihn erreicht
 haben, mit dem Ergebnis auf diesem Host. Klicken Sie auf einen Task, um sein Log zu öffnen.

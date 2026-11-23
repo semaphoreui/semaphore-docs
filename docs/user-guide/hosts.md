@@ -30,6 +30,8 @@ history.
   connect to. **Not seen 30 days** shows hosts no task touched for a month.
 - **Template** narrows the list to the hosts of one template.
 
+The **Inventories** column shows the managed inventories of the project in which the host is declared. Click an inventory to open its **Hosts** tab.
+
 Click a host to open its card: when it was first seen, how many runs it had, how many of the last
 10 runs failed, and the tasks that reached it with the result on this host. Click a task to open
 its log.

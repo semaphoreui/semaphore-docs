@@ -72,6 +72,8 @@ Un valore impostato su un host ha la precedenza sulla stessa variabile impostata
 
 Per saltare un host, disattivare il suo interruttore nell'elenco degli host. I task creati dopo non usano quell'host. Riattivarlo per usarlo di nuovo.
 
+Nella scheda **Hosts**, la colonna **Last run** <Pro /> mostra come è terminata su ogni host l'ultima attività con questo inventario e quando. Fare clic sulla data per aprire l'attività. Un host su cui non è ancora stato eseguito nulla mostra «never run». Fare clic sul nome di un host già eseguito per aprire la sua pagina con la cronologia delle attività. Un host rinominato mantiene la sua ultima esecuzione.
+
 * Dopo la creazione non è possibile cambiare il tipo di un Inventory in `managed` né da `managed`.
 * Gli host e le variabili di un Inventory gestito fanno parte del backup del progetto.
 * Gli utenti che possono solo visualizzare il progetto possono aprire la pagina, ma non possono modificarla.

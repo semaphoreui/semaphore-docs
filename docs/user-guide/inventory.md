@@ -77,6 +77,8 @@ A value set on a host wins over the same variable set on the inventory. YAML anc
 
 To skip a host, turn off its switch in the list of hosts. Tasks created after that do not use the host. Turn the switch on to use the host again.
 
+On the **Hosts** tab, the **Last run** <Pro /> column shows how the last task with this inventory ended on each host, and when. Click the date to open the task. A host that has not run yet shows "never run". Click the name of a host that has run to open its page with the task history. A renamed host keeps its last run.
+
 * You cannot change the type of an inventory to or from `managed` after you create it.
 * Hosts and variables of a managed inventory are part of the project backup.
 * Users who can only view the project can open the page, but they cannot change it.

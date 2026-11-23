@@ -31,6 +31,8 @@ projekta. Host ostaje na listi i nakon što izađe iz vašeg inventara, zajedno 
   nijedan zadatak nije dotakao mesec dana.
 - **Template** sužava listu na hostove jednog šablona.
 
+Kolona **Inventories** prikazuje upravljane inventare projekta u kojima je host deklarisan. Kliknite na inventar da otvorite njegovu karticu **Hosts**.
+
 Kliknite na host da otvorite njegovu karticu: kada je prvi put viđen, koliko je imao pokretanja,
 koliko od poslednjih 10 pokretanja je otkazalo i zadaci koji su stigli do njega sa rezultatom na tom
 hostu. Kliknite na zadatak da otvorite njegov log.

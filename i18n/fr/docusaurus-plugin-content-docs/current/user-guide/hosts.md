@@ -32,6 +32,8 @@ avoir quitté votre inventaire, avec son historique.
   tâche n'a touchés depuis un mois.
 - **Template** restreint la liste aux hôtes d'un seul modèle.
 
+La colonne **Inventories** affiche les inventaires gérés du projet dans lesquels l'hôte est déclaré. Cliquez sur un inventaire pour ouvrir son onglet **Hosts**.
+
 Cliquez sur un hôte pour ouvrir sa fiche : quand il a été vu pour la première fois, combien
 d'exécutions il a eues, combien des 10 dernières exécutions ont échoué, et les tâches qui l'ont
 atteint avec le résultat sur cet hôte. Cliquez sur une tâche pour ouvrir son journal.

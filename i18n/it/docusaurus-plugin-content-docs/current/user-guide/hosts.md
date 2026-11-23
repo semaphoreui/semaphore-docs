@@ -31,6 +31,8 @@ insieme alla sua cronologia.
   toccato per un mese.
 - **Template** restringe l'elenco agli host di un solo Template.
 
+La colonna **Inventories** mostra gli inventari gestiti del progetto in cui l'host è dichiarato. Fare clic su un inventario per aprire la sua scheda **Hosts**.
+
 Fare clic su un host per aprire la sua scheda: quando è stato visto per la prima volta, quante
 esecuzioni ha avuto, quante delle ultime 10 esecuzioni sono fallite e i Task che lo hanno raggiunto
 con il risultato su quell'host. Fare clic su un Task per aprirne il log.

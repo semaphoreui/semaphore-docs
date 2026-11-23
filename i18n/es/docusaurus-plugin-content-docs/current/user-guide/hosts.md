@@ -32,6 +32,8 @@ después de salir de su inventario.
   ninguna tarea en un mes.
 - **Template** limita la lista a los hosts de una plantilla.
 
+La columna **Inventories** muestra los inventarios gestionados del proyecto en los que se declara el host. Haga clic en un inventario para abrir su pestaña **Hosts**.
+
 Haga clic en un host para abrir su ficha: cuándo se vio por primera vez, cuántas ejecuciones tuvo,
 cuántas de las últimas 10 ejecuciones fallaron y las tareas que llegaron a él, con el resultado en
 este host. Haga clic en una tarea para abrir su registro.
