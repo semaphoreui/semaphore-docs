@@ -36,7 +36,7 @@ Las tareas de una misma plantilla se ejecutan una tras otra, a menos que la opci
 
 ## Ventana de la tarea {#task-window}
 
-Al hacer clic en una tarea en cualquier parte de la interfaz se abre la ventana de la tarea. El encabezado muestra la plantilla, el número de la tarea, el mensaje del commit de la revisión del repositorio, el distintivo de estado, quién inició la tarea y cuándo, y la duración. El icono de las flechas amplía la ventana a pantalla completa.
+Al hacer clic en una tarea en cualquier parte de la interfaz se abre la ventana de la tarea. El encabezado muestra la plantilla, el número de la tarea, el mensaje del commit de la revisión del repositorio, el distintivo de estado, quién inició la tarea y cuándo, y la duración. El icono de las flechas amplía la ventana a pantalla completa. Arrastre el borde izquierdo o derecho de la ventana para cambiar su ancho: la ventana permanece centrada y el navegador recuerda el ancho. Haga doble clic en un borde para restaurar el ancho predeterminado.
 
 ![Registro de la tarea](/assets/task-log.webp)
 

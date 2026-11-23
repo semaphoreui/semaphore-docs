@@ -36,7 +36,7 @@ Zadaci istog šablona izvršavaju se jedan za drugim, osim ako je u šablonu ukl
 
 ## Prozor zadatka {#task-window}
 
-Klik na zadatak bilo gde u korisničkom interfejsu otvara prozor zadatka. Zaglavlje prikazuje šablon, broj zadatka, poruku commit-a revizije repozitorijuma, oznaku statusa, ko je i kada pokrenuo zadatak, kao i trajanje. Ikona sa strelicama proširuje prozor na ceo ekran.
+Klik na zadatak bilo gde u korisničkom interfejsu otvara prozor zadatka. Zaglavlje prikazuje šablon, broj zadatka, poruku commit-a revizije repozitorijuma, oznaku statusa, ko je i kada pokrenuo zadatak, kao i trajanje. Ikona sa strelicama proširuje prozor na ceo ekran. Prevucite levu ili desnu ivicu prozora da biste promenili njegovu širinu: prozor ostaje centriran, a pregledač pamti širinu. Dvoklik na ivicu vraća podrazumevanu širinu.
 
 ![Log zadatka](/assets/task-log.webp)
 

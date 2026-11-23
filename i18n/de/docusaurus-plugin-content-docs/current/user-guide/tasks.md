@@ -36,7 +36,7 @@ Tasks desselben Task Template laufen nacheinander, sofern im Task Template nicht
 
 ## Task-Fenster {#task-window}
 
-Ein Klick auf einen Task an beliebiger Stelle in der Oberfläche öffnet das Task-Fenster. Die Kopfzeile zeigt das Task Template, die Task-Nummer, die Commit-Nachricht des Repository-Stands, das Status-Badge, wer den Task gestartet hat und wann, sowie die Dauer. Das Pfeilsymbol vergrößert das Fenster auf den Vollbildmodus.
+Ein Klick auf einen Task an beliebiger Stelle in der Oberfläche öffnet das Task-Fenster. Die Kopfzeile zeigt das Task Template, die Task-Nummer, die Commit-Nachricht des Repository-Stands, das Status-Badge, wer den Task gestartet hat und wann, sowie die Dauer. Das Pfeilsymbol vergrößert das Fenster auf den Vollbildmodus. Ziehen Sie den linken oder rechten Rand des Fensters, um seine Breite zu ändern: Das Fenster bleibt zentriert, und der Browser merkt sich die Breite. Ein Doppelklick auf einen Rand stellt die Standardbreite wieder her.
 
 ![Task-Log](/assets/task-log.webp)
 

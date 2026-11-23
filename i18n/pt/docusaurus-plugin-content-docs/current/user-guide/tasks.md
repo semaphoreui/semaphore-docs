@@ -36,7 +36,7 @@ As tarefas do mesmo modelo são executadas uma após a outra, a menos que **Allo
 
 ## Janela da tarefa {#task-window}
 
-Clicar em uma tarefa em qualquer lugar da interface abre a janela da tarefa. O cabeçalho mostra o modelo, o número da tarefa, a mensagem de commit da revisão do repositório, o selo de status, quem iniciou a tarefa e quando, e a duração. O ícone de setas expande a janela para tela cheia.
+Clicar em uma tarefa em qualquer lugar da interface abre a janela da tarefa. O cabeçalho mostra o modelo, o número da tarefa, a mensagem de commit da revisão do repositório, o selo de status, quem iniciou a tarefa e quando, e a duração. O ícone de setas expande a janela para tela cheia. Arraste a borda esquerda ou direita da janela para alterar sua largura: a janela permanece centralizada e o navegador memoriza a largura. Clique duas vezes em uma borda para restaurar a largura padrão.
 
 ![Log da tarefa](/assets/task-log.webp)
 

@@ -36,7 +36,7 @@ I Task dello stesso Task Template vengono eseguiti uno dopo l'altro, a meno che 
 
 ## Finestra del Task {#task-window}
 
-Facendo clic su un Task in qualsiasi punto dell'interfaccia si apre la finestra del Task. L'intestazione mostra il Task Template, il numero del Task, il messaggio di commit della revisione del Repository, il badge dello stato, chi ha avviato il Task e quando, oltre alla durata. L'icona con le frecce espande la finestra a schermo intero.
+Facendo clic su un Task in qualsiasi punto dell'interfaccia si apre la finestra del Task. L'intestazione mostra il Task Template, il numero del Task, il messaggio di commit della revisione del Repository, il badge dello stato, chi ha avviato il Task e quando, oltre alla durata. L'icona con le frecce espande la finestra a schermo intero. Trascinare il bordo sinistro o destro della finestra per modificarne la larghezza: la finestra resta centrata e il browser ricorda la larghezza. Fare doppio clic su un bordo per ripristinare la larghezza predefinita.
 
 ![Log del Task](/assets/task-log.webp)
 

@@ -14,12 +14,27 @@ Los usuarios con el rol **Manager** o superior pueden editar las vistas. Haga cl
 | **Tipo** | **Custom** muestra solo las plantillas asignadas a esta vista. **All** muestra todas las plantillas del proyecto. |
 | **Ordenar por** y **Invertir** | Orden de clasificación predeterminado de las plantillas en la pestaña. |
 | **Oculta** | Conservar la vista pero ocultar la pestaña. |
+| **Show task counts** | Mostrar en la pestaña cuántas de sus plantillas están en cada estado, consulte [Recuento de plantillas en las pestañas](#template-counts). Desactivado por defecto. |
 
 Arrastre las vistas en el cuadro de diálogo para cambiar el orden de las pestañas. Eliminar una vista no elimina sus plantillas: siguen siendo visibles en la vista **All**.
 
 ## Asignar una plantilla a una vista {#assigning-a-template-to-a-view}
 
 Abra el formulario de la plantilla y elija la pestaña en el campo **Vista**. Una plantilla pertenece a una sola vista personalizada a la vez y siempre se lista en las vistas del tipo **All**.
+
+## Recuento de plantillas en las pestañas {#template-counts}
+
+Una vista con **Show task counts** activado muestra junto a su título cuántas de sus plantillas están en cada estado, en un chip de segmentos de colores. El estado de una plantilla es el estado de su última tarea. Un segmento se oculta cuando su recuento es cero, y los recuentos siguen a las tareas mientras se ejecutan. El ajuste está desactivado en una vista nueva, y los recuentos se calculan solo para las vistas que lo tienen activado.
+
+| Color | Plantillas contadas |
+|---|---|
+| Verde | La última tarea se completó correctamente. |
+| Rojo | La última tarea falló. |
+| Gris | La última tarea se detuvo o se está deteniendo, o la plantilla nunca se ha ejecutado. |
+| Naranja | La última tarea espera una confirmación. |
+| Azul | La última tarea está en cola, iniciándose o en ejecución. |
+
+Los recuentos incluyen solo las plantillas que usted puede ver.
 
 ## Columnas {#columns}
 

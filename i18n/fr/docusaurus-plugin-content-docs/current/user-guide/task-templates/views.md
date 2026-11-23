@@ -14,12 +14,27 @@ Les utilisateurs ayant le rôle **Manager** ou supérieur peuvent modifier les v
 | **Type** | **Custom** n'affiche que les modèles affectés à cette vue. **All** affiche tous les modèles du projet. |
 | **Trier par** et **Inverser** | Ordre de tri par défaut des modèles dans l'onglet. |
 | **Masqué** | Conserver la vue mais masquer l'onglet. |
+| **Show task counts** | Afficher sur l'onglet combien de ses modèles se trouvent dans chaque état, voir [Nombre de modèles sur les onglets](#template-counts). Désactivé par défaut. |
 
 Faites glisser les vues dans la boîte de dialogue pour modifier l'ordre des onglets. Supprimer une vue ne supprime pas ses modèles : ils restent visibles dans la vue **Tout**.
 
 ## Affecter un modèle à une vue {#assigning-a-template-to-a-view}
 
 Ouvrez le formulaire du modèle et choisissez l'onglet dans le champ **Vue**. Un modèle appartient à une seule vue personnalisée à la fois et figure toujours dans les vues de type **All**.
+
+## Nombre de modèles sur les onglets {#template-counts}
+
+Une vue dont **Show task counts** est activé indique à côté de son titre combien de ses modèles se trouvent dans chaque état, sous la forme d'une puce composée de segments colorés. L'état d'un modèle est le statut de sa dernière tâche. Un segment est masqué lorsque son nombre est nul, et les nombres suivent les tâches pendant leur exécution. Le réglage est désactivé pour une nouvelle vue, et les nombres ne sont calculés que pour les vues où il est activé.
+
+| Couleur | Modèles comptés |
+|---|---|
+| Vert | La dernière tâche a réussi. |
+| Rouge | La dernière tâche a échoué. |
+| Gris | La dernière tâche a été arrêtée ou est en cours d'arrêt, ou le modèle n'a jamais été lancé. |
+| Orange | La dernière tâche attend une confirmation. |
+| Bleu | La dernière tâche est en file d'attente, en cours de démarrage ou en cours d'exécution. |
+
+Les nombres ne portent que sur les modèles que vous êtes autorisé à voir.
 
 ## Colonnes {#columns}
 

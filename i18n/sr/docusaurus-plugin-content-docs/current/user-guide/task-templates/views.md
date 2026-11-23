@@ -14,12 +14,27 @@ Korisnici sa ulogom **Menadžer** (Manager) ili višom mogu da uređuju prikaze.
 | **Tip** (Type) | **Prilagođen** (Custom) prikazuje samo šablone dodeljene ovom prikazu. **Svi** (All) prikazuje sve šablone projekta. |
 | **Sortiraj po** (Sort by) i **Obrnuto** (Reverse) | Podrazumevani redosled sortiranja šablona na kartici. |
 | **Sakriven** (Hidden) | Zadržava prikaz, ali sakriva karticu. |
+| **Show task counts** | Prikazuje na kartici koliko je njenih šablona u kom stanju, pogledajte [Broj šablona na karticama](#template-counts). Podrazumevano isključeno. |
 
 Prevlačite prikaze u dijalogu da biste promenili redosled kartica. Brisanje prikaza ne briše njegove šablone, oni ostaju vidljivi u prikazu **Svi** (All).
 
 ## Dodeljivanje šablona prikazu {#assigning-a-template-to-a-view}
 
 Otvorite formu šablona i izaberite karticu u polju **Prikaz** (View). Šablon istovremeno pripada samo jednom prilagođenom prikazu i uvek je naveden u prikazima tipa **Svi** (All).
+
+## Broj šablona na karticama {#template-counts}
+
+Prikaz sa uključenom opcijom **Show task counts** prikazuje pored naslova koliko je njegovih šablona u kom stanju, kao jedan čip od obojenih segmenata. Stanje šablona je status njegovog poslednjeg zadatka. Segment se ne prikazuje kada je njegov broj nula, a brojevi prate zadatke dok se izvršavaju. Kod novog prikaza opcija je isključena, a brojevi se računaju samo za prikaze kod kojih je uključena.
+
+| Boja | Šabloni koji se broje |
+|---|---|
+| Zelena | Poslednji zadatak je uspešno završen. |
+| Crvena | Poslednji zadatak nije uspeo. |
+| Siva | Poslednji zadatak je zaustavljen ili se zaustavlja, ili šablon nikada nije pokrenut. |
+| Narandžasta | Poslednji zadatak čeka potvrdu. |
+| Plava | Poslednji zadatak čeka u redu, pokreće se ili se izvršava. |
+
+Brojevi obuhvataju samo šablone koje smete da vidite.
 
 ## Kolone {#columns}
 

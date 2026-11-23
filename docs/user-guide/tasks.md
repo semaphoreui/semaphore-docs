@@ -41,7 +41,7 @@ Tasks of the same template run one after another unless **Allow parallel tasks**
 
 ## Task window {#task-window}
 
-Clicking a task anywhere in the UI opens the task window. The header shows the template, the task number, the commit message of the repository revision, the status badge, who started the task and when, and the duration. The arrows icon expands the window to full screen.
+Clicking a task anywhere in the UI opens the task window. The header shows the template, the task number, the commit message of the repository revision, the status badge, who started the task and when, and the duration. The arrows icon expands the window to full screen. Drag the left or right edge of the window to change its width: the window stays centered, and the browser remembers the width. Double-click an edge to restore the default width.
 
 ![Task log](/assets/task-log.webp)
 

@@ -36,7 +36,7 @@ Les tâches d'un même modèle s'exécutent l'une après l'autre, sauf si **Auto
 
 ## Fenêtre de tâche {#task-window}
 
-Cliquer sur une tâche n'importe où dans l'interface ouvre la fenêtre de tâche. L'en-tête affiche le modèle, le numéro de la tâche, le message de commit de la révision du dépôt, le badge de statut, qui a démarré la tâche et quand, ainsi que la durée. L'icône en forme de flèches agrandit la fenêtre en plein écran.
+Cliquer sur une tâche n'importe où dans l'interface ouvre la fenêtre de tâche. L'en-tête affiche le modèle, le numéro de la tâche, le message de commit de la révision du dépôt, le badge de statut, qui a démarré la tâche et quand, ainsi que la durée. L'icône en forme de flèches agrandit la fenêtre en plein écran. Faites glisser le bord gauche ou droit de la fenêtre pour modifier sa largeur : la fenêtre reste centrée et le navigateur mémorise la largeur. Double-cliquez sur un bord pour rétablir la largeur par défaut.
 
 ![Journal de la tâche](/assets/task-log.webp)
 
