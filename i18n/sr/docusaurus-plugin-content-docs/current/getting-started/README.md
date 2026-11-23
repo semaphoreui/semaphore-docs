@@ -33,15 +33,15 @@ Izaberite način instalacije prema okruženju u kome će Semaphore raditi. Podra
 Za Debian ili Ubuntu na `amd64`:
 
 ```bash
-wget https://github.com/semaphoreui/semaphore/releases/download/v2.19.12/semaphore_2.19.12_linux_amd64.deb
-sudo apt install ./semaphore_2.19.12_linux_amd64.deb
+wget https://github.com/semaphoreui/semaphore/releases/download/v2.20.23/semaphore_2.20.23_linux_amd64.deb
+sudo apt install ./semaphore_2.20.23_linux_amd64.deb
 ```
 
 Za RHEL, Fedora, Rocky Linux, AlmaLinux ili CentOS Stream na `amd64`:
 
 ```bash
-curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.19.12/semaphore_2.19.12_linux_amd64.rpm
-sudo dnf install ./semaphore_2.19.12_linux_amd64.rpm
+curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.20.23/semaphore_2.20.23_linux_amd64.rpm
+sudo dnf install ./semaphore_2.20.23_linux_amd64.rpm
 ```
 
 Podesite bazu podataka i prvog administratora, a zatim pokrenite Semaphore pomoću generisane konfiguracije:
@@ -61,7 +61,7 @@ Napravite `compose.yaml`:
 ```yaml
 services:
   semaphore:
-    image: semaphoreui/semaphore:v2.19.12
+    image: semaphoreui/semaphore:v2.20.23
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -104,8 +104,8 @@ docker compose logs -f semaphore
 Preuzmite arhivu za svoj operativni sistem i arhitekturu procesora sa stranice [GitHub Releases](https://github.com/semaphoreui/semaphore/releases). Primer za Linux `amd64`:
 
 ```bash
-curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.19.12/semaphore_2.19.12_linux_amd64.tar.gz
-tar -xzf semaphore_2.19.12_linux_amd64.tar.gz
+curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.20.23/semaphore_2.20.23_linux_amd64.tar.gz
+tar -xzf semaphore_2.20.23_linux_amd64.tar.gz
 ./semaphore setup --config ./config.json
 ./semaphore server --config ./config.json
 ```

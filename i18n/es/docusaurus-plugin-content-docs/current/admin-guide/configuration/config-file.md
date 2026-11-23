@@ -25,8 +25,8 @@ Use los siguientes comandos para generar el archivo de configuración de forma i
 ### Generar en el sitio web {#generate-on-the-website}
 
 Como alternativa, puede usar el configurador interactivo web:
-* [Configurador del servidor](https://semaphoreui.com/install/binary/2_13/config)
-* [Configurador del runner](https://semaphoreui.com/install/binary/2_13/runner)
+* [Configurador del servidor](https://semaphoreui.com/install/binary/2_20/config)
+* [Configurador del runner](https://semaphoreui.com/install/binary/2_20/runner)
 
 ## Ejemplo de archivo de configuración {#configuration-file-example}
 

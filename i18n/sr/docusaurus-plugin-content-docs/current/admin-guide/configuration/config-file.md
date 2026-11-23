@@ -25,8 +25,8 @@ Koristite sledeće komande da biste interaktivno generisali konfiguracioni fajl:
 ### Generisanje na veb-sajtu {#generate-on-the-website}
 
 Alternativno, možete koristiti interaktivni veb konfigurator:
-* [Konfigurator servera](https://semaphoreui.com/install/binary/2_13/config)
-* [Konfigurator runnera](https://semaphoreui.com/install/binary/2_13/runner)
+* [Konfigurator servera](https://semaphoreui.com/install/binary/2_20/config)
+* [Konfigurator runnera](https://semaphoreui.com/install/binary/2_20/runner)
 
 ## Primer konfiguracionog fajla {#configuration-file-example}
 

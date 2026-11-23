@@ -14,18 +14,18 @@ import TabItem from '@theme/TabItem';
 <Tabs>
   <TabItem value="linux-x64" label="Linux（x64）">
     ```bash
-    wget https://github.com/semaphoreui/semaphore/releases/download/v2.17.15/semaphore_2.17.15_linux_amd64.tar.gz
+    wget https://github.com/semaphoreui/semaphore/releases/download/v2.20.23/semaphore_2.20.23_linux_amd64.tar.gz
 
-    tar xf semaphore_2.17.15_linux_amd64.tar.gz
+    tar xf semaphore_2.20.23_linux_amd64.tar.gz
 
     ./semaphore setup
     ```
   </TabItem>
   <TabItem value="linux-arm64" label="Linux（ARM64）">
     ```
-    wget https://github.com/semaphoreui/semaphore/releases/download/v2.17.15/semaphore_2.17.15_linux_arm64.tar.gz
+    wget https://github.com/semaphoreui/semaphore/releases/download/v2.20.23/semaphore_2.20.23_linux_arm64.tar.gz
 
-    tar xf semaphore_2.17.15_linux_arm64.tar.gz
+    tar xf semaphore_2.20.23_linux_arm64.tar.gz
 
     ./semaphore setup
     ```
@@ -34,7 +34,7 @@ import TabItem from '@theme/TabItem';
     ```powershell
     Invoke-WebRequest `
     -Uri ("https://github.com/semaphoreui/semaphore/releases/" +
-          "download/v2.17.15/semaphore_2.17.15_windows_amd64.zip") `
+          "download/v2.20.23/semaphore_2.20.23_windows_amd64.zip") `
 
     -OutFile semaphore.zip
 

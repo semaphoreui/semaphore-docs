@@ -33,15 +33,15 @@ Scegli il metodo di installazione in base all’ambiente in cui verrà eseguito 
 Per Debian o Ubuntu su `amd64`:
 
 ```bash
-wget https://github.com/semaphoreui/semaphore/releases/download/v2.19.12/semaphore_2.19.12_linux_amd64.deb
-sudo apt install ./semaphore_2.19.12_linux_amd64.deb
+wget https://github.com/semaphoreui/semaphore/releases/download/v2.20.23/semaphore_2.20.23_linux_amd64.deb
+sudo apt install ./semaphore_2.20.23_linux_amd64.deb
 ```
 
 Per RHEL, Fedora, Rocky Linux, AlmaLinux o CentOS Stream su `amd64`:
 
 ```bash
-curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.19.12/semaphore_2.19.12_linux_amd64.rpm
-sudo dnf install ./semaphore_2.19.12_linux_amd64.rpm
+curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.20.23/semaphore_2.20.23_linux_amd64.rpm
+sudo dnf install ./semaphore_2.20.23_linux_amd64.rpm
 ```
 
 Configura il database e il primo amministratore, quindi avvia Semaphore con la configurazione generata:
@@ -61,7 +61,7 @@ Crea `compose.yaml`:
 ```yaml
 services:
   semaphore:
-    image: semaphoreui/semaphore:v2.19.12
+    image: semaphoreui/semaphore:v2.20.23
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -104,8 +104,8 @@ docker compose logs -f semaphore
 Scarica l’archivio per il tuo sistema operativo e l’architettura della CPU da [GitHub Releases](https://github.com/semaphoreui/semaphore/releases). Esempio per Linux `amd64`:
 
 ```bash
-curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.19.12/semaphore_2.19.12_linux_amd64.tar.gz
-tar -xzf semaphore_2.19.12_linux_amd64.tar.gz
+curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.20.23/semaphore_2.20.23_linux_amd64.tar.gz
+tar -xzf semaphore_2.20.23_linux_amd64.tar.gz
 ./semaphore setup --config ./config.json
 ./semaphore server --config ./config.json
 ```

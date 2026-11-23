@@ -3,8 +3,8 @@
 С помощью переменных окружения можно переопределить любую доступную опцию конфигурации.
 
 Вы можете воспользоваться интерактивным генератором переменных окружения (для Docker):
-* для [сервера](https://semaphoreui.com/install/docker/2_12/)
-* для [runner'а](https://semaphoreui.com/install/docker/2_12/runner).
+* для [сервера](https://semaphoreui.com/install/docker/2_20/)
+* для [runner'а](https://semaphoreui.com/install/docker/2_20/runner).
 
 ---
 

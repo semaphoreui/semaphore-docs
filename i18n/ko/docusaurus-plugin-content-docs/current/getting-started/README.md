@@ -33,15 +33,15 @@ Semaphore를 실행할 환경에 맞는 설치 방법을 선택합니다. 기본
 `amd64`의 Debian 또는 Ubuntu:
 
 ```bash
-wget https://github.com/semaphoreui/semaphore/releases/download/v2.19.12/semaphore_2.19.12_linux_amd64.deb
-sudo apt install ./semaphore_2.19.12_linux_amd64.deb
+wget https://github.com/semaphoreui/semaphore/releases/download/v2.20.23/semaphore_2.20.23_linux_amd64.deb
+sudo apt install ./semaphore_2.20.23_linux_amd64.deb
 ```
 
 `amd64`의 RHEL, Fedora, Rocky Linux, AlmaLinux 또는 CentOS Stream:
 
 ```bash
-curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.19.12/semaphore_2.19.12_linux_amd64.rpm
-sudo dnf install ./semaphore_2.19.12_linux_amd64.rpm
+curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.20.23/semaphore_2.20.23_linux_amd64.rpm
+sudo dnf install ./semaphore_2.20.23_linux_amd64.rpm
 ```
 
 데이터베이스와 첫 관리자를 설정한 다음 생성된 설정으로 Semaphore를 시작합니다.
@@ -61,7 +61,7 @@ semaphore server --config ./config.json
 ```yaml
 services:
   semaphore:
-    image: semaphoreui/semaphore:v2.19.12
+    image: semaphoreui/semaphore:v2.20.23
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -104,8 +104,8 @@ docker compose logs -f semaphore
 [GitHub Releases](https://github.com/semaphoreui/semaphore/releases)에서 운영 체제와 CPU 아키텍처에 맞는 압축 파일을 다운로드합니다. Linux `amd64` 예제:
 
 ```bash
-curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.19.12/semaphore_2.19.12_linux_amd64.tar.gz
-tar -xzf semaphore_2.19.12_linux_amd64.tar.gz
+curl -LO https://github.com/semaphoreui/semaphore/releases/download/v2.20.23/semaphore_2.20.23_linux_amd64.tar.gz
+tar -xzf semaphore_2.20.23_linux_amd64.tar.gz
 ./semaphore setup --config ./config.json
 ./semaphore server --config ./config.json
 ```

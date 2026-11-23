@@ -25,8 +25,8 @@ Verwenden Sie die folgenden Befehle, um die Konfigurationsdatei interaktiv zu er
 ### Auf der Website erzeugen {#generate-on-the-website}
 
 Alternativ können Sie den webbasierten interaktiven Konfigurator verwenden:
-* [Server-Konfigurator](https://semaphoreui.com/install/binary/2_13/config)
-* [Runner-Konfigurator](https://semaphoreui.com/install/binary/2_13/runner)
+* [Server-Konfigurator](https://semaphoreui.com/install/binary/2_20/config)
+* [Runner-Konfigurator](https://semaphoreui.com/install/binary/2_20/runner)
 
 ## Beispiel einer Konfigurationsdatei {#configuration-file-example}
 
