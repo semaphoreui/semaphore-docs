@@ -53,9 +53,10 @@ Se non si è sicuri di quali risorse utilizzino un ambiente, seguire i passaggi 
 
 Un Inventory gestito conserva gli host come record invece che come testo di Inventory. Utilizzarlo quando si aggiungono, modificano o disattivano host spesso e non si vuole modificare un testo lungo.
 
-Fare clic sul nome dell'Inventory nell'elenco. La pagina ha due schede:
+Fare clic sul nome dell'Inventory nell'elenco. La pagina ha tre schede:
 
-* **Hosts**: cercare gli host per nome, aggiungerli, modificarli ed eliminarli. La colonna **Variables** mostra quante variabili ha un host.
+* **Hosts**: cercare gli host per nome, filtrarli per gruppo, aggiungerli, modificarli ed eliminarli. La colonna **Groups** mostra i gruppi di un host. La colonna **Variables** mostra quante variabili ha un host.
+* **Groups**: gruppi di host. Vedere [Gruppi](#managed-inventory-groups).
 * **Variables**: variabili dell'intero Inventory.
 
 Un host ha un nome, una descrizione facoltativa e variabili. Il nome è ciò che Ansible vede come host. Deve essere univoco nell'Inventory, distingue tra maiuscole e minuscole e non deve contenere spazi, virgole, parentesi quadre o due punti. Inserire l'indirizzo e la porta nelle variabili `ansible_host` e `ansible_port`.
@@ -74,3 +75,15 @@ Per saltare un host, disattivare il suo interruttore nell'elenco degli host. I t
 * Dopo la creazione non è possibile cambiare il tipo di un Inventory in `managed` né da `managed`.
 * Gli host e le variabili di un Inventory gestito fanno parte del backup del progetto.
 * Gli utenti che possono solo visualizzare il progetto possono aprire la pagina, ma non possono modificarla.
+
+### Gruppi {#managed-inventory-groups}
+
+Un gruppo consente di eseguire un playbook su una parte degli host, ad esempio con `hosts: web`, e di impostare una variabile una sola volta per molti host.
+
+Aggiungere un gruppo nella scheda **Groups**. Un gruppo ha un nome, una descrizione facoltativa, variabili e gruppi figli. Il nome deve essere univoco nell'Inventory, e i nomi `all` e `ungrouped` sono riservati. Gli host di un gruppo figlio appartengono anche al gruppo padre. Un gruppo non può essere un proprio antenato.
+
+Per inserire un host in gruppi, sceglierli nel campo **Groups** quando si aggiunge o si modifica l'host. Per modificare più host insieme, selezionarli nella scheda **Hosts** e fare clic su **Add to groups** o **Remove from groups**. Un host può appartenere a più gruppi.
+
+Per vedere gli host di un gruppo, scegliere il gruppo nel filtro della scheda **Hosts**. L'elenco include gli host dei suoi gruppi figli.
+
+Un valore impostato su un host ha la precedenza sulla stessa variabile impostata su un gruppo, e un valore impostato su un gruppo ha la precedenza sull'Inventory. Un task destinato a un gruppo viene eseguito sui suoi host attivati.

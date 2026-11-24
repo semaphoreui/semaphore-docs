@@ -99,7 +99,14 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `resource.inventory_host` | `update` | `change` | success |  | `inventory_id`, `inventory_name`, `changed_fields`, `old_name`, `added_variables`, `removed_variables`, `changed_variables` | Community |
 | `resource.inventory_host` | `enable` | `change` | success |  | `inventory_id`, `inventory_name` | Community |
 | `resource.inventory_host` | `disable` | `change` | success |  | `inventory_id`, `inventory_name` | Community |
-| `resource.inventory_host` | `delete` | `deletion` | success |  | `inventory_id`, `inventory_name` | Community |
+| `resource.inventory_host` | `delete` | `deletion` | success |  | `inventory_id`, `inventory_name`, `groups`, `part`, `parts` | Community |
+| `resource.inventory_group` | `create` | `creation` | success |  | `inventory_id`, `inventory_name`, `added_variables` | Community |
+| `resource.inventory_group` | `update` | `change` | success |  | `inventory_id`, `inventory_name`, `changed_fields`, `old_name`, `added_variables`, `removed_variables`, `changed_variables` | Community |
+| `resource.inventory_group` | `delete` | `deletion` | success |  | `inventory_id`, `inventory_name`, `children`, `parents`, `host_count`, `part`, `parts` | Community |
+| `resource.inventory_group` | `host_add` | `change` | success |  | `inventory_id`, `inventory_name`, `hosts`, `part`, `parts` | Community |
+| `resource.inventory_group` | `host_remove` | `change` | success |  | `inventory_id`, `inventory_name`, `hosts`, `part`, `parts` | Community |
+| `resource.inventory_group` | `child_add` | `change` | success |  | `inventory_id`, `inventory_name`, `children`, `part`, `parts` | Community |
+| `resource.inventory_group` | `child_remove` | `change` | success |  | `inventory_id`, `inventory_name`, `children`, `part`, `parts` | Community |
 | `resource.repository` | `create` | `creation` | success |  |  | Community |
 | `resource.repository` | `update` | `change` | success |  |  | Community |
 | `resource.repository` | `delete` | `deletion` | success |  |  | Community |

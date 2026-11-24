@@ -53,9 +53,10 @@ Wenn Sie nicht sicher sind, welche Ressourcen in einer Umgebung verwendet werden
 
 Ein Managed Inventory speichert Ihre Hosts als Datensätze statt als Inventory-Text. Verwenden Sie es, wenn Sie Hosts oft hinzufügen, ändern oder ausschalten und keinen großen Text bearbeiten möchten.
 
-Klicken Sie in der Liste auf den Namen des Inventory. Die Seite hat zwei Tabs:
+Klicken Sie in der Liste auf den Namen des Inventory. Die Seite hat drei Tabs:
 
-* **Hosts**: Hosts nach Namen suchen, hinzufügen, bearbeiten und löschen. Die Spalte **Variables** zeigt, wie viele Variablen ein Host hat.
+* **Hosts**: Hosts nach Namen suchen, nach Gruppe filtern, hinzufügen, bearbeiten und löschen. Die Spalte **Groups** zeigt die Gruppen eines Hosts. Die Spalte **Variables** zeigt, wie viele Variablen ein Host hat.
+* **Groups**: Gruppen von Hosts. Siehe [Gruppen](#managed-inventory-groups).
 * **Variables**: Variablen des gesamten Inventory.
 
 Ein Host hat einen Namen, eine optionale Beschreibung und Variablen. Der Name ist das, was Ansible als Host sieht. Er muss im Inventory eindeutig sein, Groß- und Kleinschreibung wird unterschieden, und er darf keine Leerzeichen, Kommas, eckigen Klammern oder Doppelpunkte enthalten. Schreiben Sie die Adresse und den Port in die Variablen `ansible_host` und `ansible_port`.
@@ -74,3 +75,15 @@ Um einen Host zu überspringen, schalten Sie seinen Schalter in der Host-Liste a
 * Den Typ eines Inventory können Sie nach dem Erstellen nicht zu `managed` oder von `managed` weg ändern.
 * Hosts und Variablen eines Managed Inventory sind Teil des Projekt-Backups.
 * Benutzer, die das Projekt nur ansehen dürfen, können die Seite öffnen, aber nichts ändern.
+
+### Gruppen {#managed-inventory-groups}
+
+Mit einer Gruppe können Sie ein Playbook auf einem Teil der Hosts ausführen, zum Beispiel mit `hosts: web`, und eine Variable einmal für viele Hosts setzen.
+
+Fügen Sie eine Gruppe im Tab **Groups** hinzu. Eine Gruppe hat einen Namen, eine optionale Beschreibung, Variablen und untergeordnete Gruppen. Der Name muss im Inventory eindeutig sein, und die Namen `all` und `ungrouped` sind vergeben. Die Hosts einer untergeordneten Gruppe gehören auch zur übergeordneten Gruppe. Eine Gruppe kann nicht ihr eigener Vorfahre sein.
+
+Um einen Host in Gruppen aufzunehmen, wählen Sie sie im Feld **Groups** aus, wenn Sie den Host hinzufügen oder bearbeiten. Um mehrere Hosts auf einmal zu ändern, wählen Sie sie im Tab **Hosts** aus und klicken Sie auf **Add to groups** oder **Remove from groups**. Ein Host kann in mehreren Gruppen sein.
+
+Um die Hosts einer Gruppe zu sehen, wählen Sie die Gruppe im Filter im Tab **Hosts**. Die Liste enthält auch die Hosts ihrer untergeordneten Gruppen.
+
+Ein Wert, der an einem Host gesetzt ist, hat Vorrang vor derselben Variable in einer Gruppe, und ein Wert in einer Gruppe hat Vorrang vor dem Inventory. Ein Task, der auf eine Gruppe zielt, läuft auf ihren eingeschalteten Hosts.
