@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # 리포지토리
 
 리포지토리는 플레이북과 역할 같은 Ansible 콘텐츠를 저장하고 관리하는 공간입니다.
@@ -22,6 +25,58 @@ SSH를 사용하는 원격 리포지토리의 경우 **키 저장소**에 있는
 인증이 없는 원격 리포지토리의 경우 `None` 유형의 키를 생성할 수 있습니다.
 
 리포지토리의 키는 해당 리포지토리에만 사용됩니다. 다른 곳에 호스팅되어 별도의 자격 증명이 필요한 서브모듈, `requirements.yml` 역할 또는 기타 리포지토리에 접근하려면 [Host config](/user-guide/host-config)에서 매핑을 추가하세요.
+
+### 배포 키(Deploy Key) 구성 {#deploy-keys}
+
+엔터프라이즈 자동화 환경에서는 개인 사용자 SSH 키나 개인 액세스 토큰(PAT) 대신 단일 리포지토리에 한정된 전용 **배포 키(Deploy Key)** 또는 액세스 키를 사용하는 것이 권장되는 모범 사례입니다. 배포 키의 이점은 다음과 같습니다:
+* **수명 주기 격리**: CI/CD 및 자동화 파이프라인이 개별 직원의 계정이나 개인 자격 증명에 의존하지 않습니다.
+* **최소 권한 원칙**: 배포 키를 엄격하게 읽기 전용으로 설정할 수 있어 Semaphore가 소스 리포지토리에 원치 않는 변경 사항을 푸시하지 못하도록 방지합니다.
+* **영향 범위 제한**: 키를 교체해야 할 경우 해당 특정 리포지토리만 영향을 받습니다.
+
+:::tip Semaphore에서 직접 SSH 키 생성
+명령줄에서 SSH 키를 수동으로 생성할 필요가 없습니다. Semaphore에서 **Key Store** &rarr; **새 키** &rarr; **SSH Key** 선택 &rarr; **Generate**를 클릭합니다. Semaphore가 안전한 키 쌍을 생성하고 복사할 수 있는 **공개 키** 대화 상자를 표시합니다. 자세한 내용은 [Key Store](/user-guide/key-store#built-in-ssh-key-generator)를 참조하세요.
+:::
+
+Semaphore에서 생성된 공개 키를 복사하여 Git 공급자에 추가합니다:
+
+<Tabs groupId="git-provider">
+  <TabItem value="github" label="GitHub" default>
+
+1. GitHub: **Settings** &rarr; **Deploy keys** &rarr; **Add deploy key**.
+2. Title: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. **Allow write access**: Unchecked.
+
+```text
+git@github.com:organization/repository.git
+```
+
+  </TabItem>
+  <TabItem value="gitlab" label="GitLab">
+
+1. GitLab: **Settings** &rarr; **Repository** &rarr; **Deploy keys**.
+2. Title: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. **Grant write permissions**: Unchecked.
+
+```text
+git@gitlab.com:organization/project.git
+```
+
+  </TabItem>
+  <TabItem value="bitbucket" label="Bitbucket">
+
+1. Bitbucket: **Repository settings** &rarr; **Access keys**.
+2. Label: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. Permissions: `Read`.
+
+```text
+git@bitbucket.org:workspace/repository.git
+```
+
+  </TabItem>
+</Tabs>
 
 ## 새 리포지토리 생성 {#creating-a-new-repository}
 1. 추가하려는 리포지토리에 대한 키를 키 저장소 섹션에서 설정했는지 확인합니다.
@@ -66,6 +121,36 @@ SSH를 사용하는 원격 리포지토리의 경우 **키 저장소**에 있는
 
 모든 템플릿이 같은 브랜치의 같은 체크아웃에서 작업하므로 모노레포의 템플릿은 자체 **브랜치**를 가질 수 없고, 작업이 브랜치나 커밋을 선택할 수 있게 하는 **브랜치** 프롬프트도 활성화할 수 없습니다. 템플릿 폼은 둘 다 비활성화하고 그 이유를 설명하며, API는 그러한 템플릿을 거부합니다. 플레이북이 체크아웃에 쓰지 않도록 하십시오. 작업 트리가 변경되면 다음 pull이 실패하고, Semaphore는 체크아웃을 제거한 뒤 다시 복제합니다.
 
+## 하위 디렉터리의 플레이북 {#subdirectories}
+
+엔터프라이즈 리포지토리는 모든 플레이북을 루트에 두기보다는 전용 디렉터리, 모노레포 또는 다중 환경 레이아웃으로 자동화 자산을 구성하는 경우가 많습니다.
+
+```text
+my-automation-repo/
+├── ansible.cfg
+├── collections/
+│   └── requirements.yml
+├── roles/
+│   └── common/
+└── playbooks/
+    ├── site.yml
+    ├── provisioning/
+    │   └── aws-vms.yml
+    └── maintenance/
+        └── patch-nodes.yml
+```
+
+[작업 템플릿](/user-guide/task-templates)을 생성할 때 **플레이북 파일 이름**은 항상 **리포지토리 루트 기준 상대 경로**로 지정됩니다:
+
+* **상대 경로 사용**: `playbooks/site.yml` 또는 `playbooks/provisioning/aws-vms.yml`과 같이 입력합니다.
+* **시작 슬래시 금지**: `/playbooks/site.yml` 형식을 사용하지 마세요. 시작 슬래시가 있으면 실행기가 복제본 대신 시스템 루트 디렉터리부터 검색하게 됩니다.
+* **Unix 슬래시 사용**: Windows 러너 노드에서 실행되더라도 항상 `/`를 사용합니다.
+* **대소문자 구분**: 경로는 폴더 및 파일의 대소문자와 정확히 일치해야 합니다(예: `playbooks/site.yml`).
+
+:::info 작업 디렉터리 및 요구사항
+플레이북이 하위 디렉터리(예: `playbooks/site.yml`)에서 실행될 때 Semaphore는 역할 및 컬렉션을 확인할 때 플레이북 디렉터리(`playbook_dir`)와 리포지토리 루트(`repo_path`)를 모두 평가합니다. 정확한 검색 순서는 아래의 [요구사항](#requirements)을 참조하세요.
+:::
+
 ## 기존 리포지토리 편집 {#editing-an-existing-repository}
 1. Semaphore의 리포지토리 섹션으로 이동합니다.
 
@@ -79,6 +164,31 @@ SSH를 사용하는 원격 리포지토리의 경우 **키 저장소**에 있는
 2. 삭제하려는 리포지토리의 휴지통 아이콘을 클릭합니다.
 
 3. 이 리포지토리를 삭제하려는 것이 확실하면 확인 팝업에서 예를 클릭합니다.
+
+### 종속성 보호 및 사용 중 안전 장치 {#dependency-protection}
+
+현재 하나 이상의 작업 템플릿에 할당된 리포지토리는 삭제할 수 없습니다.
+
+삭제를 시도하기 전에 Semaphore는 활성 템플릿 참조를 확인합니다:
+1. 리포지토리 목록에서 휴지통 아이콘을 클릭하면 리포지토리가 프로젝트 템플릿에서 참조되고 있는지 확인합니다.
+2. 종속성이 존재하는 경우 Semaphore는 해당 리포지토리를 참조하는 작업 템플릿 목록과 각 템플릿으로 연결되는 직접 링크가 포함된 경고 대화 상자를 표시합니다.
+3. 사용 중인 상태에서 API를 통해 직접 삭제하려고 하면 HTTP `400 Bad Request`로 요청이 거부됩니다:
+
+```json
+{
+  "error": "Repository is in use by one or more templates",
+  "inUse": true
+}
+```
+
+리포지토리를 안전하게 삭제하려면:
+1. **템플릿**으로 이동하여 종속된 각 템플릿을 다른 리포지토리에 재할당하거나 사용하지 않는 템플릿을 삭제합니다.
+2. **리포지토리**로 돌아가 리포지토리 옆의 휴지통 아이콘을 클릭합니다.
+3. 팝업 대화 상자에서 삭제를 확인합니다.
+
+:::tip 체크아웃 캐시 자동 삭제
+리포지토리가 성공적으로 삭제되면 Semaphore는 호스트/러너 파일 시스템에서 리포지토리의 로컬 체크아웃 작업 디렉터리를 자동으로 삭제하여 디스크 공간을 확보합니다.
+:::
 
 ## 요구 사항 {#requirements}
 프로젝트를 초기화할 때 Semaphore는 다음 위치를 아래 순서대로 검색하여 requirements.yml에 명시된 Ansible 역할과 컬렉션을 설치합니다.

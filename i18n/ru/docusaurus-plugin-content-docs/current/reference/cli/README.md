@@ -19,6 +19,7 @@ semaphore help
 | [`semaphore vaults`](/reference/cli/vaults) | Перешифрование хранимых секретов и проверка использования ключей шифрования. |
 | [`semaphore runner`](/reference/cli/runners) | Запуск в режиме runner'а и регистрация/отмена регистрации runner'ов. |
 | [`semaphore migrate`](/reference/cli/migrations) | Применение или откат миграций базы данных. |
+| [`semaphore client`](/reference/cli/client) | Управление работающим сервером через его REST API из терминала и скриптов: проекты, шаблоны, задачи и остальные ресурсы. |
 
 У некоторых групп команд есть более короткие псевдонимы: `users`/`user`, `projects`/`project`,
 `vaults`/`vault` и `server`/`service`.

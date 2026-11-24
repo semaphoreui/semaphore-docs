@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # 仓库
 
 仓库（Repository）是存放和管理 Ansible 内容（如 playbook 和 role）的地方。
@@ -22,6 +25,58 @@ Semaphore 支持以下类型的仓库：
 对于不需要认证的远程仓库，可以创建类型为 `None` 的密钥。
 
 仓库的密钥仅用于该仓库。要访问托管在别处、拥有各自凭据的子模块、`requirements.yml` 角色或其他仓库，请在 [Host config](/user-guide/host-config) 中添加一条映射。
+
+### 配置部署密钥（Deploy Keys） {#deploy-keys}
+
+在企业级自动化环境中，相比于使用个人用户的 SSH 密钥或个人访问令牌（PAT），使用仅限定于单个仓库的专用**部署密钥（Deploy Keys 或 Access Keys）**是推荐的最佳实践。部署密钥具有以下优势：
+* **生命周期隔离**：CI/CD 和自动化流水线不依赖于个别员工的账户或个人凭据。
+* **最小权限原则**：部署密钥可以严格设置为只读权限，确保 Semaphore 不会向源仓库意外推送更改。
+* **限定影响范围**：若需要轮换密钥，仅会影响该特定仓库。
+
+:::tip 在 Semaphore 中直接生成 SSH 密钥
+您无需在命令行手动生成 SSH 密钥。在 Semaphore 中，前往 **Key Store** &rarr; **新建密钥** &rarr; 选择 **SSH Key** &rarr; 点击 **Generate**。Semaphore 会自动创建安全的密钥对，并弹出包含可复制**公钥**的对话框。详情请参阅 [Key Store](/user-guide/key-store#built-in-ssh-key-generator)。
+:::
+
+复制 Semaphore 中生成的公钥，并将其添加到您的 Git 提供商中：
+
+<Tabs groupId="git-provider">
+  <TabItem value="github" label="GitHub" default>
+
+1. GitHub: **Settings** &rarr; **Deploy keys** &rarr; **Add deploy key**.
+2. Title: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. **Allow write access**: Unchecked.
+
+```text
+git@github.com:organization/repository.git
+```
+
+  </TabItem>
+  <TabItem value="gitlab" label="GitLab">
+
+1. GitLab: **Settings** &rarr; **Repository** &rarr; **Deploy keys**.
+2. Title: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. **Grant write permissions**: Unchecked.
+
+```text
+git@gitlab.com:organization/project.git
+```
+
+  </TabItem>
+  <TabItem value="bitbucket" label="Bitbucket">
+
+1. Bitbucket: **Repository settings** &rarr; **Access keys**.
+2. Label: `Semaphore UI Runner`.
+3. Key: Public Key.
+4. Permissions: `Read`.
+
+```text
+git@bitbucket.org:workspace/repository.git
+```
+
+  </TabItem>
+</Tabs>
 
 ## 创建新仓库 {#creating-a-new-repository}
 1. 确保你已经在密钥库分区中为即将添加的仓库配置好了密钥。
@@ -66,6 +121,36 @@ Semaphore 支持以下类型的仓库：
 
 由于所有模板都在同一分支的同一检出中工作，monorepo 的模板不能拥有自己的 **Branch**，也不能启用允许任务选择分支或提交的 **Branch** 提示。模板表单会禁用这两项并说明原因，API 也会拒绝这样的模板。请确保 playbook 不会向检出中写入内容：被修改的工作树会导致下一次 pull 失败，Semaphore 随后会删除该检出并重新克隆。
 
+## 子目录中的 Playbook {#subdirectories}
+
+企业仓库通常会将自动化资产组织在专用目录、单体仓库（Monorepo）或多环境结构中，而不是将所有 Playbook 存放在仓库根目录下。
+
+```text
+my-automation-repo/
+├── ansible.cfg
+├── collections/
+│   └── requirements.yml
+├── roles/
+│   └── common/
+└── playbooks/
+    ├── site.yml
+    ├── provisioning/
+    │   └── aws-vms.yml
+    └── maintenance/
+        └── patch-nodes.yml
+```
+
+创建[任务模板](/user-guide/task-templates)时，**Playbook 文件名**始终**相对于仓库根目录**指定：
+
+* **使用相对路径**：输入 `playbooks/site.yml` 或 `playbooks/provisioning/aws-vms.yml`。
+* **不要包含前导斜杠**：请勿使用 `/playbooks/site.yml`。前导斜杠会导致执行器从系统根目录而非仓库克隆目录开始查找文件。
+* **Unix 格式正斜杠**：即使在 Windows Runner 节点上运行，也始终使用 `/`。
+* **区分大小写**：路径必须与文件夹和文件的大小写完全一致（例如 `playbooks/site.yml`）。
+
+:::info 工作目录与要求
+当 Playbook 从子目录（例如 `playbooks/site.yml`）运行时，Semaphore 在解析角色和集合时会同时评估 Playbook 目录（`playbook_dir`）和仓库根目录（`repo_path`）。具体查找顺序请参见下方的[要求](#requirements)。
+:::
+
 ## 编辑现有仓库 {#editing-an-existing-repository}
 1. 进入 Semaphore 的 Repositories 分区。
 
@@ -79,6 +164,31 @@ Semaphore 支持以下类型的仓库：
 2. 点击要删除的仓库上的垃圾桶图标。
 
 3. 如果确定要删除该仓库，请在确认弹窗中点击 Yes。
+
+### 依赖保护与使用中防误删 {#dependency-protection}
+
+如果仓库当前分配给了一个或多个任务模板，则无法将其删除。
+
+在尝试删除之前，Semaphore 会检查处于活动状态的模板引用：
+1. 在仓库列表中，点击垃圾桶图标会检查该仓库是否被任何项目模板引用。
+2. 如果存在依赖项，Semaphore 会显示一个警告对话框，列出引用此仓库的具体任务模板，并提供指向每个模板的直接链接。
+3. 如果在仍处于使用状态时通过 API 直接删除，请求将被拒绝并返回 HTTP `400 Bad Request`：
+
+```json
+{
+  "error": "Repository is in use by one or more templates",
+  "inUse": true
+}
+```
+
+安全删除仓库的步骤：
+1. 前往**模板**，将每个依赖该仓库的模板重新分配给其他仓库，或者删除未使用的模板。
+2. 返回**仓库**，点击该仓库旁边的垃圾桶图标。
+3. 在弹出对话框中确认删除。
+
+:::tip 自动清理检出缓存
+成功删除仓库后，Semaphore 会自动清除主机/Runner 文件系统中该仓库的本地检出工作目录，从而释放磁盘空间。
+:::
 
 ## 依赖要求 {#requirements}
 在项目初始化时，Semaphore 会按以下位置和顺序查找并安装 requirements.yml 中的 Ansible role 和 collection。

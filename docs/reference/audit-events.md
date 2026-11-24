@@ -79,6 +79,9 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `iam.template_permission` | `create` | `creation` | success |  | `template_id`, `role`, `permissions` | Community |
 | `iam.template_permission` | `update` | `change` | success |  | `template_id`, `role`, `permissions` | Community |
 | `iam.template_permission` | `delete` | `deletion` | success |  | `template_id`, `role` | Community |
+| `iam.workflow_permission` | `create` | `creation` | success |  | `workflow_id`, `role`, `permissions` | Pro |
+| `iam.workflow_permission` | `update` | `change` | success |  | `workflow_id`, `role`, `permissions` | Pro |
+| `iam.workflow_permission` | `delete` | `deletion` | success |  | `workflow_id`, `role` | Pro |
 
 ## Resources {#resources}
 
@@ -153,6 +156,13 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `task.control` | `stop_all` | `change` | success |  |  | Community |
 | `task.execution` | `complete` | `end` | success |  | `result`, `end_reason`, `template_id`, `initiator_id`, `duration_ms` | Community |
 | `task.history` | `delete` | `deletion` | success |  | `template_id` | Community |
+
+## Workflows {#workflows}
+
+| Event code | Action | Type | Outcomes | Reasons | Metadata | Edition |
+| --- | --- | --- | --- | --- | --- | --- |
+| `workflow.approval` | `approve` | `change` | success |  | `run_id`, `node_id` | Pro |
+| `workflow.approval` | `reject` | `change` | success |  | `run_id`, `node_id` | Pro |
 
 ## Runners {#runners}
 

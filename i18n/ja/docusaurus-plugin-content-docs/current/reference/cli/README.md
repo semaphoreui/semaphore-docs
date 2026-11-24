@@ -17,6 +17,7 @@ semaphore help
 | [`semaphore vaults`](/reference/cli/vaults) | 保存されたシークレットの再暗号化と、暗号化キーの使用状況の確認。 |
 | [`semaphore runner`](/reference/cli/runners) | ランナーモードでの実行と、ランナーの登録/登録解除。 |
 | [`semaphore migrate`](/reference/cli/migrations) | データベースマイグレーションの適用またはロールバック。 |
+| [`semaphore client`](/reference/cli/client) | REST API 経由で稼働中のサーバーをターミナルやスクリプトから管理します: プロジェクト、テンプレート、タスク、その他のリソース。 |
 
 いくつかのコマンドグループには短いエイリアスがあります: `users`/`user`、`projects`/`project`、
 `vaults`/`vault`、`server`/`service`。

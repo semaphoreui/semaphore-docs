@@ -26,6 +26,2154 @@ These are accepted by every command.
 | `--log-level` | string | — | Log level: DEBUG, INFO, WARN, ERROR, FATAL, PANIC |
 | `--no-config` | bool | — | Don't use configuration file |
 
+## `semaphore client` {#semaphore-client}
+
+Manage a Semaphore UI server from the terminal or from scripts over its REST API.  The client needs a server URL and an API token. Give them with flags, with SEMAPHORE_CLIENT_* environment variables, or save them once as a named context with 'semaphore client auth login' (stored in ~/.semaphore/client.yml with mode 0600). Precedence: flag > environment > context > default.  Commands follow the form 'semaphore client \<resource> \<action> [id\|name]'. Results go to stdout as a table, JSON (-o json) or YAML (-o yaml); messages and errors go to stderr.  Exit codes: 0 success, 1 client or API error, 2 usage error, 3 the awaited task failed, 4 authentication failed, 5 not found, 6 the awaited task was stopped, 124 wait timeout, 130 interrupted.
+
+```
+semaphore client
+```
+
+Example:
+
+```bash
+# Save a server and its token as the current context
+  echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
+
+  # List templates of project 1 as JSON
+  semaphore client template list -p 1 -o json
+
+  # Run a template and follow its log; exit code tells how the task ended
+  semaphore client template run deploy -p 1 --follow
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--ca-cert` | string | — | PEM file with the CA that signed the server certificate ($SEMAPHORE_CLIENT_CA_CERT) |
+| `--context` | string | — | Named context from the configuration file ($SEMAPHORE_CLIENT_CONTEXT) |
+| `--debug` | bool | — | Trace HTTP requests to stderr with secrets masked ($SEMAPHORE_CLIENT_DEBUG) |
+| `--fields` | stringSlice | — | Fields to show, comma-separated JSON field names (e.g. id,name,status) |
+| `--insecure` | bool | — | Skip TLS certificate verification ($SEMAPHORE_CLIENT_INSECURE) |
+| `--no-color` | bool | — | Disable colors (also $NO_COLOR) |
+| `--no-headers` | bool | — | Omit the table header line |
+| `--no-input` | bool | — | Never prompt; fail instead ($SEMAPHORE_CLIENT_NO_INPUT, $CI) |
+| `--output`, `-o` | string | — | Output format: table, json or yaml ($SEMAPHORE_CLIENT_OUTPUT, default table) |
+| `--project`, `-p` | string | — | Project id or name for project-scoped commands ($SEMAPHORE_CLIENT_PROJECT) |
+| `--quiet`, `-q` | bool | — | Print only ids, one per line |
+| `--timeout` | duration | `0s` | HTTP request timeout, e.g. 30s ($SEMAPHORE_CLIENT_TIMEOUT, default 30s) |
+| `--url` | string | — | Server URL, e.g. https://semaphore.example.com ($SEMAPHORE_CLIENT_URL) |
+| `--yes`, `-y` | bool | — | Answer yes to confirmations |
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client auth`](#semaphore-client-auth) | Log in to a server and manage the saved token |
+| [`semaphore client context`](#semaphore-client-context) | Manage saved servers (contexts) |
+| [`semaphore client environment`](#semaphore-client-environment) | Manage variable groups (environments) |
+| [`semaphore client info`](#semaphore-client-info) | Show the server version and settings |
+| [`semaphore client inventory`](#semaphore-client-inventory) | Manage inventories |
+| [`semaphore client key`](#semaphore-client-key) | Manage access keys (SSH keys, passwords) |
+| [`semaphore client project`](#semaphore-client-project) | Manage projects |
+| [`semaphore client repository`](#semaphore-client-repository) | Manage repositories |
+| [`semaphore client runner`](#semaphore-client-runner) | Manage runners (global, or a project's with --project) |
+| [`semaphore client schedule`](#semaphore-client-schedule) | Manage schedules (cron runs of templates) |
+| [`semaphore client task`](#semaphore-client-task) | Inspect, follow, stop and rerun tasks |
+| [`semaphore client template`](#semaphore-client-template) | Manage task templates |
+| [`semaphore client user`](#semaphore-client-user) | Manage users of the server (administrators only) |
+| [`semaphore client view`](#semaphore-client-view) | Manage views (template groups on the project page) |
+
+## `semaphore client auth` {#semaphore-client-auth}
+
+Log in to a Semaphore server and save the server URL and an API token as a named context in ~/.semaphore/client.yml (mode 0600). Later commands use the current context unless --url, --context or SEMAPHORE_CLIENT_* say otherwise.
+
+```
+semaphore client auth
+```
+
+Example:
+
+```bash
+semaphore client auth login --url https://semaphore.example.com
+  echo "$TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
+  semaphore client auth status
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client auth login`](#semaphore-client-auth-login) | Save a server and an API token as a context |
+| [`semaphore client auth logout`](#semaphore-client-auth-logout) | Forget the token of the current context |
+| [`semaphore client auth status`](#semaphore-client-auth-status) | Show which server and token are in use and whether they work |
+| [`semaphore client auth token`](#semaphore-client-auth-token) | Print the API token in use |
+
+## `semaphore client auth login` {#semaphore-client-auth-login}
+
+Save a server and an API token as a context and make it the current one.  Two ways to authenticate:    * Paste a token: with --with-token, or whenever stdin is not a terminal, the     first line of stdin is read as an existing API token and checked against     the server. Create one in the web UI under Settings > API tokens.    * Log in with a password: in an interactive terminal the command asks for the     login and the password (and a one-time code when two-factor authentication     is enabled), creates an API token named --name with lifetime --ttl, and     closes the web session. The password is never stored.  The context is named by --context, or after the server host. The token is written to the configuration file with mode 0600; use --ca-cert or --insecure to describe a server with a private certificate and they are saved as well.
+
+```
+semaphore client auth login [flags]
+```
+
+Example:
+
+```bash
+# Paste an existing token (CI, scripts)
+  echo "$SEMAPHORE_TOKEN" | semaphore client auth login --url https://semaphore.example.com --with-token
+
+  # Interactive login with a password, token valid for 30 days
+  semaphore client auth login --url https://semaphore.example.com --ttl 720h
+
+  # Save a second server under its own name
+  semaphore client auth login --url https://staging.example.com --context staging
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--login` | string | — | Login or e-mail for the password flow (asked when omitted) |
+| `--name` | string | — | Name of the API token to create (default semaphore-cli@\<hostname>) |
+| `--ttl` | duration | `0s` | Lifetime of the created token, e.g. 720h (default: never expires) |
+| `--with-token` | bool | — | Read an existing API token from the first line of stdin |
+
+## `semaphore client auth logout` {#semaphore-client-auth-logout}
+
+Remove the token from the current context in the configuration file. With --revoke the token is also deleted on the server, so it stops working everywhere. The context itself (URL, project, TLS settings) stays; delete it with 'semaphore client context delete'.
+
+```
+semaphore client auth logout [flags]
+```
+
+Example:
+
+```bash
+semaphore client auth logout
+  semaphore client auth logout --context staging --revoke
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--revoke` | bool | — | Also delete the token on the server |
+
+## `semaphore client auth status` {#semaphore-client-auth-status}
+
+Show the current context, the server URL, where the token comes from (flag, environment, context file) and the user the token belongs to. Exit code 4 means the server rejected the token.
+
+```
+semaphore client auth status
+```
+
+Example:
+
+```bash
+semaphore client auth status
+  semaphore client auth status --context staging -o json
+```
+
+## `semaphore client auth token` {#semaphore-client-auth-token}
+
+Print the API token the client would send, for handing it to another tool:    curl -H "Authorization: Bearer $(semaphore client auth token)" ...  The token is written to stdout only; a warning goes to stderr when stdout is a terminal, because a token on screen tends to end up in screenshots and logs.
+
+```
+semaphore client auth token
+```
+
+Example:
+
+```bash
+curl -H "Authorization: Bearer $(semaphore client auth token)" https://semaphore.example.com/api/user
+```
+
+## `semaphore client context` {#semaphore-client-context}
+
+Manage the contexts saved in ~/.semaphore/client.yml. A context is a server URL with its token, an optional default project and TLS settings. One context is current; --context or SEMAPHORE_CLIENT_CONTEXT selects another one per call.
+
+```
+semaphore client context
+```
+
+Aliases: `contexts`, `ctx`.
+
+Example:
+
+```bash
+semaphore client context list
+  semaphore client context use staging
+  semaphore client context set prod --url https://semaphore.example.com --project 3
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client context delete`](#semaphore-client-context-delete) | Delete a context |
+| [`semaphore client context get`](#semaphore-client-context-get) | Show one context (the current one by default) |
+| [`semaphore client context list`](#semaphore-client-context-list) | List saved contexts |
+| [`semaphore client context set`](#semaphore-client-context-set) | Create or change a context without logging in |
+| [`semaphore client context use`](#semaphore-client-context-use) | Make a context the current one |
+
+## `semaphore client context delete` {#semaphore-client-context-delete}
+
+Remove a context from the configuration file. The token stored in it is forgotten but not revoked on the server; use 'auth logout --revoke' for that. Asks for confirmation in a terminal; pass --yes to skip it.
+
+```
+semaphore client context delete NAME
+```
+
+Aliases: `rm`.
+
+Example:
+
+```bash
+semaphore client context delete staging -y
+```
+
+## `semaphore client context get` {#semaphore-client-context-get}
+
+Show one saved context without its token. Without a name the current context is shown.
+
+```
+semaphore client context get [NAME]
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client context get
+  semaphore client context get staging -o yaml
+```
+
+## `semaphore client context list` {#semaphore-client-context-list}
+
+List the contexts of the configuration file: name, whether it is current, server URL, default project and where its token comes from (inline, file or none). Token values are never shown. Works without a server connection.
+
+```
+semaphore client context list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client context list
+```
+
+## `semaphore client context set` {#semaphore-client-context-set}
+
+Create or change a context field by field. The global flags --url, --project, --ca-cert and --insecure give the new values; only the flags you pass change. The token comes from --token-file (a file holding the token) or from 'semaphore client auth login'; there is no flag that takes the token itself.
+
+```
+semaphore client context set NAME [flags]
+```
+
+Example:
+
+```bash
+semaphore client context set staging --url https://staging.example.com --token-file ~/.semaphore/staging.token
+  semaphore client context set prod -p 3
+  semaphore client context set lab --insecure
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--no-insecure` | bool | — | Turn TLS verification back on |
+| `--no-project` | bool | — | Remove the default project |
+| `--token-file` | string | — | File holding the API token (replaces an inline token) |
+
+## `semaphore client context use` {#semaphore-client-context-use}
+
+Make a saved context the current one, so later commands use its server, token and default project unless --context or SEMAPHORE_CLIENT_CONTEXT say otherwise.
+
+```
+semaphore client context use NAME
+```
+
+Example:
+
+```bash
+semaphore client context use staging
+```
+
+## `semaphore client environment` {#semaphore-client-environment}
+
+Manage variable groups (environments): the extra variables, environment variables and secrets a task receives. Secret values are never printed — 'get' and 'list' show only the names of the secrets.  An object is addressed by its numeric id or by its name (case-insensitive). A name shared by several objects is an error (exit code 5); use the id then.
+
+```
+semaphore client environment
+```
+
+Aliases: `environments`, `env`.
+
+Example:
+
+```bash
+semaphore client environment list -p 1
+  semaphore client environment get "default" -p 1 -o json
+  semaphore client environment delete "default" -p 1 -y
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client environment create`](#semaphore-client-environment-create) | Create a environment |
+| [`semaphore client environment delete`](#semaphore-client-environment-delete) | Delete a environment |
+| [`semaphore client environment get`](#semaphore-client-environment-get) | Show one environment |
+| [`semaphore client environment list`](#semaphore-client-environment-list) | List environments of the project |
+| [`semaphore client environment update`](#semaphore-client-environment-update) | Change a environment |
+
+## `semaphore client environment create` {#semaphore-client-environment-create}
+
+Create a environment from flags, from a JSON or YAML file (--from-file, same field names as the API), or both: flags override the file. The created object is printed; with -q only its id.
+
+```
+semaphore client environment create [flags]
+```
+
+Example:
+
+```bash
+semaphore client environment create -p 1 --name prod --json vars.json --secrets-file secrets.yml
+  semaphore client environment create -p 1 --name empty --json '{}'
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--delete-secret` | stringArray | — | Name of a secret to delete (update only); repeatable |
+| `--env` | string | — | Environment variables as a JSON object, inline or a file path |
+| `--from-file` | string | — | JSON or YAML file with the object (API field names) |
+| `--json` | string | — | Extra variables as a JSON object, inline or a file path |
+| `--name` | string | — | Environment name |
+| `--secret` | stringArray | — | Secret extra variable NAME=VALUE (visible in `ps`; prefer --secrets-file); repeatable |
+| `--secret-env` | stringArray | — | Secret environment variable NAME=VALUE (visible in `ps`); repeatable |
+| `--secrets-file` | string | — | JSON or YAML file: \{vars: \{NAME: VALUE\}, env: \{NAME: VALUE\}\} or a flat \{NAME: VALUE\} map of secret variables |
+
+## `semaphore client environment delete` {#semaphore-client-environment-delete}
+
+Delete a environment. Asks for confirmation in a terminal; pass --yes to skip it (required when stdin is not a terminal).
+
+```
+semaphore client environment delete <id|name>
+```
+
+Aliases: `rm`.
+
+Example:
+
+```bash
+semaphore client environment delete "default" -p 1 -y
+```
+
+## `semaphore client environment get` {#semaphore-client-environment-get}
+
+Show one environment, addressed by its numeric id or by its name. With -o json or -o yaml every field of the object is printed; the table shows the main ones, --fields chooses others.
+
+```
+semaphore client environment get <id|name>
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client environment get 12 -p 1
+  semaphore client environment get "default" -p 1 -o json
+```
+
+## `semaphore client environment list` {#semaphore-client-environment-list}
+
+List environments of the project as a table (default), JSON (-o json) or YAML (-o yaml). --fields picks the columns, -q prints only the ids, one per line.
+
+```
+semaphore client environment list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client environment list -p 1
+  semaphore client environment list -p 1 -o json
+  semaphore client environment list -p 1 -q
+```
+
+## `semaphore client environment update` {#semaphore-client-environment-update}
+
+Change fields of a environment. The object is read from the server first, the fields from --from-file and then from the flags are applied, and the whole object is written back — so nothing you did not mention is lost.
+
+```
+semaphore client environment update <id|name> [flags]
+```
+
+Example:
+
+```bash
+semaphore client environment update prod --env '{"ANSIBLE_FORCE_COLOR":"1"}'
+  semaphore client environment update prod --secrets-file secrets.yml
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--delete-secret` | stringArray | — | Name of a secret to delete (update only); repeatable |
+| `--env` | string | — | Environment variables as a JSON object, inline or a file path |
+| `--from-file` | string | — | JSON or YAML file with the fields to change (API field names) |
+| `--json` | string | — | Extra variables as a JSON object, inline or a file path |
+| `--name` | string | — | Environment name |
+| `--secret` | stringArray | — | Secret extra variable NAME=VALUE (visible in `ps`; prefer --secrets-file); repeatable |
+| `--secret-env` | stringArray | — | Secret environment variable NAME=VALUE (visible in `ps`); repeatable |
+| `--secrets-file` | string | — | JSON or YAML file: \{vars: \{NAME: VALUE\}, env: \{NAME: VALUE\}\} or a flat \{NAME: VALUE\} map of secret variables |
+
+## `semaphore client info` {#semaphore-client-info}
+
+Show the version and public settings of the server the client is pointed at, next to the client version. Use it to check that the URL and the token work.
+
+```
+semaphore client info
+```
+
+Example:
+
+```bash
+semaphore client info
+  semaphore client info --url https://semaphore.example.com -o json
+```
+
+## `semaphore client inventory` {#semaphore-client-inventory}
+
+Manage inventories. The subcommands work on the inventories of the project given with --project (or the context's default project).  An object is addressed by its numeric id or by its name (case-insensitive). A name shared by several objects is an error (exit code 5); use the id then.
+
+```
+semaphore client inventory
+```
+
+Aliases: `inventories`, `inv`.
+
+Example:
+
+```bash
+semaphore client inventory list -p 1
+  semaphore client inventory get "prod" -p 1 -o json
+  semaphore client inventory delete "prod" -p 1 -y
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client inventory create`](#semaphore-client-inventory-create) | Create a inventory |
+| [`semaphore client inventory delete`](#semaphore-client-inventory-delete) | Delete a inventory |
+| [`semaphore client inventory get`](#semaphore-client-inventory-get) | Show one inventory |
+| [`semaphore client inventory list`](#semaphore-client-inventory-list) | List inventories of the project |
+| [`semaphore client inventory update`](#semaphore-client-inventory-update) | Change a inventory |
+
+## `semaphore client inventory create` {#semaphore-client-inventory-create}
+
+Create a inventory from flags, from a JSON or YAML file (--from-file, same field names as the API), or both: flags override the file. The created object is printed; with -q only its id.
+
+```
+semaphore client inventory create [flags]
+```
+
+Example:
+
+```bash
+semaphore client inventory create -p 1 --name prod --type static --inventory-file hosts.ini --ssh-key deploy
+  semaphore client inventory create -p 1 --name repo-hosts --type file --inventory inventories/prod.yml --repository infra
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--become-key` | string | — | Access key id or name for become (sudo) |
+| `--from-file` | string | — | JSON or YAML file with the object (API field names) |
+| `--inventory` | string | — | Inventory content (static types) or path inside the repository (file type) |
+| `--inventory-file` | string | — | Local file whose content becomes the inventory |
+| `--name` | string | — | Inventory name |
+| `--repository` | string | — | Repository id or name (file type) |
+| `--ssh-key` | string | — | Access key id or name for SSH |
+| `--type` | string | — | Type: static, static-yaml, file, terraform-workspace, tofu-workspace, terragrunt-workspace |
+
+## `semaphore client inventory delete` {#semaphore-client-inventory-delete}
+
+Delete a inventory. Asks for confirmation in a terminal; pass --yes to skip it (required when stdin is not a terminal).
+
+```
+semaphore client inventory delete <id|name>
+```
+
+Aliases: `rm`.
+
+Example:
+
+```bash
+semaphore client inventory delete "prod" -p 1 -y
+```
+
+## `semaphore client inventory get` {#semaphore-client-inventory-get}
+
+Show one inventory, addressed by its numeric id or by its name. With -o json or -o yaml every field of the object is printed; the table shows the main ones, --fields chooses others.
+
+```
+semaphore client inventory get <id|name>
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client inventory get 12 -p 1
+  semaphore client inventory get "prod" -p 1 -o json
+```
+
+## `semaphore client inventory list` {#semaphore-client-inventory-list}
+
+List inventories of the project as a table (default), JSON (-o json) or YAML (-o yaml). --fields picks the columns, -q prints only the ids, one per line.
+
+```
+semaphore client inventory list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client inventory list -p 1
+  semaphore client inventory list -p 1 -o json
+  semaphore client inventory list -p 1 -q
+```
+
+## `semaphore client inventory update` {#semaphore-client-inventory-update}
+
+Change fields of a inventory. The object is read from the server first, the fields from --from-file and then from the flags are applied, and the whole object is written back — so nothing you did not mention is lost.
+
+```
+semaphore client inventory update <id|name> [flags]
+```
+
+Example:
+
+```bash
+semaphore client inventory update prod --inventory-file hosts.ini
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--become-key` | string | — | Access key id or name for become (sudo) |
+| `--from-file` | string | — | JSON or YAML file with the fields to change (API field names) |
+| `--inventory` | string | — | Inventory content (static types) or path inside the repository (file type) |
+| `--inventory-file` | string | — | Local file whose content becomes the inventory |
+| `--name` | string | — | Inventory name |
+| `--repository` | string | — | Repository id or name (file type) |
+| `--ssh-key` | string | — | Access key id or name for SSH |
+| `--type` | string | — | Type: static, static-yaml, file, terraform-workspace, tofu-workspace, terragrunt-workspace |
+
+## `semaphore client key` {#semaphore-client-key}
+
+Manage access keys: SSH private keys, login/password pairs and plain secrets used by repositories, inventories and templates. Secret material is read only from files or stdin and is never printed.  An object is addressed by its numeric id or by its name (case-insensitive). A name shared by several objects is an error (exit code 5); use the id then.
+
+```
+semaphore client key
+```
+
+Aliases: `keys`.
+
+Example:
+
+```bash
+semaphore client key list -p 1
+  semaphore client key get "deploy-key" -p 1 -o json
+  semaphore client key delete "deploy-key" -p 1 -y
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client key create`](#semaphore-client-key-create) | Create a key |
+| [`semaphore client key delete`](#semaphore-client-key-delete) | Delete a key |
+| [`semaphore client key get`](#semaphore-client-key-get) | Show one key |
+| [`semaphore client key list`](#semaphore-client-key-list) | List keies of the project |
+| [`semaphore client key update`](#semaphore-client-key-update) | Change a key |
+
+## `semaphore client key create` {#semaphore-client-key-create}
+
+Create a key from flags, from a JSON or YAML file (--from-file, same field names as the API), or both: flags override the file. The created object is printed; with -q only its id.
+
+```
+semaphore client key create [flags]
+```
+
+Example:
+
+```bash
+semaphore client key create -p 1 --name deploy --type ssh --login git --ssh-key-file ~/.ssh/id_ed25519
+  semaphore client key create -p 1 --name vault --type login_password --login admin --password-file ./pw.txt
+  echo "$SECRET" | semaphore client key create -p 1 --name api --type string --secret-stdin
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--from-file` | string | — | JSON or YAML file with the object (API field names) |
+| `--login` | string | — | Login (ssh, login_password) |
+| `--name` | string | — | Key name |
+| `--passphrase-file` | string | — | File with the key passphrase (ssh) |
+| `--password-file` | string | — | File with the password (login_password) |
+| `--password-stdin` | bool | — | Read the password from stdin (login_password) |
+| `--secret-file` | string | — | File with the secret (string) |
+| `--secret-stdin` | bool | — | Read the secret from stdin (string) |
+| `--ssh-key-file` | string | — | File with the private key (ssh) |
+| `--type` | string | — | Type: ssh, login_password, string, none |
+
+## `semaphore client key delete` {#semaphore-client-key-delete}
+
+Delete a key. Asks for confirmation in a terminal; pass --yes to skip it (required when stdin is not a terminal).
+
+```
+semaphore client key delete <id|name>
+```
+
+Aliases: `rm`.
+
+Example:
+
+```bash
+semaphore client key delete "deploy-key" -p 1 -y
+```
+
+## `semaphore client key get` {#semaphore-client-key-get}
+
+Show one key, addressed by its numeric id or by its name. With -o json or -o yaml every field of the object is printed; the table shows the main ones, --fields chooses others.
+
+```
+semaphore client key get <id|name>
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client key get 12 -p 1
+  semaphore client key get "deploy-key" -p 1 -o json
+```
+
+## `semaphore client key list` {#semaphore-client-key-list}
+
+List keies of the project as a table (default), JSON (-o json) or YAML (-o yaml). --fields picks the columns, -q prints only the ids, one per line.
+
+```
+semaphore client key list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client key list -p 1
+  semaphore client key list -p 1 -o json
+  semaphore client key list -p 1 -q
+```
+
+## `semaphore client key update` {#semaphore-client-key-update}
+
+Change fields of a key. The object is read from the server first, the fields from --from-file and then from the flags are applied, and the whole object is written back — so nothing you did not mention is lost.
+
+```
+semaphore client key update <id|name> [flags]
+```
+
+Example:
+
+```bash
+semaphore client key update deploy --ssh-key-file ~/.ssh/new_key
+  semaphore client key update 4 --name "deploy (old)"
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--from-file` | string | — | JSON or YAML file with the fields to change (API field names) |
+| `--login` | string | — | Login (ssh, login_password) |
+| `--name` | string | — | Key name |
+| `--passphrase-file` | string | — | File with the key passphrase (ssh) |
+| `--password-file` | string | — | File with the password (login_password) |
+| `--password-stdin` | bool | — | Read the password from stdin (login_password) |
+| `--secret-file` | string | — | File with the secret (string) |
+| `--secret-stdin` | bool | — | Read the secret from stdin (string) |
+| `--ssh-key-file` | string | — | File with the private key (ssh) |
+| `--type` | string | — | Type: ssh, login_password, string, none |
+
+## `semaphore client project` {#semaphore-client-project}
+
+Manage projects: list and inspect them, create, change, back up, restore and delete them, and manage their members. A project is addressed by numeric id or by name; most other commands take it through -p / --project.
+
+```
+semaphore client project
+```
+
+Aliases: `projects`.
+
+Example:
+
+```bash
+semaphore client project list
+  semaphore client project get Homelab
+  semaphore client project backup Homelab --file homelab.json
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client project backup`](#semaphore-client-project-backup) | Download a project backup (JSON) |
+| [`semaphore client project create`](#semaphore-client-project-create) | Create a project |
+| [`semaphore client project delete`](#semaphore-client-project-delete) | Delete a project with everything in it |
+| [`semaphore client project get`](#semaphore-client-project-get) | Show one project (the configured one by default) |
+| [`semaphore client project list`](#semaphore-client-project-list) | List projects |
+| [`semaphore client project member`](#semaphore-client-project-member) | Manage the users of a project and their roles |
+| [`semaphore client project restore`](#semaphore-client-project-restore) | Create a project from a backup file |
+| [`semaphore client project update`](#semaphore-client-project-update) | Change a project |
+
+## `semaphore client project backup` {#semaphore-client-project-backup}
+
+Download the backup of a project — its templates, inventories, keys, repositories, environments, views and schedules — as the JSON document the 'Restore' page of the UI accepts. Without --file the document goes to stdout; with --file it is written with mode 0600, because it contains secrets.
+
+```
+semaphore client project backup [id|name] [flags]
+```
+
+Example:
+
+```bash
+semaphore client project backup Homelab --file homelab.json
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--file` | string | — | Write the backup to this file (mode 0600) instead of stdout |
+
+## `semaphore client project create` {#semaphore-client-project-create}
+
+Create a project from flags or from a JSON/YAML file (--from-file, API field names); flags override the file. --demo also fills it with the demo template, inventory and repository. The created project is printed.
+
+```
+semaphore client project create [flags]
+```
+
+Example:
+
+```bash
+semaphore client project create --name Homelab
+  semaphore client project create --name Playground --demo
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--alert` | bool | — | Send alerts about tasks (use --alert=false to stop) |
+| `--alert-chat` | string | — | Alert chat id |
+| `--demo` | bool | — | Fill the project with the demo resources |
+| `--from-file` | string | — | JSON or YAML file with the project fields |
+| `--max-parallel-tasks` | int | `0` | Maximum tasks running at once (0 = unlimited) |
+| `--name` | string | — | Project name |
+| `--type` | string | — | Project type (empty for a regular project) |
+
+## `semaphore client project delete` {#semaphore-client-project-delete}
+
+Delete a project and all its templates, tasks, keys and other resources. This cannot be undone, so the project name has to be typed back (or passed with --confirm=\<name>); --yes alone is not enough.
+
+```
+semaphore client project delete <id|name> [flags]
+```
+
+Aliases: `rm`.
+
+Example:
+
+```bash
+semaphore client project delete Playground --confirm=Playground
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--confirm` | string | — | The project name, to confirm without a prompt |
+
+## `semaphore client project get` {#semaphore-client-project-get}
+
+Show one project by numeric id or name. Without an argument the project of --project, SEMAPHORE_CLIENT_PROJECT or the current context is shown.
+
+```
+semaphore client project get [id|name]
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client project get
+  semaphore client project get Homelab -o json
+```
+
+## `semaphore client project list` {#semaphore-client-project-list}
+
+List projects as a table (default), JSON (-o json) or YAML (-o yaml). --fields picks the columns, -q prints only the ids, one per line.
+
+```
+semaphore client project list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client project list
+  semaphore client project list -o json
+  semaphore client project list -q
+```
+
+## `semaphore client project member` {#semaphore-client-project-member}
+
+Manage the members of a project: which users belong to it and with which role (owner, manager, task_runner, guest). A member is addressed by user id or login.
+
+```
+semaphore client project member
+```
+
+Aliases: `members`.
+
+Example:
+
+```bash
+semaphore client member list -p 1
+  semaphore client member get "bob" -p 1 -o json
+  semaphore client member delete "bob" -p 1 -y
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client project member add`](#semaphore-client-project-member-add) | Add a user to the project with a role |
+| [`semaphore client project member get`](#semaphore-client-project-member-get) | Show one member |
+| [`semaphore client project member list`](#semaphore-client-project-member-list) | List members of the project |
+| [`semaphore client project member remove`](#semaphore-client-project-member-remove) | Remove a user from the project |
+| [`semaphore client project member update`](#semaphore-client-project-member-update) | Change the role of a project member |
+
+## `semaphore client project member add` {#semaphore-client-project-member-add}
+
+Add an existing user of the server to the project with a role: owner, manager, task_runner or guest.
+
+```
+semaphore client project member add <user id|login|email> [flags]
+```
+
+Example:
+
+```bash
+semaphore client project member add bob --role manager -p 1
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--role` | string | — | Role slug: owner, manager, task_runner, guest or a custom role |
+
+## `semaphore client project member get` {#semaphore-client-project-member-get}
+
+Show one member, addressed by its numeric id or by its name. With -o json or -o yaml every field of the object is printed; the table shows the main ones, --fields chooses others.
+
+```
+semaphore client project member get <id|name>
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client member get 12 -p 1
+  semaphore client member get "bob" -p 1 -o json
+```
+
+## `semaphore client project member list` {#semaphore-client-project-member-list}
+
+List members of the project as a table (default), JSON (-o json) or YAML (-o yaml). --fields picks the columns, -q prints only the ids, one per line.
+
+```
+semaphore client project member list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client member list -p 1
+  semaphore client member list -p 1 -o json
+  semaphore client member list -p 1 -q
+```
+
+## `semaphore client project member remove` {#semaphore-client-project-member-remove}
+
+Remove a user from the project. The user keeps the account on the server. Asks for confirmation in a terminal; pass --yes to skip it.
+
+```
+semaphore client project member remove <user id|login>
+```
+
+Aliases: `rm`, `delete`.
+
+Example:
+
+```bash
+semaphore client project member remove bob -p 1 -y
+```
+
+## `semaphore client project member update` {#semaphore-client-project-member-update}
+
+Give a project member another role: owner, manager, task_runner or guest.
+
+```
+semaphore client project member update <user id|login> [flags]
+```
+
+Example:
+
+```bash
+semaphore client project member update bob --role guest -p 1
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--role` | string | — | New role slug |
+
+## `semaphore client project restore` {#semaphore-client-project-restore}
+
+Create a new project from a backup file produced by 'project backup' or by the UI. The new project is printed.
+
+```
+semaphore client project restore [flags]
+```
+
+Example:
+
+```bash
+semaphore client project restore --file homelab.json
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--file` | string | — | Backup file produced by 'project backup' |
+
+## `semaphore client project update` {#semaphore-client-project-update}
+
+Change fields of a project. The object is read from the server first, the fields from --from-file and then from the flags are applied, and the whole object is written back — so nothing you did not mention is lost.
+
+```
+semaphore client project update <id|name> [flags]
+```
+
+Example:
+
+```bash
+semaphore client project update Homelab --max-parallel-tasks 4
+  semaphore client project update 3 --alert --alert-chat ops
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--alert` | bool | — | Send alerts about tasks (use --alert=false to stop) |
+| `--alert-chat` | string | — | Alert chat id |
+| `--from-file` | string | — | JSON or YAML file with the fields to change (API field names) |
+| `--max-parallel-tasks` | int | `0` | Maximum tasks running at once (0 = unlimited) |
+| `--name` | string | — | Project name |
+| `--type` | string | — | Project type (empty for a regular project) |
+
+## `semaphore client repository` {#semaphore-client-repository}
+
+Manage repositories. The subcommands work on the repositories of the project given with --project (or the context's default project).  An object is addressed by its numeric id or by its name (case-insensitive). A name shared by several objects is an error (exit code 5); use the id then.
+
+```
+semaphore client repository
+```
+
+Aliases: `repositories`, `repo`.
+
+Example:
+
+```bash
+semaphore client repository list -p 1
+  semaphore client repository get "infra" -p 1 -o json
+  semaphore client repository delete "infra" -p 1 -y
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client repository create`](#semaphore-client-repository-create) | Create a repository |
+| [`semaphore client repository delete`](#semaphore-client-repository-delete) | Delete a repository |
+| [`semaphore client repository get`](#semaphore-client-repository-get) | Show one repository |
+| [`semaphore client repository list`](#semaphore-client-repository-list) | List repositories of the project |
+| [`semaphore client repository update`](#semaphore-client-repository-update) | Change a repository |
+
+## `semaphore client repository create` {#semaphore-client-repository-create}
+
+Create a repository from flags, from a JSON or YAML file (--from-file, same field names as the API), or both: flags override the file. The created object is printed; with -q only its id.
+
+```
+semaphore client repository create [flags]
+```
+
+Example:
+
+```bash
+semaphore client repository create -p 1 --name infra --url git@github.com:org/infra.git --branch main --ssh-key deploy
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--branch` | string | — | Branch |
+| `--from-file` | string | — | JSON or YAML file with the object (API field names) |
+| `--name` | string | — | Repository name |
+| `--ssh-key` | string | — | Access key id or name used to fetch (type none for public repositories) |
+| `--url` | string | — | Git URL or local path |
+
+## `semaphore client repository delete` {#semaphore-client-repository-delete}
+
+Delete a repository. Asks for confirmation in a terminal; pass --yes to skip it (required when stdin is not a terminal).
+
+```
+semaphore client repository delete <id|name>
+```
+
+Aliases: `rm`.
+
+Example:
+
+```bash
+semaphore client repository delete "infra" -p 1 -y
+```
+
+## `semaphore client repository get` {#semaphore-client-repository-get}
+
+Show one repository, addressed by its numeric id or by its name. With -o json or -o yaml every field of the object is printed; the table shows the main ones, --fields chooses others.
+
+```
+semaphore client repository get <id|name>
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client repository get 12 -p 1
+  semaphore client repository get "infra" -p 1 -o json
+```
+
+## `semaphore client repository list` {#semaphore-client-repository-list}
+
+List repositories of the project as a table (default), JSON (-o json) or YAML (-o yaml). --fields picks the columns, -q prints only the ids, one per line.
+
+```
+semaphore client repository list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client repository list -p 1
+  semaphore client repository list -p 1 -o json
+  semaphore client repository list -p 1 -q
+```
+
+## `semaphore client repository update` {#semaphore-client-repository-update}
+
+Change fields of a repository. The object is read from the server first, the fields from --from-file and then from the flags are applied, and the whole object is written back — so nothing you did not mention is lost.
+
+```
+semaphore client repository update <id|name> [flags]
+```
+
+Example:
+
+```bash
+semaphore client repository update infra --branch release
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--branch` | string | — | Branch |
+| `--from-file` | string | — | JSON or YAML file with the fields to change (API field names) |
+| `--name` | string | — | Repository name |
+| `--ssh-key` | string | — | Access key id or name used to fetch (type none for public repositories) |
+| `--url` | string | — | Git URL or local path |
+
+## `semaphore client runner` {#semaphore-client-runner}
+
+Manage runners. Without --project the commands work on the global runners (administrators only), even when the context has a default project; with --project they work on the runners of that project.  A runner is addressed by its numeric id or by its name (case-insensitive).
+
+```
+semaphore client runner
+```
+
+Aliases: `runners`.
+
+Example:
+
+```bash
+semaphore client runner list
+  semaphore client runner get "worker-1" -o json
+  semaphore client runner delete "worker-1" -y
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client runner clear-cache`](#semaphore-client-runner-clear-cache) | Ask a runner to drop its repository cache |
+| [`semaphore client runner create`](#semaphore-client-runner-create) | Register a runner record and print its registration token |
+| [`semaphore client runner delete`](#semaphore-client-runner-delete) | Delete a runner |
+| [`semaphore client runner disable`](#semaphore-client-runner-disable) | Disable a runner |
+| [`semaphore client runner enable`](#semaphore-client-runner-enable) | Enable a runner |
+| [`semaphore client runner get`](#semaphore-client-runner-get) | Show one runner |
+| [`semaphore client runner list`](#semaphore-client-runner-list) | List runners of the project |
+| [`semaphore client runner registration-token`](#semaphore-client-runner-registration-token) | Re-issue the registration token of a runner (printed once) |
+| [`semaphore client runner update`](#semaphore-client-runner-update) | Change a runner |
+
+## `semaphore client runner clear-cache` {#semaphore-client-runner-clear-cache}
+
+Ask a runner to delete its local clones of the repositories, so the next task fetches them afresh.
+
+```
+semaphore client runner clear-cache <id|name>
+```
+
+Example:
+
+```bash
+semaphore client runner clear-cache worker-1
+```
+
+## `semaphore client runner create` {#semaphore-client-runner-create}
+
+Create a runner record (global, or a project's with --project) and print the registration token the runner process needs. The token is shown only once; re-issue it later with 'runner registration-token'.
+
+```
+semaphore client runner create [flags]
+```
+
+Example:
+
+```bash
+semaphore client runner create --name builder-1 --tags docker,linux
+  semaphore client runner create --name proj-runner -p 1 -q   # prints only the token
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--from-file` | string | — | JSON or YAML file with the runner fields |
+| `--max-parallel-tasks` | int | `0` | Maximum tasks at once |
+| `--name` | string | — | Runner name |
+| `--tags` | stringSlice | — | Tags, comma-separated |
+| `--webhook` | string | — | Webhook URL called when a task is assigned |
+
+## `semaphore client runner delete` {#semaphore-client-runner-delete}
+
+Delete a runner. Asks for confirmation in a terminal; pass --yes to skip it (required when stdin is not a terminal).
+
+```
+semaphore client runner delete <id|name>
+```
+
+Aliases: `rm`.
+
+Example:
+
+```bash
+semaphore client runner delete "worker-1" -y
+```
+
+## `semaphore client runner disable` {#semaphore-client-runner-disable}
+
+Disable a runner. A disabled runner stays registered but is not given tasks until it is enabled again.
+
+```
+semaphore client runner disable <id|name>
+```
+
+Example:
+
+```bash
+semaphore client runner disable worker-1
+```
+
+## `semaphore client runner enable` {#semaphore-client-runner-enable}
+
+Enable a runner. A disabled runner stays registered but is not given tasks until it is enabled again.
+
+```
+semaphore client runner enable <id|name>
+```
+
+Example:
+
+```bash
+semaphore client runner enable worker-1
+```
+
+## `semaphore client runner get` {#semaphore-client-runner-get}
+
+Show one runner, addressed by its numeric id or by its name. With -o json or -o yaml every field of the object is printed; the table shows the main ones, --fields chooses others.
+
+```
+semaphore client runner get <id|name>
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client runner get 12
+  semaphore client runner get "worker-1" -o json
+```
+
+## `semaphore client runner list` {#semaphore-client-runner-list}
+
+List runners of the project as a table (default), JSON (-o json) or YAML (-o yaml). --fields picks the columns, -q prints only the ids, one per line.
+
+```
+semaphore client runner list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client runner list
+  semaphore client runner list -o json
+  semaphore client runner list -q
+```
+
+## `semaphore client runner registration-token` {#semaphore-client-runner-registration-token}
+
+Issue a new registration token for a runner and print it. The previous token stops working; the server keeps only a hash, so the token cannot be shown again later.
+
+```
+semaphore client runner registration-token <id|name>
+```
+
+Example:
+
+```bash
+semaphore client runner registration-token worker-1 > runner.token
+```
+
+## `semaphore client runner update` {#semaphore-client-runner-update}
+
+Change fields of a runner. The object is read from the server first, the fields from --from-file and then from the flags are applied, and the whole object is written back — so nothing you did not mention is lost.
+
+```
+semaphore client runner update <id|name> [flags]
+```
+
+Example:
+
+```bash
+semaphore client runner update builder-1 --tags docker,linux --max-parallel-tasks 4
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--from-file` | string | — | JSON or YAML file with the fields to change (API field names) |
+| `--max-parallel-tasks` | int | `0` | Maximum tasks at once |
+| `--name` | string | — | Runner name |
+| `--tags` | stringSlice | — | Tags, comma-separated |
+| `--webhook` | string | — | Webhook URL called when a task is assigned |
+
+## `semaphore client schedule` {#semaphore-client-schedule}
+
+Manage schedules (cron runs of templates). The subcommands work on the schedules of the project given with --project (or the context's default project).  An object is addressed by its numeric id or by its name (case-insensitive). A name shared by several objects is an error (exit code 5); use the id then.
+
+```
+semaphore client schedule
+```
+
+Aliases: `schedules`.
+
+Example:
+
+```bash
+semaphore client schedule list -p 1
+  semaphore client schedule get "nightly" -p 1 -o json
+  semaphore client schedule delete "nightly" -p 1 -y
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client schedule create`](#semaphore-client-schedule-create) | Create a schedule |
+| [`semaphore client schedule delete`](#semaphore-client-schedule-delete) | Delete a schedule |
+| [`semaphore client schedule disable`](#semaphore-client-schedule-disable) | Disable a schedule |
+| [`semaphore client schedule enable`](#semaphore-client-schedule-enable) | Enable a schedule |
+| [`semaphore client schedule get`](#semaphore-client-schedule-get) | Show one schedule |
+| [`semaphore client schedule list`](#semaphore-client-schedule-list) | List schedules of the project |
+| [`semaphore client schedule update`](#semaphore-client-schedule-update) | Change a schedule |
+| [`semaphore client schedule validate`](#semaphore-client-schedule-validate) | Check a cron expression with the server |
+
+## `semaphore client schedule create` {#semaphore-client-schedule-create}
+
+Create a schedule from flags, from a JSON or YAML file (--from-file, same field names as the API), or both: flags override the file. The created object is printed; with -q only its id.
+
+```
+semaphore client schedule create [flags]
+```
+
+Example:
+
+```bash
+semaphore client schedule create -p 1 --template deploy --cron "0 3 * * *" --name nightly
+  semaphore client schedule create -p 1 --template 12 --cron "@hourly" --inactive
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--cron` | string | — | Cron expression, e.g. "0 3 * * *" or @daily |
+| `--from-file` | string | — | JSON or YAML file with the object (API field names) |
+| `--inactive` | bool | — | Create the schedule disabled |
+| `--name` | string | — | Schedule name |
+| `--template` | string | — | Template id or name to run |
+
+## `semaphore client schedule delete` {#semaphore-client-schedule-delete}
+
+Delete a schedule. Asks for confirmation in a terminal; pass --yes to skip it (required when stdin is not a terminal).
+
+```
+semaphore client schedule delete <id|name>
+```
+
+Aliases: `rm`.
+
+Example:
+
+```bash
+semaphore client schedule delete "nightly" -p 1 -y
+```
+
+## `semaphore client schedule disable` {#semaphore-client-schedule-disable}
+
+Disable a schedule without changing anything else about it. A disabled schedule keeps its cron expression but does not start tasks.
+
+```
+semaphore client schedule disable <id|name>
+```
+
+Example:
+
+```bash
+semaphore client schedule disable nightly -p 1
+```
+
+## `semaphore client schedule enable` {#semaphore-client-schedule-enable}
+
+Enable a schedule without changing anything else about it. A disabled schedule keeps its cron expression but does not start tasks.
+
+```
+semaphore client schedule enable <id|name>
+```
+
+Example:
+
+```bash
+semaphore client schedule enable nightly -p 1
+```
+
+## `semaphore client schedule get` {#semaphore-client-schedule-get}
+
+Show one schedule, addressed by its numeric id or by its name. With -o json or -o yaml every field of the object is printed; the table shows the main ones, --fields chooses others.
+
+```
+semaphore client schedule get <id|name>
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client schedule get 12 -p 1
+  semaphore client schedule get "nightly" -p 1 -o json
+```
+
+## `semaphore client schedule list` {#semaphore-client-schedule-list}
+
+List schedules of the project as a table (default), JSON (-o json) or YAML (-o yaml). --fields picks the columns, -q prints only the ids, one per line.
+
+```
+semaphore client schedule list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client schedule list -p 1
+  semaphore client schedule list -p 1 -o json
+  semaphore client schedule list -p 1 -q
+```
+
+## `semaphore client schedule update` {#semaphore-client-schedule-update}
+
+Change fields of a schedule. The object is read from the server first, the fields from --from-file and then from the flags are applied, and the whole object is written back — so nothing you did not mention is lost.
+
+```
+semaphore client schedule update <id|name> [flags]
+```
+
+Example:
+
+```bash
+semaphore client schedule update nightly --cron "0 4 * * *"
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--cron` | string | — | Cron expression, e.g. "0 3 * * *" or @daily |
+| `--from-file` | string | — | JSON or YAML file with the fields to change (API field names) |
+| `--inactive` | bool | — | Create the schedule disabled |
+| `--name` | string | — | Schedule name |
+| `--template` | string | — | Template id or name to run |
+
+## `semaphore client schedule validate` {#semaphore-client-schedule-validate}
+
+Ask the server whether a cron expression is valid, before putting it into a schedule. Exit code 0 when it is, 1 with the server's message when it is not.
+
+```
+semaphore client schedule validate [flags]
+```
+
+Example:
+
+```bash
+semaphore client schedule validate --cron "0 3 * * *" -p 1
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--cron` | string | — | Cron expression to check |
+
+## `semaphore client task` {#semaphore-client-task}
+
+Work with the tasks of a project: list and inspect them, print or follow their logs, wait for them, stop, confirm, reject or rerun them. New tasks are started with 'template run'. Tasks are addressed by numeric id.  Waiting commands exit with 0 when the task ends in 'success', 3 on 'error', 6 on 'stopped' and 124 when --wait-timeout runs out (the task keeps running).
+
+```
+semaphore client task
+```
+
+Aliases: `tasks`.
+
+Example:
+
+```bash
+semaphore client task list -p 1 --status error
+  semaphore client task logs 42 -p 1 --follow
+  semaphore client task wait 42 -p 1 --wait-timeout 30m
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client task confirm`](#semaphore-client-task-confirm) | Let a task that waits for confirmation proceed |
+| [`semaphore client task get`](#semaphore-client-task-get) | Show one task |
+| [`semaphore client task list`](#semaphore-client-task-list) | List recent tasks of the project, newest first |
+| [`semaphore client task logs`](#semaphore-client-task-logs) | Print the log of a task |
+| [`semaphore client task reject`](#semaphore-client-task-reject) | Refuse a task that waits for confirmation |
+| [`semaphore client task rerun`](#semaphore-client-task-rerun) | Start a new task with the parameters of an existing one |
+| [`semaphore client task stop`](#semaphore-client-task-stop) | Stop a running task |
+| [`semaphore client task wait`](#semaphore-client-task-wait) | Wait silently until a task finishes; exit code follows its status |
+| [`semaphore client task watch`](#semaphore-client-task-watch) | Show the status of a task until it finishes |
+
+## `semaphore client task confirm` {#semaphore-client-task-confirm}
+
+Approve a task whose template requires a confirmation before it runs (status 'waiting_confirmation'). The task is queued and runs as usual afterwards.
+
+```
+semaphore client task confirm <id>
+```
+
+Example:
+
+```bash
+semaphore client task confirm 42 -p 1
+```
+
+## `semaphore client task get` {#semaphore-client-task-get}
+
+Show one task with all its fields: status, template, who started it, when it ran, its parameters.
+
+```
+semaphore client task get <id>
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client task get 42 -p 1 -o json
+```
+
+## `semaphore client task list` {#semaphore-client-task-list}
+
+List the recent tasks of the project, newest first. --template and --status filter the list; --limit bounds the number of rows and --all lifts it.
+
+```
+semaphore client task list [flags]
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client task list -p 1
+  semaphore client task list -p 1 --template deploy --status success --limit 10
+  semaphore client task list -p 1 -o json -q
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--all` | bool | — | Fetch every task (ignores --limit) |
+| `--limit` | int | `50` | Maximum number of tasks to fetch |
+| `--status` | string | — | Only tasks with this status (waiting, running, success, error, stopped, …) |
+| `--template` | string | — | Only tasks of this template (id or name) |
+
+## `semaphore client task logs` {#semaphore-client-task-logs}
+
+Print the log of a task. --raw streams the plain-text log the server keeps (ANSI codes stripped); otherwise the stored lines are printed, or listed as records with -o json. With --follow new lines are printed until the task finishes and the exit code follows its status.
+
+```
+semaphore client task logs <id> [flags]
+```
+
+Example:
+
+```bash
+semaphore client task logs 42
+  semaphore client task logs 42 -f
+  semaphore client task logs 42 --raw > task-42.log
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--follow`, `-f` | bool | — | Keep printing new lines until the task finishes |
+| `--raw` | bool | — | Stream the plain-text log as the server stores it |
+
+## `semaphore client task reject` {#semaphore-client-task-reject}
+
+Refuse a task whose template requires a confirmation before it runs (status 'waiting_confirmation'). The task does not run.
+
+```
+semaphore client task reject <id>
+```
+
+Example:
+
+```bash
+semaphore client task reject 42 -p 1
+```
+
+## `semaphore client task rerun` {#semaphore-client-task-rerun}
+
+Start a new task with the template, inventory, branch, variables and parameters of an existing task. Overrides given on the command line replace the copied values. --wait and --follow work as for 'template run'.
+
+```
+semaphore client task rerun <id> [flags]
+```
+
+Example:
+
+```bash
+semaphore client task rerun 42 -p 1
+  semaphore client task rerun 42 -p 1 --branch hotfix --follow
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--arguments` | string | — | Extra CLI arguments as a JSON array, e.g. '["-vv"]' (if the template allows it) |
+| `--auto-approve` | bool | — | Terraform/OpenTofu: apply without approval |
+| `--branch` | string | — | Git branch to check out (if the template allows it) |
+| `--check` | bool | — | Ansible check mode (dry run, no changes) |
+| `--debug-level` | int | `0` | Ansible verbosity level 1-4 (implies --debug-task) |
+| `--debug-task` | bool | — | Ansible verbose output (-vvvv) |
+| `--destroy` | bool | — | Terraform/OpenTofu: destroy |
+| `--diff` | bool | — | Ansible --diff |
+| `--extra-vars-file` | string | — | JSON or YAML file with extra variables |
+| `--follow` | bool | — | Print the task log while waiting (implies --wait) |
+| `--inventory` | string | — | Inventory id or name (if the template allows overriding it) |
+| `--limit` | stringSlice | — | Ansible --limit hosts, comma-separated |
+| `--message` | string | — | Message shown in the task history |
+| `--plan` | bool | — | Terraform/OpenTofu: plan only |
+| `--reconfigure` | bool | — | Terraform/OpenTofu: init -reconfigure |
+| `--skip-galaxy` | bool | — | Skip ansible-galaxy requirements install |
+| `--skip-tags` | stringSlice | — | Ansible --skip-tags, comma-separated |
+| `--stop-on-interrupt` | bool | — | On Ctrl+C ask the server to stop the task (by default only the client disconnects) |
+| `--tags` | stringSlice | — | Ansible --tags, comma-separated |
+| `--upgrade` | bool | — | Terraform/OpenTofu: init -upgrade |
+| `--var` | stringArray | — | Extra variable NAME=VALUE; repeatable |
+| `--wait` | bool | — | Wait until the task finishes; exit code follows its status (0 success, 3 error, 6 stopped) |
+| `--wait-timeout` | duration | `0s` | Give up waiting after this long, exit 124; the task keeps running (default: no limit) |
+
+## `semaphore client task stop` {#semaphore-client-task-stop}
+
+Ask the server to stop a task. Without --force the process gets a chance to end gracefully; --force kills it at once. --wait blocks until the task has actually stopped.
+
+```
+semaphore client task stop <id> [flags]
+```
+
+Example:
+
+```bash
+semaphore client task stop 42 -p 1
+  semaphore client task stop 42 -p 1 --force --wait
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--force` | bool | — | Kill the task process immediately |
+| `--wait` | bool | — | Wait until the task has stopped |
+
+## `semaphore client task wait` {#semaphore-client-task-wait}
+
+Wait until a task finishes without printing anything, for scripts. Exit code 0 on success, 3 on error, 6 when the task was stopped, 124 when --wait-timeout runs out (the task keeps running on the server).
+
+```
+semaphore client task wait <id> [flags]
+```
+
+Example:
+
+```bash
+semaphore client task wait 42; case $? in 0) echo ok;; 3) echo failed;; 6) echo stopped;; 124) echo timeout;; esac
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--wait-timeout` | duration | `0s` | Give up after this long, exit 124 (default: no limit) |
+
+## `semaphore client task watch` {#semaphore-client-task-watch}
+
+Show the status of a task as it changes, until the task finishes. By default the exit code is 0 whatever the outcome; with --exit-status it follows the task (3 error, 6 stopped), like 'gh run watch --exit-status'.
+
+```
+semaphore client task watch <id> [flags]
+```
+
+Example:
+
+```bash
+semaphore client task watch 42 -p 1
+  semaphore client task watch 42 -p 1 --exit-status --wait-timeout 1h
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--exit-status` | bool | — | Exit with 3 or 6 when the task failed or was stopped |
+| `--wait-timeout` | duration | `0s` | Give up after this long, exit 124 (default: no limit) |
+
+## `semaphore client template` {#semaphore-client-template}
+
+Manage task templates. The subcommands work on the templates of the project given with --project (or the context's default project).  An object is addressed by its numeric id or by its name (case-insensitive). A name shared by several objects is an error (exit code 5); use the id then.
+
+```
+semaphore client template
+```
+
+Aliases: `templates`, `tpl`.
+
+Example:
+
+```bash
+semaphore client template list -p 1
+  semaphore client template get "deploy" -p 1 -o json
+  semaphore client template delete "deploy" -p 1 -y
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client template create`](#semaphore-client-template-create) | Create a template |
+| [`semaphore client template delete`](#semaphore-client-template-delete) | Delete a template |
+| [`semaphore client template get`](#semaphore-client-template-get) | Show one template |
+| [`semaphore client template list`](#semaphore-client-template-list) | List templates of the project |
+| [`semaphore client template run`](#semaphore-client-template-run) | Start a task from a template |
+| [`semaphore client template stop-all`](#semaphore-client-template-stop-all) | Stop every running task of a template |
+| [`semaphore client template tasks`](#semaphore-client-template-tasks) | List recent tasks of a template |
+| [`semaphore client template update`](#semaphore-client-template-update) | Change a template |
+
+## `semaphore client template create` {#semaphore-client-template-create}
+
+Create a template from flags, from a JSON or YAML file (--from-file, same field names as the API), or both: flags override the file. The created object is printed; with -q only its id.
+
+```
+semaphore client template create [flags]
+```
+
+Example:
+
+```bash
+semaphore client template create -p 1 --name deploy --app ansible --playbook site.yml --repository infra --inventory prod --environment default
+  semaphore client template create -p 1 --from-file template.yml
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--allow-override-args` | bool | — | Let a task override the arguments (use =false to forbid) |
+| `--app` | string | — | Application: ansible, terraform, tofu, bash, python, powershell, pulumi, terragrunt |
+| `--arguments` | string | — | Extra CLI arguments as a JSON array |
+| `--branch` | string | — | Git branch |
+| `--description` | string | — | Description |
+| `--environment` | string | — | Environment (variable group) id or name |
+| `--from-file` | string | — | JSON or YAML file with the object (API field names) |
+| `--inventory` | string | — | Inventory id or name |
+| `--name` | string | — | Template name |
+| `--playbook` | string | — | Playbook or script path inside the repository |
+| `--repository` | string | — | Repository id or name |
+| `--view` | string | — | View id or title to show the template in |
+| `--working-directory` | string | — | Working directory inside the repository |
+
+## `semaphore client template delete` {#semaphore-client-template-delete}
+
+Delete a template. Asks for confirmation in a terminal; pass --yes to skip it (required when stdin is not a terminal).
+
+```
+semaphore client template delete <id|name>
+```
+
+Aliases: `rm`.
+
+Example:
+
+```bash
+semaphore client template delete "deploy" -p 1 -y
+```
+
+## `semaphore client template get` {#semaphore-client-template-get}
+
+Show one template, addressed by its numeric id or by its name. With -o json or -o yaml every field of the object is printed; the table shows the main ones, --fields chooses others.
+
+```
+semaphore client template get <id|name>
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client template get 12 -p 1
+  semaphore client template get "deploy" -p 1 -o json
+```
+
+## `semaphore client template list` {#semaphore-client-template-list}
+
+List templates of the project as a table (default), JSON (-o json) or YAML (-o yaml). --fields picks the columns, -q prints only the ids, one per line.
+
+```
+semaphore client template list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client template list -p 1
+  semaphore client template list -p 1 -o json
+  semaphore client template list -p 1 -q
+```
+
+## `semaphore client template run` {#semaphore-client-template-run}
+
+Start a task from a template. By default the task id is printed and the command returns at once; --wait blocks until the task finishes and sets the exit code from its status (0 success, 3 error, 6 stopped); --follow also streams the log.  Overrides (--limit, --tags, --check, --branch, --inventory, …) apply only when the template allows them; otherwise the server rejects the task. Ctrl+C while waiting only disconnects the client — the task goes on — unless --stop-on-interrupt is given.
+
+```
+semaphore client template run <id|name> [flags]
+```
+
+Example:
+
+```bash
+# Fire and forget: prints the task id
+  semaphore client template run deploy -p 1
+
+  # Run and follow the log; exit 0 only if the task succeeded
+  semaphore client template run deploy -p 1 --follow
+
+  # Check mode on two hosts with extra variables, give up after 30 minutes
+  semaphore client template run deploy --check --limit web1,web2 --var version=1.4.2 --wait --wait-timeout 30m
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--arguments` | string | — | Extra CLI arguments as a JSON array, e.g. '["-vv"]' (if the template allows it) |
+| `--auto-approve` | bool | — | Terraform/OpenTofu: apply without approval |
+| `--branch` | string | — | Git branch to check out (if the template allows it) |
+| `--check` | bool | — | Ansible check mode (dry run, no changes) |
+| `--debug-level` | int | `0` | Ansible verbosity level 1-4 (implies --debug-task) |
+| `--debug-task` | bool | — | Ansible verbose output (-vvvv) |
+| `--destroy` | bool | — | Terraform/OpenTofu: destroy |
+| `--diff` | bool | — | Ansible --diff |
+| `--extra-vars-file` | string | — | JSON or YAML file with extra variables |
+| `--follow` | bool | — | Print the task log while waiting (implies --wait) |
+| `--inventory` | string | — | Inventory id or name (if the template allows overriding it) |
+| `--limit` | stringSlice | — | Ansible --limit hosts, comma-separated |
+| `--message` | string | — | Message shown in the task history |
+| `--plan` | bool | — | Terraform/OpenTofu: plan only |
+| `--reconfigure` | bool | — | Terraform/OpenTofu: init -reconfigure |
+| `--skip-galaxy` | bool | — | Skip ansible-galaxy requirements install |
+| `--skip-tags` | stringSlice | — | Ansible --skip-tags, comma-separated |
+| `--stop-on-interrupt` | bool | — | On Ctrl+C ask the server to stop the task (by default only the client disconnects) |
+| `--tags` | stringSlice | — | Ansible --tags, comma-separated |
+| `--upgrade` | bool | — | Terraform/OpenTofu: init -upgrade |
+| `--var` | stringArray | — | Extra variable NAME=VALUE; repeatable |
+| `--wait` | bool | — | Wait until the task finishes; exit code follows its status (0 success, 3 error, 6 stopped) |
+| `--wait-timeout` | duration | `0s` | Give up waiting after this long, exit 124; the task keeps running (default: no limit) |
+
+## `semaphore client template stop-all` {#semaphore-client-template-stop-all}
+
+Ask the server to stop every running or queued task of one template. Asks for confirmation in a terminal; pass --yes to skip it.
+
+```
+semaphore client template stop-all <id|name>
+```
+
+Example:
+
+```bash
+semaphore client template stop-all deploy -p 1 -y
+```
+
+## `semaphore client template tasks` {#semaphore-client-template-tasks}
+
+List the recent tasks of one template, newest first — the same as 'task list --template'. --limit bounds the number of rows, --all lifts it.
+
+```
+semaphore client template tasks <id|name> [flags]
+```
+
+Example:
+
+```bash
+semaphore client template tasks deploy -p 1
+  semaphore client template tasks 12 -p 1 --limit 5 -o json
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--all` | bool | — | List every task (ignores --limit) |
+| `--limit` | int | `50` | Maximum number of tasks |
+
+## `semaphore client template update` {#semaphore-client-template-update}
+
+Change fields of a template. The object is read from the server first, the fields from --from-file and then from the flags are applied, and the whole object is written back — so nothing you did not mention is lost.
+
+```
+semaphore client template update <id|name> [flags]
+```
+
+Example:
+
+```bash
+semaphore client template update deploy --description "Deploys the site"
+  semaphore client template update 12 --inventory staging --branch release
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--allow-override-args` | bool | — | Let a task override the arguments (use =false to forbid) |
+| `--app` | string | — | Application: ansible, terraform, tofu, bash, python, powershell, pulumi, terragrunt |
+| `--arguments` | string | — | Extra CLI arguments as a JSON array |
+| `--branch` | string | — | Git branch |
+| `--description` | string | — | Description |
+| `--environment` | string | — | Environment (variable group) id or name |
+| `--from-file` | string | — | JSON or YAML file with the fields to change (API field names) |
+| `--inventory` | string | — | Inventory id or name |
+| `--name` | string | — | Template name |
+| `--playbook` | string | — | Playbook or script path inside the repository |
+| `--repository` | string | — | Repository id or name |
+| `--view` | string | — | View id or title to show the template in |
+| `--working-directory` | string | — | Working directory inside the repository |
+
+## `semaphore client user` {#semaphore-client-user}
+
+Manage the users of the server. Every subcommand needs an administrator token. A user is addressed by numeric id, login or e-mail address.
+
+```
+semaphore client user
+```
+
+Aliases: `users`.
+
+Example:
+
+```bash
+semaphore client user list
+  semaphore client user get "bob" -o json
+  semaphore client user delete "bob" -y
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client user create`](#semaphore-client-user-create) | Create a user |
+| [`semaphore client user delete`](#semaphore-client-user-delete) | Delete a user |
+| [`semaphore client user get`](#semaphore-client-user-get) | Show one user |
+| [`semaphore client user list`](#semaphore-client-user-list) | List users |
+| [`semaphore client user set-password`](#semaphore-client-user-set-password) | Set a user's password (read from stdin) |
+| [`semaphore client user update`](#semaphore-client-user-update) | Change a user |
+
+## `semaphore client user create` {#semaphore-client-user-create}
+
+Create a user. The password is read from stdin with --password-stdin and is never accepted as an argument; an --external user has no local password.
+
+```
+semaphore client user create [flags]
+```
+
+Example:
+
+```bash
+echo "$PASSWORD" | semaphore client user create --login bob --name "Bob" --email bob@example.com --password-stdin
+  semaphore client user create --login alice --name Alice --email alice@example.com --external
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--admin` | bool | — | Administrator (use --admin=false to revoke) |
+| `--alert` | bool | — | Send alerts to this user |
+| `--email` | string | — | E-mail |
+| `--external` | bool | — | External user (LDAP/OIDC), no local password |
+| `--from-file` | string | — | JSON or YAML file with the user fields |
+| `--login` | string | — | Login (username) |
+| `--name` | string | — | Full name |
+| `--password-stdin` | bool | — | Read the password from stdin |
+
+## `semaphore client user delete` {#semaphore-client-user-delete}
+
+Delete a user. Asks for confirmation in a terminal; pass --yes to skip it (required when stdin is not a terminal).
+
+```
+semaphore client user delete <id|name>
+```
+
+Aliases: `rm`.
+
+Example:
+
+```bash
+semaphore client user delete "bob" -y
+```
+
+## `semaphore client user get` {#semaphore-client-user-get}
+
+Show one user, addressed by its numeric id or by its name. With -o json or -o yaml every field of the object is printed; the table shows the main ones, --fields chooses others.
+
+```
+semaphore client user get <id|name>
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client user get 12
+  semaphore client user get "bob" -o json
+```
+
+## `semaphore client user list` {#semaphore-client-user-list}
+
+List users as a table (default), JSON (-o json) or YAML (-o yaml). --fields picks the columns, -q prints only the ids, one per line.
+
+```
+semaphore client user list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client user list
+  semaphore client user list -o json
+  semaphore client user list -q
+```
+
+## `semaphore client user set-password` {#semaphore-client-user-set-password}
+
+Set a new password for a user. The password is read from stdin with --password-stdin (or prompted for in a terminal) and is never accepted as an argument, so it does not show up in the shell history or in 'ps'.
+
+```
+semaphore client user set-password <id|login> [flags]
+```
+
+Example:
+
+```bash
+echo "$NEW_PASSWORD" | semaphore client user set-password bob --password-stdin
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--password-stdin` | bool | — | Read the new password from stdin |
+
+## `semaphore client user update` {#semaphore-client-user-update}
+
+Change fields of a user. The object is read from the server first, the fields from --from-file and then from the flags are applied, and the whole object is written back — so nothing you did not mention is lost.
+
+```
+semaphore client user update <id|name> [flags]
+```
+
+Example:
+
+```bash
+semaphore client user update bob --email bob@example.com
+  semaphore client user update bob --admin=false
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--admin` | bool | — | Administrator (use --admin=false to revoke) |
+| `--alert` | bool | — | Send alerts to this user |
+| `--email` | string | — | E-mail |
+| `--external` | bool | — | External user (LDAP/OIDC), no local password |
+| `--from-file` | string | — | JSON or YAML file with the fields to change (API field names) |
+| `--login` | string | — | Login (username) |
+| `--name` | string | — | Full name |
+
+## `semaphore client view` {#semaphore-client-view}
+
+Manage views (template groups on the project page). The subcommands work on the views of the project given with --project (or the context's default project).  An object is addressed by its numeric id or by its name (case-insensitive). A name shared by several objects is an error (exit code 5); use the id then.
+
+```
+semaphore client view
+```
+
+Aliases: `views`.
+
+Example:
+
+```bash
+semaphore client view list -p 1
+  semaphore client view get "Deploy" -p 1 -o json
+  semaphore client view delete "Deploy" -p 1 -y
+```
+
+| Subcommand | Purpose |
+|---|---|
+| [`semaphore client view create`](#semaphore-client-view-create) | Create a view |
+| [`semaphore client view delete`](#semaphore-client-view-delete) | Delete a view |
+| [`semaphore client view get`](#semaphore-client-view-get) | Show one view |
+| [`semaphore client view list`](#semaphore-client-view-list) | List views of the project |
+| [`semaphore client view templates`](#semaphore-client-view-templates) | List the templates shown in a view |
+| [`semaphore client view update`](#semaphore-client-view-update) | Change a view |
+
+## `semaphore client view create` {#semaphore-client-view-create}
+
+Create a view from flags, from a JSON or YAML file (--from-file, same field names as the API), or both: flags override the file. The created object is printed; with -q only its id.
+
+```
+semaphore client view create [flags]
+```
+
+Example:
+
+```bash
+semaphore client view create -p 1 --title Ops --position 2
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--from-file` | string | — | JSON or YAML file with the object (API field names) |
+| `--position` | int | `0` | Position among the views |
+| `--title` | string | — | View title |
+
+## `semaphore client view delete` {#semaphore-client-view-delete}
+
+Delete a view. Asks for confirmation in a terminal; pass --yes to skip it (required when stdin is not a terminal).
+
+```
+semaphore client view delete <id|name>
+```
+
+Aliases: `rm`.
+
+Example:
+
+```bash
+semaphore client view delete "Deploy" -p 1 -y
+```
+
+## `semaphore client view get` {#semaphore-client-view-get}
+
+Show one view, addressed by its numeric id or by its name. With -o json or -o yaml every field of the object is printed; the table shows the main ones, --fields chooses others.
+
+```
+semaphore client view get <id|name>
+```
+
+Aliases: `show`.
+
+Example:
+
+```bash
+semaphore client view get 12 -p 1
+  semaphore client view get "Deploy" -p 1 -o json
+```
+
+## `semaphore client view list` {#semaphore-client-view-list}
+
+List views of the project as a table (default), JSON (-o json) or YAML (-o yaml). --fields picks the columns, -q prints only the ids, one per line.
+
+```
+semaphore client view list
+```
+
+Aliases: `ls`.
+
+Example:
+
+```bash
+semaphore client view list -p 1
+  semaphore client view list -p 1 -o json
+  semaphore client view list -p 1 -q
+```
+
+## `semaphore client view templates` {#semaphore-client-view-templates}
+
+List the templates that belong to one view, in the same columns as 'template list'.
+
+```
+semaphore client view templates <id|name>
+```
+
+Example:
+
+```bash
+semaphore client view templates Deploy -p 1
+```
+
+## `semaphore client view update` {#semaphore-client-view-update}
+
+Change fields of a view. The object is read from the server first, the fields from --from-file and then from the flags are applied, and the whole object is written back — so nothing you did not mention is lost.
+
+```
+semaphore client view update <id|name> [flags]
+```
+
+Example:
+
+```bash
+semaphore client view update Ops --title Operations
+```
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--from-file` | string | — | JSON or YAML file with the fields to change (API field names) |
+| `--position` | int | `0` | Position among the views |
+| `--title` | string | — | View title |
+
 ## `semaphore migrate` {#semaphore-migrate}
 
 Execute migrations
@@ -383,7 +2531,7 @@ semaphore vaults check
 
 ## `semaphore vaults rekey` {#semaphore-vaults-rekey}
 
-Re-encrypt all locally stored secrets (access keys and the JWT signing key) under the active key, stamping its key id into each value.  Zero-downtime rotation:   1. Add a new key to the keyset (a file in keys_folder, or a keys: entry) and      point active.access_key (or access_key_file) at it; reload applies it      within keys_poll_interval, or send `kill -HUP <pid>`.   2. Run `vault rekey` to re-encrypt existing data to the new key.   3. Run `vault check`; once the old key shows 0 rows it is safe to remove.  Legacy: `vault rekey --old-key <old-key>` decrypts un-prefixed data with an explicit old key.
+Re-encrypt all locally stored secrets (access keys and the JWT signing key) under the active key, stamping its key id into each value.  Zero-downtime rotation:   1. Add a new key to the keyset (a file in keys_folder, or a keys: entry) and      point active.access_key (or access_key_file) at it; reload applies it      within keys_poll_interval, or send `kill -HUP \<pid>`.   2. Run `vault rekey` to re-encrypt existing data to the new key.   3. Run `vault check`; once the old key shows 0 rows it is safe to remove.  Legacy: `vault rekey --old-key \<old-key>` decrypts un-prefixed data with an explicit old key.
 
 ```
 semaphore vaults rekey

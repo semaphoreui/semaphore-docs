@@ -175,6 +175,13 @@ Um derselben Rolle Zugriff auf weitere Task Templates zu gewähren, wiederholen 
 Task-Template-Berechtigungen sind additiv. Sie fügen Zugriff hinzu, ohne den Zugriff aus der integrierten Rolle eines Benutzers oder aus anderen benutzerdefinierten Rollen zu ersetzen oder zu verringern. Wenn ein Benutzer bereits alle Task Templates ausführen oder bearbeiten kann, schränkt das Hinzufügen einer Task-Template-spezifischen Rolle diesen Zugriff nicht ein.
 :::
 
+
+### Zugriff auf bestimmte Workflows konfigurieren {#configure-access-to-specific-workflows}
+
+Workflow-Berechtigungen funktionieren genauso wie Vorlagenberechtigungen und erfordern die Enterprise-Edition. Öffnen Sie **Workflows**, wählen Sie den Workflow aus und öffnen Sie dessen Registerkarte **Berechtigungen**. Wählen Sie **Rolle hinzufügen**, wählen Sie die Rolle aus und bestimmen Sie die Aktionen auf diesem Workflow: **Kann diesen Workflow sehen**, **Kann diesen Workflow ausführen**, **Kann diesen Workflow bearbeiten** oder **Kann diesen Workflow genehmigen**.
+
+Ein Mitglied mit einer Berechtigung für einen Workflow sieht die Schaltflächen nur für diesen Workflow.
+
 ### Eine benutzerdefinierte Rolle in einem Projekt zuweisen {#assign-a-custom-role-in-a-project}
 
 Nachdem Sie eine globale oder eine Projektrolle erstellt und konfiguriert haben, weisen Sie sie dem gewünschten Teammitglied zu:

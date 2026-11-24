@@ -18,6 +18,7 @@ administrativas tienen un grupo de comandos dedicado:
 | [`semaphore vaults`](/reference/cli/vaults) | Volver a cifrar los secretos almacenados e inspeccionar el uso de las claves de cifrado. |
 | [`semaphore runner`](/reference/cli/runners) | Ejecutar en modo runner y registrar/desregistrar runners. |
 | [`semaphore migrate`](/reference/cli/migrations) | Aplicar o revertir migraciones de la base de datos. |
+| [`semaphore client`](/reference/cli/client) | Administrar un servidor en ejecución a través de su API REST desde la terminal y desde scripts: proyectos, plantillas, tareas y el resto de recursos. |
 
 Varios grupos de comandos tienen alias más cortos: `users`/`user`, `projects`/`project`,
 `vaults`/`vault` y `server`/`service`.
