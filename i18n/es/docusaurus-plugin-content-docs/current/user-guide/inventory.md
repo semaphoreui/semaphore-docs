@@ -72,6 +72,8 @@ Un valor definido en un host prevalece sobre la misma variable definida en el in
 
 Para omitir un host, desactive su interruptor en la lista de hosts. Las tareas creadas después no usan ese host. Actívelo de nuevo para volver a usarlo.
 
+En la pestaña **Hosts**, la columna **Last run** <Pro /> muestra cómo terminó en cada host la última tarea con este inventario y cuándo. Haga clic en la fecha para abrir la tarea. Un host en el que aún no se ha ejecutado nada muestra «never run». Haga clic en el nombre de un host que ya se ha ejecutado para abrir su página con el historial de tareas. Un host renombrado conserva su última ejecución.
+
 * No puede cambiar el tipo de un inventario a `managed` ni desde `managed` después de crearlo.
 * Los hosts y las variables de un inventario administrado forman parte de la copia de seguridad del proyecto.
 * Los usuarios que solo pueden ver el proyecto pueden abrir la página, pero no pueden cambiarla.

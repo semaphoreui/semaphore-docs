@@ -72,6 +72,8 @@ Une valeur définie sur un hôte l'emporte sur la même variable définie sur l'
 
 Pour ignorer un hôte, désactivez son interrupteur dans la liste des hôtes. Les tâches créées ensuite n'utilisent pas cet hôte. Réactivez-le pour l'utiliser de nouveau.
 
+Dans l'onglet **Hosts**, la colonne **Last run** <Pro /> indique comment la dernière tâche avec cet inventaire s'est terminée sur chaque hôte, et quand. Cliquez sur la date pour ouvrir la tâche. Un hôte sur lequel rien n'a encore été exécuté affiche « never run ». Cliquez sur le nom d'un hôte déjà exécuté pour ouvrir sa page avec l'historique des tâches. Un hôte renommé conserve sa dernière exécution.
+
 * Vous ne pouvez pas changer le type d'un inventaire vers `managed` ni depuis `managed` après sa création.
 * Les hôtes et les variables d'un inventaire géré font partie de la sauvegarde du projet.
 * Les utilisateurs qui peuvent seulement consulter le projet peuvent ouvrir la page, mais ils ne peuvent pas la modifier.

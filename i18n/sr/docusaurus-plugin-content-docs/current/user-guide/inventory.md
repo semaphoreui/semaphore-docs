@@ -72,6 +72,8 @@ Vrednost postavljena na hostu ima prednost nad istom promenljivom postavljenom n
 
 Da biste preskočili host, isključite njegov prekidač u listi hostova. Zadaci kreirani posle toga ne koriste taj host. Uključite prekidač da biste ponovo koristili host.
 
+Na kartici **Hosts** kolona **Last run** <Pro /> prikazuje kako se poslednji zadatak sa ovim inventarom završio na svakom hostu i kada. Kliknite na datum da otvorite zadatak. Host na kome ništa još nije pokrenuto prikazuje „never run“. Kliknite na ime hosta koji je već pokretan da otvorite njegovu stranicu sa istorijom zadataka. Preimenovani host zadržava svoje poslednje pokretanje.
+
 * Posle kreiranja ne možete promeniti tip inventara u `managed` niti iz `managed`.
 * Hostovi i promenljive upravljanog inventara deo su rezervne kopije projekta.
 * Korisnici koji mogu samo da pregledaju projekat mogu da otvore stranicu, ali ne mogu da je menjaju.

@@ -30,6 +30,8 @@ histórico.
   conseguiu se conectar. **Not seen 30 days** mostra hosts em que nenhuma tarefa tocou durante um mês.
 - **Template** restringe a lista aos hosts de um template.
 
+A coluna **Inventories** mostra os inventários gerenciados do projeto em que o host está declarado. Clique em um inventário para abrir a aba **Hosts** dele.
+
 Clique em um host para abrir o seu cartão: quando foi visto pela primeira vez, quantas execuções teve, quantas das últimas
 10 execuções falharam e as tarefas que o alcançaram com o resultado neste host. Clique em uma tarefa para abrir
 o seu log.
