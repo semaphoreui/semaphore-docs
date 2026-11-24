@@ -109,6 +109,46 @@ curl -X POST "https://semaphore.example.com/api/project/1/keys" \
 
 ---
 
+## Segredos em playbooks {#secrets-in-playbooks}
+
+O Semaphore não passa as chaves do Key Store para um playbook. Ele mesmo as utiliza: para clonar o repositório, para se conectar aos hosts do inventário e executar `become` neles, e para responder ao prompt de senha do Ansible Vault. Uma chave nunca se torna uma variável do Ansible nem uma variável de ambiente da tarefa, por isso `lookup('env', 'MY_KEY')` retorna uma string vazia e um playbook não consegue ler uma senha ou chave privada armazenada. Uma chave pode ser usada indiretamente: a chave SSH do inventário é carregada em um agente SSH, de modo que comandos `ssh` e `git` que o playbook inicia no host do Semaphore podem se autenticar por meio de `SSH_AUTH_SOCK` sem ver a chave. Consulte [Variáveis de ambiente da tarefa](/reference/task-environment#every-task).
+
+Para entregar um valor a um playbook, armazene-o como segredo de um [grupo de variáveis](/user-guide/environment#secrets) e selecione esse grupo no template. A aba **Secrets** de um grupo de variáveis tem duas listas:
+
+| Lista | O playbook recebe o segredo como | Como ler |
+| :--- | :--- | :--- |
+| **Extra variables** | Uma variável extra do Ansible | `{{ db_password }}` |
+| **Environment variables** | Uma variável de ambiente do processo `ansible-playbook` | `{{ lookup('env', 'API_TOKEN') }}` |
+
+```yaml
+- hosts: app
+  tasks:
+    - name: Write the database password
+      ansible.builtin.copy:
+        dest: /etc/myapp/db_password
+        content: "{{ db_password }}"
+        mode: "0600"
+      no_log: true
+
+    - name: Call the deploy API
+      ansible.builtin.uri:
+        url: https://api.example.com/deploy
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('env', 'API_TOKEN') }}"
+      no_log: true
+```
+
+O Semaphore não filtra valores secretos da saída da tarefa. O Ansible pode imprimir um valor no resultado de uma tarefa com falha ou em um nível de verbosidade maior, então adicione `no_log: true` a cada tarefa que lida com um segredo.
+
+O campo de segredo do formulário aceita uma única linha. Para distribuir um arquivo como uma chave privada SSH, armazene-o codificado em base64 (`base64 < id_ed25519 | tr -d '\n'`) e grave-o com `content: "{{ deploy_key_b64 | b64decode }}"`, ou mantenha o arquivo no repositório criptografado com `ansible-vault` e associe a senha do vault ao template; consulte [Múltiplas senhas de vault](/user-guide/apps/ansible#multiple-vault-passwords). Para um valor informado ao iniciar a tarefa, use uma [variável de pesquisa do tipo secret](/user-guide/task-templates/survey-vars#secret).
+
+:::info Desde a v2.20
+Desde o **Semaphore 2.20**, os segredos passados como variáveis extras chegam ao Ansible em um arquivo criptografado com Ansible Vault. Versões anteriores passam cada um na linha de comando do `ansible-playbook` como `--extra-vars name=value`, de modo que o valor aparece na lista de processos do host do Semaphore e o Ansible o corta no primeiro espaço. Nessas versões, use um segredo de variável de ambiente para valores que contenham espaços.
+:::
+
+---
+
 ## Armazenamentos de segredos {#secret-storages}
 
 O Semaphore oferece suporte a arquiteturas desacopladas de armazenamento de segredos. Ao criar ou editar credenciais, você pode selecionar onde o material reside por meio das abas:

@@ -109,6 +109,46 @@ curl -X POST "https://semaphore.example.com/api/project/1/keys" \
 
 ---
 
+## 플레이북에서 시크릿 사용 {#secrets-in-playbooks}
+
+Semaphore는 Key Store의 키를 플레이북에 전달하지 않습니다. 키는 Semaphore가 직접 사용합니다: 리포지토리 클론, 인벤토리 호스트 연결과 해당 호스트에서의 `become`, Ansible Vault 비밀번호 프롬프트 응답. 키는 Ansible 변수나 작업의 환경 변수가 되지 않으므로 `lookup('env', 'MY_KEY')`는 빈 문자열을 반환하며, 플레이북은 저장된 비밀번호나 개인 키를 읽을 수 없습니다. 간접적으로 사용할 수 있는 키는 하나뿐입니다. 인벤토리의 SSH 키는 SSH 에이전트에 로드되므로, 플레이북이 Semaphore 호스트에서 실행하는 `ssh` 및 `git` 명령은 키를 보지 않고도 `SSH_AUTH_SOCK`을 통해 인증할 수 있습니다. [작업 환경 변수](/reference/task-environment#every-task)를 참조하세요.
+
+플레이북에 값을 전달하려면 그 값을 [변수 그룹](/user-guide/environment#secrets)의 시크릿으로 저장하고 템플릿에서 해당 그룹을 선택하세요. 변수 그룹의 **Secrets** 탭에는 두 개의 목록이 있습니다:
+
+| 목록 | 플레이북이 시크릿을 받는 형태 | 읽는 방법 |
+| :--- | :--- | :--- |
+| **Extra variables** | Ansible 추가 변수 | `{{ db_password }}` |
+| **Environment variables** | `ansible-playbook` 프로세스의 환경 변수 | `{{ lookup('env', 'API_TOKEN') }}` |
+
+```yaml
+- hosts: app
+  tasks:
+    - name: Write the database password
+      ansible.builtin.copy:
+        dest: /etc/myapp/db_password
+        content: "{{ db_password }}"
+        mode: "0600"
+      no_log: true
+
+    - name: Call the deploy API
+      ansible.builtin.uri:
+        url: https://api.example.com/deploy
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('env', 'API_TOKEN') }}"
+      no_log: true
+```
+
+Semaphore는 작업 출력에서 시크릿 값을 걸러내지 않습니다. Ansible은 실패한 작업의 결과나 높은 상세 수준에서 값을 출력할 수 있으므로, 시크릿을 다루는 모든 작업에 `no_log: true`를 추가하세요.
+
+양식의 시크릿 필드는 한 줄만 입력할 수 있습니다. SSH 개인 키 같은 파일을 배포하려면 base64로 인코딩하여 저장하고(`base64 < id_ed25519 | tr -d '\n'`) `content: "{{ deploy_key_b64 | b64decode }}"`로 기록하거나, 파일을 `ansible-vault`로 암호화하여 리포지토리에 두고 Vault 비밀번호를 템플릿에 연결하세요. [여러 Vault 비밀번호](/user-guide/apps/ansible#multiple-vault-passwords)를 참조하세요. 작업 시작 시 입력하는 값에는 [secret 유형의 설문 변수](/user-guide/task-templates/survey-vars#secret)를 사용하세요.
+
+:::info v2.20부터
+**Semaphore 2.20**부터 추가 변수로 전달되는 시크릿은 Ansible Vault로 암호화된 파일로 Ansible에 전달됩니다. 이전 버전은 각 시크릿을 `ansible-playbook` 명령줄에 `--extra-vars name=value` 형태로 전달하므로, 값이 Semaphore 호스트의 프로세스 목록에 표시되고 Ansible은 첫 번째 공백에서 값을 자릅니다. 해당 버전에서 공백이 포함된 값에는 환경 변수 시크릿을 사용하세요.
+:::
+
+---
+
 ## 시크릿 스토리지 {#secret-storages}
 
 Semaphore는 분리된 시크릿 스토리지 아키텍처를 지원합니다. 자격 증명을 생성하거나 편집할 때 소스 스토리지 탭을 통해 기본 시크릿 자료가 상주하는 위치를 선택할 수 있습니다:

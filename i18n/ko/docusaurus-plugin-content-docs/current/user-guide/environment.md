@@ -26,6 +26,11 @@ Ansible은 그룹의 변수를 Jinja2 구분자(`{{ … }}`, `{% … %}`, `{# �
 2. 변수 그룹 옆의 휴지통 아이콘을 클릭합니다.
 3. 변수 그룹을 제거하려는 것이 확실하면 예를 클릭합니다.
 
+## 시크릿 {#secrets}
+**Secrets** 탭에는 암호화되어 저장되고 저장 후에는 API가 반환하지 않는 값이 들어 있습니다. **Extra variables** 아래의 시크릿은 Ansible에는 추가 변수로, Terraform/OpenTofu에는 `-var`로 전달되고, **Environment variables** 아래의 시크릿은 작업 프로세스의 환경에 설정됩니다.
+
+[Key Store](/user-guide/key-store)의 키는 이 방식으로 작업에 전달되지 않습니다. 플레이북 예시는 [플레이북에서 시크릿 사용](/user-guide/key-store#secrets-in-playbooks)을 참조하세요.
+
 ## 변수 그룹 사용 - Terraform/OpenTofu {#using-variable-groups---terraformopentofu}
 저장된 변수 그룹의 변수나 시크릿을 terraform 템플릿에서 사용하려면, terraform 스크립트가 이를 사용할 수 있도록 이름 앞에 `TF_VAR_` 접두사를 붙여야 합니다. 
 
