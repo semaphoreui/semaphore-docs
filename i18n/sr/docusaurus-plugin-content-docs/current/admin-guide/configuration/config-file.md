@@ -72,10 +72,6 @@ Semaphore koristi konfiguracioni fajl `config.json` sa sledećim sadržajem:
 			"enabled": true,
 			"path": "./events.log"
 		}
-	},
-
-	"process": {
-		"chroot": "/opt/semaphore/sandbox"
 	}
  }
 ```

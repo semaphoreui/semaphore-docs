@@ -72,10 +72,6 @@ O Semaphore usa um arquivo de configuração `config.json` com o seguinte conte�
 			"enabled": true,
 			"path": "./events.log"
 		}
-	},
-
-	"process": {
-		"chroot": "/opt/semaphore/sandbox"
 	}
  }
 ```

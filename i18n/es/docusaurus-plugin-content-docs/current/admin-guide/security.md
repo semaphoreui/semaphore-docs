@@ -81,9 +81,7 @@ Semaphore ejecuta playbooks y comandos definidos por el usuario, lo que puede re
 
 - **Privilegio mínimo**<br />Con los executors de Docker y Kubernetes usted elige la imagen, la red y la cuenta de servicio, de modo que la tarea recibe solo lo que necesita.
 
-- **Ejecución en chroot**<br />Semaphore puede ejecutar tareas dentro de una jaula chroot para aislar todavía más el entorno de ejecución del sistema anfitrión.
-
-- **Usuario del proceso de la tarea**<br />Las tareas pueden ejecutarse con un usuario del sistema dedicado y sin privilegios de root (por ejemplo, `semaphore`) para reducir el impacto de posibles vulnerabilidades. Esto es opcional y puede configurarse según las políticas del sistema.
+- **Usuario del servicio**<br />Una tarea iniciada como proceso local se ejecuta con el usuario del sistema operativo del servidor o runner de Semaphore que la inicia. Ejecute ese servicio con un usuario del sistema dedicado y sin privilegios de root (por ejemplo, `semaphore`) para reducir el impacto de posibles vulnerabilidades; consulte [Usuario del servicio](/admin-guide/installation_manually#service-user).
 <!-- - **Resource Limits**: To prevent abuse, CPU and memory limits can be applied. -->
 
 ## Despliegue seguro {#secure-deployment}
