@@ -15,7 +15,7 @@ Semaphore는 안전한 인증과 유연한 권한 부여 메커니즘을 지원�
 
   - **OpenID Connect (OIDC)**<br />Google, Azure AD, Keycloak과 같은 ID 공급자를 통한 싱글 사인온을 지원합니다. 사용자 지정 클레임과 그룹 매핑을 지원합니다.
 
-- **2단계 인증(2FA)**<br />TOTP 기반 2FA를 사용할 수 있으며 모든 사용자에게 권장됩니다. 사용자별로 활성화할 수 있고 선택적으로 복구 코드를 지원합니다. 설정 옵션 `mfa.totp.enabled`와 `mfa.totp.allow_recovery`를 참조하십시오.
+- **2단계 인증(2FA)**<br />TOTP 기반 2FA를 사용할 수 있으며 모든 사용자에게 권장됩니다. 사용자별로 활성화할 수 있고 선택적으로 복구 코드를 지원합니다. 설정 방법은 [2단계 인증](/admin-guide/authentication/two-factor)을 참조하십시오.
 
 - **역할 기반 접근 제어**<br />Admin, Maintainer, Viewer 등 서로 다른 역할을 사용자에게 할당하여 책임에 따라 접근을 제한할 수 있습니다.
 

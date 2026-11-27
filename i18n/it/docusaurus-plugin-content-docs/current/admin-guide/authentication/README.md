@@ -17,6 +17,9 @@ di identità.
 | [OpenID Connect](/admin-guide/authentication/openid) | Il proprio provider di identità | È disponibile il single sign-on: Keycloak, Okta, Entra ID, Google, GitHub e altri. |
 | [Proxy JWT](/admin-guide/authentication/jwt-proxy-auth) | Il proprio reverse proxy di autenticazione | Un proxy come Pomerium fa già accedere gli utenti e inoltra un JWT firmato. |
 
+Qualunque sia il metodo con cui un utente accede, l'[autenticazione a due fattori](/admin-guide/authentication/two-factor)
+può chiedere come secondo passaggio un codice TOTP generato da un'app di autenticazione.
+
 L'autenticazione risponde soltanto alla domanda su *chi* sia l'utente. Ciò che gli è consentito
 fare viene deciso separatamente, dal suo ruolo a livello di server e dal suo ruolo in ciascun
 Project: vedere [Team](/user-guide/team).
@@ -57,7 +60,7 @@ amministratore locale per il giorno in cui il provider di identità non è raggi
 1. Configurare il provider e verificare che un utente reale riesca ad accedere tramite esso.
 2. Assegnare a quell'utente i ruoli di cui ha bisogno.
 3. Mantenere un account di amministratore locale con una password robusta e
-   [TOTP](/admin-guide/authentication/local#two-factor-authentication) abilitato.
+   [TOTP](/admin-guide/authentication/two-factor) abilitato.
 4. Impostare `password_login_disable` per impedire a tutti gli altri di usare le password.
 
 Eseguite questi passaggi nell'ordine indicato. Impostare `password_login_disable` prima del
@@ -67,7 +70,8 @@ passaggio 1 funziona esattamente come dichiarato e vi esclude dal vostro stesso 
 
 | Pagina | Contenuto |
 |---|---|
-| [Account locali](/admin-guide/authentication/local) | Password, TOTP, codici monouso via e-mail, durata della sessione e disattivazione dell'accesso con password. |
+| [Account locali](/admin-guide/authentication/local) | Password, gestione degli account, durata della sessione e disattivazione dell'accesso con password. |
+| [Autenticazione a due fattori](/admin-guide/authentication/two-factor) | Codici TOTP da un'app di autenticazione: attivazione, configurazione, accesso e ripristino. |
 | [LDAP e Active Directory](/admin-guide/authentication/ldap) | Bind a una directory, filtri di ricerca, mappature degli attributi e TLS. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Configurazione del provider, espressioni per i claim, accesso avviato dall'IdP e dodici esempi completi di provider. |
 | [Autenticazione tramite proxy JWT](/admin-guide/authentication/jwt-proxy-auth) | Fidarsi del JWT firmato di un reverse proxy, impostazioni JWKS e dei claim e logout tramite il proxy. |

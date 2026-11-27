@@ -31,7 +31,8 @@ de ce qu'il en advient.
 Les utilisateurs s'authentifient de trois manières, et toutes trois aboutissent à la même session :
 
 - **Comptes locaux.** Les mots de passe sont hachés avec Argon2id (bcrypt avant 2.20, mis à niveau
-  à la première connexion). L'authentification à deux facteurs TOTP peut être exigée.
+  à la première connexion). Chaque utilisateur peut ajouter l'authentification à deux facteurs
+  TOTP à son compte.
 - **[LDAP ou Active Directory](/admin-guide/authentication/ldap).** L'annuaire vérifie le mot de passe ;
   Semaphore ne conserve que le compte.
 - **[OpenID Connect](/admin-guide/authentication/openid).** Le fournisseur authentifie et Semaphore

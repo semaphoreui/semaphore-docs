@@ -30,7 +30,7 @@ Semaphore는 인프라의 자격 증명을 보관하고 그 인프라를 대상�
 사용자는 세 가지 방법 중 하나로 인증하며, 세 방법 모두 동일한 세션으로 이어집니다.
 
 - **로컬 계정.** 비밀번호는 Argon2id로 해시됩니다(2.20 이전에는 bcrypt였고, 첫 로그인 시
-  업그레이드됩니다). TOTP 2단계 인증을 필수로 설정할 수 있습니다.
+  업그레이드됩니다). 각 사용자는 자신의 계정에 TOTP 2단계 인증을 추가할 수 있습니다.
 - **[LDAP 또는 Active Directory](/admin-guide/authentication/ldap).** 디렉터리가 비밀번호를 검증하고,
   Semaphore는 계정만 보관합니다.
 - **[OpenID Connect](/admin-guide/authentication/openid).** 공급자가 인증하고 Semaphore는 클레임을

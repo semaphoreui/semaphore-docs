@@ -98,6 +98,7 @@ const sidebars = {
           link: { type: 'doc', id: 'admin-guide/authentication/README' },
           items: [
             'admin-guide/authentication/local',
+            'admin-guide/authentication/two-factor',
             {
               type: 'category',
               label: 'LDAP and AD',

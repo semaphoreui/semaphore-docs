@@ -17,6 +17,10 @@ proveedor de identidad.
 | [OpenID Connect](/admin-guide/authentication/openid) | Su proveedor de identidad | Dispone de inicio de sesión único: Keycloak, Okta, Entra ID, Google, GitHub y otros. |
 | [Proxy JWT](/admin-guide/authentication/jwt-proxy-auth) | Su proxy inverso de autenticación | Un proxy como Pomerium ya inicia la sesión de los usuarios y reenvía un JWT firmado. |
 
+Sea cual sea el método con el que inicia sesión un usuario, la
+[autenticación en dos pasos](/admin-guide/authentication/two-factor) puede pedirle como segundo paso un código TOTP de una
+aplicación de autenticación.
+
 La autenticación solo responde a *quién* es el usuario. Lo que tiene permitido hacer se decide
 por separado, según su rol de servidor y su rol en cada proyecto: consulte
 [Equipos](/user-guide/team).
@@ -59,7 +63,7 @@ administrador local para el día en que el proveedor de identidad no esté dispo
 1. Configure el proveedor y confirme que un usuario real puede iniciar sesión a través de él.
 2. Asigne a ese usuario los roles que necesite.
 3. Conserve una cuenta de administrador local con una contraseña robusta y
-   [TOTP](/admin-guide/authentication/local#two-factor-authentication) habilitado.
+   [TOTP](/admin-guide/authentication/two-factor) habilitado.
 4. Establezca `password_login_disable` para impedir que el resto siga usando contraseñas.
 
 Hágalo en ese orden. Establecer `password_login_disable` antes del paso 1 funciona exactamente
@@ -69,7 +73,8 @@ como se anuncia y le deja fuera de su propio servidor.
 
 | Página | Qué cubre |
 |---|---|
-| [Cuentas locales](/admin-guide/authentication/local) | Contraseñas, TOTP, códigos de un solo uso por correo electrónico, duración de la sesión y desactivación del inicio de sesión con contraseña. |
+| [Cuentas locales](/admin-guide/authentication/local) | Contraseñas, gestión de cuentas, duración de la sesión y desactivación del inicio de sesión con contraseña. |
+| [Autenticación en dos pasos](/admin-guide/authentication/two-factor) | Códigos TOTP de una aplicación de autenticación: activarla, configurarla, iniciar sesión y recuperar el acceso. |
 | [LDAP y Active Directory](/admin-guide/authentication/ldap) | Enlace (bind) con un directorio, filtros de búsqueda, asignaciones de atributos y TLS. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Configuración del proveedor, expresiones de claims, inicio de sesión iniciado por el IdP y doce ejemplos completos de proveedores. |
 | [Autenticación por proxy JWT](/admin-guide/authentication/jwt-proxy-auth) | Confiar en el JWT firmado de un proxy inverso, ajustes de JWKS y de claims, y cierre de sesión a través del proxy. |

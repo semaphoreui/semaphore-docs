@@ -1,6 +1,6 @@
 ---
 title: Contas locais
-description: Login por senha contra o banco de dados do Semaphore - como as senhas são armazenadas, autenticação de dois fatores TOTP, duração da sessão e como desativar as senhas.
+description: Login por senha contra o banco de dados do Semaphore - como as senhas são armazenadas, gerenciamento de contas, duração da sessão e como desativar as senhas.
 ---
 
 # Contas locais
@@ -50,46 +50,31 @@ pela interface web.
 
 ## Autenticação de dois fatores {#two-factor-authentication}
 
-O Semaphore oferece suporte a TOTP: os códigos de seis dígitos gerados pelo Google
-Authenticator, Aegis, 1Password e aplicativos semelhantes. Vem desabilitado e vale para as
-contas que o habilitarem — não é imposto a todo mundo.
+Uma conta local pode pedir um segundo fator depois da senha: um código TOTP de seis dígitos
+de um aplicativo autenticador. Vem desabilitado, é ativado para o servidor com
+`mfa.totp.enabled` e cada usuário o configura na própria conta. Como funciona, como ativá-lo,
+como entrar com um código e como recuperar o acesso após perder o telefone está descrito em
+[Autenticação de dois fatores](/admin-guide/authentication/two-factor).
+
+## Duração da sessão {#session-lifetime}
+
+Dois limites independentes encerram uma sessão; o que for atingido primeiro desconecta o
+usuário.
+
+O **tempo limite de inatividade** conta a partir da última requisição. Toda requisição
+autenticada, incluindo o polling em segundo plano de uma aba aberta do navegador, o reinicia.
+O padrão é 168 horas (sete dias):
 
 ```json
 {
-  "mfa": {
-    "totp": {
-      "enabled": true,
-      "allow_recovery": true,
-      "app_name": "Semaphore"
-    }
+  "auth": {
+    "session_inactivity_hours": 8
   }
 }
 ```
 
-| Opção | Efeito |
-|---|---|
-| `mfa.totp.enabled` | Permite que os usuários adicionem TOTP à sua conta. Sem isso, ninguém consegue se cadastrar. |
-| `mfa.totp.allow_recovery` | Emite um código de recuperação no cadastro, para que um telefone perdido não signifique uma conta perdida. Informá-lo **remove o cadastro TOTP** e conecta o usuário; depois ele se cadastra novamente. O código é armazenado como um hash bcrypt. |
-| `mfa.totp.app_name` | O rótulo de emissor exibido pelo aplicativo autenticador. Defina-o quando você executa mais de um Semaphore. |
-
-Os usuários se cadastram na própria página de conta. Um administrador pode inspecionar ou
-remover o segundo fator de quem perdeu o dispositivo:
-
-```bash
-semaphore users totp show --login jane
-semaphore users totp disable --login jane
-```
-
-Desligar `mfa.totp.enabled` de novo não apaga o cadastro de ninguém; apenas deixa de pedir o
-segundo fator. Ligue novamente e os cadastros antigos voltam a valer.
-
-## Duração da sessão {#session-lifetime}
-
-Uma sessão expira depois de **sete dias sem atividade**. Esse tempo limite de inatividade é
-embutido e não configurável.
-
-Já um limite absoluto é configurável, e é medido a partir do momento do login, e não da
-última requisição, de modo que uma sessão em uso ativo também termina:
+O **limite absoluto** conta a partir do momento do login, e não da última requisição, de modo
+que uma sessão em uso ativo também termina:
 
 ```json
 {
@@ -101,7 +86,9 @@ Já um limite absoluto é configurável, e é medido a partir do momento do logi
 
 O padrão, `0`, significa nenhum limite absoluto. Defina-o quando uma estação de trabalho
 compartilhada ou uma regra de conformidade exigir que as pessoas se autentiquem novamente em
-intervalos regulares.
+intervalos regulares. Um navegador deixado aberto em uma página que consulta a API
+periodicamente mantém a sessão ativa, então só o limite absoluto encerra com segurança uma
+sessão assim.
 
 ## Desativar o login por senha {#turn-password-sign-in-off}
 
@@ -128,4 +115,5 @@ Recuperar-se de um erro significa editar o arquivo de configuração no servidor
 
 - [LDAP e Active Directory](/admin-guide/authentication/ldap) — autenticar contra um diretório.
 - [OpenID Connect](/admin-guide/authentication/openid) — single sign-on com um provedor de identidade.
+- [Autenticação de dois fatores](/admin-guide/authentication/two-factor) — pedir um código TOTP depois da senha.
 - [Segurança](/admin-guide/security) — parâmetros de hashing, criptografia e hardening.

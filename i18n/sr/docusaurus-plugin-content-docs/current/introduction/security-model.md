@@ -31,7 +31,7 @@ koje su mu potrebne, a od tog trenutka kod u vašem repozitorijumu odlučuje
 Korisnici se autentifikuju na jedan od tri načina, a sva tri završavaju istom sesijom:
 
 - **Lokalni nalozi.** Lozinke se heširaju pomoću Argon2id (bcrypt pre verzije 2.20, uz nadogradnju
-  pri prvoj prijavi). Može se zahtevati TOTP dvofaktorska autentifikacija.
+  pri prvoj prijavi). Svaki korisnik može svom nalogu da doda TOTP dvofaktorsku autentifikaciju.
 - **[LDAP ili Active Directory](/admin-guide/authentication/ldap).** Direktorijum proverava lozinku;
   Semaphore čuva samo nalog.
 - **[OpenID Connect](/admin-guide/authentication/openid).** Provajder vrši autentifikaciju, a Semaphore

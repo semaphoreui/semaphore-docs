@@ -1,6 +1,6 @@
 ---
 title: Local accounts
-description: Password sign-in against the Semaphore database - how passwords are stored, TOTP two-factor authentication, session lifetime, and turning passwords off.
+description: Password sign-in against the Semaphore database - how passwords are stored, managing accounts, session lifetime, and turning passwords off.
 ---
 
 # Local accounts
@@ -51,38 +51,11 @@ password from the web interface afterwards.
 
 ## Two-factor authentication {#two-factor-authentication}
 
-Semaphore supports TOTP: the six-digit codes produced by Google Authenticator, Aegis,
-1Password, and similar apps. It is off by default and applies to whichever accounts
-enable it — it is not forced on everyone.
-
-```json
-{
-  "mfa": {
-    "totp": {
-      "enabled": true,
-      "allow_recovery": true,
-      "app_name": "Semaphore"
-    }
-  }
-}
-```
-
-| Option | Effect |
-|---|---|
-| `mfa.totp.enabled` | Lets users add TOTP to their account. Without it, nobody can enrol. |
-| `mfa.totp.allow_recovery` | Issues one recovery code at enrolment, so a lost phone is not a lost account. Entering it **removes the TOTP enrolment** and signs the user in; they then enrol again. The code is stored as a bcrypt hash. |
-| `mfa.totp.app_name` | The issuer label the authenticator app displays. Set it when you run more than one Semaphore. |
-
-Users enrol from their own account page. An administrator can inspect or remove a
-second factor for somebody who has lost their device:
-
-```bash
-semaphore users totp show --login jane
-semaphore users totp disable --login jane
-```
-
-Turning `mfa.totp.enabled` off again does not delete anybody's enrolment; it stops the
-second factor being requested. Turn it back on and the old enrolments apply again.
+A local account can ask for a second factor after the password: a six-digit TOTP code
+from an authenticator app. It is off by default, turned on for the server with
+`mfa.totp.enabled`, and set up by each user for their own account. How it works, how to
+turn it on, how to sign in with a code, and how to recover from a lost phone are described
+in [Two-factor authentication](/admin-guide/authentication/two-factor).
 
 ## Session lifetime {#session-lifetime}
 
@@ -141,4 +114,5 @@ file on the server and restarting.
 
 - [LDAP and Active Directory](/admin-guide/authentication/ldap) — authenticate against a directory.
 - [OpenID Connect](/admin-guide/authentication/openid) — single sign-on with an identity provider.
+- [Two-factor authentication](/admin-guide/authentication/two-factor) — ask for a TOTP code after the password.
 - [Security](/admin-guide/security) — hashing parameters, encryption, and hardening.

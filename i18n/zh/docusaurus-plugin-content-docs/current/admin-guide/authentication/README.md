@@ -15,6 +15,9 @@ Semaphore 提供四种确认用户身份的方式。它们相互独立，可以�
 | [OpenID Connect](/admin-guide/authentication/openid) | 你的身份提供方 | 你使用单点登录：Keycloak、Okta、Entra ID、Google、GitHub 等。 |
 | [JWT 代理](/admin-guide/authentication/jwt-proxy-auth) | 你的认证反向代理 | Pomerium 等代理已经完成用户登录，并转发一个已签名的 JWT。 |
 
+无论用户通过哪种方式登录，[双因素认证](/admin-guide/authentication/two-factor)
+都可以作为第二步，要求输入认证器应用中的 TOTP 验证码。
+
 身份认证只回答用户*是谁*。用户被允许做什么则由服务器角色和他在每个项目中的角色单独决定 ——
 参见[团队](/user-guide/team)。
 
@@ -51,7 +54,7 @@ Semaphore 提供四种确认用户身份的方式。它们相互独立，可以�
 1. 配置提供方，并确认真实用户能够通过它登录。
 2. 为该用户分配所需的角色。
 3. 保留一个本地管理员账户，使用强密码并启用
-   [TOTP](/admin-guide/authentication/local#two-factor-authentication)。
+   [TOTP](/admin-guide/authentication/two-factor)。
 4. 设置 `password_login_disable`，阻止其他所有人使用密码登录。
 
 请按此顺序操作。在第 1 步之前设置 `password_login_disable` 会完全按照其字面含义生效，
@@ -61,7 +64,8 @@ Semaphore 提供四种确认用户身份的方式。它们相互独立，可以�
 
 | 页面 | 涵盖内容 |
 |---|---|
-| [本地账户](/admin-guide/authentication/local) | 密码、TOTP、邮件一次性验证码、会话有效期，以及关闭密码登录。 |
+| [本地账户](/admin-guide/authentication/local) | 密码、账户管理、会话有效期，以及关闭密码登录。 |
+| [双因素认证](/admin-guide/authentication/two-factor) | 认证器应用生成的 TOTP 验证码：开启、设置、登录和恢复。 |
 | [LDAP 与 Active Directory](/admin-guide/authentication/ldap) | 绑定到目录、搜索过滤器、属性映射和 TLS。 |
 | [OpenID Connect](/admin-guide/authentication/openid) | 提供方配置、声明表达式、IdP 发起的登录，以及十二个完整的提供方示例。 |
 | [JWT 代理身份认证](/admin-guide/authentication/jwt-proxy-auth) | 信任反向代理签名的 JWT、JWKS 与声明设置，以及通过代理退出登录。 |

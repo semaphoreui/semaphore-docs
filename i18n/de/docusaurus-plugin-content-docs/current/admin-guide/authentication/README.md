@@ -17,6 +17,10 @@ anbieten kann.
 | [OpenID Connect](/admin-guide/authentication/openid) | Ihr Identitätsanbieter | Sie nutzen Single Sign-on: Keycloak, Okta, Entra ID, Google, GitHub und andere. |
 | [JWT-Proxy](/admin-guide/authentication/jwt-proxy-auth) | Ihr authentifizierender Reverse Proxy | Ein Proxy wie Pomerium meldet die Benutzer bereits an und leitet ein signiertes JWT weiter. |
 
+Unabhängig davon, mit welcher Methode sich ein Benutzer anmeldet, kann die
+[Zwei-Faktor-Authentifizierung](/admin-guide/authentication/two-factor) als zweiten Schritt einen TOTP-Code aus einer
+Authenticator-App abfragen.
+
 Die Authentifizierung beantwortet nur, *wer* der Benutzer ist. Was er tun darf, wird
 getrennt davon entschieden – über seine Serverrolle und über seine Rolle in jedem Projekt,
 siehe [Teams](/user-guide/team).
@@ -59,7 +63,7 @@ Administrator für den Tag, an dem der Identitätsanbieter nicht erreichbar ist:
 1. Konfigurieren Sie den Anbieter und bestätigen Sie, dass sich ein echter Benutzer darüber anmelden kann.
 2. Geben Sie diesem Benutzer die Rollen, die er benötigt.
 3. Behalten Sie ein lokales Administratorkonto mit einem starken Passwort und aktiviertem
-   [TOTP](/admin-guide/authentication/local#two-factor-authentication).
+   [TOTP](/admin-guide/authentication/two-factor).
 4. Setzen Sie `password_login_disable`, damit alle anderen keine Passwörter mehr verwenden können.
 
 Halten Sie diese Reihenfolge ein. `password_login_disable` vor Schritt 1 zu setzen funktioniert
@@ -69,7 +73,8 @@ genau wie angekündigt und sperrt Sie aus Ihrem eigenen Server aus.
 
 | Seite | Inhalt |
 |---|---|
-| [Lokale Konten](/admin-guide/authentication/local) | Passwörter, TOTP, einmalige Codes per E-Mail, Sitzungsdauer und das Abschalten der Passwortanmeldung. |
+| [Lokale Konten](/admin-guide/authentication/local) | Passwörter, Kontenverwaltung, Sitzungsdauer und das Abschalten der Passwortanmeldung. |
+| [Zwei-Faktor-Authentifizierung](/admin-guide/authentication/two-factor) | TOTP-Codes aus einer Authenticator-App: Einschalten, Einrichten, Anmelden und Wiederherstellung. |
 | [LDAP und Active Directory](/admin-guide/authentication/ldap) | Bind an ein Verzeichnis, Suchfilter, Attributzuordnungen und TLS. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Anbieterkonfiguration, Claim-Ausdrücke, IdP-initiierte Anmeldung und zwölf ausgearbeitete Anbieterbeispiele. |
 | [JWT-Proxy-Authentifizierung](/admin-guide/authentication/jwt-proxy-auth) | Einem signierten JWT eines Reverse Proxys vertrauen, JWKS- und Claim-Einstellungen sowie die Abmeldung über den Proxy. |

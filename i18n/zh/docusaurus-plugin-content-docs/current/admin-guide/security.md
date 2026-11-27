@@ -15,7 +15,7 @@ Semaphore 支持安全的认证和灵活的授权机制：
 
   - **OpenID Connect（OIDC）**<br />支持与 Google、Azure AD 或 Keycloak 等身份提供商的单点登录。支持自定义声明和组映射。
 
-- **双因素认证（2FA）**<br />提供基于 TOTP 的 2FA，并建议所有用户启用。可按用户启用，并支持可选的恢复码。参见配置选项 `mfa.totp.enabled` 和 `mfa.totp.allow_recovery`。
+- **双因素认证（2FA）**<br />提供基于 TOTP 的 2FA，并建议所有用户启用。可按用户启用，并支持可选的恢复码。设置方法参见[双因素认证](/admin-guide/authentication/two-factor)。
 
 - **基于角色的访问控制**<br />你可以为用户分配不同的角色，例如 Admin、Maintainer 或 Viewer，根据职责限制访问。
 

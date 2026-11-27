@@ -1,6 +1,6 @@
 ---
 title: 로컬 계정
-description: Semaphore 데이터베이스를 기준으로 하는 비밀번호 로그인 - 비밀번호 저장 방식, TOTP 2단계 인증, 세션 수명, 비밀번호 로그인 끄기.
+description: Semaphore 데이터베이스를 기준으로 하는 비밀번호 로그인 - 비밀번호 저장 방식, 계정 관리, 세션 수명, 비밀번호 로그인 끄기.
 ---
 
 # 로컬 계정
@@ -47,46 +47,28 @@ semaphore users list
 
 ## 2단계 인증 {#two-factor-authentication}
 
-Semaphore는 TOTP를 지원합니다. Google Authenticator, Aegis, 1Password 등의 앱이 생성하는 여섯 자리
-코드입니다. 기본적으로 꺼져 있으며, 이를 활성화한 계정에만 적용됩니다. 모든 사용자에게 강제되지
-않습니다.
+로컬 계정은 비밀번호 다음에 두 번째 인증 요소로 인증 앱의 여섯 자리 TOTP 코드를 요구할 수 있습니다.
+기본적으로 꺼져 있으며, 서버에서는 `mfa.totp.enabled`로 켜고 각 사용자가 자신의 계정에 직접
+설정합니다. 동작 방식, 켜는 방법, 코드로 로그인하는 방법, 휴대폰을 잃어버렸을 때 복구하는 방법은
+[2단계 인증](/admin-guide/authentication/two-factor)에 설명되어 있습니다.
+
+## 세션 수명 {#session-lifetime}
+
+세션을 끝내는 제한은 서로 독립적으로 두 가지이며, 먼저 도달하는 쪽에서 사용자가 로그아웃됩니다.
+
+**비활성 제한 시간**은 마지막 요청부터 측정됩니다. 열려 있는 브라우저 탭의 백그라운드 폴링을
+포함해 인증된 요청이 있을 때마다 초기화됩니다. 기본값은 168시간(7일)입니다.
 
 ```json
 {
-  "mfa": {
-    "totp": {
-      "enabled": true,
-      "allow_recovery": true,
-      "app_name": "Semaphore"
-    }
+  "auth": {
+    "session_inactivity_hours": 8
   }
 }
 ```
 
-| 옵션 | 효과 |
-|---|---|
-| `mfa.totp.enabled` | 사용자가 자신의 계정에 TOTP를 추가할 수 있게 합니다. 이 옵션이 없으면 아무도 등록할 수 없습니다. |
-| `mfa.totp.allow_recovery` | 등록 시 복구 코드를 하나 발급하므로, 휴대폰을 잃어버려도 계정을 잃지 않습니다. 복구 코드를 입력하면 **TOTP 등록이 해제되고** 사용자가 로그인됩니다. 그런 다음 다시 등록하면 됩니다. 이 코드는 bcrypt 해시로 저장됩니다. |
-| `mfa.totp.app_name` | 인증 앱에 표시되는 발급자 라벨입니다. Semaphore를 두 개 이상 운영한다면 설정하세요. |
-
-사용자는 자신의 계정 페이지에서 등록합니다. 기기를 분실한 사용자의 2단계 인증은 관리자가 확인하거나
-제거할 수 있습니다.
-
-```bash
-semaphore users totp show --login jane
-semaphore users totp disable --login jane
-```
-
-`mfa.totp.enabled`를 다시 끄더라도 등록 정보가 삭제되지는 않습니다. 2단계 인증을 요구하지 않게 될
-뿐입니다. 다시 켜면 기존 등록 정보가 그대로 적용됩니다.
-
-## 세션 수명 {#session-lifetime}
-
-세션은 **활동이 없는 상태로 7일**이 지나면 만료됩니다. 이 비활성 제한 시간은 내장되어 있으며 설정할
-수 없습니다.
-
-절대 제한은 설정할 수 있으며, 마지막 요청이 아니라 로그인 시점부터 측정됩니다. 따라서 활발히
-사용 중인 세션도 종료됩니다.
+**절대 제한**은 마지막 요청이 아니라 로그인 시점부터 측정됩니다. 따라서 활발히 사용 중인 세션도
+종료됩니다.
 
 ```json
 {
@@ -97,7 +79,8 @@ semaphore users totp disable --login jane
 ```
 
 기본값 `0`은 절대 제한이 없다는 뜻입니다. 공용 워크스테이션이나 규정 준수 규칙 때문에 사용자가
-주기적으로 재인증해야 하는 경우에 설정하세요.
+주기적으로 재인증해야 하는 경우에 설정하세요. API를 폴링하는 페이지를 열어 둔 브라우저는 세션을
+활성 상태로 유지하므로, 그런 세션을 확실하게 끝낼 수 있는 것은 절대 제한뿐입니다.
 
 ## 비밀번호 로그인 끄기 {#turn-password-sign-in-off}
 
@@ -123,4 +106,5 @@ LDAP와 OpenID Connect는 영향을 받지 않습니다. 기존 로컬 계정은
 
 - [LDAP 및 Active Directory](/admin-guide/authentication/ldap) — 디렉터리를 기준으로 인증합니다.
 - [OpenID Connect](/admin-guide/authentication/openid) — ID 공급자를 이용한 싱글 사인온입니다.
+- [2단계 인증](/admin-guide/authentication/two-factor) — 비밀번호 다음에 TOTP 코드를 요구합니다.
 - [보안](/admin-guide/security) — 해싱 매개변수, 암호화, 하드닝.

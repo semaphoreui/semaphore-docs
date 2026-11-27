@@ -29,7 +29,7 @@ Semaphore 持有访问你基础设施的凭据，并针对它运行代码。由�
 用户通过三种方式之一进行认证，三者最终都产生同样的会话：
 
 - **本地账号。** 密码使用 Argon2id 哈希（2.20 之前为 bcrypt，首次登录时升级）。
-  可以强制要求 TOTP 双因素认证。
+  每位用户都可以为自己的账户添加 TOTP 双因素认证。
 - **[LDAP 或 Active Directory](/admin-guide/authentication/ldap)。** 由目录服务校验密码；
   Semaphore 只保留账号。
 - **[OpenID Connect](/admin-guide/authentication/openid)。** 由提供方完成认证，Semaphore

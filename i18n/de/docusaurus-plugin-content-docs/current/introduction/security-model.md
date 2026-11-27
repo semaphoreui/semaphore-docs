@@ -32,7 +32,7 @@ Benutzer authentifizieren sich auf eine von drei Arten, und alle drei enden in d
 Sitzung:
 
 - **Lokale Konten.** Passwörter werden mit Argon2id gehasht (vor 2.20 mit bcrypt, beim
-  ersten Anmelden umgestellt). TOTP-Zwei-Faktor-Authentifizierung kann verpflichtend sein.
+  ersten Anmelden umgestellt). Jeder Benutzer kann seinem Konto TOTP-Zwei-Faktor-Authentifizierung hinzufügen.
 - **[LDAP oder Active Directory](/admin-guide/authentication/ldap).** Das Verzeichnis prüft das Passwort;
   Semaphore behält nur das Konto.
 - **[OpenID Connect](/admin-guide/authentication/openid).** Der Provider authentifiziert, und Semaphore

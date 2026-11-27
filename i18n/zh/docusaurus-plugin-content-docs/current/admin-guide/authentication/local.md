@@ -1,6 +1,6 @@
 ---
 title: 本地账户
-description: 依据 Semaphore 数据库进行的密码登录 - 密码如何存储、TOTP 双因素认证、会话有效期，以及关闭密码登录。
+description: 依据 Semaphore 数据库进行的密码登录 - 密码如何存储、账户管理、会话有效期，以及关闭密码登录。
 ---
 
 # 本地账户
@@ -47,43 +47,27 @@ semaphore users list
 
 ## 双因素认证 {#two-factor-authentication}
 
-Semaphore 支持 TOTP：即 Google Authenticator、Aegis、1Password 等应用生成的六位验证码。
-该功能默认关闭，并且只对启用了它的账户生效 —— 不会强制所有人使用。
+本地账户可以在密码之后要求第二因素：认证器应用生成的六位 TOTP 验证码。该功能默认关闭，
+通过 `mfa.totp.enabled` 为服务器开启，再由每位用户为自己的账户设置。它的工作原理、如何开启、
+如何使用验证码登录，以及手机丢失后如何恢复，请参见[双因素认证](/admin-guide/authentication/two-factor)。
+
+## 会话有效期 {#session-lifetime}
+
+会话受两个相互独立的限制约束；先达到哪一个，就由哪一个让用户退出登录。
+
+**闲置超时**从最后一次请求开始计算。每个经过认证的请求，包括浏览器中打开的标签页在后台
+发起的轮询，都会重置它。默认值为 168 小时（七天）：
 
 ```json
 {
-  "mfa": {
-    "totp": {
-      "enabled": true,
-      "allow_recovery": true,
-      "app_name": "Semaphore"
-    }
+  "auth": {
+    "session_inactivity_hours": 8
   }
 }
 ```
 
-| 选项 | 作用 |
-|---|---|
-| `mfa.totp.enabled` | 允许用户为自己的账户添加 TOTP。不启用它，任何人都无法绑定。 |
-| `mfa.totp.allow_recovery` | 在绑定时签发一个恢复码，这样手机丢失不等于账户丢失。输入恢复码会**解除 TOTP 绑定**并让用户登录；之后用户可以重新绑定。该恢复码以 bcrypt 哈希形式存储。 |
-| `mfa.totp.app_name` | 认证器应用显示的签发者标签。当你运行多个 Semaphore 时请设置它。 |
-
-用户在自己的账户页面完成绑定。管理员可以为丢失设备的用户查看或移除第二因素：
-
-```bash
-semaphore users totp show --login jane
-semaphore users totp disable --login jane
-```
-
-再次关闭 `mfa.totp.enabled` 不会删除任何人的绑定；它只是不再要求输入第二因素。重新开启后，
-原有的绑定会再次生效。
-
-## 会话有效期 {#session-lifetime}
-
-会话在**七天无活动**后过期。该闲置超时是内置的，不可配置。
-
-绝对有效期则可以配置，并且从登录时刻开始计算，而不是从最后一次请求开始计算，因此正在活跃
-使用的会话同样会结束：
+**绝对有效期**从登录时刻开始计算，而不是从最后一次请求开始计算，因此正在活跃使用的会话
+同样会结束：
 
 ```json
 {
@@ -94,7 +78,8 @@ semaphore users totp disable --login jane
 ```
 
 默认值 `0` 表示没有绝对有效期限制。当共享工作站或合规要求人员按固定周期重新认证时，请设置
-该选项。
+该选项。停留在轮询 API 的页面上的浏览器会让会话一直保持活跃，因此只有绝对有效期才能可靠地
+结束这类会话。
 
 ## 关闭密码登录 {#turn-password-sign-in-off}
 
@@ -119,4 +104,5 @@ LDAP 和 OpenID Connect 不受影响。现有本地账户保留其角色和历�
 
 - [LDAP 与 Active Directory](/admin-guide/authentication/ldap) —— 依据目录服务进行认证。
 - [OpenID Connect](/admin-guide/authentication/openid) —— 使用身份提供方实现单点登录。
+- [双因素认证](/admin-guide/authentication/two-factor) —— 在密码之后要求输入 TOTP 验证码。
 - [安全](/admin-guide/security) —— 哈希参数、加密和安全加固。

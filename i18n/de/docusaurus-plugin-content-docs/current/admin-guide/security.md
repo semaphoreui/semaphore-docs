@@ -15,7 +15,7 @@ Semaphore unterstützt sichere Authentifizierung und flexible Autorisierungsmech
 
   - **OpenID Connect (OIDC)**<br />Ermöglicht Single Sign-on mit Identitätsanbietern wie Google, Azure AD oder Keycloak. Unterstützt benutzerdefinierte Claims und Gruppenzuordnungen.
 
-- **Zwei-Faktor-Authentifizierung (2FA)**<br />TOTP-basierte 2FA ist verfügbar und wird für alle Benutzer empfohlen. Sie kann pro Benutzer aktiviert werden und unterstützt optionale Wiederherstellungscodes. Siehe die Konfigurationsoptionen `mfa.totp.enabled` und `mfa.totp.allow_recovery`.
+- **Zwei-Faktor-Authentifizierung (2FA)**<br />TOTP-basierte 2FA ist verfügbar und wird für alle Benutzer empfohlen. Sie kann pro Benutzer aktiviert werden und unterstützt optionale Wiederherstellungscodes. Die Einrichtung beschreibt [Zwei-Faktor-Authentifizierung](/admin-guide/authentication/two-factor).
 
 - **Rollenbasierte Zugriffskontrolle**<br />Sie können Benutzern unterschiedliche Rollen wie Admin, Maintainer oder Viewer zuweisen und so den Zugriff entsprechend der Verantwortung einschränken.
 

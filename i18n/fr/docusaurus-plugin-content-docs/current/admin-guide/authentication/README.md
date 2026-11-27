@@ -16,6 +16,10 @@ formulaire de mot de passe, une connexion à l'annuaire et un bouton par fournis
 | [OpenID Connect](/admin-guide/authentication/openid) | Votre fournisseur d'identité | Vous disposez d'une authentification unique : Keycloak, Okta, Entra ID, Google, GitHub et d'autres. |
 | [Proxy JWT](/admin-guide/authentication/jwt-proxy-auth) | Votre proxy inverse d'authentification | Un proxy tel que Pomerium connecte déjà les utilisateurs et transmet un JWT signé. |
 
+Quelle que soit la méthode par laquelle un utilisateur se connecte,
+l'[authentification à deux facteurs](/admin-guide/authentication/two-factor) peut demander en deuxième étape un code TOTP
+issu d'une application d'authentification.
+
 L'authentification répond uniquement à la question de savoir *qui* est l'utilisateur. Ce qu'il a
 le droit de faire est décidé séparément, par son rôle serveur et par son rôle dans chaque
 projet — voir [Équipes](/user-guide/team).
@@ -59,7 +63,7 @@ administrateur local pour le jour où le fournisseur d'identité est injoignable
 1. Configurez le fournisseur et vérifiez qu'un utilisateur réel peut se connecter avec.
 2. Attribuez à cet utilisateur les rôles dont il a besoin.
 3. Conservez un compte d'administrateur local avec un mot de passe fort et
-   [TOTP](/admin-guide/authentication/local#two-factor-authentication) activé.
+   [TOTP](/admin-guide/authentication/two-factor) activé.
 4. Définissez `password_login_disable` pour empêcher tous les autres d'utiliser des mots de passe.
 
 Respectez cet ordre. Définir `password_login_disable` avant l'étape 1 fonctionne exactement
@@ -69,7 +73,8 @@ comme annoncé et vous prive de l'accès à votre propre serveur.
 
 | Page | Contenu |
 |---|---|
-| [Comptes locaux](/admin-guide/authentication/local) | Mots de passe, TOTP, codes à usage unique par e-mail, durée de session et désactivation de la connexion par mot de passe. |
+| [Comptes locaux](/admin-guide/authentication/local) | Mots de passe, gestion des comptes, durée de session et désactivation de la connexion par mot de passe. |
+| [Authentification à deux facteurs](/admin-guide/authentication/two-factor) | Codes TOTP d'une application d'authentification : activation, configuration, connexion et récupération. |
 | [LDAP et Active Directory](/admin-guide/authentication/ldap) | Liaison (bind) à un annuaire, filtres de recherche, correspondances d'attributs et TLS. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Configuration du fournisseur, expressions de claims, connexion initiée par l'IdP et douze exemples de fournisseurs détaillés. |
 | [Authentification par proxy JWT](/admin-guide/authentication/jwt-proxy-auth) | Faire confiance au JWT signé d'un proxy inverse, paramètres JWKS et de claims, et déconnexion via le proxy. |

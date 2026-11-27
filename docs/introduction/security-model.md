@@ -31,7 +31,7 @@ what happens to them.
 Users authenticate in one of three ways, and all three end in the same session:
 
 - **Local accounts.** Passwords are hashed with Argon2id (bcrypt before 2.20, upgraded
-  on first login). TOTP two-factor authentication can be required.
+  on first login). Each user can add TOTP two-factor authentication to their account.
 - **[LDAP or Active Directory](/admin-guide/authentication/ldap).** The directory verifies the password;
   Semaphore keeps only the account.
 - **[OpenID Connect](/admin-guide/authentication/openid).** The provider authenticates and Semaphore

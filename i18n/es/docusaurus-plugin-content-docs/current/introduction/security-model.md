@@ -30,7 +30,7 @@ necesita y, a partir de ese momento, el código de tu repositorio decide qué oc
 Los usuarios se autentican de una de estas tres formas, y las tres terminan en la misma sesión:
 
 - **Cuentas locales.** Las contraseñas se cifran con Argon2id (bcrypt antes de la 2.20, con
-  actualización en el primer inicio de sesión). Se puede exigir autenticación de dos factores TOTP.
+  actualización en el primer inicio de sesión). Cada usuario puede añadir a su cuenta la autenticación de dos factores TOTP.
 - **[LDAP o Active Directory](/admin-guide/authentication/ldap).** El directorio verifica la contraseña;
   Semaphore conserva solo la cuenta.
 - **[OpenID Connect](/admin-guide/authentication/openid).** El proveedor autentica y Semaphore asigna los

@@ -16,6 +16,9 @@ Semaphore には、相手が誰であるかを確認する方法が 4 つあり�
 | [OpenID Connect](/admin-guide/authentication/openid) | ID プロバイダー | シングルサインオンを利用している場合: Keycloak、Okta、Entra ID、Google、GitHub など。 |
 | [JWT プロキシ](/admin-guide/authentication/jwt-proxy-auth) | 認証リバースプロキシ | Pomerium などのプロキシがすでにユーザーをサインインさせ、署名付き JWT を転送している場合。 |
 
+どの方法でサインインした場合でも、[二要素認証](/admin-guide/authentication/two-factor)によって
+2 段階目として認証アプリの TOTP コードを求めることができます。
+
 認証が答えるのは、そのユーザーが*誰か*ということだけです。何を行えるかは、サーバーロールと
 各プロジェクトでのロールによって別途決まります。[チーム](/user-guide/team)を参照してください。
 
@@ -55,7 +58,7 @@ LDAP、OIDC、または JWT プロキシのアカウントは最初のサイン�
 
 1. プロバイダーを設定し、実際のユーザーがそれ経由でサインインできることを確認します。
 2. そのユーザーに必要なロールを付与します。
-3. 強力なパスワードと [TOTP](/admin-guide/authentication/local#two-factor-authentication) を
+3. 強力なパスワードと [TOTP](/admin-guide/authentication/two-factor) を
    有効にしたローカル管理者アカウントを 1 つ残します。
 4. `password_login_disable` を設定して、それ以外の全員がパスワードを使えないようにします。
 
@@ -66,7 +69,8 @@ LDAP、OIDC、または JWT プロキシのアカウントは最初のサイン�
 
 | ページ | 扱う内容 |
 |---|---|
-| [ローカルアカウント](/admin-guide/authentication/local) | パスワード、TOTP、メールのワンタイムコード、セッションの有効期間、パスワードログインの無効化。 |
+| [ローカルアカウント](/admin-guide/authentication/local) | パスワード、アカウントの管理、セッションの有効期間、パスワードログインの無効化。 |
+| [二要素認証](/admin-guide/authentication/two-factor) | 認証アプリの TOTP コード: 有効化、設定、サインイン、復旧。 |
 | [LDAP と Active Directory](/admin-guide/authentication/ldap) | ディレクトリへのバインド、検索フィルター、属性マッピング、TLS。 |
 | [OpenID Connect](/admin-guide/authentication/openid) | プロバイダーの設定、クレーム式、IdP 起点のログイン、12 種類のプロバイダー設定例。 |
 | [JWT プロキシ認証](/admin-guide/authentication/jwt-proxy-auth) | リバースプロキシの署名付き JWT の信頼、JWKS とクレームの設定、プロキシ経由のサインアウト。 |

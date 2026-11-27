@@ -1,6 +1,6 @@
 ---
 title: Cuentas locales
-description: Inicio de sesión con contraseña contra la base de datos de Semaphore - cómo se almacenan las contraseñas, la autenticación en dos pasos TOTP, la duración de la sesión y cómo desactivar las contraseñas.
+description: Inicio de sesión con contraseña contra la base de datos de Semaphore - cómo se almacenan las contraseñas, la gestión de cuentas, la duración de la sesión y cómo desactivar las contraseñas.
 ---
 
 # Cuentas locales
@@ -53,46 +53,32 @@ recuperación, y cambie después la contraseña desde la interfaz web.
 
 ## Autenticación en dos pasos {#two-factor-authentication}
 
-Semaphore admite TOTP: los códigos de seis dígitos que generan Google Authenticator, Aegis,
-1Password y aplicaciones similares. Está desactivado de forma predeterminada y se aplica a las
-cuentas que lo habiliten; no se impone a todo el mundo.
+Una cuenta local puede pedir un segundo factor después de la contraseña: un código TOTP de
+seis dígitos de una aplicación de autenticación. Está desactivado de forma predeterminada, se
+activa para el servidor con `mfa.totp.enabled` y cada usuario lo configura para su propia
+cuenta. Cómo funciona, cómo activarlo, cómo iniciar sesión con un código y cómo recuperar el
+acceso tras perder el teléfono se describe en
+[Autenticación en dos pasos](/admin-guide/authentication/two-factor).
+
+## Duración de la sesión {#session-lifetime}
+
+Dos límites independientes terminan una sesión; el primero que se alcance cierra la sesión del
+usuario.
+
+El **tiempo de espera por inactividad** se cuenta desde la última petición. Cada petición
+autenticada, incluido el sondeo en segundo plano de una pestaña abierta del navegador, lo
+reinicia. El valor predeterminado es de 168 horas (siete días):
 
 ```json
 {
-  "mfa": {
-    "totp": {
-      "enabled": true,
-      "allow_recovery": true,
-      "app_name": "Semaphore"
-    }
+  "auth": {
+    "session_inactivity_hours": 8
   }
 }
 ```
 
-| Opción | Efecto |
-|---|---|
-| `mfa.totp.enabled` | Permite a los usuarios añadir TOTP a su cuenta. Sin ella, nadie puede registrarse. |
-| `mfa.totp.allow_recovery` | Emite un código de recuperación durante el registro, de modo que perder el teléfono no signifique perder la cuenta. Introducirlo **elimina el registro de TOTP** e inicia la sesión del usuario; después este vuelve a registrarse. El código se almacena como hash bcrypt. |
-| `mfa.totp.app_name` | La etiqueta de emisor que muestra la aplicación de autenticación. Defínala cuando ejecute más de un Semaphore. |
-
-Los usuarios se registran desde su propia página de cuenta. Un administrador puede consultar o
-eliminar el segundo factor de alguien que haya perdido su dispositivo:
-
-```bash
-semaphore users totp show --login jane
-semaphore users totp disable --login jane
-```
-
-Volver a desactivar `mfa.totp.enabled` no elimina el registro de nadie; solo deja de solicitarse
-el segundo factor. Vuelva a activarlo y los registros antiguos se aplicarán de nuevo.
-
-## Duración de la sesión {#session-lifetime}
-
-Una sesión caduca tras **siete días sin actividad**. Ese tiempo de espera por inactividad está
-integrado y no es configurable.
-
-El límite absoluto sí lo es, y se mide desde el momento del inicio de sesión y no desde la
-última petición, de modo que también termina una sesión en uso activo:
+El **límite absoluto** se mide desde el momento del inicio de sesión y no desde la última
+petición, de modo que también termina una sesión en uso activo:
 
 ```json
 {
@@ -104,7 +90,9 @@ El límite absoluto sí lo es, y se mide desde el momento del inicio de sesión 
 
 El valor predeterminado, `0`, significa que no hay límite absoluto. Establézcalo cuando un
 puesto de trabajo compartido o una norma de cumplimiento exijan que las personas se vuelvan a
-autenticar de forma periódica.
+autenticar de forma periódica. Un navegador que se deja abierto en una página que sondea la API
+mantiene la sesión activa, por lo que solo el límite absoluto termina de forma fiable una sesión
+así.
 
 ## Desactivar el inicio de sesión con contraseña {#turn-password-sign-in-off}
 
@@ -131,4 +119,5 @@ configuración en el servidor y reiniciar.
 
 - [LDAP y Active Directory](/admin-guide/authentication/ldap): autenticar contra un directorio.
 - [OpenID Connect](/admin-guide/authentication/openid): inicio de sesión único con un proveedor de identidad.
+- [Autenticación en dos pasos](/admin-guide/authentication/two-factor): pedir un código TOTP después de la contraseña.
 - [Seguridad](/admin-guide/security): parámetros de hash, cifrado y fortalecimiento.

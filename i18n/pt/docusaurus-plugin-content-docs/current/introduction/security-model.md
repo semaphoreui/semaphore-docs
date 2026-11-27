@@ -31,7 +31,7 @@ o que acontece com eles.
 Os usuários se autenticam de uma destas três formas, e todas as três terminam na mesma sessão:
 
 - **Contas locais.** As senhas são hasheadas com Argon2id (bcrypt antes da 2.20, atualizado
-  no primeiro login). A autenticação de dois fatores TOTP pode ser exigida.
+  no primeiro login). Cada usuário pode adicionar a autenticação de dois fatores TOTP à própria conta.
 - **[LDAP ou Active Directory](/admin-guide/authentication/ldap).** O diretório verifica a senha;
   o Semaphore mantém apenas a conta.
 - **[OpenID Connect](/admin-guide/authentication/openid).** O provedor autentica e o Semaphore

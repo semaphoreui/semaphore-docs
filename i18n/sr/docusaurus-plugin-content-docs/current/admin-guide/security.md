@@ -15,7 +15,7 @@ Semaphore podržava bezbednu autentifikaciju i fleksibilne mehanizme autorizacij
 
   - **OpenID Connect (OIDC)**<br />Omogućava jedinstveno prijavljivanje (SSO) sa provajderima identiteta kao što su Google, Azure AD ili Keycloak. Podržava prilagođene claim-ove i mapiranje grupa.
 
-- **Dvofaktorska autentifikacija (2FA)**<br />Dostupna je 2FA zasnovana na TOTP-u i preporučuje se za sve korisnike. Može se uključiti po korisniku i podržava opcione kodove za oporavak. Pogledajte konfiguracione opcije `mfa.totp.enabled` i `mfa.totp.allow_recovery`.
+- **Dvofaktorska autentifikacija (2FA)**<br />Dostupna je 2FA zasnovana na TOTP-u i preporučuje se za sve korisnike. Može se uključiti po korisniku i podržava opcione kodove za oporavak. Pogledajte [Dvofaktorsku autentifikaciju](/admin-guide/authentication/two-factor) za podešavanje.
 
 - **Kontrola pristupa zasnovana na ulogama**<br />Korisnicima možete dodeliti različite uloge, kao što su Admin, Maintainer ili Viewer, čime se pristup ograničava prema odgovornostima.
 

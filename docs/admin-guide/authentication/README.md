@@ -16,6 +16,9 @@ directory login, and one button per identity provider.
 | [OpenID Connect](/admin-guide/authentication/openid) | Your identity provider | You have single sign-on: Keycloak, Okta, Entra ID, Google, GitHub, and others. |
 | [JWT proxy](/admin-guide/authentication/jwt-proxy-auth) | Your authenticating reverse proxy | A proxy such as Pomerium already signs users in and forwards a signed JWT. |
 
+Whichever method signs a user in, [two-factor authentication](/admin-guide/authentication/two-factor)
+can ask for a TOTP code from an authenticator app as a second step.
+
 Authentication only answers *who* the user is. What they are allowed to do is decided
 separately, by their server role and by their role in each project — see
 [Teams](/user-guide/team).
@@ -57,7 +60,7 @@ for the day the identity provider is unreachable:
 1. Configure the provider and confirm that a real user can sign in through it.
 2. Give that user the roles they need.
 3. Keep one local administrator account with a strong password and
-   [TOTP](/admin-guide/authentication/local#two-factor-authentication) enabled.
+   [TOTP](/admin-guide/authentication/two-factor) enabled.
 4. Set `password_login_disable` to stop everyone else from using passwords.
 
 Do those in order. Setting `password_login_disable` before step 1 works exactly as
@@ -67,7 +70,8 @@ advertised and locks you out of your own server.
 
 | Page | What it covers |
 |---|---|
-| [Local accounts](/admin-guide/authentication/local) | Passwords, TOTP, e-mail one-time codes, session lifetime, and disabling password login. |
+| [Local accounts](/admin-guide/authentication/local) | Passwords, managing accounts, session lifetime, and disabling password login. |
+| [Two-factor authentication](/admin-guide/authentication/two-factor) | TOTP codes from an authenticator app: turning it on, setting it up, signing in, and recovery. |
 | [LDAP and Active Directory](/admin-guide/authentication/ldap) | Binding to a directory, search filters, attribute mappings, and TLS. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Provider configuration, claim expressions, IdP-initiated login, and twelve worked provider examples. |
 | [JWT proxy authentication](/admin-guide/authentication/jwt-proxy-auth) | Trusting a reverse proxy's signed JWT, JWKS and claim settings, and signing out through the proxy. |

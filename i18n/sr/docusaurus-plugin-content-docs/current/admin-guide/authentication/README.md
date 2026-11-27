@@ -16,6 +16,9 @@ i po jedno dugme za svakog provajdera identiteta.
 | [OpenID Connect](/admin-guide/authentication/openid) | Vaš provajder identiteta | Imate jedinstvenu prijavu: Keycloak, Okta, Entra ID, Google, GitHub i druge. |
 | [JWT proksi](/admin-guide/authentication/jwt-proxy-auth) | Vaš reverse proxy za autentifikaciju | Proksi kao što je Pomerium već prijavljuje korisnike i prosleđuje potpisani JWT. |
 
+Kojim god metodom da se korisnik prijavi, [dvofaktorska autentifikacija](/admin-guide/authentication/two-factor)
+može kao drugi korak da zatraži TOTP kod iz aplikacije za autentifikaciju.
+
 Autentifikacija odgovara samo na pitanje *ko* je korisnik. Šta mu je dozvoljeno da radi
 odlučuje se posebno, na osnovu njegove uloge na serveru i uloge u svakom projektu — vidite
 [Timovi](/user-guide/team).
@@ -56,7 +59,7 @@ administratora za dan kada provajder identiteta bude nedostupan:
 1. Podesite provajdera i potvrdite da stvarni korisnik može da se prijavi preko njega.
 2. Dodelite tom korisniku uloge koje su mu potrebne.
 3. Zadržite jedan lokalni administratorski nalog sa jakom lozinkom i uključenim
-   [TOTP-om](/admin-guide/authentication/local#two-factor-authentication).
+   [TOTP-om](/admin-guide/authentication/two-factor).
 4. Postavite `password_login_disable` da biste svima ostalima onemogućili prijavu lozinkom.
 
 Radite to tim redosledom. Postavljanje `password_login_disable` pre koraka 1 radi tačno onako
@@ -66,7 +69,8 @@ kako je opisano i zaključava vas van sopstvenog servera.
 
 | Stranica | Šta obrađuje |
 |---|---|
-| [Lokalni nalozi](/admin-guide/authentication/local) | Lozinke, TOTP, jednokratni kodovi putem e-pošte, trajanje sesije i isključivanje prijave lozinkom. |
+| [Lokalni nalozi](/admin-guide/authentication/local) | Lozinke, upravljanje nalozima, trajanje sesije i isključivanje prijave lozinkom. |
+| [Dvofaktorska autentifikacija](/admin-guide/authentication/two-factor) | TOTP kodovi iz aplikacije za autentifikaciju: uključivanje, podešavanje, prijava i oporavak. |
 | [LDAP i Active Directory](/admin-guide/authentication/ldap) | Povezivanje sa direktorijumom, filteri pretrage, mapiranja atributa i TLS. |
 | [OpenID Connect](/admin-guide/authentication/openid) | Konfiguracija provajdera, claim izrazi, prijava koju pokreće IdP i dvanaest razrađenih primera provajdera. |
 | [Autentifikacija preko JWT proksija](/admin-guide/authentication/jwt-proxy-auth) | Poverenje u potpisani JWT reverse proxy-ja, JWKS i podešavanja claim-ova, i odjava preko proksija. |

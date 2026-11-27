@@ -1,6 +1,6 @@
 ---
 title: Comptes locaux
-description: Connexion par mot de passe à la base de données Semaphore - comment les mots de passe sont stockés, l'authentification à deux facteurs TOTP, la durée de session et la désactivation des mots de passe.
+description: Connexion par mot de passe à la base de données Semaphore - comment les mots de passe sont stockés, la gestion des comptes, la durée de session et la désactivation des mots de passe.
 ---
 
 # Comptes locaux
@@ -54,48 +54,32 @@ administrateur et pour la récupération, puis changez le mot de passe depuis l'
 
 ## Authentification à deux facteurs {#two-factor-authentication}
 
-Semaphore prend en charge TOTP : les codes à six chiffres produits par Google Authenticator,
-Aegis, 1Password et des applications similaires. Il est désactivé par défaut et s'applique aux
-comptes qui l'activent — il n'est imposé à personne.
+Un compte local peut demander un deuxième facteur après le mot de passe : un code TOTP à six
+chiffres issu d'une application d'authentification. Il est désactivé par défaut, activé pour le
+serveur avec `mfa.totp.enabled` et configuré par chaque utilisateur pour son propre compte. Son
+fonctionnement, son activation, la connexion avec un code et la récupération après la perte du
+téléphone sont décrits dans
+[Authentification à deux facteurs](/admin-guide/authentication/two-factor).
+
+## Durée de session {#session-lifetime}
+
+Deux limites indépendantes mettent fin à une session ; la première atteinte déconnecte
+l'utilisateur.
+
+Le **délai d'inactivité** est compté à partir de la dernière requête. Chaque requête
+authentifiée, y compris l'interrogation en arrière-plan d'un onglet de navigateur ouvert, le
+réinitialise. La valeur par défaut est de 168 heures (sept jours) :
 
 ```json
 {
-  "mfa": {
-    "totp": {
-      "enabled": true,
-      "allow_recovery": true,
-      "app_name": "Semaphore"
-    }
+  "auth": {
+    "session_inactivity_hours": 8
   }
 }
 ```
 
-| Option | Effet |
-|---|---|
-| `mfa.totp.enabled` | Permet aux utilisateurs d'ajouter TOTP à leur compte. Sans elle, personne ne peut s'enrôler. |
-| `mfa.totp.allow_recovery` | Délivre un code de récupération lors de l'enrôlement, afin qu'un téléphone perdu ne signifie pas un compte perdu. Sa saisie **supprime l'enrôlement TOTP** et connecte l'utilisateur ; celui-ci s'enrôle ensuite à nouveau. Le code est stocké sous forme d'empreinte bcrypt. |
-| `mfa.totp.app_name` | Le libellé d'émetteur affiché par l'application d'authentification. Définissez-le lorsque vous exploitez plusieurs Semaphore. |
-
-Les utilisateurs s'enrôlent depuis leur propre page de compte. Un administrateur peut consulter
-ou supprimer le deuxième facteur de quelqu'un qui a perdu son appareil :
-
-```bash
-semaphore users totp show --login jane
-semaphore users totp disable --login jane
-```
-
-Désactiver à nouveau `mfa.totp.enabled` ne supprime l'enrôlement de personne ; cela empêche
-simplement de demander le deuxième facteur. Réactivez-la et les anciens enrôlements
-s'appliquent de nouveau.
-
-## Durée de session {#session-lifetime}
-
-Une session expire après **sept jours sans activité**. Ce délai d'inactivité est intégré et
-n'est pas configurable.
-
-Une limite absolue l'est, en revanche, et elle est mesurée à partir du moment de la connexion
-plutôt qu'à partir de la dernière requête : une session activement utilisée prend donc fin elle
-aussi :
+La **limite absolue** est mesurée à partir du moment de la connexion plutôt qu'à partir de la
+dernière requête : une session activement utilisée prend donc fin elle aussi :
 
 ```json
 {
@@ -107,7 +91,8 @@ aussi :
 
 La valeur par défaut, `0`, signifie qu'il n'y a pas de limite absolue. Définissez-la lorsqu'un
 poste de travail partagé ou une règle de conformité impose aux personnes de se réauthentifier
-périodiquement.
+périodiquement. Un navigateur laissé ouvert sur une page qui interroge l'API maintient la
+session active : seule la limite absolue met donc fin de manière fiable à une telle session.
 
 ## Désactiver la connexion par mot de passe {#turn-password-sign-in-off}
 
@@ -134,4 +119,5 @@ configuration sur le serveur et de redémarrer.
 
 - [LDAP et Active Directory](/admin-guide/authentication/ldap) — s'authentifier auprès d'un annuaire.
 - [OpenID Connect](/admin-guide/authentication/openid) — authentification unique avec un fournisseur d'identité.
+- [Authentification à deux facteurs](/admin-guide/authentication/two-factor) — demander un code TOTP après le mot de passe.
 - [Sécurité](/admin-guide/security) — paramètres de hachage, chiffrement et durcissement.

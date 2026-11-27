@@ -1,6 +1,6 @@
 ---
 title: Lokale Konten
-description: Passwortanmeldung gegen die Semaphore-Datenbank – wie Passwörter gespeichert werden, TOTP-Zwei-Faktor-Authentifizierung, Sitzungsdauer und das Abschalten von Passwörtern.
+description: Passwortanmeldung gegen die Semaphore-Datenbank – wie Passwörter gespeichert werden, Kontenverwaltung, Sitzungsdauer und das Abschalten von Passwörtern.
 ---
 
 # Lokale Konten
@@ -53,47 +53,32 @@ Maschine. Verwenden Sie es für den ersten Administrator und für die Wiederhers
 
 ## Zwei-Faktor-Authentifizierung {#two-factor-authentication}
 
-Semaphore unterstützt TOTP: die sechsstelligen Codes, die von Google Authenticator, Aegis,
-1Password und ähnlichen Apps erzeugt werden. Es ist standardmäßig deaktiviert und gilt nur für
-die Konten, die es aktivieren – es wird niemandem aufgezwungen.
+Ein lokales Konto kann nach dem Passwort einen zweiten Faktor abfragen: einen sechsstelligen
+TOTP-Code aus einer Authenticator-App. Er ist standardmäßig deaktiviert, wird für den Server mit
+`mfa.totp.enabled` eingeschaltet und von jedem Benutzer für sein eigenes Konto eingerichtet. Wie
+er funktioniert, wie Sie ihn einschalten, wie Sie sich mit einem Code anmelden und wie Sie nach
+dem Verlust des Telefons wieder Zugang erhalten, beschreibt
+[Zwei-Faktor-Authentifizierung](/admin-guide/authentication/two-factor).
+
+## Sitzungsdauer {#session-lifetime}
+
+Zwei voneinander unabhängige Limits beenden eine Sitzung; welches zuerst erreicht wird, meldet
+den Benutzer ab.
+
+Das **Inaktivitäts-Zeitlimit** zählt ab der letzten Anfrage. Jede authentifizierte Anfrage,
+einschließlich der Hintergrundabfragen eines geöffneten Browser-Tabs, setzt es zurück. Der
+Standardwert ist 168 Stunden (sieben Tage):
 
 ```json
 {
-  "mfa": {
-    "totp": {
-      "enabled": true,
-      "allow_recovery": true,
-      "app_name": "Semaphore"
-    }
+  "auth": {
+    "session_inactivity_hours": 8
   }
 }
 ```
 
-| Option | Wirkung |
-|---|---|
-| `mfa.totp.enabled` | Erlaubt Benutzern, TOTP für ihr Konto einzurichten. Ohne diese Option kann sich niemand registrieren. |
-| `mfa.totp.allow_recovery` | Gibt bei der Einrichtung einen Wiederherstellungscode aus, damit ein verlorenes Telefon kein verlorenes Konto bedeutet. Seine Eingabe **entfernt die TOTP-Einrichtung** und meldet den Benutzer an; er richtet TOTP anschließend erneut ein. Der Code wird als bcrypt-Hash gespeichert. |
-| `mfa.totp.app_name` | Die Aussteller-Bezeichnung, die die Authenticator-App anzeigt. Setzen Sie sie, wenn Sie mehr als ein Semaphore betreiben. |
-
-Benutzer richten TOTP auf ihrer eigenen Kontoseite ein. Ein Administrator kann den zweiten
-Faktor einer Person, die ihr Gerät verloren hat, einsehen oder entfernen:
-
-```bash
-semaphore users totp show --login jane
-semaphore users totp disable --login jane
-```
-
-`mfa.totp.enabled` wieder auszuschalten löscht keine bestehenden Einrichtungen; es sorgt nur
-dafür, dass der zweite Faktor nicht mehr abgefragt wird. Schalten Sie es wieder ein, gelten die
-alten Einrichtungen erneut.
-
-## Sitzungsdauer {#session-lifetime}
-
-Eine Sitzung läuft nach **sieben Tagen ohne Aktivität** ab. Dieses Inaktivitäts-Zeitlimit ist
-fest eingebaut und nicht konfigurierbar.
-
-Ein absolutes Limit ist es dagegen schon, und es wird ab dem Zeitpunkt der Anmeldung gemessen
-und nicht ab der letzten Anfrage, sodass auch eine aktiv genutzte Sitzung endet:
+Das **absolute Limit** zählt ab dem Zeitpunkt der Anmeldung und nicht ab der letzten Anfrage,
+sodass auch eine aktiv genutzte Sitzung endet:
 
 ```json
 {
@@ -105,7 +90,8 @@ und nicht ab der letzten Anfrage, sodass auch eine aktiv genutzte Sitzung endet:
 
 Der Standardwert `0` bedeutet kein absolutes Limit. Setzen Sie ihn dort, wo ein gemeinsam
 genutzter Arbeitsplatz oder eine Compliance-Vorgabe verlangt, dass sich Personen regelmäßig
-erneut authentifizieren.
+erneut authentifizieren. Ein Browser, der auf einer Seite geöffnet bleibt, die die API abfragt,
+hält die Sitzung aktiv; nur das absolute Limit beendet eine solche Sitzung daher zuverlässig.
 
 ## Passwortanmeldung abschalten {#turn-password-sign-in-off}
 
@@ -133,4 +119,5 @@ Konfigurationsdatei auf dem Server bearbeiten und neu starten.
 
 - [LDAP und Active Directory](/admin-guide/authentication/ldap) – Authentifizierung gegen ein Verzeichnis.
 - [OpenID Connect](/admin-guide/authentication/openid) – Single Sign-on mit einem Identitätsanbieter.
+- [Zwei-Faktor-Authentifizierung](/admin-guide/authentication/two-factor) – nach dem Passwort einen TOTP-Code abfragen.
 - [Sicherheit](/admin-guide/security) – Hashing-Parameter, Verschlüsselung und Härtung.

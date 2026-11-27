@@ -1,6 +1,6 @@
 ---
 title: Lokalni nalozi
-description: Prijava lozinkom prema bazi podataka Semaphore-a - kako se lozinke čuvaju, TOTP dvofaktorska autentifikacija, trajanje sesije i isključivanje lozinki.
+description: Prijava lozinkom prema bazi podataka Semaphore-a - kako se lozinke čuvaju, upravljanje nalozima, trajanje sesije i isključivanje lozinki.
 ---
 
 # Lokalni nalozi
@@ -50,46 +50,29 @@ interfejs.
 
 ## Dvofaktorska autentifikacija {#two-factor-authentication}
 
-Semaphore podržava TOTP: šestocifrene kodove koje generišu Google Authenticator, Aegis,
-1Password i slične aplikacije. Podrazumevano je isključen i važi za one naloge koji ga uključe
-— ne nameće se svima.
+Lokalni nalog može posle lozinke da zatraži drugi faktor: šestocifreni TOTP kod iz
+aplikacije za autentifikaciju. Podrazumevano je isključen, za server se uključuje opcijom
+`mfa.totp.enabled`, a svaki korisnik ga podešava za sopstveni nalog. Kako radi, kako se
+uključuje, kako se prijaviti kodom i kako se oporaviti nakon gubitka telefona opisano je u
+[Dvofaktorskoj autentifikaciji](/admin-guide/authentication/two-factor).
+
+## Trajanje sesije {#session-lifetime}
+
+Dva nezavisna ograničenja završavaju sesiju; koje god se prvo dostigne, odjavljuje korisnika.
+
+**Vreme neaktivnosti** računa se od poslednjeg zahteva. Resetuje ga svaki autentifikovani
+zahtev, uključujući pozadinsko periodično proveravanje (polling) otvorene kartice pregledača. Podrazumevana vrednost je 168 sati (sedam dana):
 
 ```json
 {
-  "mfa": {
-    "totp": {
-      "enabled": true,
-      "allow_recovery": true,
-      "app_name": "Semaphore"
-    }
+  "auth": {
+    "session_inactivity_hours": 8
   }
 }
 ```
 
-| Opcija | Dejstvo |
-|---|---|
-| `mfa.totp.enabled` | Dozvoljava korisnicima da dodaju TOTP svom nalogu. Bez toga niko ne može da se registruje. |
-| `mfa.totp.allow_recovery` | Izdaje jedan kod za oporavak pri registraciji, tako da izgubljen telefon ne znači i izgubljen nalog. Njegovim unosom **uklanja se TOTP registracija** i korisnik se prijavljuje; nakon toga se registruje ponovo. Kod se čuva kao bcrypt heš. |
-| `mfa.totp.app_name` | Oznaka izdavaoca koju prikazuje aplikacija za autentifikaciju. Podesite je kada imate više od jednog Semaphore-a. |
-
-Korisnici se registruju sa sopstvene stranice naloga. Administrator može da pregleda ili
-ukloni drugi faktor nekome ko je izgubio uređaj:
-
-```bash
-semaphore users totp show --login jane
-semaphore users totp disable --login jane
-```
-
-Ponovno isključivanje `mfa.totp.enabled` ne briše ničiju registraciju; samo prestaje da traži
-drugi faktor. Uključite ga ponovo i stare registracije opet važe.
-
-## Trajanje sesije {#session-lifetime}
-
-Sesija ističe nakon **sedam dana bez aktivnosti**. To vreme neaktivnosti je ugrađeno i ne
-može se podesiti.
-
-Apsolutno ograničenje može, a meri se od trenutka prijave, a ne od poslednjeg zahteva, pa se
-i aktivno korišćena sesija završava:
+**Apsolutno ograničenje** računa se od trenutka prijave, a ne od poslednjeg zahteva, pa se i
+aktivno korišćena sesija završava:
 
 ```json
 {
@@ -99,9 +82,10 @@ i aktivno korišćena sesija završava:
 }
 ```
 
-Podrazumevana vrednost `0` znači da apsolutnog ograničenja nema. Postavite je tamo gde
-deljena radna stanica ili pravilo usklađenosti zahtevaju da se ljudi periodično ponovo
-autentifikuju.
+Podrazumevana vrednost `0` znači da apsolutnog ograničenja nema. Postavite je tamo gde deljena
+radna stanica ili pravilo usklađenosti zahtevaju da se ljudi periodično ponovo
+autentifikuju. Pregledač ostavljen otvoren na stranici koja periodično proziva API održava
+sesiju aktivnom, pa samo apsolutno ograničenje pouzdano završava takvu sesiju.
 
 ## Isključivanje prijave lozinkom {#turn-password-sign-in-off}
 
@@ -128,4 +112,5 @@ ponovno pokretanje.
 
 - [LDAP i Active Directory](/admin-guide/authentication/ldap) — autentifikacija prema direktorijumu.
 - [OpenID Connect](/admin-guide/authentication/openid) — jedinstvena prijava preko provajdera identiteta.
+- [Dvofaktorska autentifikacija](/admin-guide/authentication/two-factor) — traženje TOTP koda posle lozinke.
 - [Bezbednost](/admin-guide/security) — parametri heširanja, šifrovanje i očvršćavanje.
