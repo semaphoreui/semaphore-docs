@@ -65,15 +65,7 @@ SEMAPHORE_TOTP_ALLOW_RECOVERY=true
 |---|---|---|
 | `mfa.totp.enabled` | `SEMAPHORE_TOTP_ENABLED` | Permet aux utilisateurs de configurer TOTP et fait demander le code à la connexion. Sans elle, le paramètre n'est affiché à personne. |
 | `mfa.totp.allow_recovery` | `SEMAPHORE_TOTP_ALLOW_RECOVERY` | Remet à chaque utilisateur un [code de récupération](#recovery-code) à usage unique lorsqu'il configure TOTP, et lui permet de se connecter avec ce code en cas de perte du téléphone. |
-| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | Le nom d'émetteur qu'une application d'authentification affiche à côté du compte. Vaut `Semaphore` par défaut. Voir l'avertissement ci-dessous. |
-
-:::warning ⚠️ `app_name` n'est pas utilisé par l'interface web (2026-11-27)
-Un compte configuré depuis l'interface web est toujours libellé `Semaphore:<email>` dans
-l'application d'authentification, quelle que soit la valeur de `mfa.totp.app_name`. Seule
-[`semaphore users totp enable`](#manage-the-second-factor-from-the-command-line) utilise le nom
-configuré. Si vous exploitez plusieurs Semaphore, les utilisateurs distinguent les entrées par
-l'adresse e-mail, ou renomment l'entrée dans leur application.
-:::
+| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | Le nom d'émetteur qu'une application d'authentification affiche à côté du compte. Vaut `Semaphore` par défaut. Une modification ne s'applique qu'aux comptes configurés ensuite. |
 
 Toutes les options figurent également dans la
 [référence de configuration](/reference/configuration).
@@ -88,7 +80,8 @@ Installez d'abord une application d'authentification sur votre téléphone. Ensu
 3. Sous **Two-factor authentication**, activez **Time-based one-time password**. Semaphore crée
    immédiatement le secret et l'affiche sous forme de code QR.
 4. Dans l'application d'authentification, ajoutez un compte et scannez le code QR. L'application
-   commence à afficher un code à six chiffres pour `Semaphore`.
+   commence à afficher un code à six chiffres pour `Semaphore`, ou pour le nom défini dans
+   `mfa.totp.app_name`.
 5. Si un **Recovery code** s'affiche sous le code QR, copiez-le avec le bouton situé à côté et
    conservez-le en lieu sûr — dans un gestionnaire de mots de passe ou sur papier. Il n'est
    affiché qu'à ce moment-là.

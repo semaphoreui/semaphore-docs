@@ -89,7 +89,7 @@ How users sign in. See [Authentication](/admin-guide/authentication) for the pro
 | `auth.session_inactivity_hours`<br />`SEMAPHORE_SESSION_INACTIVITY_HOURS` | integer | How long a login session may stay unused, in hours, before it is rejected and expired. Every authenticated request resets the counter. 0 (default) means the built-in 168 hours (7 days). The inactivity timeout cannot be disabled. |
 | `mfa.totp.enabled`<br />`SEMAPHORE_TOTP_ENABLED` | boolean | Enable Two-factor authentication using TOTP. |
 | `mfa.totp.allow_recovery`<br />`SEMAPHORE_TOTP_ALLOW_RECOVERY` | boolean | Allow users to reset TOTP using a recovery code. |
-| `mfa.totp.app_name`<br />`SEMAPHORE_TOTP_ISSUER` | string | Issuer label (Semaphore title) shown in TOTP authenticator apps. |
+| `mfa.totp.app_name`<br />`SEMAPHORE_TOTP_ISSUER` | string<br />Default: `Semaphore` | Issuer label (Semaphore title) shown in TOTP authenticator apps. |
 | `mfa.email.enabled`<br />`SEMAPHORE_EMAIL_2TP_ENABLED` | boolean | Enable email-based multi-factor authentication. |
 | `mfa.email.allow_login_as_external_user`<br />`SEMAPHORE_EMAIL_2TP_ALLOW_LOGIN_AS_EXTERNAL_USER` | boolean | Allow login as an external (email-only) user. |
 | `mfa.email.allow_create_external_user`<br />`SEMAPHORE_EMAIL_2TP_ALLOW_CREATE_EXTERNAL_USER` | boolean | Allow creating external users on first login. |

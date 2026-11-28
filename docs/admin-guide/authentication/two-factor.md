@@ -61,15 +61,7 @@ SEMAPHORE_TOTP_ALLOW_RECOVERY=true
 |---|---|---|
 | `mfa.totp.enabled` | `SEMAPHORE_TOTP_ENABLED` | Lets users set up TOTP and makes sign-in ask for the code. Without it, the setting is not shown to anybody. |
 | `mfa.totp.allow_recovery` | `SEMAPHORE_TOTP_ALLOW_RECOVERY` | Gives each user a one-time [recovery code](#recovery-code) when they set up TOTP, and lets them sign in with it when the phone is lost. |
-| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | The issuer name an authenticator app shows next to the account. Defaults to `Semaphore`. See the warning below. |
-
-:::warning ⚠️ `app_name` is not used by the web interface (2026-11-27)
-An account set up from the web interface is always labelled `Semaphore:<email>` in the
-authenticator app, whatever `mfa.totp.app_name` says. Only
-[`semaphore users totp enable`](#manage-the-second-factor-from-the-command-line) uses the
-configured name. If you run more than one Semaphore, users tell the entries apart by the
-e-mail address, or rename the entry in their app.
-:::
+| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | The issuer name an authenticator app shows next to the account. Defaults to `Semaphore`. A change applies only to accounts set up afterwards. |
 
 Every option is also listed in the
 [configuration reference](/reference/configuration).
@@ -84,7 +76,7 @@ Install an authenticator app on your phone first. Then:
 3. Under **Two-factor authentication**, turn on **Time-based one-time password**.
    Semaphore creates the secret at once and shows it as a QR code.
 4. In the authenticator app, add an account and scan the QR code. The app starts showing a
-   six-digit code for `Semaphore`.
+   six-digit code for `Semaphore`, or for the name set in `mfa.totp.app_name`.
 5. If a **Recovery code** is shown under the QR code, copy it with the button next to it
    and keep it somewhere safe — a password manager, or on paper. It is shown only now.
 6. Close the dialog.

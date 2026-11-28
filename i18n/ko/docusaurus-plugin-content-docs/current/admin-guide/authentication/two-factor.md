@@ -59,15 +59,7 @@ SEMAPHORE_TOTP_ALLOW_RECOVERY=true
 |---|---|---|
 | `mfa.totp.enabled` | `SEMAPHORE_TOTP_ENABLED` | 사용자가 TOTP를 설정할 수 있게 하고, 로그인할 때 코드를 요구합니다. 이 옵션이 없으면 이 설정은 누구에게도 표시되지 않습니다. |
 | `mfa.totp.allow_recovery` | `SEMAPHORE_TOTP_ALLOW_RECOVERY` | TOTP를 설정할 때 각 사용자에게 일회용 [복구 코드](#recovery-code)를 발급하고, 휴대폰을 잃어버렸을 때 이 코드로 로그인할 수 있게 합니다. |
-| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | 인증 앱이 계정 옆에 표시하는 발급자 이름입니다. 기본값은 `Semaphore`입니다. 아래 경고를 참조하세요. |
-
-:::warning ⚠️ 웹 인터페이스는 `app_name`을 사용하지 않습니다 (2026-11-27)
-웹 인터페이스에서 설정한 계정은 `mfa.totp.app_name` 값과 관계없이 인증 앱에서 항상
-`Semaphore:<email>`로 표시됩니다. 구성된 이름을 사용하는 것은
-[`semaphore users totp enable`](#manage-the-second-factor-from-the-command-line)뿐입니다.
-Semaphore를 두 개 이상 운영한다면 사용자는 이메일 주소로 항목을 구분하거나, 앱에서 항목 이름을
-바꾸면 됩니다.
-:::
+| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | 인증 앱이 계정 옆에 표시하는 발급자 이름입니다. 기본값은 `Semaphore`입니다. 변경 사항은 그 이후에 설정한 계정에만 적용됩니다. |
 
 모든 옵션은 [구성 레퍼런스](/reference/configuration)에도
 나와 있습니다.
@@ -81,8 +73,8 @@ Semaphore를 두 개 이상 운영한다면 사용자는 이메일 주소로 항
 2. **Security** 탭을 엽니다.
 3. **Two-factor authentication** 아래에서 **Time-based one-time password**를 켭니다.
    Semaphore가 즉시 시크릿을 만들어 QR 코드로 표시합니다.
-4. 인증 앱에서 계정을 추가하고 QR 코드를 스캔합니다. 앱에 `Semaphore`의 여섯 자리 코드가
-   표시되기 시작합니다.
+4. 인증 앱에서 계정을 추가하고 QR 코드를 스캔합니다. 앱에 `Semaphore` 또는
+   `mfa.totp.app_name`에 설정한 이름의 여섯 자리 코드가 표시되기 시작합니다.
 5. QR 코드 아래에 **Recovery code**가 표시되면 옆의 버튼으로 복사해 비밀번호 관리자나 종이 등
    안전한 곳에 보관하세요. 지금 한 번만 표시됩니다.
 6. 대화 상자를 닫습니다.

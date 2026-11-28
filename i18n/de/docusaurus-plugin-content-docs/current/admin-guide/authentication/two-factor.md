@@ -64,15 +64,7 @@ SEMAPHORE_TOTP_ALLOW_RECOVERY=true
 |---|---|---|
 | `mfa.totp.enabled` | `SEMAPHORE_TOTP_ENABLED` | Erlaubt Benutzern, TOTP einzurichten, und sorgt dafür, dass bei der Anmeldung der Code abgefragt wird. Ohne diese Option wird die Einstellung niemandem angezeigt. |
 | `mfa.totp.allow_recovery` | `SEMAPHORE_TOTP_ALLOW_RECOVERY` | Gibt jedem Benutzer bei der Einrichtung von TOTP einen einmaligen [Wiederherstellungscode](#recovery-code) und erlaubt ihm, sich damit anzumelden, wenn das Telefon verloren ist. |
-| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | Der Ausstellername, den eine Authenticator-App neben dem Konto anzeigt. Standardwert ist `Semaphore`. Siehe die Warnung unten. |
-
-:::warning ⚠️ `app_name` wird von der Weboberfläche nicht verwendet (2026-11-27)
-Ein über die Weboberfläche eingerichtetes Konto heißt in der Authenticator-App immer
-`Semaphore:<email>`, unabhängig davon, was in `mfa.totp.app_name` steht. Nur
-[`semaphore users totp enable`](#manage-the-second-factor-from-the-command-line) verwendet den
-konfigurierten Namen. Wenn Sie mehr als ein Semaphore betreiben, unterscheiden die Benutzer die
-Einträge anhand der E-Mail-Adresse oder benennen den Eintrag in ihrer App um.
-:::
+| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | Der Ausstellername, den eine Authenticator-App neben dem Konto anzeigt. Standardwert ist `Semaphore`. Eine Änderung gilt nur für Konten, die danach eingerichtet werden. |
 
 Jede Option ist außerdem in der
 [Konfigurationsreferenz](/reference/configuration) aufgeführt.
@@ -87,7 +79,8 @@ Installieren Sie zuerst eine Authenticator-App auf Ihrem Telefon. Dann:
 3. Schalten Sie unter **Two-factor authentication** die Option **Time-based one-time password**
    ein. Semaphore erzeugt sofort das Geheimnis und zeigt es als QR-Code an.
 4. Fügen Sie in der Authenticator-App ein Konto hinzu und scannen Sie den QR-Code. Die App zeigt
-   nun einen sechsstelligen Code für `Semaphore` an.
+   nun einen sechsstelligen Code für `Semaphore` oder für den in `mfa.totp.app_name` festgelegten
+   Namen an.
 5. Wenn unter dem QR-Code ein **Recovery code** angezeigt wird, kopieren Sie ihn mit der
    Schaltfläche daneben und bewahren Sie ihn sicher auf – in einem Passwortmanager oder auf
    Papier. Er wird nur jetzt angezeigt.

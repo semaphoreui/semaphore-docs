@@ -62,15 +62,7 @@ SEMAPHORE_TOTP_ALLOW_RECOVERY=true
 |---|---|---|
 | `mfa.totp.enabled` | `SEMAPHORE_TOTP_ENABLED` | Consente agli utenti di configurare TOTP e fa sì che l'accesso richieda il codice. Senza di essa l'impostazione non viene mostrata a nessuno. |
 | `mfa.totp.allow_recovery` | `SEMAPHORE_TOTP_ALLOW_RECOVERY` | Fornisce a ogni utente un [codice di ripristino](#recovery-code) monouso quando configura TOTP e gli consente di accedere con esso quando perde il telefono. |
-| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | Il nome dell'emittente che un'app di autenticazione mostra accanto all'account. Il valore predefinito è `Semaphore`. Vedere l'avviso qui sotto. |
-
-:::warning ⚠️ `app_name` non è usato dall'interfaccia web (2026-11-27)
-Un account configurato dall'interfaccia web è sempre etichettato `Semaphore:<email>` nell'app di
-autenticazione, qualunque sia il valore di `mfa.totp.app_name`. Solo
-[`semaphore users totp enable`](#manage-the-second-factor-from-the-command-line) usa il nome
-configurato. Se gestite più di un Semaphore, gli utenti distinguono le voci dall'indirizzo
-e-mail, oppure rinominano la voce nella propria app.
-:::
+| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | Il nome dell'emittente che un'app di autenticazione mostra accanto all'account. Il valore predefinito è `Semaphore`. Una modifica vale solo per gli account configurati in seguito. |
 
 Ogni opzione è elencata anche nel
 [riferimento della configurazione](/reference/configuration).
@@ -85,7 +77,8 @@ Installate prima un'app di autenticazione sul telefono. Poi:
 3. In **Two-factor authentication**, attivate **Time-based one-time password**.
    Semaphore crea subito il segreto e lo mostra come codice QR.
 4. Nell'app di autenticazione aggiungete un account e scansionate il codice QR. L'app inizia a
-   mostrare un codice a sei cifre per `Semaphore`.
+   mostrare un codice a sei cifre per `Semaphore` o per il nome impostato in
+   `mfa.totp.app_name`.
 5. Se sotto il codice QR compare un **Recovery code**, copiatelo con il pulsante accanto e
    conservatelo in un posto sicuro — un password manager, oppure su carta. Viene mostrato solo
    adesso.

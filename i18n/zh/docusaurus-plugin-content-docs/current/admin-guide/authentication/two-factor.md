@@ -56,15 +56,7 @@ SEMAPHORE_TOTP_ALLOW_RECOVERY=true
 |---|---|---|
 | `mfa.totp.enabled` | `SEMAPHORE_TOTP_ENABLED` | 允许用户设置 TOTP，并让登录要求输入验证码。不启用它，任何人都看不到该设置。 |
 | `mfa.totp.allow_recovery` | `SEMAPHORE_TOTP_ALLOW_RECOVERY` | 在用户设置 TOTP 时为其提供一个一次性的[恢复码](#recovery-code)，并允许在手机丢失时用它登录。 |
-| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | 认证器应用在账户旁边显示的签发者名称。默认为 `Semaphore`。请参见下方的警告。 |
-
-:::warning ⚠️ Web 界面不使用 `app_name`（2026-11-27）
-通过 Web 界面设置的账户在认证器应用中始终标记为 `Semaphore:<email>`，无论
-`mfa.totp.app_name` 如何设置。只有
-[`semaphore users totp enable`](#manage-the-second-factor-from-the-command-line) 会使用
-配置的名称。如果你运行多个 Semaphore，用户可以通过电子邮件地址区分这些条目，或者在应用中
-重命名条目。
-:::
+| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | 认证器应用在账户旁边显示的签发者名称。默认为 `Semaphore`。修改只对之后设置的账户生效。 |
 
 所有选项也都列在[配置参考](/reference/configuration)中。
 
@@ -76,7 +68,7 @@ SEMAPHORE_TOTP_ALLOW_RECOVERY=true
 2. 打开 **Security** 标签页。
 3. 在 **Two-factor authentication** 下，开启 **Time-based one-time password**。
    Semaphore 会立即生成密钥并以二维码形式显示。
-4. 在认证器应用中添加账户并扫描二维码。应用开始为 `Semaphore` 显示六位验证码。
+4. 在认证器应用中添加账户并扫描二维码。应用开始为 `Semaphore`（或 `mfa.totp.app_name` 中设置的名称）显示六位验证码。
 5. 如果二维码下方显示了 **Recovery code**，请用旁边的按钮复制它，并保存在安全的地方 ——
    密码管理器或纸上。它只在此时显示。
 6. 关闭对话框。

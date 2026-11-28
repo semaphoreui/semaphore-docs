@@ -61,15 +61,7 @@ SEMAPHORE_TOTP_ALLOW_RECOVERY=true
 |---|---|---|
 | `mfa.totp.enabled` | `SEMAPHORE_TOTP_ENABLED` | Permite que os usuários configurem TOTP e faz o login pedir o código. Sem ela, a configuração não aparece para ninguém. |
 | `mfa.totp.allow_recovery` | `SEMAPHORE_TOTP_ALLOW_RECOVERY` | Dá a cada usuário um [código de recuperação](#recovery-code) de uso único quando ele configura TOTP, e permite entrar com ele quando o telefone é perdido. |
-| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | O nome do emissor que o aplicativo autenticador mostra ao lado da conta. O padrão é `Semaphore`. Veja o aviso abaixo. |
-
-:::warning ⚠️ `app_name` não é usado pela interface web (2026-11-27)
-Uma conta configurada pela interface web sempre aparece como `Semaphore:<email>` no aplicativo
-autenticador, seja qual for o valor de `mfa.totp.app_name`. Apenas
-[`semaphore users totp enable`](#manage-the-second-factor-from-the-command-line) usa o nome
-configurado. Se você executa mais de um Semaphore, os usuários diferenciam as entradas pelo
-endereço de e-mail ou renomeiam a entrada no aplicativo.
-:::
+| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | O nome do emissor que o aplicativo autenticador mostra ao lado da conta. O padrão é `Semaphore`. Uma alteração só vale para as contas configuradas depois dela. |
 
 Todas as opções também estão listadas na
 [referência de configuração](/reference/configuration).
@@ -84,7 +76,8 @@ Primeiro instale um aplicativo autenticador no telefone. Depois:
 3. Em **Two-factor authentication**, ative **Time-based one-time password**.
    O Semaphore cria o segredo na hora e o mostra como um QR code.
 4. No aplicativo autenticador, adicione uma conta e escaneie o QR code. O aplicativo passa a
-   mostrar um código de seis dígitos para `Semaphore`.
+   mostrar um código de seis dígitos para `Semaphore` ou para o nome definido em
+   `mfa.totp.app_name`.
 5. Se um **Recovery code** aparecer abaixo do QR code, copie-o com o botão ao lado e guarde-o
    em um lugar seguro — um gerenciador de senhas, ou em papel. Ele só é mostrado agora.
 6. Feche a janela.

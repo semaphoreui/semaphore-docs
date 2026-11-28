@@ -62,15 +62,7 @@ SEMAPHORE_TOTP_ALLOW_RECOVERY=true
 |---|---|---|
 | `mfa.totp.enabled` | `SEMAPHORE_TOTP_ENABLED` | Permite a los usuarios configurar TOTP y hace que el inicio de sesión pida el código. Sin ella, el ajuste no se muestra a nadie. |
 | `mfa.totp.allow_recovery` | `SEMAPHORE_TOTP_ALLOW_RECOVERY` | Entrega a cada usuario un [código de recuperación](#recovery-code) de un solo uso al configurar TOTP y le permite iniciar sesión con él si pierde el teléfono. |
-| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | El nombre del emisor que una aplicación de autenticación muestra junto a la cuenta. El valor predeterminado es `Semaphore`. Consulte la advertencia de abajo. |
-
-:::warning ⚠️ La interfaz web no usa `app_name` (2026-11-27)
-Una cuenta configurada desde la interfaz web aparece siempre como `Semaphore:<email>` en la
-aplicación de autenticación, diga lo que diga `mfa.totp.app_name`. Solo
-[`semaphore users totp enable`](#manage-the-second-factor-from-the-command-line) usa el nombre
-configurado. Si ejecuta más de un Semaphore, los usuarios distinguen las entradas por la
-dirección de correo electrónico o cambian el nombre de la entrada en su aplicación.
-:::
+| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | El nombre del emisor que una aplicación de autenticación muestra junto a la cuenta. El valor predeterminado es `Semaphore`. Un cambio solo se aplica a las cuentas configuradas después. |
 
 Todas las opciones figuran también en la
 [referencia de configuración](/reference/configuration).
@@ -85,7 +77,8 @@ Instale primero una aplicación de autenticación en su teléfono. Después:
 3. En **Two-factor authentication**, active **Time-based one-time password**. Semaphore crea el
    secreto al instante y lo muestra como código QR.
 4. En la aplicación de autenticación, añada una cuenta y escanee el código QR. La aplicación
-   empieza a mostrar un código de seis dígitos para `Semaphore`.
+   empieza a mostrar un código de seis dígitos para `Semaphore` o para el nombre definido en
+   `mfa.totp.app_name`.
 5. Si aparece un **Recovery code** debajo del código QR, cópielo con el botón que tiene al lado
    y guárdelo en un lugar seguro: un gestor de contraseñas o en papel. Solo se muestra ahora.
 6. Cierre el diálogo.

@@ -61,15 +61,7 @@ SEMAPHORE_TOTP_ALLOW_RECOVERY=true
 |---|---|---|
 | `mfa.totp.enabled` | `SEMAPHORE_TOTP_ENABLED` | Dozvoljava korisnicima da podese TOTP i čini da prijava traži kod. Bez nje podešavanje se nikome ne prikazuje. |
 | `mfa.totp.allow_recovery` | `SEMAPHORE_TOTP_ALLOW_RECOVERY` | Daje svakom korisniku jednokratni [kod za oporavak](#recovery-code) kada podesi TOTP i dozvoljava mu da se njime prijavi kada izgubi telefon. |
-| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | Naziv izdavaoca koji aplikacija za autentifikaciju prikazuje pored naloga. Podrazumevano je `Semaphore`. Pogledajte upozorenje ispod. |
-
-:::warning ⚠️ Veb interfejs ne koristi `app_name` (2026-11-27)
-Nalog podešen iz veb interfejsa u aplikaciji za autentifikaciju uvek nosi oznaku
-`Semaphore:<email>`, bez obzira na vrednost `mfa.totp.app_name`. Samo
-[`semaphore users totp enable`](#manage-the-second-factor-from-the-command-line) koristi
-podešeni naziv. Ako imate više od jednog Semaphore-a, korisnici razlikuju unose po adresi
-e-pošte ili preimenuju unos u svojoj aplikaciji.
-:::
+| `mfa.totp.app_name` | `SEMAPHORE_TOTP_ISSUER` | Naziv izdavaoca koji aplikacija za autentifikaciju prikazuje pored naloga. Podrazumevano je `Semaphore`. Izmena važi samo za naloge podešene nakon nje. |
 
 Svaka opcija je navedena i u
 [referenci konfiguracije](/reference/configuration).
@@ -84,7 +76,7 @@ Prvo instalirajte aplikaciju za autentifikaciju na telefon. Zatim:
 3. U delu **Two-factor authentication** uključite **Time-based one-time password**.
    Semaphore odmah kreira tajnu i prikazuje je kao QR kod.
 4. U aplikaciji za autentifikaciju dodajte nalog i skenirajte QR kod. Aplikacija počinje da
-   prikazuje šestocifreni kod za `Semaphore`.
+   prikazuje šestocifreni kod za `Semaphore` ili za naziv podešen u `mfa.totp.app_name`.
 5. Ako se ispod QR koda prikaže **Recovery code**, kopirajte ga dugmetom pored njega i
    sačuvajte ga na bezbednom mestu — u menadžeru lozinki ili na papiru. Prikazuje se samo sada.
 6. Zatvorite dijalog.
