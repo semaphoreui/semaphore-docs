@@ -121,8 +121,16 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `resource.schedule` | `delete` | `deletion` | success |  |  | Community |
 | `resource.schedule` | `activate` | `change` | success |  | `template_id` | Community |
 | `resource.schedule` | `deactivate` | `change` | success |  | `template_id` | Community |
-| `resource.integration` | `create` | `creation` | success |  | `template_id`, `auth_method` | Community |
-| `resource.integration` | `update` | `change` | success |  | `template_id`, `auth_method` | Community |
+| `resource.endpoint` | `create` | `creation` | success |  | `auth_method` | Community |
+| `resource.endpoint` | `update` | `change` | success |  | `auth_method` | Community |
+| `resource.endpoint` | `delete` | `deletion` | success |  |  | Community |
+| `resource.endpoint_alias` | `create` | `creation` | success |  | `endpoint_id` | Community |
+| `resource.endpoint_alias` | `delete` | `deletion` | success |  | `endpoint_id` | Community |
+| `resource.integration_group` | `create` | `creation` | success |  | `endpoint_id`, `auth_override`, `auth_method` | Community |
+| `resource.integration_group` | `update` | `change` | success |  | `endpoint_id`, `auth_override`, `auth_method` | Community |
+| `resource.integration_group` | `delete` | `deletion` | success |  |  | Community |
+| `resource.integration` | `create` | `creation` | success |  | `group_id`, `template_id`, `workflow_id` | Community |
+| `resource.integration` | `update` | `change` | success |  | `group_id`, `template_id`, `workflow_id` | Community |
 | `resource.integration` | `delete` | `deletion` | success |  |  | Community |
 | `resource.integration_matcher` | `create` | `creation` | success |  | `integration_id` | Community |
 | `resource.integration_matcher` | `update` | `change` | success |  | `integration_id` | Community |
@@ -130,8 +138,8 @@ Every event is a JSON object. Fields that do not apply to an event are left out.
 | `resource.integration_extractor` | `create` | `creation` | success |  | `integration_id` | Community |
 | `resource.integration_extractor` | `update` | `change` | success |  | `integration_id` | Community |
 | `resource.integration_extractor` | `delete` | `deletion` | success |  | `integration_id` | Community |
-| `resource.integration_alias` | `create` | `creation` | success |  | `integration_id` | Community |
-| `resource.integration_alias` | `delete` | `deletion` | success |  | `integration_id` | Community |
+| `resource.integration_alias` | `create` | `creation` | success |  | `integration_id` | Community (before 2.20.19; aliases now belong to endpoints) |
+| `resource.integration_alias` | `delete` | `deletion` | success |  | `integration_id` | Community (before 2.20.19) |
 | `resource.host_config` | `create` | `creation` | success |  | `type` | Community |
 | `resource.host_config` | `update` | `change` | success |  | `type` | Community |
 | `resource.host_config` | `delete` | `deletion` | success |  |  | Community |

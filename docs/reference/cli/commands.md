@@ -182,7 +182,7 @@ curl -H "Authorization: Bearer $(semaphore client auth token)" https://semaphore
 
 ## `semaphore client context` {#semaphore-client-context}
 
-Manage the contexts saved in ~/.semaphore/client.yml. A context is a server URL with its token, an optional default project and TLS settings. One context is current; --context or SEMAPHORE_CLIENT_CONTEXT selects another one per call.
+Manage the contexts saved in ~/.semaphore/client.yml. A context is a server URL with its token, an optional default project and TLS settings.  The context named "default" is the one commands use when nothing says otherwise; --context or SEMAPHORE_CLIENT_CONTEXT picks another one per call. There is no "current context" to set: a file that remembered a choice made 'auth login' against another server overwrite whichever context was selected.
 
 ```
 semaphore client context
@@ -194,17 +194,16 @@ Example:
 
 ```bash
 semaphore client context list
-  semaphore client context use staging
   semaphore client context set prod --url https://semaphore.example.com --project 3
+  semaphore client project list --context prod
 ```
 
 | Subcommand | Purpose |
 |---|---|
 | [`semaphore client context delete`](#semaphore-client-context-delete) | Delete a context |
-| [`semaphore client context get`](#semaphore-client-context-get) | Show one context (the current one by default) |
+| [`semaphore client context get`](#semaphore-client-context-get) | Show one context ("default" when no name is given) |
 | [`semaphore client context list`](#semaphore-client-context-list) | List saved contexts |
 | [`semaphore client context set`](#semaphore-client-context-set) | Create or change a context without logging in |
-| [`semaphore client context use`](#semaphore-client-context-use) | Make a context the current one |
 
 ## `semaphore client context delete` {#semaphore-client-context-delete}
 
@@ -224,7 +223,7 @@ semaphore client context delete staging -y
 
 ## `semaphore client context get` {#semaphore-client-context-get}
 
-Show one saved context without its token. Without a name the current context is shown.
+Show one saved context without its token. Without a name the context "default" is shown.
 
 ```
 semaphore client context get [NAME]
@@ -241,7 +240,7 @@ semaphore client context get
 
 ## `semaphore client context list` {#semaphore-client-context-list}
 
-List the contexts of the configuration file: name, whether it is current, server URL, default project and where its token comes from (inline, file or none). Token values are never shown. Works without a server connection.
+List the contexts of the configuration file: name, server URL, default project and where its token comes from (inline, file or none). Token values are never shown. The context named "default" is the one used when --context and SEMAPHORE_CLIENT_CONTEXT are absent. Works without a server connection.
 
 ```
 semaphore client context list
@@ -257,7 +256,7 @@ semaphore client context list
 
 ## `semaphore client context set` {#semaphore-client-context-set}
 
-Create or change a context field by field. The global flags --url, --project, --ca-cert and --insecure give the new values; only the flags you pass change. The token comes from --token-file (a file holding the token) or from 'semaphore client auth login'; there is no flag that takes the token itself.
+Create or change a context field by field. The global flags --url, --project, --ca-cert and --insecure give the new values; only the flags you pass change. The token comes from --token-file (a file holding the token) or from 'semaphore client auth login'; there is no flag that takes the token itself.  Aiming an existing context at another server drops what belonged to the old one — its token, its default project and its TLS settings — so that a production credential is never handed to a stranger. Values passed in the same command are applied afterwards and survive.
 
 ```
 semaphore client context set NAME [flags]
@@ -276,20 +275,6 @@ semaphore client context set staging --url https://staging.example.com --token-f
 | `--no-insecure` | bool | — | Turn TLS verification back on |
 | `--no-project` | bool | — | Remove the default project |
 | `--token-file` | string | — | File holding the API token (replaces an inline token) |
-
-## `semaphore client context use` {#semaphore-client-context-use}
-
-Make a saved context the current one, so later commands use its server, token and default project unless --context or SEMAPHORE_CLIENT_CONTEXT say otherwise.
-
-```
-semaphore client context use NAME
-```
-
-Example:
-
-```bash
-semaphore client context use staging
-```
 
 ## `semaphore client environment` {#semaphore-client-environment}
 
@@ -1540,7 +1525,7 @@ semaphore client task list -p 1
 
 ## `semaphore client task logs` {#semaphore-client-task-logs}
 
-Print the log of a task. --raw streams the plain-text log the server keeps (ANSI codes stripped); otherwise the stored lines are printed, or listed as records with -o json. With --follow new lines are printed until the task finishes and the exit code follows its status.
+Print the log of a task. --raw streams the plain-text log the server keeps (ANSI codes stripped); otherwise the stored lines are printed, or listed as records with -o json. With --follow new lines are printed until the task finishes and the exit code follows its status; a task that stops for approval is answered right here when the session is interactive.
 
 ```
 semaphore client task logs <id> [flags]
@@ -1556,6 +1541,7 @@ semaphore client task logs 42
 
 | Flag | Type | Default | Description |
 |---|---|---|---|
+| `--auto-reject` | bool | — | With --follow: reject the task instead of waiting if it asks for approval |
 | `--follow`, `-f` | bool | — | Keep printing new lines until the task finishes |
 | `--raw` | bool | — | Stream the plain-text log as the server stores it |
 
@@ -1592,6 +1578,7 @@ semaphore client task rerun 42 -p 1
 |---|---|---|---|
 | `--arguments` | string | — | Extra CLI arguments as a JSON array, e.g. '["-vv"]' (if the template allows it) |
 | `--auto-approve` | bool | — | Terraform/OpenTofu: apply without approval |
+| `--auto-reject` | bool | — | Reject the task instead of waiting if it asks for approval (it ends as error, exit 3) |
 | `--branch` | string | — | Git branch to check out (if the template allows it) |
 | `--check` | bool | — | Ansible check mode (dry run, no changes) |
 | `--debug-level` | int | `0` | Ansible verbosity level 1-4 (implies --debug-task) |
@@ -1636,7 +1623,7 @@ semaphore client task stop 42 -p 1
 
 ## `semaphore client task wait` {#semaphore-client-task-wait}
 
-Wait until a task finishes without printing anything, for scripts. Exit code 0 on success, 3 on error, 6 when the task was stopped, 124 when --wait-timeout runs out (the task keeps running on the server).
+Wait until a task finishes without printing anything, for scripts. Exit code 0 on success, 3 on error, 6 when the task was stopped, 124 when --wait-timeout runs out (the task keeps running on the server).  A task waiting for approval is reported on stderr: in a terminal the question is asked here, in a script run 'task confirm' or 'task reject' elsewhere.
 
 ```
 semaphore client task wait <id> [flags]
@@ -1650,6 +1637,7 @@ semaphore client task wait 42; case $? in 0) echo ok;; 3) echo failed;; 6) echo 
 
 | Flag | Type | Default | Description |
 |---|---|---|---|
+| `--auto-reject` | bool | — | Reject the task instead of waiting if it asks for approval |
 | `--wait-timeout` | duration | `0s` | Give up after this long, exit 124 (default: no limit) |
 
 ## `semaphore client task watch` {#semaphore-client-task-watch}
@@ -1669,6 +1657,7 @@ semaphore client task watch 42 -p 1
 
 | Flag | Type | Default | Description |
 |---|---|---|---|
+| `--auto-reject` | bool | — | Reject the task instead of waiting if it asks for approval |
 | `--exit-status` | bool | — | Exit with 3 or 6 when the task failed or was stopped |
 | `--wait-timeout` | duration | `0s` | Give up after this long, exit 124 (default: no limit) |
 
@@ -1785,7 +1774,7 @@ semaphore client template list -p 1
 
 ## `semaphore client template run` {#semaphore-client-template-run}
 
-Start a task from a template. By default the task id is printed and the command returns at once; --wait blocks until the task finishes and sets the exit code from its status (0 success, 3 error, 6 stopped); --follow also streams the log.  Overrides (--limit, --tags, --check, --branch, --inventory, …) apply only when the template allows them; otherwise the server rejects the task. Ctrl+C while waiting only disconnects the client — the task goes on — unless --stop-on-interrupt is given.
+Start a task from a template. By default the task id is printed and the command returns at once; --wait blocks until the task finishes and sets the exit code from its status (0 success, 3 error, 6 stopped); --follow also streams the log.  Overrides (--limit, --tags, --check, --branch, --inventory, …) apply only when the template allows them; otherwise the server rejects the task. Ctrl+C while waiting only disconnects the client — the task goes on — unless --stop-on-interrupt is given.  A task may stop halfway and wait for approval: a Terraform plan before it is applied, or any template whose app asks first. While waiting in a terminal the client asks "Apply task N? [yes/no]" and answers the server for you; without a terminal it says which 'task confirm' to run and keeps waiting. Use --auto-approve to skip the question altogether when the template allows it.
 
 ```
 semaphore client template run <id|name> [flags]
@@ -1808,6 +1797,7 @@ Example:
 |---|---|---|---|
 | `--arguments` | string | — | Extra CLI arguments as a JSON array, e.g. '["-vv"]' (if the template allows it) |
 | `--auto-approve` | bool | — | Terraform/OpenTofu: apply without approval |
+| `--auto-reject` | bool | — | Reject the task instead of waiting if it asks for approval (it ends as error, exit 3) |
 | `--branch` | string | — | Git branch to check out (if the template allows it) |
 | `--check` | bool | — | Ansible check mode (dry run, no changes) |
 | `--debug-level` | int | `0` | Ansible verbosity level 1-4 (implies --debug-task) |

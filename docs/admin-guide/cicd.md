@@ -15,7 +15,7 @@ Template types **Build** and **Deploy**, artifact versioning, and the `semaphore
 
 There are two ways to trigger a task from GitHub Actions, GitLab CI, Jenkins, or any other system:
 
-- **Integrations**: a webhook URL per project that starts a template when the request matches. It supports GitHub signatures, tokens, and HMAC and can pass request fields to the task as variables. See [Integrations](/user-guide/integrations).
+- **Integrations**: webhook endpoints of the project whose URLs start templates or workflows when the request passes the endpoint's authentication and the integration's matchers. Endpoints support GitHub signatures, tokens, HMAC and BasicAuth, and integrations can pass request fields to the task as variables. See [Integrations](/user-guide/integrations).
 - **REST API**: create a task with an API token:
 
 ```bash
