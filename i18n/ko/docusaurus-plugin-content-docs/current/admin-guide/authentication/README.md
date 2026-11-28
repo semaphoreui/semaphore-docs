@@ -16,12 +16,26 @@ Semaphore는 사용자가 누구인지 확인하는 네 가지 방식을 제공�
 | [OpenID Connect](/admin-guide/authentication/openid) | ID 공급자 | Keycloak, Okta, Entra ID, Google, GitHub 등으로 싱글 사인온을 사용하는 경우. |
 | [JWT 프록시](/admin-guide/authentication/jwt-proxy-auth) | 인증 리버스 프록시 | Pomerium 같은 프록시가 이미 사용자를 로그인시키고 서명된 JWT를 전달하는 경우. |
 
-어떤 방식으로 로그인하든 [2단계 인증](/admin-guide/authentication/two-factor)을 사용하면
-두 번째 단계로 인증 앱의 TOTP 코드를 요구할 수 있습니다.
-
 인증은 사용자가 *누구인지*만 판단합니다. 사용자가 무엇을 할 수 있는지는 서버 역할과 각
 프로젝트에서의 역할에 따라 별도로 결정됩니다 —
 [팀](/user-guide/team)을 참조하세요.
+
+## 2단계 인증 {#two-factor-authentication}
+
+로그인 방식에 더해 Semaphore는 두 번째 증명을 요구할 수 있습니다. Google Authenticator, Aegis,
+1Password 같은 인증 앱이 만드는 여섯 자리 TOTP 코드입니다. 비밀번호, LDAP, OpenID Connect 중
+어느 방식으로 로그인하든 그 뒤에 요구됩니다.
+
+- **기본적으로 꺼져 있습니다.** 서버에서 허용하려면 `mfa.totp.enabled`를 `true`로 설정하세요.
+- **각 사용자가 자신의 계정에 직접 설정합니다.** **Edit Account**의 **Security** 탭에서 합니다.
+  Semaphore에는 이를 필수로 만드는 옵션이 없습니다.
+- **휴대폰을 잃어버렸을 때는 복구 코드를 사용합니다.** `mfa.totp.allow_recovery`가 켜져 있을
+  때 발급됩니다.
+- **API 토큰은 2단계 인증을 거치지 않습니다.** Bearer 토큰이 있는 요청에는 코드를 요구하지
+  않습니다.
+
+켜는 방법, 계정 설정, 코드로 로그인하기, 복구는
+[2단계 인증](/admin-guide/authentication/two-factor)을 참조하세요.
 
 ## 사용자 레코드가 생성되는 방식 {#how-a-user-record-comes-to-exist}
 

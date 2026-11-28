@@ -16,13 +16,28 @@ formulaire de mot de passe, une connexion à l'annuaire et un bouton par fournis
 | [OpenID Connect](/admin-guide/authentication/openid) | Votre fournisseur d'identité | Vous disposez d'une authentification unique : Keycloak, Okta, Entra ID, Google, GitHub et d'autres. |
 | [Proxy JWT](/admin-guide/authentication/jwt-proxy-auth) | Votre proxy inverse d'authentification | Un proxy tel que Pomerium connecte déjà les utilisateurs et transmet un JWT signé. |
 
-Quelle que soit la méthode par laquelle un utilisateur se connecte,
-l'[authentification à deux facteurs](/admin-guide/authentication/two-factor) peut demander en deuxième étape un code TOTP
-issu d'une application d'authentification.
-
 L'authentification répond uniquement à la question de savoir *qui* est l'utilisateur. Ce qu'il a
 le droit de faire est décidé séparément, par son rôle serveur et par son rôle dans chaque
 projet — voir [Équipes](/user-guide/team).
+
+## Authentification à deux facteurs {#two-factor-authentication}
+
+En plus de la méthode de connexion, Semaphore peut demander une seconde preuve : un code TOTP
+à six chiffres issu d'une application d'authentification telle que Google Authenticator,
+Aegis ou 1Password. Il est demandé après la connexion par mot de passe, via LDAP ou via
+OpenID Connect.
+
+- **Elle est désactivée par défaut.** Définissez `mfa.totp.enabled` sur `true` pour
+  l'autoriser sur le serveur.
+- **Chaque utilisateur la configure pour son propre compte**, dans l'onglet **Security** de
+  **Edit Account**. Semaphore n'a aucune option qui la rende obligatoire.
+- **Un code de récupération pallie la perte du téléphone** lorsque
+  `mfa.totp.allow_recovery` est activé.
+- **Les jetons d'API contournent le deuxième facteur.** Une requête avec un jeton bearer ne
+  se voit jamais demander de code.
+
+Voir [Authentification à deux facteurs](/admin-guide/authentication/two-factor) pour
+l'activer, configurer un compte, se connecter avec un code et récupérer l'accès.
 
 ## Comment un enregistrement utilisateur est créé {#how-a-user-record-comes-to-exist}
 

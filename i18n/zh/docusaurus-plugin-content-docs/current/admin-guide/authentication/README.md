@@ -15,11 +15,23 @@ Semaphore 提供四种确认用户身份的方式。它们相互独立，可以�
 | [OpenID Connect](/admin-guide/authentication/openid) | 你的身份提供方 | 你使用单点登录：Keycloak、Okta、Entra ID、Google、GitHub 等。 |
 | [JWT 代理](/admin-guide/authentication/jwt-proxy-auth) | 你的认证反向代理 | Pomerium 等代理已经完成用户登录，并转发一个已签名的 JWT。 |
 
-无论用户通过哪种方式登录，[双因素认证](/admin-guide/authentication/two-factor)
-都可以作为第二步，要求输入认证器应用中的 TOTP 验证码。
-
 身份认证只回答用户*是谁*。用户被允许做什么则由服务器角色和他在每个项目中的角色单独决定 ——
 参见[团队](/user-guide/team)。
+
+## 双因素认证 {#two-factor-authentication}
+
+在登录方式之上，Semaphore 还可以要求第二项证明：由 Google Authenticator、Aegis、1Password
+等认证器应用生成的六位 TOTP 验证码。无论通过密码、LDAP 还是 OpenID Connect 登录，之后都会
+要求输入。
+
+- **默认关闭。** 将 `mfa.totp.enabled` 设为 `true`，即可在服务器上允许使用。
+- **每个用户为自己的账户设置**，位置在 **Edit Account** 的 **Security** 标签页。Semaphore
+  没有将其设为强制的选项。
+- **手机丢失时可使用恢复码**，前提是已开启 `mfa.totp.allow_recovery`。
+- **API 令牌会跳过第二因素。** 带有 Bearer 令牌的请求不会被要求输入验证码。
+
+如何开启、设置账户、使用验证码登录以及恢复，请参见
+[双因素认证](/admin-guide/authentication/two-factor)。
 
 ## 用户记录是如何产生的 {#how-a-user-record-comes-to-exist}
 

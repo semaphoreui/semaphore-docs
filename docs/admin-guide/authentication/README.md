@@ -16,12 +16,25 @@ directory login, and one button per identity provider.
 | [OpenID Connect](/admin-guide/authentication/openid) | Your identity provider | You have single sign-on: Keycloak, Okta, Entra ID, Google, GitHub, and others. |
 | [JWT proxy](/admin-guide/authentication/jwt-proxy-auth) | Your authenticating reverse proxy | A proxy such as Pomerium already signs users in and forwards a signed JWT. |
 
-Whichever method signs a user in, [two-factor authentication](/admin-guide/authentication/two-factor)
-can ask for a TOTP code from an authenticator app as a second step.
-
 Authentication only answers *who* the user is. What they are allowed to do is decided
 separately, by their server role and by their role in each project — see
 [Teams](/user-guide/team).
+
+## Two-factor authentication {#two-factor-authentication}
+
+On top of the sign-in method, Semaphore can ask for a second proof: a six-digit TOTP code
+from an authenticator app such as Google Authenticator, Aegis or 1Password. It follows a
+password, LDAP and OpenID Connect sign-in alike.
+
+- **It is off by default.** Set `mfa.totp.enabled` to `true` to allow it on the server.
+- **Each user sets it up for their own account**, on the **Security** tab of
+  **Edit Account**. Semaphore has no option that makes it mandatory.
+- **A recovery code covers a lost phone** when `mfa.totp.allow_recovery` is on.
+- **API tokens skip the second factor.** A request with a bearer token is never asked for
+  a code.
+
+See [Two-factor authentication](/admin-guide/authentication/two-factor) for turning it on,
+setting up an account, signing in with a code, and recovery.
 
 ## How a user record comes to exist {#how-a-user-record-comes-to-exist}
 

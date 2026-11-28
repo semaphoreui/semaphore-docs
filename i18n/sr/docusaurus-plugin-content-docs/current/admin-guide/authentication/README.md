@@ -16,12 +16,26 @@ i po jedno dugme za svakog provajdera identiteta.
 | [OpenID Connect](/admin-guide/authentication/openid) | Vaš provajder identiteta | Imate jedinstvenu prijavu: Keycloak, Okta, Entra ID, Google, GitHub i druge. |
 | [JWT proksi](/admin-guide/authentication/jwt-proxy-auth) | Vaš reverse proxy za autentifikaciju | Proksi kao što je Pomerium već prijavljuje korisnike i prosleđuje potpisani JWT. |
 
-Kojim god metodom da se korisnik prijavi, [dvofaktorska autentifikacija](/admin-guide/authentication/two-factor)
-može kao drugi korak da zatraži TOTP kod iz aplikacije za autentifikaciju.
-
 Autentifikacija odgovara samo na pitanje *ko* je korisnik. Šta mu je dozvoljeno da radi
 odlučuje se posebno, na osnovu njegove uloge na serveru i uloge u svakom projektu — vidite
 [Timovi](/user-guide/team).
+
+## Dvofaktorska autentifikacija {#two-factor-authentication}
+
+Pored metoda prijave, Semaphore može da zatraži i drugi dokaz: šestocifreni TOTP kod iz
+aplikacije za autentifikaciju kao što su Google Authenticator, Aegis ili 1Password. Traži se
+posle prijave lozinkom, preko LDAP-a ili preko OpenID Connect-a.
+
+- **Podrazumevano je isključena.** Postavite `mfa.totp.enabled` na `true` da biste je
+  dozvolili na serveru.
+- **Svaki korisnik je podešava za sopstveni nalog**, na kartici **Security** u prozoru
+  **Edit Account**. Semaphore nema opciju koja je čini obaveznom.
+- **Kod za oporavak pomaže kada je telefon izgubljen**, ako je uključen
+  `mfa.totp.allow_recovery`.
+- **API tokeni preskaču drugi faktor.** Od zahteva sa bearer tokenom nikada se ne traži kod.
+
+Uključivanje, podešavanje naloga, prijava kodom i oporavak opisani su na stranici
+[Dvofaktorska autentifikacija](/admin-guide/authentication/two-factor).
 
 ## Kako nastaje zapis o korisniku {#how-a-user-record-comes-to-exist}
 

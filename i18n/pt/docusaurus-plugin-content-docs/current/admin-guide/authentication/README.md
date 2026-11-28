@@ -16,12 +16,27 @@ formulário de senha, um login de diretório e um botão para cada provedor de i
 | [OpenID Connect](/admin-guide/authentication/openid) | Seu provedor de identidade | Você usa single sign-on: Keycloak, Okta, Entra ID, Google, GitHub e outros. |
 | [Proxy JWT](/admin-guide/authentication/jwt-proxy-auth) | Seu proxy reverso autenticador | Um proxy como o Pomerium já faz o login dos usuários e repassa um JWT assinado. |
 
-Qualquer que seja o método pelo qual o usuário entra, a [autenticação de dois fatores](/admin-guide/authentication/two-factor)
-pode pedir, como segunda etapa, um código TOTP de um aplicativo autenticador.
-
 A autenticação responde apenas *quem* é o usuário. O que ele tem permissão de fazer é
 decidido separadamente, pelo papel no servidor e pelo papel em cada projeto — veja
 [Equipes](/user-guide/team).
+
+## Autenticação de dois fatores {#two-factor-authentication}
+
+Além do método de login, o Semaphore pode pedir uma segunda prova: um código TOTP de seis
+dígitos de um aplicativo autenticador como Google Authenticator, Aegis ou 1Password. Ele é
+pedido depois do login com senha, via LDAP ou via OpenID Connect.
+
+- **Vem desativada por padrão.** Defina `mfa.totp.enabled` como `true` para permiti-la no
+  servidor.
+- **Cada usuário a configura para a própria conta**, na aba **Security** de
+  **Edit Account**. O Semaphore não tem opção que a torne obrigatória.
+- **Um código de recuperação cobre a perda do telefone** quando `mfa.totp.allow_recovery`
+  está ativado.
+- **Tokens de API pulam o segundo fator.** Uma requisição com um token bearer nunca recebe o
+  pedido de código.
+
+Veja [Autenticação de dois fatores](/admin-guide/authentication/two-factor) para ativá-la,
+configurar uma conta, entrar com um código e recuperar o acesso.
 
 ## Como um registro de usuário passa a existir {#how-a-user-record-comes-to-exist}
 

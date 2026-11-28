@@ -17,13 +17,28 @@ anbieten kann.
 | [OpenID Connect](/admin-guide/authentication/openid) | Ihr Identitätsanbieter | Sie nutzen Single Sign-on: Keycloak, Okta, Entra ID, Google, GitHub und andere. |
 | [JWT-Proxy](/admin-guide/authentication/jwt-proxy-auth) | Ihr authentifizierender Reverse Proxy | Ein Proxy wie Pomerium meldet die Benutzer bereits an und leitet ein signiertes JWT weiter. |
 
-Unabhängig davon, mit welcher Methode sich ein Benutzer anmeldet, kann die
-[Zwei-Faktor-Authentifizierung](/admin-guide/authentication/two-factor) als zweiten Schritt einen TOTP-Code aus einer
-Authenticator-App abfragen.
-
 Die Authentifizierung beantwortet nur, *wer* der Benutzer ist. Was er tun darf, wird
 getrennt davon entschieden – über seine Serverrolle und über seine Rolle in jedem Projekt,
 siehe [Teams](/user-guide/team).
+
+## Zwei-Faktor-Authentifizierung {#two-factor-authentication}
+
+Zusätzlich zur Anmeldemethode kann Semaphore einen zweiten Nachweis verlangen: einen
+sechsstelligen TOTP-Code aus einer Authenticator-App wie Google Authenticator, Aegis oder
+1Password. Er wird nach der Anmeldung per Passwort, über LDAP und über OpenID Connect
+abgefragt.
+
+- **Standardmäßig ist sie ausgeschaltet.** Setzen Sie `mfa.totp.enabled` auf `true`, um sie
+  auf dem Server zu erlauben.
+- **Jeder Benutzer richtet sie für sein eigenes Konto ein**, auf der Registerkarte
+  **Security** von **Edit Account**. Semaphore hat keine Option, die sie verpflichtend macht.
+- **Ein Wiederherstellungscode hilft bei einem verlorenen Telefon**, wenn
+  `mfa.totp.allow_recovery` eingeschaltet ist.
+- **API-Tokens umgehen den zweiten Faktor.** Eine Anfrage mit einem Bearer-Token wird nie
+  nach einem Code gefragt.
+
+Einschalten, Einrichten eines Kontos, Anmelden mit einem Code und Wiederherstellung sind
+unter [Zwei-Faktor-Authentifizierung](/admin-guide/authentication/two-factor) beschrieben.
 
 ## Wie ein Benutzerdatensatz entsteht {#how-a-user-record-comes-to-exist}
 

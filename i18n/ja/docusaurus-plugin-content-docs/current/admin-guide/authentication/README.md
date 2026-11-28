@@ -16,11 +16,25 @@ Semaphore には、相手が誰であるかを確認する方法が 4 つあり�
 | [OpenID Connect](/admin-guide/authentication/openid) | ID プロバイダー | シングルサインオンを利用している場合: Keycloak、Okta、Entra ID、Google、GitHub など。 |
 | [JWT プロキシ](/admin-guide/authentication/jwt-proxy-auth) | 認証リバースプロキシ | Pomerium などのプロキシがすでにユーザーをサインインさせ、署名付き JWT を転送している場合。 |
 
-どの方法でサインインした場合でも、[二要素認証](/admin-guide/authentication/two-factor)によって
-2 段階目として認証アプリの TOTP コードを求めることができます。
-
 認証が答えるのは、そのユーザーが*誰か*ということだけです。何を行えるかは、サーバーロールと
 各プロジェクトでのロールによって別途決まります。[チーム](/user-guide/team)を参照してください。
+
+## 二要素認証 {#two-factor-authentication}
+
+サインイン方法に加えて、Semaphore は 2 つ目の証明として、Google Authenticator、Aegis、1Password
+などの認証アプリが生成する 6 桁の TOTP コードを求めることができます。パスワード、LDAP、OpenID
+Connect のいずれでサインインした場合にも求められます。
+
+- **デフォルトでは無効です。** サーバーで許可するには `mfa.totp.enabled` を `true` に設定します。
+- **各ユーザーが自分のアカウントに設定します。** **Edit Account** の **Security** タブで行います。
+  全員に必須とするオプションは Semaphore にはありません。
+- **スマートフォンを紛失したときはリカバリーコードを使えます。** `mfa.totp.allow_recovery` が
+  有効な場合に発行されます。
+- **API トークンは二要素目を経由しません。** Bearer トークン付きのリクエストがコードを求められる
+  ことはありません。
+
+有効化、アカウントの設定、コードでのサインイン、リカバリーについては
+[二要素認証](/admin-guide/authentication/two-factor)を参照してください。
 
 ## ユーザーレコードが作成される仕組み {#how-a-user-record-comes-to-exist}
 
